@@ -21,6 +21,7 @@ rootnode
     end,
 
     impossibleToFilter = function( self, params ) -- called within this skill
+        meKnowledge:sendReport( eRC_ImpossibleToOperateObject )
         Feedback( self.feedbacks.failed, params )
     end,
 
@@ -39,8 +40,8 @@ rootnode
 
         if self.arrived then
             if self.params.checkpoint:canBeUsedToFilter() then
-            Activate( skill.links.filter, 1, 
-              { checkpoint = self.params.checkpoint, intensity = self.params.intensity } )
+                Activate( skill.links.filter, 1, 
+                  { checkpoint = self.params.checkpoint, intensity = self.params.intensity } )
             else
                 self:impossibleToFilter()
             end

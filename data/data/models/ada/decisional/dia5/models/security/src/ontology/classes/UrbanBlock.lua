@@ -1,7 +1,7 @@
 -- --------------------------------------------------------------------------------
 -- Delays for magic actions in MINUTES
 -- --------------------------------------------------------------------------------
-local decontaminationDelays = 2 -- min
+local decontaminationDelays = 10 -- min
 
 -- --------------------------------------------------------------------------------
 -- Populated area
@@ -55,7 +55,7 @@ method "isEvacuated" (
 -- --------------------------------------------------------------------------------
 --  Work
 -- --------------------------------------------------------------------------------
-method "createIt" ( masalife.brain.integration.startStopAction( 
+method "buildIt" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self )
         integration.startBuildItUrbanBlock( self )
@@ -71,20 +71,37 @@ method "createIt" ( masalife.brain.integration.startStopAction(
     end
 } ) )
 
+method "createIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self )
+        return self -- $$$ TODO
+    end,
+    started = function( self )
+        return self -- $$$ TODO
+    end, 
+    stop = function( self )
+        return self -- $$$ TODO
+    end
+} ) )
+
 method "isBuilt" (
     function( self )
         return integration.buildLevelUrbanBlock( self ) == 1
     end )
 
 method "canBeCreated" (
-    function( self )
-        local urbanBlockType = integration.getTypeUrbanBlock( self )
-        local result = integration.canBuildNowObjectType( urbanBlockType ) 
-        and integration.hasEnoughtDotationForObjectType( urbanBlockType )
-        if not result then -- $$$ MIA not the right place to do this report
-            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+    function( self, instantaneously )
+        if instantaneously then
+            return false -- temp
+        else
+            local urbanBlockType = integration.getTypeUrbanBlock( self )
+            local result = integration.canBuildNowObjectType( urbanBlockType ) 
+            and integration.hasEnoughtDotationForObjectType( urbanBlockType )
+            if not result then -- $$$ MIA not the right place to do this report
+                meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+            end
+            return result
         end
-        return result
     end )
 
 method "canBeDeconstructed" ( 
@@ -92,15 +109,16 @@ method "canBeDeconstructed" (
         if instantaneously then -- impossible to remove magically a urban block
             return false 
         end
-        return false -- $$$ MIA TODO
+        return true -- a urban block can be decontructed
     end )
 
 method "deconstructIt" ( masalife.brain.integration.startStopAction( 
 {
-    -- $$$ TODO
     start = function( self )
+        return integration.deteriorateUrbanBlock( self )
     end,
     started = function( self )
+        
     end,
     stop = function( self )
     end
@@ -144,7 +162,6 @@ method "createLinkWith" (
     function( self, resourceNode )
         return integration.createResourceLinkWithUrbanBlock( self, resourceNode )
     end )
-
 
 -- --------------------------------------------------------------------------------
 -- Specific classes methods

@@ -32,3 +32,7 @@ end
 integration.finMissionConvoi = function()
     DEC_Ravitaillement_Convoi_FinMission()
 end
+
+integration.isMedical = function( agent )
+    return DEC_Agent_IsMedical( agent.source ) -- works with myself
+end

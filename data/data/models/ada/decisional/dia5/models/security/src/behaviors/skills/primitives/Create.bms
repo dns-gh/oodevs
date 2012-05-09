@@ -63,8 +63,8 @@ rootnode
                          Activate( skill.links.dismount, 1 )
                          return -- until agent is dismounted
                     end
-                    if self.work:canBeCreated() then
-                        Activate( skill.links.create, 1, { work = self.work } )
+                    if self.work:canBeCreated( self.params.instantaneously ) then
+                        Activate( skill.links.create, 1, { work = self.work, instantaneously = self.params.instantaneously } )
                     elseif not self.params.waitForReinforcement then
                         self:impossibleToCreate( { work = self.work } )
                     else

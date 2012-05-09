@@ -1,10 +1,10 @@
 -- --------------------------------------------------------------------------------
 -- Work
 -- --------------------------------------------------------------------------------
-method "createIt" ( masalife.brain.integration.startStopAction( 
+method "buildIt" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self )
-        integration.startBuildIt( self, ontology.classes.Object ) -- $$$ MIA TEMP
+        integration.startBuildIt( self, ontology.classes.Object )
         return self.knowledge
     end, 
     started = function( self )
@@ -17,6 +17,20 @@ method "createIt" ( masalife.brain.integration.startStopAction(
     end,
 } ) )
 
+method "createIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self )
+        integration.startBuildItInstantaneously( self, ontology.classes.Object )
+        return self.knowledge
+    end,
+    started = function( self )
+        return self.knowledge
+    end, 
+    stop = function( self )
+        return self.knowledge
+    end
+} ) )
+
 method "isBuilt" ( 
     function( self )
         if self.knowledge ~= nil then
@@ -27,15 +41,19 @@ method "isBuilt" (
     end )
 
 method "canBeCreated" ( 
-    function( self )
-        local result = integration.canBuildNowObjectType( DEC_GenObject_Type( self.source ) )
-           and integration.hasEnoughtDotationForObjectType( DEC_GenObject_Type( self.source ) )
-        if not result then -- $$$ MIA not the right place to do this report
-            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+    function( self, instantaneously )
+        if instantaneously then 
+            return true -- magic action
+        else
+            local result = integration.canBuildNowObjectType( DEC_GenObject_Type( self.source ) )
+               and integration.hasEnoughtDotationForObjectType( DEC_GenObject_Type( self.source ) )
+            if not result then -- $$$ MIA not the right place to do this report
+                meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+            end
+            return result
         end
-        return result
     end )
-    
+
 method "getDestinationForWork" ( 
     function( self ) 
         local simPosition = integration.getPlannedObjectNearestBorderPosition( self )

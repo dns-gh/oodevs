@@ -40,7 +40,7 @@
             </argument>
         </method>
         <method name="create">
-            <description>An agent's physical ability to build a specified construction. </description>
+            <description>For an agent, to create a 100% built element (a 'Work' object) instantaneously, without any physical capability consideration.</description>
             <argument name="work">
                 <description>The construction to build. </description>
                 <type>
@@ -48,7 +48,7 @@
                 </type>
             </argument>
             <return name="builtWork">
-                <description>Returns the work built upon simulation method completion. </description>
+                <description>Returns the work created (and 100% built) upon simulation method completion. </description>
                 <type>
                     <class name="agent.world.Work"/>
                 </type>
@@ -592,8 +592,7 @@ Returns 'true' when checkPoint is filtering.</description>
                     <simple name="string"/>
                 </type>
             </argument>
-		</method>
-        
+        </method>
         <method name="isInstalled">
             <description>Returns 'true' once this element is installed on its current position. An installed unit is more efficient (perception, protection...)  that a moving unit. </description>
             <return>
@@ -628,6 +627,21 @@ Returns 'true' when checkPoint is filtering.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="build">
+            <description>An agent's physical ability to build a specified construction. </description>
+            <argument name="work">
+                <description>The construction to build. </description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+            <return name="builtWork">
+                <description>Returns the work built upon simulation method completion. </description>
+                <type>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>

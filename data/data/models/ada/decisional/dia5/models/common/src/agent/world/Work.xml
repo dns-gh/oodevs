@@ -10,7 +10,7 @@
             </return>
         </method>
         <method name="createIt">
-            <description>To create and build this element.</description>
+            <description>To create instantaneously this element.</description>
             <return name="work">
                 <description>The created work.</description>
                 <type>
@@ -20,6 +20,12 @@
         </method>
         <method name="canBeCreated">
             <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be built instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -70,6 +76,15 @@ Returns 'true' when element is deconstructed.</description>
             <return>
                 <type>
                     <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildIt">
+            <description>To create and build this element.</description>
+            <return name="work">
+                <description>The created work.</description>
+                <type>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>

@@ -9,24 +9,17 @@ local unloadingActionDelays = 1
 -- --------------------------------------------------------------------------------
 method "canVictimsBeEvacuated" (
     function( self )
-        if not self:isReached() then
-            meKnowledge:sendReport( eRC_VictimsCannotBeEvacuated ) -- $$$ MIA not the right place to do this report
-            return false -- $$$ MIA Add rule: "hasVictims"
-        else
-            return true
-        end
+        return self:isReached()
     end )
 
 method "canVictimsBeExtracted" (
     function( self )
-        -- $$$ teammate unit cannot be extracted for now.
-        return false
+        return false  -- teammate unit cannot be extracted for now.
     end )
 
 method "extractVictimsFromIt" (
     function( self, victimsUnit )
-        -- $$$ MIA: TODO
-        return false
+        return false -- teammate unit cannot be extracted for now.
     end )
 
 -- --------------------------------------------------------------------------------
@@ -39,8 +32,7 @@ method "evacuateVictims" (
 
 method "canEvacuateVictims" ( 
     function( self, victimsUnit )
-        -- $$$ MIA todo vérifier que self est un TC2
-        return true
+        return integration.isMedical( self )
     end )
 
 -- --------------------------------------------------------------------------------

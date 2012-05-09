@@ -430,21 +430,6 @@ Returns true if the agent has physical capabilities to loasd a 'Crowd' object.</
                 </type>
             </return>
         </method>
-        <method name="create" abstract="false">
-            <description>An agent's physical ability to build a specified construction. </description>
-            <argument name="work">
-                <description>The construction to build. </description>
-                <type>
-                    <class name="agent.world.Work"/>
-                </type>
-            </argument>
-            <return name="builtWork">
-                <description>Returns the work built upon simulation method completion. </description>
-                <type>
-                    <class name="agent.world.Work"/>
-                </type>
-            </return>
-        </method>
         <method name="deconstruct" abstract="false">
             <description>An agent's physical ability to deconstruct a work. </description>
             <argument name="work">
@@ -723,6 +708,36 @@ This implemention</description>
             <return>
                 <type>
                     <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="build" abstract="false">
+            <description>An agent's physical ability to build a specified construction. </description>
+            <argument name="work">
+                <description>The construction to build. </description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+            <return name="builtWork">
+                <description>Returns the work built upon simulation method completion. </description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </return>
+        </method>
+        <method name="create" abstract="false">
+            <description>For an agent, to create a 100% built element (a 'Work' object) instantaneously, without any physical capability consideration.</description>
+            <argument name="work">
+                <description>The construction to build. </description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+            <return name="builtWork">
+                <description>Returns the work created (and 100% built) upon simulation method completion. </description>
+                <type>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>

@@ -58,6 +58,20 @@ integration.startBuildIt = function( object, type )
     integration.pionRC( eRC_DebutTravaux )
 end
 
+integration.startBuildItInstantaneously = function( object, type )
+    object[ myself ] = object[ myself ] or {}
+    object[myself].actionBuild = DEC_StartCreateObjectInstantaneously( object.source )
+    actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
+        object[ myself ].actionBuildState = arg
+    end
+    actionKnowledgeCallbacks[ object[ myself ].actionBuild ] = function( arg )
+        if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
+            object.knowledge = CreateKnowledge( type, arg )
+        end
+    end
+    integration.pionRC( eRC_DebutTravaux )
+end
+
 -- -----------------------------------------------------------------------------
 -- Start the creation of pre-existing object
 -- -----------------------------------------------------------------------------

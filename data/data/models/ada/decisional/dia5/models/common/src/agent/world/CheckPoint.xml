@@ -17,7 +17,7 @@
             </return>
         </method>
         <method name="canBeUsedToFilter">
-            <description>Returns 'true' if this entity can be extinguished by the agent.</description>
+            <description>Returns 'true' if this entity can be used by the agent to filter crowds.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

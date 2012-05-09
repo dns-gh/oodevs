@@ -69,18 +69,10 @@ It returns 'false' otherwise.</description>
                 </type>
             </return>
         </method>
-        <method name="canBeCreated" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to create and build this element.&#xD;
-&#xD;
-This implementation returns true if agent has the physical capability and has the resource capacities to build this element.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="createIt" abstract="false">
-            <description>To create and build this element.</description>
+            <description>To create and build this element.&#xD;
+&#xD;
+If this element's construction level is smaller than 100%, this impementation allows the agent to make this element be built to 100% instantaneously.</description>
             <return name="work">
                 <description>The created work.</description>
                 <type>
@@ -221,7 +213,7 @@ This implementation returns 'true' if this element (the object to operate) can b
             </return>
         </method>
         <method name="canBeUsedToFilter" abstract="false">
-            <description>Returns 'true' if this entity can be extinguished by the agent.&#xD;
+            <description>Returns 'true' if this entity can be used by the agent to filter crowds.&#xD;
 &#xD;
 This implementation returns 'true' if this element can be used as a checkpoint  (see definition of objects capacities in authoring tool).</description>
             <return>
@@ -247,6 +239,33 @@ This implemention returns 'true' if this object can be activated (see capacity d
             <return>
                 <type>
                     <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeCreated" abstract="false">
+            <description>Returns 'True' if agent has the physical capability to create and build this element.&#xD;
+&#xD;
+This implementation returns 'true' if the &quot;instantaneously&quot; paramter is set to 'true', or if agent has the physical capability. It returns 'false' otherwise.</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be built instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildIt" abstract="false">
+            <description>To create and build this element.&#xD;
+&#xD;
+If this element's construction level is smaller than 100%, this impementation allows the agent to increase it until 100%. Because this action checks physical capabilities of the agent, it should take time (see delays of objects construction within the authoring tool).</description>
+            <return name="work">
+                <description>The created work.</description>
+                <type>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>

@@ -113,14 +113,6 @@ This action can take time (depending on the current status of the population, e.
                 </type>
             </return>
         </method>
-        <method name="canBeCreated" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="isBuilt" abstract="false">
             <description>Returns true if this element is entierly built.</description>
             <return>
@@ -199,6 +191,29 @@ This implementation returns the nearest positions outside the urban block.</desc
             <return>
                 <type>
                     <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeCreated" abstract="false">
+            <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be built instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="buildIt" abstract="false">
+            <description>To create and build this element.</description>
+            <return name="work">
+                <description>The created work.</description>
+                <type>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>

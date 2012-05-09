@@ -1,7 +1,7 @@
 -- --------------------------------------------------------------------------------
 --  Work
 -- --------------------------------------------------------------------------------
-method "createIt" ( masalife.brain.integration.startStopAction( 
+method "buildIt" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self )
         integration.startBuildItKnowledge( self )
@@ -17,24 +17,46 @@ method "createIt" ( masalife.brain.integration.startStopAction(
     end
 } ) )
 
+method "createIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self )
+        integration.createObjectInstantaneously( self )
+        return self
+    end,
+    started = function( self )
+        return self
+    end, 
+    stop = function( self )
+        return self
+    end
+} ) )
+
 method "isBuilt" (
     function( self )
         return integration.isConstructed( self )
     end )
 
 method "canBeCreated" (
-    function( self )
-        local result = integration.canBuildNowObjectType( DEC_ConnaissanceObjet_Type( self.source ) ) 
-        and integration.hasEnoughtDotationForObjectType( DEC_ConnaissanceObjet_Type( self.source ) )
-        if not result then -- $$$ MIA not the right place to do this report
-            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+    function( self, instantaneously )
+        if instantaneously then 
+            return true -- magic action
+        else
+            local result = integration.canBuildNowObjectType( DEC_ConnaissanceObjet_Type( self.source ) ) 
+            and integration.hasEnoughtDotationForObjectType( DEC_ConnaissanceObjet_Type( self.source ) )
+            if not result then -- $$$ MIA not the right place to do this report
+                meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+            end
+            return result
         end
-        return result
     end )
 
 method "canBeDeconstructed" (
     function( self, instantaneously )
-        return integration.canRemoveItSecu( self ) or instantaneously
+        if instantaneously then 
+            return true -- magic action
+        else
+            return integration.canRemoveItSecu( self )
+        end
     end )
 
 method "deconstructIt" ( masalife.brain.integration.startStopAction( 

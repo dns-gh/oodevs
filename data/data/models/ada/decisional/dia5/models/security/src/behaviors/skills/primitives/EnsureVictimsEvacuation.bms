@@ -24,6 +24,7 @@ rootnode
 
     impossibleToEvacuate = function( self, params )
         Feedback( self.feedbacks.notEvacuated, { victimsUnit = params.victimsUnit } )
+         meKnowledge:sendReport( eRC_VictimsCannotBeEvacuated )
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
     end,
@@ -47,7 +48,8 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.victimsUnit = self.params.victimsUnits[ self.nextTargetIndex ]
                 if self.arrived then
-                    if self.victimsUnit:canVictimsBeEvacuated() then
+                    if self.victimsUnit:canVictimsBeEvacuated() 
+                       and self.params.medicalUnit:canEvacuateVictims( self.victimsUnit ) then
                         Activate( skill.links.ensureEvacuation, 1, 
                               { victimsUnit = self.victimsUnit, medicalUnit = self.params.medicalUnit } )
                     else

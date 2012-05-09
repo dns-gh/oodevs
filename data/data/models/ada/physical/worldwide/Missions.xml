@@ -2740,79 +2740,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="planned check point" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Safe Point"/>
-          <parameter type="Jamming Area"/>
-          <parameter type="Full jamming Area"/>
-          <parameter type="NBC Contaminated Area - External"/>
-          <parameter type="NBC Cloud - External"/>
-          <parameter type="NBC Contaminated Area"/>
-          <parameter type="NBC Cloud"/>
-          <parameter type="Fire"/>
-          <parameter type="Wild Surface Fire"/>
-          <parameter type="Decontamination Site"/>
-          <parameter type="Supply Route"/>
-          <parameter type="Crossing Site"/>
-          <parameter type="ROTA Point"/>
-          <parameter type="Abatis"/>
-          <parameter type="Anti-tank Ditch"/>
-          <parameter type="Barricade"/>
-          <parameter type="Mined Area (linear)"/>
-          <parameter type="Mined Area (scattered)"/>
-          <parameter type="Landslide"/>
-          <parameter type="Roadblock"/>
-          <parameter type="Bridge destruction"/>
-          <parameter type="Bridge (continuous)"/>
-          <parameter type="Bridge (discontinuous)"/>
-          <parameter type="Firing post"/>
-          <parameter type="Gun artillery deployment area"/>
-          <parameter type="Cobra deployment area"/>
-          <parameter type="Mrls deployment area"/>
-          <parameter type="Mortar deployment area"/>
-          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
-          <parameter type="Landing Zone"/>
-          <parameter type="Airfield Zone"/>
-          <parameter type="Platform"/>
-          <parameter type="Mobility enhanced area"/>
-          <parameter type="Landing Zone (helicopter)"/>
-          <parameter type="Forward Arming and Refueling Point (FARP)"/>
-          <parameter type="Detainee Holding Area"/>
-          <parameter type="Refugee Holding Area"/>
           <parameter type="Checkpoint"/>
-          <parameter type="Drop Zone (DZ)"/>
-          <parameter type="No-Fire Area (NFA)"/>
-          <parameter type="General obstacle zone"/>
-          <parameter type="Installation"/>
-          <parameter type="Distribution point"/>
-          <parameter type="Sensors detection zone"/>
-          <parameter type="Sensors zone"/>
-          <parameter type="Supply Point"/>
-          <parameter type="Urban Block"/>
-          <parameter type="Dirty bomb"/>
-          <parameter type="Hospital"/>
-          <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
-          <parameter type="Emergency Shelter"/>
-          <parameter type="Meeting Place for Victims (PRV)"/>
-          <parameter type="Victims Discovery"/>
-          <parameter type="Stock"/>
-          <parameter type="Flood Origin"/>
-          <parameter type="Moving Population"/>
-          <parameter type="Secured Area"/>
-          <parameter type="Firebreak"/>
-          <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
-          <parameter type="Underground Exit"/>
-          <parameter type="Country road"/>
-          <parameter type="Highway"/>
-          <parameter type="Main road"/>
-          <parameter type="Secondary road"/>
-          <parameter type="Wet terrain"/>
-          <parameter type="Snowed terrain"/>
-          <parameter type="Iced terrain"/>
-          <parameter type="Border"/>
-          <parameter type="Ressource node"/>
-          <parameter type="Arson"/>
-          <parameter type="Destruction Bomb"/>
         </objects>
       </parameter>
       <parameter dia-name="intensity" name="intensity used to filter interacting crowds (%)" optional="true" type="Integer"/>
@@ -4720,4 +4648,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0770980341" -->
+<!-- signature="1613137700" -->

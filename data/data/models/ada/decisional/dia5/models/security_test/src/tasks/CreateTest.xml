@@ -16,6 +16,14 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="instantaneously">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Starting works" disable-when-done="true">
@@ -29,6 +37,11 @@
                     <parameter name="works">
                         <value>
                             <parameter>works</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="instantaneously">
+                        <value>
+                            <parameter>instantaneously</parameter>
                         </value>
                     </parameter>
                 </skill>

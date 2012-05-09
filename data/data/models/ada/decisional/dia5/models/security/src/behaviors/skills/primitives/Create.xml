@@ -25,6 +25,15 @@ If the 'waitForReinforcement' parameter is set to 'true' (default value is 'fals
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="instantaneously">
+            <description>If this parameter is set to 'true', the agent will decide to create and build the given element instantaneously, without any physical capability considerations.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <body-type>
         <class name="agent.world.Body"/>

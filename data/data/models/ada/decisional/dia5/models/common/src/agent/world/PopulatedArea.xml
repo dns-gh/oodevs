@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.PopulatedArea" source-version="1.0.0" extends="agent.world.Destination">
-    <description>A PopulatedArea is a region of the terrain that can contain populations. To act on a population, a Unit act ons the populated area containing it.   </description>
+    <description>A PopulatedArea is a region of the terrain that can contain populations. To act on a population, the agent acts on the populated area containing it.   </description>
     <methods>
         <method name="alertIt">
             <description>To alert the populations contained in the populated area. </description>

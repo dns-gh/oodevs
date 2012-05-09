@@ -32,7 +32,12 @@ method "stopMovement" (
 -- --------------------------------------------------------------------------------
 method "create" (
     function( self, work )
-        return work:createIt()
+        return work:createIt() -- build object instantaneously
+    end )
+
+method "build" (
+    function( self, work )
+        return work:buildIt()
     end )
 
 method "deconstruct" (

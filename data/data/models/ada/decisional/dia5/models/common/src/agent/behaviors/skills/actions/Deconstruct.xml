@@ -9,7 +9,7 @@
             </type>
         </parameter>
         <parameter name="instantaneously">
-            <description>If this parameter is set to 'true', agent  Unit will decide to remove the given element instantaneously, without any physical capability considerations.</description>
+            <description>If this parameter is set to 'true', the agent will decide to remove the given element instantaneously, without any physical capability considerations.</description>
             <type>
                 <simple name="boolean"/>
             </type>
