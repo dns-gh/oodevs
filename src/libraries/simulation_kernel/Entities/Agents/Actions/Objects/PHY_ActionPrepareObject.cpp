@@ -63,7 +63,7 @@ void PHY_ActionPrepareObject::Execute()
         pObject_ = 0;
 
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
-    int nReturn = role_.Construct( pObject_, pKnowledge );
+    int nReturn = role_.Construct( pObject_, pKnowledge, false );
     Callback( nReturn );
     CallbackKnowledge( pKnowledge );
     // $$$$ LDC: Parameter 0 and 1. cf. PHY_ActionConstructObject - same code...

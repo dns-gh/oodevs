@@ -60,7 +60,7 @@ public:
     //@{
     int GetInitialReturnCode() const;
     int GetFinalReturnCode() const;
-    int Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, bool instantaneous );
     int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt );
     int ResumeWork( UrbanObjectWrapper* pUrbanBlock );

@@ -141,7 +141,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
 // Name: PHY_RoleAction_Objects::Construct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool instantaneous )
 {
     if( !pObject )
     {
@@ -149,7 +149,10 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
         return eImpossible;
     }
     pKnowledge = owner_.GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
-    return Construct( *pObject );
+    if( instantaneous )
+        return pKnowledge.get() ? eFinished : eRunning;
+    else
+        return Construct( *pObject );
 }
 
 // -----------------------------------------------------------------------------

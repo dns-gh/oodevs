@@ -205,7 +205,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_StartTirIndirectSurConnaissancePtr" ] =
         boost::function< unsigned int( const PHY_DotationCategory*, float, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Knowledge, const PHY_DotationCategory*, float, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartCreateObject" ] =
-        boost::function< unsigned int( boost::shared_ptr< DEC_Gen_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, boost::shared_ptr< DEC_Gen_Object > >, boost::ref( GetPion() ), _1 ) );
+        boost::function< unsigned int( boost::shared_ptr< DEC_Gen_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, boost::shared_ptr< DEC_Gen_Object >, bool >, boost::ref( GetPion() ), _1, false ) );
+    brain[ "DEC_StartCreateObjectInstantaneously" ] =
+        boost::function< unsigned int( boost::shared_ptr< DEC_Gen_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, boost::shared_ptr< DEC_Gen_Object >, bool >, boost::ref( GetPion() ), _1, true ) );
     brain[ "DEC_StartPrepareObject" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Gen_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject, boost::shared_ptr< DEC_Gen_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartDevaloriserObjet" ] =

@@ -25,23 +25,27 @@
 // Name: PHY_ActionConstructObject constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
+PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject, bool instantaneous )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() ) )
+    , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
+    , pObject_      ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() ) )
+    , instantaneous_( instantaneous )
 {
     role_.SetCreator( *pObject_ );
     pObject_->Initialize( *pGenObject.get() );
-    ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();
-    if( attribute )
+    if( !instantaneous_ )
     {
-        attribute->Set( 0. );//default construction is set to 100%
-        attribute->NotifyBuildByGen();
-    }
-    MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
-    if( mineAttribute )
-    {
-        mineAttribute->Set(0.);//default valorization is set to 100%
+        ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();
+        if( attribute )
+        {
+            attribute->Set( 0. );//default construction is set to 100%
+            attribute->NotifyBuildByGen();
+        }
+        MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
+        if( mineAttribute )
+        {
+            mineAttribute->Set(0.);//default valorization is set to 100%
+        }
     }
     Callback( role_.GetInitialReturnCode() );
 }
@@ -76,7 +80,7 @@ void PHY_ActionConstructObject::Execute()
         pObject_ = 0;
 
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge;
-    int nReturn = role_.Construct( pObject_, pKnowledge );
+    int nReturn = role_.Construct( pObject_, pKnowledge, instantaneous_ );
     Callback( nReturn ); // $$$$ LDC: Was DIA3 Parameter 0
     CallbackKnowledge( pKnowledge ); // $$$$ LDC: Was DIA3 Parameter 1
     // $$$$ LDC: Could as well hardcode the fact that myself.objMisEnCours_ = pKnowledge ? pKnowledge->GetID() : 0

@@ -29,7 +29,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject );
+             PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject, bool instantaneous );
     virtual ~PHY_ActionConstructObject();
 
     //! @name Operations
@@ -41,7 +41,8 @@ public:
 
 private:
     PHY_RoleAction_Objects& role_;
-    MIL_Object_ABC*         pObject_;
+    MIL_Object_ABC* pObject_;
+    bool instantaneous_;
 };
 
 #endif // __PHY_ActionConstructObject_h_
