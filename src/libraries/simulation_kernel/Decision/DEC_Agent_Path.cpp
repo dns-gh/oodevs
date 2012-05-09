@@ -34,6 +34,7 @@
 #include "Entities/Objects/BurnSurfaceCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_BurningCells.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -238,7 +239,10 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     if( pathClass_.AvoidObjects() )
     {
         T_KnowledgeObjectVector knowledgesObject;
-        queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+        const double rHeight = queryMaker_.GetRole< PHY_RoleInterface_Location >().GetHeight();
+        MIL_DangerousObjectFilter filter;
+        queryMaker_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, rHeight, filter );
+
         T_PointVector firstPointVector;
         if( !pathPoints.empty() )
             firstPointVector.push_back( *pathPoints.begin() );
