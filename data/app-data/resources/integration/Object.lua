@@ -38,3 +38,11 @@ end
 integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone )
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
 end
+
+integration.createObjectInstantaneously = function( object )
+    return DEC_ObjectKnowledge_BuildInstantaneously( object.source )
+end
+
+integration.canFilter = function( object )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "workable" )
+end
