@@ -22,18 +22,12 @@ return
     end,
 
     getObserving = function( self, params )
-        local resultPositions = {}
-        if params.meetingPoints and params.meetingPoints ~= NIL then -- positions given by user
+        if params.meetingPoints and params.meetingPoints ~= NIL then
             myself.leadData.observingIndex = myself.leadData.observingIndex % #params.meetingPoints + 1
-            resultPositions[ #resultPositions + 1 ] = params.meetingPoints[myself.leadData.observingIndex]
-            if #params.meetingPoints > 1 then -- Use a second position if given by user
-                myself.leadData.observingIndex = myself.leadData.observingIndex % #params.meetingPoints + 1
-                resultPositions[ #resultPositions + 1 ] = params.meetingPoints[myself.leadData.observingIndex]  
-            end
-            return resultPositions
-        else -- Find at least 2 positions for each unit in front
+            return { params.meetingPoints[myself.leadData.observingIndex] }
+        else
             if myself.leadData.observingIndex == 0 then
-                -- Urban environnement, get all the BU in circle around elements to destroy
+                -- urban environnement, get all the BU in circle around elements to destroy
                 if #myself.leadData.observingPositions < 1 then
                     local radius = 150 -- in meters. Defined the radius of circle in witch we need to find terrain poisition to destroy elements
                     local elementPosition = params.objective:getPosition()
@@ -45,7 +39,7 @@ return
                     end
                 end
                 -- Area case, add positions in the area if needed
-                local nbParts = ( 2 * math.min( self:getNbrFront(), params.maxNbrFront ) ) - #myself.leadData.observingPositions
+                local nbParts = math.min( self:getNbrFront(), params.maxNbrFront ) - #myself.leadData.observingPositions
                 if nbParts > 0 then
                     if masalife.brain.core.class.isOfType( params.objective, sword.military.world.Area) then
                         local subAreas = DEC_Geometry_SplitLocalisation( params.objective.source, nbParts, nil )
@@ -56,11 +50,8 @@ return
                     end
                 end   
             end
-            myself.leadData.observingIndex = myself.leadData.observingIndex % #myself.leadData.observingPositions + 1
-            resultPositions[ #resultPositions + 1 ] = myself.leadData.observingPositions[myself.leadData.observingIndex]
             myself.leadData.observingIndex = myself.leadData.observingIndex % #myself.leadData.observingPositions + 1 
-            resultPositions[ #resultPositions + 1 ] = myself.leadData.observingPositions[myself.leadData.observingIndex]  
-            return resultPositions
+            return { myself.leadData.observingPositions[myself.leadData.observingIndex] }
         end
     end,
     

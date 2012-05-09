@@ -1,13 +1,14 @@
 local radius = 150 -- in meters. Defined the radius of cricle in witch we need 
                    -- to find terrain poisition to destroy elements
-local nbParts = 3 -- Why 3 ? Why not, it's sounds good
+local nbParts = 2 -- Number of positions to harass : 2 is the minima
+
 queryImplementation "getPositionsToIntercept"
 {
     ["execute"] = function ( params )
         local blocksInCircle
         local allRes={}
 
-        -- ZU environnement,  get all the BU in circle around elements to destroy
+        -- Urban environnement,  get all the UB in circle around elements to destroy
         for _, objective in pairs( params.objectives ) do
             local elementPosition = objective:getPosition()
             if elementPosition then
@@ -18,11 +19,12 @@ queryImplementation "getPositionsToIntercept"
             end
         end
 
-        -- Area case, add positions in the area : if I had at least one position in BU I don't try to find another position
-        if #allRes < 1 then
+        -- Area case, add positions in the area : if I had less than 2 position in UB I try to find more positions
+        local nbAreas = nbParts - #allRes
+        if nbAreas > 0 then
             for _, objective in pairs( params.objectives ) do
                 if masalife.brain.core.class.isOfType( objective, sword.military.world.Area) then
-                    local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts, nil )
+                    local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbAreas, nil )
                     for _, subArea in pairs( subAreas.first ) do
                          local pos = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
                          allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Point, pos )

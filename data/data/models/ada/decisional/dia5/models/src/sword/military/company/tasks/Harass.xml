@@ -6,13 +6,16 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
-        <parameter name="meetingPoints">
+        <parameter name="meetingPoints" nullable="true">
             <description>Positions d'observation où l'unité peut observer les unités ennemis avant l'engagement.</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Observing"/>
                 </list>
             </type>
+            <default>
+                <nil/>
+            </default>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>

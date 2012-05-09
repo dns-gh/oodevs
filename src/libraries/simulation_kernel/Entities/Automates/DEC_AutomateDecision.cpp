@@ -154,6 +154,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     brain[ "DEC_ConnaissanceObjet_Type" ] = &DEC_KnowledgeObjectFunctions::GetType;
     brain[ "DEC_ConnaissanceObjet_LargeurSiteFranchissement" ] = &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth;
     brain[ "DEC_ConnaissanceObjet_EstReconnu" ] = &DEC_KnowledgeObjectFunctions::IsRecon;
+    brain[ "DEC_Connaissances_BlocUrbainDansCercle" ] = &DEC_KnowledgeFunctions::GetUrbanBlockInCircle;
 
     // Geometry
     brain[ "DEC_Geometrie_StopCalculLignesAvantEtArriere" ] = &DEC_GeometryFunctions::StopComputingFrontAndBackLines;
