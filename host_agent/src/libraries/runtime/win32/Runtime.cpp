@@ -21,32 +21,28 @@ using namespace runtime;
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: Enumerate
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    template< typename T >
-    bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
-    {
-        DWORD size = 0;
-        bool done = api.EnumProcesses( &pids[0], static_cast< DWORD >( pids.size() * sizeof T ), &size );
-        if( !done )
-            return true;
-        if( size == pids.size() * sizeof T )
-            return false;
-        pids.resize( size / sizeof size );
-        BOOST_FOREACH( const T& id, pids )
-            try
-            {
-                list.push_back( boost::make_shared< Process >( api, id ) );
-            }
-            catch( const std::exception& err )
-            {
-                LOG_WARN( log ) << "[runtime] Unable to load process " << id << ", " << err.what();
-                continue;
-            }
+template< typename T >
+bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
+{
+    DWORD size = 0;
+    bool done = api.EnumProcesses( &pids[0], static_cast< DWORD >( pids.size() * sizeof T ), &size );
+    if( !done )
         return true;
-    }
+    if( size == pids.size() * sizeof T )
+        return false;
+    pids.resize( size / sizeof size );
+    BOOST_FOREACH( const T& id, pids )
+        try
+        {
+            list.push_back( boost::make_shared< Process >( api, id ) );
+        }
+        catch( const std::exception& err )
+        {
+            LOG_WARN( log ) << "[runtime] Unable to load process " << id << ", " << err.what();
+            continue;
+        }
+    return true;
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -101,29 +97,25 @@ boost::shared_ptr< Process_ABC > Runtime::GetProcess( int pid ) const
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: CreateProcess
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    boost::shared_ptr< Process_ABC > CreateProcess( const Api_ABC& api,
-                                                    const std::wstring& app,
-                                                    std::vector< wchar_t >& args,
-                                                    const std::wstring& run )
-    {
-        STARTUPINFOW startup = { sizeof startup, };
-        PROCESS_INFORMATION info = {};
+boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
+                                              const std::wstring& app,
+                                              std::vector< wchar_t >& args,
+                                              const std::wstring& run )
+{
+    STARTUPINFOW startup = { sizeof startup, };
+    PROCESS_INFORMATION info = {};
 
-        bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, false,
-                        NORMAL_PRIORITY_CLASS | DETACHED_PROCESS, 0, run.empty() ? 0 : run.c_str(),
-                        &startup, &info );
-        if( info.hThread )
-            api.CloseHandle( info.hThread );
-        Handle handle = MakeHandle( api, info.hProcess );
-        if( !done )
-            throw std::runtime_error( "unable to create process" );
+    bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, false,
+                    NORMAL_PRIORITY_CLASS | DETACHED_PROCESS, 0, run.empty() ? 0 : run.c_str(),
+                    &startup, &info );
+    if( info.hThread )
+        api.CloseHandle( info.hThread );
+    Handle handle = MakeHandle( api, info.hProcess );
+    if( !done )
+        throw std::runtime_error( "unable to create process" );
 
-        return boost::make_shared< Process >( api, info.dwProcessId, handle );
-    }
+    return boost::make_shared< Process >( api, info.dwProcessId, handle );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +135,7 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
         std::copy( join.begin(), join.end(), std::back_inserter( wcmd ) );
         wcmd.push_back( 0 );
         wrun = Utf8Convert( run );
-        return CreateProcess( api_, wapp, wcmd, wrun );
+        return MakeProcess( api_, wapp, wcmd, wrun );
     }
     catch( const std::runtime_error& err )
     {
@@ -152,6 +144,10 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Runtime::GetModuleFilename
+// Created: BAX 2012-05-09
+// -----------------------------------------------------------------------------
 boost::filesystem::path Runtime::GetModuleFilename() const
 {
     return api_.GetModuleFilename();
