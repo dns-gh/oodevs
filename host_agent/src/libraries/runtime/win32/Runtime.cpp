@@ -97,6 +97,12 @@ boost::shared_ptr< Process_ABC > Runtime::GetProcess( int pid ) const
 
 namespace
 {
+void TryClose( const Api_ABC& api, HANDLE handle )
+{
+    if( handle )
+        api.CloseHandle( handle );
+}
+
 boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
                                               const std::wstring& app,
                                               std::vector< wchar_t >& args,
@@ -108,8 +114,7 @@ boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
     bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, false,
                     NORMAL_PRIORITY_CLASS | DETACHED_PROCESS, 0, run.empty() ? 0 : run.c_str(),
                     &startup, &info );
-    if( info.hThread )
-        api.CloseHandle( info.hThread );
+    TryClose( api, info.hThread );
     Handle handle = MakeHandle( api, info.hProcess );
     if( !done )
         throw std::runtime_error( "unable to create process" );
@@ -126,16 +131,13 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
                                                  const std::vector< std::string >& args,
                                                  const std::string& run ) const
 {
-    std::wstring wapp, wrun;
-    std::vector< wchar_t > wcmd;
     try
     {
-        wapp = Utf8Convert( cmd );
+        std::vector< wchar_t > wcmd;
         const std::wstring join = Utf8Convert( boost::algorithm::join( args, " " ) );
         std::copy( join.begin(), join.end(), std::back_inserter( wcmd ) );
         wcmd.push_back( 0 );
-        wrun = Utf8Convert( run );
-        return MakeProcess( api_, wapp, wcmd, wrun );
+        return MakeProcess( api_, Utf8Convert( cmd ), wcmd, Utf8Convert( run ) );
     }
     catch( const std::runtime_error& err )
     {
