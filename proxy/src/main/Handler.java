@@ -66,10 +66,10 @@ public class Handler extends HttpServlet {
         return value;
     }
 
-    private void Insert(final String key, final ProxyHolder value) {
+    private ProxyHolder Insert(final String key, final ProxyHolder value) {
         write_.lock();
         try {
-            targets_.put(key, value);
+            return targets_.put(key, value);
         } finally {
             write_.unlock();
         }
@@ -102,14 +102,15 @@ public class Handler extends HttpServlet {
         }
     }
 
-    private void insertProxy(final ServletRequest req, final ServletResponse res) throws ServletException {
+    private void insertProxy(final ServletRequest req, final ServletResponse res) throws ServletException, IOException {
         final String prefix = RequireParameter(req, "prefix");
         final String host = RequireParameter(req, "host");
         final int port = Integer.parseInt(RequireParameter(req, "port"));
-        if (targets_.containsKey(prefix))
-            throw new ServletException("Unable to register proxy " + prefix + " twice");
         final ProxyHolder proxy = new ProxyHolder(prefix, host, port, config_);
-        Insert(prefix, proxy);
+        final ProxyHolder previous = Insert(prefix, proxy);
+        if (previous != null)
+            previous.destroy();
+        res.getWriter().print(proxy.toJson());
         log_.info("Added proxy from /" + prefix + " to " + host + ":" + port);
     }
 
@@ -118,11 +119,14 @@ public class Handler extends HttpServlet {
         return split == -1 ? null : Get(uri.substring(0, split));
     }
 
-    private void removeProxy(final ServletRequest req, final ServletResponse res) throws ServletException {
+    private void removeProxy(final ServletRequest req, final ServletResponse res) throws ServletException, IOException {
         final String prefix = RequireParameter(req, "prefix");
         final ProxyHolder target = Remove(prefix);
-        if (target == null)
-            throw new ServletException("Unable to unregister unknown proxy " + prefix);
+        if (target == null) {
+            res.getWriter().print("Unable to remove unknown proxy");
+            return;
+        }
+        res.getWriter().print(target.toString());
         target.destroy();
         log_.info("Removed proxy /" + prefix);
     }
@@ -130,8 +134,8 @@ public class Handler extends HttpServlet {
     private void listProxies(final ServletRequest req, final ServletResponse res) throws IOException {
         String reply = "";
         for (final Entry<String, ProxyHolder> it : List())
-            reply += "{ \"prefix\" : \"" + it.getKey() + "\", \"host\" : \"" + it.getValue().getHost() + "\", \"port\" : " + it.getValue().getPort() + " }, ";
-        reply = "[" + reply.substring(0, Math.max(0, reply.length() - 2)) + "]";
+            reply += it.getValue().toJson() + ",";
+        reply = "[" + reply.substring(0, Math.max(0, reply.length() - 1)) + "]";
         res.getWriter().print(reply);
     }
 }
