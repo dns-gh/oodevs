@@ -134,10 +134,35 @@ T GetTree( boost::property_tree::ptree& tree, const std::string& key, const T& v
     return value;
 }
 
+struct NullLogger : public cpplog::BaseLogger
+{
+    virtual bool sendLogMessage( cpplog::LogData* /*logData*/ )
+    {
+        return true;
+    }
+};
+
+boost::filesystem::path GetLogDir( int argc, const char* argv[] )
+{
+    std::wstring dir;
+    for( int i = 0; i < argc; ++i )
+        if( ReadParameter( dir, "--log_dir", i, argc, argv ) )
+            return dir;
+    NullLogger nil;
+    runtime::Factory factory( nil );
+    boost::filesystem::path reply = factory.GetRuntime().GetModuleFilename();
+    reply.remove_filename();
+    reply.remove_filename();
+    return reply / "log";
+}
+
 int StartServer( int argc, const char* argv[] )
 {
-    cpplog::StdErrLogger base;
-    cpplog::BackgroundLogger log( base );
+    const boost::filesystem::path logs = GetLogDir( argc-1, argv+1 );
+    cpplog::TeeLogger tee(
+        new cpplog::FileLogger( ( logs / "host_agent.log" ).string(), true ), true,
+        new cpplog::StdErrLogger(), true );
+    cpplog::BackgroundLogger log( tee );
     LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";
 
     try
@@ -152,8 +177,8 @@ int StartServer( int argc, const char* argv[] )
         if( system.IsFile( config ) )
             tree = host::FromJson( system.ReadFile( config ) );
 
-        const char* home = getenv( "JAVA_HOME" );
-        const std::string java = GetTree( tree, "java", home ? std::string( home ) + "/bin/java.exe" : "" );
+        const char* jhome = getenv( "JAVA_HOME" );
+        const std::string java = GetTree( tree, "java", jhome ? std::string( jhome ) + "/bin/java.exe" : "" );
         if( java.empty() )
             throw std::runtime_error( "Missing JAVA_HOME environment variable. Please install a Java Runtime Environment" );
 
