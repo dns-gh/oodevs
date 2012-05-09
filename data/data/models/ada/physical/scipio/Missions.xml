@@ -2046,7 +2046,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
@@ -2063,7 +2063,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
+      <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
@@ -3138,4 +3138,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="0323235064" -->
+<!-- signature="1942593772" -->
