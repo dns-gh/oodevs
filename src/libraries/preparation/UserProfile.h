@@ -10,6 +10,8 @@
 #ifndef __UserProfile_h_
 #define __UserProfile_h_
 
+#include "clients_kernel/UserRights.h"
+
 namespace kernel
 {
     class Controller;
@@ -72,35 +74,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned long > T_Ids;
-
-    struct ExistenceChecker_ABC
-    {
-        virtual bool operator()( unsigned long id ) const = 0;
-    };
-
-    template< typename Resolver >
-    struct ExistenceChecker : public ExistenceChecker_ABC
-    {
-        explicit ExistenceChecker( const Resolver& resolver ) : resolver_( &resolver ) {}
-        virtual bool operator()( unsigned long id ) const
-        {
-            return resolver_->Find( id ) != 0;
-        }
-        const Resolver* resolver_;
-    };
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker );
-    void SerializeRights( xml::xostream& xos, const std::string& tag, const T_Ids& list ) const;
-    void SetRight( unsigned long id, T_Ids& ids, bool status );
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
@@ -108,15 +81,8 @@ private:
     QString login_;
     QString password_;
     bool supervisor_;
-    T_Ids readSides_;
-    T_Ids readFormations_;
-    T_Ids readAutomats_;
-    T_Ids readPopulations_;
-    T_Ids writeSides_;
-    T_Ids writeFormations_;
-    T_Ids writeAutomats_;
-    T_Ids writePopulations_;
     bool isClone_;
+    kernel::UserRights rights_;
     //@}
 };
 

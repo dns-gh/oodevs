@@ -91,8 +91,6 @@ private:
     //@{
     void Clean();
     void Update( const sword::Profile& profile );
-    template< typename T >
-    void ReadList( const T& idList, T_Ids& ids );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
     //@}

@@ -78,20 +78,6 @@ void Profile::Login( const std::string& login, const std::string& password ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profile::ReadList
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-template< typename T >
-void Profile::ReadList( const T& idList, T_Ids& ids )
-{
-    ids.clear();
-    ids.reserve( idList.elem_size() );
-    for( int i = 0; i < idList.elem_size(); ++i )
-        ids.push_back( idList.elem( i ).id() );
-    std::sort( ids.begin(), ids.end() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
@@ -160,25 +146,7 @@ void Profile::Update( const sword::Profile& profile )
         password_ = "";
     supervision_ = profile.supervisor();
 
-    if( profile.has_read_only_parties()  )
-        ReadList( profile.read_only_parties(), readTeams_ );
-    if( profile.has_read_write_parties()  )
-        ReadList( profile.read_write_parties(), writeTeams_ );
-
-    if( profile.has_read_only_automates()  )
-        ReadList( profile.read_only_automates(), readAutomats_ );
-    if( profile.has_read_write_automates()  )
-        ReadList( profile.read_write_automates(), writeAutomats_ );
-
-    if( profile.has_read_only_crowds()  )
-        ReadList( profile.read_only_crowds(), readPopulations_ );
-    if( profile.has_read_write_crowds()  )
-        ReadList( profile.read_write_crowds(), writePopulations_ );
-
-    if( profile.has_read_only_formations()  )
-        ReadList( profile.read_only_formations(), readFormations_ );
-    if( profile.has_read_write_formations()  )
-        ReadList( profile.read_write_formations(), writeFormations_ );
+    RightsResolver::Update( profile );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,14 +223,7 @@ void Profile::Clean()
     loggedIn_ = false;
     readEntities_.clear();
     readWriteEntities_.clear();
-    readTeams_.clear();
-    writeTeams_.clear();
-    readAutomats_.clear();
-    writeAutomats_.clear();
-    readPopulations_.clear();
-    writePopulations_.clear();
-    readFormations_.clear();
-    writeFormations_.clear();
+    rights_.Clear();
 }
 
 // -----------------------------------------------------------------------------

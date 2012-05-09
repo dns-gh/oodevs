@@ -457,6 +457,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Team.cpp">
       <Filter>Source Files\Model\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UserRights.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
@@ -1064,6 +1067,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Team.h">
       <Filter>Source Files\Model\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UserRights.h">
+      <Filter>Source Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

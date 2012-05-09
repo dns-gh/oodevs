@@ -13,7 +13,6 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "RightsResolver.h"
-#include "protocol/AuthenticationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel

@@ -56,7 +56,8 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const UserProfile& p )
-    : controller_      ( p.controller_ )
+    : RightsResolver   ( (const RightsResolver&) p )
+    , controller_      ( p.controller_ )
     , publisher_       ( p.publisher_ )
     , model_           ( p.model_ )
     , registered_      ( false )
@@ -65,13 +66,6 @@ UserProfile::UserProfile( const UserProfile& p )
     , supervision_     ( p.supervision_ )
 {
     controller_.Register( *this );
-    readTeams_ = p.readTeams_;
-    readFormations_ = p.readFormations_;
-    readAutomats_ = p.readAutomats_;
-    readPopulations_ = p.readPopulations_;
-    writeTeams_ = p.writeTeams_;
-    writeFormations_ = p.writeFormations_;
-    writePopulations_ = p.writePopulations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,14 +124,14 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_login( newLogin.ascii() );
     profile.set_password( password_.ascii() );
     profile.set_supervisor( supervision_ );
-    CopyList( readTeams_, *profile.mutable_read_only_parties() );
-    CopyList( writeTeams_, *profile.mutable_read_write_parties() );
-    CopyList( readFormations_, *profile.mutable_read_only_formations() );
-    CopyList( writeFormations_, *profile.mutable_read_write_formations() );
-    CopyList( readAutomats_, *profile.mutable_read_only_automates() );
-    CopyList( writeAutomats_, *profile.mutable_read_write_automates() );
-    CopyList( readPopulations_, *profile.mutable_read_only_crowds() );
-    CopyList( writePopulations_, *profile.mutable_read_write_crowds() );
+    CopyList( rights_.GetReadSides(), *profile.mutable_read_only_parties() );
+    CopyList( rights_.GetWriteSides(), *profile.mutable_read_write_parties() );
+    CopyList( rights_.GetReadFormations(), *profile.mutable_read_only_formations() );
+    CopyList( rights_.GetWriteFormations(), *profile.mutable_read_write_formations() );
+    CopyList( rights_.GetReadAutomats(), *profile.mutable_read_only_automates() );
+    CopyList( rights_.GetWriteAutomats(), *profile.mutable_read_write_automates() );
+    CopyList( rights_.GetReadPopulations(), *profile.mutable_read_only_crowds() );
+    CopyList( rights_.GetWritePopulations(), *profile.mutable_read_write_crowds() );
     message.Send( publisher_ );
 }
 
@@ -150,20 +144,6 @@ void UserProfile::DoUpdate( const sword::ProfileUpdate& message )
     SetProfile( message.profile() );
 }
 
-namespace
-{
-    template< typename List >
-    void CopyList( const List& from, std::vector< unsigned long >& to )
-    {
-        to.clear();
-        if( from.elem_size() == 0 )
-            return;
-        to.reserve( from.elem_size() );
-        for( int i = 0; i < from.elem_size(); ++i )
-            to.push_back( from.elem(i).id() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UserProfile::SetProfile
 // Created: SBO 2007-01-19
@@ -174,23 +154,8 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_password() )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
-    if( profile.has_read_only_parties() )
-        CopyList( profile.read_only_parties(), readTeams_);
-    if( profile.has_read_only_formations() )
-        CopyList( profile.read_only_formations(), readFormations_ );
-    if( profile.has_read_only_automates() )
-        CopyList( profile.read_only_automates(), readAutomats_ );
-    if( profile.has_read_only_crowds() )
-        CopyList( profile.read_only_crowds(), readPopulations_ );
-
-    if( profile.has_read_write_parties() )
-        CopyList( profile.read_write_parties(), writeTeams_);
-    if( profile.has_read_write_formations() )
-        CopyList( profile.read_write_formations(), writeFormations_ );
-    if( profile.has_read_write_automates() )
-        CopyList( profile.read_write_automates(), writeAutomats_ );
-    if( profile.has_read_write_crowds() )
-        CopyList( profile.read_write_crowds(), writePopulations_ );
+    
+    RightsResolver::Update( profile );
 
     if( registered_ )
         controller_.Update( *this );
@@ -214,25 +179,13 @@ bool UserProfile::IsPasswordProtected() const
     return password_ != "";
 }
 
-namespace
-{
-    template< typename List >
-    bool FindIn( unsigned long id, const List& list )
-    {
-        return std::find( list.begin(), list.end(), id ) != list.end();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UserProfile::IsReadable
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
 bool UserProfile::IsReadable( const kernel::Entity_ABC& entity ) const
 {
-    return FindIn( entity.GetId(), readTeams_ )
-        || FindIn( entity.GetId(), readFormations_ )
-        || FindIn( entity.GetId(), readAutomats_ )
-        || FindIn( entity.GetId(), readPopulations_ );
+    return rights_.IsReadable( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,10 +194,7 @@ bool UserProfile::IsReadable( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 {
-    return FindIn( entity.GetId(), writeTeams_ )
-        || FindIn( entity.GetId(), writeFormations_ )
-        || FindIn( entity.GetId(), writeAutomats_ )
-        || FindIn( entity.GetId(), writePopulations_ );
+    return rights_.IsWriteable( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,50 +215,22 @@ void UserProfile::SetSupervisor( bool supervisor )
     supervision_ = supervisor;
 }
 
-namespace
-{
-    void SetRight( unsigned long id, std::vector< unsigned long >& ids, bool status )
-    {
-        std::vector< unsigned long >::iterator it = std::find( ids.begin(), ids.end(), id );
-        if( it == ids.end() && status )
-            ids.push_back( id );
-        else if( it != ids.end() && !status )
-            ids.erase( it );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UserProfile::SetReadable
-// Created: SBO 2007-01-19
+// Created: JSR 2012-05-09
 // -----------------------------------------------------------------------------
 void UserProfile::SetReadable( const kernel::Entity_ABC& entity, bool readable )
 {
-    const unsigned long id = entity.GetId();
-    if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
-        SetRight( id, readTeams_, readable );
-    else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        SetRight( id, readFormations_, readable );
-    else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        SetRight( id, readAutomats_, readable );
-    else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
-        SetRight( id, readPopulations_, readable );
+    rights_.SetReadable( entity, readable );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile::SetWriteable
-// Created: SBO 2007-01-19
+// Created: JSR 2012-05-09
 // -----------------------------------------------------------------------------
 void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable )
 {
-    const unsigned long id = entity.GetId();
-    if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
-        SetRight( id, writeTeams_, writeable );
-    else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        SetRight( id, writeFormations_, writeable );
-    else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        SetRight( id, writeAutomats_, writeable );
-    else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
-        SetRight( id, writePopulations_, writeable );
+    rights_.SetWriteable( entity, writeable );
 }
 
 // -----------------------------------------------------------------------------

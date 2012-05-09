@@ -11,6 +11,8 @@
 #define __RightsResolver_h_
 
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/UserRights.h"
+#include "protocol/AuthenticationSenders.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -45,6 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              RightsResolver();
+             RightsResolver( const RightsResolver& resolver );
     virtual ~RightsResolver();
     //@}
 
@@ -71,6 +74,7 @@ protected:
     //! @name Operations
     //@{
     virtual void Update( const Model& model );
+    void Update( const sword::Profile& profile );
     //@}
 
 private:
@@ -105,14 +109,7 @@ protected:
     //@{
     T_Entities readEntities_;
     T_Entities readWriteEntities_;
-    T_Ids readTeams_;
-    T_Ids writeTeams_;
-    T_Ids readAutomats_;
-    T_Ids writeAutomats_;
-    T_Ids readPopulations_;
-    T_Ids writePopulations_;
-    T_Ids readFormations_;
-    T_Ids writeFormations_;
+    kernel::UserRights rights_;
     //@}
 };
 

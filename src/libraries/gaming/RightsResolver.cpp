@@ -35,6 +35,18 @@ RightsResolver::RightsResolver()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RightsResolver constructor
+// Created: LDC 2012-05-09
+// -----------------------------------------------------------------------------
+RightsResolver::RightsResolver( const RightsResolver& resolver )
+    : readEntities_( resolver.readEntities_ )
+    , readWriteEntities_( resolver.readWriteEntities_ )
+    , rights_( resolver.rights_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RightsResolver destructor
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
@@ -59,8 +71,7 @@ bool RightsResolver::IsVisible( const Entity_ABC& entity ) const
 bool RightsResolver::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
     if( !knowledge.GetEntity() && IsSupervision() && knowledge.GetTeam() )
-        if( std::find( readTeams_.begin(), readTeams_.end(), knowledge.GetTeam()->GetId() ) != readTeams_.end() 
-          || std::find( writeTeams_.begin(), writeTeams_.end(), knowledge.GetTeam()->GetId() ) != writeTeams_.end() )
+        if( rights_.FindSide( knowledge.GetTeam()->GetId() ) )
             return false;
 
     return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
@@ -92,10 +103,35 @@ void RightsResolver::Update( const Model& model )
 {
     readWriteEntities_.clear();
     readEntities_.clear();
-    ResolveEntities< Team_ABC >      (  model.GetTeamResolver()      , readTeams_      , writeTeams_ );
-    ResolveEntities< Formation_ABC > (  model.GetFormationResolver() , readFormations_ , writeFormations_ );
-    ResolveEntities< Automat_ABC >   (  model.GetAutomatResolver()   , readAutomats_   , writeAutomats_ );
-    ResolveEntities<  Population_ABC >( model.GetPopulationResolver(), readPopulations_, writePopulations_ );
+    ResolveEntities< Team_ABC >      (  model.GetTeamResolver(), rights_.GetReadSides(), rights_.GetWriteSides() );
+    ResolveEntities< Formation_ABC > (  model.GetFormationResolver(), rights_.GetReadFormations(), rights_.GetWriteFormations() );
+    ResolveEntities< Automat_ABC >   (  model.GetAutomatResolver(), rights_.GetReadAutomats(), rights_.GetWriteAutomats() );
+    ResolveEntities<  Population_ABC >( model.GetPopulationResolver(), rights_.GetReadPopulations(), rights_.GetWritePopulations() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RightsResolver::Update
+// Created: LDC 2012-05-09
+// -----------------------------------------------------------------------------
+void RightsResolver::Update( const sword::Profile& profile )
+{    
+    if( profile.has_read_only_parties() )
+        rights_.SetReadSides( profile.read_only_parties() );
+    if( profile.has_read_only_formations() )
+        rights_.SetReadFormations( profile.read_only_formations() );
+    if( profile.has_read_only_automates() )
+        rights_.SetReadAutomats( profile.read_only_automates() );
+    if( profile.has_read_only_crowds() )
+        rights_.SetReadPopulations( profile.read_only_crowds() );
+
+    if( profile.has_read_write_parties() )
+        rights_.SetWriteSides( profile.read_write_parties() );
+    if( profile.has_read_write_formations() )
+        rights_.SetWriteFormations( profile.read_write_formations() );
+    if( profile.has_read_write_automates() )
+        rights_.SetWriteAutomats( profile.read_write_automates() );
+    if( profile.has_read_write_crowds() )
+        rights_.SetWritePopulations( profile.read_write_crowds() );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +345,7 @@ void RightsResolver::Remove( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void RightsResolver::NotifyCreated( const Automat_ABC& automat )
 {
-    Add( automat, readAutomats_, writeAutomats_ );
+    Add( automat, rights_.GetReadAutomats(), rights_.GetWriteAutomats() );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +363,7 @@ void RightsResolver::NotifyDeleted( const Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void RightsResolver::NotifyCreated( const Population_ABC& popu )
 {
-    Add( popu, readPopulations_, writePopulations_ );
+    Add( popu, rights_.GetReadPopulations(), rights_.GetWritePopulations() );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +381,7 @@ void RightsResolver::NotifyDeleted( const Population_ABC& popu )
 // -----------------------------------------------------------------------------
 void RightsResolver::NotifyCreated( const Team_ABC& team )
 {
-    Add( team, readTeams_, writeTeams_ );
+    Add( team, rights_.GetReadSides(), rights_.GetWriteSides() );
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +399,7 @@ void RightsResolver::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void RightsResolver::NotifyCreated( const Formation_ABC& formation )
 {
-    Add( formation, readFormations_, writeFormations_ );
+    Add( formation, rights_.GetReadFormations(), rights_.GetWriteFormations() );
 }
 
 // -----------------------------------------------------------------------------
