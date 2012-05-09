@@ -34,8 +34,9 @@ namespace
 {
     struct SubFixture
     {
-        SubFixture( const std::string& java, const std::string& jar, const std::string& web )
+        SubFixture( const std::string& logs, const std::string& java, const std::string& jar, const std::string& web )
         {
+            MOCK_EXPECT( system.MakeDirectory ).with( logs + "/nodes" );
             MOCK_EXPECT( system.Exists ).with( java ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
@@ -73,15 +74,17 @@ namespace
     struct Fixture
     {
         Fixture()
-            : java   ( "e:/java/some_java.exe" )
+            : logs   ( "e:/logs" )
+            , java   ( "e:/java/some_java.exe" )
             , jar    ( "e:/jar/some_jar.jar" )
             , web    ( "e:/zomg/www" )
             , type   ( isCluster ? "cluster" : "node" )
-            , sub    ( java, jar, web )
-            , control( sub.log, sub.runtime, sub.system, sub.uuids, sub.proxy, java, jar, web, type, sub.pool, sub.ports )
+            , sub    ( logs, java, jar, web )
+            , control( sub.log, sub.runtime, sub.system, sub.uuids, sub.proxy, logs, java, jar, web, type, sub.pool, sub.ports )
         {
             // NOTHING
         }
+        const std::string logs;
         const std::string java;
         const std::string jar;
         const std::string web;
@@ -133,7 +136,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
         ( "--type \"node\"" )
         ( "--name \"zebulon\"" )
         ( "--port \"1337\"" ),
-        "e:/jar" ).returns( boost::make_shared< MockProcess >( 1377, java ) );
+        "e:/jar", mock::any ).returns( boost::make_shared< MockProcess >( 1377, java ) );
     MOCK_EXPECT( sub.system.WriteFile ).once();
     MOCK_EXPECT( sub.system.MakeDirectory ).once().with( "e:/jar/" + idIdleText );
     NodeController::T_Node node = control.Create( "zebulon" );

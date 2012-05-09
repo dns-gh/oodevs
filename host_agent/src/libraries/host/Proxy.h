@@ -53,9 +53,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-                    const FileSystem_ABC& system, const boost::filesystem::path& java,
-                    const boost::filesystem::path& jar, int port,
-                    web::Client_ABC& client, Pool_ABC& pool );
+                    const FileSystem_ABC& system, const boost::filesystem::path& logs,
+                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
+                    int port, web::Client_ABC& client, Pool_ABC& pool );
     virtual ~Proxy();
     //@}
 
@@ -81,6 +81,7 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
+    const boost::filesystem::path logs_;
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const int port_;

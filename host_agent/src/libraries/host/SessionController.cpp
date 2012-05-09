@@ -63,6 +63,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const runtime::Runtime_ABC& runtime,
                                       const FileSystem_ABC& system,
                                       const UuidFactory_ABC& uuids,
+                                      const boost::filesystem::path& logs,
                                       const boost::filesystem::path& data,
                                       const boost::filesystem::path& apps,
                                       Pool_ABC& pool,
@@ -71,6 +72,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , runtime_  ( runtime )
     , system_   ( system )
     , uuids_    ( uuids )
+    , logs_     ( logs / "sessions" )
     , data_     ( data )
     , apps_     ( apps )
     , exercises_( ::GetExercises( system_, data_ / L"exercises" ) )
@@ -78,6 +80,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , ports_    ( ports )
     , sessions_ ( new Container< Session >() )
 {
+    system_.MakeDirectory( logs_ );
     if( !system_.IsDirectory( data_ ) )
         throw std::runtime_error( runtime::Utf8Convert( data_ ) + " is not a directory" );
     if( !system_.IsDirectory( apps_ ) )
@@ -222,7 +225,8 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
         ( MakeOption( "models-dir", Utf8Convert( data_ / "data/models" ) ) )
         ( MakeOption( "exercise", session.exercise_ ) )
         ( MakeOption( "session",  session.id_ ) ),
-        Utf8Convert( apps_ ) );
+        Utf8Convert( apps_ ),
+        Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( session.id_ ) + ".log" ) ) );
 }
 
 // -----------------------------------------------------------------------------

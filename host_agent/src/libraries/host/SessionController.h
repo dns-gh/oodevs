@@ -50,6 +50,7 @@ public:
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
                                 const UuidFactory_ABC& uuids,
+                                const boost::filesystem::path& logs,
                                 const boost::filesystem::path& data,
                                 const boost::filesystem::path& apps,
                                 Pool_ABC& pool,
@@ -89,6 +90,7 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
+    const boost::filesystem::path logs_;
     const boost::filesystem::path data_;
     const boost::filesystem::path apps_;
     const std::vector< std::string > exercises_;

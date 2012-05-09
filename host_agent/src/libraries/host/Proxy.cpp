@@ -40,12 +40,13 @@ using runtime::Utf8Convert;
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
 Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-              const FileSystem_ABC& system, const boost::filesystem::path& java,
-              const boost::filesystem::path& jar, int port, web::Client_ABC& client,
-              Pool_ABC& pool )
+              const FileSystem_ABC& system, const boost::filesystem::path& logs,
+              const boost::filesystem::path& java, const boost::filesystem::path& jar,
+              int port, web::Client_ABC& client, Pool_ABC& pool )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
+    , logs_   ( logs )
     , java_   ( java )
     , jar_    ( jar )
     , port_   ( port )
@@ -159,7 +160,8 @@ void Proxy::Start()
     process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
             ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_ ) + "\"" ),
-            Utf8Convert( jar_path.remove_filename() ) );
+            Utf8Convert( jar_path.remove_filename() ),
+            Utf8Convert( logs_ / "proxy.log" ) );
     if( !process_ )
         throw new std::runtime_error( "Unable to start proxy process" );
     Save();

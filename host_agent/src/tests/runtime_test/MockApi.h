@@ -27,6 +27,9 @@ namespace test
         MOCK_METHOD( CreateRemoteThreadExt, 8 );
         MOCK_METHOD( GetExitProcessPointer, 0 );
         MOCK_METHOD( GetModuleFilename, 0 );
+        MOCK_METHOD( CreateFile, 7 );
+        MOCK_METHOD( GetStdHandle, 1 );
+        MOCK_METHOD( DuplicateHandle, 5 );
     };
 }
 

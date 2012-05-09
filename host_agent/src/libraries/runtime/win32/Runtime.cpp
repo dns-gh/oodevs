@@ -103,18 +103,42 @@ void TryClose( const Api_ABC& api, HANDLE handle )
         api.CloseHandle( handle );
 }
 
+HANDLE GetFileHandle( const Api_ABC& api, const std::wstring& log )
+{
+    SECURITY_ATTRIBUTES sec = {};
+    sec.nLength        = sizeof sec;
+    sec.bInheritHandle = true;
+    HANDLE reply = api.CreateFile( log.c_str(), GENERIC_WRITE, FILE_SHARE_READ, &sec, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+    if( reply == INVALID_HANDLE_VALUE )
+        throw std::runtime_error( "unable to open file " + Utf8Convert( log ) + " : " + api.GetLastError() );
+    return reply;
+}
+
 boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
                                               const std::wstring& app,
                                               std::vector< wchar_t >& args,
-                                              const std::wstring& run )
+                                              const std::wstring& run,
+                                              const std::wstring& log )
 {
     STARTUPINFOW startup = { sizeof startup, };
     PROCESS_INFORMATION info = {};
 
-    bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, false,
+    if( !log.empty() )
+    {
+        startup.dwFlags = STARTF_USESTDHANDLES;
+        startup.hStdInput = api.GetStdHandle( STD_INPUT_HANDLE );
+        startup.hStdOutput = GetFileHandle( api, log );
+        bool valid = api.DuplicateHandle( startup.hStdOutput, &startup.hStdError, 0, true, DUPLICATE_SAME_ACCESS );
+        if( !valid )
+            throw std::runtime_error( "unable to duplicate output handle : " + api.GetLastError() );
+    }
+
+    bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, !log.empty(),
                     NORMAL_PRIORITY_CLASS | DETACHED_PROCESS, 0, run.empty() ? 0 : run.c_str(),
                     &startup, &info );
     TryClose( api, info.hThread );
+    TryClose( api, startup.hStdOutput );
+    TryClose( api, startup.hStdError );
     Handle handle = MakeHandle( api, info.hProcess );
     if( !done )
         throw std::runtime_error( "unable to create process" );
@@ -129,7 +153,8 @@ boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
                                                  const std::vector< std::string >& args,
-                                                 const std::string& run ) const
+                                                 const std::string& run,
+                                                 const std::string& log ) const
 {
     try
     {
@@ -137,7 +162,7 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
         const std::wstring join = Utf8Convert( boost::algorithm::join( args, " " ) );
         std::copy( join.begin(), join.end(), std::back_inserter( wcmd ) );
         wcmd.push_back( 0 );
-        return MakeProcess( api_, Utf8Convert( cmd ), wcmd, Utf8Convert( run ) );
+        return MakeProcess( api_, Utf8Convert( cmd ), wcmd, Utf8Convert( run ), Utf8Convert( log ) );
     }
     catch( const std::runtime_error& err )
     {

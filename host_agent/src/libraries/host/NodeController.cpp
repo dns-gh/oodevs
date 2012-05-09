@@ -63,6 +63,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const FileSystem_ABC& system,
                                 const UuidFactory_ABC& uuids,
                                 const Proxy_ABC& proxy,
+                                const boost::filesystem::path& logs,
                                 const boost::filesystem::path& java,
                                 const boost::filesystem::path& jar,
                                 const boost::filesystem::path& web,
@@ -74,6 +75,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , system_ ( system )
     , uuids_  ( uuids )
     , proxy_  ( proxy )
+    , logs_   ( logs / "nodes" )
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
@@ -82,6 +84,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , ports_  ( ports )
     , nodes_  ( new Container< Node >() )
 {
+    system.MakeDirectory( logs_ );
     if( !system_.Exists( java_ ) )
         throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
     if( !system_.IsFile( java_ ) )
@@ -233,7 +236,8 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node&
         ( MakeOption( "type", type_ ) )
         ( MakeOption( "name", node.name_ ) )
         ( MakeOption( "port", node.port_->Get() ) ),
-        Utf8Convert( jar_path.remove_filename() ) );
+        Utf8Convert( jar_path.remove_filename() ),
+        Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( node.GetId() ) + ".log" ) ) );
 }
 
 // -----------------------------------------------------------------------------

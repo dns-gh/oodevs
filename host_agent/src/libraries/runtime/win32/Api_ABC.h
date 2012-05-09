@@ -45,6 +45,9 @@ public:
     virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const = 0;
     virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const = 0;
     virtual std::wstring           GetModuleFilename    () const = 0;
+    virtual HANDLE                 CreateFile           ( const wchar_t* filename, DWORD dwDesiredAccess, DWORD dwShareMode, SECURITY_ATTRIBUTES* lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile ) const = 0;
+    virtual HANDLE                 GetStdHandle         ( DWORD nStdHandle ) const = 0;
+    virtual bool                   DuplicateHandle      ( HANDLE hSourceHandle, HANDLE* lpTargetHandle, DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwOptions ) const = 0;
     //@}
 };
 

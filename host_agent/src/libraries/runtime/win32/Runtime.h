@@ -41,7 +41,8 @@ public:
     virtual boost::shared_ptr< Process_ABC > GetProcess( int pid ) const;
     virtual boost::shared_ptr< Process_ABC > Start( const std::string& cmd,
                                                     const std::vector< std::string >& args,
-                                                    const std::string& run ) const;
+                                                    const std::string& run,
+                                                    const std::string& log ) const;
     virtual boost::filesystem3::path GetModuleFilename() const;
     //@}
 

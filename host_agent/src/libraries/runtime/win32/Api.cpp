@@ -182,3 +182,30 @@ std::wstring Api::GetModuleFilename() const
     }
     return std::wstring( &buffer[0], ret );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Api::CreateFile
+// Created: BAX 2012-05-09
+// -----------------------------------------------------------------------------
+HANDLE Api::CreateFile( const wchar_t* filename, DWORD dwDesiredAccess, DWORD dwShareMode, SECURITY_ATTRIBUTES* lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile ) const
+{
+    return ::CreateFileW( filename, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Api::GetStdHandle
+// Created: BAX 2012-05-09
+// -----------------------------------------------------------------------------
+HANDLE Api::GetStdHandle( DWORD nStdHandle ) const
+{
+    return ::GetStdHandle( nStdHandle );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Api::DuplicateHandle
+// Created: BAX 2012-05-09
+// -----------------------------------------------------------------------------
+bool Api::DuplicateHandle( HANDLE hSourceHandle, HANDLE* lpTargetHandle, DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwOptions ) const
+{
+    return !!::DuplicateHandle( ::GetCurrentProcess(), hSourceHandle, ::GetCurrentProcess(), lpTargetHandle, dwDesiredAccess, bInheritHandle, dwOptions );
+}

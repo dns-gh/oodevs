@@ -51,6 +51,7 @@ public:
                              const FileSystem_ABC& system,
                              const UuidFactory_ABC& uuids,
                              const Proxy_ABC& proxy,
+                             const boost::filesystem::path& logs,
                              const boost::filesystem::path& java,
                              const boost::filesystem::path& jar,
                              const boost::filesystem::path& web,
@@ -92,6 +93,7 @@ private:
     const FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
     const Proxy_ABC& proxy_;
+    const boost::filesystem::path logs_;
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const boost::filesystem::path web_;

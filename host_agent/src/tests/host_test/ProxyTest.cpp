@@ -29,7 +29,8 @@ namespace
     struct Fixture
     {
         Fixture()
-            : java   ( "java" )
+            : logs   ( "logs" )
+            , java   ( "java" )
             , jar    ( "jar" )
             , port   ( 1337 )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
@@ -40,6 +41,7 @@ namespace
             MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
         }
 
+        const std::string logs;
         const std::string java;
         const std::string jar;
         const int port;
@@ -59,9 +61,9 @@ namespace
             MOCK_EXPECT( runtime.Start ).once().with( java, boost::assign::list_of
                 ( " " "-jar \"" + jar + "\"" )
                 ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
-                "" ).returns( process );
+                "", mock::any ).returns( process );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" );
-            return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client, pool );
+            return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
 
         boost::shared_ptr< Proxy > ReloadProxy()
@@ -70,7 +72,7 @@ namespace
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" );
-            return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client, pool );
+            return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
     };
 

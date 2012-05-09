@@ -42,8 +42,9 @@ namespace
 
     struct SubFixture
     {
-        SubFixture( const std::string& data, const std::string& apps )
+        SubFixture( const std::string& logs, const std::string& data, const std::string& apps )
         {
+            MOCK_EXPECT( system.MakeDirectory ).with( logs + "/sessions" );
             MOCK_EXPECT( system.IsDirectory ).with( data ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
             MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
@@ -95,13 +96,15 @@ namespace
     struct Fixture
     {
         Fixture()
-            : data   ( "e:/data" )
+            : logs   ( "e:/logs" )
+            , data   ( "e:/data" )
             , apps   ( "e:/apps" )
-            , sub    ( data, apps )
-            , control( sub.log, sub.runtime, sub.system, sub.uuids, data, apps, sub.pool, sub.ports )
+            , sub    ( logs, data, apps )
+            , control( sub.log, sub.runtime, sub.system, sub.uuids, logs, data, apps, sub.pool, sub.ports )
         {
             // NOTHING
         }
+        const std::string logs;
         const std::string data;
         const std::string apps;
         SubFixture sub;
@@ -154,13 +157,13 @@ BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
     MOCK_EXPECT( sub.ports.Create0 ).once().returns( new MockPort( 1337 ) );
     MOCK_EXPECT( sub.uuids.Create ).once().returns( idIdle );
     MOCK_EXPECT( sub.runtime.Start ).once().with( GetApp( apps, false ), boost::bind( &CheckParameters, _1, boost::assign::list_of< std::string >
-        ( "--root-dir \"e:/data\"" )
-        ( "--exercises-dir \"e:/data/exercises\"" )
-        ( "--terrains-dir \"e:/data/data/terrains\"" )
-        ( "--models-dir \"e:/data/data/models\"" )
+        ( "--root-dir \"" + data + "\"" )
+        ( "--exercises-dir \"" + data + "/exercises\"" )
+        ( "--terrains-dir \"" + data + "/data/terrains\"" )
+        ( "--models-dir \"" + data + "/data/models\"" )
         ( "--exercise \"baroud\"" )
         ( "--session \"" + idIdleText + "\"" ) ),
-        "e:/apps" ).returns( boost::make_shared< MockProcess >( 1377, GetApp( apps ) ) );
+        apps, mock::any ).returns( boost::make_shared< MockProcess >( 1377, GetApp( apps ) ) );
     MOCK_EXPECT( sub.system.WriteFile ).exactly( 2 );
     MOCK_EXPECT( sub.system.MakeDirectory ).once().with( "e:/data/exercises/baroud/sessions/" + idIdleText );
     SessionController::T_Session session = control.Create( idNode, "zebulon", "baroud" );

@@ -143,5 +143,5 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     MOCK_EXPECT( api.CloseHandle ).once().with( dummy ).returns( true );
     MOCK_EXPECT( api.CloseHandle ).once().with( thread ).returns( true );
     MOCK_EXPECT( api.GetProcessName ).once().with( dummy, mock::any, mock::any ).returns( 0 );
-    runtime.Start( app, args, dir );
+    runtime.Start( app, args, dir, "" );
 }

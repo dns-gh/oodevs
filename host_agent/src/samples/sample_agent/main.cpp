@@ -59,6 +59,10 @@ struct Configuration
     } ports;
     struct
     {
+        std::wstring dir;
+    } logs;
+    struct
+    {
         std::wstring jar;
     } proxy;
     struct
@@ -81,6 +85,7 @@ struct Configuration
         for( int i = 0; i < argc; ++i )
         {
             bool found = false;
+            found |= ReadParameter( logs.dir, "--log_dir", i, argc, argv );
             found |= ReadParameter( ports.host, "--port_host", i, argc, argv );
             found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
             found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
@@ -108,12 +113,12 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     host::Pool pool( 8 );
     host::UuidFactory uuids;
     web::Client client;
-    host::Proxy proxy( log, runtime, system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
+    host::Proxy proxy( log, runtime, system, cfg.logs.dir, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
     proxy.Register( "api", "localhost", cfg.ports.host );
     host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-    host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
-    host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
-    host::SessionController sessions( log, runtime, system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
+    host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.logs.dir, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
+    host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.logs.dir, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
+    host::SessionController sessions( log, runtime, system, uuids, cfg.logs.dir, cfg.session.data, cfg.session.applications, pool, ports );
     host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
     web::Server server( log, pool, controller, cfg.ports.host );
@@ -183,6 +188,7 @@ int StartServer( int argc, const char* argv[] )
             throw std::runtime_error( "Missing JAVA_HOME environment variable. Please install a Java Runtime Environment" );
 
         Configuration cfg;
+        cfg.logs.dir             = Utf8Convert( GetTree( tree, "logs.dir", Utf8Convert( logs ) ) );
         cfg.ports.host           = GetTree( tree, "ports.host", 15000 );
         cfg.ports.period         = GetTree( tree, "ports.period", 40 );
         cfg.ports.min            = GetTree( tree, "ports.min", 50000 );
