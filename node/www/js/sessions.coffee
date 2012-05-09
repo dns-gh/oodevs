@@ -6,7 +6,7 @@ ajax = (url, data, success, error) ->
         dataType: "json"
         error:    error,
         success:  success,
-        url:      url,
+        url:      url
 
 Handlebars.registerHelper "is_option", (value, options) ->
     if value of options.hash
