@@ -34,13 +34,7 @@
             </div>
         </div>
     </body>
-    [#-- script include order is required --]
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/bootstrap-2.0.3.min.js"></script>
-    <script src="js/underscore-min.js"></script>
-    <script src="js/backbone-min.js"></script>
-    <script src="js/handlebars-1.0.0.beta.6-min.js"></script>
-    <script src="js/spin.min.js"></script>
+    [#include "../imports.html"]
     [#if pg == "sessions"]
     <script src="js/sessions.js"></script>
     [/#if]
