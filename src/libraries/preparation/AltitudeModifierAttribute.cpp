@@ -153,6 +153,37 @@ void AltitudeModifierAttribute::SetHeight( unsigned int height )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::BeginDrag
+// Created: JSR 2012-05-09
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::BeginDrag() const
+{
+    if( !dragLocation_.IsEmpty() )
+        return;
+    LocationVisitor visitor( dragLocation_ );
+    object_.Get< Positions >().Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::EndDrag
+// Created: JSR 2012-05-09
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::EndDrag() const
+{
+    geometry::Polygon2f polygon;
+    LocationVisitor visitor( polygon );
+    object_.Get< Positions >().Accept( visitor );
+    if( !dragLocation_.IsEmpty() && !polygon.IsEmpty() && dragLocation_ != polygon )
+    {
+        detection_.ModifyAltitude( dragLocation_, -static_cast< short >( height_.value_ ) );
+        controllers_.controller_.Update( AltitudeModified( dragLocation_ ) );
+        detection_.ModifyAltitude( polygon, static_cast< short >( height_.value_ ) );
+        controllers_.controller_.Update( AltitudeModified( polygon ) );
+    }
+    dragLocation_ = geometry::Polygon2f();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute::CreateDictionary
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------

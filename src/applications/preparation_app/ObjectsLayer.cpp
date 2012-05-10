@@ -10,8 +10,39 @@
 #include "preparation_app_pch.h"
 #include "ObjectsLayer.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Object_ABC.h"
+#include "preparation/AltitudeModifierAttribute.h"
+#include "preparation/FloodAttribute.h"
 #include "preparation/ObjectPositions.h"
+
+namespace
+{
+    class LayerValuedDragObject : public gui::ValuedDragObject
+    {
+    public:
+        LayerValuedDragObject( const ObjectPositions* pos, const kernel::Entity_ABC* entity, QWidget* dragSource = 0 )
+            : ValuedDragObject( pos, dragSource )
+            , entity_    ( entity )
+        {
+            if( entity_ )
+                if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
+                    attribute->BeginDrag();
+        }
+        virtual ~LayerValuedDragObject()
+        {
+            if( entity_)
+            {
+                if( const AltitudeModifierAttribute* attribute = entity_->Retrieve< AltitudeModifierAttribute >() )
+                    attribute->EndDrag();
+                if( const FloodAttribute* flood = entity_->Retrieve< FloodAttribute >() )
+                    flood->EndDrag();
+            }
+        }
+    private:
+        const kernel::Entity_ABC* entity_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer constructor
@@ -129,7 +160,7 @@ bool ObjectsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
         if( const ObjectPositions* pos = static_cast< const ObjectPositions* >( selected_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
-            Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( dummy_.get() ) );
+            Q3DragObject* drag = new LayerValuedDragObject( pos, selected_, dummy_.get() );
             drag->dragMove();
         }
     }

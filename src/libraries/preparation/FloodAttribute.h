@@ -69,18 +69,13 @@ public:
     virtual short GetElevationAt( const geometry::Point2f& point ) const;
     //@}
 
-    //! @name Modifiers
+    //! @name Operations
     //@{
     void SetValues( int depth, int refDist );
+    void EndDrag() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FloodAttribute( const FloodAttribute& );            //!< Copy constructor
-    FloodAttribute& operator=( const FloodAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico );

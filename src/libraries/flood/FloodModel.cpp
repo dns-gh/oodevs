@@ -62,10 +62,10 @@ FloodModel& FloodModel::operator=( const FloodModel& from )
 // Name: FloodModel::ComputePolygons
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist, bool force )
+bool FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist, bool force )
 {
-    if( !force && ( depth == oldDepth_ && refDist == refDist_ ) )
-        return;
+    if( !force && ( center == center_ && depth == oldDepth_ && refDist == refDist_ ) )
+        return false;
     Reset();
     oldDepth_ = depth;
     refDist_ = refDist;
@@ -90,15 +90,16 @@ void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist, b
     for( unsigned int i = width; i; )
         delete [] ppCells_[ --i ];
     delete [] ppCells_;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FloodModel::GenerateFlood
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodModel::GenerateFlood( const Point2d& center, int depth, int refDist, bool force )
+bool FloodModel::GenerateFlood( const Point2d& center, int depth, int refDist, bool force )
 {
-    GenerateFlood( Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), depth, refDist, force );
+    return GenerateFlood( Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), depth, refDist, force );
 }
 
 // -----------------------------------------------------------------------------

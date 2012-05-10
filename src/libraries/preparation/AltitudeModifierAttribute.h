@@ -63,6 +63,13 @@ public:
     void SetHeight( unsigned int height );
     //@}
 
+    //! @name Operations
+    //@{
+    void BeginDrag() const;
+    void EndDrag() const;
+    //@}
+
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -84,6 +91,7 @@ private:
     const kernel::Object_ABC& object_;
     kernel::UnitedValue< unsigned int > height_;
     unsigned int oldHeight_;
+    mutable geometry::Polygon2f dragLocation_;
     //@}
 };
 

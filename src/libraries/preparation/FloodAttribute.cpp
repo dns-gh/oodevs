@@ -109,8 +109,8 @@ void FloodAttribute::NotifyUpdated( const FloodAttribute& attribute )
 {
     if( &attribute == this )
     {
-        floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
-        floodDrawer_->ResetTexture();
+        if( floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ ) )
+            floodDrawer_->ResetTexture();
     }
 }
 
@@ -152,6 +152,15 @@ void FloodAttribute::SetValues( int depth, int refDist )
         floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
         floodDrawer_->ResetTexture();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::EndDrag
+// Created: JSR 2012-05-10
+// -----------------------------------------------------------------------------
+void FloodAttribute::EndDrag() const
+{
+    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

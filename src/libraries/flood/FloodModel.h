@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void GenerateFlood( const geometry::Point2f& center, int depth, int refDist, bool force = false );
-    void GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force = false );
+    bool GenerateFlood( const geometry::Point2f& center, int depth, int refDist, bool force = false );
+    bool GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force = false );
     const geometry::Point2f& GetCenter() const { return center_; }
     int GetReferenceDistance() const { return refDist_; }
     int GetDepth() const { return oldDepth_; }
