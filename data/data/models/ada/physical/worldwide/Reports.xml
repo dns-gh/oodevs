@@ -422,7 +422,7 @@
   <report category="operational" id="289" message="Partial radio silence"/>
   <report category="operational" id="290" message="Area reconnaissance started"/>
   <report category="operational" id="291" message="Area reconnaissance completed"/>
-  <report category="operational" id="292" message="Work impossible : no construction capacity"/>
+  <report category="operational" id="292" message="Work impossible : no capacity"/>
   <report category="operational" id="293" message="Work impossible : no dotation"/>
   <report category="operational" id="294" message="Embarkment started"/>
   <report category="operational" id="295" message="Disembarkment started"/>
@@ -659,4 +659,4 @@
   </report>
   <report category="operational" id="463" message="Object cannot be operated"/>
 </reports>
-<!-- signature="0560982935" -->
+<!-- signature="2287737108" -->
