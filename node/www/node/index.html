@@ -15,7 +15,8 @@
                             [/#macro]
                             [@nav_item item="home"     name="Home"     img="places/user-home" /]
                             [@nav_item item="sessions" name="Sessions" img="actions/document-new" /]
-                            [@nav_item item="data"     name="Data"     img="mimetypes/package-x-generic" /]
+                            [@nav_item item="packages" name="Packages" img="devices/drive-harddisk" /]
+                            [@nav_item item="uploads"  name="Uploads"  img="status/software-update-available" /]
                             [@nav_item item="users"    name="Users"    img="apps/system-users" /]
                             [@nav_item item="settings" name="Settings" img="categories/preferences-system" /]
                         </ul>
@@ -27,15 +28,22 @@
                     <p class="footer">&copy; MASA Group 2012</p>
                 </div>
                 <div class="span9">
-                    [#if pg == "sessions"]
+                    [#switch pg]
+                    [#case "sessions"]
                     [#include "/node/sessions.html"]
-                    [/#if]
+                    [#break]
+                    [#case "packages"]
+                    [#include "/node/packages.html"]
+                    [#break]
+                    [/#switch]
                 </div>
             </div>
         </div>
     </body>
     [#include "../imports.html"]
-    [#if pg == "sessions"]
+    [#switch pg]
+    [#case "sessions"]
     <script src="js/sessions.js"></script>
-    [/#if]
+    [#break]
+    [/#switch]
 </html>
