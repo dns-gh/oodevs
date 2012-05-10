@@ -1,0 +1,106 @@
+[#ftl]
+<div class="row">
+    <div class="span9">
+        <div class="hide">
+            <iframe id="upload_target" name="upload_target"></iframe>
+        </div>
+        <form id="upload_form" class="form-horizontal" enctype="multipart/form-data" method="post" target="upload_target">
+            <div class="control-group">
+                <label class="control-label" for="upload_file"><strong>Package</strong></label>
+                <div class="controls">
+                    <input type="file" name="pack" />
+                    <a class="btn upload"><i class="icon-upload"></i> Upload</a>
+                </div>
+            </div>
+        </form>
+        <div class="hide alert alert-info upload_alert">
+            <a class="spin_btn"></a>
+            <span>
+                <strong>Uploading, </strong>
+                please wait...
+            </span>
+        </div>
+        <form class="well package">
+            <div class="package_name">Musoria Pack</div>
+            <div class="package_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Version</th>
+                        <th>Date</th>
+                        <th>Checksum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Model</td>
+                        <td>Worldwide</td>
+                        <td>5.0</td>
+                        <td>2012-04-01</td>
+                        <td>0xABCDEF98</td>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox"> Update
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Terrain</td>
+                        <td>Afghanistan</td>
+                        <td>5.1</td>
+                        <td>2012-04-01</td>
+                        <td>0xBCDEF98A</td>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox"> Add
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Terrain</td>
+                        <td>Normandie</td>
+                        <td>5.1</td>
+                        <td>2012-04-01</td>
+                        <td>0xCDEF98AB</td>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox"> Update
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Exercise</td>
+                        <td>Madrid</td>
+                        <td>5.0</td>
+                        <td>2012-04-01</td>
+                        <td>0xEF98ABCD</td>
+                        <td>
+                            <label class="package_label">
+                                <span class="badge badge-important">!</span>
+                                Missing terrain &quot;Spain&quot;
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Exercise</td>
+                        <td>Kabul</td>
+                        <td>5.0</td>
+                        <td>2012-04-01</td>
+                        <td>0xDEF98ABC</td>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox"> Add
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="form-actions">
+                <button type="submit" class="btn">Save</button>
+                <button class="btn btn-primary">Discard</button>
+            </div>
+        </form>
+    </div>
+</div>

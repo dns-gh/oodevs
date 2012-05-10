@@ -35,6 +35,9 @@
                     [#case "packages"]
                     [#include "/node/packages.html"]
                     [#break]
+                    [#case "uploads"]
+                    [#include "/node/uploads.html"]
+                    [#break]
                     [/#switch]
                 </div>
             </div>
@@ -44,6 +47,9 @@
     [#switch pg]
     [#case "sessions"]
     <script src="js/sessions.js"></script>
+    [#break]
+    [#case "uploads"]
+    <script src="js/uploads.js"></script>
     [#break]
     [/#switch]
 </html>
