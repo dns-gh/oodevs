@@ -713,6 +713,8 @@ void MainWindow::NotifyDeleted()
 // -----------------------------------------------------------------------------
 void MainWindow::SetWindowTitle( bool needsSaving )
 {
+    if( QThread::currentThread() != thread() ) // si setCaption est appelé par un autre thread -> assert QT.
+        return;
     SetNeedsSaving( needsSaving );
     QString filename = tr( "No file loaded" );
     if( model_.IsLoaded() )

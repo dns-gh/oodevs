@@ -1,4 +1,4 @@
-// *****************************************************************************
+*// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -117,10 +117,11 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( button != Qt::LeftButton && button != Qt::RightButton )
         return false;
 
+    std::size_t oldSelected = selected_;
     if( selected_ >= entities_.size()
      || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
+     || ( button == Qt::LeftButton && ( selected_ + 1 ) > entities_.size() ) )
         selected_ = 0;
 
     for( ; selected_ < entities_.size(); ++selected_ )
@@ -136,6 +137,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
             return true;
         }
     }
+    selected_ = oldSelected;
     return false;
 }
 
