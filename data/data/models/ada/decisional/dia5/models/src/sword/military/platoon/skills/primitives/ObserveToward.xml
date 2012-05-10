@@ -30,7 +30,5 @@
         <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
             <description>Lien vers le skill observe</description>
         </link>
-        <link name="indirectFire" skill="sword.military.platoon.skills.ApplyIndirectFire"/>
-        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
     </links>
 </skill>

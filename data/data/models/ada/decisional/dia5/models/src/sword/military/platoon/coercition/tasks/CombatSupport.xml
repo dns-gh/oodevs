@@ -1,82 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.CombatSupport" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.CombatSupport">
-	<description>Soutien dynamique. Appuyer par le mouvement et par le feu.</description>
-	<parameters>
-		<parameter name="objectives">
-			<description>Les unités à appuyer.</description>
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Supportable"/>
-				</list>
-			</type>
-		</parameter>
-		<parameter name="marcheRetrograde" nullable="true">
-			<description>Contexte de la mission de soutien. Peut etre: offensif, défensif ou statique</description>
-			<type>
-				<simple name="boolean"/>
-			</type>
-			<default>
-				<boolean>false</boolean>
-			</default>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
-	</goal>
-	<stages>
-		<stage label="Appui" permanent="true">
-			<description>Suivre, observer et appuyer (feu) les objectifs.</description>
-			<goal>
-				<description>Suivre en mesure de pouvoir observer / appuyer.</description>
-			</goal>
-			<let name="enemiesInRange">
-				<value>
-					<call method="sword.military.queries.enemies.getEnemiesEngagingFriends">
-						<parameter name="dynamic">
-							<value>
-								<boolean>true</boolean>
-							</value>
-						</parameter>
-						<parameter name="friends">
-							<value>
-								<parameter>objectives</parameter>
-							</value>
-						</parameter>
-					</call>
-				</value>
-			</let>
-			<skills>
-				<skill name="sword.military.platoon.coercition.skills.Support" priority="0.1">
-					<parameter name="entities">
-						<value>
-							<parameter>objectives</parameter>
-						</value>
-					</parameter>
-					<parameter name="marcheRetrograde">
-						<value>
-							<parameter>marcheRetrograde</parameter>
-						</value>
-					</parameter>
-				</skill>
-				<skill name="sword.military.platoon.coercition.skills.Engage" priority="0.9">
-					<parameter name="entities">
-						<value>
-							<parameter>enemiesInRange</parameter>
-						</value>
-					</parameter>
-					<parameter name="positions">
-						<value>
-							<call method="sword.military.queries.tactical.getPositionsToNeutralize">
-								<parameter name="elementsToNeutralize">
-									<value>
-										<parameter>enemiesInRange</parameter>
-									</value>
-								</parameter>
-							</call>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <description>Soutien dynamique. Appuyer par le mouvement et par le feu.</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>Les unités à appuyer.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="marcheRetrograde" nullable="true">
+            <description>Contexte de la mission de soutien. Peut etre: offensif, défensif ou statique</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
+    </goal>
+    <stages>
+        <stage label="Appui" permanent="true">
+            <description>Suivre, observer et appuyer (feu) les objectifs.</description>
+            <goal>
+                <description>Suivre en mesure de pouvoir observer / appuyer.</description>
+            </goal>
+            <let name="enemiesInRange">
+                <value>
+                    <call method="sword.military.queries.enemies.getEnemiesEngagingFriends">
+                        <parameter name="dynamic">
+                            <value>
+                                <boolean>true</boolean>
+                            </value>
+                        </parameter>
+                        <parameter name="friends">
+                            <value>
+                                <parameter>objectives</parameter>
+                            </value>
+                        </parameter>
+                    </call>
+                </value>
+            </let>
+            <skills>
+                <skill name="sword.military.platoon.coercition.skills.Support" priority="0.1">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="marcheRetrograde">
+                        <value>
+                            <parameter>marcheRetrograde</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.coercition.skills.Engage" priority="0.8">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>enemiesInRange</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <call method="sword.military.queries.tactical.getPositionsToNeutralize">
+                                <parameter name="elementsToNeutralize">
+                                    <value>
+                                        <parameter>enemiesInRange</parameter>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.actions.ApplyMortarFires" priority="0.1"/>
+            </skills>
+        </stage>
+    </stages>
 </task>

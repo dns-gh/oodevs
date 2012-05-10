@@ -26,7 +26,5 @@ S'enregistre auprès des éléments soutenus pour recevoir la valeur de leur rap
     </body-type>
     <links>
         <link name="support" skill="sword.military.platoon.coercition.skills.primitives.Support"/>
-        <link name="indirectFire" skill="sword.military.platoon.skills.ApplyIndirectFire"/>
-        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
     </links>
 </skill>

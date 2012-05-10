@@ -89,6 +89,7 @@
         <skill name="sword.military.platoon.skills.ReactToNBC"/>
         <skill name="sword.military.platoon.skills.ReactToFireArea"/>
         <skill name="sword.military.platoon.skills.Decontaminate"/>
+        <skill name="sword.military.platoon.skills.actions.ApplyMortarFires"/>
     </skills>
     <resources>
         <resource name="sword.military.platoon.resources.EngageCapacity"/>
