@@ -3,27 +3,14 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = {  skill.links.support, skill.links.indirectFire, skill.links.dismount, skill.nodes.CR_ReceiveFireOrder },
+    connections = {  skill.links.support },
 
-    done = function( self, params, additionnalParams )
-        if additionnalParams.state == "hasFire" then
-            self.hasFire = true
-            self.order = nil
-        elseif additionnalParams.state == "no ammo" or
-               additionnalParams.state == "forbidden ammo" or
-               additionnalParams.state == "out of range" or
-               additionnalParams.state == "impossible to fire" or
-               additionnalParams.state == "no Launcher" or
-               additionnalParams.state == "target not illuminated" then
-            self.order = nil
-        end
-    end,
+    done = function( self ) end,
 
     -- -------------------------------------------------------------------------------- 
     -- Init: register entities to get their force ratio value.
     -- --------------------------------------------------------------------------------
     create = function( self )
-        self.hasFire = false
         if self.params.marcheRetrograde then
             myself.desactiveSelfProtection = true
         end
@@ -35,20 +22,6 @@ rootnode
     activate = function( self )
         local Activate = Activate
         Activate( skill.links.support, 1, { entities  = self.params.entities } )
-        if not self.order then
-            self.order = integration.query.getFirstFireOrder()
-        end
-        if self.order then
-            if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
-                Activate( skill.links.dismount, 1 )
-            end
-            
-            if meKnowledge:isDismounted() then
-                integration.sendfireAvailable(true)
-                Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
-                Activate( skill.links.indirectFire, 1, self.order )
-            end
-        end
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -58,13 +31,5 @@ rootnode
         if self.params.marcheRetrograde then
             myself.desactiveSelfProtection = false
         end
-        integration.sendfireAvailable(false)
     end,
-}
-
-node "CR_ReceiveFireOrder"
-{ 
-    create = function( self )
-        meKnowledge:RC( eRC_ReceptionOrdreDeFeu )
-    end
 }
