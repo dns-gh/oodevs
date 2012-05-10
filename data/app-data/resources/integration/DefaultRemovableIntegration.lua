@@ -153,3 +153,12 @@ integration.stopRemoveItSecu = function( object )
     object[ myself ].actionRemove = DEC__StopAction( object[myself].actionRemove )
     return true
 end
+
+integration.startDecontructItUrbanBlock = function( urbanBlock )
+    urbanBlock[ myself ] = urbanBlock[ myself ] or {} 
+    urbanBlock[ myself ].actionRemove = DEC_DeteriorateUrbanBlock( urbanBlock.source, 0 )
+    actionCallbacks[ urbanBlock[ myself ].actionRemove ] = function( arg ) 
+        urbanBlock[ myself ].actionRemoveState = arg 
+    end
+    meKnowledge:RC( eRC_DebutTravaux )
+end

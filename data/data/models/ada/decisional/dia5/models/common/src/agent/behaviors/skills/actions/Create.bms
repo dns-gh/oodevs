@@ -8,7 +8,6 @@ rootnode
     feedbacks = { "creationActionCompleted", "createActionRunning" },
 
     select = function( self )
-        DEC_Trace( "self.params.instantaneously = "..tostring( self.params.instantaneously ) )
         if self.params.work:isBuilt() and self.createdWork ~= nil then
             Feedback( self.feedbacks.creationActionCompleted, { work = self.createdWork } )
         else

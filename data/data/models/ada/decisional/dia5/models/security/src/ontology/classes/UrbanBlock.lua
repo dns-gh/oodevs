@@ -71,18 +71,11 @@ method "buildIt" ( masalife.brain.integration.startStopAction(
     end
 } ) )
 
-method "createIt" ( masalife.brain.integration.startStopAction( 
-{ 
-    start = function( self )
-        return self -- $$$ TODO
-    end,
-    started = function( self )
-        return self -- $$$ TODO
-    end, 
-    stop = function( self )
-        return self -- $$$ TODO
-    end
-} ) )
+method "createIt" ( 
+    function( self )
+        meKnowledge:sendMessage( "The agent cannot build a urban block instantaneously" )
+        return false -- a urban block cannot be created instantaneously
+    end )
 
 method "isBuilt" (
     function( self )
@@ -92,7 +85,7 @@ method "isBuilt" (
 method "canBeCreated" (
     function( self, instantaneously )
         if instantaneously then
-            return false -- temp
+            return false -- a urban block cannot be created instantaneously
         else
             local urbanBlockType = integration.getTypeUrbanBlock( self )
             local result = integration.canBuildNowObjectType( urbanBlockType ) 
@@ -106,8 +99,8 @@ method "canBeCreated" (
 
 method "canBeDeconstructed" ( 
     function( self, instantaneously )
-        if instantaneously then -- impossible to remove magically a urban block
-            return false 
+        if instantaneously then 
+            return false -- impossible to remove magically a urban block
         end
         return true -- a urban block can be decontructed
     end )
@@ -115,12 +108,13 @@ method "canBeDeconstructed" (
 method "deconstructIt" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self )
-        return integration.deteriorateUrbanBlock( self )
+        return integration.startDecontructItUrbanBlock( self )
     end,
     started = function( self )
-        
-    end,
+        return integration.updateRemoveItSecu( self )
+    end, 
     stop = function( self )
+        return integration.stopRemoveItSecu( self )
     end
 } ) )
 

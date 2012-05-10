@@ -195,7 +195,9 @@ This implementation returns the nearest positions outside the urban block.</desc
             </return>
         </method>
         <method name="canBeCreated" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
+            <description>Returns 'True' if agent has the physical capability to create and build this element.&#xD;
+&#xD;
+This implementation return 'true' is the agent has the physical capacity to build the urban block. It returns 'false' otherwise.</description>
             <argument name="instantaneously">
                 <description>Define if this element has to be built instantaneously (&quot;magic&quot; action) or not. </description>
                 <type>
