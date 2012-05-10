@@ -1,4 +1,3 @@
-
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
@@ -344,7 +343,7 @@ void PHY_ComposantePion::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object
     const PHY_ComposanteState& oldState  = *pState_;
     const PHY_ComposanteState* pNewState = pState_;
     StructuralCapacity* capacity = const_cast< MIL_Object_ABC& >( object ).Retrieve< StructuralCapacity >();
-    if ( capacity )
+    if( capacity )
         pNewState = &capacity->ComputeComposanteState( object, pType_->GetProtection() );
     PHY_FireDamages_Agent fireDamages;
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
@@ -1051,7 +1050,7 @@ float PHY_ComposantePion::GetIdentificationMaxRange() const
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
     {
         const PHY_SensorTypeAgent* pTypeAgent = (*itSensor)->GetType().GetTypeAgent();
-        if ( pTypeAgent )
+        if( pTypeAgent )
             distance = std::max( distance, pTypeAgent->IdentificationDistance() );
     }
     return static_cast< float >( distance );
@@ -1067,7 +1066,7 @@ float PHY_ComposantePion::GetReconnoissanceMaxRange() const
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
     {
         const PHY_SensorTypeAgent* pTypeAgent = ( *itSensor )->GetType().GetTypeAgent();
-        if ( pTypeAgent )
+        if( pTypeAgent )
             distance = std::min( distance, pTypeAgent->ReconnoissanceDistance() );
     }
     return static_cast< float >( distance );

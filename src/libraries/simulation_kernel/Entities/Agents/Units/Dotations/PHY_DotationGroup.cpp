@@ -85,7 +85,7 @@ namespace serialization
     {
         std::size_t nNbr;
         file >> nNbr;
-        while ( nNbr-- )
+        while( nNbr-- )
         {
             unsigned int nID;
             file >> nID;

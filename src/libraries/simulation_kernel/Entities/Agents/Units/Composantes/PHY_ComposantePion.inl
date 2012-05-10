@@ -13,7 +13,7 @@
 // Name: PHY_ComposantePion::FillFireData
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 {
     for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
@@ -24,7 +24,7 @@ inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 // Name: PHY_ComposantePion::FillFireData
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 inline void PHY_ComposantePion::ApplyOnHumanProtection( T& functor ) const
 {
     for( CIT_HumanProtectionVector it = protections_.begin(); it != protections_.end(); ++it )

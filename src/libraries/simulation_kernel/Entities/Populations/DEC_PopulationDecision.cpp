@@ -168,13 +168,13 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< int () >( boost::bind( &DEC_PopulationFunctions::GetActualNumber, boost::cref( GetPopulation() ) ) );
     brain[ "DEC_GetNombrePersonneContaminee" ] =
         boost::function< int () >( boost::bind( &DEC_PopulationFunctions::GetContaminatedHumans, boost::cref( GetPopulation() ) ) );
-    
+
     // Agents
     brain[ "DEC_Agent_EstDansFoule" ] =
         boost::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) );
 
     // Orders
-    brain[ "DEC_AssignMissionCrowdParameter" ] = 
+    brain[ "DEC_AssignMissionCrowdParameter" ] =
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) );
 
     // Knowledge agents
@@ -387,7 +387,6 @@ void DEC_PopulationDecision::RegisterSelf( directia::brain::Brain& brain, bool i
     if( isMasalife )
         brain[ "InitMeCrowd" ](  brain[ "integration.ontology.types.body" ], brain[ "myself" ], groupName );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::Reload

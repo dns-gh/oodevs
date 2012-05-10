@@ -805,7 +805,6 @@ void PHY_ComposanteTypePion::ReadLogistic( xml::xistream& xis )
     InitializeLogisticSupply     ( xis );
 }
 
-
 // =============================================================================
 // INSTANCIATION
 // =============================================================================
@@ -925,7 +924,6 @@ bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) c
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     return pObjectData && pObjectData->CanExtinguish();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanDemine
@@ -1102,7 +1100,7 @@ const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_Break
 {
     const double rRandomValue = 1. - MIL_Random::rand_ii( 0., 1., MIL_Random::eBreakdowns );
 
-    for ( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
+    for( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
     {
         if( rRandomValue <= it->rProbabilityBound_ )
             return *it->pBreakdownType_;
@@ -1142,7 +1140,7 @@ double PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, 
 double PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     double rRange = std::numeric_limits< double >::max();
-    for ( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
+    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOn( firer, targetComposanteType, rWantedPH ) );
     return rRange;
 }
@@ -1166,7 +1164,7 @@ double PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_A
 double PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     double rRange = std::numeric_limits< double >::max();
-    for ( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
+    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
     return rRange;
 }

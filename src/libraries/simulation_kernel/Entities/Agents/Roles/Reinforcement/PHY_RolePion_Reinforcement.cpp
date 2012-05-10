@@ -81,7 +81,7 @@ bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::IsReinforcedBy( MIL_AgentPion& pion ) const
 {
-    for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+    for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
     {
         const MIL_AgentPion& reinforcement = **itPion;
         if( pion == reinforcement || reinforcement.GetRole< PHY_RolePion_Reinforcement >().IsReinforcedBy( pion ) )
@@ -286,7 +286,7 @@ void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request)
 {
-    for ( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+    for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
     {
         MIL_AgentPion& reinforcement = **itPion;
         reinforcement.Apply(&ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request);

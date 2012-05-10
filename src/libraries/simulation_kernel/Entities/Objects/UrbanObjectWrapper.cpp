@@ -437,7 +437,7 @@ float UrbanObjectWrapper::GetStructuralState() const
 {
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-            if ( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
+            if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
                 return structuralCapacity->GetStructuralState();
     return 0.0f;
 }
@@ -600,7 +600,6 @@ void UrbanObjectWrapper::AddLivingArea( MIL_LivingArea& livingArea )
 {
     livingAreas_.push_back( &livingArea );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::HasArchitecture

@@ -606,7 +606,7 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
     if( rVisionNRJ > 0 )
         rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
 
-    while ( rVisionNRJ > 0 && !(++it).End() )
+    while( rVisionNRJ > 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
 
     return rVisionNRJ;
@@ -631,7 +631,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     if( rVisionNRJ > 0 )
         rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
-    while ( rVisionNRJ > 0 && !(++it).End() )
+    while( rVisionNRJ > 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
     return InterpretExtinction( rVisionNRJ );
@@ -860,7 +860,7 @@ unsigned int PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionD
         return 0;
 
     unsigned int res = 1;
-    for ( unsigned int idx = 1; !( idx & obj ); idx <<= 1 )
+    for( unsigned int idx = 1; !( idx & obj ); idx <<= 1 )
         ++res;
     return res;
 }

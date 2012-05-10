@@ -67,7 +67,7 @@ LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_Automat
     : owner_        ( &owner )
     , superior_     ( &superior )
     , useQuotas_    ( useQuotas )
-    , quotasUpdated_( useQuotas ) 
+    , quotasUpdated_( useQuotas )
 {
     // NOTHING
 }
@@ -291,7 +291,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 unsigned int nCategory;
                 file >> nCategory;

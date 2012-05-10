@@ -333,7 +333,7 @@ void PHY_HumansComposante::NotifyComposanteBackFromMaintenance()
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RoleInterface_Composantes& src, PHY_RoleInterface_Composantes& dest )
 {
-    for ( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
     {
         ( **it ).CancelLogisticRequests();
         const_cast< MIL_Agent_ABC& >( src.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, **it );

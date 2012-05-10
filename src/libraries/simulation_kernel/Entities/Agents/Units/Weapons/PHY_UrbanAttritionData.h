@@ -46,13 +46,13 @@ public:
     //@}
 
 private:
-    //! @name 
+    //! @name Helpers
     //@{
     void ReadModifier( xml::xistream& xis );
     //@}
 
 private:
-    //! @name 
+    //! @name Types
     //@{
     typedef std::vector< double >   T_UrbanAttritionVector;
     //@}

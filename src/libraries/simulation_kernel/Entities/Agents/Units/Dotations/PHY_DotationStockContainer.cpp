@@ -77,7 +77,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
+            for( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
             {
                 unsigned id = it->first->GetMosID();
                 file << id;
@@ -90,7 +90,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 unsigned int nID;
 
@@ -115,7 +115,7 @@ namespace boost
         {
             std::size_t size= set.size();
             file << size;
-            for ( PHY_DotationStockContainer::CIT_StockSet it = set.begin(); it != set.end(); ++it )
+            for( PHY_DotationStockContainer::CIT_StockSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
 
@@ -124,7 +124,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 PHY_DotationStock* pStock;
                 file >> pStock;

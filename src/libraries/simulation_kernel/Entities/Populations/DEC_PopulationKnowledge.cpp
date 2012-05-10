@@ -71,7 +71,7 @@ namespace boost
         {
             std::size_t size = set.size();
             file << size;
-            for ( DEC_PopulationKnowledge::CIT_AgentSet it = set.begin(); it != set.end(); ++it )
+            for( DEC_PopulationKnowledge::CIT_AgentSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
 
@@ -80,7 +80,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 MIL_Agent_ABC* pAgent;
                 file >> pAgent;

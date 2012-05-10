@@ -101,7 +101,7 @@ namespace serialization
     {
         std::size_t size = set.size();
         file << size;
-        for ( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
+        for( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
             file << *it;
     }
 
@@ -110,7 +110,7 @@ namespace serialization
     {
         std::size_t n;
         file >> n;
-        while ( n-- )
+        while( n-- )
         {
             PHY_Dotation* pDotation;
             file >> pDotation;

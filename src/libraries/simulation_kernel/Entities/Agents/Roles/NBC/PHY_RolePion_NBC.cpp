@@ -41,7 +41,7 @@ namespace boost
         {
             const std::size_t size = set.size();
             file << size;
-            for ( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
+            for( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
             {
                 const unsigned id = (*it)->GetID();
                 file << id;
@@ -53,7 +53,7 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 unsigned int nID;
                 file >> nID;

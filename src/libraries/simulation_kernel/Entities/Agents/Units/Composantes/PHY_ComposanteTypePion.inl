@@ -44,7 +44,7 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( sword::EquipmentType
 // -----------------------------------------------------------------------------
 inline
 const PHY_DotationCapacities& PHY_ComposanteTypePion::GetDotationCapacities() const
-{   
+{
     return dotationCapacities_;
 }
 
@@ -117,7 +117,7 @@ double PHY_ComposanteTypePion::GetPionTransporterWeightCapacity() const
 {
     return rPionTransporterWeightCapacity_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep
 // Created: NLD 2004-11-19
@@ -263,7 +263,7 @@ PHY_ComposanteTypePion::sNTICapability::sNTICapability( const PHY_MaintenanceLev
 {
 
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::sNTICapability::operator<
 // Created: NLD 2004-12-21
@@ -273,7 +273,6 @@ bool PHY_ComposanteTypePion::sNTICapability::operator < ( const sNTICapability& 
 {
     return pMaintenanceLevel_ < rhs.pMaintenanceLevel_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanRepair
@@ -428,7 +427,7 @@ double PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() co
 {
     return rNbrHumansUnloadedForEvacuationPerTimeStep_;
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetStockTransporterCapacity
 // Created: NLD 2005-07-18
@@ -457,7 +456,7 @@ const PHY_DotationNature* PHY_ComposanteTypePion::GetStockTransporterNature() co
 inline
 PHY_ComposanteTypePion::sBreakdownTypeProbability::sBreakdownTypeProbability( const PHY_BreakdownType& breakdownType, double rProbabilityBound )
     : pBreakdownType_   ( &breakdownType )
-    , rProbabilityBound_( rProbabilityBound ) 
+    , rProbabilityBound_( rProbabilityBound )
 {
 }
 
@@ -482,7 +481,7 @@ const PHY_BreakdownType& PHY_ComposanteTypePion::GetAttritionBreakdownType() con
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------

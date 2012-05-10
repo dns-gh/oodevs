@@ -645,7 +645,6 @@ unsigned int MIL_LivingArea::ComputeEvacuatedPeople()
     return evacuated;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::ForceEvacuation
 // Created: JSR 2012-04-26

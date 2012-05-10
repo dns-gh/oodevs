@@ -621,6 +621,6 @@ namespace
 void MIL_PopulationElement_ABC::ClearCollidingAttackingAgents()
 {
     collidingAttackingAgents_.erase( std::remove_if( collidingAttackingAgents_.begin(), collidingAttackingAgents_.end(),
-                                                     boost::bind( &CheckCollidingAttackingAgents, _1, boost::cref( collidingAgents_ ) ) ), 
+                                                     boost::bind( &CheckCollidingAttackingAgents, _1, boost::cref( collidingAgents_ ) ) ),
                                      collidingAttackingAgents_.end() );
 }

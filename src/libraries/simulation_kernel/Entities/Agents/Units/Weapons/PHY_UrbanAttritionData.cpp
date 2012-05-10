@@ -86,7 +86,7 @@ void PHY_UrbanAttritionData::ReadModifier( xml::xistream& xis )
 void PHY_UrbanAttritionData::UpdateGlobalScore()
 {
     PHY_UrbanAttritionData::Init();
-    for ( unsigned int i = 0; i < attritionFactors_.size(); ++i )
+    for( unsigned int i = 0; i < attritionFactors_.size(); ++i )
         globalAttritionFactors_[ i ] = std::max( globalAttritionFactors_[ i ], attritionFactors_[ i ] );
 }
 
