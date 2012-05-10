@@ -55,7 +55,7 @@ private:
     //! @name Member data
     //@{
     const FloodModel& model_;
-    unsigned int textureId_;
+    mutable unsigned int callListId_;
     //@}
 };
 
