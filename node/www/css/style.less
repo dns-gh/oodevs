@@ -6,12 +6,14 @@
 @replay: #6FA8DC;
 @stop:   #E06666;
 
-body {
+body
+{
     padding-top:    60px;
     padding-bottom: 40px;
 }
 
-.session {
+.session
+{
     border:     0;
     padding:    0;
     margin:     0;
@@ -22,80 +24,95 @@ body {
     height:     100%;
 }
 
-.playing, .running {
+.playing, .running
+{
     .session;
     background-color:   @run;
 }
 
-.paused {
+.paused
+{
     .session;
     background-color:   @pause;
 }
 
-.replaying {
+.replaying
+{
     .session;
     background-color:   @replay;
 }
 
-.stopped {
+.stopped
+{
     .session;
     background-color:   @stop;
 }
 
-.session_row {
+.session_row
+{
     position:       relative;
     min-height:     64px;
 }
 
-.session_name, .package_name {
+.session_name, .package_name
+{
     font-size:      large;
     font-weight:    bold;
 }
 
-.session_exercise {
+.session_exercise
+{
     padding-left:   24px;
 }
 
-.session_model {
+.session_model
+{
     padding-left:   24px;
 }
 
 @session_margin: 6px;
 @topbar_margin: 20px;
 
-.session_top_right {
+.session_top_right
+{
     position:   absolute;
     top:        @session_margin;
     right:      @session_margin;
 }
 
-.session_bottom_right {
+.session_bottom_right
+{
     position:   absolute;
     right:      @session_margin;
     bottom:     @session_margin;
 }
 
-.session_search {
+.session_search
+{
     float:          right;
     margin-bottom:  @topbar_margin;
     position:       relative;
 }
 
-.session_search i {
+.session_search i
+{
     position:   absolute;
     top:        8px;
     left:       8px;
 }
 
-.session_search input {
+.session_search input
+{
     padding-left:   24px;
 }
 
-.session_actions a {
+.session_actions a
+{
     min-width:  72px;
 }
 
-.spin_btn {
+.spin_btn
+{
     width:  14px;
     height: 18px;
 }
