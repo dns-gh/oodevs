@@ -101,8 +101,9 @@ bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mous
         static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->Translate( dragPoint_, translation, Precision( point ) );
         dragPoint_ = point;
         controllers_.controller_.Update( entity );
+        return true;
     }
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
