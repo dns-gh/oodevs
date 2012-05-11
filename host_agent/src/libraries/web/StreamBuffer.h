@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <string>
+#include <vector>
 
 namespace web
 {
@@ -50,7 +51,7 @@ private:
 
 private:
     std::istream& src_;
-    char buffer_[4096];
+    std::vector< char > buffer_;
     size_t skip_;
     size_t size_;
 };

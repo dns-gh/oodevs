@@ -9,6 +9,8 @@
 
 #include "StreamBuffer.h"
 
+#include <stdint.h>
+
 using namespace web;
 
 // -----------------------------------------------------------------------------
@@ -19,6 +21,7 @@ StreamBuffer::StreamBuffer( std::istream& src )
     : src_   ( src )
     , skip_  ( 0 )
     , size_  ( 0 )
+    , buffer_( UINT16_MAX )
 {
     // NOTHING
 }
@@ -70,7 +73,7 @@ char StreamBuffer::Get()
 // -----------------------------------------------------------------------------
 size_t StreamBuffer::Peek( char** dst )
 {
-    FillAtLeast( INT_MAX );
+    FillAtLeast( INT16_MAX );
     *dst = &buffer_[skip_];
     return size_;
 }
@@ -124,7 +127,7 @@ void StreamBuffer::FillAtLeast( size_t size )
     skip_ = 0;
     if( src_.eof() )
         return;
-    src_.read( &buffer_[size_], sizeof buffer_ - size_ );
+    src_.read( &buffer_[size_], buffer_.size() - size_ );
     size_ += static_cast< size_t >( src_.gcount() );
 }
 
