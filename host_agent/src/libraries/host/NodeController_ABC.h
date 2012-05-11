@@ -11,6 +11,7 @@
 #define NODE_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <vector>
@@ -39,6 +40,7 @@ public:
     typedef Node_ABC T_Base;
     typedef boost::shared_ptr< T_Base > T_Node;
     typedef std::vector< T_Node > T_Nodes;
+    typedef boost::property_tree::ptree T_Tree;
     //@}
 
     //! @name Methods
@@ -52,6 +54,8 @@ public:
     virtual T_Node  Delete( const boost::uuids::uuid& id ) = 0;
     virtual T_Node  Start( const boost::uuids::uuid& id ) const = 0;
     virtual T_Node  Stop( const boost::uuids::uuid& id ) const = 0;
+    virtual T_Tree  GetPack( const boost::uuids::uuid& id ) const = 0;
+    virtual T_Tree  UploadPack( const boost::uuids::uuid& id, std::istream& src ) const = 0;
     //@}
 };
 

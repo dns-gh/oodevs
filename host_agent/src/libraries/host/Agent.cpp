@@ -235,22 +235,18 @@ Reply Agent::StopNode( const boost::uuids::uuid& id ) const
 
 // -----------------------------------------------------------------------------
 // Name: Agent::UploadPack
-// Created: BAX 2012-04-03
+// Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
 Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
 {
-    // doesn't do anything yet
-    std::vector< char > buf( 4096 );
-    size_t read = 0;
-    while( !src.eof() )
+    try
     {
-        src.read( &buf[0], buf.size() );
-        read += static_cast< size_t >( src.gcount() );
+        return Reply( ToJson( nodes_.UploadPack( id, src ) ) );
     }
-
-    boost::property_tree::ptree tree;
-    tree.put( "read", read );
-    return Reply( ToJson( tree ) );
+    catch( const std::exception& err )
+    {
+        return Reply( err.what(), false );
+    }
 }
 
 // -----------------------------------------------------------------------------

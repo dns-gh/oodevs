@@ -234,7 +234,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node&
         ( MakeOption( "name", node.name_ ) )
         ( MakeOption( "port", node.port_->Get() ) ),
         Utf8Convert( jar_path.remove_filename() ),
-        Utf8Convert( root_ / boost::lexical_cast< std::string >( node.GetId() ) / ( type_ + ".log" ) ) );
+        Utf8Convert( GetPath( root_, node ) / ( type_ + ".log" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,3 +285,31 @@ void NodeController::Stop( Node& node, bool skipSave ) const
         Save( node );
 }
 
+// -----------------------------------------------------------------------------
+// Name: NodeController::GetStash
+// Created: BAX 2012-05-11
+// -----------------------------------------------------------------------------
+NodeController::T_Tree NodeController::GetPack( const boost::uuids::uuid& id ) const
+{
+    return NodeController::T_Tree();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::UploadPack
+// Created: BAX 2012-05-11
+// -----------------------------------------------------------------------------
+NodeController::T_Tree NodeController::UploadPack( const boost::uuids::uuid& id, std::istream& src ) const
+{
+    boost::shared_ptr< Node > node = nodes_->Get( id );
+    if( !node )
+        return T_Tree();
+    const bool IsPackUploading = false; // TODO check concurrency
+    if( IsPackUploading )
+        throw std::runtime_error( "Another package is being uploaded" );
+    const boost::filesystem::path pack = GetPath( root_, *node ) / "pack";
+    system_.Remove( pack );
+    system_.MakeDirectory( pack );
+    FileSystem_ABC::T_Unpacker obj = system_.Unpack( pack, src );
+    obj->Unpack();
+    return GetPack( id );
+}
