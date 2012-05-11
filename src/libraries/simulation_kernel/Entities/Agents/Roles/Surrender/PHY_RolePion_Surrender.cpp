@@ -192,6 +192,19 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::SetAsPrisoner
+// Created: JSR 2012-05-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Surrender::SetAsPrisoner()
+{
+    if( !bPrisoner_ )
+    {
+        bPrisoner_ = true;
+        bHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::IsImprisoned
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------

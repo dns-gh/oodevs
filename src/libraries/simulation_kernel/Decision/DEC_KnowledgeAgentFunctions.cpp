@@ -421,6 +421,8 @@ void DEC_KnowledgeAgentFunctions::UnitDecisionalState( const DEC_Knowledge_Agent
     msg().set_key( key.c_str() );
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
+    if( key == "hostage" && value == "true" && callerAgent.IsValid() )
+        callerAgent.GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().SetAsPrisoner();
 }
 
 // -----------------------------------------------------------------------------
