@@ -13,7 +13,7 @@ masalife.brain.communication.setMessageTreatment( "report",
 
 masalife.brain.communication.setMessageTreatment( "ArrivedOnLima",
     function( content, sender )
-        if content.arrived then
+        if content.arrived and meKnowledge.pionsToAwait then
             meKnowledge.pionsToAwait[ content.me ] = nil
         end
     end )
