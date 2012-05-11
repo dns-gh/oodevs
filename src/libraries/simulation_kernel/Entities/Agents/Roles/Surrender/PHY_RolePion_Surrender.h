@@ -62,6 +62,7 @@ public:
     virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release                ();
     virtual bool Imprison               ( const MIL_Object_ABC& camp );
+    virtual void SetAsPrisoner          ();
     //@}
 
     //! @name Accessors
