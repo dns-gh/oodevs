@@ -12,6 +12,7 @@
 #include <runtime/Utf8.h>
 #include <cpplog/cpplog.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
@@ -108,6 +109,7 @@ HANDLE GetFileHandle( const Api_ABC& api, const std::wstring& log )
     SECURITY_ATTRIBUTES sec = {};
     sec.nLength        = sizeof sec;
     sec.bInheritHandle = true;
+    boost::filesystem::create_directories( boost::filesystem::path( log ).remove_filename() );
     HANDLE reply = api.CreateFile( log.c_str(), GENERIC_WRITE, FILE_SHARE_READ, &sec, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
     if( reply == INVALID_HANDLE_VALUE )
         throw std::runtime_error( "unable to open file " + Utf8Convert( log ) + " : " + api.GetLastError() );
