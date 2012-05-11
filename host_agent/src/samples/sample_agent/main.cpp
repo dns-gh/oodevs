@@ -51,7 +51,6 @@ struct Configuration
     std::wstring java;
     struct
     {
-        int host;
         int proxy;
         int period;
         int min;
@@ -86,7 +85,6 @@ struct Configuration
         {
             bool found = false;
             found |= ReadParameter( logs.dir, "--log_dir", i, argc, argv );
-            found |= ReadParameter( ports.host, "--port_host", i, argc, argv );
             found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
             found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
             found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
@@ -114,15 +112,16 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     host::UuidFactory uuids;
     web::Client client;
     host::Proxy proxy( log, runtime, system, cfg.logs.dir, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
-    proxy.Register( "api", "localhost", cfg.ports.host );
     host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.logs.dir, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
     host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.logs.dir, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
     host::SessionController sessions( log, runtime, system, uuids, cfg.logs.dir, cfg.session.data, cfg.session.applications, pool, ports );
     host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
-    web::Server server( log, pool, controller, cfg.ports.host );
+    const std::auto_ptr< host::Port_ABC > host = ports.Create();
+    web::Server server( log, pool, controller, host->Get() );
     server.Listen();
+    proxy.Register( "api", "localhost", host->Get() );
     host::SecurePool run( log, "server", pool );
     run.Post( boost::bind( &web::Server::Run, &server ) );
     getc( stdin );
@@ -189,7 +188,6 @@ int StartServer( int argc, const char* argv[] )
 
         Configuration cfg;
         cfg.logs.dir             = Utf8Convert( GetTree( tree, "logs.dir", Utf8Convert( logs ) ) );
-        cfg.ports.host           = GetTree( tree, "ports.host", 15000 );
         cfg.ports.period         = GetTree( tree, "ports.period", 40 );
         cfg.ports.min            = GetTree( tree, "ports.min", 50000 );
         cfg.ports.max            = GetTree( tree, "ports.max", 60000 );
