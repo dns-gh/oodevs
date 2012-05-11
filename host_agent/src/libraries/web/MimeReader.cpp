@@ -26,7 +26,7 @@ using namespace web;
 namespace
 {
 template< typename T >
-struct PartReader
+struct PartReader : boost::noncopyable
 {
     PartReader( T part, host::Pool_ABC& pool )
         : async_ ( part->async_ )
