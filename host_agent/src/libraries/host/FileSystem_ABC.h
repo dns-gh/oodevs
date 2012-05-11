@@ -11,6 +11,7 @@
 #define FILE_SYSTEM_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include <vector>
 
@@ -24,6 +25,25 @@ namespace filesystem3
 
 namespace host
 {
+// =============================================================================
+/** @class  Unpacker_ABC
+    @brief  Unpacker_ABC interface
+*/
+// Created: BAX 2012-05-11
+// =============================================================================
+struct Unpacker_ABC : public boost::noncopyable
+{
+    //! @name Constructors/Destructor
+    //@{
+             Unpacker_ABC() {}
+    virtual ~Unpacker_ABC() {}
+    //@}
+
+    //! @name Methods
+    //@{
+    virtual void Unpack() = 0;
+    //@}
+};
 
 // =============================================================================
 /** @class  FileSystem_ABC
@@ -40,6 +60,11 @@ public:
     virtual ~FileSystem_ABC() {}
     //@}
 
+    //! @name Public helpers
+    //@{
+    typedef boost::shared_ptr< Unpacker_ABC > T_Unpacker;
+    //@}
+
     //! @name Methods
     //@{
     virtual bool IsFile( const boost::filesystem3::path& path ) const = 0;
@@ -52,7 +77,7 @@ public:
     virtual void WriteFile( const boost::filesystem3::path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const boost::filesystem3::path& path ) const = 0;
     virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const = 0;
-    virtual void Unpack( const boost::filesystem3::path& input, const boost::filesystem3::path& prefix ) const = 0;
+    virtual T_Unpacker Unpack( const boost::filesystem3::path& output, std::istream& src ) const = 0;
     //@}
 };
 

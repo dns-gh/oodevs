@@ -14,6 +14,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/make_shared.hpp>
 
 #define  LIBARCHIVE_STATIC
 #include <libarchive/archive.h>
@@ -173,8 +174,9 @@ typedef struct archive_entry ArchiveEntry;
 
 void AbortArchive( cpplog::BaseLogger& log, Archive* arc )
 {
-    LOG_ERROR( log ) << "[archive] " << archive_error_string( arc );
-    throw std::runtime_error( "[archive] Operation aborted" );
+    const std::string err = archive_error_string( arc );
+    LOG_ERROR( log ) << "[archive] " << err;
+    throw std::runtime_error( "[archive] Operation aborted, " + err );
 }
 
 void CheckArchiveCode( cpplog::BaseLogger& log, Archive* arc, int err )
@@ -200,49 +202,91 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
             AbortArchive( log, dst );
     }
 }
+
+struct Unpacker : public Unpacker_ABC
+{
+    Unpacker( cpplog::BaseLogger& log, const boost::filesystem::path& output, std::istream& stream )
+        : log_   ( log )
+        , output_( output )
+        , stream_( stream )
+        , buffer_( UINT16_MAX )
+    {
+        // NOTHING
+    }
+
+    ~Unpacker()
+    {
+        // NOTHING
+    }
+
+    static __LA_SSIZE_T Read( Archive* arc, void* userdata, const void** buffer )
+    {
+        Unpacker* it = static_cast< Unpacker* >( userdata );
+        __LA_SSIZE_T fill = 0;
+        *buffer = &it->buffer_[0];
+        while( fill < 1 && !it->stream_.eof() )
+        {
+            it->stream_.read( &it->buffer_[ fill ], it->buffer_.size() - fill );
+            fill += it->stream_.gcount();
+        }
+        return fill;
+    }
+
+    void Unpack()
+    {
+        boost::shared_ptr< Archive > src( archive_read_new(), archive_read_free );
+        archive_read_support_format_zip( src.get() );
+        archive_read_set_read_callback( src.get(), &Unpacker::Read );
+        archive_read_set_callback_data( src.get(), this );
+        int err = archive_read_open1( src.get() );
+        if( err != ARCHIVE_OK )
+            throw std::runtime_error( archive_error_string( src.get() ) );
+
+        boost::shared_ptr< Archive > dst( archive_write_disk_new(), archive_write_free );
+        int flags = ARCHIVE_EXTRACT_TIME
+              | ARCHIVE_EXTRACT_PERM
+              | ARCHIVE_EXTRACT_ACL
+              | ARCHIVE_EXTRACT_FFLAGS;
+        archive_write_disk_set_options( dst.get(), flags );
+        archive_write_disk_set_standard_lookup( dst.get() );
+
+       for( ;; )
+        {
+            ArchiveEntry* entry;
+            err = archive_read_next_header( src.get(), &entry );
+            if( err == ARCHIVE_EOF )
+                break;
+            if( err != ARCHIVE_OK )
+                CheckArchiveCode( log_, src.get(), err );
+
+            const boost::filesystem::path next = output_ / archive_entry_pathname_w( entry );
+            archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
+
+            err = archive_write_header( dst.get(), entry );
+            if( err != ARCHIVE_OK )
+                CheckArchiveCode( log_, dst.get(), err );
+            else if( archive_entry_size( entry ) > 0 )
+                CopyBlocks( log_, src.get(), dst.get() );
+            err = archive_write_finish_entry( dst.get() );
+            if( err != ARCHIVE_OK )
+                CheckArchiveCode( log_, dst.get(), err );
+        }
+        archive_read_close( src.get() );
+        archive_write_close( dst.get() );
+    }
+
+    cpplog::BaseLogger& log_;
+    const boost::filesystem::path output_;
+    std::istream& stream_;
+    std::vector< char > buffer_;
+};
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::Unpack
-// Created: BAX 2012-03-21
+// Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-void FileSystem::Unpack( const boost::filesystem::path& input, const boost::filesystem::path& prefix ) const
+FileSystem_ABC::T_Unpacker FileSystem::Unpack( const boost::filesystem::path& output, std::istream& src ) const
 {
-    boost::shared_ptr< Archive > src( archive_read_new(), archive_read_free );
-    archive_read_support_format_zip( src.get() );
-    int err = archive_read_open_filename_w( src.get(), input.wstring().c_str(), 1<<16 );
-    if( err != ARCHIVE_OK )
-        AbortArchive( log_, src.get() );
-
-    boost::shared_ptr< Archive > dst( archive_write_disk_new(), archive_write_free );
-    int flags = ARCHIVE_EXTRACT_TIME
-              | ARCHIVE_EXTRACT_PERM
-              | ARCHIVE_EXTRACT_ACL
-              | ARCHIVE_EXTRACT_FFLAGS;
-    archive_write_disk_set_options( dst.get(), flags );
-    archive_write_disk_set_standard_lookup( dst.get() );
-
-    for( ;; )
-    {
-        ArchiveEntry* entry;
-        err = archive_read_next_header( src.get(), &entry );
-        if( err == ARCHIVE_EOF )
-            break;
-        if( err != ARCHIVE_OK )
-            CheckArchiveCode( log_, src.get(), err );
-
-        const boost::filesystem::path next = prefix / archive_entry_pathname_w( entry );
-        archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
-
-        err = archive_write_header( dst.get(), entry );
-        if( err != ARCHIVE_OK )
-            CheckArchiveCode( log_, dst.get(), err );
-        else if( archive_entry_size( entry ) > 0 )
-            CopyBlocks( log_, src.get(), dst.get() );
-        err = archive_write_finish_entry( dst.get() );
-        if( err != ARCHIVE_OK )
-            CheckArchiveCode( log_, dst.get(), err );
-    }
-    archive_read_close( src.get() );
-    archive_write_close( dst.get() );
+    return boost::make_shared< Unpacker >( log_, output, src );
 }
