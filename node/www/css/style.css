@@ -30,3 +30,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .package,.package table{margin-bottom:0;padding-bottom:0;}
 .package .badge{position:relative;top:-1px;}
 .upload_alert span{margin-left:28px;}
+.exercise_briefing h2,.exercise_briefing h1{font-size:small;font-weight:bold;}
+.exercise_briefing h1:first-child{display:none;}
+.exercise_briefing .deps{margin-bottom:8px;}
