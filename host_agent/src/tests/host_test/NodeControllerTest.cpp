@@ -94,7 +94,7 @@ namespace
 
         boost::shared_ptr< MockProcess > Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( "e:/jar", L"node.id" ).returns( boost::assign::list_of< boost::filesystem::path >( "a/b/c/node.id" )( "node.id" ) );
+            MOCK_EXPECT( sub.system.Glob ).once().with( root + "/node", L"node.id" ).returns( boost::assign::list_of< boost::filesystem::path >( "a/b/c/node.id" )( "node.id" ) );
 
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "a/b/c/node.id" ).returns( nodeActive );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1337 ).returns( new MockPort( 1337 ) );
