@@ -59,7 +59,6 @@ public:
     void Construct( MIL_Object_ABC& object );
     void Construct( MIL_Object_ABC& object, float rDeltaPercentage );
     void Destroy( MIL_Object_ABC& object );
-    void Destroy( MIL_Object_ABC& object, float rDeltaPercentage );
     //@}
 
     //! @name Accessors

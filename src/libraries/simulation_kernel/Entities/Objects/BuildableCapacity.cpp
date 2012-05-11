@@ -239,15 +239,6 @@ void BuildableCapacity::Construct( MIL_Object_ABC& object, float rDeltaPercentag
 
 // -----------------------------------------------------------------------------
 // Name: BuildableCapacity::Destroy
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-void BuildableCapacity::Destroy( MIL_Object_ABC& object, float rDeltaPercentage )
-{
-    object.GetAttribute< ConstructionAttribute >().Build( -rDeltaPercentage );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BuildableCapacity::Destroy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 void BuildableCapacity::Destroy( MIL_Object_ABC& object )
@@ -263,11 +254,13 @@ void BuildableCapacity::ChangeConstructionPercentage( MIL_Object_ABC& object, fl
 {
     if( object.IsMarkedForDestruction() )
         return;
-    const float rDeltaPercentage = rNewConstructionPercentage - static_cast< float >( object.GetAttribute< ConstructionAttribute >().GetState() );
-    if( rDeltaPercentage == 0 )
+    const float state = static_cast< float >( object.GetAttribute< ConstructionAttribute >().GetState() );
+    if( state == rNewConstructionPercentage )
         return;
-    if( rDeltaPercentage > 0 )
-        Construct( object, rDeltaPercentage );
+    if( rNewConstructionPercentage == 0 )
+        Construct( object, -1 );
+    else if( rNewConstructionPercentage == 1 )
+        Construct( object, 1 );
     else
-        Destroy( object, -rDeltaPercentage );
+        Construct( object, rNewConstructionPercentage - state );
 }
