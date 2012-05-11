@@ -140,3 +140,18 @@ BOOST_FIXTURE_TEST_CASE( reader_skip_invalid_mime_handlers, Fixture )
     reader.Parse( pool, buffer );
     BOOST_CHECK_EQUAL( count, 1 );
 }
+
+BOOST_FIXTURE_TEST_CASE( reader_skip_unregistered_parts, Fixture )
+{
+    const std::string limit = "0123456789abcdefedcba9876543210";
+    const std::string headers = "Content-Disposition: form-data; filename=\"wut\"; name=\"my_name\"";
+    std::stringstream buffer;
+    buffer << "--" + limit + " \t \r\n"
+           << headers + "\r\n"
+           << "\r\n"
+           << "blah\r\n"
+           << "--" + limit + "--\r\n";
+    reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
+    BOOST_CHECK_EQUAL( reader.IsValid(), true );
+    reader.Parse( pool, buffer );
+}

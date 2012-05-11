@@ -23,6 +23,27 @@
 
 using namespace web;
 
+namespace
+{
+template< typename T >
+struct PartReader
+{
+    PartReader( T part, host::Pool_ABC& pool )
+        : async_ ( part->async_ )
+        , future_( pool.Post( boost::bind( &AsyncStream::Read, &async_, part->handler_ ) ) )
+    {
+        // NOTHING
+    }
+    ~PartReader()
+    {
+        async_.CloseWrite();
+        future_.wait();
+    }
+    AsyncStream& async_;
+    host::Pool_ABC::Future future_;
+};
+}
+
 struct MimeReader::Part : boost::noncopyable
 {
     explicit Part( const std::string& name, const MimeReader::Handler handler )
@@ -185,7 +206,7 @@ size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_
 }
 
 template< typename T >
-void ParseData( StreamBuffer& buf, T part, const std::string boundary )
+void ParseData( StreamBuffer& buf, const std::string boundary, T part = T() )
 {
     const std::string end = "\r\n--" + boundary;
     while( !buf.Eof() )
@@ -206,6 +227,13 @@ void ParseData( StreamBuffer& buf, T part, const std::string boundary )
             part->async_.Write( ptr, read - end.size() );
         buf.Skip( read - end.size() );
     }
+}
+
+template< typename T >
+void ParsePart( StreamBuffer& buf, const std::string boundary, T part, host::Pool_ABC& pool )
+{
+    PartReader< T > reader( part, pool );
+    ParseData( buf, boundary, part );
 }
 
 template< typename T >
@@ -260,9 +288,9 @@ void MimeReader::Parse( host::Pool_ABC& pool, std::istream& src )
         if( !IsDelimiterLine( line, end ) )
             break;
         T_Part part = NextPart( parts_, ParseHeaders( buf ) );
-        host::Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Read, &part->async_, part->handler_ ) );
-        ParseData( buf, part, boundary_ );
-        part->async_.CloseWrite();
-        ft.wait();
+        if( part )
+            ParsePart( buf, boundary_, part, pool );
+        else
+            ParseData< T_Part >( buf, boundary_ );
     }
 }
