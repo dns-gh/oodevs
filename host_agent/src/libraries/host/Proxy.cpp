@@ -163,7 +163,7 @@ void Proxy::Start()
             Utf8Convert( jar_path.remove_filename() ),
             Utf8Convert( logs_ / "proxy.log" ) );
     if( !process_ )
-        throw new std::runtime_error( "Unable to start proxy process" );
+        throw std::runtime_error( "Unable to start proxy process" );
     Save();
 }
 
