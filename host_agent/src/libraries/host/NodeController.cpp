@@ -42,10 +42,9 @@ std::string MakeOption( const std::string& option, const T& value )
     return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
 }
 
-boost::filesystem::path GetPath( const boost::filesystem::path& path, const Node& node )
+boost::filesystem::path GetPath( const boost::filesystem::path& root, const Node& node )
 {
-    boost::filesystem::path copy = path;
-    return copy.remove_filename() / boost::lexical_cast< std::wstring >( node.id_ );
+    return root / boost::lexical_cast< std::wstring >( node.id_ );
 }
 
 std::string GetPrefix( const std::string& type, const Node& node )
@@ -63,7 +62,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const FileSystem_ABC& system,
                                 const UuidFactory_ABC& uuids,
                                 const Proxy_ABC& proxy,
-                                const boost::filesystem::path& logs,
+                                const boost::filesystem::path& root,
                                 const boost::filesystem::path& java,
                                 const boost::filesystem::path& jar,
                                 const boost::filesystem::path& web,
@@ -75,7 +74,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , system_ ( system )
     , uuids_  ( uuids )
     , proxy_  ( proxy )
-    , logs_   ( logs / "nodes" )
+    , root_   ( root / type )
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
@@ -84,7 +83,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , ports_  ( ports )
     , nodes_  ( new Container< Node >() )
 {
-    system.MakeDirectory( logs_ );
+    system.MakeDirectory( root_ );
     if( !system_.Exists( java_ ) )
         throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
     if( !system_.IsFile( java_ ) )
@@ -112,9 +111,7 @@ NodeController::~NodeController()
 // -----------------------------------------------------------------------------
 void NodeController::Reload()
 {
-    boost::filesystem::path dir = jar_;
-    const std::wstring wtype = Utf8Convert( type_ );
-    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( dir.remove_filename(), wtype + L".id" ) )
+    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
         try
         {
             boost::shared_ptr< Node > node = boost::make_shared< Node >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
@@ -175,7 +172,7 @@ void NodeController::Create( Node& node, bool isReload )
     const int port = node.port_->Get();
     LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.id_ << " " << node.name_ << " :" << port;
     if( !isReload )
-        system_.MakeDirectory( GetPath( jar_, node ) );
+        system_.MakeDirectory( GetPath( root_, node ) );
     proxy_.Register( GetPrefix( type_, node ), "localhost", port );
     if( isReload )
         Save( node );
@@ -201,7 +198,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
 // -----------------------------------------------------------------------------
 void NodeController::Save( const Node& node ) const
 {
-    const boost::filesystem::path path = GetPath( jar_, node ) / ( Utf8Convert( type_ ) + L".id" );
+    const boost::filesystem::path path = GetPath( root_, node ) / ( type_ + ".id" );
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
 }
 
@@ -217,7 +214,7 @@ NodeController::T_Node NodeController::Delete( const boost::uuids::uuid& id )
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
     proxy_.Unregister( GetPrefix( type_, *node ) );
     Stop( *node, true );
-    pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( jar_, *node ) ) );
+    pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( root_, *node ) ) );
     return node;
 }
 
@@ -237,7 +234,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node&
         ( MakeOption( "name", node.name_ ) )
         ( MakeOption( "port", node.port_->Get() ) ),
         Utf8Convert( jar_path.remove_filename() ),
-        Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( node.GetId() ) + ".log" ) ) );
+        Utf8Convert( root_ / boost::lexical_cast< std::string >( node.GetId() ) / ( type_ + ".log" ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -48,6 +48,7 @@ bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const c
 
 struct Configuration
 {
+    std::wstring root;
     std::wstring java;
     struct
     {
@@ -56,10 +57,6 @@ struct Configuration
         int min;
         int max;
     } ports;
-    struct
-    {
-        std::wstring dir;
-    } logs;
     struct
     {
         std::wstring jar;
@@ -84,7 +81,7 @@ struct Configuration
         for( int i = 0; i < argc; ++i )
         {
             bool found = false;
-            found |= ReadParameter( logs.dir, "--log_dir", i, argc, argv );
+            found |= ReadParameter( root, "--root", i, argc, argv );
             found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
             found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
             found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
@@ -111,11 +108,11 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     host::Pool pool( 8 );
     host::UuidFactory uuids;
     web::Client client;
-    host::Proxy proxy( log, runtime, system, cfg.logs.dir, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
+    host::Proxy proxy( log, runtime, system, cfg.root + L"/log", cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
     host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-    host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.logs.dir, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
-    host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.logs.dir, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
-    host::SessionController sessions( log, runtime, system, uuids, cfg.logs.dir, cfg.session.data, cfg.session.applications, pool, ports );
+    host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
+    host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
+    host::SessionController sessions( log, runtime, system, uuids, cfg.root + L"/log", cfg.session.data, cfg.session.applications, pool, ports );
     host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
     const std::auto_ptr< host::Port_ABC > host = ports.Create();
@@ -146,25 +143,25 @@ struct NullLogger : public cpplog::BaseLogger
     }
 };
 
-boost::filesystem::path GetLogDir( int argc, const char* argv[] )
+boost::filesystem::path GetRootDir( int argc, const char* argv[] )
 {
     std::wstring dir;
     for( int i = 0; i < argc; ++i )
-        if( ReadParameter( dir, "--log_dir", i, argc, argv ) )
+        if( ReadParameter( dir, "--root", i, argc, argv ) )
             return dir;
     NullLogger nil;
     runtime::Factory factory( nil );
     boost::filesystem::path reply = factory.GetRuntime().GetModuleFilename();
     reply.remove_filename();
     reply.remove_filename();
-    return reply / "log";
+    return reply;
 }
 
 int StartServer( int argc, const char* argv[] )
 {
-    const boost::filesystem::path logs = GetLogDir( argc-1, argv+1 );
+    const boost::filesystem::path root = GetRootDir( argc-1, argv+1 );
     cpplog::TeeLogger tee(
-        new cpplog::FileLogger( ( logs / "host_agent.log" ).string(), true ), true,
+        new cpplog::FileLogger( ( root / "log" / "host_agent.log" ).string(), true ), true,
         new cpplog::StdErrLogger(), true );
     cpplog::BackgroundLogger log( tee );
     LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";
@@ -176,8 +173,7 @@ int StartServer( int argc, const char* argv[] )
         host::FileSystem system( log );
 
         boost::property_tree::ptree tree;
-        const boost::filesystem::path root = runtime.GetModuleFilename().remove_filename();
-        const boost::filesystem::path config = root / "host_agent.config";
+        const boost::filesystem::path config = root / "host" / "host_agent.config";
         if( system.IsFile( config ) )
             tree = host::FromJson( system.ReadFile( config ) );
 
@@ -186,28 +182,29 @@ int StartServer( int argc, const char* argv[] )
         if( java.empty() )
             throw std::runtime_error( "Missing JAVA_HOME environment variable. Please install a Java Runtime Environment" );
 
+        const boost::filesystem::path bin = runtime.GetModuleFilename().remove_filename();
         Configuration cfg;
-        cfg.logs.dir             = Utf8Convert( GetTree( tree, "logs.dir", Utf8Convert( logs ) ) );
+        cfg.root                 = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
         cfg.ports.period         = GetTree( tree, "ports.period", 40 );
         cfg.ports.min            = GetTree( tree, "ports.min", 50000 );
         cfg.ports.max            = GetTree( tree, "ports.max", 60000 );
         cfg.ports.proxy          = GetTree( tree, "ports.proxy", 8080 );
         cfg.cluster.enabled      = GetTree( tree, "cluster.enabled", true );
         cfg.java                 = Utf8Convert( java );
-        cfg.proxy.jar            = Utf8Convert( GetTree( tree, "proxy.jar",            Utf8Convert( root / "proxy.jar" ) ) );
-        cfg.node.jar             = Utf8Convert( GetTree( tree, "node.jar",             Utf8Convert( root / "node.jar" ) ) );
-        cfg.node.root            = Utf8Convert( GetTree( tree, "node.root",            Utf8Convert( root / "../www" ) ) );
-        cfg.session.data         = Utf8Convert( GetTree( tree, "session.data",         Utf8Convert( root / "../data" ) ) );
-        cfg.session.applications = Utf8Convert( GetTree( tree, "session.applications", Utf8Convert( root / "../bin" ) ) );
+        cfg.proxy.jar            = Utf8Convert( GetTree( tree, "proxy.jar",            Utf8Convert( bin / "proxy.jar" ) ) );
+        cfg.node.jar             = Utf8Convert( GetTree( tree, "node.jar",             Utf8Convert( bin / "node.jar" ) ) );
+        cfg.node.root            = Utf8Convert( GetTree( tree, "node.root",            Utf8Convert( bin / "../www" ) ) );
+        cfg.session.data         = Utf8Convert( GetTree( tree, "session.data",         Utf8Convert( bin / "../data" ) ) );
+        cfg.session.applications = Utf8Convert( GetTree( tree, "session.applications", Utf8Convert( bin ) ) );
 
-        system.WriteFile( root / "host_agent.config", host::ToJson( tree, true ) );
+        system.WriteFile( root / "host" / "host_agent.config", host::ToJson( tree, true ) );
 
         bool valid = cfg.Parse( log, argc-1, argv+1 );
         if( !valid )
             return -1;
         Start( log, runtime, system, cfg );
     }
-    catch( const std::runtime_error& err )
+    catch( const std::exception& err )
     {
         LOG_ERROR( log ) << "[main] Unable to start, " << err.what();
         return -1;
