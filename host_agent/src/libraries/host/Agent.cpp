@@ -234,6 +234,26 @@ Reply Agent::StopNode( const boost::uuids::uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::UploadPack
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
+{
+    // doesn't do anything yet
+    std::vector< char > buf( 4096 );
+    size_t read = 0;
+    while( !src.eof() )
+    {
+        src.read( &buf[0], buf.size() );
+        read += static_cast< size_t >( src.gcount() );
+    }
+
+    boost::property_tree::ptree tree;
+    tree.put( "read", read );
+    return Reply( ToJson( tree ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
@@ -326,20 +346,4 @@ Reply Agent::ListExercises( int offset, int limit ) const
 Reply Agent::CountExercises() const
 {
     return Count( sessions_.GetExercises().size() );
-}
-
-Reply Agent::UploadPack( std::istream& src )
-{
-    // does't do anything yet
-    std::vector< char > buf( 4096 );
-    size_t read = 0;
-    while( !src.eof() )
-    {
-        src.read( &buf[0], buf.size() );
-        read += static_cast< size_t >( src.gcount() );
-    }
-
-    boost::property_tree::ptree tree;
-    tree.put( "read", read );
-    return Reply( ToJson( tree ) );
 }

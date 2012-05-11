@@ -452,9 +452,9 @@ std::string Controller::CountExercises( const Request_ABC& /*request*/ )
 
 namespace
 {
-void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, std::istream& stream )
+void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, const boost::uuids::uuid& id, std::istream& stream )
 {
-    reply = agent.UploadPack( stream );
+    reply = agent.UploadPack( id, stream );
 }
 }
 
@@ -464,8 +464,10 @@ void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, std::istream& str
 // -----------------------------------------------------------------------------
 std::string Controller::UploadPack( Request_ABC& request )
 {
+    const std::string id = RequireParameter< std::string >( "id", request );
+    LOG_INFO( log_ ) << "[web] /upload_pack id: " << id;
     host::Reply reply( "Unable to find mime part 'pack'", false );
-    request.RegisterMime( "pack", boost::bind( &OnUploadPack, boost::ref( reply ), boost::ref( agent_ ), _1 ) );
+    request.RegisterMime( "pack", boost::bind( &OnUploadPack, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
     request.ParseMime();
     return WriteHttpReply( reply );
 }

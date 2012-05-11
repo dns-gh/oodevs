@@ -59,6 +59,7 @@ public:
     virtual Reply DeleteNode( const boost::uuids::uuid& id );
     virtual Reply StartNode ( const boost::uuids::uuid& id ) const;
     virtual Reply StopNode  ( const boost::uuids::uuid& id ) const;
+    virtual Reply UploadPack( const boost::uuids::uuid& id, std::istream& src );
     //@}
 
     //! @name Session Methods
@@ -76,7 +77,6 @@ public:
     //@{
     virtual Reply ListExercises ( int offset, int limit ) const;
     virtual Reply CountExercises() const;
-    virtual Reply UploadPack( std::istream& src );
     //@}
 
 private:

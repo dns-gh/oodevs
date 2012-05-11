@@ -56,6 +56,7 @@ namespace
         MOCK_METHOD( DeleteNode, 1 );
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
+        MOCK_METHOD( UploadPack, 2 );
         // sessions
         MOCK_METHOD( ListSessions, 3 );
         MOCK_METHOD( CountSessions, 1 );
@@ -67,8 +68,6 @@ namespace
         // exercises
         MOCK_METHOD( ListExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
-        // other
-        MOCK_METHOD( UploadPack, 1 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
@@ -333,13 +332,13 @@ bool RegisterMime( Request_ABC::MimeHandler& dst, const Request_ABC::MimeHandler
 
 BOOST_FIXTURE_TEST_CASE( controller_upload_pack, Fixture )
 {
-    SetRequest( "POST", "/upload_pack" );
+    SetRequest( "POST", "/upload_pack", boost::assign::map_list_of( "id", default_id_string ) );
     Request_ABC::MimeHandler handler;
     MOCK_EXPECT( request.RegisterMime ).once().with( "pack", boost::bind( &RegisterMime, boost::ref( handler ), _1 ) );
     const std::string dummy = "dummy mime file";
     std::stringstream stream( dummy );
     MOCK_EXPECT( request.ParseMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
     const std::string expected = "dummy reply";
-    MOCK_EXPECT( agent.UploadPack ).once().with( boost::ref( stream ) ).returns( expected );
+    MOCK_EXPECT( agent.UploadPack ).once().with( default_id, boost::ref( stream ) ).returns( expected );
     CheckNotify( 200, expected );
 }
