@@ -1,4 +1,4 @@
-$("#upload_form").attr "action", window.location.protocol + "//" + window.location.hostname + ":" + proxy + "/api/upload_pack"
+$("#upload_form").attr "action", window.location.protocol + "//" + window.location.hostname + ":" + proxy + "/api/upload_pack?id=" + uuid
 
 spin_opts =
     lines:      12

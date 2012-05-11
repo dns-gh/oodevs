@@ -1,7 +1,7 @@
 (function() {
   var spin_opts, spinner, toggle_load, tr, uid, _i, _len, _ref, _ref2;
 
-  $("#upload_form").attr("action", window.location.protocol + "//" + window.location.hostname + ":" + proxy + "/api/upload_pack");
+  $("#upload_form").attr("action", window.location.protocol + "//" + window.location.hostname + ":" + proxy + "/api/upload_pack?id=" + uuid);
 
   spin_opts = {
     lines: 12,
