@@ -72,6 +72,8 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
             ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
             ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
         {
+            if( rMaxTrafficability_ != 0. && weight > rMaxTrafficability_ )
+                return -1.; //$$$$ CMA in order to block the unit if there is a non-trafficable object
             double rCostIn = pathClass_.GetObjectCost( objectType_ );
             if( rCostIn < 0. )
                 return 0.;
