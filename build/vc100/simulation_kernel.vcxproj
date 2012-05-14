@@ -137,6 +137,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.cpp" />
@@ -477,7 +478,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfEquippedCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfHeightCapacity.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithEnemyCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InterferenceCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\IntoxicationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.cpp" />
@@ -882,6 +882,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h" />
@@ -1285,7 +1286,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfEquippedCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfHeightCapacity.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithEnemyCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InterferenceCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\IntoxicationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.h" />

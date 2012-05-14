@@ -37,7 +37,7 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -55,7 +55,7 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -130,7 +130,7 @@
       <terrain type="suburb" value="1"/>
       <terrain type="urban area" value="2"/>
     </heuristic>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -222,7 +222,7 @@
   </object>
   <object geometry="polygon" name="zone protegee" symbol="G*MPSF----****X" type="safe zone">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
@@ -282,7 +282,7 @@
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="100"/>
     <interference/>
   </object>
@@ -341,6 +341,7 @@
   </object>
   <object geometry="polygon" name="zone interdite mouvement" symbol="G*MPOGZ---****X" type="movement forbidden area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interact-with-enemy friend="true"/>
     <interaction-height height="6000"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -376,7 +377,7 @@
   </object>
   <object geometry="line" name="zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
     <avoidable distance="10"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
@@ -444,4 +445,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1926180529" -->
+<!-- signature="3206549976" -->

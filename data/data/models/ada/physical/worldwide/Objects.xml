@@ -21,7 +21,7 @@
       <terrain type="bridge" value="8"/>
       <terrain type="suburb" value="7"/>
     </heuristic>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -33,7 +33,7 @@
   </object>
   <object geometry="polygon" name="Jamming Area" symbol="G*EW***********" type="jamming area">
     <avoidable distance="250"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -155,7 +155,7 @@
       </buildable>
       <improvable/>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -174,7 +174,7 @@
       </buildable>
       <improvable/>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -466,7 +466,7 @@
       </buildable>
       <improvable/>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -523,4 +523,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1336574287" -->
+<!-- signature="3752933404" -->

@@ -226,8 +226,11 @@ void ADN_Objects_GUI::Build()
         builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
         builder.AddField< ADN_CheckBox >( protection, tr( "Genie prepared" ), vInfosConnectors[ eProtectionCapacity_GeniePrepared ] );
 
-        ADN_GroupBox* interactWithEnemy = new ADN_GroupBox( 3, Qt::Horizontal, tr( "InteractWithEnemy" ), capacitiesGroup );
-        vInfosConnectors[ eInteractWithEnemyCapacityPresent ] = & interactWithEnemy->GetConnector();
+        ADN_GroupBox* interactWithSide = new ADN_GroupBox( 3, Qt::Horizontal, tr( "InteractWithSide" ), capacitiesGroup );
+        vInfosConnectors[ eInteractWithSideCapacityPresent ] = & interactWithSide->GetConnector();
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Friend" ), vInfosConnectors[ eInteractWithSideCapacity_Friend ] );
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Enemy" ), vInfosConnectors[ eInteractWithSideCapacity_Enemy ] );
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Neutral" ), vInfosConnectors[ eInteractWithSideCapacity_Neutral ] );
 
         ADN_GroupBox* occupable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Occupable" ), capacitiesGroup );
         vInfosConnectors[ eOccupableCapacityPresent ] = & occupable->GetConnector();

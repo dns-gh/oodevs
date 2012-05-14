@@ -1398,9 +1398,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfHeightCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithEnemyCapacity.cpp">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InterferenceCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
@@ -2540,6 +2537,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp">
       <Filter>Source Files\Entities\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3717,9 +3717,6 @@
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractIfHeightCapacity.h">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithEnemyCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InterferenceCapacity.h">
@@ -4993,6 +4990,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h">
       <Filter>Source Files\Decision\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

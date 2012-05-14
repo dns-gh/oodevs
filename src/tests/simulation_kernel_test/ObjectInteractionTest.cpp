@@ -23,7 +23,7 @@
 #include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
 #include "simulation_kernel/Entities/Objects/DetectionCapacity.h"
 #include "simulation_kernel/Entities/Objects/InteractIfEquippedCapacity.h"
-#include "simulation_kernel/Entities/Objects/InteractWithEnemyCapacity.h"
+#include "simulation_kernel/Entities/Objects/InteractWithSideCapacity.h"
 #include "simulation_kernel/Entities/Objects/ProtectionCapacity.h"
 #include "simulation_kernel/Entities/Objects/SupplyRouteAttribute.h"
 #include "simulation_kernel/Entities/Objects/SupplyCapacity.h"

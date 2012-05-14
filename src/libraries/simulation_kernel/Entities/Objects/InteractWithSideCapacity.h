@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2009 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __InteractWithEnemyCapacity_h_
-#define __InteractWithEnemyCapacity_h_
+#ifndef __InteractWithSideCapacity_h_
+#define __InteractWithSideCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
 
@@ -17,20 +17,22 @@ namespace xml
     class xistream;
 }
 
+class MIL_Army_ABC;
+
 // =============================================================================
-/** @class  InteractWithEnemyCapacity
-    @brief  InteractWithEnemyCapacity
+/** @class  InteractWithSideCapacity
+    @brief  InteractWithSideCapacity
 */
-// Created: LDC 2009-03-06
+// Created: CMA 2012-05-10
 // =============================================================================
-class InteractWithEnemyCapacity : public ObjectCapacity_ABC
+class InteractWithSideCapacity : public ObjectCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InteractWithEnemyCapacity();
-    explicit InteractWithEnemyCapacity( xml::xistream& xis );
-    virtual ~InteractWithEnemyCapacity();
+             InteractWithSideCapacity();
+    explicit InteractWithSideCapacity( xml::xistream& xis );
+    virtual ~InteractWithSideCapacity();
     //@}
 
     //! @name Operations
@@ -38,15 +40,24 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    bool IsPossible( const MIL_Army_ABC& army1, const MIL_Army_ABC& army2 ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    InteractWithEnemyCapacity& operator=( const InteractWithEnemyCapacity& ); //!< Assignment operator
+    InteractWithSideCapacity& operator=( const InteractWithSideCapacity& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool friendSide_;
+    bool enemySide_;
+    bool neutralSide_;
     //@}
 };
 
-BOOST_CLASS_EXPORT_KEY( InteractWithEnemyCapacity )
+BOOST_CLASS_EXPORT_KEY( InteractWithSideCapacity )
 
-#endif // __InteractWithEnemyCapacity_h_
+#endif // __InteractWithSideCapacity_h_

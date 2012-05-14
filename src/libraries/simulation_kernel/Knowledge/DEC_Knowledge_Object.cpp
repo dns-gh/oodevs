@@ -23,7 +23,7 @@
 #include "Entities/Objects/CrowdCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/InteractionHeightAttribute.h"
-#include "Entities/Objects/InteractWithEnemyCapacity.h"
+#include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/ObstacleAttribute.h"
@@ -1006,8 +1006,9 @@ double DEC_Knowledge_Object::GetMaxTrafficability() const
 {
     if( const TrafficabilityAttribute* pTrafficability = RetrieveAttribute< TrafficabilityAttribute >() )
     {
-        bool interact = pObjectType_ && pObjectType_->GetCapacity< InteractWithEnemyCapacity >();
-        if( !interact || pArmyKnowing_ != pOwnerArmy_ )
+        const InteractWithSideCapacity* pSideInteraction = pObjectType_->GetCapacity< InteractWithSideCapacity >();
+        bool interact = pObjectType_ && pSideInteraction;
+        if( !interact || pSideInteraction->IsPossible( *pArmyKnowing_, *pOwnerArmy_ ) )
             return pTrafficability->GetMaxValue();
     }
     return 0.;

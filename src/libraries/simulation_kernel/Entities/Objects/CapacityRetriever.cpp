@@ -30,7 +30,7 @@
 #include "TerrainHeuristicCapacity.h"
 #include "ImprovableCapacity.h"
 #include "InfrastructureCapacity.h"
-#include "InteractWithEnemyCapacity.h"
+#include "InteractWithSideCapacity.h"
 #include "InteractIfHeightCapacity.h"
 #include "InterferenceCapacity.h"
 #include "IntoxicationCapacity.h"
@@ -86,7 +86,7 @@ const ObjectCapacity_ABC* CapacityRetriever::RetrieveCapacity( const MIL_ObjectT
     RETRIEVE( "flood", FloodCapacity );
     RETRIEVE( "heuristic", TerrainHeuristicCapacity );
     RETRIEVE( "infrastructure", InfrastructureCapacity );
-    RETRIEVE( "interact-with-enemy", InteractWithEnemyCapacity );
+    RETRIEVE( "interact-with-enemy", InteractWithSideCapacity );
     RETRIEVE( "interaction-height", InteractIfHeightCapacity );
     RETRIEVE( "interference", InterferenceCapacity );
     RETRIEVE( "intoxication", IntoxicationCapacity );

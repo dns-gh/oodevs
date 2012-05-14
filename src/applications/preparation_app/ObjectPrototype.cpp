@@ -105,7 +105,7 @@ namespace
     {
     }
 
-    void InteractWithEnemyAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
+    void InteractWithSideAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     {
     }
 
@@ -217,7 +217,7 @@ namespace
         factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "trafficability"            , boost::bind( &::TrafficabilityAttribute, _1, _2, _3, boost::ref( object ) ) );
         factory->Register( "underground-network"       , boost::bind( &::UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
-        factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
+        factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithSideAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"              , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &::AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );
 

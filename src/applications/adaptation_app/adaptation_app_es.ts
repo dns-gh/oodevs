@@ -3203,8 +3203,8 @@ tirador</translation>
         <translation>Interferencia</translation>
     </message>
     <message>
-        <source>InteractWithEnemy</source>
-        <translation>Interactuar con el enemigo</translation>
+        <source>InteractWithSide</source>
+        <translation>Interactuar con los campos siguientes</translation>
     </message>
     <message>
         <source>Protection</source>
@@ -3421,6 +3421,18 @@ tirador</translation>
     <message>
         <source>Crowd attrition</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend</source>
+        <translation>Amigo</translation>
+    </message>
+    <message>
+        <source>Enemy</source>
+        <translation>Enemigo</translation>
+    </message>
+    <message>
+        <source>Neutral</source>
+        <translation>Neutral</translation>
     </message>
 </context>
 <context>

@@ -55,7 +55,7 @@ enum E_Capacities
     eFloodCapacity,
     eImprovableCapacity,
     eInteractionHeightCapacity,
-    eInteractWithEnemyCapacity,
+    eInteractWithSideCapacity,
     eInterferenceCapacity,
     eIntoxicationCapacity,
     eLodgingCapacity,
