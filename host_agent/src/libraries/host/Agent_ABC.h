@@ -12,8 +12,10 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
 #include <vector>
+
 
 namespace host
 {
@@ -33,6 +35,7 @@ struct Reply
     {
         // NOTHING
     }
+    Reply( const boost::property_tree::ptree& tree );
 };
 
 // =============================================================================

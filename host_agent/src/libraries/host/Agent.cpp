@@ -34,6 +34,13 @@
 
 using namespace host;
 
+Reply::Reply( const boost::property_tree::ptree& tree )
+    : data ( ToJson( tree ) )
+    , valid( true )
+{
+    // NOTHING
+}
+
 namespace
 {
 #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
@@ -68,7 +75,7 @@ Reply Count( size_t count )
 {
     boost::property_tree::ptree tree;
     tree.put( "count", count );
-    return Reply( ToJson( tree ) );
+    return Reply( tree );
 }
 
 template< typename T >
@@ -76,7 +83,7 @@ Reply Create( T ptr, const std::string& name )
 {
     if( !ptr )
         return Reply( "unable to create new " + name, false );
-    return Reply( ToJson( ptr->GetProperties() ) );
+    return Reply( ptr->GetProperties() );
 }
 
 template< typename T, typename U >
@@ -85,7 +92,16 @@ Reply Dispatch( T& controller, const U& member, const boost::uuids::uuid& id, co
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
         return Reply( "unable to " + action + " " + boost::lexical_cast< std::string >( id ), false );
-    return Reply( ToJson( ptr->GetProperties() ) );
+    return Reply( ptr->GetProperties() );
+}
+
+template< typename T >
+Reply TreeDispatch( const T& functor, const std::string& action )
+{
+    boost::property_tree::ptree tree = functor();
+    if( tree.empty() )
+        return Reply( "unable to " + action, false );
+    return Reply( tree );
 }
 
 template< typename T, typename U >
@@ -212,7 +228,7 @@ Reply Agent::DeleteNode( const boost::uuids::uuid& id )
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )
         sessions_.Delete( ptr->GetId() );
-    return Reply( ToJson( ptr->GetProperties() ) );
+    return Reply( ptr->GetProperties() );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,14 +255,7 @@ Reply Agent::StopNode( const boost::uuids::uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
 {
-    try
-    {
-        return Reply( ToJson( nodes_.UploadPack( id, src ) ) );
-    }
-    catch( const std::exception& err )
-    {
-        return Reply( err.what(), false );
-    }
+    return TreeDispatch( boost::bind( &NodeController_ABC::UploadPack, &nodes_, id, boost::ref( src ) ), "upload pack" );
 }
 
 // -----------------------------------------------------------------------------
