@@ -250,7 +250,7 @@ struct Unpacker : public Unpacker_ABC
         archive_write_disk_set_options( dst.get(), flags );
         archive_write_disk_set_standard_lookup( dst.get() );
 
-       for( ;; )
+        for( ;; )
         {
             ArchiveEntry* entry;
             err = archive_read_next_header( src.get(), &entry );
