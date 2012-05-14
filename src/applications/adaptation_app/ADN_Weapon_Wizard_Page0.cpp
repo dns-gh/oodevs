@@ -19,6 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Weapon_Wizard_Page0.h"
 
+#include "clients_kernel/Tools.h"
 #include <QtGui/qcombobox.h>
 #include <Qt3Support/q3listview.h>
 #include <Qt3Support/q3buttongroup.h>
@@ -58,11 +59,11 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char*
     Q3ButtonGroup* pButtonGroup = new Q3ButtonGroup( 2, Qt::Vertical, pBox );
     pButtonGroup->setMargin( 0 );
     pButtonGroup->setLineWidth( 0 );
-                        new QRadioButton( tr( "Create new" ), pButtonGroup );
-    pCopyRadioButton_ = new QRadioButton( tr( "Create a copy of:" ),    pButtonGroup );
+                        new QRadioButton( tools::translate( "ADN_Weapon_Wizard_Page0", "Create new" ), pButtonGroup );
+    pCopyRadioButton_ = new QRadioButton( tools::translate( "ADN_Weapon_Wizard_Page0", "Create a copy of:" ),    pButtonGroup );
 
     pWeaponList_ = new Q3ListView( pBox );
-    pWeaponList_->addColumn( tr( "Weapon systems" ) );
+    pWeaponList_->addColumn( tools::translate( "ADN_Weapon_Wizard_Page0", "Weapon systems" ) );
     pWeaponList_->setColumnWidth( 0, 350 );
     pWeaponList_->setMultiSelection( false );
     pWeaponList_->setFixedWidth( 350 );
@@ -81,7 +82,7 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char*
     pButtonGroup->setButton( 0 );
     pWeaponList_->setEnabled( false );
 
-    pParent->addPage( this, tr( "New weapon creation" ) );
+    pParent->addPage( this, tools::translate( "ADN_Weapon_Wizard_Page0", "New weapon creation" ) );
     pParent->setBackEnabled( this, false );
     pParent->setNextEnabled( this, true );
     pParent->setHelpEnabled( this, false );
@@ -109,8 +110,8 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
     if( pExistingWeapon != 0 )
     {
         QMessageBox::warning( this,
-            tr( "Warning" ),
-            tr( "A weapon using the same launcher and ammunition already exists. Please modify your choices." ),
+            tools::translate( "ADN_Weapon_Wizard_Page0", "Warning" ),
+            tools::translate( "ADN_Weapon_Wizard_Page0", "A weapon using the same launcher and ammunition already exists. Please modify your choices." ),
             QMessageBox::Ok, Qt::NoButton );
         return 0;
     }
@@ -127,8 +128,8 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
         ammo.bIndirect_.GetData() != pLauncher->bIndirect_.GetData() )
     {
         QMessageBox::warning( this,
-            tr( "Warning" ),
-            tr( "The weapon and ammunition are not compatible (direct/indirect). Please modify your choices." ),
+            tools::translate( "ADN_Weapon_Wizard_Page0", "Warning" ),
+            tools::translate( "ADN_Weapon_Wizard_Page0", "The weapon and ammunition are not compatible (direct/indirect). Please modify your choices." ),
             QMessageBox::Ok, QMessageBox::NoButton );
         return 0;
     }
