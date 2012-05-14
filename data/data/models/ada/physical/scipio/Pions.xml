@@ -2550,6 +2550,7 @@
       <equipment count="1" crew="2" major="true" type="CBH + FG 75 A"/>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="1" crew="2" type="GBC 8 KT 12.7"/>
+      <equipment count="1" crew="2" loadable="true" type="Sapeurs constructeurs"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="1000"/>
@@ -19416,4 +19417,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2814671436" -->
+<!-- signature="2703415061" -->

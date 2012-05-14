@@ -26,11 +26,6 @@
         <detectable-activity type="Deplacement" value="true"/>
       </detectable-activities>
     </radar>
-    <radar action-range="2240" max-height="20" min-height="1" name="Radar ROLAND Courte Portee" type="radar">
-      <detectable-activities>
-        <detectable-activity type="Deplacement" value="true"/>
-      </detectable-activities>
-    </radar>
     <radar action-range="40000" name="Ecoute VHF" type="ecoute">
       <detectable-activities>
         <detectable-activity type="ArretMoteurEteint" value="true"/>
@@ -133,11 +128,6 @@
       </detectable-activities>
     </radar>
     <radar action-range="15000" max-height="50" min-height="20" name="Radar HAWK Moyenne Portee" type="radar">
-      <detectable-activities>
-        <detectable-activity type="Deplacement" value="true"/>
-      </detectable-activities>
-    </radar>
-    <radar action-range="16000" max-height="5000" min-height="20" name="Radar ROLAND Longue Portee" type="radar">
       <detectable-activities>
         <detectable-activity type="Deplacement" value="true"/>
       </detectable-activities>
@@ -7786,4 +7776,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="2795038004" -->
+<!-- signature="0499940359" -->
