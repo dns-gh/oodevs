@@ -258,8 +258,9 @@ void InhabitantPositions::UpdateDictionary()
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
         if( pProxy->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
             ++medicalInfrastructures_;
-        else if( pProxy->Retrieve< kernel::Infrastructure_ABC >() )
-            ++infrastructures_;
+        else if( const kernel::Infrastructure_ABC* infra = pProxy->Retrieve< kernel::Infrastructure_ABC >() )
+            if( infra->HasValidType() )
+                ++infrastructures_;
         const kernel::AccommodationTypes& accommodations = pProxy->GetAccommodations();
         tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();
         while( itAcco.HasMoreElements() )

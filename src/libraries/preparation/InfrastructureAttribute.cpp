@@ -166,6 +166,15 @@ bool InfrastructureAttribute::IsEnabled() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::HasValidType
+// Created: JSR 2012-05-14
+// -----------------------------------------------------------------------------
+bool InfrastructureAttribute::HasValidType() const
+{
+    return type_ != 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::GetThreshold
 // Created: CMA 2011-09-08
 // -----------------------------------------------------------------------------
