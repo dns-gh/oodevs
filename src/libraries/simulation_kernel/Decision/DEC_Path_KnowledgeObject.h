@@ -13,10 +13,11 @@
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 
-class DEC_Knowledge_Object;
 class DEC_Agent_PathClass;
+class DEC_Knowledge_Object;
 class DEC_Population_PathClass;
 class DEC_PathClass;
+class MIL_ObjectType_ABC;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -44,7 +45,8 @@ private:
     TER_Localisation scaledLocalisation_;
     TER_Localisation realLocalisation_;
     const DEC_PathClass& pathClass_;
-    const DEC_Knowledge_Object& knowledge_;
+    const MIL_ObjectType_ABC& objectType_;
+    double rMaxTrafficability_;
     //@}
 };
 

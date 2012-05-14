@@ -22,9 +22,10 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
     : scaledLocalisation_   ( knowledge.GetLocalisation() )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
     , pathClass_            ( pathClass )
-    , knowledge_            ( knowledge )
+    , objectType_           ( knowledge.GetType() )
+    , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
 {
-    const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
+    const double rCost = pathClass.GetObjectCost( objectType_ );
     if( rCost != 0 )
         scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision 
 }
@@ -37,7 +38,8 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Population_PathCla
     : scaledLocalisation_   ( knowledge.GetLocalisation() )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
     , pathClass_            ( pathClass )
-    , knowledge_            ( knowledge )
+    , objectType_           ( knowledge.GetType() )
+    , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
 {
     // NOTHING
 }
@@ -62,7 +64,7 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
     {
         if( scaledLocalisation_.Intersect2D( line ) || scaledLocalisation_.IsInside( to ) || scaledLocalisation_.IsInside( from ) )
         {
-            double rCostIn = pathClass_.GetObjectCost( knowledge_.GetType() );
+            double rCostIn = pathClass_.GetObjectCost( objectType_ );
             if( rCostIn < 0. )
                 return 0.;
             else if( rCostIn >= pathClass_.GetThreshold() )
@@ -80,7 +82,7 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObject::GetCostOut() const
 {
-    double cost = pathClass_.GetObjectCost( knowledge_.GetType() );
+    double cost = pathClass_.GetObjectCost( objectType_ );
     return cost > 0 ? 0. : -cost;
 }
 
@@ -90,5 +92,5 @@ double DEC_Path_KnowledgeObject::GetCostOut() const
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
 {
-    return knowledge_.GetMaxTrafficability();
+    return rMaxTrafficability_;
 }
