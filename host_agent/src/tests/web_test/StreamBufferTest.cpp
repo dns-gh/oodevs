@@ -42,7 +42,7 @@ BOOST_FIXTURE_TEST_CASE( buffer_read_data, Fixture )
     stream << line;
     char dst[256];
     const size_t read = buffer.Read( dst, 4 );
-    BOOST_CHECK_EQUAL( read, 4 );
+    BOOST_CHECK_EQUAL( read, size_t( 4 ) );
     const size_t next = buffer.Read( dst + read, sizeof dst - read );
     BOOST_CHECK_EQUAL( read + next, line.size() );
     BOOST_CHECK_EQUAL( std::string( dst, read + next ), line );
@@ -98,8 +98,8 @@ BOOST_FIXTURE_TEST_CASE( buffer_skip_overread, Fixture )
     BOOST_CHECK_EQUAL( buffer.GetLine(), "" );
     char dst[256];
     const size_t read = buffer.Read( dst, sizeof dst );
-    BOOST_CHECK_EQUAL( read, 0 );
+    BOOST_CHECK_EQUAL( read, size_t( 0 ) );
     char* ptr;
     const size_t peek = buffer.Peek( &ptr );
-    BOOST_CHECK_EQUAL( peek, 0 );
+    BOOST_CHECK_EQUAL( peek, size_t( 0 ) );
 }

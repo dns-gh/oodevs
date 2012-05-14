@@ -79,7 +79,7 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_single_part, Fixture )
     size_t count = 0;
     reader.Register( "my_name", boost::bind( &CheckStream, _1, boost::ref( count ), data ) );
     reader.Parse( pool, buffer );
-    BOOST_CHECK_EQUAL( count, 1 );
+    BOOST_CHECK_EQUAL( count, size_t( 1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( reader_parse_multi_part, Fixture )
@@ -106,7 +106,7 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_multi_part, Fixture )
     reader.Register( "text", boost::bind( &CheckStream, _1, boost::ref( count ), text ) );
     reader.Register( "binary", boost::bind( &CheckStream, _1, boost::ref( count ), std::string( &binary[0], binary.size() ) ) );
     reader.Parse( pool, buffer );
-    BOOST_CHECK_EQUAL( count, 2 );
+    BOOST_CHECK_EQUAL( count, size_t( 2 ) );
 }
 
 namespace
@@ -138,7 +138,7 @@ BOOST_FIXTURE_TEST_CASE( reader_skip_invalid_mime_handlers, Fixture )
     reader.Register( "my_name", boost::bind( &ReadLittle, _1, boost::ref( count ), &binary[0], 1024 ) );
     reader.Register( "zebulon", boost::bind( &ReadLittle, _1, boost::ref( count ), &binary[0], 0 ) );
     reader.Parse( pool, buffer );
-    BOOST_CHECK_EQUAL( count, 1 );
+    BOOST_CHECK_EQUAL( count, size_t( 1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( reader_skip_unregistered_parts, Fixture )

@@ -50,7 +50,7 @@ namespace
         while( fill < read && !src.eof() )
         {
             src.read( tmp, std::min( read - fill, sizeof tmp ) );
-            fill += src.gcount();
+            fill += static_cast< size_t >( src.gcount() );
         }
     }
 }
