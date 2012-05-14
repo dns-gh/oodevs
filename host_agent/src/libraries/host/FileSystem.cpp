@@ -244,7 +244,7 @@ struct Unpacker : public Unpacker_ABC
         // NOTHING
     }
 
-    static __LA_SSIZE_T Read( Archive* arc, void* userdata, const void** buffer )
+    static __LA_SSIZE_T Read( Archive* /*arc*/, void* userdata, const void** buffer )
     {
         Unpacker* it = static_cast< Unpacker* >( userdata );
         __LA_SSIZE_T fill = 0;

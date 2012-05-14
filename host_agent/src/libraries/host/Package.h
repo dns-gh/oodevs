@@ -31,6 +31,8 @@ struct SubPackage
     const std::string date_;
     const std::string checksum_;
     const std::string action_;
+private:
+    const SubPackage& operator=( const SubPackage& );
 };
 
 // =============================================================================
