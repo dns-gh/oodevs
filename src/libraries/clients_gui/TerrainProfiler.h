@@ -10,6 +10,7 @@
 #ifndef __TerrainProfiler_h_
 #define __TerrainProfiler_h_
 
+#include "RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
@@ -32,8 +33,7 @@ namespace gui
 */
 // Created: SBO 2010-03-31
 // =============================================================================
-class TerrainProfiler : public QDockWidget
-                      , public tools::Observer_ABC
+class TerrainProfiler : public RichDockWidget
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >

@@ -1053,6 +1053,15 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController.h">
+      <Filter>Source Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h">
+      <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController_ABC.h">
+      <Filter>Source Files\kernel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">
@@ -1081,6 +1090,9 @@
     </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_fr.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\ModeController.inl">
+      <Filter>Source Files\kernel</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

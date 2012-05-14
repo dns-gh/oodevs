@@ -29,6 +29,7 @@ namespace gui
 {
     class ItemFactory_ABC;
     class HelpSystem;
+    class RichAction;
 }
 
 // =============================================================================
@@ -39,45 +40,48 @@ namespace gui
 // =============================================================================
 class Menu : public QMenuBar
            , private boost::noncopyable
-           , public tools::Observer_ABC
-           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
     Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog,
-            QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, 
-            QDialog& consistencyDialog, QDialog& performanceDialog,
-            gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
+          QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, 
+          QDialog& consistencyDialog, QDialog& performanceDialog,
+          gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
-    void EnableSaveItem( bool status );
-    int InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel = 0, int index = -1 );
+    void InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel = 0, int index = -1 );
     void RemoveFileMenuEntry( int index );
+    //@}
+
+    //! @name Accessors
+    //@{
+    QAction* GetNewAction() const; // $$$$ ABR 2012-05-14: Add and use a QActionFactory
+    QAction* GetOpenAction() const;
+    QAction* GetSaveAction() const;
+    QAction* GetSaveAsAction() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void EnableItems( bool status );
-    void Wrap( int item );
+    void AddModdedAction( QAction* action, int defaultModes = 0, int hiddenModes = 0, int visibleModes = 0 );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    std::vector< int >   exerciseItems_;
-    kernel::ContextMenu* fileMenu_;
-    int                  saveItem_;
+    kernel::Controllers&            controllers_;
+    std::vector< gui::RichAction* > moddedActions_;
+    kernel::ContextMenu*            fileMenu_;
+    QAction*                        newAction_;
+    QAction*                        openAction_;
+    QAction*                        saveAction_;
+    QAction*                        saveAsAction_;
     //@}
 };
 

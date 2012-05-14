@@ -33,14 +33,10 @@ namespace
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------
 DisplayToolbar::DisplayToolbar( QMainWindow* pParent, kernel::Controllers& controllers )
-    : QToolBar( "display toolbar", pParent )
+    : RichToolBar( controllers, pParent, "displaytoolbar", tools::translate( "gui::DisplayToolbar", "Display toolbar" ) )
 {
-    setObjectName( "displayToolBar" );
-    setLabel( tools::translate( "gui::DisplayToolbar", "Display toolbar" ) );
     addWidget( new BooleanOptionButton( MAKE_ICON( threed ), tools::translate( "gui::DisplayToolbar", "3D" ), this, controllers.options_, "3D" ) );
     addWidget( new BooleanOptionButton( MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "gui::DisplayToolbar", "Fog of war" ), this, controllers.options_, "FogOfWar" ) );
-    // $$$$ SBO 2008-08-19: uncomment when there is something connected to the button
-//    new BooleanOptionButton( MAKE_ICON( twodnoterrain ), tools::translate( "DisplayToolbar", "2D no terrain" ), this, controllers.options_, "2DnoTerrain" );
 }
 
 // -----------------------------------------------------------------------------

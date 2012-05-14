@@ -50,8 +50,8 @@ namespace
 // Name: ExtensionsPanel constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const char* name )
-    : QDockWidget( name, parent )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations )
+    : RichDockWidget( controllers, parent, "extensions", tr( "Extensions" ), false )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, formations, extensions, "DiffusionListDialog" ) )
@@ -59,12 +59,10 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , pGroupBox_      ( 0 )
     , updating_       ( false )
 {
-    setObjectName( "extensions" );
     pMainLayout_ = new Q3VBox( this );
     pMainLayout_->setMargin( 5 );
     pMainLayout_->setSpacing( 5 );
     pExtensionLayout_ = new Q3VBox( pMainLayout_ );
-    setWindowTitle( tr( "Extensions" ) );
     setWidget( pMainLayout_ );
     controllers_.Register( *this );
 }

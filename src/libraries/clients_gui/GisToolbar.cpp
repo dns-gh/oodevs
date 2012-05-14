@@ -22,6 +22,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Units.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/GeneralConfig.h"
 
 using namespace gui;
@@ -39,14 +40,13 @@ namespace
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
-    : QToolBar( "gis tools", parent )
+    : RichToolBar( controllers, parent, "gistoolbar", tools::translate( "gui::GisToolBar", "GIS tools" ), false )
     , controllers_      ( controllers )
     , detection_        ( detection )
     , terrainProfiler_  ( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
-    setObjectName( "gisToolBar" );
     parent->addDockWidget( Qt::RightDockWidgetArea, terrainProfiler_ );
-    setWindowTitle( tools::translate( "gui::GisToolBar", "GIS tools" ) );
+    terrainProfiler_->SetHiddenModes( ePreparationMode_Default | ePreparationMode_LivingArea ); // Should be in DockManager
     {
         Q3HBox* waterShedBox = new Q3HBox( this );
         watershedEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );

@@ -102,7 +102,7 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, kernel::Viewport_ABC& view
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 {
-    return profile_.IsVisible( entity );
+    return IsEnabled() && profile_.IsVisible( entity );
 }
 
 // -----------------------------------------------------------------------------

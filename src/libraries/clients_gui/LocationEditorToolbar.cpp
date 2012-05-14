@@ -35,9 +35,10 @@ using namespace gui;
 // Name: LocationEditorToolbar constructor
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
-LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer )
-    : QToolBar( parent, "location editor" )
+LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer, bool needRegister /* = true */ )
+    : RichToolBar( controllers, parent, "locationeditor", tr( "Location editor" ), false )
     , controllers_( controllers )
+    , needRegister_( needRegister )
     , converter_( converter )
     , featureNameParser_( controllers )
     , view_( view )
@@ -45,8 +46,6 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     , parameters_( 0 )
     , bookmarksMenu_( 0 )
 {
-    setObjectName( "locEditToolBar" );
-    setWindowTitle( tr( "Location editor" ) );
     locBox_ = new LocationEditorBox( this, controllers, converter );
     locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
     gotoButton_ = new QToolButton( this );
@@ -74,7 +73,8 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     connect( okButton_, SIGNAL( clicked() ), SLOT( AddPoint() ) );
     connect( paramsButton_, SIGNAL( clicked() ), SLOT( AddParamPoint() ) );
 
-    controllers_.Register( *this );
+    if( needRegister_ )
+        controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,8 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::~LocationEditorToolbar()
 {
-    controllers_.Unregister( *this );
+    if( needRegister_ )
+        controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

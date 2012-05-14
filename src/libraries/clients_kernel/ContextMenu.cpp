@@ -164,21 +164,13 @@ ContextMenu::T_SubMenus& ContextMenu::GetCategoryCreateIFN( const std::string& t
 // -----------------------------------------------------------------------------
 ContextMenu::T_MenuVariant ContextMenu::InsertVariant( const std::string& category, T_MenuVariant& variant, bool separatorText /*= false*/, int index /*= -1*/ )
 {
-    //T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
-
     ContextMenu::T_MenuVariant result;
-
     if( QAction* const* newAction = boost::get< QAction* >( &variant ) )
         result = InsertAction( category, *newAction, separatorText, index );
-        //this->addAction( *newAction );
     else if( ContextMenu* const* newMenu = boost::get< ContextMenu* >( &variant ) )
         result = SubMenu( category, *newMenu, separatorText, index );
-        //InsertItem( category, *newMenu, separatorText, index );
-        //this->addMenu( ( *newMenu )->FillMenu() );
     else
         throw std::exception( __FUNCTION__ "Invalid boost variant value" );
-
-    //subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = variant;
     return result;
 }
 

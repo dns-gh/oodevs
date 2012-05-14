@@ -10,6 +10,10 @@
 #ifndef __Controllers_h_
 #define __Controllers_h_
 
+#include <boost/noncopyable.hpp>
+
+class QMainWindow;
+
 namespace tools
 {
     class  Observer_ABC;
@@ -17,9 +21,10 @@ namespace tools
 
 namespace kernel
 {
-    class Options;
-    class Controller;
     class ActionController;
+    class Controller;
+    class ModeController_ABC;
+    class Options;
 
 // =============================================================================
 /** @class  Controllers
@@ -27,7 +32,7 @@ namespace kernel
 */
 // Created: AGE 2006-03-22
 // =============================================================================
-class Controllers
+class Controllers : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,22 +48,21 @@ public:
     void Update( tools::Observer_ABC& observer );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Setters
     //@{
-    Controllers( const Controllers& );
-    Controllers& operator=( const Controllers& );
+    void SetModeController( ModeController_ABC* modeController );
     //@}
 
 public:
     //! @name Member data
     //@{
-    Options&          options_;
-    Controller&       controller_;
-    ActionController& actions_;
+    Options&            options_;
+    Controller&         controller_;
+    ActionController&   actions_;
+    ModeController_ABC* modes_;
     //@}
 };
 
-}
+} //! namespace kernel
 
 #endif // __Controllers_h_

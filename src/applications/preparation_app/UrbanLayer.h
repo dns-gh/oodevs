@@ -11,7 +11,6 @@
 #define __UrbanLayer_h_
 
 #include "clients_gui/UrbanLayer.h"
-#include "EditorProxy.h"
 
 namespace kernel
 {
@@ -35,7 +34,7 @@ namespace gui
 */
 // Created: LGY 2012-01-06
 // =============================================================================
-class UrbanLayer : public EditorProxy< gui::UrbanLayer >
+class UrbanLayer : public gui::UrbanLayer
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +46,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 };

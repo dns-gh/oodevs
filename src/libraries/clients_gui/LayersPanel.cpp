@@ -155,9 +155,7 @@ void LayersPanel::ResetLayers()
         item->SetValue( *it );
         T_Layers::const_iterator lit = std::find( layers_.begin(), layers_.end(), *it );
         if( lit != layers_.end() )
-        {
             item->setText( 0, "  "+names_[ lit - layers_.begin() ]);
-        }
     }
     UpdateLeastAndMostVisible();
     layersList_->setCurrentItem( layersList_-> firstChild() );
@@ -329,4 +327,19 @@ void LayersPanel::OnFogOfWarChanged( bool value )
 void LayersPanel::OnInfraChanged( bool value )
 {
     options_.Change( "Infra", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::Update
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+void LayersPanel::Update()
+{
+    for( Q3ListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
+        if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item ) )
+            if( Layer_ABC* layer = valuedItem->GetValue< Layer_ABC >() )
+            {
+                item->setEnabled( layer->IsEnabled() );
+                item->setVisible( layer->IsEnabled() );
+            }
 }

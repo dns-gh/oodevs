@@ -34,7 +34,6 @@ namespace gui
 // Created: SBO 2010-03-23
 // =============================================================================
 class WatershedLayer : public Layer2d_ABC
-                     , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                      , public kernel::OptionsObserver_ABC
 {

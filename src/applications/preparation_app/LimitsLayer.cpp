@@ -13,6 +13,8 @@
 #include "preparation/TacticalLinePositions.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/ModeController_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -24,7 +26,7 @@ using namespace gui;
 LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
                           gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : EditorProxy< TacticalLinesLayer >( controllers, tools, strategy, parameters, view, profile, filter )
+    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, filter )
     , modelBuilder_( modelBuilder )
     , tools_( tools )
     , eventStrategy_( eventStrategy )
@@ -47,7 +49,7 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
-    if( livingAreaEditor_ )
+    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() == ePreparationMode_LivingArea )
         return false;
     return modelBuilder_.CanCreateLine();
 }
@@ -137,7 +139,7 @@ bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mou
 // -----------------------------------------------------------------------------
 bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    if( ! EditorProxy< TacticalLinesLayer >::ShouldDisplay( entity ) )
+    if( !TacticalLinesLayer::ShouldDisplay( entity ) )
         return false;
     return drawLines_.IsSet( true, true );
 }
@@ -148,7 +150,6 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void LimitsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    EditorProxy< TacticalLinesLayer >::OptionChanged( name, value );
     if( name == "TacticalLines" )
         drawLines_ = value.To< FourStateOption >();
 }

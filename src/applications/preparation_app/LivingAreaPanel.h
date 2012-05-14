@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_gui/RichDockWidget.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "LivingAreaEditor_ABC.h"
 
@@ -37,9 +37,7 @@ namespace gui
 */
 // Created: LGY 2012-01-05
 // =============================================================================
-class LivingAreaPanel : public QDockWidget
-                      , public kernel::OptionsObserver_ABC
-                      , public tools::Observer_ABC
+class LivingAreaPanel : public gui::RichDockWidget
                       , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public gui::ShapeHandler_ABC
@@ -66,7 +64,6 @@ private:
     virtual void closeEvent( QCloseEvent* pEvent );
     virtual void NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void Handle( kernel::Location_ABC& location );
     virtual void Draw( kernel::Viewport_ABC& viewport );
     //@}
@@ -107,7 +104,6 @@ private:
     const kernel::GlTools_ABC& tools_;
     Mode mode_;
     kernel::Location_ABC* location_;
-    bool editorEnabled_;
     QLabel* text_;
     //@}
 };

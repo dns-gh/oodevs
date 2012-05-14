@@ -238,6 +238,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
@@ -433,6 +436,7 @@
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
     <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\ModeController.inl" />
     <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts" />

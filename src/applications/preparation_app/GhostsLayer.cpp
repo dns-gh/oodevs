@@ -30,7 +30,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 GhostsLayer::GhostsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : EditorProxy< gui::EntityLayer< kernel::Ghost_ABC > >( controllers, tools, strategy, view, profile, filter )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, filter )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )

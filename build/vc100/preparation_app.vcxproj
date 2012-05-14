@@ -284,7 +284,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\DockManager.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\EditorProxy.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -1539,7 +1538,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\FileToolbar.h">
+    <ClInclude Include="..\..\src\applications\preparation_app\FileToolbar.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
@@ -1556,8 +1555,8 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\Menu.h">
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\Menu.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
@@ -1574,12 +1573,11 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\icons.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\applications\preparation_app\EditorProxy.inl" />
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">

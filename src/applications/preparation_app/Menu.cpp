@@ -9,9 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "Menu.h"
-#include "moc_Menu.cpp"
-#include "FilterDialog.h"
-#include "FilterDialogs.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
@@ -20,6 +17,8 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/RichAction.h"
+#include "clients_gui/RichMenu.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 #include "clients_kernel/Tools.h"
@@ -74,98 +73,126 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
-    fileMenu_ = new kernel::ContextMenu( this );
-    addMenu( fileMenu_ );
-    fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , Qt::CTRL + Qt::Key_N );
-    fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), Qt::CTRL + Qt::Key_O );
-    Wrap( fileMenu_->insertItem( MAKE_ICON( refresh ), tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), Qt::CTRL + Qt::Key_R ) ); // $$$$ ABR 2011-06-24: Add a refresh icon
-    Wrap( fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), Qt::CTRL + Qt::Key_W ) );
-    fileMenu_->insertSeparator();
-    // $$$$ ABR 2011-06-24: Filters dialogs insert themselves here
-    fileMenu_->insertSeparator();
-    saveItem_ = fileMenu_->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   Qt::CTRL + Qt::Key_S );
-    Wrap( fileMenu_->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), Qt::CTRL + Qt::SHIFT + Qt::Key_S ) );
-    fileMenu_->insertSeparator();
-    fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
-    insertItem( tools::translate( "Menu", "&File" ), fileMenu_ );
-
-    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
-    addMenu( menu );
-    menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
-    menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
-    Wrap( insertItem( tools::translate( "Menu", "&Profiles" ), menu ) );
-
-    menu = new kernel::ContextMenu( this );
-    addMenu( menu );
-    kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
+    // File
     {
-        OptionMenu< int >* resourceMenu = new OptionMenu< int >( subMenu, controllers.options_, "ResourceNetworks" );
-        resourceMenu->AddItem( tools::translate( "Menu", "On" ), 0 );
-        resourceMenu->AddItem( tools::translate( "Menu", "Off" ), 1 );
-        resourceMenu->AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
-        resourceMenu->AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
-        subMenu->insertItem( MakePixmap( "logistic_links" ), tools::translate( "Menu", "Resource networks" ), resourceMenu );
+        fileMenu_ = new kernel::ContextMenu( this );
+        fileMenu_->setTitle( tools::translate( "Menu", "&File" ) );
+        newAction_ = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , QKeySequence( Qt::CTRL + Qt::Key_N ) );
+        newAction_->setIcon( MAKE_ICON( new ) );
+        openAction_ = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), QKeySequence( Qt::CTRL + Qt::Key_O ) );
+        openAction_->setIcon( MAKE_ICON( open ) );
+
+        QAction* action = 0;
+        action = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), QKeySequence( Qt::CTRL + Qt::Key_R ) );
+        action->setIcon( MAKE_ICON( refresh ) );
+        AddModdedAction( action, ePreparationMode_All, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        action = fileMenu_->InsertItem( "1", tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), QKeySequence( Qt::CTRL + Qt::Key_W ) );
+        AddModdedAction( action, ePreparationMode_All, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+
+        fileMenu_->GetCategoryCreateIFN( "2" ); // Import Export Category
+
+        saveAction_ = fileMenu_->InsertItem( "3", tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ), QKeySequence( Qt::CTRL + Qt::Key_S ) );
+        saveAction_->setIcon( MAKE_ICON( save ) );
+        AddModdedAction( saveAction_, ePreparationMode_All, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        saveAsAction_ = fileMenu_->InsertItem( "3", tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_S ) );
+        saveAsAction_->setIcon( MAKE_ICON( saveas ) );
+        AddModdedAction( saveAsAction_, ePreparationMode_All, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        fileMenu_->InsertItem( "4", tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), QKeySequence( Qt::CTRL + Qt::Key_Q ) );
+        addMenu( fileMenu_->FillMenu() );
     }
-    Wrap( menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu ) );
 
-    subMenu = new kernel::ContextMenu( menu );
-    AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu3( subMenu, tools::translate( "Menu", "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu4( subMenu, tools::translate( "Menu", "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
+    // Profile
+    {
+        RichMenu* menu = new RichMenu( this, controllers, tools::translate( "Menu", "&Profiles" ) );
+        menu->SetModes( ePreparationMode_All, ePreparationMode_All ^ ePreparationMode_Exercise, ePreparationMode_Exercise );
+        QAction* action = menu->InsertItem( "1", tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
+        action->setIcon( MAKE_ICON( profile ) );
+        menu->InsertItem( "2", tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
+        addMenu( menu->FillMenu() );
+    }
 
-    subMenu->insertSeparator();
+    // Display
+    {
+        RichMenu* menu = new RichMenu( this, controllers, tools::translate( "Menu", "&Display" ) );
+        menu->SetModes( ePreparationMode_All, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
+        AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
+        AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
+        {
+            OptionMenu< int >* resourceMenu = new OptionMenu< int >( subMenu, controllers.options_, "ResourceNetworks" );
+            resourceMenu->AddItem( tools::translate( "Menu", "On" ), 0 );
+            resourceMenu->AddItem( tools::translate( "Menu", "Off" ), 1 );
+            resourceMenu->AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
+            resourceMenu->AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
+            subMenu->insertItem( MakePixmap( "logistic_links" ), tools::translate( "Menu", "Resource networks" ), resourceMenu );
+        }
+        menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
-    OptionMenu< float >* gridMenu = new OptionMenu< float >( subMenu, controllers.options_, "GridSize" );
-    gridMenu->AddItem( tools::translate( "Menu", "Off"    ),  -1 );
-    gridMenu->AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
-    gridMenu->AddItem( tools::translate( "Menu", "250m" ),  0.25f );
-    gridMenu->AddItem( tools::translate( "Menu", "500m"  ),  0.5f );
-    gridMenu->AddItem( tools::translate( "Menu", "1km"  ),  1.0f );
-    gridMenu->AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
-    gridMenu->AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
-    gridMenu->AddItem( tools::translate( "Menu", "10km" ), 10.0f );
-    subMenu->insertItem( tools::translate( "Menu", "Grid" ), gridMenu );
+        subMenu = new kernel::ContextMenu( menu );
+        AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+        AddSubMenu3( subMenu, tools::translate( "Menu", "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+        AddSubMenu4( subMenu, tools::translate( "Menu", "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
 
-    Wrap( menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu ) );
-    menu->insertSeparator();
+        subMenu->insertSeparator();
 
-    OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
-    boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
-    boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
-    menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
-    menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
-    menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
+        OptionMenu< float >* gridMenu = new OptionMenu< float >( subMenu, controllers.options_, "GridSize" );
+        gridMenu->AddItem( tools::translate( "Menu", "Off"    ),  -1 );
+        gridMenu->AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
+        gridMenu->AddItem( tools::translate( "Menu", "250m" ),  0.25f );
+        gridMenu->AddItem( tools::translate( "Menu", "500m"  ),  0.5f );
+        gridMenu->AddItem( tools::translate( "Menu", "1km"  ),  1.0f );
+        gridMenu->AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
+        gridMenu->AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
+        gridMenu->AddItem( tools::translate( "Menu", "10km" ), 10.0f );
+        subMenu->insertItem( tools::translate( "Menu", "Grid" ), gridMenu );
 
-    menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
-    Wrap( insertItem( tools::translate( "Menu", "&Display" ), menu ) );
+        menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
+        menu->insertSeparator();
 
-    menu = new kernel::ContextMenu( this );
-    addMenu( menu );
-    menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
-    menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
-    menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
-    menu->insertItem( tools::translate( "Menu", "Consistency analysis..." ), &consistencyDialog, SLOT( Display() ) );
-    menu->insertItem( tools::translate( "Menu", "Performance..."), &performanceDialog, SLOT( exec() ) );
-    Wrap( insertItem( tools::translate( "Menu", "&Exercise" ), menu ) );
+        OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
+        boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
+        boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
+        menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
+        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
+        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
 
-    QMenu* pMenu = pParent->createPopupMenu();
-    pMenu->removeItemAt( 0 );
-    pMenu->removeItemAt( 5 );
-    addMenu( pMenu );
-    insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
+        menu->insertSeparator();
+        menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
+        addMenu( menu );
+    }
 
-    menu = new kernel::ContextMenu( this );
-    addMenu( menu );
-    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ) );
-    menu->insertSeparator();
-    AboutDialog* about = new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );
-    menu->insertItem( tools::translate( "Menu", "About" ), about, SLOT( open() ) );
-    insertItem( tools::translate( "Menu", "&?" ), menu );
-    controllers_.Register( *this );
+    // Exercise
+    {
+        RichMenu* menu = new RichMenu( this, controllers_, tools::translate( "Menu", "&Exercise" ) );
+        menu->SetModes( ePreparationMode_All, ePreparationMode_All ^ ePreparationMode_Exercise, ePreparationMode_Exercise );
+        menu->InsertItem( "", tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
+        menu->InsertItem( "", tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
+        menu->InsertItem( "", tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
+        menu->InsertItem( "", tools::translate( "Menu", "Consistency analysis..." ), &consistencyDialog, SLOT( Display() ) );
+        menu->InsertItem( "", tools::translate( "Menu", "Performance..."), &performanceDialog, SLOT( exec() ) );
+        addMenu( menu->FillMenu() );
+    }
+
+    // Windows
+    if( QMenu* menu = pParent->createPopupMenu() )
+    {
+        QAction* action = menu->actions().value( 6 );
+        AddModdedAction( action, ePreparationMode_None, ePreparationMode_All );
+        if( QAction* action = addMenu( menu ) )
+        {
+            action->setText( tools::translate( "Menu", "&Windows" ) );
+            AddModdedAction( action, ePreparationMode_All, ePreparationMode_LivingArea | ePreparationMode_Default, ePreparationMode_Exercise | ePreparationMode_Terrain );
+        }
+    }
+
+    // Help
+    {
+        RichMenu* menu = new RichMenu( this, controllers_, tools::translate( "Menu", "&?" ) );
+        menu->InsertItem( "1", tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ) );
+        AboutDialog* about = new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );
+        menu->InsertItem( "2", tools::translate( "Menu", "About" ), about, SLOT( open() ) );
+        addMenu( menu->FillMenu() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,64 +201,32 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 // -----------------------------------------------------------------------------
 Menu::~Menu()
 {
-    controllers_.Unregister( *this );
+    for( std::vector< gui::RichAction* >::iterator it = moddedActions_.begin(); it != moddedActions_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Menu EnableSaveItem
-// Created: RPD 2010-02-05
+// Name: Menu::AddModdedAction
+// Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-void Menu::EnableSaveItem( bool status )
+void Menu::AddModdedAction( QAction* action, int defaultModes /* = 0 */, int hiddenModes /* = 0 */, int visibleModes /* = 0 */ )
 {
-    setItemEnabled( saveItem_, status );
+    if( !action )
+        return;
+    gui::RichAction* richAction = new gui::RichAction( action, controllers_ );
+    richAction->SetModes( defaultModes, hiddenModes, visibleModes );
+    moddedActions_.push_back( richAction );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Menu::NotifyUpdated
-// Created: SBO 2011-05-16
-// -----------------------------------------------------------------------------
-void Menu::NotifyUpdated( const kernel::ModelLoaded& )
-{
-    EnableItems( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Menu::NotifyUpdated
-// Created: SBO 2011-05-16
-// -----------------------------------------------------------------------------
-void Menu::NotifyUpdated( const kernel::ModelUnLoaded& )
-{
-    EnableItems( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Menu::EnableItems
-// Created: SLG 2010-11-09
-// -----------------------------------------------------------------------------
-void Menu::EnableItems( bool status )
-{
-    for( std::vector< int >::const_iterator it = exerciseItems_.begin(); it != exerciseItems_.end(); ++it )
-        setItemEnabled( *it, status );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Menu::Wrap
-// Created: SBO 2011-05-16
-// -----------------------------------------------------------------------------
-void Menu::Wrap( int item )
-{
-    exerciseItems_.push_back( item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Menu::InsertFileMenuEntry
+// Name: Menu::InsertFileMenuTmpEntry
 // Created: ABR 2011-06-24
 // -----------------------------------------------------------------------------
-int Menu::InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel /*= 0*/, int index /*= -1*/ )
+void Menu::InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel /*= 0*/, int index /*= -1*/ )
 {
-    int result = fileMenu_->insertItem( name, receiver, member, accel, -1, index );
-    Wrap( result );
-    return result;
+    fileMenu_->insertItem( name, receiver, member, accel, -1, index );
+    QAction* action = fileMenu_->actions().value( index );
+    AddModdedAction( action, ePreparationMode_All, ePreparationMode_All ^ ePreparationMode_Exercise, ePreparationMode_Exercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,4 +236,40 @@ int Menu::InsertFileMenuEntry( const QString& name, const QObject* receiver, con
 void Menu::RemoveFileMenuEntry( int index )
 {
     fileMenu_->removeItemAt( index );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::GetNewAction
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+QAction* Menu::GetNewAction() const
+{
+    return newAction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::GetOpenAction
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+QAction* Menu::GetOpenAction() const
+{
+    return openAction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::GetSaveAction
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+QAction* Menu::GetSaveAction() const
+{
+    return saveAction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::GetSaveAsAction
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+QAction* Menu::GetSaveAsAction() const
+{
+    return saveAsAction_;
 }

@@ -12,6 +12,7 @@
 #include "moc_LivingAreaPanel.cpp"
 #include "preparation/InhabitantPositions.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_kernel/Location_ABC.h"
@@ -28,7 +29,6 @@ namespace
             "</li><li>"+ tools::translate( "LivingAreaPanel", "Use the context menu to add or remove several urban blocks at once." ) +
             "</li></ul></font>" );
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -37,20 +37,17 @@ namespace
 // -----------------------------------------------------------------------------
 LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
                                   const kernel::GlTools_ABC& tools )
-    : QDockWidget( "livingArea", parent )
+    : gui::RichDockWidget( controllers, parent, "livingArea", tools::translate( "LivingAreaPanel", "Living Area" ), false )
     , controllers_  ( controllers )
     , selected_     ( controllers )
     , paramLayer_   ( paramLayer )
     , tools_        ( tools )
     , mode_         ( LivingAreaPanel::add )
     , location_     ( 0 )
-    , editorEnabled_( false )
 {
-    setObjectName( "livingArea" );
     QWidget* main = new QWidget( this );
     QHBoxLayout* mainLayout = new QHBoxLayout( main );
     QGroupBox* instruction = new QGroupBox();
-    instruction->setTitle( tools::translate( "LivingAreaPanel", "Living Area" ) );
     QVBoxLayout* instructionLayout = new QVBoxLayout( instruction );
     QHBoxLayout* iconLayout = new QHBoxLayout();
     QPixmap pixmap( "resources/images/preparation/livingArea.png" );
@@ -95,7 +92,7 @@ LivingAreaPanel::~LivingAreaPanel()
 void LivingAreaPanel::closeEvent( QCloseEvent* /*pEvent*/ )
 {
     Reset();
-    controllers_.options_.Change( "LivingAreaEditor", false, false );
+    controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,25 +112,10 @@ void LivingAreaPanel::NotifyContextMenu( const kernel::Inhabitant_ABC& entity, k
 // -----------------------------------------------------------------------------
 void LivingAreaPanel::NotifyContextMenu( const geometry::Point2f& /*point*/, kernel::ContextMenu& menu )
 {
-    if( editorEnabled_ )
+    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() == ePreparationMode_LivingArea )
     {
         menu.InsertItem( "Update", tools::translate( "LivingAreaPanel", "Add urban blocks" ), this, SLOT( Add() ) );
         menu.InsertItem( "Update", tools::translate( "LivingAreaPanel", "Remove urban blocks" ), this, SLOT( Remove() ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LivingAreaPanel::OptionChanged
-// Created: LGY 2012-01-10
-// -----------------------------------------------------------------------------
-void LivingAreaPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "LivingAreaEditor" )
-    {
-        editorEnabled_ = value.To< bool >();
-        if( editorEnabled_ && selected_ )
-            if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
-                positions->StartEdition();
     }
 }
 
@@ -216,7 +198,11 @@ void LivingAreaPanel::Remove()
 // -----------------------------------------------------------------------------
 void LivingAreaPanel::Update()
 {
-    controllers_.options_.Change( "LivingAreaEditor", true, false );
+    assert( controllers_.modes_ );
+    controllers_.modes_->ChangeMode( ePreparationMode_LivingArea );
+    if( selected_ )
+        if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
+            positions->StartEdition();
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +214,7 @@ void LivingAreaPanel::Accept()
     if( selected_ )
         if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
             positions->Accept();
-    controllers_.options_.Change( "LivingAreaEditor", false, false );
+    controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
     Reset();
 }
 
@@ -241,7 +227,7 @@ void LivingAreaPanel::Reject()
     if( selected_ )
         if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
             positions->Reject();
-    controllers_.options_.Change( "LivingAreaEditor", false, false );
+    controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
     Reset();
 }
 

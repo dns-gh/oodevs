@@ -13,7 +13,6 @@
 #include "clients_gui/PopulationsLayer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include "EditorProxy.h"
 
 namespace kernel
 {
@@ -28,7 +27,7 @@ class Model;
 */
 // Created: SBO 2006-11-09
 // =============================================================================
-class PopulationsLayer : public EditorProxy< gui::PopulationsLayer >
+class PopulationsLayer : public gui::PopulationsLayer
                        , public tools::SelectionObserver_Base< kernel::Entity_ABC >
 {
 public:

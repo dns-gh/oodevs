@@ -113,8 +113,12 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDockWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenu.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
@@ -783,8 +787,12 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichAction.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDockWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListItem.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchListView.h" />

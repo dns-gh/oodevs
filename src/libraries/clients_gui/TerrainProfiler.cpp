@@ -29,13 +29,11 @@ using namespace gui;
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
 TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
-    : QDockWidget( "terrain-profiler", parent )
+    : RichDockWidget( controllers, parent, "terrainProfiler", tools::translate( "gui::TerrainProfiler", "Terrain profile" ), false )
     , controllers_( controllers )
     , detection_  ( detection )
     , layer_      ( layer )
 {
-    setObjectName( "terrainProfiler" );
-    setCaption( tools::translate( "gui::TerrainProfiler", "Terrain profile" ) );
     {
         Q3HBox* box = new Q3HBox( this );
         {
@@ -52,8 +50,6 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( SliderChanged( int ) ) );
         connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged( int ) ) );
     }
-    parent->addDockWidget( Qt::RightDockWidgetArea, this );
-    hide();
     setFloating( true );
     setProperty( "notAppropriate", QVariant( true ) );
     controllers_.Register( *this );

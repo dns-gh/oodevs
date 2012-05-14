@@ -127,7 +127,6 @@ private:
     virtual void NotifyDeleted();
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
-    void EnableWorkspace( bool enabled );
     void SetProgression( int value, const QString& text );
     //@}
 
@@ -155,8 +154,7 @@ private:
     bool loading_;
     bool needsSaving_;
     QString savedState_;
-    QByteArray docks_;
-    QByteArray toolbars_;
+    QByteArray states_;
     ScoreDialog* pScoreDialog_;
     FilterDialogs* filterDialogs_;
     QProgressDialog* progressDialog_;

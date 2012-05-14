@@ -10,8 +10,6 @@
 #ifndef __DockManager_h_
 #define __DockManager_h_
 
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -55,8 +53,6 @@ class LivingAreaPanel;
 // Created: LGY 2012-01-04
 // =============================================================================
 class DockManager : private boost::noncopyable
-                  , public tools::Observer_ABC
-                  , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -75,40 +71,21 @@ public:
     void Purge();
     void Load();
     void BlockCreationOnListViews( bool enable );
-    QByteArray SaveGeometry() const;
-    QByteArray SaveState() const;
+    //@}
+
+    //! @name Getters
+    //@{
     ObjectCreationPanel& GetObjectCreationPanel() const;
     InhabitantCreationPanel& GetInhabitantCreationPanel() const;
     LivingAreaPanel& GetLivingAreaPanel() const;
     //@}
 
 private:
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ToggleWidget( QList< QWidget* >& container, QList< QWidget* >& current );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    QMainWindow* parent_;
-    kernel::Controllers& controllers_;
     std::vector< gui::RichListView* > listViews_;
-    QDockWidget* pExtensionsPanel_;
     CreationPanels* pCreationPanel_;
     LivingAreaPanel* pLivingAreaPanel_;
-    QList< QWidget* > dockWidgets_;
-    QList< QWidget* > widgets_;
-    QList< QWidget* > toolbars_;
-    QByteArray geometry_;
-    QByteArray state_;
-    bool editionModeEnabled_;
     //@}
 };
 #endif // __DockManager_h_

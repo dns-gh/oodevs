@@ -28,6 +28,7 @@
 #include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/SearchListView.h"
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -46,22 +47,14 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
                           const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                           gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
                           gui::GlProxy& glProxy, ColorController& colorController )
-    : parent_            ( parent )
-    , controllers_       ( controllers )
-    , pExtensionsPanel_  ( 0 )
-    , pCreationPanel_    ( 0 )
+    : pCreationPanel_    ( 0 )
     , pLivingAreaPanel_  ( 0 )
-    , geometry_          ( parent_->saveGeometry() )
-    , state_             ( parent_->saveState() )
-    , editionModeEnabled_( false )
 {
     // Agent list panel
     {
-        QDockWidget* pListDockWnd = new QDockWidget( "orbat", parent );
-        pListDockWnd->setWindowTitle( tools::translate( "DockManager", "ORBAT" ) );
-        pListDockWnd->setObjectName( "Orbat" );
+        gui::RichDockWidget* pListDockWnd = new gui::RichDockWidget( controllers, parent, "orbat", tools::translate( "DockManager", "ORBAT" ) );
+        pListDockWnd->SetModes( ePreparationMode_Exercise, ePreparationMode_Default | ePreparationMode_LivingArea );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
-        dockWidgets_.push_back( pListDockWnd );
         Q3VBox* box = new Q3VBox( pListDockWnd );
         pListDockWnd->setWidget( box );
 
@@ -112,50 +105,38 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
 
     // Properties panel
     {
-        QDockWidget* pPropertiesDockWnd = new QDockWidget( "properties", parent );
-        pPropertiesDockWnd->setObjectName( "properties" );
-        parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
+        gui::RichDockWidget* pPropertiesDockWnd = new gui::RichDockWidget( controllers, parent, "properties", tools::translate( "DockManager", "Properties" ) );
+        pPropertiesDockWnd->SetModes( ePreparationMode_Exercise | ePreparationMode_Terrain, ePreparationMode_Default | ePreparationMode_LivingArea );
         PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel );
         pPropertiesDockWnd->setWidget( propertiesPanel );
-        pPropertiesDockWnd->setWindowTitle( tools::translate( "DockManager", "Properties" ) );
-        dockWidgets_.push_back( pPropertiesDockWnd );
+        parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
     }
     // ResourceNetwork panel
     {
-         QDockWidget* pResourceWnd = new ResourceNetworkDialog( parent, controllers, staticModel, model );
+         gui::RichDockWidget* pResourceWnd = new ResourceNetworkDialog( parent, controllers, staticModel, model );
+         pResourceWnd->SetModes( ePreparationMode_Terrain, ePreparationMode_Default | ePreparationMode_LivingArea );
          parent->addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
-         pResourceWnd->hide();
-         dockWidgets_.push_back( pResourceWnd );
     }
     // Extensions panel
     {
-        pExtensionsPanel_ = new ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_, "ExtensionsPanel" );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
-        pExtensionsPanel_->hide();
-        dockWidgets_.push_back( pExtensionsPanel_ );
+        gui::RichDockWidget* pExtensionsPanel = new ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_ );
+        pExtensionsPanel->SetModes( ePreparationMode_None, ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
     }
     // Creation panel
     {
-        QDockWidget* pCreationDockWnd = new QDockWidget( "creation", parent );
-        pCreationDockWnd->setObjectName( "creation" );
-        parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
-        pCreationDockWnd->hide();
+        gui::RichDockWidget* pCreationDockWnd = new gui::RichDockWidget( controllers, parent, "creation", tools::translate( "DockManager", "Creation" ) );
+        pCreationDockWnd->SetModes( ePreparationMode_None, ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
         pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, factory, symbols, colorStrategy, paramLayer, weatherLayer, glProxy, colorController );
         pCreationDockWnd->setWidget( pCreationPanel_ );
-        pCreationDockWnd->setWindowTitle( tools::translate( "DockManager", "Creation" ) );
-        dockWidgets_.push_back( pCreationDockWnd );
+        parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
     }
     // Living area panel
     {
         pLivingAreaPanel_ = new LivingAreaPanel( parent, controllers, paramLayer, glProxy );
-        QWidget* titleWidget = new QWidget( parent_ );
-        pLivingAreaPanel_->setTitleBarWidget( titleWidget );
-        pLivingAreaPanel_->titleBarWidget()->hide();
-        pLivingAreaPanel_->setFeatures( QDockWidget::NoDockWidgetFeatures );
+        pLivingAreaPanel_->SetModes( ePreparationMode_LivingArea, ePreparationMode_Default | ePreparationMode_Exercise | ePreparationMode_Terrain, ePreparationMode_LivingArea );
         parent->addDockWidget( Qt::TopDockWidgetArea, pLivingAreaPanel_ );
-        pLivingAreaPanel_->hide();
     }
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,8 +145,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 DockManager::~DockManager()
 {
-    pLivingAreaPanel_->hide();
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +157,6 @@ void DockManager::Purge()
     for( std::vector< gui::RichListView* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it )
             ( *it )->Purge();
-    pExtensionsPanel_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -189,6 +168,15 @@ void DockManager::BlockCreationOnListViews( bool enable )
     for( std::vector< gui::RichListView* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it )
             ( *it )->SetCreationBlocked( enable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DockManager::Load
+// Created: LGY 2012-01-04
+// -----------------------------------------------------------------------------
+void DockManager::Load()
+{
+    pCreationPanel_->Load();
 }
 
 // -----------------------------------------------------------------------------
@@ -207,86 +195,6 @@ ObjectCreationPanel& DockManager::GetObjectCreationPanel() const
 InhabitantCreationPanel& DockManager::GetInhabitantCreationPanel() const
 {
     return pCreationPanel_->GetInhabitantCreationPanel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockManager::Load
-// Created: LGY 2012-01-04
-// -----------------------------------------------------------------------------
-void DockManager::Load()
-{
-    pCreationPanel_->Load();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockManager::OptionChanged
-// Created: LGY 2012-01-04
-// -----------------------------------------------------------------------------
-void DockManager::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "LivingAreaEditor" )
-    {
-        editionModeEnabled_ = value.To< bool >();
-        if( editionModeEnabled_ )
-        {
-            geometry_ = parent_->saveGeometry();
-            state_ = parent_->saveState();
-        }
-        ToggleWidget( dockWidgets_, widgets_ );
-        QList< QWidget* > widgets;
-        QList< QToolBar* > toolbars = parent_->findChildren< QToolBar* >();
-        for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
-            widgets.push_back( *it );
-        ToggleWidget( widgets, toolbars_ );
-        if( parent_->menuBar() )
-            parent_->menuBar()->setDisabled( editionModeEnabled_ );
-        pLivingAreaPanel_->setShown( editionModeEnabled_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockManager::ToggleWidget
-// Created: LGY 2012-01-11
-// -----------------------------------------------------------------------------
-void DockManager::ToggleWidget( QList< QWidget* >& container, QList< QWidget* >& current )
-{
-    if( editionModeEnabled_ )
-    {
-        for( QList< QWidget* >::iterator it = container.begin(); it != container.end(); ++it )
-            if( (*it)->isVisible() )
-            {
-                (*it)->setVisible( false );
-                current.push_back( (*it) );
-            }
-    }
-    else
-    {
-        for( QList< QWidget* >::iterator it = current.begin(); it != current.end(); ++it )
-            (*it)->setVisible( true );
-        current.clear();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockManager::SaveGeometry
-// Created: LGY 2012-01-10
-// -----------------------------------------------------------------------------
-QByteArray DockManager::SaveGeometry() const
-{
-    if( editionModeEnabled_ )
-        return geometry_;
-    return parent_->saveGeometry();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockManager::SaveState
-// Created: LGY 2012-01-10
-// -----------------------------------------------------------------------------
-QByteArray DockManager::SaveState() const
-{
-    if( editionModeEnabled_ )
-        return state_;
-    return parent_->saveState();
 }
 
 // -----------------------------------------------------------------------------
