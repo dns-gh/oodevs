@@ -51,7 +51,6 @@ private:
     //@{
     virtual void DoUpdate( const sword::PhaseLineUpdate&  message );
     virtual void DoUpdate( const sword::LimitUpdate& message );
-    // void Update( const sword::TacticalLine& message );
     void Update( const sword::CoordLatLongList& coordinates );
     //@}
 };
