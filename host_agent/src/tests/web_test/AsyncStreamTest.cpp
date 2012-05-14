@@ -10,6 +10,7 @@
 #include "web_test.h"
 
 #include <web/AsyncStream.h>
+#include <host/Pool.h>
 
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
@@ -20,11 +21,12 @@ namespace
 {
     struct Fixture
     {
-        Fixture()
+        Fixture() : pool( 1 )
         {
             // NOTHING
         }
         AsyncStream async;
+        host::Pool pool;
     };
 
     void ReadLine( std::string& dst, std::istream& src )
@@ -38,6 +40,17 @@ namespace
         {
             BOOST_CHECK_EQUAL( src.peek(), c );
             BOOST_CHECK_EQUAL( src.get(),  c );
+        }
+    }
+
+    void NullRead( std::istream& src, size_t read )
+    {
+        char tmp[256];
+        size_t fill = 0;
+        while( fill < read && !src.eof() )
+        {
+            src.read( tmp, std::min( read - fill, sizeof tmp ) );
+            fill += src.gcount();
         }
     }
 }
@@ -88,4 +101,24 @@ BOOST_FIXTURE_TEST_CASE( async_write_peek_get, Fixture )
     async.Write( line.data(), line.size() );
     async.CloseWrite();
     async.Read( boost::bind( &PeekGetLoop, _1, line ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( async_not_enough_reads, Fixture )
+{
+    std::vector< char > buffer( UINT16_MAX * 2 );
+    host::Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Write, &async, &buffer[0], buffer.size() ) );
+    async.Read( boost::bind( &NullRead, _1, 256 ) );
+    ft.timed_wait( boost::posix_time::milliseconds( 500 ) );
+    async.CloseWrite();
+    ft.wait();
+}
+
+BOOST_FIXTURE_TEST_CASE( async_not_enough_writes, Fixture )
+{
+    std::vector< char > buffer( UINT16_MAX * 2 );
+    AsyncStream::Handler handler = boost::bind( &NullRead, _1, buffer.size() );
+    host::Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Read, &async, handler ) );
+    ft.timed_wait( boost::posix_time::milliseconds( 500 ) );
+    async.CloseWrite();
+    ft.wait();
 }

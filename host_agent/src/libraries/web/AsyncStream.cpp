@@ -68,10 +68,12 @@ private:
 struct AsyncStream::Private : public boost::noncopyable
 {
     Private()
-        : reading_( false )
-        , writing_( true )
+        : capacity_( UINT16_MAX )
+        , reading_ ( true )
+        , writing_ ( true )
+        , started_ ( false )
     {
-        // NOTHING
+        buffer_.reserve( capacity_ );
     }
 
     ~Private()
@@ -81,24 +83,34 @@ struct AsyncStream::Private : public boost::noncopyable
 
     void Write( const char* data, size_t size )
     {
-        boost::lock_guard< boost::mutex > lock( access_ );
-        if( !writing_ && !reading_ )
-            return;
-        buffer_.insert( buffer_.end(), data, data + size );
-        condition_.notify_all();
+        size_t fill = 0;
+        boost::unique_lock< boost::mutex > lock( access_ );
+        while( writing_ && ( !started_ || reading_ ) && fill < size )
+        {
+            const size_t next = std::min( size - fill, capacity_ - buffer_.size() );
+            if( !next )
+            {
+                condition_.wait( lock );
+                continue;
+            }
+            buffer_.insert( buffer_.end(), data + fill, data + fill + next );
+            fill += next;
+            condition_.notify_all();
+        }
     }
 
     void CloseWrite()
     {
-        boost::lock_guard< boost::mutex > lock( access_ );
+        boost::unique_lock< boost::mutex > lock( access_ );
         writing_ = false;
+        lock.unlock();
         condition_.notify_all();
     }
 
     void Read( AsyncStream::Handler handler )
     {
         boost::unique_lock< boost::mutex > lock( access_ );
-        reading_ = true;
+        started_ = true;
         lock.unlock();
 
         Device< Private > device( this );
@@ -107,13 +119,14 @@ struct AsyncStream::Private : public boost::noncopyable
 
         lock.lock();
         reading_ = false;
+        lock.unlock();
         condition_.notify_all();
     }
 
     void Join()
     {
         boost::unique_lock< boost::mutex > lock( access_ );
-        while( reading_ )
+        while( started_ && reading_ )
             condition_.wait( lock );
     }
 
@@ -133,16 +146,19 @@ struct AsyncStream::Private : public boost::noncopyable
             if( next )
                 MoveData( data + fill, buffer_, next );
             fill += next;
+            condition_.notify_all();
         }
         return fill;
     }
 
 private:
     boost::mutex access_;
-    boost::condition_variable condition_;
+    const size_t capacity_;
     std::vector< char > buffer_;
+    boost::condition_variable condition_;
     bool reading_;
     bool writing_;
+    bool started_;
 };
 
 // -----------------------------------------------------------------------------
