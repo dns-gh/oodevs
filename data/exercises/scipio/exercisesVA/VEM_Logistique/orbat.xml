@@ -124,7 +124,6 @@
                     <resource name="CART 30/550  OSPEI" quantity="6000"/>
                     <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
                     <resource name="Obus 73 OE" quantity="96"/>
-                    <resource name="Grenade AGS 17" quantity="0"/>
                     <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
                     <resource name="GR 51 FUM INC LGI" quantity="3816"/>
                     <resource name="GR 47  ECL LGI" quantity="3816"/>
@@ -140,10 +139,9 @@
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
                     <resource name="CART 7,62 BD HOM" quantity="53376"/>
-                    <resource name="Grenade offensive" quantity="12324"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
-                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="mine classique" quantity="249136"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="barbele classique" quantity="68160"/>
                   </stocks>
                   <extensions>
@@ -176,7 +174,6 @@
                     <resource name="CART 30/550  OSPEI" quantity="6000"/>
                     <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
                     <resource name="Obus 73 OE" quantity="96"/>
-                    <resource name="Grenade AGS 17" quantity="0"/>
                     <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
                     <resource name="GR 51 FUM INC LGI" quantity="3816"/>
                     <resource name="GR 47  ECL LGI" quantity="3816"/>
@@ -192,10 +189,9 @@
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
                     <resource name="CART 7,62 BD HOM" quantity="53376"/>
-                    <resource name="Grenade offensive" quantity="12324"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
-                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="mine classique" quantity="249136"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="barbele classique" quantity="68160"/>
                   </stocks>
                   <extensions>
@@ -276,7 +272,6 @@
                     <resource name="CART 30/550  OSPEI" quantity="6000"/>
                     <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
                     <resource name="Obus 73 OE" quantity="96"/>
-                    <resource name="Grenade AGS 17" quantity="0"/>
                     <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
                     <resource name="GR 51 FUM INC LGI" quantity="3816"/>
                     <resource name="GR 47  ECL LGI" quantity="3816"/>
@@ -292,10 +287,9 @@
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
                     <resource name="CART 7,62 BD HOM" quantity="53376"/>
-                    <resource name="Grenade offensive" quantity="12324"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
-                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="mine classique" quantity="249136"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="barbele classique" quantity="68160"/>
                   </stocks>
                   <extensions>
@@ -328,7 +322,6 @@
                     <resource name="CART 30/550  OSPEI" quantity="6000"/>
                     <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
                     <resource name="Obus 73 OE" quantity="96"/>
-                    <resource name="Grenade AGS 17" quantity="0"/>
                     <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
                     <resource name="GR 51 FUM INC LGI" quantity="3816"/>
                     <resource name="GR 47  ECL LGI" quantity="3816"/>
@@ -344,10 +337,9 @@
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
                     <resource name="CART 7,62 BD HOM" quantity="53376"/>
-                    <resource name="Grenade offensive" quantity="12324"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
-                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="mine classique" quantity="249136"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="barbele classique" quantity="68160"/>
                   </stocks>
                   <extensions>
@@ -416,10 +408,10 @@
                     <resource name="F-63 1" quantity="47135"/>
                     <resource name="mine classique" quantity="300"/>
                     <resource name="barbele classique" quantity="300"/>
-                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
-                    <resource name="Rechange  NTI1 EA" quantity="30"/>
                     <resource name="RATION DE COMBAT 1" quantity="2140"/>
                     <resource name="EAU MINERALE 1L T 1" quantity="12690"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
+                    <resource name="Rechange  NTI1 EA" quantity="30"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value=""/>
@@ -671,10 +663,10 @@
                     <resource name="F-35 1" quantity="23250"/>
                     <resource name="mine classique" quantity="450"/>
                     <resource name="barbele classique" quantity="450"/>
-                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
-                    <resource name="Rechange  NTI1 EA" quantity="30"/>
                     <resource name="RATION DE COMBAT 1" quantity="3350"/>
                     <resource name="EAU MINERALE 1L T 1" quantity="19950"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
+                    <resource name="Rechange  NTI1 EA" quantity="30"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value=""/>
@@ -877,6 +869,8 @@
                     <resource name="F-63 1" quantity="34360"/>
                     <resource name="mine classique" quantity="450"/>
                     <resource name="barbele classique" quantity="450"/>
+                    <resource name="RATION DE COMBAT 1" quantity="2430"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="14370"/>
                     <resource name="Rechange  NTI1 MOB" quantity="1470"/>
                     <resource name="Rechange  NTI2 MOB" quantity="600"/>
                     <resource name="Rechange  NTI1 TCT" quantity="720"/>
@@ -885,8 +879,6 @@
                     <resource name="Rechange  NTI2 COTAC" quantity="220"/>
                     <resource name="Rechange  NTI2 DEM" quantity="220"/>
                     <resource name="Rechange  NTI1 EA" quantity="1350"/>
-                    <resource name="RATION DE COMBAT 1" quantity="2430"/>
-                    <resource name="EAU MINERALE 1L T 1" quantity="14370"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value=""/>
@@ -938,7 +930,6 @@
                     <resource name="CART 30/550  OSPEI" quantity="6000"/>
                     <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
                     <resource name="Obus 73 OE" quantity="96"/>
-                    <resource name="Grenade AGS 17" quantity="0"/>
                     <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
                     <resource name="GR 51 FUM INC LGI" quantity="3816"/>
                     <resource name="GR 47  ECL LGI" quantity="3816"/>
@@ -957,14 +948,15 @@
                     <resource name="Missile AT4" quantity="12"/>
                     <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
                     <resource name="CART 7,62 BD HOM" quantity="53376"/>
-                    <resource name="Grenade offensive" quantity="12324"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
                     <resource name="F-63 1" quantity="1567829"/>
                     <resource name="F-57 1" quantity="2053"/>
                     <resource name="F-35 1" quantity="351192"/>
-                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="mine classique" quantity="249136"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
                     <resource name="barbele classique" quantity="68160"/>
+                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
                     <resource name="Rechange  NTI1 MOB" quantity="13560"/>
                     <resource name="Rechange  NTI2 MOB" quantity="900"/>
                     <resource name="Rechange  NTI1 TCT" quantity="1440"/>
@@ -973,8 +965,6 @@
                     <resource name="Rechange  NTI2 COTAC" quantity="330"/>
                     <resource name="Rechange  NTI2 DEM" quantity="330"/>
                     <resource name="Rechange  NTI1 EA" quantity="4680"/>
-                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
-                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value="16471"/>
@@ -1080,10 +1070,10 @@
                     <resource name="CART 7.62 N BD PAN" quantity="18000"/>
                     <resource name="CART 5.56 F1A F1" quantity="16200"/>
                     <resource name="F-63 1" quantity="4920"/>
-                    <resource name="Rechange  NTI1 MOB" quantity="120"/>
-                    <resource name="Rechange  NTI1 EA" quantity="120"/>
                     <resource name="RATION DE COMBAT 1" quantity="580"/>
                     <resource name="EAU MINERALE 1L T 1" quantity="3360"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="120"/>
+                    <resource name="Rechange  NTI1 EA" quantity="120"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value="16471"/>
@@ -1123,10 +1113,10 @@
                     <resource name="F-57 1" quantity="180"/>
                     <resource name="mine classique" quantity="300"/>
                     <resource name="barbele classique" quantity="300"/>
-                    <resource name="Rechange  NTI1 MOB" quantity="180"/>
-                    <resource name="Rechange  NTI1 EA" quantity="60"/>
                     <resource name="RATION DE COMBAT 1" quantity="1925"/>
                     <resource name="EAU MINERALE 1L T 1" quantity="11370"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="180"/>
+                    <resource name="Rechange  NTI1 EA" quantity="60"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value=""/>
@@ -1319,10 +1309,10 @@
                     <resource name="F-63 1" quantity="39010"/>
                     <resource name="mine classique" quantity="150"/>
                     <resource name="barbele classique" quantity="150"/>
-                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
-                    <resource name="Rechange  NTI1 EA" quantity="30"/>
                     <resource name="RATION DE COMBAT 1" quantity="2130"/>
                     <resource name="EAU MINERALE 1L T 1" quantity="12630"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
+                    <resource name="Rechange  NTI1 EA" quantity="30"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value=""/>
@@ -1672,10 +1662,9 @@
                       <resource name="CART 20 OEI OEIT SBP" quantity="7332"/>
                       <resource name="CART 20 OPT" quantity="2214"/>
                       <resource name="CART 7,62 BD HOM" quantity="6672"/>
-                      <resource name="Grenade offensive" quantity="1533"/>
                       <resource name="OE JUPU 155 F2 Kit RTC" quantity="144"/>
-                      <resource name="PETD 500 G T ID M 1" quantity="54620"/>
                       <resource name="mine classique" quantity="31202"/>
+                      <resource name="PETD 500 G T ID M 1" quantity="54620"/>
                       <resource name="barbele classique" quantity="8580"/>
                     </stocks>
                     <extensions>
@@ -1718,10 +1707,9 @@
                       <resource name="CART 20 OEI OEIT SBP" quantity="7332"/>
                       <resource name="CART 20 OPT" quantity="2214"/>
                       <resource name="CART 7,62 BD HOM" quantity="6672"/>
-                      <resource name="Grenade offensive" quantity="1533"/>
                       <resource name="OE JUPU 155 F2 Kit RTC" quantity="144"/>
-                      <resource name="PETD 500 G T ID M 1" quantity="54620"/>
                       <resource name="mine classique" quantity="31202"/>
+                      <resource name="PETD 500 G T ID M 1" quantity="54620"/>
                       <resource name="barbele classique" quantity="8580"/>
                     </stocks>
                     <extensions>
@@ -2064,11 +2052,11 @@
                       <resource name="F-63 1" quantity="12107"/>
                       <resource name="mine classique" quantity="150"/>
                       <resource name="barbele classique" quantity="150"/>
+                      <resource name="RATION DE COMBAT 1" quantity="736"/>
+                      <resource name="EAU MINERALE 1L T 1" quantity="4404"/>
                       <resource name="Rechange  NTI1 MOB" quantity="90"/>
                       <resource name="Rechange  NTI1 TCT" quantity="18"/>
                       <resource name="Rechange  NTI1 EA" quantity="36"/>
-                      <resource name="RATION DE COMBAT 1" quantity="736"/>
-                      <resource name="EAU MINERALE 1L T 1" quantity="4404"/>
                     </stocks>
                     <extensions>
                       <entry key="DiffusionList" value=""/>
@@ -2224,17 +2212,16 @@
                   <resource name="CPLT 81 OECL F1" quantity="60"/>
                   <resource name="CART 20 OEI OEIT SBP" quantity="558"/>
                   <resource name="CART 20 OPT" quantity="108"/>
-                  <resource name="Grenade offensive" quantity="420"/>
                   <resource name="F-63 1" quantity="82271"/>
                   <resource name="F-57 1" quantity="216"/>
-                  <resource name="PETD 500 G T ID M 1" quantity="17400"/>
                   <resource name="mine classique" quantity="7670"/>
+                  <resource name="PETD 500 G T ID M 1" quantity="17400"/>
                   <resource name="barbele classique" quantity="3110"/>
+                  <resource name="RATION DE COMBAT 1" quantity="6647"/>
+                  <resource name="EAU MINERALE 1L T 1" quantity="39630"/>
                   <resource name="Rechange  NTI1 MOB" quantity="330"/>
                   <resource name="Rechange  NTI1 TCT" quantity="18"/>
                   <resource name="Rechange  NTI1 EA" quantity="84"/>
-                  <resource name="RATION DE COMBAT 1" quantity="6647"/>
-                  <resource name="EAU MINERALE 1L T 1" quantity="39630"/>
                 </stocks>
                 <extensions>
                   <entry key="DiffusionList" value=""/>
@@ -2264,10 +2251,10 @@
                     <resource name="F-63 1" quantity="3377"/>
                     <resource name="mine classique" quantity="40"/>
                     <resource name="barbele classique" quantity="40"/>
-                    <resource name="Rechange  NTI1 MOB" quantity="30"/>
-                    <resource name="Rechange  NTI1 EA" quantity="6"/>
                     <resource name="RATION DE COMBAT 1" quantity="189"/>
                     <resource name="EAU MINERALE 1L T 1" quantity="1104"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="30"/>
+                    <resource name="Rechange  NTI1 EA" quantity="6"/>
                   </stocks>
                   <extensions>
                     <entry key="DiffusionList" value=""/>
@@ -2469,4 +2456,4 @@
     <party id="12521"/>
   </diplomacy>
 </orbat>
-<!-- signature="2297094812" -->
+<!-- signature="3438577429" -->
