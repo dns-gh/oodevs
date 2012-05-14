@@ -5044,7 +5044,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.TRANS.PC TAC" id="174" name="GEN . DLGEN" type="Pion ASS">
+  <unit decisional-model="Masalife.TRANS.PC TAC" id="174" name="GEN . DLGEN" type="Pion GEN">
     <nature atlas-nature="None" level="o" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="VTC P4"/>
@@ -19011,4 +19011,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0478096905" -->
+<!-- signature="1783156739" -->

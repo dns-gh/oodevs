@@ -451,7 +451,7 @@
   <automat decisional-model="Masalife.Automate.ASS.DLO" id="766" name="ASS . EO AMX10P" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . EO AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="767" name="GEN . DLGEN" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.TRANS.TAC" id="767" name="GEN . DLGEN" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . DLGEN"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="768" name="GEN . PC GEN" type="Automate TRANS">
@@ -1533,4 +1533,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="3994110191" -->
+<!-- signature="0918568538" -->
