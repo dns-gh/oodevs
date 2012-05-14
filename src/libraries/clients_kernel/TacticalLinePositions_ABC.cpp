@@ -1,0 +1,189 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "clients_kernel_pch.h"
+#include "TacticalLinePositions_ABC.h"
+
+#include "TacticalLine_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Lines.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Viewport_ABC.h"
+
+using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC constructor
+// Created: MMC 2012-05-14
+// -----------------------------------------------------------------------------
+TacticalLinePositions_ABC::TacticalLinePositions_ABC( const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+    : converter_( converter )
+    , owner_    ( owner )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC constructor
+// Created: MMC 2012-05-14
+// -----------------------------------------------------------------------------
+TacticalLinePositions_ABC::TacticalLinePositions_ABC( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+    : converter_( converter )
+    , owner_    ( owner )
+    , pointList_( pointList )
+{
+    ComputeBoundingBox();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC destructor
+// Created: MMC 2012-05-14
+// -----------------------------------------------------------------------------
+TacticalLinePositions_ABC::~TacticalLinePositions_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::GetPosition
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+geometry::Point2f TacticalLinePositions_ABC::GetPosition( bool ) const
+{
+    return pointList_.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::GetHeight
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+float TacticalLinePositions_ABC::GetHeight( bool ) const
+{
+    return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::IsAt
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions_ABC::IsAt( const geometry::Point2f& point, float precision, float /*adaptiveFactor*/ ) const
+{
+    precision *= precision;
+    if( pointList_.empty() )
+        return false;
+    if( pointList_.size() == 1 )
+        return pointList_.front().SquareDistance( point ) <= precision;
+
+    CIT_PointVector previous = pointList_.begin();
+    for( CIT_PointVector current = previous + 1; current != pointList_.end(); ++current )
+    {
+        const geometry::Segment2f segment( *previous, *current );
+        if( segment.SquareDistance( point ) < precision )
+            return true;
+        previous = current;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::IsIn
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions_ABC::IsIn( const geometry::Rectangle2f& rectangle ) const
+{
+    return rectangle.IsInside( GetPosition( true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::GetBoundingBox
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f TacticalLinePositions_ABC::GetBoundingBox() const
+{
+    return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::Accept
+// Created: SBO 2009-05-25
+// -----------------------------------------------------------------------------
+void TacticalLinePositions_ABC::Accept( kernel::LocationVisitor_ABC& visitor ) const
+{
+    visitor.VisitLines( pointList_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::Draw
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( pointList_.empty() || !viewport.IsVisible( boundingBox_ ) )
+        return;
+
+    std::string symbol = owner_.Get< kernel::TacticalHierarchies >().GetSymbol();
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    if( symbol.empty() )
+    {
+        glLineWidth( 5.f );
+        tools.DrawLines( pointList_ );
+        glLineWidth( 3.f );
+        if( owner_.IsLimit() )
+            glColor3f( 0.1f, 0.1f, 0.1f );
+        else
+            glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
+        tools.DrawLines( pointList_ );
+    }
+    if( tools.ShouldDisplay() )
+        for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+            tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
+    glPopAttrib();
+
+    if( !symbol.empty() )
+    {
+        kernel::Lines location;
+        for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        {
+            const geometry::Point2f& point = *it;
+            location.AddPoint( point );
+        }
+        tools.DrawTacticalGraphics( symbol, location, false );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::ComputeBoundingBox
+// Created: SBO 2007-03-08
+// -----------------------------------------------------------------------------
+void TacticalLinePositions_ABC::ComputeBoundingBox()
+{
+    boundingBox_ = geometry::Rectangle2f();
+    for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        boundingBox_.Incorporate( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions_ABC::CanAggregate() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions_ABC::IsAggregated() const
+{
+    return false;
+}

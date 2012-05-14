@@ -10,8 +10,7 @@
 #ifndef __TacticalLineHierarchies_h_
 #define __TacticalLineHierarchies_h_
 
-#include "clients_kernel/SimpleHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TacticalLineHierarchies_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -35,14 +34,14 @@ namespace kernel
 */
 // Created: SBO 2006-11-14
 // =============================================================================
-class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
+class TacticalLineHierarchies : public kernel::TacticalLineHierarchies_ABC
                               , public kernel::Updatable_ABC< sword::PhaseLineUpdate >
                               , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const sword::Diffusion& message
+             TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const sword::Diffusion& message
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
@@ -55,12 +54,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalLineHierarchies( const TacticalLineHierarchies& );            //!< Copy constructor
-    TacticalLineHierarchies& operator=( const TacticalLineHierarchies& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Update( const sword::Diffusion& message );

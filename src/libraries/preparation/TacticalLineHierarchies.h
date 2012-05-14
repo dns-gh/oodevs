@@ -10,8 +10,7 @@
 #ifndef __TacticalLineHierarchies_h_
 #define __TacticalLineHierarchies_h_
 
-#include "clients_kernel/SimpleHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TacticalLineHierarchies_ABC.h"
 
 // =============================================================================
 /** @class  TacticalLineHierarchies
@@ -19,19 +18,13 @@
 */
 // Created: SBO 2006-10-19
 // =============================================================================
-class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
+class TacticalLineHierarchies : public kernel::TacticalLineHierarchies_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TacticalLineHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~TacticalLineHierarchies();
-    //@}
-    
-    //! @name Operations
-    //@{
-    virtual std::string GetSymbol() const;
-    virtual std::string GetLevel() const;
     //@}
 
 private:

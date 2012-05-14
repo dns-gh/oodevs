@@ -116,6 +116,8 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\objecticons.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Styles.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
@@ -260,6 +262,8 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\SubTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
