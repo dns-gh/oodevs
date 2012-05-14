@@ -19,7 +19,8 @@
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
-    : scaledLocalisation_   ( knowledge.GetLocalisation() )
+    : localisation_         ( knowledge.GetLocalisation() )
+    , scaledLocalisation_   ( localisation_ )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
     , pathClass_            ( pathClass )
     , objectType_           ( knowledge.GetType() )
@@ -35,7 +36,8 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
 // Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Population_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
-    : scaledLocalisation_   ( knowledge.GetLocalisation() )
+    : localisation_         ( knowledge.GetLocalisation() )
+    , scaledLocalisation_   ( localisation_ )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
     , pathClass_            ( pathClass )
     , objectType_           ( knowledge.GetType() )
@@ -68,9 +70,9 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
     bool isFromInsideReal = realLocalisation_.IsInside( from, epsilon );
     if( isIntersectingWithReal || isToInsideReal || isFromInsideReal )
     {
-        if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
-            ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
-            ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
+        if( ( isIntersectingWithReal && localisation_.Intersect2D( line, epsilon ) ) ||
+            ( isToInsideReal && localisation_.IsInside( to, epsilon ) ) ||
+            ( isFromInsideReal && localisation_.IsInside( from, epsilon ) ) )
         {
             if( rMaxTrafficability_ != 0. && weight > rMaxTrafficability_ )
                 return -1.; //$$$$ CMA in order to block the unit if there is a non-trafficable object
@@ -82,6 +84,10 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
             else
                 return rCostIn;
         }
+        else if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
+                 ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
+                 ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
+            return pathClass_.GetObjectCost( objectType_ );
     }
     return std::numeric_limits< double >::min();
 }

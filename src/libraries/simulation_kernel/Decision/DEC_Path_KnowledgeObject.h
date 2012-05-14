@@ -42,6 +42,7 @@ public:
 private:
     //! @name Member data
     //@{
+    TER_Localisation localisation_;
     TER_Localisation scaledLocalisation_;
     TER_Localisation realLocalisation_;
     const DEC_PathClass& pathClass_;
