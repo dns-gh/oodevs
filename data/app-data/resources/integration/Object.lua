@@ -39,7 +39,8 @@ integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
 end
 
-integration.createObjectInstantaneously = function( object )
+integration.buildObjectInstantaneously = function( object )
+    integration.pionRC( eRC_FinTravauxObjet, object.source )
     return DEC_ObjectKnowledge_BuildInstantaneously( object.source )
 end
 

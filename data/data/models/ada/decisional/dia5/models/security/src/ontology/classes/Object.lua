@@ -20,7 +20,7 @@ method "buildIt" ( masalife.brain.integration.startStopAction(
 method "createIt" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self )
-        integration.createObjectInstantaneously( self )
+        integration.buildObjectInstantaneously( self )
         return self
     end,
     started = function( self )
