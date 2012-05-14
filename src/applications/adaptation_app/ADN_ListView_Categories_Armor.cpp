@@ -16,6 +16,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_GuiTools.h"
+#include "ADN_Composantes_Data.h"
 #include "ADN_Tr.h"
 
 typedef helpers::ArmorInfos ArmorInfos;
@@ -97,4 +98,42 @@ void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect()
             SetCurrentItem( pData );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Categories_Armor::ContextMenuDelete
+// Created: LGY 2012-05-14
+// -----------------------------------------------------------------------------
+void ADN_ListView_Categories_Armor::ContextMenuDelete()
+{
+    if( pCurData_ == 0 || !bDeletionEnabled_ )
+        return;
+
+    ArmorInfos* pInfos = (ArmorInfos*)pCurData_;
+    if( pInfos == 0 )
+        return;
+
+    if( IsReferenced( pInfos->strName_.GetData() ) )
+    {
+        if( !ADN_GuiTools::MultiRefWarning() )
+            return;
+    }
+    else if( !ADN_GuiTools::DeletionWarning() )
+        return;
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pInfos );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Categories_Armor::IsReferenced
+// Created: LGY 2012-05-14
+// -----------------------------------------------------------------------------
+bool ADN_ListView_Categories_Armor::IsReferenced( const std::string& name ) const
+{
+    ADN_Composantes_Data::T_ComposanteInfos_Vector& vAllComposantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
+    for( ADN_Composantes_Data::T_ComposanteInfos_Vector::const_iterator it = vAllComposantes.begin(); it != vAllComposantes.end(); ++it )
+        if( (*it)->ptrArmor_.GetData()->strName_.GetData() == name )
+            return true;
+
+    return false;
 }
