@@ -136,6 +136,7 @@ namespace mocks
         MOCK_METHOD( WriteFile, 2 );
         MOCK_METHOD( ReadFile, 1 );
         MOCK_METHOD( Glob, 2 );
+        MOCK_METHOD( Find, 3 );
         MOCK_METHOD( Unpack, 2 );
     };
 

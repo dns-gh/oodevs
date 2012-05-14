@@ -77,6 +77,7 @@ public:
     virtual void WriteFile( const boost::filesystem3::path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const boost::filesystem3::path& path ) const = 0;
     virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const = 0;
+    virtual std::vector< boost::filesystem3::path > Walk( const boost::filesystem3::path& path, bool recurse ) const = 0;
     virtual T_Unpacker Unpack( const boost::filesystem3::path& output, std::istream& src ) const = 0;
     //@}
 };

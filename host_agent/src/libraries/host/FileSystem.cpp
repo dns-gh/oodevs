@@ -169,6 +169,31 @@ std::vector< boost::filesystem::path > FileSystem::Glob( const boost::filesystem
 
 namespace
 {
+template< typename T >
+std::vector< boost::filesystem::path > Iterate( const boost::filesystem::path& path )
+{
+    std::vector< boost::filesystem::path > paths;
+    if( boost::filesystem::is_directory( path ) )
+        for( T it( path); it != T(); ++it )
+            paths.push_back( *it );
+    return paths;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::Walk
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+std::vector< boost::filesystem::path > FileSystem::Walk( const boost::filesystem::path& path, bool recurse ) const
+{
+    if( recurse )
+        return Iterate< boost::filesystem::recursive_directory_iterator >( path );
+    else
+        return Iterate< boost::filesystem::directory_iterator >( path );
+}
+
+namespace
+{
 typedef struct archive Archive;
 typedef struct archive_entry ArchiveEntry;
 
