@@ -70,6 +70,7 @@ public:
     virtual Reply StartNode( const boost::uuids::uuid& id ) const = 0;
     virtual Reply StopNode( const boost::uuids::uuid& id ) const = 0;
     virtual Reply UploadPack( const boost::uuids::uuid& id, std::istream& src ) = 0;
+    virtual Reply GetPack( const boost::uuids::uuid& id ) const = 0;
     //@}
 
     //! @name Session Methods

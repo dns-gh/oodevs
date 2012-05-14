@@ -57,6 +57,7 @@ namespace
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
         MOCK_METHOD( UploadPack, 2 );
+        MOCK_METHOD( GetPack, 1 );
         // sessions
         MOCK_METHOD( ListSessions, 3 );
         MOCK_METHOD( CountSessions, 1 );

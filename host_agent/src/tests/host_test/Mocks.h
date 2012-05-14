@@ -61,6 +61,8 @@ namespace mocks
     {
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetProperties, 0 );
+        MOCK_METHOD( Unpack, 3 );
+        MOCK_METHOD( GetPack, 0 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )

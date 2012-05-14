@@ -259,6 +259,15 @@ Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::GetPack
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+Reply Agent::GetPack( const boost::uuids::uuid& id ) const
+{
+    return TreeDispatch( boost::bind( &NodeController_ABC::GetPack, &nodes_, id ), "get pack" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------

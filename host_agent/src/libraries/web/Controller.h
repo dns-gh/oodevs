@@ -64,6 +64,7 @@ private:
     std::string DeleteNode( const Request_ABC& request );
     std::string StartNode ( const Request_ABC& request );
     std::string StopNode  ( const Request_ABC& request );
+    std::string GetPack   ( const Request_ABC& request );
     //@}
 
     //! @name Session Methods
