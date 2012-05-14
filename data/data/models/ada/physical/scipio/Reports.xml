@@ -658,5 +658,7 @@
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="463" message="Impossible d'animer l'objet"/>
+  <report category="operational" id="464" message="Subit un interrogatoire"/>
+  <report category="operational" id="465" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
 </reports>
-<!-- signature="0850110815" -->
+<!-- signature="0291190107" -->

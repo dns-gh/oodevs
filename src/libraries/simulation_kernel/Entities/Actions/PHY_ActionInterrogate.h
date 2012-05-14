@@ -30,7 +30,8 @@ public:
     enum E_ReturnCode
     {
         eRunning = 0,
-        eFinished = 1
+        eFinished = 1,
+        eFailed = 2
     };
 
 public:
@@ -60,6 +61,7 @@ private:
     //@{
     unsigned int rBaseTime_;
     unsigned int rTimeToWait_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge_;
     //@}
 };
 

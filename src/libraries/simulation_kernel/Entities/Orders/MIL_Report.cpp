@@ -140,6 +140,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_UnderIndirectFire   ] = eRC_PrisSousTirMunition;
 
     diaEvents_[ eReport_SetUponByPopulation ] = eRC_PriseAPartieParPopulation;
+    diaEvents_[ eReport_Questionning ] = eRC_Questionning;
 }
 
 // -----------------------------------------------------------------------------

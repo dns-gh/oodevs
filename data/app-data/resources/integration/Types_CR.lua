@@ -476,4 +476,6 @@ eRC_NotInSameUndergroundNetwork = 460
 eRC_FireIsBeingExtinguished = 461
 eRC_TerroristDropped = 462
 eRC_ImpossibleToOperateObject = 463
-eNbr = 464
+eRC_Questionning = 464
+eRC_criticalIntelligenceImpossible = 465
+eNbr = 466

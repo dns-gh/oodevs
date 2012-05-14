@@ -658,5 +658,7 @@
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="463" message="Object cannot be operated"/>
+  <report category="operational" id="464" message="Being interrogated"/>
+  <report category="operational" id="465" message="Impossible to have the critical intelligence : weak force ratio"/>
 </reports>
-<!-- signature="2287737108" -->
+<!-- signature="3865851861" -->

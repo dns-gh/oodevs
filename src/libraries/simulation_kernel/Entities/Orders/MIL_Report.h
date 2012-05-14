@@ -146,6 +146,7 @@ public:
         eReport_UrbanCollisionStarted,
         eReport_UrbanCollisionStopped,
         eReport_SetUponByPopulation,
+        eReport_Questionning,
         eNbrReport
     };
 
@@ -615,6 +616,8 @@ public:
         eRC_FireIsBeingExtinguished,
         eRC_TerroristDropped,
         eRC_ImpossibleToOperateObject,
+        eRC_Questionning,
+        eRC_criticalIntelligenceImpossible,
         eLast
     };
     //@}
