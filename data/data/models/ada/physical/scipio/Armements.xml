@@ -3027,21 +3027,6 @@
       </hit-probabilities>
     </direct-fire>
   </weapon-system>
-  <weapon-system launcher="Main" munition="Grenade offensive">
-    <burst duration="10s" munition="1"/>
-    <reloading duration="10s" munition="1"/>
-    <direct-fire>
-      <hit-probabilities target="Drone"/>
-      <hit-probabilities target="Gros"/>
-      <hit-probabilities target="Moyen"/>
-      <hit-probabilities target="Petit"/>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="20" percentage="0.9"/>
-        <hit-probability distance="25" percentage="0"/>
-        <hit-probability distance="0" percentage="1"/>
-      </hit-probabilities>
-    </direct-fire>
-  </weapon-system>
   <weapon-system launcher="Main" munition="IED">
     <burst duration="1s" munition="1"/>
     <reloading duration="1s" munition="1"/>
@@ -3197,4 +3182,4 @@
     </direct-fire>
   </weapon-system>
 </weapons>
-<!-- signature="2621941847" -->
+<!-- signature="3751001469" -->

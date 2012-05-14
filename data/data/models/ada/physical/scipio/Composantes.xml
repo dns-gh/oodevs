@@ -304,7 +304,6 @@
     <composition>
       <category name="munition">
         <resource capacity="240" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="30"/>
-        <resource capacity="10" logistic-threshold="10" name="Grenade offensive" normalized-consumption="1"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -33669,7 +33668,6 @@
     <composition>
       <category name="munition">
         <resource capacity="240" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="30"/>
-        <resource capacity="10" logistic-threshold="10" name="Grenade offensive" normalized-consumption="1"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -33739,7 +33737,6 @@
     <composition>
       <category name="munition">
         <resource capacity="240" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="30"/>
-        <resource capacity="10" logistic-threshold="10" name="Grenade offensive" normalized-consumption="1"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -34592,7 +34589,6 @@
     <composition>
       <category name="munition">
         <resource capacity="240" logistic-threshold="10" name="CART 5.56 F1A F1" normalized-consumption="30"/>
-        <resource capacity="10" logistic-threshold="10" name="Grenade offensive" normalized-consumption="1"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -35213,4 +35209,4 @@
     <equipment-category>Hommes</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3459209488" -->
+<!-- signature="0338307113" -->

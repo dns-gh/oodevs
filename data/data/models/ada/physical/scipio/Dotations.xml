@@ -2457,19 +2457,6 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="112" id-nature="3" name="Grenade offensive" nature="Solide" package-mass="1" package-size="1" package-volume="1" type="ALR">
-    <attritions>
-      <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
-    </attritions>
-  </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="113" id-nature="3" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
@@ -2614,4 +2601,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="145" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="0932173177" -->
+<!-- signature="3802168744" -->
