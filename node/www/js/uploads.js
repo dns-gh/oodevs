@@ -1,7 +1,11 @@
 (function() {
-  var spin_opts, spinner, toggle_load, tr, uid, _i, _len, _ref, _ref2;
+  var get_url, spin_opts, spinner, toggle_load, tr, uid, _i, _len, _ref, _ref2;
 
-  $("#upload_form").attr("action", window.location.protocol + "//" + window.location.hostname + ":" + proxy + "/api/upload_pack?id=" + uuid);
+  get_url = function(url) {
+    return window.location.protocol + "//" + window.location.hostname + ":" + proxy + url;
+  };
+
+  $("#upload_form").attr("action", (get_url("/api/upload_pack")) + "?id=" + uuid);
 
   spin_opts = {
     lines: 12,
@@ -33,10 +37,6 @@
     return $("#upload_form").submit();
   });
 
-  $("#upload_target").load(function() {
-    return toggle_load();
-  });
-
   _ref = $(".exercises tr");
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     tr = _ref[_i];
@@ -48,5 +48,9 @@
       content: $(uid).contents()
     });
   }
+
+  $("#upload_target").load(function(data) {
+    return toggle_load();
+  });
 
 }).call(this);

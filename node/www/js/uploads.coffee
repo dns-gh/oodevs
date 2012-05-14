@@ -1,4 +1,7 @@
-$("#upload_form").attr "action", window.location.protocol + "//" + window.location.hostname + ":" + proxy + "/api/upload_pack?id=" + uuid
+get_url = (url) ->
+    return window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
+
+$("#upload_form").attr "action", (get_url "/api/upload_pack") + "?id=" + uuid
 
 spin_opts =
     lines:      12
@@ -26,9 +29,6 @@ $("#upload_form .upload").click ->
     toggle_load()
     $("#upload_form").submit()
 
-$("#upload_target").load ->
-    toggle_load()
-
 for tr in $(".exercises tr")
     continue unless tr.id?.length
     uid = "#" + tr.id + "_briefing"
@@ -36,3 +36,6 @@ for tr in $(".exercises tr")
         placement: "bottom",
         title:     $(uid + " h1:nth-child(2)").contents()
         content:   $(uid).contents()
+
+$("#upload_target").load (data) ->
+    toggle_load()
