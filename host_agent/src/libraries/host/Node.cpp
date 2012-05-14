@@ -12,6 +12,8 @@
 #include "PortFactory_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
+#include "FileSystem_ABC.h"
+#include "Package.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -24,6 +26,7 @@
 #endif
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
+#include <boost/thread/mutex.hpp>
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
@@ -72,6 +75,7 @@ Node::Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr
     , name_   ( name )
     , port_   ( port )
     , access_ ( new boost::shared_mutex() )
+    , packer_ ( new boost::mutex() )
     , process_()
 {
     // NOTHING
@@ -86,6 +90,7 @@ Node::Node( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC&
     , name_   ( tree.get< std::string >( "name" ) )
     , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
     , access_ ( new boost::shared_mutex() )
+    , packer_ ( new boost::mutex() )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
 {
     // NOTHING
@@ -179,4 +184,51 @@ bool Node::Stop()
     process_->Kill( 0 );
     process_.reset();
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::Unpack
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+void Node::Unpack( const FileSystem_ABC& system, const boost::filesystem::path& path, std::istream& src )
+{
+    boost::mutex::scoped_try_lock lock( *packer_ );
+    if( !lock.owns_lock() )
+        return;
+
+    try
+    {
+        system.Remove( path );
+        system.MakeDirectory( path );
+        FileSystem_ABC::T_Unpacker unpacker = system.Unpack( path, src );
+        unpacker->Unpack();
+    }
+    catch( const std::exception& /*err*/ )
+    {
+        return;
+    }
+
+    try
+    {
+        boost::shared_ptr< Package_ABC > next( new Package( system, path ) );
+        bool valid = next->Parse();
+        if( !valid )
+            return;
+
+        boost::lock_guard< boost::shared_mutex > write( *access_ );
+        package_ = next;
+    }
+    catch( const std::exception& /*err*/ )
+    {
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetPack
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+boost::property_tree::ptree Node::GetPack() const
+{
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    return package_ ? package_->GetProperties() : boost::property_tree::ptree();
 }

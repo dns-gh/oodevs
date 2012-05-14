@@ -291,7 +291,8 @@ void NodeController::Stop( Node& node, bool skipSave ) const
 // -----------------------------------------------------------------------------
 NodeController::T_Tree NodeController::GetPack( const boost::uuids::uuid& id ) const
 {
-    return NodeController::T_Tree();
+    boost::shared_ptr< Node > node = nodes_->Get( id );
+    return node ? node->GetPack() : T_Tree();
 }
 
 // -----------------------------------------------------------------------------
@@ -303,13 +304,6 @@ NodeController::T_Tree NodeController::UploadPack( const boost::uuids::uuid& id,
     boost::shared_ptr< Node > node = nodes_->Get( id );
     if( !node )
         return T_Tree();
-    const bool IsPackUploading = false; // TODO check concurrency
-    if( IsPackUploading )
-        throw std::runtime_error( "Another package is being uploaded" );
-    const boost::filesystem::path pack = GetPath( root_, *node ) / "pack";
-    system_.Remove( pack );
-    system_.MakeDirectory( pack );
-    FileSystem_ABC::T_Unpacker obj = system_.Unpack( pack, src );
-    obj->Unpack();
-    return GetPack( id );
+    node->Unpack( system_, GetPath( root_, *node ) / "pack", src );
+    return node->GetPack();
 }

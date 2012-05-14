@@ -17,6 +17,7 @@
 
 namespace boost
 {
+    class mutex;
     class shared_mutex;
 }
 
@@ -28,6 +29,7 @@ namespace runtime
 
 namespace host
 {
+    class Package_ABC;
     class Port_ABC;
     class PortFactory_ABC;
 
@@ -51,6 +53,8 @@ public:
     //@{
     virtual boost::uuids::uuid GetId() const;
     virtual boost::property_tree::ptree GetProperties() const;
+    virtual void Unpack( const FileSystem_ABC& system, const boost::filesystem3::path& path, std::istream& src );
+    virtual boost::property_tree::ptree GetPack() const;
     //@}
 
     //! @name Typedef helpers
@@ -83,6 +87,8 @@ private:
     //! @name Private members
     //@{
     const std::auto_ptr< boost::shared_mutex > access_;
+    const std::auto_ptr< boost::mutex > packer_;
+    boost::shared_ptr< Package_ABC > package_;
     T_Process process_;
     //@}
 };
