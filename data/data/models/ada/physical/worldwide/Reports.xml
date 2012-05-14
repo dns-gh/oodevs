@@ -614,5 +614,7 @@
   <report category="operational" id="419" message="Terrorist %1 dropped">
     <parameter type="AgentKnowledge"/>
   </report>
+  <report category="operational" id="420" message="Being interrogated"/>
+  <report category="operational" id="421" message="Impossible to have the critical intelligence : weak force ratio"/>
 </reports>
-<!-- signature="0818543071" -->
+<!-- signature="3860172219" -->

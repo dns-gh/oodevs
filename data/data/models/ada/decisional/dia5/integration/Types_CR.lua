@@ -431,4 +431,6 @@ eRC_TrafficablePositionFindingInZone = 416
 eRC_PrisSousTirMunition = 417
 eRC_NotInSameUndergroundNetwork = 418
 eRC_TerroristDropped = 419
-eNbr = 420
+eRC_Questionning = 420
+eRC_criticalIntelligenceImpossible = 421
+eNbr = 422

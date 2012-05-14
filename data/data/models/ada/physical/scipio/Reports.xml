@@ -614,5 +614,7 @@
   <report category="operational" id="419" message="Terroriste %1 déposé">
     <parameter type="AgentKnowledge"/>
   </report>
+  <report category="operational" id="420" message="Subit un interrogatoire"/>
+  <report category="operational" id="421" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
 </reports>
-<!-- signature="1356906306" -->
+<!-- signature="2136694140" -->

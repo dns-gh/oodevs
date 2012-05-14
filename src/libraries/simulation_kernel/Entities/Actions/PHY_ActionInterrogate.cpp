@@ -16,10 +16,12 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/MIL_AffinitiesMap.h"
 
 // -----------------------------------------------------------------------------
@@ -30,11 +32,21 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
     : PHY_DecisionCallbackAction_ABC( caller )
     , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
     , rTimeToWait_ ( 0 )
+    , pKnowledge_ ( pKnowledge )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
 
-    ComputeTimeToWait( pKnowledge->GetAgentKnown().GetAffinity( callerTeamID ) );
-    Callback( static_cast< int >( eRunning ) );
+    float affinity = pKnowledge->GetAgentKnown().GetAffinity( callerTeamID );
+    ComputeTimeToWait( affinity );
+    E_ReturnCode result = eRunning;
+    if( affinity < 0.)
+    {
+        if( pKnowledge->GetAgentKnown().GetKnowledge().GetRapForLocalValue() > 2.5 )
+            result = eFailed;
+    }
+    if( result == eRunning )
+        MIL_Report::PostEvent( pKnowledge->GetAgentKnown(), MIL_Report::eReport_Questionning );
+    Callback( static_cast< int >( result ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,10 +94,15 @@ void PHY_ActionInterrogate::ComputeTimeToWait( float affinity )
 // -----------------------------------------------------------------------------
 void PHY_ActionInterrogate::Execute()
 {
-    if( MIL_AgentServer::GetWorkspace().GetRealTime() - rBaseTime_ < rTimeToWait_ )
-        Callback( static_cast< int >( eRunning ) );
+    if( pKnowledge_ && pKnowledge_->GetAgentKnown().GetKnowledge().GetRapForLocalValue() > 2.5 )
+         Callback( static_cast< int >( eFailed ) );
     else
-        Callback( static_cast< int >( eFinished ) );
+    {
+        if( MIL_AgentServer::GetWorkspace().GetRealTime() - rBaseTime_ < rTimeToWait_ )
+             Callback( static_cast< int >( eRunning ) );
+        else
+             Callback( static_cast< int >( eFinished ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

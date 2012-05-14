@@ -9,7 +9,7 @@ end
 
 integration.updateInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
-    if pion[myself].actionInterrogateState == eActionObjetTerminee then
+    if pion[myself].actionInterrogateState == eActionObjetTerminee or pion[myself].actionInterrogateState == eActionObjetImpossible then
         return true
     end
     return false
@@ -26,6 +26,9 @@ integration.stopInterrogatePion = function( pion )
             meKnowledge:RC( eRC_criticalIntelligenceNone )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {RC = eRC_criticalIntelligenceNone} )
         end
+    end
+    if pion[myself].actionInterrogateState == eActionObjetImpossible then
+        meKnowledge:RC( eRC_criticalIntelligenceImpossible )
     end
     pion[myself].actionInterrogate = DEC__StopAction( pion[myself].actionInterrogate )
     pion[myself].actionInterrogateState = nil

@@ -146,6 +146,7 @@ public:
         eReport_UrbanCollisionStopped,
         eReport_UnderIndirectFire,
         eReport_SetUponByPopulation,
+        eReport_Questionning,
         eNbrReport
     };
 
@@ -571,6 +572,8 @@ public:
         eRC_PrisSousTirMunition,
         eRC_NotInSameUndergroundNetwork,
         eRC_TerroristDropped,
+        eRC_Questionning,
+        eRC_criticalIntelligenceImpossible,
         eLast
     };
     //@}
