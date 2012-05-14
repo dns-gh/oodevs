@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathClass_h_
-#define __DEC_PathClass_h_
+#ifndef __DEC_Agent_PathClass_h_
+#define __DEC_Agent_PathClass_h_
 
 #include <spatialcontainer/TerrainData.h>
+#include "DEC_PathClass.h"
 
 namespace xml
 {
@@ -28,7 +29,7 @@ class MIL_PopulationAttitude;
 */
 // Created: AGE 2005-08-04
 // =============================================================================
-class DEC_Agent_PathClass
+class DEC_Agent_PathClass : public DEC_PathClass
 {
 public:
     //! @name Manager
@@ -170,4 +171,4 @@ private:
 
 #include "DEC_Agent_PathClass.inl"
 
-#endif // __DEC_PathClass_h_
+#endif // __DEC_Agent_PathClass_h_

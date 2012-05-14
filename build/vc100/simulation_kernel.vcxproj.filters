@@ -4994,6 +4994,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h">
+      <Filter>Source Files\Decision\Path</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.h">
       <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClInclude>
@@ -5108,9 +5111,6 @@
       <Filter>Source Files\Decision\Path\Population</Filter>
     </None>
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.inl">
-      <Filter>Source Files\Decision\Path\Agent</Filter>
-    </None>
-    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.inl">
       <Filter>Source Files\Decision\Path\Agent</Filter>
     </None>
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.inl">

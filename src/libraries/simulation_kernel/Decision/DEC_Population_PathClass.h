@@ -10,6 +10,8 @@
 #ifndef __DEC_Population_PathClass_h_
 #define __DEC_Population_PathClass_h_
 
+#include "DEC_PathClass.h"
+
 namespace xml
 {
     class xistream;
@@ -23,7 +25,7 @@ class MIL_ObjectType_ABC;
 */
 // Created: SBO 2006-03-23
 // =============================================================================
-class DEC_Population_PathClass
+class DEC_Population_PathClass : public DEC_PathClass
 {
 public:
     //! @name Manager

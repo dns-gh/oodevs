@@ -255,13 +255,14 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
+                bool empty = pathKnowledges.empty();
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
                     pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
                     pathKnowledges.push_back( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) );
-                else
+                else if( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 )
                     pathKnowledges.push_back( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
-                if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
+                if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }
         }

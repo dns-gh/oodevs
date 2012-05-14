@@ -832,6 +832,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
@@ -1697,7 +1698,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ActionFunctions.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.inl" />

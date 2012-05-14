@@ -36,28 +36,18 @@
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
-        <object-cost type="gun artillery deployment area" value="10"/>
-        <object-cost type="cobra deployment area" value="10"/>
-        <object-cost type="mrls deployment area" value="10"/>
-        <object-cost type="crossing site" value="10"/>
         <object-cost type="nbc cloud" value="10000"/>
-        <object-cost type="decontamination site" value="10"/>
-        <object-cost type="logistic support area" value="10"/>
         <object-cost type="jamming area" value="10"/>
         <object-cost type="rota area" value="10000"/>
         <object-cost type="nbc zone" value="10000"/>
         <object-cost type="landing area" value="10"/>
-        <object-cost type="trail" value="-5"/>
         <object-cost type="platform" value="10"/>
-        <object-cost type="mobility enhanced area" value="10"/>
         <object-cost type="landing area (helicopter)" value="10"/>
         <object-cost type="logistic area" value="10"/>
         <object-cost type="prisoners camp" value="10"/>
         <object-cost type="refugees camp" value="10"/>
-        <object-cost type="checkpoint" value="-5"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
-        <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
@@ -204,28 +194,18 @@
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
-        <object-cost type="gun artillery deployment area" value="10"/>
-        <object-cost type="cobra deployment area" value="10"/>
-        <object-cost type="mrls deployment area" value="10"/>
-        <object-cost type="crossing site" value="10"/>
         <object-cost type="nbc cloud" value="10000"/>
-        <object-cost type="decontamination site" value="10"/>
-        <object-cost type="logistic support area" value="10"/>
         <object-cost type="jamming area" value="10000"/>
         <object-cost type="rota area" value="10000"/>
         <object-cost type="nbc zone" value="10000"/>
         <object-cost type="landing area" value="10"/>
-        <object-cost type="trail" value="-5"/>
         <object-cost type="platform" value="10"/>
-        <object-cost type="mobility enhanced area" value="10"/>
         <object-cost type="landing area (helicopter)" value="10"/>
         <object-cost type="logistic area" value="10"/>
         <object-cost type="prisoners camp" value="10"/>
         <object-cost type="refugees camp" value="10"/>
-        <object-cost type="checkpoint" value="-5"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
-        <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
@@ -325,26 +305,16 @@
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
-        <object-cost type="gun artillery deployment area" value="10"/>
-        <object-cost type="cobra deployment area" value="10"/>
-        <object-cost type="mrls deployment area" value="10"/>
-        <object-cost type="crossing site" value="10"/>
-        <object-cost type="decontamination site" value="10"/>
-        <object-cost type="logistic support area" value="10"/>
         <object-cost type="jamming area" value="10000"/>
         <object-cost type="rota area" value="0"/>
         <object-cost type="landing area" value="10"/>
-        <object-cost type="trail" value="-5"/>
         <object-cost type="platform" value="10"/>
-        <object-cost type="mobility enhanced area" value="10"/>
         <object-cost type="landing area (helicopter)" value="10"/>
         <object-cost type="logistic area" value="10"/>
         <object-cost type="prisoners camp" value="10"/>
         <object-cost type="refugees camp" value="10"/>
-        <object-cost type="checkpoint" value="-5"/>
         <object-cost type="dropping area" value="10"/>
         <object-cost type="movement forbidden area" value="10000"/>
-        <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
@@ -407,4 +377,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="4103428854" -->
+<!-- signature="2887675172" -->

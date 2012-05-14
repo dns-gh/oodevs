@@ -19,19 +19,13 @@
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
-    : localisation_         ( knowledge.GetLocalisation() )
-    , scaledLocalisation_   ( localisation_ )
-    , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : localisation_ )
-    , rCostIn_              ( 0 )
-    , rCostOut_             ( 0 )
-    , rObstructionThreshold_( pathClass.GetThreshold() )
+    : scaledLocalisation_   ( knowledge.GetLocalisation() )
+    , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
+    , pathClass_            ( pathClass )
+    , objectType_           ( knowledge.GetType() )
     , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
 {
-    const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
-    if( rCost > 0 )
-        rCostIn_ = rCost;
-    else
-        rCostOut_ = -rCost;
+    const double rCost = pathClass.GetObjectCost( objectType_ );
     if( rCost != 0 )
         scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision (useful for making path very close to obstacle expensive)
 }
@@ -41,19 +35,13 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
 // Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Population_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
-    : localisation_         ( knowledge.GetLocalisation() )
-    , scaledLocalisation_   ( localisation_ )
-    , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : localisation_ )
-    , rCostIn_              ( 0 )
-    , rCostOut_             ( 0 )
-    , rObstructionThreshold_( pathClass.GetThreshold() )
+    : scaledLocalisation_   ( knowledge.GetLocalisation() )
+    , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
+    , pathClass_            ( pathClass )
+    , objectType_           ( knowledge.GetType() )
     , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
 {
-    const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
-    if( rCost > 0 )
-        rCostIn_ = rCost;
-    else
-        rCostOut_ = -rCost;
+    const double rCost = pathClass.GetObjectCost( objectType_ );
     if( rCost != 0 )
         scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision (useful for making path very close to obstacle expensive)
 }
@@ -80,21 +68,37 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
     bool isFromInsideReal = realLocalisation_.IsInside( from, epsilon );
     if( isIntersectingWithReal || isToInsideReal || isFromInsideReal )
     {
-        if( ( isIntersectingWithReal && localisation_.Intersect2D( line, epsilon ) ) ||
-            ( isToInsideReal && localisation_.IsInside( to, epsilon ) ) ||
-            ( isFromInsideReal && localisation_.IsInside( from, epsilon ) ) )
+        if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
+            ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
+            ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
         {
-            if( rMaxTrafficability_ != 0. && weight > rMaxTrafficability_ )
-                return -1.; //$$$$ CMA in order to block the unit if there is a non-trafficable object
-            else if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
-                return -1.;  //$$$$ SLG in order to block the unit if there is an object
+            double rCostIn = pathClass_.GetObjectCost( objectType_ );
+            if( rCostIn < 0. )
+                return 0.;
+            else if( rCostIn >= pathClass_.GetThreshold() )
+                return -1;  //$$$$ SLG in order to block the unit if there is an object
             else
-                return rCostIn_;
+                return rCostIn;
         }
-        else if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
-                 ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
-                 ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
-            return rCostIn_;
     }
     return std::numeric_limits< double >::min();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::GetCostOut
+// Created: NLD 2007-02-09
+// -----------------------------------------------------------------------------
+double DEC_Path_KnowledgeObject::GetCostOut() const
+{
+    double cost = pathClass_.GetObjectCost( objectType_ );
+    return cost > 0 ? 0. : -cost;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::GetMaxTrafficability
+// Created: CMA 2011-09-09
+// -----------------------------------------------------------------------------
+double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
+{
+    return rMaxTrafficability_;
 }
