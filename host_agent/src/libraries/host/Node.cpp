@@ -140,7 +140,7 @@ boost::property_tree::ptree Node::GetProperties() const
 boost::property_tree::ptree Node::Save() const
 {
     boost::property_tree::ptree tree = GetCommonProperties();
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );
