@@ -4571,8 +4571,8 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Really delete this item?
-Click &quot;Ok&quot; to delete it and all its references.</source>
-        <translation></translation>
+Click &quot;Ok&quot; to delete.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

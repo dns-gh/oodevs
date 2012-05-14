@@ -43,7 +43,7 @@ bool ADN_GuiTools::DeletionWarning()
 {
     int nResult = QMessageBox::warning( 0,
         qApp->translate( "ADN_Tools", "Delete?" ),
-        qApp->translate( "ADN_Tools", "Really delete this item?\nClick \"Ok\" to delete it and all its references." ),
+        qApp->translate( "ADN_Tools", "Really delete this item?\nClick \"Ok\" to delete." ),
         QMessageBox::Ok     | QMessageBox::Default,
         QMessageBox::Cancel | QMessageBox::Escape );
 

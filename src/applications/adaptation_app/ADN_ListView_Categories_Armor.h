@@ -31,6 +31,8 @@ public:
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
+    virtual void ContextMenuDelete();
+    bool IsReferenced( const std::string& name ) const;
 };
 
 
