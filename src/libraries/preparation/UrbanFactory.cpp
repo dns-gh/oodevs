@@ -66,8 +66,6 @@ UrbanFactory::~UrbanFactory()
 gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis ) const
 {
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( xis, controllers_, objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), options_, accommodations_ );
-    if( pTerrainObject->GetId() == 22)
-        std::string toto = "" ;
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis ) );
