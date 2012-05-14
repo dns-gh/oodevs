@@ -47,6 +47,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsEnabled() const;
+    virtual bool HasValidType() const;
     virtual unsigned int GetThreshold() const;
     //@}
 
