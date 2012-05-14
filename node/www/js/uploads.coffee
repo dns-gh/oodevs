@@ -1,6 +1,45 @@
 get_url = (url) ->
     return window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
 
+ajax = (url, data, success, error) ->
+    $.ajax
+        cache:    false
+        data:     data,
+        dataType: "json"
+        error:    error,
+        success:  success,
+        url:      get_url url
+
+package_template = Handlebars.compile $("#package_template").html()
+
+class Package extends Backbone.Model
+    view: PackageView
+
+    sync: (method, model, options) =>
+        if method == "read"
+            return ajax "/api/get_pack", id: uuid,
+                options.success, options.error
+        return Backbone.sync method, model, options
+
+class PackageView extends Backbone.View
+    el: $("#packages")
+
+    initialize: (obj) ->
+        @model = new Package
+        @model.bind 'change', @render
+        @model.fetch()
+
+    render: =>
+        $(@el).empty()
+        if @model.attributes.name?
+            $(@el).html package_template @model.attributes
+        return
+
+    update: (data) =>
+        @model.set data
+
+package_view = new PackageView
+
 $("#upload_form").attr "action", (get_url "/api/upload_pack") + "?id=" + uuid
 
 spin_opts =
@@ -39,3 +78,4 @@ for tr in $(".exercises tr")
 
 $("#upload_target").load (data) ->
     toggle_load()
+    package_view.update jQuery.parseJSON $(@).contents().find("body").html()
