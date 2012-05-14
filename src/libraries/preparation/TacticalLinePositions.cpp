@@ -11,32 +11,27 @@
 #include "TacticalLinePositions.h"
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
-    : converter_( converter )
-    , owner_    ( owner )
-    , pointList_( pointList )
+TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner )
+    : TacticalLinePositions_ABC( pointList, converter, owner )
 {
-    ComputeBoundingBox();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
-    : converter_( converter )
-    , owner_    ( owner )
+TacticalLinePositions::TacticalLinePositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner )
+    : TacticalLinePositions_ABC( converter, owner )
 {
     xis >> xml::list( "point", *this, &TacticalLinePositions::ReadPoint );
+    ComputeBoundingBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,98 +52,6 @@ void TacticalLinePositions::ReadPoint( xml::xistream& xis )
     std::string mgrs;
     xis >> mgrs;
     pointList_.push_back( converter_.ConvertToXY( mgrs ) );
-    boundingBox_.Incorporate( pointList_.back() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::GetPosition
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-geometry::Point2f TacticalLinePositions::GetPosition( bool ) const
-{
-    return pointList_.front();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::GetHeight
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-float TacticalLinePositions::GetHeight( bool ) const
-{
-    return 0.f;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::IsAt
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-bool TacticalLinePositions::IsAt( const geometry::Point2f& point, float precision /* = 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
-{
-    precision*=precision;
-    if( pointList_.empty() )
-        return false;
-    if( pointList_.size() == 1 )
-        return pointList_.front().SquareDistance( point ) <= precision;
-
-    CIT_PointVector previous = pointList_.begin();
-    for( CIT_PointVector current = previous + 1; current != pointList_.end(); ++current )
-    {
-        const geometry::Segment2f segment( *previous, *current );
-        if( segment.SquareDistance( point ) < precision )
-            return true;
-        previous = current;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::IsIn
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-bool TacticalLinePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
-{
-    return rectangle.IsInside( GetPosition( true ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::GetBoundingBox
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-geometry::Rectangle2f TacticalLinePositions::GetBoundingBox() const
-{
-    return boundingBox_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::Accept
-// Created: SBO 2009-05-25
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
-{
-    visitor.VisitLines( pointList_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::Draw
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
-{
-    if( ! viewport.IsVisible( boundingBox_ ) )
-        return;
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glLineWidth( 5.f );
-        tools.DrawLines( pointList_ );
-        glLineWidth( 3.f );
-        if( owner_.IsLimit() )
-            glColor3f( 0.1f, 0.1f, 0.1f );
-        else
-            glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
-        tools.DrawLines( pointList_ );
-        if( tools.ShouldDisplay() )
-            for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
-                tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
-    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -232,33 +135,4 @@ void TacticalLinePositions::RemovePoint( const geometry::Point2f& point, float p
             ComputeBoundingBox();
             return;
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::ComputeBoundingBox
-// Created: SBO 2007-03-08
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::ComputeBoundingBox()
-{
-    boundingBox_ = geometry::Rectangle2f();
-    for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
-        boundingBox_.Incorporate( *it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::CanAggregate
-// Created: LDC 2010-10-07
-// -----------------------------------------------------------------------------
-bool TacticalLinePositions::CanAggregate() const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::IsAggregated
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-bool TacticalLinePositions::IsAggregated() const
-{
-    return false;
 }

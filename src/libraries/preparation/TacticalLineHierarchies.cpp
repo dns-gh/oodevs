@@ -16,7 +16,7 @@
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
+    : kernel::TacticalLineHierarchies_ABC( holder, superior )
     , superior_( superior )
 {
     // NOTHING

@@ -23,7 +23,7 @@ using namespace kernel;
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const sword::Diffusion& message,
                                                   const tools::Resolver_ABC< Automat_ABC >& automats,
                                                   const tools::Resolver_ABC< Formation_ABC >& formations )
-    : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
+    : kernel::TacticalLineHierarchies_ABC( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )
     , formations_( formations )
@@ -38,7 +38,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const Entity_ABC& superior
                                                 , const tools::Resolver_ABC< Automat_ABC >& automats
                                                 , const tools::Resolver_ABC< Formation_ABC >& formations )
-    : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
+    : kernel::TacticalLineHierarchies_ABC( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )
     , formations_( formations )

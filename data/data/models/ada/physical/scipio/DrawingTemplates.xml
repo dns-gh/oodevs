@@ -2,35 +2,46 @@
 <templates model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/DrawingTemplates.xsd">
 	<category name="Lignes">
 		<description>Lignes tactiques</description>
+        <template name="-- o --" type="line">
+			<description>Ligne de niveau equipe</description>
+			<segment>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
+			</segment>
+			<marker-mid unit="px">
+				<g fill="none" stroke="currentColor" stroke-width="2px">
+					<circle cy="0" r="4"/>
+				</g>
+			</marker-mid>
+		</template>
 		<template name="-- oo --" type="line">
 			<description>Ligne de niveau section</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
-				<g fill="currentColor" stroke="none">
-					<circle cy="-4" r="3"/>
-					<circle cy=" 4" r="3"/>
+				<g fill="none" stroke="currentColor" stroke-width="2px">
+					<circle cy="-6" r="4"/>
+					<circle cy=" 6" r="4"/>
 				</g>
 			</marker-mid>
 		</template>
 		<template name="-- ooo --" type="line">
 			<description>Ligne de niveau automate</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
-				<g fill="currentColor" stroke="none">
-					<circle cy="-6" r="3"/>
-					<circle cy=" 0" r="3"/>
-					<circle cy=" 6" r="3"/>
+				<g fill="none" stroke="currentColor" stroke-width="2px">
+					<circle cy="-12" r="4"/>
+					<circle cy=" 0" r="4"/>
+					<circle cy=" 12" r="4"/>
 				</g>
 			</marker-mid>
 		</template>
 		<template name="-- i --" type="line">
 			<description>Ligne de niveau compagnie</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
 				<line stroke="currentColor" stroke-width="2px" x1="5" x2="-5"/>
@@ -39,7 +50,7 @@
 		<template name="-- ii --" type="line">
 			<description>Ligne de niveau bataillon</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
 				<g stroke="currentColor" stroke-width="2px">
@@ -51,7 +62,7 @@
 		<template name="-- iii --" type="line">
 			<description>Ligne de niveau regiment</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
 				<g stroke="currentColor" stroke-width="2px">
@@ -64,7 +75,7 @@
 		<template name="-- x --" type="line">
 			<description>Ligne de niveau brigade</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
 				<g stroke-width="2px">
@@ -76,15 +87,63 @@
 		<template name="-- xx --" type="line">
 			<description>Ligne de niveau division</description>
 			<segment>
-				<line stroke="currentColor" x1="0.02" x2="0.98" stroke-width="3px"/>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
 			</segment>
 			<marker-mid unit="px">
 				<g stroke-width="2px">
-					<g transform="translate(0,-6)">
+					<g transform="translate(0,-8)">
 						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
 						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
 					</g>
-					<g transform="translate(0,6)">
+					<g transform="translate(0,8)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+				</g>
+			</marker-mid>
+		</template>
+                <template name="-- xxx --" type="line">
+			<description>Ligne de niveau corps d'armee</description>
+			<segment>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
+			</segment>
+			<marker-mid unit="px">
+				<g stroke-width="2px">
+					<g transform="translate(0,-16)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+					<g transform="translate(0,0)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+					<g transform="translate(0,16)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+				</g>
+			</marker-mid>
+                </template>
+                <template name="-- xxxx --" type="line">
+			<description>Ligne de niveau armee</description>
+			<segment>
+				<line stroke="currentColor" x1="0" x2="1" stroke-width="3px"/>
+			</segment>
+			<marker-mid unit="px">
+				<g stroke-width="2px">
+					<g transform="translate(0,-24)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+					<g transform="translate(0,-8)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+					<g transform="translate(0,8)">
+						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
+						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
+					</g>
+					<g transform="translate(0,24)">
 						<line stroke="currentColor" x1="-5" y1=" 5" x2="5" y2="-5"/>
 						<line stroke="currentColor" x1="-5" y1="-5" x2="5" y2=" 5"/>
 					</g>
@@ -881,4 +940,4 @@
 	</category>
 </templates>
 <!-- signature="1253111117" -->
-<!-- signature="1165537120" -->
+<!-- signature="0476431959" -->

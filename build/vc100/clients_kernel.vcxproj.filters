@@ -454,6 +454,12 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Team.cpp">
       <Filter>Source Files\Model\Entities</Filter>
     </ClCompile>
@@ -1063,6 +1069,12 @@
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Team.h">
