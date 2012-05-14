@@ -4991,6 +4991,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h">
+      <Filter>Source Files\Decision\Path</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">

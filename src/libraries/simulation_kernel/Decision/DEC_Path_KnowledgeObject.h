@@ -16,6 +16,7 @@
 class DEC_Knowledge_Object;
 class DEC_Agent_PathClass;
 class DEC_Population_PathClass;
+class DEC_PathClass;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -40,16 +41,11 @@ public:
 private:
     //! @name Member data
     //@{
-    TER_Localisation localisation_;
     TER_Localisation scaledLocalisation_;
     TER_Localisation realLocalisation_;
-    double rCostIn_;
-    double rCostOut_;
-    double rObstructionThreshold_;
-    double rMaxTrafficability_;
+    const DEC_PathClass& pathClass_;
+    const DEC_Knowledge_Object& knowledge_;
     //@}
 };
-
-#include "DEC_Path_KnowledgeObject.inl"
 
 #endif // __DEC_Path_KnowledgeObject_h_

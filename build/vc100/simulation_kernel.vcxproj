@@ -831,6 +831,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
