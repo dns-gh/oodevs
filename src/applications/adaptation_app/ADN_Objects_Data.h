@@ -106,7 +106,6 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eActivableCapacity >               ADN_CapacityInfos_Activable;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eDelayCapacity >                   ADN_CapacityInfos_Delay;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eExtinguishableCapacity >          ADN_CapacityInfos_Extinguishable;
-    typedef helpers::ADN_CapacityInfos_Default< helpers::eInteractWithEnemyCapacity >       ADN_CapacityInfos_InteractWithEnemy;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eInterferenceCapacity >            ADN_CapacityInfos_Interference;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eLogisticCapacity >                ADN_CapacityInfos_Logistic;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eSupplyCapacity >                  ADN_CapacityInfos_Supply;
@@ -620,6 +619,24 @@ public:
 
     private:
         void ReadModifier( xml::xistream& xis );
+    };
+
+    class ADN_CapacityInfos_InteractWithSide
+        : public helpers::ADN_CapacityInfos_Default< helpers::eInteractWithSideCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_InteractWithSide();
+
+        void ReadArchive( xml::xistream& input );
+        void ReadSide( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_Type_Bool bFriendSide_;
+        ADN_Type_Bool bEnemySide_;
+        ADN_Type_Bool bNeutralSide_;
     };
 
 //*****************************************************************************

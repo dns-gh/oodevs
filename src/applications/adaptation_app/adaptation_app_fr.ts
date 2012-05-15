@@ -3340,10 +3340,6 @@ du tireur</translation>
         <translation>Utilise une munition</translation>
     </message>
     <message>
-        <source>InteractWithEnemy</source>
-        <translation>Gêne uniquement les ennemis</translation>
-    </message>
-    <message>
         <source>AttitudeModifier</source>
         <translation>Modificateur d&apos;attitude</translation>
     </message>
@@ -3542,6 +3538,22 @@ du tireur</translation>
     <message>
         <source>Infos</source>
         <translation>Infos</translation>
+    </message>
+    <message>
+        <source>InteractWithSide</source>
+        <translation>Gêne uniquement les camps suivants</translation>
+    </message>
+    <message>
+        <source>Friend</source>
+        <translation>Ami</translation>
+    </message>
+    <message>
+        <source>Enemy</source>
+        <translation>Ennemi</translation>
+    </message>
+    <message>
+        <source>Neutral</source>
+        <translation>Neutre</translation>
     </message>
 </context>
 <context>

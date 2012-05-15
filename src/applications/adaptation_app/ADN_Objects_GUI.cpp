@@ -124,9 +124,6 @@ void ADN_Objects_GUI::Build()
         ADN_CheckBox* interference = new ADN_CheckBox( tr( "Interference" ), capacitiesGroup );
         vInfosConnectors[ eInterferenceCapacityPresent ] = & interference->GetConnector();
 
-        ADN_CheckBox* interactWithEnemy = new ADN_CheckBox( tr( "InteractWithEnemy" ), capacitiesGroup );
-        vInfosConnectors[ eInteractWithEnemyCapacityPresent ] = & interactWithEnemy->GetConnector();
-
         ADN_CheckBox* occupable = new ADN_CheckBox( tr( "Occupable" ), capacitiesGroup );
         vInfosConnectors[ eOccupableCapacityPresent ] = & occupable->GetConnector();
 
@@ -169,6 +166,12 @@ void ADN_Objects_GUI::Build()
 
     QGridLayout* grid = new QGridLayout();
     {
+        ADN_GroupBox* interactWithSide = new ADN_GroupBox( 3, Qt::Horizontal, tr( "InteractWithSide" ) );
+        vInfosConnectors[ eInteractWithSideCapacityPresent ] = & interactWithSide->GetConnector();
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Friend" ), vInfosConnectors[ eInteractWithSideCapacity_Friend ] );
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Enemy" ), vInfosConnectors[ eInteractWithSideCapacity_Enemy ] );
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Neutral" ), vInfosConnectors[ eInteractWithSideCapacity_Neutral ] );
+
         ADN_GroupBox* constructor = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Constructor" ) );
         vInfosConnectors[ eConstructorCapacityPresent ] = & constructor->GetConnector();
 
@@ -366,6 +369,7 @@ void ADN_Objects_GUI::Build()
         grid->addWidget( structural, 12, 0 );
         grid->addWidget( flood, 12, 1, 2, 1 );
         grid->addWidget( firePropagationModifier, 13, 0 );
+        grid->addWidget( interactWithSide, 14, 0 );
     }
 
     // -------------------------------------------------------------------------

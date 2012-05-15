@@ -1197,6 +1197,54 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFire
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide
+// Created: CMA 2012-05-10
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ADN_CapacityInfos_InteractWithSide()
+    : bFriendSide_ ( false )
+    , bEnemySide_  ( false )
+    , bNeutralSide_( false )
+{
+    bFriendSide_.SetParentNode( *this );
+    bEnemySide_.SetParentNode( *this );
+    bNeutralSide_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ReadArchive
+// Created: CMA 2012-05-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    std::string friends, enemy, neutral, unknown;
+    input >> xml::optional
+          >> xml::attribute( "friend", friends )
+          >> xml::optional
+          >> xml::attribute( "enemy", enemy )
+          >> xml::optional
+          >> xml::attribute( "neutral", neutral );
+
+    bFriendSide_  = ( friends.compare( "true" ) == 0 );
+    bEnemySide_   = ( enemy.compare( "true" ) == 0 );
+    bNeutralSide_ = ( neutral.compare( "true" ) == 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::WriteArchive
+// Created: CMA 2012-05-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::WriteArchive( xml::xostream& output )
+{
+    if( bFriendSide_.GetData() )
+        output << xml::attribute( "friend", "true" );
+    if( bEnemySide_.GetData() )
+        output << xml::attribute( "enemy", "true" );
+    if( bNeutralSide_.GetData() )
+        output << xml::attribute( "neutral", "true" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::GetItemName
 // Created: BCI 2010-12-03
 // -----------------------------------------------------------------------------
@@ -1226,7 +1274,7 @@ INIT_DATA( ADN_CapacityInfos_Detection,               "Detection",              
 INIT_DATA( ADN_CapacityInfos_Extinguishable,          "Extinguishable",          "extinguishable" );
 INIT_DATA( ADN_CapacityInfos_Medical,                 "Medical",                 "medical" );
 INIT_DATA( ADN_CapacityInfos_InteractionHeight,       "InteractionHeight",       "interaction-height" );
-INIT_DATA( ADN_CapacityInfos_InteractWithEnemy,       "InteractWithEnemy",       "interact-with-enemy" );
+INIT_DATA( ADN_CapacityInfos_InteractWithSide,        "InteractWithSide",        "interact-with-enemy" );
 INIT_DATA( ADN_CapacityInfos_Interference,            "Interference",            "interference" );
 INIT_DATA( ADN_CapacityInfos_Improvable,              "Improvable",              "improvable" );
 INIT_DATA( ADN_CapacityInfos_Intoxication,            "Intoxication",            "intoxication" );

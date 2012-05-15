@@ -35,7 +35,7 @@
 #include "InputPropagationCapacity.h"
 #include "InteractIfEquippedCapacity.h"
 #include "InteractIfHeightCapacity.h"
-#include "InteractWithEnemyCapacity.h"
+#include "InteractWithSideCapacity.h"
 #include "InterferenceCapacity.h"
 #include "IntoxicationCapacity.h"
 #include "MedicalCapacity.h"
@@ -158,7 +158,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
     DoRegister( "heuristic", boost::bind( &AddBuilder< TerrainHeuristicCapacity >::Add, _1, _2 ) );
     DoRegister( "infrastructure", boost::bind( &AddBuilder< InfrastructureCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< InfrastructureCapacity >::Update, _1, _2 ) );
-    DoRegister( "interact-with-enemy", boost::bind( &AddBuilder< InteractWithEnemyCapacity >::Add, _1, _2 ) );
+    DoRegister( "interact-with-enemy", boost::bind( &AddBuilder< InteractWithSideCapacity >::Add, _1, _2 ) );
     DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
     DoRegister( "interference", boost::bind( &AddBuilder< InterferenceCapacity >::Add, _1, _2 ) );
     DoRegister( "intoxication", boost::bind( &AddBuilder< IntoxicationCapacity >::Add, _1, _2 ) );

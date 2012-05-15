@@ -23,7 +23,7 @@
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "ImprovableCapacity.h"
-#include "InteractWithEnemyCapacity.h"
+#include "InteractWithSideCapacity.h"
 #include "MineAttribute.h"
 #include "MobilityCapacity.h"
 #include "ObstacleAttribute.h"
@@ -331,7 +331,8 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
     {
         if( const TrafficabilityAttribute* pTrafficability = object_.RetrieveAttribute< TrafficabilityAttribute >() )
         {
-            if( object_.Retrieve< InteractWithEnemyCapacity >() == 0 || &agent.GetArmy() != object_.GetArmy() )
+            const InteractWithSideCapacity* pSideInteraction = object_.Retrieve< InteractWithSideCapacity >();
+            if( !pSideInteraction || pSideInteraction->IsPossible( *object_.GetArmy(), agent.GetArmy() ) )
             {
                 double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
                 return ( pTrafficability->GetMaxValue() > weight );
@@ -415,8 +416,9 @@ double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, 
     const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
     if( capacity )
     {
-        if( object_.Retrieve< InteractWithEnemyCapacity >() == 0 || &agent.GetArmy() != object_.GetArmy() )
-            speed =  std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
+        const InteractWithSideCapacity* pSideInteraction = object_.Retrieve< InteractWithSideCapacity >();
+        if( !pSideInteraction || pSideInteraction->IsPossible( *object_.GetArmy(), agent.GetArmy() ) )
+            speed = std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
     }
     const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
     if( crowdcapacity )

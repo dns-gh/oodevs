@@ -22,7 +22,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/CapacityRetriever.h"
-#include "Entities/Objects/InteractWithEnemyCapacity.h"
+#include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -294,15 +294,21 @@ namespace
         {
             if( !knowledge->IsValid() )
                 return;
-            if( knowledge->GetType().GetCapacity< InteractWithEnemyCapacity >() != 0 && knowledge->GetArmy() == army_ )
+            if( rHeight_ > knowledge->GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
                 return;
-            if( filter_.Test( knowledge->GetType() )
-                && rHeight_ <= knowledge->GetMaxInteractionHeight() )///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
+            const InteractWithSideCapacity* pSideInteraction = knowledge->GetType().GetCapacity< InteractWithSideCapacity >();
+            if( pSideInteraction )
+            {
+                if( pSideInteraction->IsPossible( *knowledge->GetArmy(), *army_ ) )
+                    pContainer_->push_back( knowledge );
+                return;
+            }
+            if( filter_.Test( knowledge->GetType() ) )
                 pContainer_->push_back( knowledge );
         }
 
     private:
-        T_KnowledgeObjectVector*  pContainer_;
+        T_KnowledgeObjectVector* pContainer_;
         const double rHeight_;
         const MIL_ObjectFilter& filter_;
         const MIL_Army_ABC* army_;

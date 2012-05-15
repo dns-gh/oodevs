@@ -86,7 +86,7 @@ void ADN_Objects_Data_ObjectInfos::InitializeCapacities()
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Extinguishable::TAG ].reset(           new ADN_Objects_Data::ADN_CapacityInfos_Extinguishable() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Medical::TAG ].reset(                  new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::TAG ].reset(        new ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight() );
-    capacities_[ ADN_Objects_Data::ADN_CapacityInfos_InteractWithEnemy::TAG ].reset(        new ADN_Objects_Data::ADN_CapacityInfos_InteractWithEnemy() );
+    capacities_[ ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::TAG ].reset(         new ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Interference::TAG ].reset(             new ADN_Objects_Data::ADN_CapacityInfos_Interference() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Intoxication::TAG ].reset(             new ADN_Objects_Data::ADN_CapacityInfos_Intoxication() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Logistic::TAG ].reset(                 new ADN_Objects_Data::ADN_CapacityInfos_Logistic() );

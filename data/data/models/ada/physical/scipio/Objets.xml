@@ -43,7 +43,7 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -64,7 +64,7 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -148,7 +148,7 @@
       <terrain type="suburb" value="1"/>
       <terrain type="urban area" value="2"/>
     </heuristic>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -259,7 +259,7 @@
       <geometry symbol="G*MPSF----****X" type="polygon"/>
     </geometries>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
@@ -349,7 +349,7 @@
       <geometry symbol="G*EW***********" type="polygon"/>
     </geometries>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="100"/>
     <interference/>
   </object>
@@ -495,7 +495,7 @@
       <geometry symbol="G*MPOGZ---****X" type="line"/>
     </geometries>
     <avoidable distance="10"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
@@ -602,4 +602,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0482670743" -->
+<!-- signature="1656408392" -->

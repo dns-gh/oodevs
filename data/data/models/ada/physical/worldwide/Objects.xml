@@ -41,7 +41,7 @@
       <geometry symbol="G*EW***********" type="polygon"/>
     </geometries>
     <avoidable distance="250"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -806,4 +806,4 @@
     <protection geniePrepared="false" max-size="50"/>
   </object>
 </objects>
-<!-- signature="0969578520" -->
+<!-- signature="3247381140" -->

@@ -14,7 +14,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Objects/InteractWithEnemyCapacity.h"
+#include "Entities/Objects/InteractWithSideCapacity.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InterferenceCapacity )
@@ -92,7 +92,8 @@ void InterferenceCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( object.Retrieve< InteractWithEnemyCapacity >() == 0 || &agent.GetArmy() != object.GetArmy() )
+    const InteractWithSideCapacity* pSideInteraction = object.Retrieve< InteractWithSideCapacity >();
+    if( !pSideInteraction || pSideInteraction->IsPossible( *object.GetArmy(), agent.GetArmy() ) )
         agent.GetRole< PHY_RoleInterface_Communications >().Jam( object );
 }
 
@@ -102,6 +103,7 @@ void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent
 // -----------------------------------------------------------------------------
 void InterferenceCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( object.Retrieve< InteractWithEnemyCapacity >() == 0 || &agent.GetArmy() != object.GetArmy() )
+    const InteractWithSideCapacity* pSideInteraction = object.Retrieve< InteractWithSideCapacity >();
+    if( !pSideInteraction || pSideInteraction->IsPossible( *object.GetArmy(), agent.GetArmy() ) )
         agent.GetRole< PHY_RoleInterface_Communications >().Unjam( object );
 }

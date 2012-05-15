@@ -28,7 +28,7 @@ class MIL_Agent_ABC;
 // Created: LDC 2009-03-03
 // =============================================================================
 class InteractIfHeightCapacity : public ObjectCapacity_ABC
-                                 , public MIL_InteractiveContainer_ABC
+                               , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -43,7 +43,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
-    virtual void CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& /*agent*/, bool& canInteract );
+    virtual void CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract );
     //@}
 
 private:
