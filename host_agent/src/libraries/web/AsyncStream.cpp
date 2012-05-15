@@ -38,6 +38,8 @@ namespace
 template< typename T >
 void MoveData( T* dst, std::vector< T >& src, std::streamsize size )
 {
+    if( !size )
+        return;
     std::copy( &src[0], &src[0] + size, dst );
     src.erase( src.begin(), src.begin() + static_cast< size_t >( size ) );
 }
@@ -63,6 +65,19 @@ struct Device : public boost::iostreams::source
 private:
     T* ref_;
 };
+
+struct Notifier
+{
+    Notifier( boost::condition_variable& condition ) : condition_( condition )
+    {
+        // NOTHING
+    }
+    ~Notifier()
+    {
+        condition_.notify_all();
+    }
+    boost::condition_variable& condition_;
+};
 }
 
 struct AsyncStream::Private : public boost::noncopyable
@@ -84,6 +99,7 @@ struct AsyncStream::Private : public boost::noncopyable
     void Write( const char* data, size_t size )
     {
         size_t fill = 0;
+        Notifier endWrite( condition_ );
         boost::unique_lock< boost::mutex > lock( access_ );
         while( writing_ && ( !started_ || reading_ ) && fill < size )
         {
@@ -93,22 +109,22 @@ struct AsyncStream::Private : public boost::noncopyable
                 condition_.wait( lock );
                 continue;
             }
+            Notifier hasWrite( condition_ );
             buffer_.insert( buffer_.end(), data + fill, data + fill + next );
             fill += next;
-            condition_.notify_all();
         }
     }
 
     void CloseWrite()
     {
+        Notifier endClose( condition_ );
         boost::unique_lock< boost::mutex > lock( access_ );
         writing_ = false;
-        lock.unlock();
-        condition_.notify_all();
     }
 
     void Read( AsyncStream::Handler handler )
     {
+        Notifier endRead( condition_ );
         boost::unique_lock< boost::mutex > lock( access_ );
         started_ = true;
         lock.unlock();
@@ -119,8 +135,6 @@ struct AsyncStream::Private : public boost::noncopyable
 
         lock.lock();
         reading_ = false;
-        lock.unlock();
-        condition_.notify_all();
     }
 
     void Join()
@@ -132,6 +146,7 @@ struct AsyncStream::Private : public boost::noncopyable
 
     std::streamsize Read( char* data, std::streamsize size )
     {
+        Notifier endRead( condition_ );
         std::streamsize fill = 0;
         boost::unique_lock< boost::mutex > lock( access_ );
         while( fill < size )
@@ -142,11 +157,10 @@ struct AsyncStream::Private : public boost::noncopyable
                     return fill ? fill : -1;
                 else
                     condition_.wait( lock );
-            std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
-            if( next )
-                MoveData( data + fill, buffer_, next );
+            Notifier hasRead( condition_ );
+            const std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
+            MoveData( data + fill, buffer_, next );
             fill += next;
-            condition_.notify_all();
         }
         return fill;
     }
