@@ -14,6 +14,8 @@
 #if ( PSAPI_VERSION == 1 )
     #pragma comment( lib, "psapi.lib" )
 #endif
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 using namespace runtime;
 
@@ -75,17 +77,6 @@ bool Api::EnumProcesses( DWORD* ids, int cb, DWORD* pBytesReturned ) const
 {
     bool reply = !!::EnumProcesses( ids, cb, pBytesReturned );
     LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to list processes, " << GetLastError();
-    return reply;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Api::CreateProcess
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-bool Api::CreateProcess( const wchar_t* app, wchar_t* args, SECURITY_ATTRIBUTES* lpProcessAttributes, SECURITY_ATTRIBUTES* lpThreadAttributes, bool bInheritHandles, int dwCreationFlags, void* lpEnvironment, const wchar_t* lpCurrentDirectory, STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation ) const
-{
-    bool reply = !!::CreateProcessW( app, args, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation );
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to create process, " << GetLastError();
     return reply;
 }
 
@@ -183,29 +174,115 @@ std::wstring Api::GetModuleFilename() const
     return std::wstring( &buffer[0], ret );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Api::CreateFile
-// Created: BAX 2012-05-09
-// -----------------------------------------------------------------------------
-HANDLE Api::CreateFile( const wchar_t* filename, DWORD dwDesiredAccess, DWORD dwShareMode, SECURITY_ATTRIBUTES* lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile ) const
+namespace
 {
-    return ::CreateFileW( filename, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile );
+#define COUNT_OF(X) (sizeof(X)/sizeof*(X))
+
+struct Scoper
+{
+    typedef boost::function< void() > Task;
+    Scoper( const Task& task )
+        : task_( task )
+    {
+        // NOTHING
+    }
+    ~Scoper()
+    {
+        task_();
+    }
+private:
+    Task task_;
+};
+
+void TryCloseHandle( HANDLE handle )
+{
+    if( handle )
+        CloseHandle( handle );
+}
+
+HANDLE MakeFileHandle( const wchar_t* file )
+{
+    SECURITY_ATTRIBUTES sec = {};
+    sec.nLength = sizeof sec;
+    sec.bInheritHandle = true;
+    HANDLE reply = CreateFileW( file, GENERIC_WRITE, FILE_SHARE_READ, &sec, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+    return reply == INVALID_HANDLE_VALUE ? NULL : reply;
+}
+
+HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, STARTUPINFOW* ex, int& pid )
+{
+    PROCESS_INFORMATION info = {};
+    bool extended = ex->cb == sizeof( STARTUPINFOEXW );
+    int flags = NORMAL_PRIORITY_CLASS | DETACHED_PROCESS;
+    if( extended )
+        flags |= EXTENDED_STARTUPINFO_PRESENT;
+    bool valid = !!CreateProcessW( app, args, 0, 0, extended, flags, 0, run, ex, &info );
+    if( !valid )
+        return NULL;
+    Scoper thread( boost::bind( &TryCloseHandle, info.hThread ) );
+    pid = info.dwProcessId;
+    return info.hProcess;
+}
+
+HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid )
+{
+    pid = 0;
+    if( !log )
+    {
+        STARTUPINFOW info = { sizeof info };
+        return ::MakeProcess( app, args, run, &info, pid );
+    }
+
+    HANDLE inherits[2] = {};
+    size_t size = 0;
+    LPPROC_THREAD_ATTRIBUTE_LIST attributes = NULL;
+    bool valid = ::InitializeProcThreadAttributeList( NULL, COUNT_OF( inherits ), 0, &size )
+              || ::GetLastError() == ERROR_INSUFFICIENT_BUFFER;
+    if( !valid )
+        return NULL;
+
+    attributes = reinterpret_cast< LPPROC_THREAD_ATTRIBUTE_LIST >( HeapAlloc( GetProcessHeap(), 0, size ) );
+    if( !attributes )
+        return NULL;
+    Scoper freeAttributes( boost::bind( &HeapFree, GetProcessHeap(), 0, attributes ) );
+
+    valid = !!InitializeProcThreadAttributeList( attributes, COUNT_OF( inherits ), 0, &size );
+    if( !valid )
+        return NULL;
+
+    inherits[0] = MakeFileHandle( log );
+    if( !inherits[0] )
+        return NULL;
+    Scoper out( boost::bind( &TryCloseHandle, inherits[0] ) );
+
+    valid = !!DuplicateHandle( GetCurrentProcess(), inherits[0], GetCurrentProcess(), &inherits[1], 0, true, DUPLICATE_SAME_ACCESS );
+    if( !valid )
+        return NULL;
+    Scoper err( boost::bind( &TryCloseHandle, inherits[1] ) );
+
+    valid = !!UpdateProcThreadAttribute( attributes, 0, PROC_THREAD_ATTRIBUTE_HANDLE_LIST, inherits, sizeof inherits, NULL, NULL );
+    if( !valid )
+        return NULL;
+    Scoper clearAttributes( boost::bind( DeleteProcThreadAttributeList, attributes ) );
+
+    STARTUPINFOEXW ex = {};
+    ex.lpAttributeList = attributes;
+    ex.StartupInfo.cb = sizeof ex;
+    ex.StartupInfo.dwFlags = STARTF_USESTDHANDLES;
+    ex.StartupInfo.hStdOutput = inherits[0];
+    ex.StartupInfo.hStdError = inherits[1];
+    return ::MakeProcess( app, args, run, &ex.StartupInfo, pid );
+}
 }
 
 // -----------------------------------------------------------------------------
-// Name: Api::GetStdHandle
-// Created: BAX 2012-05-09
+// Name: Api::MakeProcess
+// Created: BAX 2012-05-15
 // -----------------------------------------------------------------------------
-HANDLE Api::GetStdHandle( DWORD nStdHandle ) const
+HANDLE Api::MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid ) const
 {
-    return ::GetStdHandle( nStdHandle );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Api::DuplicateHandle
-// Created: BAX 2012-05-09
-// -----------------------------------------------------------------------------
-bool Api::DuplicateHandle( HANDLE hSourceHandle, HANDLE* lpTargetHandle, DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwOptions ) const
-{
-    return !!::DuplicateHandle( ::GetCurrentProcess(), hSourceHandle, ::GetCurrentProcess(), lpTargetHandle, dwDesiredAccess, bInheritHandle, dwOptions );
+    HANDLE reply = ::MakeProcess( app, args, run, log, pid );
+    if( !reply )
+        LOG_ERROR( log_ ) << "[win32] Unable to create process, " << GetLastError();
+    return reply;
 }

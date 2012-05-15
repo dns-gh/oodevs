@@ -35,7 +35,6 @@ public:
     //@{
     virtual std::string            GetLastError         () const = 0;
     virtual bool                   EnumProcesses        ( DWORD* ids, int cb, DWORD* pBytesReturned ) const = 0;
-    virtual bool                   CreateProcess        ( const wchar_t* app, wchar_t* args, SECURITY_ATTRIBUTES* lpProcessAttributes, SECURITY_ATTRIBUTES* lpThreadAttributes, bool bInheritHandles, int dwCreationFlags, void* lpEnvironment, const wchar_t* lpCurrentDirectory, STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation ) const = 0;
     virtual bool                   CloseHandle          ( HANDLE hObject ) const = 0;
     virtual HANDLE                 OpenProcess          ( int dwDesiredAccess, bool bInheritHandle, int dwProcessId ) const = 0;
     virtual int                    GetProcessName       ( HANDLE hProcess, wchar_t* lpImageFileName, int nSize ) const = 0;
@@ -45,9 +44,7 @@ public:
     virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const = 0;
     virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const = 0;
     virtual std::wstring           GetModuleFilename    () const = 0;
-    virtual HANDLE                 CreateFile           ( const wchar_t* filename, DWORD dwDesiredAccess, DWORD dwShareMode, SECURITY_ATTRIBUTES* lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile ) const = 0;
-    virtual HANDLE                 GetStdHandle         ( DWORD nStdHandle ) const = 0;
-    virtual bool                   DuplicateHandle      ( HANDLE hSourceHandle, HANDLE* lpTargetHandle, DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwOptions ) const = 0;
+    virtual HANDLE                 MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid ) const = 0;
     //@}
 };
 

@@ -37,7 +37,6 @@ public:
     //@{
     virtual std::string            GetLastError         () const;
     virtual bool                   EnumProcesses        ( DWORD* ids, int cb, DWORD* pBytesReturned ) const;
-    virtual bool                   CreateProcess        ( const wchar_t* app, wchar_t* args, SECURITY_ATTRIBUTES* lpProcessAttributes, SECURITY_ATTRIBUTES* lpThreadAttributes, bool bInheritHandles, int dwCreationFlags, void* lpEnvironment, const wchar_t* lpCurrentDirectory, STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation ) const;
     virtual bool                   CloseHandle          ( HANDLE hObject ) const;
     virtual HANDLE                 OpenProcess          ( int dwDesiredAccess, bool bInheritHandle, int dwProcessId ) const;
     virtual int                    GetProcessName       ( HANDLE hProcess, wchar_t* lpImageFileName, int nSize ) const;
@@ -47,9 +46,7 @@ public:
     virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const;
     virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const;
     virtual std::wstring           GetModuleFilename    () const;
-    virtual HANDLE                 CreateFile           ( const wchar_t* filename, DWORD dwDesiredAccess, DWORD dwShareMode, SECURITY_ATTRIBUTES* lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile ) const;
-    virtual HANDLE                 GetStdHandle         ( DWORD nStdHandle ) const;
-    virtual bool                   DuplicateHandle      ( HANDLE hSourceHandle, HANDLE* lpTargetHandle, DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwOptions ) const;
+    virtual HANDLE                 MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid ) const;
     //@}
 
 private:

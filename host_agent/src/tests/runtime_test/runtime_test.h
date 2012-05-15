@@ -16,7 +16,6 @@
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
 
-#define MOCK_MAX_ARGS 10
 #pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 

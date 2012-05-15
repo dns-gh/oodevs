@@ -18,6 +18,10 @@
 #include <boost/ref.hpp>
 #include <boost/algorithm/string/join.hpp>
 
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+
+
 using namespace runtime;
 
 namespace
@@ -98,54 +102,18 @@ boost::shared_ptr< Process_ABC > Runtime::GetProcess( int pid ) const
 
 namespace
 {
-void TryClose( const Api_ABC& api, HANDLE handle )
-{
-    if( handle )
-        api.CloseHandle( handle );
-}
-
-HANDLE GetFileHandle( const Api_ABC& api, const std::wstring& log )
-{
-    SECURITY_ATTRIBUTES sec = {};
-    sec.nLength        = sizeof sec;
-    sec.bInheritHandle = true;
-    boost::filesystem::create_directories( boost::filesystem::path( log ).remove_filename() );
-    HANDLE reply = api.CreateFile( log.c_str(), GENERIC_WRITE, FILE_SHARE_READ, &sec, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-    if( reply == INVALID_HANDLE_VALUE )
-        throw std::runtime_error( "unable to open file " + Utf8Convert( log ) + " : " + api.GetLastError() );
-    return reply;
-}
-
 boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
                                               const std::wstring& app,
                                               std::vector< wchar_t >& args,
                                               const std::wstring& run,
                                               const std::wstring& log )
 {
-    STARTUPINFOW startup = { sizeof startup, };
-    PROCESS_INFORMATION info = {};
-
-    if( !log.empty() )
-    {
-        startup.dwFlags = STARTF_USESTDHANDLES;
-        startup.hStdInput = api.GetStdHandle( STD_INPUT_HANDLE );
-        startup.hStdOutput = GetFileHandle( api, log );
-        bool valid = api.DuplicateHandle( startup.hStdOutput, &startup.hStdError, 0, true, DUPLICATE_SAME_ACCESS );
-        if( !valid )
-            throw std::runtime_error( "unable to duplicate output handle : " + api.GetLastError() );
-    }
-
-    bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, !log.empty(),
-                    NORMAL_PRIORITY_CLASS | DETACHED_PROCESS, 0, run.empty() ? 0 : run.c_str(),
-                    &startup, &info );
-    TryClose( api, info.hThread );
-    TryClose( api, startup.hStdOutput );
-    TryClose( api, startup.hStdError );
-    Handle handle = MakeHandle( api, info.hProcess );
-    if( !done )
+    int pid;
+    HANDLE reply = api.MakeProcess( app.c_str(), &args[0], run.empty() ? 0 : run.c_str(), log.empty() ? 0 : log.c_str(), pid );
+    if( !reply )
         throw std::runtime_error( "unable to create process" );
-
-    return boost::make_shared< Process >( api, info.dwProcessId, handle );
+    Handle handle = MakeHandle( api, reply );
+    return boost::make_shared< Process >( api, pid, handle );
 }
 }
 

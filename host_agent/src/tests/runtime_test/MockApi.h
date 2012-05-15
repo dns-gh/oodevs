@@ -17,7 +17,7 @@ namespace test
     {
         MOCK_METHOD( GetLastError, 0 );
         MOCK_METHOD( EnumProcesses, 3 );
-        MOCK_METHOD( CreateProcess, 10 );
+        MOCK_METHOD( MakeProcess, 5 );
         MOCK_METHOD( CloseHandle, 1 );
         MOCK_METHOD( OpenProcess, 3 );
         MOCK_METHOD( GetProcessName, 3 );
@@ -27,9 +27,6 @@ namespace test
         MOCK_METHOD( CreateRemoteThreadExt, 8 );
         MOCK_METHOD( GetExitProcessPointer, 0 );
         MOCK_METHOD( GetModuleFilename, 0 );
-        MOCK_METHOD( CreateFile, 7 );
-        MOCK_METHOD( GetStdHandle, 1 );
-        MOCK_METHOD( DuplicateHandle, 5 );
     };
 }
 

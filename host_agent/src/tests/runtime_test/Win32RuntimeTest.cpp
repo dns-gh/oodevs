@@ -16,17 +16,15 @@
 #include <cpplog/cpplog.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
-#include <boost/spirit/home/phoenix/core/argument.hpp>
+#include <boost/bind.hpp>
 #include <boost/algorithm/string/join.hpp>
 
 using namespace runtime;
 using test::MockApi;
-using namespace boost::phoenix::arg_names;
 
 namespace
 {
     const HANDLE dummy = reinterpret_cast< HANDLE >( 0xCAFEBABE );
-    const HANDLE thread = reinterpret_cast< HANDLE >( 0xBAADF00D );
     const std::wstring wname = L"Zebulon";
 
     MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
@@ -74,25 +72,15 @@ namespace
         return count + 1;
     }
 
-    bool FakeCreateProcess( const wchar_t* app, const std::string& expected_app,
-                            wchar_t* args, const std::vector< std::string >& expected_args,
-                            const wchar_t* lpCurrentDirectory, const std::string& expected_dir,
-                            STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation )
+    bool StringCompare( const wchar_t* actual, const std::string& expected )
     {
-        BOOST_CHECK_EQUAL( Utf8Convert( app ), expected_app );
-        std::string join = boost::algorithm::join( expected_args, " " );
-        BOOST_CHECK_EQUAL( Utf8Convert( args ), join );
-        BOOST_CHECK_EQUAL( Utf8Convert( lpCurrentDirectory ), expected_dir );
-        BOOST_CHECK_EQUAL( lpStartupInfo->cb, sizeof STARTUPINFOW );
-        lpProcessInformation->hProcess = dummy;
-        lpProcessInformation->hThread = thread;
-        return true;
+        return Utf8Convert( actual ) == expected;
     }
 
     void ExpectOpenProcess( MockApi& api, HANDLE handle, int pid )
     {
         MOCK_EXPECT( api.OpenProcess ).once().with( mock::any, false, pid ).returns( handle );
-        MOCK_EXPECT( api.GetProcessName ).once().calls( boost::phoenix::bind( &FakeGetProcessName, _1, _2, _3, handle ) );
+        MOCK_EXPECT( api.GetProcessName ).once().calls( boost::bind( &FakeGetProcessName, _1, _2, _3, handle ) );
         MOCK_EXPECT( api.CloseHandle ).once().with( handle ).returns( true );
     }
 
@@ -109,7 +97,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
     MockApi api;
     Runtime runtime( log, api );
     int size = 64;
-    MOCK_EXPECT( api.EnumProcesses ).once().calls( boost::phoenix::bind( &FakeEnumProcesses, _1, _2, _3, size ) );
+    MOCK_EXPECT( api.EnumProcesses ).once().calls( boost::bind( &FakeEnumProcesses, _1, _2, _3, size ) );
     for( int i = 0; i < size; ++i )
         ExpectOpenProcess( api, reinterpret_cast< HANDLE >( 0xDEADBEEF + i ), i + 1 );
     Runtime::T_Processes list = runtime.GetProcesses();
@@ -139,9 +127,14 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
                                                                   ( "--exercise=worldwide/Egypt" )
                                                                   ( "--session=default" );
     const std::string dir = "e:/dev/lib/vc100";
-    MOCK_EXPECT( api.CreateProcess ).once().calls( boost::phoenix::bind( &FakeCreateProcess, arg1, app, arg2, args, arg8, dir, arg9, arg10 ) );
+    const std::string logs = "e:/log.log";
+    MOCK_EXPECT( api.MakeProcess ).once().with(
+        boost::bind( &StringCompare, _1, app ),
+        boost::bind( &StringCompare, _1, boost::algorithm::join( args, " " ) ),
+        boost::bind( &StringCompare, _1, dir ),
+        boost::bind( &StringCompare, _1, logs ),
+        mock::any ).returns( dummy );
     MOCK_EXPECT( api.CloseHandle ).once().with( dummy ).returns( true );
-    MOCK_EXPECT( api.CloseHandle ).once().with( thread ).returns( true );
     MOCK_EXPECT( api.GetProcessName ).once().with( dummy, mock::any, mock::any ).returns( 0 );
-    runtime.Start( app, args, dir, "" );
+    runtime.Start( app, args, dir, logs );
 }
