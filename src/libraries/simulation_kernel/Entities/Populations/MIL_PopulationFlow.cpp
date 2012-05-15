@@ -163,16 +163,20 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
     if( pHeadPath_ )
     {
         pHeadPath_->Cancel();
+        pHeadPath_->DecRef();
         pHeadPath_.reset();
     }
     if( pTailPath_ )
     {
         pTailPath_->Cancel();
+        pTailPath_->DecRef();
         pTailPath_.reset();
     }
     pHeadPath_.reset( new DEC_Population_Path( GetPopulation(), GetHeadPosition(), destination ) );
+    pHeadPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pHeadPath_ );
     pTailPath_.reset( new DEC_Population_Path( GetPopulation(), GetTailPosition(), destination ) );
+    pTailPath_->AddRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pTailPath_ );
     DetachFromDestConcentration();
 }

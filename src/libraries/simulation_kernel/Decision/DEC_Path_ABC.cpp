@@ -25,6 +25,7 @@ unsigned int DEC_Path_ABC::nIDIdx_ = 0;
 // -----------------------------------------------------------------------------
 DEC_Path_ABC::DEC_Path_ABC()
     : nID_         ( ++ nIDIdx_ )
+    , nNbrRefs_    ( 0 )
     , nState_      ( eComputing )
     , bJobCanceled_( false )
 {
@@ -60,6 +61,25 @@ void DEC_Path_ABC::Cancel()
     bJobCanceled_ = true;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
         ( *itPathSection )->Cancel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::AddRef
+// Created: LDC 2012-05-15
+// -----------------------------------------------------------------------------
+void DEC_Path_ABC::AddRef()
+{
+    ++nNbrRefs_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::DecRef
+// Created: LDC 2012-05-15
+// -----------------------------------------------------------------------------
+void DEC_Path_ABC::DecRef()
+{
+    if( --nNbrRefs_ <= 0 )
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( this );
 }
 
 // -----------------------------------------------------------------------------

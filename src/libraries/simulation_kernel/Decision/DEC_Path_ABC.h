@@ -45,6 +45,8 @@ public:
     virtual void Execute( TerrainPathfinder& pathfind );
     void Cancel();
     virtual void CleanAfterComputation();
+    void AddRef();
+    void DecRef();
 
     double GetLength() const;
     virtual bool NeedRefine() const = 0;
@@ -91,7 +93,6 @@ private:
     const unsigned int nID_;
     T_PathSectionVector pathSections_;
     unsigned int nNbrRefs_;              // nb of references on path
-    unsigned int nNbrDIARefs_;           // nb of references by DIA on path
     E_State nState_;
     bool bJobCanceled_;
 

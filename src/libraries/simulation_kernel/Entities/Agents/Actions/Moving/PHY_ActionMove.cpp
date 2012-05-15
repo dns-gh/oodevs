@@ -49,7 +49,10 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , mustWaitForKnowledge_         ( false )
 {
     if( pMainPath_.get() )
+    {
+        pMainPath_->AddRef();
         Callback( static_cast< int >( DEC_PathWalker::eRunning ) );
+    }
     else
         Callback( static_cast< int >( DEC_PathWalker::eNotAllowed ) );
 }
@@ -73,7 +76,10 @@ void PHY_ActionMove::StopAction()
 
     DestroyJoiningPath();
     if( pMainPath_.get() )
+    {
         role_.MoveCanceled( pMainPath_ );
+        pMainPath_->DecRef();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +318,9 @@ void PHY_ActionMove::CreateFinalPath()
     pNewMainPath->ComputePath( pNewMainPath );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
+    pMainPath_->DecRef();
     pMainPath_ = pNewMainPath;
+    pMainPath_->AddRef();
 }
 
 // -----------------------------------------------------------------------------

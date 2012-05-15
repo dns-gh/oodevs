@@ -43,6 +43,7 @@ public:
     void Update();
     void UpdateInSimulationThread();
     void StartCompute( boost::shared_ptr< DEC_Path_ABC > pPath );
+    void CancelJob( DEC_Path_ABC* pPath );
     void CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath );
     //@}
 
