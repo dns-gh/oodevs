@@ -35,6 +35,8 @@
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/CrossingSiteAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/QueryValidity.h"
 
@@ -513,12 +515,15 @@ bool DEC_KnowledgeObjectFunctions::HasCapacity( boost::shared_ptr< DEC_Knowledge
 // Name: DEC_KnowledgeObjectFunctions::BuildInstantaneously
 // Created: JSR 2012-04-20
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::BuildInstantaneously( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+void DEC_KnowledgeObjectFunctions::BuildInstantaneously( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return;
     if( MIL_Object_ABC* obj = pKnowledge->GetObjectKnown() )
+    {
+        callerAgent.GetPion().GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *obj );
         ( *obj )().Construct();
+    }
 }
 
 // -----------------------------------------------------------------------------

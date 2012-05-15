@@ -41,7 +41,7 @@ end
 
 integration.buildObjectInstantaneously = function( object )
     integration.pionRC( eRC_FinTravauxObjet, object.source )
-    return DEC_ObjectKnowledge_BuildInstantaneously( object.source )
+    return DEC_ObjectKnowledge_BuildInstantaneously( myself, object.source )
 end
 
 integration.canFilter = function( object )
