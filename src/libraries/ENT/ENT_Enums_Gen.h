@@ -407,4 +407,16 @@ enum E_NbcState
     eNbrNbcState      = 2
 };
 
+enum E_PreparationMode
+{
+    ePreparationMode_None       = 0x00, // Filter
+
+    ePreparationMode_Default    = 0x01,
+    ePreparationMode_Exercise   = 0x02,
+    ePreparationMode_Terrain    = 0x04,
+    ePreparationMode_LivingArea = 0x08,
+
+    ePreparationMode_All        = 0x0F  // Filter
+};
+
 #endif // __ENT_Enums_Gen_h_

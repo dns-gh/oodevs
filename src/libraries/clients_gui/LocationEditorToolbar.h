@@ -10,6 +10,7 @@
 #ifndef _gui_LocationEditorToolbar_h_
 #define _gui_LocationEditorToolbar_h_
 
+#include "RichToolBar.h"
 #include "LocationEditor_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "FeatureNameParser.h"
@@ -38,9 +39,8 @@ namespace gui
 */
 // Created: SBO 2007-03-06
 // =============================================================================
-class LocationEditorToolbar : public QToolBar
+class LocationEditorToolbar : public RichToolBar
                             , public LocationEditor_ABC
-                            , public tools::Observer_ABC
                             , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
@@ -48,7 +48,7 @@ class LocationEditorToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer );
+             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer, bool needRegister = true );
     virtual ~LocationEditorToolbar();
     //@}
 
@@ -106,6 +106,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
+    bool needRegister_;
     View_ABC& view_;
     LocationsLayer& layer_;
     ParametersLayer* parameters_;

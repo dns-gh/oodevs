@@ -17,6 +17,24 @@
 namespace gui
 {
 
+class RichListView;
+
+// =============================================================================
+/** @class  SearchListView
+    @brief  SearchListView
+*/
+// Created: ABR 2012-03-27
+// =============================================================================
+class SearchListView_ABC : public QWidget
+                         , private boost::noncopyable
+{
+public:
+    explicit SearchListView_ABC( QWidget* parent ) : QWidget( parent ) {}
+    virtual ~SearchListView_ABC() {}
+
+    virtual RichListView* GetRichListView() const = 0;
+};
+
 // =============================================================================
 /** @class  SearchListView
     @brief  SearchListView
@@ -24,8 +42,7 @@ namespace gui
 // Created: ABR 2012-03-27
 // =============================================================================
 template< typename ListView >
-class SearchListView : public QWidget
-                     , private boost::noncopyable
+class SearchListView : public SearchListView_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -51,6 +68,7 @@ public:
     //! @name Operations
     //@{
     ListView* GetListView() const;
+    virtual RichListView* GetRichListView() const;
     //@}
 
 private:
@@ -73,7 +91,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename ListView >
 SearchListView< ListView >::SearchListView( QWidget* parent )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -88,7 +106,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent )
 template< typename ListView >
 template< typename _1 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -103,7 +121,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first )
 template< typename ListView >
 template< typename _1, typename _2 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -118,7 +136,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 template< typename ListView >
 template< typename _1, typename _2, typename _3 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -133,7 +151,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 template< typename ListView >
 template< typename _1, typename _2, typename _3, typename _4 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -148,7 +166,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 template< typename ListView >
 template< typename _1, typename _2, typename _3, typename _4, typename _5 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -163,7 +181,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 template< typename ListView >
 template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -178,7 +196,7 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 template< typename ListView >
 template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7 >
 SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
-    : QWidget( parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
@@ -203,6 +221,17 @@ SearchListView< ListView >::~SearchListView()
 template< typename ListView >
 inline
 ListView* SearchListView< ListView >::GetListView() const
+{
+    return listView_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SearchListView::GetRichListView
+// Created: ABR 2012-03-29
+// -----------------------------------------------------------------------------
+template< typename ListView >
+inline
+RichListView* SearchListView< ListView >::GetRichListView() const
 {
     return listView_;
 }

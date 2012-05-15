@@ -25,6 +25,7 @@ Layer_ABC::Layer_ABC()
     : alpha_        ( 1 )
     , currentWidget_( 0 )
     , currentProxy_ ( 0 )
+    , enabled_      ( true )
 {
     // NOTHING
 }
@@ -209,4 +210,40 @@ std::string Layer_ABC::GetCurrentPass() const
 bool Layer_ABC::ShouldDrawPass() const
 {
     return passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::SetVisible
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+void Layer_ABC::SetVisible( bool /*visible*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::ForceEnabled
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+void Layer_ABC::ForceEnabled( bool enabled )
+{
+    enabled_ = enabled;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::EnsureIsEnabled
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+void Layer_ABC::EnsureIsEnabled()
+{
+    enabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::IsEnabled
+// Created: ABR 2012-05-14
+// -----------------------------------------------------------------------------
+bool Layer_ABC::IsEnabled() const
+{
+    return enabled_;
 }

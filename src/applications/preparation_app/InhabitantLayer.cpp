@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "InhabitantLayer.h"
 #include "LivingAreaEditor_ABC.h"
+#include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::InhabitantLayer
@@ -18,7 +19,7 @@
 InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
                                   gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
                                   const gui::LayerFilter_ABC& filter, LivingAreaEditor_ABC& editor )
-    : EditorProxy< gui::InhabitantLayer >( controllers, tools, strategy, view, profile, filter )
+    : gui::InhabitantLayer( controllers, tools, strategy, view, profile, filter )
     , editor_( editor )
 {
     // NOTHING
@@ -34,22 +35,13 @@ InhabitantLayer::~InhabitantLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantLayer::ShouldDisplay
-// Created: LGY 2012-01-10
-// -----------------------------------------------------------------------------
-bool InhabitantLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
-{
-    return gui::InhabitantLayer::ShouldDisplay( entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: InhabitantLayer::NotifySelected
 // Created: LGY 2012-01-10
 // -----------------------------------------------------------------------------
 void InhabitantLayer::NotifySelected( const kernel::Inhabitant_ABC* inhabitant )
 {
-    if( !livingAreaEditor_ )
-        EditorProxy< gui::InhabitantLayer >::NotifySelected( inhabitant );
+    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_LivingArea )
+        gui::InhabitantLayer::NotifySelected( inhabitant );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +50,8 @@ void InhabitantLayer::NotifySelected( const kernel::Inhabitant_ABC* inhabitant )
 // -----------------------------------------------------------------------------
 bool InhabitantLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( !livingAreaEditor_ )
-        return EditorProxy< gui::InhabitantLayer >::HandleMousePress( event, point );
+    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_LivingArea )
+        return gui::InhabitantLayer::HandleMousePress( event, point );
     if( event && event->state() != Qt::NoButton )
     {
         if( event->button() == Qt::LeftButton )

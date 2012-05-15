@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UrbanLayer.h"
+#include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanLayer constructor
@@ -16,7 +17,7 @@
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                         gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter)
-    : EditorProxy< gui::UrbanLayer >( controllers, tools, strategy, view, profile, filter )
+    : gui::UrbanLayer( controllers, tools, strategy, view, profile, filter )
 {
     // NOTHING
 }
@@ -31,21 +32,12 @@ UrbanLayer::~UrbanLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::ShouldDisplay
-// Created: LGY 2012-01-06
-// -----------------------------------------------------------------------------
-bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& /*entity*/ )
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanLayer::HandleMousePress
 // Created: LGY 2012-01-16
 // -----------------------------------------------------------------------------
 bool UrbanLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( !livingAreaEditor_ )
-        return EditorProxy< gui::UrbanLayer >::HandleMousePress( event, point );
-    return false;
+    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() == ePreparationMode_LivingArea )
+        return false;
+    return gui::UrbanLayer::HandleMousePress( event, point );
 }

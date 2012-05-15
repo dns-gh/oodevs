@@ -31,7 +31,6 @@ ResourceNetworkDialog::ResourceNetworkDialog( QMainWindow* parent, Controllers& 
     , staticModel_( staticModel )
     , resolver_   ( resolver )
 {
-    setObjectName( "ressources" );
     stockBox_->show();
     generateProduction_->show();
 }

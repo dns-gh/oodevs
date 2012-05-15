@@ -18,7 +18,7 @@
 #include "clients_kernel/Tools.h"
 #include <string>
 
-const int FilterDialog::menuIndex_ = 5;
+const int FilterDialog::menuIndex_ = 6;
 
 // -----------------------------------------------------------------------------
 // Name: FilterDialog constructor

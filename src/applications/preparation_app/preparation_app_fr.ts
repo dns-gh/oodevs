@@ -438,28 +438,8 @@
 <context>
     <name>FileToolbar</name>
     <message>
-        <source>File</source>
-        <translation>Fichier</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Ouvrir</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Enregistrer</translation>
-    </message>
-    <message>
         <source>Standard</source>
         <translation>Standard</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation>Nouveau</translation>
-    </message>
-    <message>
-        <source>Save As</source>
-        <translation>Enregistrer sous</translation>
     </message>
 </context>
 <context>

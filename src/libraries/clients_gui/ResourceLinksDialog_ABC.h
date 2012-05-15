@@ -10,6 +10,7 @@
 #ifndef __ResourceLinksDialog_ABC_h_
 #define __ResourceLinksDialog_ABC_h_
 
+#include "RichDockWidget.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
@@ -36,14 +37,12 @@ class TerrainObjectProxy;
 */
 // Created: JSR 2010-08-24
 // =============================================================================
-class ResourceLinksDialog_ABC : public QDockWidget
-                              , public tools::Observer_ABC
+class ResourceLinksDialog_ABC : public RichDockWidget
                               , public tools::SelectionObserver_ABC
                               , public tools::SelectionObserver_Base< TerrainObjectProxy >
                               , public tools::SelectionObserver_Base< kernel::Object_ABC >
                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
-                              , private boost::noncopyable
 {
     Q_OBJECT
 

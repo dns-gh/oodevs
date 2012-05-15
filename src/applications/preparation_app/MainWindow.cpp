@@ -104,6 +104,7 @@
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
+#include "preparation/ModeController.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
@@ -117,6 +118,7 @@
 namespace bfs = boost::filesystem;
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -134,7 +136,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , pPainter_         ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , simpleFilter_     ( new gui::SimpleFilter() )
     , urbanFilter_      ( new gui::UrbanFilter() )
-    , colorController_  ( new ColorController( controllers_ ) )
+    , colorController_  ( new ::ColorController( controllers_ ) )
     , glProxy_          ( new gui::GlProxy() )
     , lighting_         ( new gui::LightingProxy( this ) )
     , strategy_         ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
@@ -148,10 +150,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , performanceDialog_( 0 )
 {
     setLocale( QLocale() );
+    setMinimumSize( 800, 600 );
+    controllers_.SetModeController( new ::ModeController( this, ePreparationMode_Default ) );
+    assert( controllers_.modes_ );
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Gaming" );
-    restoreGeometry( settings.value("mainWindowGeometry").toByteArray() );
-
+    settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
+    restoreGeometry( settings.value( "mainWindowGeometry").toByteArray() );
     if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().empty() )
     {
         if( config_.HasGenerateScores() )
@@ -211,43 +215,52 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_ );
     pScoreDialog_ = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_, *glProxy_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
-    fileToolBar_ = new FileToolbar( this, controllers );
     consistencyDialog_ = new ModelConsistencyDialog( this, model, staticModel_, controllers_ );
     performanceDialog_ = new PerformanceDialog( this, model, staticModel_ );
-
-    addToolBar( fileToolBar_ );
-    addToolBar( new gui::DisplayToolbar( this, controllers ) );
-    addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
-    addToolBar( locEditToolBar );
 
     // Dock widgets
     pDockManager_.reset( new DockManager( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_ ) );
 
     // Menu
-    help_ = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
+    help_ = new HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog,
                     *consistencyDialog_, *performanceDialog_, *factory, expiration, *help_ );
     setMenuBar( menu_ );
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_, staticModel_.coordinateConverter_ );
 
-    // Layers
-    CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *terrainLayer,
-                  *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, automats, formation );
+    // Toolbars
+    {
+        fileToolBar_ = new FileToolbar( this, controllers, *menu_ );
+        fileToolBar_->SetModes( ePreparationMode_All, ePreparationMode_LivingArea );
+        addToolBar( fileToolBar_ );
+        RichToolBar* displayToolBar = new DisplayToolbar( this, controllers );
+        displayToolBar->SetModes( ePreparationMode_All, ePreparationMode_Default | ePreparationMode_LivingArea );
+        addToolBar( displayToolBar );
+        RichToolBar* gisToolBar = new GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
+        gisToolBar->SetModes( ePreparationMode_All, ePreparationMode_Default | ePreparationMode_LivingArea );
+        addToolBar( gisToolBar );
+        locEditToolBar->SetModes( ePreparationMode_All, ePreparationMode_Default | ePreparationMode_LivingArea );
+        addToolBar( locEditToolBar );
+    }
 
     // Status bar
-    gui::StatusBar* pStatus = new gui::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
+    StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
 
+    // Layers
+    CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *terrainLayer,
+        *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, automats, formation );
+
+    // Initialize
     SetWindowTitle( false );
-    EnableWorkspace( false );
     ReadOptions();
+    controllers_.modes_->Initialize();
 
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
         LoadExercise();
 
-    restoreState(settings.value("mainWindowState").toByteArray());
     SetProgression( 100, tr( "Loading complete" ) );
 }
 
@@ -269,26 +282,32 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
                                gui::PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
                                gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
-    gui::Layer_ABC& agents                   = *new ::AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
-    gui::TooltipsLayer_ABC& tooltipLayer     = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer_ABC& objectCreationLayer      = *new gui::MiscLayer< ObjectCreationPanel >( pDockManager_->GetObjectCreationPanel() );
-    gui::Layer_ABC& inhabitantCreationLayer  = *new gui::MiscLayer< InhabitantCreationPanel >( pDockManager_->GetInhabitantCreationPanel() );
-    gui::Layer_ABC& indicatorCreationLayer   = *new gui::MiscLayer< ScoreDialog >( *pScoreDialog_ );
-    gui::Elevation2dLayer& elevation2d       = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    gui::Layer_ABC& raster                   = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer_ABC& watershed                = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& elevation3d              = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer               = *new ::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
-    gui::Layer_ABC& grid                     = *new gui::GridLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& metrics                  = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
-    gui::Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
-    gui::Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
-    gui::Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
-    gui::Layer_ABC& defaultLayer             = *new gui::DefaultLayer( controllers_ );
-    gui::Layer_ABC& drawerLayer              = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
-    gui::Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
-    gui::Layer_ABC& contour                  = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    ::AgentsLayer& agents               = *new ::AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
+    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer_ABC or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer_ABC.
+    agents.SetModes( ePreparationMode_All, ePreparationMode_LivingArea );
+    TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
+    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( pDockManager_->GetObjectCreationPanel() );
+    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( pDockManager_->GetInhabitantCreationPanel() );
+    Layer_ABC& indicatorCreationLayer   = *new MiscLayer< ScoreDialog >( *pScoreDialog_ );
+    Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& raster                   = *new RasterLayer( controllers_.controller_ );
+    Layer_ABC& watershed                = *new WatershedLayer( controllers_, staticModel_.detection_ );
+    Layer_ABC& elevation3d              = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    Layer_ABC& urbanLayer               = *new ::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& grid                     = *new GridLayer( controllers_, *glProxy_ );
+    Layer_ABC& metrics                  = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
+    Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
+    limits.SetModes( ePreparationMode_All, ePreparationMode_LivingArea );
+    Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
+    objectsLayer.SetModes( ePreparationMode_All, ePreparationMode_LivingArea );
+    Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
+    populations.SetModes( ePreparationMode_All, ePreparationMode_LivingArea );
+    Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
+    ghosts.SetModes( ePreparationMode_All, ePreparationMode_LivingArea );
+    Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
+    Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
+    Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -483,20 +502,8 @@ bool MainWindow::Close()
     selector_->Close();
     filterDialogs_->Purge();
     SetWindowTitle( false );
-    EnableWorkspace( false );
+    controllers_.modes_->ChangeMode( ePreparationMode_Default );
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::EnableWorkspace
-// Created: SBO 2011-05-16
-// -----------------------------------------------------------------------------
-void MainWindow::EnableWorkspace( bool enabled )
-{
-    QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
-    for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
-        if( *it != dynamic_cast< QWidget* >( fileToolBar_ ) )
-            (*it)->setEnabled( enabled );
 }
 
 // -----------------------------------------------------------------------------
@@ -524,8 +531,8 @@ void MainWindow::LoadExercise()
             return;
         }
         loading_ = false;
+        controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() );
-        EnableWorkspace( true );
         CheckConsistency();
     }
     catch( std::exception& e )
@@ -605,13 +612,10 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
         pEvent->ignore();
         return;
     }
+    assert( controllers_.modes_ );
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Gaming" );
-    if( pDockManager_.get() )
-    {
-        settings.setValue( "mainWindowGeometry", pDockManager_->SaveGeometry() );
-        settings.setValue( "mainWindowState", pDockManager_->SaveState() );
-    }
+    settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
+    settings.setValue( "mainWindowGeometry", saveGeometry() );
 
     WriteOptions();
 
@@ -721,10 +725,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     }
     setCaption( tr( "Preparation - [%1]" ).arg( filename ) );
     if( menu_ && fileToolBar_ )
-    {
-        menu_->EnableSaveItem( needsSaving );
-        fileToolBar_->EnableSaveItem( needsSaving );
-    }
+        menu_->GetSaveAction()->setEnabled( needsSaving );
 }
 
 // -----------------------------------------------------------------------------
@@ -771,24 +772,28 @@ void MainWindow::ToggleFullScreen()
 // -----------------------------------------------------------------------------
 void MainWindow::ToggleDocks()
 {
-    if( docks_.isNull() || docks_.isEmpty() && toolbars_.isNull() || toolbars_.isEmpty())
+    if( states_.isNull() || states_.isEmpty() )
     {
-        docks_ = saveState();
-        toolbars_ = saveState();
+        states_ = saveState();
         QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this , QString() );
         for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
+        {
+            if( ModesObserver_ABC* observer = dynamic_cast< ModesObserver_ABC* >( *it ) )
+                if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() & observer->GetVisibleModes() )
+                    continue;
             (*it)->hide();
+        }
         QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
         for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
+        {
+            if( ModesObserver_ABC* observer = dynamic_cast< ModesObserver_ABC* >( *it ) )
+                if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() & observer->GetVisibleModes() )
+                    continue;
             (*it)->hide();
+        }
     }
-    else
-    {
-        if( restoreState( docks_ ) )
-            docks_ = 0;
-        if( restoreState( toolbars_ ) )
-            toolbars_ = 0;
-    }
+    else if( restoreState( states_ ) )
+        states_ = 0;
 }
 
 // -----------------------------------------------------------------------------

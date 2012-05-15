@@ -12,6 +12,9 @@
 #include "Options.h"
 #include "Controller.h"
 #include "ActionController.h"
+#include "ModeController.h"
+#include "tools/SelectionObserver_ABC.h"
+#include "ContextMenuObserver_ABC.h"
 
 using namespace kernel;
 
@@ -20,9 +23,10 @@ using namespace kernel;
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
 Controllers::Controllers()
-    : options_( *new Options() )
+    : options_   ( *new Options() )
     , controller_( *new Controller() )
-    , actions_( *new ActionController() )
+    , actions_   ( *new ActionController() )
+    , modes_     ( 0 )
 {
     // NOTHING
 }
@@ -33,6 +37,7 @@ Controllers::Controllers()
 // -----------------------------------------------------------------------------
 Controllers::~Controllers()
 {
+    delete modes_;
     delete &actions_;
     delete &controller_;
     delete &options_;
@@ -47,6 +52,8 @@ void Controllers::Register( tools::Observer_ABC& observer )
     options_.Register( observer );
     controller_.Register( observer );
     actions_.Register( observer );
+    if( modes_ )
+        modes_->Register( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +65,8 @@ void Controllers::Unregister( tools::Observer_ABC& observer )
     options_.Unregister( observer );
     controller_.Unregister( observer );
     actions_.Unregister( observer );
+    if( modes_ )
+        modes_->Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,4 +77,13 @@ void Controllers::Update( tools::Observer_ABC& observer )
 {
     Unregister( observer );
     Register  ( observer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controllers::SetModeController
+// Created: ABR 2012-05-10
+// -----------------------------------------------------------------------------
+void Controllers::SetModeController( ModeController_ABC* modeController )
+{
+    modes_ = modeController;
 }

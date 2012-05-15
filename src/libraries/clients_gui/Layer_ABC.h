@@ -13,11 +13,14 @@
 #include <graphics/MapLayer_ABC.h>
 #include <string>
 #include <boost/noncopyable.hpp>
+#include "tools/Observer_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 
 class ViewFrustum;
 
 namespace kernel
 {
+    class Controllers;
     class Viewport_ABC;
 }
 
@@ -33,6 +36,8 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class Layer_ABC : public MapLayer_ABC
+                , public tools::Observer_ABC
+                , public kernel::ModesObserver_ABC
                 , private boost::noncopyable
 {
 public:
@@ -57,6 +62,8 @@ public:
     virtual void SetAlpha( float alpha );
     float GetAlpha() const;
 
+    bool IsEnabled() const;
+
     void MoveAbove( Layer_ABC& layer );
     void MoveBelow( Layer_ABC& layer );
 
@@ -65,13 +72,22 @@ public:
     bool ShouldDrawPass() const;
     //@}
 
+    //! @name ModesObserver implementation
+    //@{
+    virtual void SetVisible( bool visible );
+    virtual void ForceEnabled( bool enabled );
+    virtual void EnsureIsEnabled();
+    //@}
+
 private:
     //! @name Member data
     //@{
-    GlWidget* currentWidget_;
+    GlWidget*     currentWidget_;
     MapLayer_ABC* currentProxy_;
-    float alpha_;
-    std::string passes_;
+    float         alpha_;
+    std::string   passes_;
+    bool          enabled_;
+    float         alphaBackUp_;
     //@}
 };
 

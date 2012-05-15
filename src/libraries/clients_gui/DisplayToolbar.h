@@ -10,6 +10,8 @@
 #ifndef __DisplayToolbar_h_
 #define __DisplayToolbar_h_
 
+#include "RichToolBar.h"
+
 namespace kernel
 {
     class Controllers;
@@ -24,7 +26,7 @@ namespace gui
 */
 // Created: SBO 2007-03-05
 // =============================================================================
-class DisplayToolbar : public QToolBar
+class DisplayToolbar : public RichToolBar
 {
 public:
     //! @name Constructors/Destructor
@@ -34,6 +36,6 @@ public:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __DisplayToolbar_h_

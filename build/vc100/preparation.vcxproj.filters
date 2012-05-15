@@ -993,6 +993,9 @@
     <ClInclude Include="..\..\src\libraries\preparation\MoveableProxy.h">
       <Filter>Source Files\Model\Agent\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\ModeController.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\preparation\preparation_es.ts">

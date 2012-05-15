@@ -438,28 +438,8 @@
 <context>
     <name>FileToolbar</name>
     <message>
-        <source>New</source>
-        <translation>Nuevo</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation>Archivo</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Abrir</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Grabar</translation>
-    </message>
-    <message>
         <source>Standard</source>
         <translation>Standard</translation>
-    </message>
-    <message>
-        <source>Save As</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

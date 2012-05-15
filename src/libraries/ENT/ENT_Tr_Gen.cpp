@@ -406,6 +406,17 @@ ENT_Tr::T_ConverterNbcState ENT_Tr::NbcStateConverter_ [] =
     T_ConverterNbcState( "", "", ( E_NbcState ) - 1 )
 };
 
+ENT_Tr::T_ConverterPreparationMode ENT_Tr::PreparationModeConverter_ [] =
+{
+    T_ConverterPreparationMode( "none",         QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),          ePreparationMode_None ),
+    T_ConverterPreparationMode( "default",      QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),       ePreparationMode_Default ),
+    T_ConverterPreparationMode( "exercise",     QT_TRANSLATE_NOOP( "ENT_Tr", "Exercise" ),      ePreparationMode_Exercise ),
+    T_ConverterPreparationMode( "terrain",      QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),       ePreparationMode_Terrain ),
+    T_ConverterPreparationMode( "living_area",  QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ),   ePreparationMode_LivingArea ),
+    T_ConverterPreparationMode( "all",          QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),           ePreparationMode_All ),
+    T_ConverterPreparationMode( "", "", ( E_PreparationMode ) - 1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -447,7 +458,8 @@ void ENT_Tr::InitTranslations()
     InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
     InitTr( GhostTypeConverter_, "ENT_Tr" );
     InitTr( NbcStateConverter_, "ENT_Tr" );
- }
+    InitTr( PreparationModeConverter_, "ENT_Tr" );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLocationType
@@ -764,6 +776,15 @@ const std::string& ENT_Tr::ConvertFromNbcState( E_NbcState nValue, E_Conversion 
     return ENT_Tr::InverseFindInConverter( NbcStateConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPreparationMode
+// Created: ABR 2012-05-10
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPreparationMode( E_PreparationMode nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( PreparationModeConverter_, nValue, nConverterType );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1077,4 +1098,13 @@ E_GhostType ENT_Tr::ConvertToGhostType( const std::string& strName )
 E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( NbcStateConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPreparationMode
+// Created: ABR 2012-05-10
+// -----------------------------------------------------------------------------
+E_PreparationMode ENT_Tr::ConvertToPreparationMode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( PreparationModeConverter_, strName );
 }

@@ -46,10 +46,9 @@ public:
     //! @name Operations
     //@{
     void AddLayer( const QString& name, Layer_ABC& layer );
-
+    void Update();
     virtual void Commit();
     virtual void Reset();
-    void UpdateLeastAndMostVisible();
     //@}
 
 private slots:
@@ -73,6 +72,7 @@ private:
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    void UpdateLeastAndMostVisible();
     void ResetLayers();
     //@}
 

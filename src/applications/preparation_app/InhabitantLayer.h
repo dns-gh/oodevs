@@ -11,7 +11,6 @@
 #define __InhabitantLayer_h_
 
 #include "clients_gui/InhabitantLayer.h"
-#include "EditorProxy.h"
 
 namespace kernel
 {
@@ -36,7 +35,7 @@ class LivingAreaEditor_ABC;
 */
 // Created: LGY 2012-01-10
 // =============================================================================
-class InhabitantLayer : public EditorProxy< gui::InhabitantLayer >
+class InhabitantLayer : public gui::InhabitantLayer
 {
 public:
     //! @name Constructors/Destructor
@@ -49,7 +48,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
     virtual void NotifySelected( const kernel::Inhabitant_ABC* inhabitant );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}

@@ -10,6 +10,7 @@
 #ifndef gui_ExtensionsPanel_h_
 #define gui_ExtensionsPanel_h_
 
+#include "RichDockWidget.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
@@ -40,19 +41,17 @@ namespace gui
 */
 // Created: ABR 2011-05-10
 // =============================================================================
-class ExtensionsPanel : public QDockWidget
-                      , public tools::Observer_ABC
+class ExtensionsPanel : public RichDockWidget
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::DictionaryExtensions >
-                      , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const char* name = 0 );
+             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations );
     virtual ~ExtensionsPanel();
     //@}
 

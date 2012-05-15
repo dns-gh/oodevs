@@ -657,9 +657,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ProfilesChecker_ABC.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\EditorProxy.h">
-      <Filter>Source Files\Layers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\DockManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -675,6 +672,12 @@
     <ClInclude Include="..\..\src\applications\preparation_app\LivingAreaEditor_ABC.h">
       <Filter>Source Files\Panels\Living area</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\Menu.h">
+      <Filter>Source Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FileToolbar.h">
+      <Filter>Source Files\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -685,9 +688,6 @@
     </None>
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl">
       <Filter>Source Files\Dialogs\Editors</Filter>
-    </None>
-    <None Include="..\..\src\applications\preparation_app\EditorProxy.inl">
-      <Filter>Source Files\Layers</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -831,12 +831,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterXsl.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\FileToolbar.h">
-      <Filter>Source Files\Menus</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\Menu.h">
-      <Filter>Source Files\Menus</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\translator.pro">
       <Filter>Translations</Filter>

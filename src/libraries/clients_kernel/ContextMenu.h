@@ -14,7 +14,8 @@
 
 #pragma warning( push, 0 )
 #include <Qt3Support/q3popupmenu.h>
-//#include <QtGui/qmenu.h> // $$$$ ABR 2011-12-30: TODO: migrate menu to Qt4
+//#include <QtGui/qmenu.h> 
+// $$$$ ABR 2011-12-30: TODO: migrate menu to Qt4, improve memory management, and simplify usage with QAction manipulation, and add QIcon parameter to Insert methodes
 #pragma warning( pop )
 
 #include <boost/variant.hpp>
@@ -76,6 +77,8 @@ public:
     void Clear();
     void Popup( const QPoint& where );
     void ConnectSubActions( const QObject* receiver, const char* member, int depth = 1 );
+    ContextMenu* FillMenu();
+    T_SubMenus& GetCategoryCreateIFN( const std::string& category, bool separatorText = false );
     //@}
 
     //! @name Operators
@@ -83,7 +86,7 @@ public:
     operator QWidget*() const;
     //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     T_MenuVariant InsertVariant( const std::string& category, T_MenuVariant& variant, bool separatorText = false, int index = -1 );
     QAction* InsertAction( const std::string& category, QAction* action, bool separatorText = false, int index = -1 );
@@ -98,9 +101,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    ContextMenu* FillMenu();
     void InternalFillMenu( const CIT_Menus& currentMenu );
-    T_SubMenus& GetCategoryCreateIFN( const std::string& category, bool separatorText = false );
     //@}
 
 private:

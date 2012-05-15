@@ -30,15 +30,13 @@ using namespace kernel;
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::StringResolver< ResourceNetworkType >& resources )
-    : QDockWidget      ( "resource", parent )
+    : RichDockWidget   ( controllers, parent, "resource", tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ), false )
     , controllers_     ( controllers )
     , selected_        ( 0 )
     , selectedItem_    ( 0 )
     , resources_       ( resources )
     , linkToChange_    ( 0 )
 {
-    setObjectName( "resource" );
-    setCaption( tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) );
     Q3VBox* mainLayout = new Q3VBox( this );
     setWidget( mainLayout );
     pMainLayout_ = new Q3VBox( mainLayout );

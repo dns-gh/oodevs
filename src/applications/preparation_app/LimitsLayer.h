@@ -12,7 +12,6 @@
 
 #include "clients_gui/TacticalLinesLayer.h"
 #include "clients_kernel/FourStateOption.h"
-#include "EditorProxy.h"
 
 namespace gui
 {
@@ -27,7 +26,7 @@ class ModelBuilder;
 */
 // Created: AGE 2006-03-24
 // =============================================================================
-class LimitsLayer : public EditorProxy< gui::TacticalLinesLayer >
+class LimitsLayer : public gui::TacticalLinesLayer
 {
 public:
     //! @name Constructors/Destructor

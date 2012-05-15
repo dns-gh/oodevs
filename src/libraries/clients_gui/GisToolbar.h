@@ -10,6 +10,7 @@
 #ifndef __GisToolbar_h_
 #define __GisToolbar_h_
 
+#include "RichToolBar.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
@@ -18,7 +19,6 @@
 #pragma warning( pop )
 
 class QColor;
-class QDockWidget;
 class QCheckBox;
 class QComboBox;
 class QSpinBox;
@@ -35,6 +35,7 @@ namespace gui
     class ColorButton;
     class TerrainProfilerLayer;
     class ContourLinesObserver;
+    class RichDockWidget;
 
 // =============================================================================
 /** @class  GisToolbar
@@ -42,8 +43,7 @@ namespace gui
 */
 // Created: SBO 2010-03-23
 // =============================================================================
-class GisToolbar : public QToolBar
-                 , public tools::Observer_ABC
+class GisToolbar : public RichToolBar
                  , public kernel::OptionsObserver_ABC
                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                  , public tools::ElementObserver_ABC< ContourLinesObserver >
@@ -90,7 +90,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
-    QDockWidget* terrainProfiler_;
+    RichDockWidget* terrainProfiler_;
     QCheckBox* watershedEnabled_;
     QComboBox* mode_;
     QSpinBox* height_;
@@ -102,6 +102,6 @@ private:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GisToolbar_h_

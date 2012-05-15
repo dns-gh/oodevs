@@ -819,5 +819,29 @@
         <source>funeral</source>
         <translation>funéraire</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
+        <source>Exercise</source>
+        <translation>Exercice</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>Living Area</source>
+        <translation>Zone de vie</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tous</translation>
+    </message>
 </context>
 </TS>

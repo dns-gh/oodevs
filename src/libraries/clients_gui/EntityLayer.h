@@ -42,7 +42,6 @@ namespace gui
 // Created: AGE 2006-03-23
 // =============================================================================
 class EntityLayerBase : public Layer_ABC
-                      , public tools::Observer_ABC
 {
 public:
     //! @name Constructors/Destructor

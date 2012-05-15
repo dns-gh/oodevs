@@ -51,9 +51,9 @@ public:
     //! @name Operations
     //@{
     virtual QSize sizeHint () const;
-    virtual void show ();
+    virtual void showEvent( QShowEvent * event );
     virtual void reject();
-    GraphicPreferences& GetPreferences() const; // $$$$ SBO 2006-05-04:
+    GraphicPreferences& GetPreferences() const;
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
     void AddLayer( const QString& name, gui::Layer_ABC& layer );

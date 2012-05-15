@@ -44,7 +44,6 @@ namespace gui
 // =============================================================================
 class Elevation3dLayer : private tools::WorldParameters
                        , public Layer3d_ABC
-                       , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 
 {

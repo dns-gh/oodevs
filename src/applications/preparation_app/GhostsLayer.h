@@ -12,7 +12,6 @@
 
 #include "clients_gui/EntityLayer.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "EditorProxy.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -30,7 +29,7 @@ class Model;
 // Created: ABR 2011-10-19
 // =============================================================================
 class GhostsLayer : public QObject
-                  , public EditorProxy< gui::EntityLayer< kernel::Ghost_ABC > >
+                  , public gui::EntityLayer< kernel::Ghost_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {

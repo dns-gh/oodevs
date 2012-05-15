@@ -30,8 +30,8 @@
 // Name: ExtensionsPanel constructor
 // Created: ABR 2011-05-13
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const char* name /* = 0*/ )
-    : gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.teams_, name )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation )
+    : gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.teams_ )
     , actions_        ( model.actions_ )
     , types_          ( staticModel.types_ )
     , simulation_     ( simulation )

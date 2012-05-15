@@ -18,11 +18,11 @@
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
                                               gui::View_ABC& view, gui::LocationsLayer& layer )
-    : gui::LocationEditorToolbar( parent, controllers, converter, view, layer )
+    : gui::LocationEditorToolbar( parent, controllers, converter, view, layer, false )
     , controllers_( controllers )
     , livingAreaEditor_( false )
 {
-    controllers_.Update( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

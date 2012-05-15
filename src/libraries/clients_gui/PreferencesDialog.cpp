@@ -126,12 +126,13 @@ QSize PreferencesDialog::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PreferencesDialog::show
-// Created: RPD 2008-08-14
+// Name: PreferencesDialog::showEvent
+// Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-void PreferencesDialog::show()
+void PreferencesDialog::showEvent( QShowEvent * event )
 {
-    QDialog::show();
+    layersPanel_->Update();
+    QDialog::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------
