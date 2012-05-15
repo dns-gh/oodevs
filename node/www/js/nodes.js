@@ -256,7 +256,7 @@
           return print_error("Unable to fetch nodes");
         }
       });
-      return setInterval(this.delta, 5 * 1000);
+      return setTimeout(this.delta, 5000);
     };
 
     NodeListView.prototype.reset = function(list, options) {
@@ -316,9 +316,11 @@
             item = _ref[_i];
             _this.model.get(item.id).set(item.attributes);
           }
+          return setTimeout(_this.delta, 5000);
         },
         error: function() {
-          return print_error("Unable to fetch nodes");
+          print_error("Unable to fetch nodes");
+          return setTimeout(_this.delta, 5000);
         }
       });
     };

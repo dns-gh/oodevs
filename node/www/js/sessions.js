@@ -331,7 +331,7 @@
           return print_error("Unable to fetch sessions");
         }
       });
-      return setInterval(this.delta, 5 * 1000);
+      return setTimeout(this.delta, 5000);
     };
 
     SessionListView.prototype.reset = function(list, options) {
@@ -393,9 +393,11 @@
             item = _ref[_i];
             _this.model.get(item.id).set(item.attributes);
           }
+          return setTimeout(_this.delta, 5000);
         },
         error: function() {
-          return print_error("Unable to fetch sessions");
+          print_error("Unable to fetch sessions");
+          return setTimeout(_this.delta, 5000);
         }
       });
     };

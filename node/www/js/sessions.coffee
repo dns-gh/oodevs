@@ -191,7 +191,7 @@ class SessionListView extends Backbone.View
         @model.bind "reset",  @reset
         @model.bind "change", @model.sort
         @model.fetch error: -> print_error "Unable to fetch sessions"
-        setInterval @delta, 5*1000
+        setTimeout @delta, 5000
 
     reset: (list, options) =>
         $(@el).empty()
@@ -226,8 +226,10 @@ class SessionListView extends Backbone.View
                 @model.add rpy[0]
                 for item in rpy[1]
                     @model.get(item.id).set item.attributes
-                return
-            error: => print_error "Unable to fetch sessions"
+                setTimeout @delta, 5000
+            error: =>
+                print_error "Unable to fetch sessions"
+                setTimeout @delta, 5000
 
     set_filter: =>
         list = get_filters()
