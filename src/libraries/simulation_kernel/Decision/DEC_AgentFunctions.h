@@ -155,6 +155,7 @@ public:
     static void SelfDecontaminate( MIL_Agent_ABC& callerAgent );
     static void ImmunizeAgent( MIL_Agent_ABC& callerAgent );
     static void StopImmunizeAgent( MIL_Agent_ABC& callerAgent );
+    static void TemporaryImmunizeAgent( MIL_Agent_ABC& callerAgent, bool bImmunize );
 
     // Population
     static int GetRoePopulation( const MIL_Agent_ABC& callerAgent );
