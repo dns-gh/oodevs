@@ -390,6 +390,30 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawStippledLine
+// Created: JSR 2012-05-14
+// -----------------------------------------------------------------------------
+void GlWidget::DrawStippledLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
+{
+    float color[ 4 ] = { 1.f, 1.f, 1.f, 0.75f };
+    glColor4fv( color );
+    glBegin( GL_LINES );
+        glVertex2f( from.X(), from.Y() );
+        glVertex2f( to.X()  , to.Y() );
+    glEnd();
+    color[ 0 ] = 0.f;
+    color[ 1 ] = 0.f;
+    color[ 2 ] = 0.f;
+    glColor4fv( color );
+    UpdateStipple();
+    glBegin( GL_LINES );
+        glVertex2f( from.X(), from.Y() );
+        glVertex2f( to.X()  , to.Y() );
+    glEnd();
+    glDisable( GL_LINE_STIPPLE );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawLines
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -449,12 +473,50 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawSelectedPolygon
+// Created: JSR 2012-05-14
+// -----------------------------------------------------------------------------
+void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
+{
+    // old DrawConvexPolygon in Terrain Workshop
+    if( points.empty() )
+        return;
+    glLineWidth( 1.5 );
+    if( points.size() > 3 )
+        UpdateStipple();
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    float color[ 4 ];
+    glGetFloatv( GL_CURRENT_COLOR, color );
+    color[ 0 ] = 0.f;
+    color[ 1 ] = 0.f;
+    color[ 2 ] = 1.f;
+    if( points.size() > 2 )
+    {
+        color[ 3 ] *= 0.35f; // ??
+        glColor4fv( color );
+        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+            DrawDisc( *it, 5, pixels );
+        color[ 0 ] = 1.f;
+    }
+    glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &points.front() ) );
+    color[ 3 ] = 0.20f;
+    glColor4fv( color );
+    glDrawArrays( GL_POLYGON, 0, static_cast< GLsizei >( points.size() ) );
+    color[ 3 ] = 0.75f;
+    glColor4fv( color );
+    glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( points.size() ) );
+    glPopAttrib();
+    glDisable( GL_LINE_STIPPLE );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawDecoratedPolygon
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
                                      const std::string& name, unsigned int height, bool selected ) const
 {
+    // TODO renommer en DrawUrbanBlock?
     const T_PointVector& footprint = polygon.Vertices();
     if( footprint.empty() )
         return;
@@ -542,6 +604,39 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
             delete [] roofPoints;
         }
     glPopAttrib();
+    if( !name.empty() )
+        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), 13 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawConcaveDecoratedPolygon
+// Created: JSR 2012-05-14
+// -----------------------------------------------------------------------------
+void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, bool selected ) const
+{
+    // TODO renommer en DrawDistrict/City??
+    const Polygon2f::T_Vertices& footprint = polygon.Vertices();
+    if( footprint.empty() )
+        return;
+    if( selected )
+    {
+        float color[ 4 ]; // couleurs à vérifier
+        color[ 0 ] = 1.f - static_cast< float >( urbanColor.Red() ) / 255.f;
+        color[ 1 ] = 1.f - static_cast< float >( urbanColor.Green() ) / 255.f;
+        color[ 2 ] = 1.f - static_cast< float >( urbanColor.Blue() ) / 255.f;
+        color[ 3 ] = 0.9f;
+        glMatrixMode( GL_MODELVIEW );
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprint.front() ) );
+        UpdateStipple();
+        glLineWidth( 1.5 );
+        glColor4fv( color );
+        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
+        glDisable( GL_LINE_STIPPLE );
+        glPopAttrib();
+    }
+    // TODO!!!
+    // voir pour calculer la taille du texte en fonction de la hierarchie (dans urban/UrbanDrawer.cpp) 
     if( !name.empty() )
         const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), 13 );
 }

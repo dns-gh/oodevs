@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UrbanLayer.h"
+#include "preparation/UrbanHierarchies.h"
 #include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -29,6 +30,18 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
 UrbanLayer::~UrbanLayer()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::IsInSelection
+// Created: JSR 2012-05-15
+// -----------------------------------------------------------------------------
+bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
+{
+    const UrbanHierarchies* hierarchies = static_cast< const UrbanHierarchies* >( entity.Retrieve< kernel::Hierarchies >() );
+    if( hierarchies && hierarchies->GetLevel() == UrbanHierarchies::eLevelBlock )
+        return gui::UrbanLayer::IsInSelection( entity, point );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

@@ -84,34 +84,51 @@ void UrbanModel::Load( const std::string& directoryPath )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadCity( xml::xistream& xis )
 {
-    xis >> xml::optional
-            >> xml::start( "urban-objects" )
-                >> xml::list( "urban-object", *this, &UrbanModel::ReadDistrict )
-           >> xml::end;
+    std::auto_ptr< gui::TerrainObjectProxy > pTerrainObject( factory_->Create( xis, 0 ) );
+    if( !Find( pTerrainObject->GetId() ) )
+    {
+        gui::TerrainObjectProxy* ptr = pTerrainObject.release();
+        ptr->Polish();
+        Register( ptr->GetId(), *ptr );
+        xis >> xml::optional
+                >> xml::start( "urban-objects" )
+                    >> xml::list( "urban-object", *this, &UrbanModel::ReadDistrict, ptr )
+               >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadDistrict
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadDistrict( xml::xistream& xis )
+void UrbanModel::ReadDistrict( xml::xistream& xis, gui::TerrainObjectProxy* parent )
 {
-    xis >> xml::optional
-        >> xml::start( "urban-objects" )
-            >> xml::list( "urban-object", *this, &UrbanModel::ReadBlock )
-        >> xml::end;
+    std::auto_ptr< gui::TerrainObjectProxy > pTerrainObject( factory_->Create( xis, parent ) );
+    if( !Find( pTerrainObject->GetId() ) )
+    {
+        gui::TerrainObjectProxy* ptr = pTerrainObject.release();
+        ptr->Polish();
+        Register( ptr->GetId(), *ptr );
+        xis >> xml::optional
+            >> xml::start( "urban-objects" )
+                >> xml::list( "urban-object", *this, &UrbanModel::ReadBlock, ptr )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadBlock
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadBlock( xml::xistream& xis )
+void UrbanModel::ReadBlock( xml::xistream& xis, gui::TerrainObjectProxy* parent )
 {
-    gui::TerrainObjectProxy* pTerrainObject = factory_->Create( xis );
-    pTerrainObject->Polish();
-    if( !Resolver< gui::TerrainObjectProxy >::Find( pTerrainObject->GetId() ) )
-        Resolver< gui::TerrainObjectProxy >::Register( pTerrainObject->GetId(), *pTerrainObject );
+    std::auto_ptr< gui::TerrainObjectProxy > pTerrainObject( factory_->Create( xis, parent ) );
+    if( !Find( pTerrainObject->GetId() ) )
+    {
+        gui::TerrainObjectProxy* ptr = pTerrainObject.release();
+        ptr->Polish();
+        Register( ptr->GetId(), *ptr );
+    }
 }
 
 // -----------------------------------------------------------------------------

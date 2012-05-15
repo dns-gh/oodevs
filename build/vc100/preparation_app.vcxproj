@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableCrew.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableResource.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UrbanLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\WeatherListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\WeatherPanel.cpp" />
@@ -882,6 +883,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\UrbanLayer.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanListView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>

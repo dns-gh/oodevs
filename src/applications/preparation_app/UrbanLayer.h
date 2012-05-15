@@ -45,6 +45,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 };

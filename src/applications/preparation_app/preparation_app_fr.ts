@@ -253,6 +253,10 @@
         <source>Logistic</source>
         <translation>Logistique</translation>
     </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urbain</translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

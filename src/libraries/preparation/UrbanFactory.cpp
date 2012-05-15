@@ -16,6 +16,8 @@
 #include "InfrastructureAttribute.h"
 #include "StructuralStateAttribute.h"
 #include "ResourceNetworkAttribute.h"
+#include "UrbanHierarchies.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanExtensions.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -62,8 +64,9 @@ UrbanFactory::~UrbanFactory()
 // Name: UrbanFactory::CreateScore
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis ) const
+gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis, gui::TerrainObjectProxy* parent ) const
 {
+    // TODO voir quels attributs virer dans le cas d'une ville ou d'un quartier
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( xis, controllers_, objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), options_, accommodations_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
@@ -76,5 +79,6 @@ gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis ) const
                                                                                           pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(),
                                                                                           urbanObjects_, objects_, objectTypes_ ) );
     pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, *pTerrainObject, dictionary, objectTypes_ ) );
+    pTerrainObject->Attach< kernel::Hierarchies >( *new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent ) );
     return pTerrainObject;
 }
