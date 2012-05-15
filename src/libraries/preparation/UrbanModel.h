@@ -60,8 +60,8 @@ private:
     //! @name Helpers
     //@{
     void ReadCity( xml::xistream& xis );
-    void ReadDistrict( xml::xistream& xis );
-    void ReadBlock( xml::xistream& xis );
+    void ReadDistrict( xml::xistream& xis, gui::TerrainObjectProxy* parent );
+    void ReadBlock( xml::xistream& xis, gui::TerrainObjectProxy* parent );
     void ReadUrbanObject( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
     template< typename T, typename U >

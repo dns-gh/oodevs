@@ -161,6 +161,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\PopulationPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\WeatherModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileSelection.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\PopulationPositions.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\WeatherModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory_ABC.h" />

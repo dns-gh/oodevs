@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual gui::TerrainObjectProxy* Create( xml::xistream& xis ) const;
+    virtual gui::TerrainObjectProxy* Create( xml::xistream& xis, gui::TerrainObjectProxy* parent ) const;
     //@}
 
 private:

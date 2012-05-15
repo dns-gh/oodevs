@@ -208,6 +208,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableCrew.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableResource.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitControls.cpp" />
@@ -914,6 +915,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanListView.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

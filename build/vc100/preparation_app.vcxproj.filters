@@ -493,6 +493,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\OrbatPanel.cpp">
       <Filter>Source Files\Panels\Preferences</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanListView.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -686,6 +689,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\FileToolbar.h">
       <Filter>Source Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanListView.h">
+      <Filter>Source Files\Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

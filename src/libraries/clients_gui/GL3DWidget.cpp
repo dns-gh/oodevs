@@ -258,6 +258,24 @@ void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawSelectedPolygon
+// Created: JSR 2012-05-14
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawSelectedPolygon( const T_PointVector& /*points*/ ) const
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawConvexDecoratedPolygon
+// Created: JSR 2012-05-14
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const kernel::UrbanColor_ABC& /*urbanColor*/, const std::string& /*name*/, bool /*selected*/ ) const
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawArrow
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

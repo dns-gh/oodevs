@@ -532,6 +532,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\MoveableProxy.cpp">
       <Filter>Source Files\Model\Agent\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanHierarchies.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -1004,6 +1007,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\ModeController.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
