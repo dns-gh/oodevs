@@ -85,6 +85,7 @@ method "isBuilt" (
 method "canBeCreated" (
     function( self, instantaneously )
         if instantaneously then
+            meKnowledge:sendReport( eRC_ConstructionObjetImpossible ) -- $$$ MIA not the right place to do this report
             return false -- a urban block cannot be created instantaneously
         else
             local urbanBlockType = integration.getTypeUrbanBlock( self )
