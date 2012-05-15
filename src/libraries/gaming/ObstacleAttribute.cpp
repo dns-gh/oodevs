@@ -46,7 +46,7 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Obstacle type:" ), obstacleType_ )
-             .Display( tools::translate( "Object", "Reserved obstacle activated:" ), reservedObstacleActivated_ )
+             .Display( tools::translate( "Object", "Obstacle activated:" ), obstacleActivated_ )
              .Display( tools::translate( "Object", "Activation time:" ), activationTime_ )
              .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
 }
@@ -97,7 +97,7 @@ void ObstacleAttribute::UpdateData( const T& message )
      if( message.has_obstacle() )
      {
         obstacleType_ = (E_DemolitionTargetType)message.obstacle().type();
-        reservedObstacleActivated_= (message.obstacle().activated() != 0);
+        obstacleActivated_= message.obstacle().activated();
         if( message.obstacle().has_activation_time() )
             activationTime_ = message.obstacle().activation_time();
         if( message.obstacle().has_activity_time() )
@@ -112,12 +112,12 @@ void ObstacleAttribute::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( reservedObstacleActivated_.IsSet() && viewport.IsVisible( where ) )
+    if( obstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawIcon( reservedObstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
+            tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
         glPopAttrib();
     }
 }
@@ -132,10 +132,10 @@ bool ObstacleAttribute::IsReservedObstacle() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::IsReservedObstacleActivated
+// Name: ObstacleAttribute::IsActivated
 // Created: LDC 2010-12-27
 // -----------------------------------------------------------------------------
-bool ObstacleAttribute::IsReservedObstacleActivated() const
+bool ObstacleAttribute::IsActivated() const
 {
-    return reservedObstacleActivated_.IsSet() && reservedObstacleActivated_;
+    return obstacleActivated_.IsSet() && obstacleActivated_;
 }

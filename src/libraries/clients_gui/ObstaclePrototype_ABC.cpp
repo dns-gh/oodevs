@@ -98,20 +98,7 @@ bool ObstaclePrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 {
-    emit ToggleActivable( types_->GetValue() == eDemolitionTargetType_Reserved );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstaclePrototype_ABC::OnObstacleTypeChanged
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-bool ObstaclePrototype_ABC::IsActivated() const
-{
-    if( types_->GetValue() == eDemolitionTargetType_Reserved )
-        return false;
-    else if( types_->GetValue() == eDemolitionTargetType_Preliminary )
-        return true;
-    return false;
+    emit ToggleActivable( types_->GetValue() != eDemolitionTargetType_Reserved );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,8 +107,6 @@ bool ObstaclePrototype_ABC::IsActivated() const
 // -----------------------------------------------------------------------------
 int ObstaclePrototype_ABC::GetActivationTime() const
 {
-    if( IsActivated() )
-        return 0;
     QTime time = activationTime_->time();
     return 3600 * time.hour() + 60 * time.minute() + time.second();
 }

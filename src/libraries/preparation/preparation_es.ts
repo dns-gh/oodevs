@@ -505,10 +505,6 @@
         <translation>Tipo de obstáculo :</translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstáculo reservado activado :</translation>
-    </message>
-    <message>
         <source>Info/Demolition target parameters/Obstacle type</source>
         <translation>Info/Atributos de demolición/Tipo de obstáculo</translation>
     </message>
@@ -610,6 +606,10 @@
     </message>
     <message>
         <source>%1 [%L2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

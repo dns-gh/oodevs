@@ -44,7 +44,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
     virtual bool IsReservedObstacle() const;
-    virtual bool IsReservedObstacleActivated() const;
+    virtual bool IsActivated() const;
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
     //@{
     kernel::Controller& controller_;
     kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
-    kernel::OptionalValue< bool >                   reservedObstacleActivated_;
+    kernel::OptionalValue< bool >                   obstacleActivated_;
     kernel::OptionalValue< unsigned int >           activationTime_;
     kernel::OptionalValue< unsigned int >           activityTime_;
     //@}

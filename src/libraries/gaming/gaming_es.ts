@@ -1186,10 +1186,6 @@
         <translation>Tipo de obstáculo:</translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstáculo reservado activado:</translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation>Fuego</translation>
     </message>
@@ -1291,6 +1287,10 @@
     </message>
     <message>
         <source>Cell decline: heat %L1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

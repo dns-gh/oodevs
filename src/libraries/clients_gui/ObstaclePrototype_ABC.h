@@ -64,7 +64,6 @@ private:
 protected:
     //! @name Helpers
     //@{
-    bool IsActivated() const;
     int GetActivationTime() const;
     int GetActivityTime() const;
     //@}

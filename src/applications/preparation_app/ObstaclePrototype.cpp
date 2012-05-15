@@ -47,9 +47,10 @@ void ObstaclePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         ObstacleAttribute* attribute = new ObstacleAttribute( dico, types_->GetValue() );
-        attribute->Activate( IsActivated() );
-        attribute->SetActivationTime( GetActivationTime() );
+        unsigned int activationTime = GetActivationTime();
+        attribute->SetActivationTime( activationTime );
         attribute->SetActivityTime( GetActivityTime() );
+        attribute->Activate( types_->GetValue() == eDemolitionTargetType_Preliminary && activationTime == 0 );
         creation_->Attach( *attribute );
     }
 }

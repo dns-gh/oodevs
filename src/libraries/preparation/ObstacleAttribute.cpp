@@ -11,24 +11,11 @@
 #include "ObstacleAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
-
-// -----------------------------------------------------------------------------
-// Name: ObstacleAttribute constructor
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary )
-    : dictionary_    ( dictionary )
-    , type_          ( eDemolitionTargetType_Preliminary )
-    , bActivated_    ( true )
-    , activationTime_( 0, 0 )
-    , activityTime_  ( 0, 0 )
-{
-    CreateDictionary();
-}
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
@@ -49,7 +36,7 @@ namespace
     int GetActivationTime( xml::xistream& xis )
     {
         int result = 0;
-        xis >> xml::optional()
+        xis >> xml::optional
             >> xml::start( "activation-time" )
                 >> xml::attribute( "value", result )
             >> xml::end;
@@ -58,7 +45,7 @@ namespace
     int GetActivityTime( xml::xistream& xis )
     {
         int result = 0;
-        xis >> xml::optional()
+        xis >> xml::optional
             >> xml::start( "activity-time" )
                 >> xml::attribute( "value", result )
             >> xml::end;
@@ -101,8 +88,8 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Mine parameters" ) )
              .Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() )
-             .Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
-    if( !bActivated_ )
+             .Display( tools::translate( "Object", "Obstacle activated:" ), bActivated_ );
+    if( type_.GetValue() == eDemolitionTargetType_Preliminary )
     {
         displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ );
         displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
@@ -115,13 +102,21 @@ void ObstacleAttribute::Display( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() );
-    if( type_.GetValue() == eDemolitionTargetType_Reserved )
-        displayer.Display( tools::translate( "Object", "Reserved obstacle activated:" ), bActivated_ );
-    if( !bActivated_ )
+    displayer.Display( tools::translate( "Object", "Obstacle type:" ), type_.GetValue() )
+             .Display( tools::translate( "Object", "Obstacle activated:" ), bActivated_ );
+
+    if( type_.GetValue() == eDemolitionTargetType_Preliminary )
     {
         displayer.Display( tools::translate( "Object", "Activation time:" ), activationTime_ );
         displayer.Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
+    }
+}
+
+namespace
+{
+    unsigned int Convert( const QTime& time )
+    {
+        return  time.hour() * 3600 + time.minute() * 60 + time.second();;
     }
 }
 
@@ -134,15 +129,13 @@ void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
      xos << xml::start( "obstacle" )
             << xml::attribute( "type", type_.ToXml() )
             << xml::attribute( "activated", bActivated_ );
-    if( !bActivated_ )
+    if( type_.GetValue() == eDemolitionTargetType_Preliminary )
     {
-        unsigned int activityTime = activityTime_.hour() * 3600 + activityTime_.minute() * 60 + activityTime_.second();
-        unsigned int activationTime = activationTime_.hour() * 3600 + activationTime_.minute() * 60 + activationTime_.second();
         xos << xml::start( "activation-time" )
-                << xml::attribute( "value", activationTime )
+                << xml::attribute( "value", Convert( activationTime_ ) )
             << xml::end
             << xml::start( "activity-time" )
-                << xml::attribute( "value", activityTime )
+                << xml::attribute( "value", Convert( activityTime_ ) )
             << xml::end;
     }
     xos << xml::end;
@@ -154,12 +147,40 @@ void ObstacleAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::CreateDictionary()
 {
-    dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle type" ), type_ );
-    dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle activated" ), bActivated_ );
-    if( !bActivated_ )
+    const ObstacleAttribute& constSelf = *this;
+
+    dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle type" ), type_, *this, &ObstacleAttribute::TypeChanged );
+    dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle activated" ), constSelf.bActivated_ );
+    if( type_.GetValue() == eDemolitionTargetType_Preliminary )
     {
-        dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activation time" ), activationTime_ );
+        dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activation time" ), activationTime_, *this, &ObstacleAttribute::ActivationTimeChanged );
         dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activity time" ), activityTime_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::ActivationTimeChanged
+// Created: LGY 2012-05-14
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::ActivationTimeChanged( const QTime& time )
+{
+    if( activationTime_ != time && type_.GetValue() == eDemolitionTargetType_Preliminary )
+    {
+        activationTime_ = time;
+        bActivated_ = ( Convert( activationTime_ ) == 0u );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::TypeChanged
+// Created: LGY 2012-05-14
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::TypeChanged( const Enum_DemolitionTargetType& type )
+{
+    if( type_.GetValue() != type.GetValue() )
+    {
+        bActivated_ = ( type.GetValue() != eDemolitionTargetType_Reserved );
+        type_ = type;
     }
 }
 
@@ -169,15 +190,7 @@ void ObstacleAttribute::CreateDictionary()
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Activate( bool activate )
 {
-    if( type_.GetValue() == eDemolitionTargetType_Reserved )
-    {
-        bActivated_ = activate;
-        if( bActivated_ )
-        {
-            dictionary_.Remove( tools::translate( "Object", "Info/Demolition target parameters/Activation time" ) );
-            dictionary_.Remove( tools::translate( "Object", "Info/Demolition target parameters/Activity time" ) );
-        }
-    }
+    bActivated_ = activate;
 }
 
 // -----------------------------------------------------------------------------
@@ -210,10 +223,10 @@ bool ObstacleAttribute::IsReservedObstacle() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::IsReservedObstacleActivated
+// Name: ObstacleAttribute::IsActivated
 // Created: LDC 2010-12-27
 // -----------------------------------------------------------------------------
-bool ObstacleAttribute::IsReservedObstacleActivated() const
+bool ObstacleAttribute::IsActivated() const
 {
     return bActivated_;
 }

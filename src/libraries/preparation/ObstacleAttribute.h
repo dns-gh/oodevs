@@ -39,7 +39,6 @@ class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( kernel::PropertiesDictionary& dictionary );
              ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type );
              ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~ObstacleAttribute();
@@ -58,7 +57,7 @@ public:
     void SetActivationTime( int time );
     void SetActivityTime( int time );
     virtual bool IsReservedObstacle() const;
-    virtual bool IsReservedObstacleActivated() const;
+    virtual bool IsActivated() const;
     //@}
 
 private:
@@ -71,6 +70,8 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary();
+    void TypeChanged( const Enum_DemolitionTargetType& type );
+    void ActivationTimeChanged( const QTime& time );
     //@}
 
 private:
