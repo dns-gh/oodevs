@@ -55,9 +55,7 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
 //-----------------------------------------------------------------------------
 DEC_Population_Path::~DEC_Population_Path()
 {
-    for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
-        for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
-            delete *it;
+    // NOTHING
 }
 
  // -----------------------------------------------------------------------------
@@ -109,11 +107,11 @@ void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& pathPoi
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( eCrossingHeightNever, knowledge ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectFlood( eCrossingHeightNever, knowledge ) ) );
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
                 else
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) ) );
                 if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }

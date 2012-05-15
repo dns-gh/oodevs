@@ -11,8 +11,12 @@
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Population_PathClass.h"
+#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "entities/objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "MT_Tools/MT_Logger.h"
+#include <map>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject constructor
@@ -93,4 +97,22 @@ double DEC_Path_KnowledgeObject::GetCostOut() const
 double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
 {
     return rMaxTrafficability_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::New
+// Created: LDC 2012-05-14
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > DEC_Path_KnowledgeObject::New( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
+{
+    static int lastTick = 0;
+    static std::map< const DEC_Agent_PathClass*, std::map< const DEC_Knowledge_Object*, boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >> > cache;
+    MIL_Time_ABC& time = MIL_Singletons::GetTime(); 
+    int currentTick = time.GetCurrentTick();
+    if( lastTick != currentTick )
+        cache.clear();
+    boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >& result = cache[&pathClass][&knowledge];
+    if( !result.get() )
+        result.reset( new DEC_Path_KnowledgeObject( pathClass, knowledge ) );
+    return result;
 }

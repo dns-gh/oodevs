@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "MT_Tools/MT_Profiler.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Path_KnowledgeAgent;
 class DEC_Path_KnowledgeObject_ABC;
@@ -36,7 +37,7 @@ public:
     typedef std::vector< DEC_Path_KnowledgeAgent >       T_PathKnowledgeAgentVector;
     typedef T_PathKnowledgeAgentVector::const_iterator CIT_PathKnowledgeAgentVector;
 
-    typedef std::vector< DEC_Path_KnowledgeObject_ABC* >  T_PathKnowledgeObjectVector;
+    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > >  T_PathKnowledgeObjectVector;
     typedef T_PathKnowledgeObjectVector::const_iterator CIT_PathKnowledgeObjectVector;
 
     typedef std::vector< T_PathKnowledgeObjectVector >           T_PathKnowledgeObjectByTypesVector;

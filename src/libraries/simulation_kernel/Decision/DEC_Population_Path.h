@@ -15,6 +15,7 @@
 #include "Decision/DEC_PathResult.h"
 #include "Decision/DEC_Population_Path_Channeler.h"
 #include "MT_Tools/MT_Profiler.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Path_KnowledgeObject_ABC;
 class MIL_Population;
@@ -32,7 +33,7 @@ public:
     typedef std::vector< DEC_Population_Path_Channeler >    T_PopulationPathChannelerVector;
     typedef T_PopulationPathChannelerVector::const_iterator CIT_PopulationPathChannelerVector;
 
-    typedef std::vector< DEC_Path_KnowledgeObject_ABC* > T_PathKnowledgeObjectVector;
+    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > T_PathKnowledgeObjectVector;
     typedef T_PathKnowledgeObjectVector::const_iterator  CIT_PathKnowledgeObjectVector;
 
     typedef std::vector< T_PathKnowledgeObjectVector >         T_PathKnowledgeObjectByTypesVector;
