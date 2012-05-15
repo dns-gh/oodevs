@@ -41,7 +41,8 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , isBlockedByObject_            ( false )
     , blockedTickCounter_           ( 0 )
 {
-    // NOTHING
+    if( pMainPath_.get() )
+        pMainPath_->AddRef();
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +138,9 @@ void PHY_ActionMove::CreateNewPath()
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewPath );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
+    pMainPath_->DecRef();
     pMainPath_ = pNewPath;
+    pMainPath_->AddRef();
 }
 
 // =============================================================================
@@ -213,6 +216,7 @@ void PHY_ActionMove::StopAction()
     if( pMainPath_.get() )
     {
         role_.MoveCanceled( pMainPath_ );
+        pMainPath_->DecRef();
         executionSuspended_ = false;
     }
     Callback( static_cast< int >( DEC_PathWalker::eFinished ) );

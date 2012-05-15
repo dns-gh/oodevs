@@ -43,6 +43,8 @@ public:
     //! @name Operations
     //@{
     virtual double GetLength() const = 0;
+    void AddRef();
+    void DecRef();
     //@}
 
     //! @name Accessors
@@ -66,6 +68,7 @@ protected:
 
 private:
     const unsigned int nID_;
+    unsigned int nNbrRefs_;              // nb of references on path
 
 private:
     static unsigned int nIDIdx_;

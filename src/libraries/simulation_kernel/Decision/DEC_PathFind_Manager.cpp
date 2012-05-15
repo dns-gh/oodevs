@@ -105,6 +105,25 @@ void DEC_PathFind_Manager::StartCompute( boost::shared_ptr< DEC_Path_ABC > path 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::CancelJob
+// Created: LDC 2012-05-15
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
+{
+    boost::mutex::scoped_lock locker( mutex_ );
+    T_Requests& requests = ( pPath->GetLength() > rDistanceThreshold_ ) ? longRequests_ : shortRequests_;
+    for( T_Requests::iterator it = requests.begin(); it != requests.end(); ++it )
+    {
+        if( it->get() == pPath )
+        {
+            requests.erase( it );
+            condition_.notify_all();
+            break;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::GetNbrShortRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------
