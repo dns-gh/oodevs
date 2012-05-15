@@ -143,7 +143,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >();
         if( obstacle && obstacle->IsReservedObstacle() )
         {
-            if( obstacle->IsReservedObstacleActivated() )
+            if( obstacle->IsActivated() )
                 AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );
             else
                 AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );

@@ -43,8 +43,9 @@ void ObstaclePrototype::Commit()
         actions::parameters::ParameterList& list = attributesList_->AddList( "Obstacle" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
         list.AddIdentifier( "TargetType", types_->GetValue() );
-        list.AddBool( "Activation", IsActivated() );
-        list.AddQuantity( "ActivationTime", GetActivationTime() );
+        unsigned int activationTime = GetActivationTime();
+        list.AddBool( "Activation", types_->GetValue() == eDemolitionTargetType_Preliminary && activationTime == 0 );
+        list.AddQuantity( "ActivationTime", activationTime );
 
         actions::parameters::ParameterList& ActivityList = attributesList_->AddList( "ActivityTime" );
         ActivityList.AddIdentifier( "ActivityType", sword::ObjectMagicAction_Attribute_activity_time );
