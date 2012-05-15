@@ -14,7 +14,7 @@ queryImplementation "getPositionsToReinforce"
             if reinforcingPosition:isReachingFor( elementToReinforce ) then
                 allRes[ #allRes + 1 ] = reinforcingPosition
             else -- find close positions around element to reinforce
-                local simlocalisations = elementToReinforce()  -- Sim localisations, not reaching elements
+                local simlocalisations = elementToReinforce:getPositions()  -- Sim localisations, not reaching elements
                 for _, localisation in pairs ( simlocalisations ) do -- create point as reaching elements
                     point = CreateKnowledge( sword.military.world.Point, localisation )
                     if point:isReachingFor( element ) then
@@ -23,7 +23,6 @@ queryImplementation "getPositionsToReinforce"
                 end
             end
         end
-        -- affichePositions( allRes )
         -- NO Reaching POSITIONS to reinforce
         if next( params.elementsToReinforce ) and not next( allRes ) then
             meKnowledge:sendReport( eRC_NoPositionsToReachTargets )
