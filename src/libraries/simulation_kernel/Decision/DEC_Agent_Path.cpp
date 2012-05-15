@@ -178,9 +178,6 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::~DEC_Agent_Path()
 {
-    for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
-        for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
-            delete *it;
     for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
@@ -257,11 +254,11 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 bool empty = pathKnowledges.empty();
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectFlood( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) ) );
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
                 else if( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 )
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) ) );
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }
@@ -560,9 +557,6 @@ void DEC_Agent_Path::InsertDecPoints()
 void DEC_Agent_Path::CleanAfterComputation()
 {
     DEC_Path::CleanAfterComputation();
-    for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
-        for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
-            delete *it;
     pathKnowledgeObjects_.clear();
     pathKnowledgeAgents_.clear();
     pathKnowledgePopulations_.clear();

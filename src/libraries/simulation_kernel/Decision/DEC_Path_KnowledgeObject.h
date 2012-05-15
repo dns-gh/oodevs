@@ -12,6 +12,7 @@
 
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Agent_PathClass;
 class DEC_Knowledge_Object;
@@ -37,6 +38,8 @@ public:
     virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double weight ) const;
     virtual double GetCostOut() const;
     virtual double GetMaxTrafficability() const;
+
+    static boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > New( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
     //@}
 
 private:
