@@ -1383,11 +1383,20 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
-        <method name="immuniserNbc">
+        <method name="startImmuniserNbc">
             <description>Action d'immuniser un agent vis à vis d'un danger NRBC.</description>
         </method>
         <method name="stopImmuniserNbc">
             <description>Action d'arrêter l'immunisation d'un agent vis à vis d'un danger NRBC.</description>
+        </method>
+        <method name="forcerImmunisationNbc">
+            <description>Action de forcer ou non l'immunisation vis à vis de la contamination NRBC notamment par contact entre agents.</description>
+            <argument name="immunize">
+                <description>Début ou fin d'immunisation.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
         </method>
         <method name="getUnitPC">
             <description>Retourne le PC du pion.</description>

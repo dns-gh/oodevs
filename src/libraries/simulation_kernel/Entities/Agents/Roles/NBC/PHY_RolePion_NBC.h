@@ -67,8 +67,10 @@ public:
     void WearNbcProtectionSuit();
     void RemoveNbcProtectionSuit();
     virtual bool IsImmune() const;
+    virtual bool IsForcedImmune() const;
     virtual void ImmunizeAgent();
     virtual void StopImmunizeAgent();
+    virtual void TemporaryImmunizeAgent( bool bImmunize );
     virtual double GetContaminationQuantity() const;
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
@@ -118,6 +120,7 @@ private:
     bool poisoned_;
     bool intoxicated_;
     bool immune_;
+    bool forcedImmuneByDecisional_;
     //@}
 };
 

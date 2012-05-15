@@ -885,11 +885,14 @@ return
             integration.StartGetVSRAM( pionRenforce, nbrAmbulances )
         end,
     } ),
-    immuniserNbc = function( self )
+    startImmuniserNbc = function( self )
         integration.immuniserNbc( self )
     end,
     stopImmuniserNbc = function( self )
         integration.stopImmuniserNbc( self )
+    end,
+    forcerImmunisationNbc = function( self, immunize )
+        integration.forcerImmunisationNbc( self, immunize ) 
     end,
     getUnitPC = function( self )
         return integration.getUnitPC( self ) 

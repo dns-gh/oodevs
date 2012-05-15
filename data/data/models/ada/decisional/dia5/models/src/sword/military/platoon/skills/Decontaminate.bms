@@ -26,7 +26,7 @@ rootnode
     create = function( self )
         self.arrived = false
         self.decontaminated = false
-        meKnowledge:immuniserNbc() -- On immunise l'agent pour toute la durée de la mission
+        meKnowledge:forcerImmunisationNbc( true ) -- On immunise l'agent pour toute la durée de la mission
     end,
     -- -------------------------------------------------------------------------------- 
     -- Select nearest plot and move toward it, asking for decontamination
@@ -43,6 +43,6 @@ rootnode
     end,
     
     destroy = function( self )
-         meKnowledge:stopImmuniserNbc() -- on arrête l'immunisation à la contamination NRBC à la fin de la mission
+         meKnowledge:forcerImmunisationNbc( false ) -- on arrête l'immunisation à la contamination NRBC à la fin de la mission
     end
 }

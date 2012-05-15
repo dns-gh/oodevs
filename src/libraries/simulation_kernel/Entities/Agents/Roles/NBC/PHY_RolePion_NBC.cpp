@@ -106,7 +106,8 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
          & bNbcProtectionSuitWorn_
          & poisoned_
          & intoxicated_
-         & immune_;
+         & immune_
+         & forcedImmuneByDecisional_;
 }
 
 // -----------------------------------------------------------------------------
@@ -282,6 +283,15 @@ bool PHY_RolePion_NBC::IsImmune() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::IsForcedImmune
+// Created: GGE 2012-05-14
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_NBC::IsForcedImmune() const
+{
+    return forcedImmuneByDecisional_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::ImmunizeAgent
 // Created: JSR 2011-06-14
 // -----------------------------------------------------------------------------
@@ -297,6 +307,15 @@ void PHY_RolePion_NBC::ImmunizeAgent()
 void PHY_RolePion_NBC::StopImmunizeAgent()
 {
     immune_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::TemporaryImmunizeAgent
+// Created: GGE 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::TemporaryImmunizeAgent( bool bImmunize )
+{
+    forcedImmuneByDecisional_ = bImmunize;
 }
 
 // -----------------------------------------------------------------------------
@@ -347,7 +366,7 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        if( target.GetID() != owner_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsImmune() &&
+        if( target.GetID() != owner_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsImmune() && !target.Get< PHY_RoleInterface_NBC >().IsForcedImmune() &&
             ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );
