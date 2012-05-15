@@ -106,7 +106,7 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
-    , activityTime_  ( 0 )
+    , activityTime_  ( attributes.list( 4 ).quantity() )
     , endActivity_   ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
 {
