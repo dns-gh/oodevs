@@ -41,7 +41,7 @@
       <geometry symbol="G*EW***********" type="polygon"/>
     </geometries>
     <avoidable distance="250"/>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy/>
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -522,7 +522,7 @@
     <resources/>
     <structural value="100"/>
   </object>
-  <object name="Dirty bomb" type="dirty bomb">
+  <object name="Dirty bomb" point-size="50" type="dirty bomb">
     <geometries>
       <geometry symbol="O*VPA-----*****" type="point"/>
     </geometries>
@@ -797,13 +797,5 @@
       <urban-modifier material-type="Vegetation" value="0.7"/>
     </urban-destruction>
   </object>
-  <object name="MyTestPosition" type="MyTestPosition">
-    <geometries>
-      <geometry symbol="" type="polygon"/>
-    </geometries>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <perception blinded="false"/>
-    <protection geniePrepared="false" max-size="50"/>
-  </object>
 </objects>
-<!-- signature="3247381140" -->
+<!-- signature="0053799765" -->

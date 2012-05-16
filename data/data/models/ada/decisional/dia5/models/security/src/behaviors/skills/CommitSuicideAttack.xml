@@ -35,4 +35,12 @@
             <description>To launch a projectile on the target agent.</description>
         </link>
     </links>
+    <feedbacks>
+        <feedback name="done">
+            <description>Sent once the agent has reached the target unit, and makes itself exploded.</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the agent cannot use the specified dotation to perform the attack.</description>
+        </feedback>
+    </feedbacks>
 </skill>

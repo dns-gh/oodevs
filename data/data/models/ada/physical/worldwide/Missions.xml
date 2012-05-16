@@ -2361,79 +2361,31 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="works to perform" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Safe Point"/>
-          <parameter type="Jamming Area"/>
-          <parameter type="Full jamming Area"/>
-          <parameter type="NBC Contaminated Area - External"/>
-          <parameter type="NBC Cloud - External"/>
-          <parameter type="NBC Contaminated Area"/>
-          <parameter type="NBC Cloud"/>
-          <parameter type="Fire"/>
-          <parameter type="Wild Surface Fire"/>
-          <parameter type="Decontamination Site"/>
           <parameter type="Supply Route"/>
           <parameter type="Crossing Site"/>
-          <parameter type="ROTA Point"/>
           <parameter type="Abatis"/>
           <parameter type="Anti-tank Ditch"/>
           <parameter type="Barricade"/>
-          <parameter type="Mined Area (linear)"/>
-          <parameter type="Mined Area (scattered)"/>
-          <parameter type="Landslide"/>
           <parameter type="Roadblock"/>
           <parameter type="Bridge destruction"/>
           <parameter type="Bridge (continuous)"/>
-          <parameter type="Bridge (discontinuous)"/>
-          <parameter type="Firing post"/>
-          <parameter type="Gun artillery deployment area"/>
-          <parameter type="Cobra deployment area"/>
-          <parameter type="Mrls deployment area"/>
-          <parameter type="Mortar deployment area"/>
-          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
           <parameter type="Landing Zone"/>
           <parameter type="Airfield Zone"/>
           <parameter type="Platform"/>
-          <parameter type="Mobility enhanced area"/>
           <parameter type="Landing Zone (helicopter)"/>
-          <parameter type="Forward Arming and Refueling Point (FARP)"/>
           <parameter type="Detainee Holding Area"/>
           <parameter type="Refugee Holding Area"/>
           <parameter type="Checkpoint"/>
           <parameter type="Drop Zone (DZ)"/>
-          <parameter type="No-Fire Area (NFA)"/>
-          <parameter type="General obstacle zone"/>
           <parameter type="Installation"/>
           <parameter type="Distribution point"/>
-          <parameter type="Sensors detection zone"/>
-          <parameter type="Sensors zone"/>
-          <parameter type="Supply Point"/>
-          <parameter type="Urban Block"/>
-          <parameter type="Dirty bomb"/>
-          <parameter type="Hospital"/>
-          <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
-          <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
-          <parameter type="Victims Discovery"/>
-          <parameter type="Stock"/>
-          <parameter type="Flood Origin"/>
-          <parameter type="Moving Population"/>
-          <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
-          <parameter type="Mined Area (linear and destructible)"/>
           <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
-          <parameter type="Highway"/>
           <parameter type="Main road"/>
           <parameter type="Secondary road"/>
-          <parameter type="Wet terrain"/>
-          <parameter type="Snowed terrain"/>
-          <parameter type="Iced terrain"/>
-          <parameter type="Border"/>
-          <parameter type="Ressource node"/>
-          <parameter type="Arson"/>
-          <parameter type="Destruction Bomb"/>
         </objects>
       </parameter>
       <parameter dia-name="waitForReinforcement" name="waitForReinforcement" optional="true" type="Boolean"/>
@@ -2458,190 +2410,45 @@ A visited object won't be created and build if agent doesn't have the physical c
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.BuildAnObjectFromAPosition" dia-type="behaviors.tasks.BuildAnObjectFromAPosition" id="4476" name="MLSECURITY - Plan an attack">
+    <mission dia-behavior="behaviors.tasks.BuildAnObjectFromAPosition" dia-type="behaviors.tasks.BuildAnObjectFromAPosition" id="4476" name="MLSECURITY - Perform a bomb attack (from a position)">
       <description>
-        <doctrine><![CDATA[To create arsons/plant a bomb on specific location]]></doctrine>
-        <usage><![CDATA[For an gent to know how to plan an attack. The agent will move to planned attack, then reach the meeting position before activating the attack.]]></usage>
+        <doctrine><![CDATA[To plant and activate a bomb on specific location]]></doctrine>
+        <usage><![CDATA[For an agent to know how to plant and activate a bomb on a sepcified location. The agent will move to the bomb location, then reach the  activation position and then activate the bomb.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plannedWork" name="Planned attack" optional="false" type="PlannedWork">
+      <parameter dia-name="plannedWork" name="Bomb" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Safe Point"/>
-          <parameter type="Jamming Area"/>
-          <parameter type="Full jamming Area"/>
-          <parameter type="NBC Contaminated Area - External"/>
-          <parameter type="NBC Cloud - External"/>
-          <parameter type="NBC Contaminated Area"/>
-          <parameter type="NBC Cloud"/>
-          <parameter type="Fire"/>
-          <parameter type="Wild Surface Fire"/>
-          <parameter type="Decontamination Site"/>
-          <parameter type="Supply Route"/>
-          <parameter type="Crossing Site"/>
-          <parameter type="ROTA Point"/>
-          <parameter type="Abatis"/>
-          <parameter type="Anti-tank Ditch"/>
-          <parameter type="Barricade"/>
-          <parameter type="Mined Area (linear)"/>
-          <parameter type="Mined Area (scattered)"/>
-          <parameter type="Landslide"/>
-          <parameter type="Roadblock"/>
-          <parameter type="Bridge destruction"/>
-          <parameter type="Bridge (continuous)"/>
-          <parameter type="Bridge (discontinuous)"/>
-          <parameter type="Firing post"/>
-          <parameter type="Gun artillery deployment area"/>
-          <parameter type="Cobra deployment area"/>
-          <parameter type="Mrls deployment area"/>
-          <parameter type="Mortar deployment area"/>
-          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
-          <parameter type="Landing Zone"/>
-          <parameter type="Airfield Zone"/>
-          <parameter type="Platform"/>
-          <parameter type="Mobility enhanced area"/>
-          <parameter type="Landing Zone (helicopter)"/>
-          <parameter type="Forward Arming and Refueling Point (FARP)"/>
-          <parameter type="Detainee Holding Area"/>
-          <parameter type="Refugee Holding Area"/>
-          <parameter type="Checkpoint"/>
-          <parameter type="Drop Zone (DZ)"/>
-          <parameter type="No-Fire Area (NFA)"/>
-          <parameter type="General obstacle zone"/>
-          <parameter type="Installation"/>
-          <parameter type="Distribution point"/>
-          <parameter type="Sensors detection zone"/>
-          <parameter type="Sensors zone"/>
-          <parameter type="Supply Point"/>
-          <parameter type="Urban Block"/>
-          <parameter type="Dirty bomb"/>
-          <parameter type="Hospital"/>
-          <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
-          <parameter type="Emergency Shelter"/>
-          <parameter type="Meeting Place for Victims (PRV)"/>
-          <parameter type="Victims Discovery"/>
-          <parameter type="Stock"/>
-          <parameter type="Flood Origin"/>
-          <parameter type="Moving Population"/>
-          <parameter type="Secured Area"/>
-          <parameter type="Firebreak"/>
-          <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
-          <parameter type="Underground Exit"/>
-          <parameter type="Country road"/>
-          <parameter type="Highway"/>
-          <parameter type="Main road"/>
-          <parameter type="Secondary road"/>
-          <parameter type="Wet terrain"/>
-          <parameter type="Snowed terrain"/>
-          <parameter type="Iced terrain"/>
-          <parameter type="Border"/>
-          <parameter type="Ressource node"/>
-          <parameter type="Arson"/>
           <parameter type="Destruction Bomb"/>
         </objects>
       </parameter>
-      <parameter dia-name="position" name="Position of attack activation" optional="false" type="LocationComposite">
+      <parameter dia-name="position" name="Position of bomb activation" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
-          <parameter type="AgentKnowledge"/>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks3" id="4477" name="MLSECURITY - Plan a multiple attack">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks3" id="4477" name="MLSECURITY - Start up fires">
       <description>
-        <doctrine><![CDATA[To create and build public works.]]></doctrine>
-        <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
-A visited object won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources to do it. In that specific case, agent will decide to visit the next one. The mission is done when all works have been visited (even if one one the objects could be built).]]></usage>
+        <doctrine><![CDATA[To start multiple fires]]></doctrine>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork">
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="fires to start up" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Safe Point"/>
-          <parameter type="Jamming Area"/>
-          <parameter type="Full jamming Area"/>
-          <parameter type="NBC Contaminated Area - External"/>
-          <parameter type="NBC Cloud - External"/>
-          <parameter type="NBC Contaminated Area"/>
-          <parameter type="NBC Cloud"/>
           <parameter type="Fire"/>
-          <parameter type="Wild Surface Fire"/>
-          <parameter type="Decontamination Site"/>
-          <parameter type="Supply Route"/>
-          <parameter type="Crossing Site"/>
-          <parameter type="ROTA Point"/>
-          <parameter type="Abatis"/>
-          <parameter type="Anti-tank Ditch"/>
-          <parameter type="Barricade"/>
-          <parameter type="Mined Area (linear)"/>
-          <parameter type="Mined Area (scattered)"/>
-          <parameter type="Landslide"/>
-          <parameter type="Roadblock"/>
-          <parameter type="Bridge destruction"/>
-          <parameter type="Bridge (continuous)"/>
-          <parameter type="Bridge (discontinuous)"/>
-          <parameter type="Firing post"/>
-          <parameter type="Gun artillery deployment area"/>
-          <parameter type="Cobra deployment area"/>
-          <parameter type="Mrls deployment area"/>
-          <parameter type="Mortar deployment area"/>
-          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
-          <parameter type="Landing Zone"/>
-          <parameter type="Airfield Zone"/>
-          <parameter type="Platform"/>
-          <parameter type="Mobility enhanced area"/>
-          <parameter type="Landing Zone (helicopter)"/>
-          <parameter type="Forward Arming and Refueling Point (FARP)"/>
-          <parameter type="Detainee Holding Area"/>
-          <parameter type="Refugee Holding Area"/>
-          <parameter type="Checkpoint"/>
-          <parameter type="Drop Zone (DZ)"/>
-          <parameter type="No-Fire Area (NFA)"/>
-          <parameter type="General obstacle zone"/>
-          <parameter type="Installation"/>
-          <parameter type="Distribution point"/>
-          <parameter type="Sensors detection zone"/>
-          <parameter type="Sensors zone"/>
-          <parameter type="Supply Point"/>
-          <parameter type="Urban Block"/>
-          <parameter type="Dirty bomb"/>
-          <parameter type="Hospital"/>
-          <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
-          <parameter type="Emergency Shelter"/>
-          <parameter type="Meeting Place for Victims (PRV)"/>
-          <parameter type="Victims Discovery"/>
-          <parameter type="Stock"/>
-          <parameter type="Flood Origin"/>
-          <parameter type="Moving Population"/>
-          <parameter type="Secured Area"/>
-          <parameter type="Firebreak"/>
-          <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
-          <parameter type="Underground Exit"/>
-          <parameter type="Country road"/>
-          <parameter type="Highway"/>
-          <parameter type="Main road"/>
-          <parameter type="Secondary road"/>
-          <parameter type="Wet terrain"/>
-          <parameter type="Snowed terrain"/>
-          <parameter type="Iced terrain"/>
-          <parameter type="Border"/>
-          <parameter type="Ressource node"/>
           <parameter type="Arson"/>
-          <parameter type="Destruction Bomb"/>
         </objects>
       </parameter>
+      <parameter dia-name="instantaneously" name="instantaneously (magic fire creations)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CreateThenOperate" dia-type="behaviors.tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and operate a system">
+    <mission dia-behavior="behaviors.tasks.CreateThenOperate" dia-type="behaviors.tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and operate">
       <description>
         <doctrine><![CDATA[To create and operate a given system.]]></doctrine>
         <usage><![CDATA[Agent moves toward the planned system (a planned object as a decontamination site), create it and then operate it. ]]></usage>
@@ -2652,79 +2459,10 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Safe Point"/>
-          <parameter type="Jamming Area"/>
-          <parameter type="Full jamming Area"/>
-          <parameter type="NBC Contaminated Area - External"/>
-          <parameter type="NBC Cloud - External"/>
-          <parameter type="NBC Contaminated Area"/>
-          <parameter type="NBC Cloud"/>
-          <parameter type="Fire"/>
-          <parameter type="Wild Surface Fire"/>
           <parameter type="Decontamination Site"/>
-          <parameter type="Supply Route"/>
-          <parameter type="Crossing Site"/>
-          <parameter type="ROTA Point"/>
-          <parameter type="Abatis"/>
-          <parameter type="Anti-tank Ditch"/>
           <parameter type="Barricade"/>
-          <parameter type="Mined Area (linear)"/>
-          <parameter type="Mined Area (scattered)"/>
-          <parameter type="Landslide"/>
           <parameter type="Roadblock"/>
-          <parameter type="Bridge destruction"/>
           <parameter type="Bridge (continuous)"/>
-          <parameter type="Bridge (discontinuous)"/>
-          <parameter type="Firing post"/>
-          <parameter type="Gun artillery deployment area"/>
-          <parameter type="Cobra deployment area"/>
-          <parameter type="Mrls deployment area"/>
-          <parameter type="Mortar deployment area"/>
-          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
-          <parameter type="Landing Zone"/>
-          <parameter type="Airfield Zone"/>
-          <parameter type="Platform"/>
-          <parameter type="Mobility enhanced area"/>
-          <parameter type="Landing Zone (helicopter)"/>
-          <parameter type="Forward Arming and Refueling Point (FARP)"/>
-          <parameter type="Detainee Holding Area"/>
-          <parameter type="Refugee Holding Area"/>
-          <parameter type="Checkpoint"/>
-          <parameter type="Drop Zone (DZ)"/>
-          <parameter type="No-Fire Area (NFA)"/>
-          <parameter type="General obstacle zone"/>
-          <parameter type="Installation"/>
-          <parameter type="Distribution point"/>
-          <parameter type="Sensors detection zone"/>
-          <parameter type="Sensors zone"/>
-          <parameter type="Supply Point"/>
-          <parameter type="Urban Block"/>
-          <parameter type="Dirty bomb"/>
-          <parameter type="Hospital"/>
-          <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
-          <parameter type="Emergency Shelter"/>
-          <parameter type="Meeting Place for Victims (PRV)"/>
-          <parameter type="Victims Discovery"/>
-          <parameter type="Stock"/>
-          <parameter type="Flood Origin"/>
-          <parameter type="Moving Population"/>
-          <parameter type="Secured Area"/>
-          <parameter type="Firebreak"/>
-          <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
-          <parameter type="Underground Exit"/>
-          <parameter type="Country road"/>
-          <parameter type="Highway"/>
-          <parameter type="Main road"/>
-          <parameter type="Secondary road"/>
-          <parameter type="Wet terrain"/>
-          <parameter type="Snowed terrain"/>
-          <parameter type="Iced terrain"/>
-          <parameter type="Border"/>
-          <parameter type="Ressource node"/>
-          <parameter type="Arson"/>
-          <parameter type="Destruction Bomb"/>
         </objects>
       </parameter>
       <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
@@ -2758,7 +2496,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="checkpoint" name="check point" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="intensity" name="intensity (%)" optional="true" type="Integer"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Operate" dia-type="behaviors.tasks.Operate" id="4482" name="MLSECURITY - Operate a system">
+    <mission dia-behavior="behaviors.tasks.Operate" dia-type="behaviors.tasks.Operate" id="4482" name="MLSECURITY - Operate">
       <description>
         <doctrine><![CDATA[To  operate a given object.]]></doctrine>
         <usage><![CDATA[Agent moves toward the planned object, create it and then operate it. ]]></usage>
@@ -2785,7 +2523,7 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnTargetsWthinArea" dia-type="behaviors.tasks.LaunchProjectileOnTargetsWthinArea" id="4484" name="MLSECURITY - Attack urban blocks within area (with projectiles)">
+    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" dia-type="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" id="4484" name="MLSECURITY - Attack urban blocks within area (with projectiles)">
       <description>
         <doctrine><![CDATA[For an agent to launch a specified quantity of projectiles on a given set of urban blocks target within a specified area.]]></doctrine>
         <usage><![CDATA[Agent will move toward each target until it is able to launch the projectile.
@@ -2803,7 +2541,7 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <mission dia-behavior="behaviors.tasks.CommitSuicideAttack" dia-type="behaviors.tasks.CommitSuicideAttack" id="4485" name="MLSECURITY - Commit suicide attack (on units)">
       <description>
         <doctrine><![CDATA[To commit a suicide attack on a given target agent.]]></doctrine>
-        <usage><![CDATA[ Agent unit will follow the target agent (a non-teammate, a teammate or a crowd) and launch the choosen projectile on it. This skill make agent unit commit suicide, using the "commitSuicide" action on itself.]]></usage>
+        <usage><![CDATA[Agent unit will follow the target agent (a non-teammate, a teammate or a crowd) and launch the choosen projectile on it. This skill make agent unit commit suicide, using the "commitSuicide" action on itself.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4648,4 +4386,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1613137700" -->
+<!-- signature="1965975834" -->

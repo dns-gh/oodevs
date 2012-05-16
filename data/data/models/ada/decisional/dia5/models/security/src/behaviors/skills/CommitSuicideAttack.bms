@@ -3,7 +3,7 @@
 -- @params: self.params.target, a masalife ResourceNode object
 -- @params: self.params.quantity, the quantity to add to resource nodes production.
 -- @params: self.params.dotationType, the quantity to add to resource nodes production.
--- @returns: "produce", when production is effective.
+-- @returns: "launchActionCompleted", when action is complete.
 -- ****************************************************************************
 rootnode 
 {
@@ -23,10 +23,17 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
+        -- skill failed if the agent cannot launch the projectile on the target unit.
+        if not self.params.targetAgent:canBeHit( self.params.dotationType ) then
+            meKnowledge:sendReport( eRC_TirIndirectNoCapacity )
+            Feedback( self.feedbacks.failed )
+        end
+
+        -- 
         if self.params.targetAgent:isReached() then
             Activate( skill.links.launchProjectile, 1, { target = self.params.targetAgent, 
                       quantity = self.params.quantity, dotationType = self.params.dotationType } )
-        else -- target is not reached reached, follow it
+        else -- target is not reached, follow it
            Activate( skill.links.follow, 1, { elementsToFollow = { self.params.targetAgent }, positions = NIL , minDistance = 0 } )
         end
     end

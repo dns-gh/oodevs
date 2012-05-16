@@ -2597,11 +2597,11 @@
         <mission name="MLSECURITY - Decontaminate"/>
         <mission name="MLSECURITY - Perform public works"/>
         <mission name="MLSECURITY - Resume public works"/>
-        <mission name="MLSECURITY - Create and operate a system"/>
+        <mission name="MLSECURITY - Create and operate"/>
         <mission name="MLSECURITY - Create and use a checkpoint (filter crowds)"/>
-        <mission name="MLSECURITY - Plan a multiple attack"/>
-        <mission name="MLSECURITY - Plan an attack"/>
-        <mission name="MLSECURITY - Operate a system"/>
+        <mission name="MLSECURITY - Start up fires"/>
+        <mission name="MLSECURITY - Perform a bomb attack (from a position)"/>
+        <mission name="MLSECURITY - Operate"/>
         <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Heal victims within crowds"/>
         <mission name="MLSECURITY - Be decontaminated"/>
@@ -2622,12 +2622,12 @@
         <mission name="MLSECURITY - Enable resource nodes"/>
         <mission name="MLSECURITY - Disable resource nodes"/>
         <mission name="MLSECURITY - Patrol"/>
-        <mission name="MLSECURITY - Plan a multiple attack"/>
-        <mission name="MLSECURITY - Plan an attack"/>
+        <mission name="MLSECURITY - Start up fires"/>
+        <mission name="MLSECURITY - Perform a bomb attack (from a position)"/>
         <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
         <mission name="MLSECURITY - Commit suicide attack (on units)"/>
         <mission name="MLSECURITY - Increase resource node production"/>
-        <mission name="MLSECURITY - Operate a system"/>
+        <mission name="MLSECURITY - Operate"/>
         <mission name="MLSECURITY - Transport units"/>
         <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Stay in crowd"/>
@@ -3877,4 +3877,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0263568913" -->
+<!-- signature="3512332795" -->
