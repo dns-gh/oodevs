@@ -14,6 +14,10 @@
 #if ( PSAPI_VERSION == 1 )
     #pragma comment( lib, "psapi.lib" )
 #endif
+
+#if defined(_MSC_VER) && !defined(_WIN64)
+#define  BOOST_BIND_ENABLE_STDCALL
+#endif
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
@@ -234,7 +238,7 @@ HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const
     }
 
     HANDLE inherits[2] = {};
-    size_t size = 0;
+    SIZE_T size = 0;
     LPPROC_THREAD_ATTRIBUTE_LIST attributes = NULL;
     bool valid = ::InitializeProcThreadAttributeList( NULL, COUNT_OF( inherits ), 0, &size )
               || ::GetLastError() == ERROR_INSUFFICIENT_BUFFER;
