@@ -1,5 +1,5 @@
 (function() {
-  var Package, PackageView, ajax, get_url, package_template, package_view, spin_opts, spinner, toggle_load, tr, uid, _i, _len, _ref, _ref2,
+  var Package, PackageView, ajax, get_url, package_template, package_view, spin_opts, spinner, toggle_load,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -18,6 +18,11 @@
       url: get_url(url)
     });
   };
+
+  Handlebars.registerHelper("equal", function(lhs, rhs, options) {
+    if (lhs === rhs) return options.fn(this);
+    return options.inverse(this);
+  });
 
   package_template = Handlebars.compile($("#package_template").html());
 
@@ -66,9 +71,21 @@
     };
 
     PackageView.prototype.render = function() {
+      var tr, uid, _i, _len, _ref, _ref2;
       $(this.el).empty();
       if (this.model.attributes.name != null) {
         $(this.el).html(package_template(this.model.attributes));
+        _ref = $(".package_row");
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          tr = _ref[_i];
+          if (!((_ref2 = tr.id) != null ? _ref2.length : void 0)) continue;
+          uid = "#" + tr.id + "_briefing";
+          $(tr).popover({
+            placement: "bottom",
+            title: $(uid + " h1:nth-child(2)").contents(),
+            content: $(uid).contents()
+          });
+        }
       }
     };
 
@@ -128,18 +145,6 @@
     toggle_load();
     return $("#upload_form").submit();
   });
-
-  _ref = $(".exercises tr");
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    tr = _ref[_i];
-    if (!((_ref2 = tr.id) != null ? _ref2.length : void 0)) continue;
-    uid = "#" + tr.id + "_briefing";
-    $(tr).popover({
-      placement: "bottom",
-      title: $(uid + " h1:nth-child(2)").contents(),
-      content: $(uid).contents()
-    });
-  }
 
   $("#upload_target").load(function(data) {
     toggle_load();

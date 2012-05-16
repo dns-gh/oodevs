@@ -25,11 +25,14 @@ body{padding-top:60px;padding-bottom:40px;}
 .brand_name{margin-right:-20px;}
 .pull-right .label{float:left;margin-top:10px;}
 .sub_header th{border-top:0;padding-top:24px;}
+.package_name:first-letter,.package_description:first-letter{text-transform:uppercase;}
 .package_name,.package_description{margin-bottom:9px;}
 .package .form-actions{margin-top:0;margin-bottom:0;padding-right:0;text-align:right;}
 .package,.package table{margin-bottom:0;padding-bottom:0;}
 .package .badge{position:relative;top:-1px;}
 .upload_alert span{margin-left:28px;}
-.exercise_briefing h2,.exercise_briefing h1{font-size:small;font-weight:bold;}
-.exercise_briefing h1:first-child{display:none;}
-.exercise_briefing .deps{margin-bottom:8px;}
+.item_briefing h2,.item_briefing h1{font-size:small;font-weight:bold;}
+.item_briefing h1:first-child{display:none;}
+.item_briefing .deps{margin-bottom:8px;}
+.package_row .type,.package_row .name{text-transform:capitalize;}
+.package .version{position:relative;top:-2px;}

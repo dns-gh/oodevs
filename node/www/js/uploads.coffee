@@ -10,6 +10,11 @@ ajax = (url, data, success, error) ->
         success:  success,
         url:      get_url url
 
+Handlebars.registerHelper "equal", (lhs, rhs, options) ->
+    if lhs == rhs
+        return options.fn this
+    return options.inverse this
+
 package_template = Handlebars.compile $("#package_template").html()
 
 class Package extends Backbone.Model
@@ -34,6 +39,13 @@ class PackageView extends Backbone.View
         $(@el).empty()
         if @model.attributes.name?
             $(@el).html package_template @model.attributes
+            for tr in $(".package_row")
+                continue unless tr.id?.length
+                uid = "#" + tr.id + "_briefing"
+                $(tr).popover
+                    placement: "bottom",
+                    title:     $(uid + " h1:nth-child(2)").contents()
+                    content:   $(uid).contents()
         return
 
     update: (data) =>
@@ -77,14 +89,6 @@ $("#upload_form .upload").click ->
     return if $(@).hasClass "disabled"
     toggle_load()
     $("#upload_form").submit()
-
-for tr in $(".exercises tr")
-    continue unless tr.id?.length
-    uid = "#" + tr.id + "_briefing"
-    $(tr).popover
-        placement: "bottom",
-        title:     $(uid + " h1:nth-child(2)").contents()
-        content:   $(uid).contents()
 
 $("#upload_target").load (data) ->
     toggle_load()

@@ -24,121 +24,78 @@
         <div id="packages">
             [#-- auto-generated templates --]
             <script type="text/template" id="upload_error_template">
-                <div class="alert alert-error"><b>Error</b> {{content}} </div>
-                </div>
-            </script>            
+                <div class="alert alert-error"><b>Error</b> {{content}}</div>
+            </script>
             <script type="text/template" id="package_template">
                 <form class="well package">
-                    <div class="package_name"> {{name}} {{version}} </div>
+                    <div class="package_name"> {{name}} <span class="version label label-info">{{version}}</span></div>
                     <div class="package_description"> {{description}} </div>
+                    {{#if items.length}}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Checksum</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#items}}
+                            <tr id="package_{{id}}" class="package_row" rel="popover">
+                                <td class="type">{{type}}</td>
+                                <td class="name">
+                                    {{name}}
+                                    <div id="package_{{id}}_briefing" class="hide">
+                                        <div class="item_briefing">
+                                            <div class="deps">
+                                                <div><b>Model</b> Worldwide</div>
+                                                <div><b>Terrain</b> Egypt</div>
+                                            </div>
+                                            <h1>Kabul</h1>
+                                            <p>This scenario takes place in North Egypt, with an opposition between a blue force, a local red asymetric force and a neutral population.</p>
+                                            <p>Some scores are calculated and allow the player to follow the mean operational state of the red units, the blue units and the combattant blue units.</p>
+                                            <h2>Profiles</h2>
+                                            <ul>
+                                                <li><b>Supervisor:</b> scripted actions allow you to demonstrate the scenario and the use of scores</li>
+                                                <li><b>Blue:</b> to actually play the scenario</li>
+                                            </ul>
+                                            <h2>Objectives</h2>
+                                            <ul>
+                                                <li>Destroy the red forces</li>
+                                                <li>Protect the population</li>
+                                            </ul>
+                                        </div>
+                                    </div>                                    
+                                </td>
+                                <td class="date">{{date}}</td>
+                                <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
+                                <td class="action">
+                                    {{#equal action "add"}}
+                                    <label class="checkbox"><input type="checkbox"> Add</label>
+                                    {{/equal}}
+                                    {{#equal action "update"}}
+                                    <label class="checkbox"><input type="checkbox"> Update</label>
+                                    {{/equal}}
+                                    {{#equal action "error"}}
+                                    <label class="package_label">
+                                        <span class="badge badge-important">!</span>
+                                        {{error}}
+                                    </label>
+                                    {{/equal}}                            
+                                </td>
+                            </tr>
+                            {{/items}}
+                        </tbody>
+                    </table>
+                    <div class="form-actions">
+                        <button type="submit" class="btn">Save</button>
+                        <button class="btn btn-primary">Discard</button>
+                    </div>
+                    {{/if}}
                 </form>
             </script>
         </div>
-        <form class="hide well package">
-            <div class="package_name">Musoria Pack</div>
-            <div class="package_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Name</th>
-                        <th>Version</th>
-                        <th>Date</th>
-                        <th>Checksum</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="exercises">
-                    <tr>
-                        <td>Model</td>
-                        <td>Worldwide</td>
-                        <td>5.0</td>
-                        <td>2012-04-01</td>
-                        <td>0xABCDEF98</td>
-                        <td>
-                            <label class="checkbox">
-                                <input type="checkbox"> Update
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Terrain</td>
-                        <td>Afghanistan</td>
-                        <td>5.1</td>
-                        <td>2012-04-01</td>
-                        <td>0xBCDEF98A</td>
-                        <td>
-                            <label class="checkbox">
-                                <input type="checkbox"> Add
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Terrain</td>
-                        <td>Normandie</td>
-                        <td>5.1</td>
-                        <td>2012-04-01</td>
-                        <td>0xCDEF98AB</td>
-                        <td>
-                            <label class="checkbox">
-                                <input type="checkbox"> Update
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Exercise</td>
-                        <td>Madrid</td>
-                        <td>5.0</td>
-                        <td>2012-04-01</td>
-                        <td>0xEF98ABCD</td>
-                        <td>
-                            <label class="package_label">
-                                <span class="badge badge-important">!</span>
-                                Missing terrain &quot;Spain&quot;
-                            </label>
-                        </td>
-                    </tr>
-                    <tr id="ABCDEF01" rel="popover">
-                        <td>Exercise</td>
-                        <td>
-                            Kabul
-                            <div id="ABCDEF01_briefing" class="hide">
-                                <div class="exercise_briefing">
-                                    <div class="deps">
-                                        <div><b>Model</b> Worldwide</div>
-                                        <div><b>Terrain</b> Egypt</div>
-                                    </div>
-                                    <h1>Kabul</h1>
-                                    <p>This scenario takes place in North Egypt, with an opposition between a blue force, a local red asymetric force and a neutral population.</p>
-                                    <p>Some scores are calculated and allow the player to follow the mean operational state of the red units, the blue units and the combattant blue units.</p>
-                                    <h2>Profiles</h2>
-                                    <ul>
-                                        <li><b>Supervisor:</b> scripted actions allow you to demonstrate the scenario and the use of scores</li>
-                                        <li><b>Blue:</b> to actually play the scenario</li>
-                                    </ul>
-                                    <h2>Objectives</h2>
-                                    <ul>
-                                        <li>Destroy the red forces</li>
-                                        <li>Protect the population</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </td>
-                        <td>5.0</td>
-                        <td>2012-04-01</td>
-                        <td>0xDEF98ABC</td>
-                        <td>
-                            <label class="checkbox">
-                                <input type="checkbox"> Add
-                            </label>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="form-actions">
-                <button type="submit" class="btn">Save</button>
-                <button class="btn btn-primary">Discard</button>
-            </div>
-        </form>
     </div>
 </div>
