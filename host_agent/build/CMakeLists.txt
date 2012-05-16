@@ -86,8 +86,8 @@ file( GLOB files
 )
 if( WIN32 )
     file( GLOB win32_files
-        "${root_dir}/src/tests/runtime_test/Win32ProcessTest.cpp"
-        "${root_dir}/src/tests/runtime_test/Win32RuntimeTest.cpp"
+        "${root_dir}/src/tests/runtime_test/Win32*.cpp"
+        "${root_dir}/src/tests/runtime_test/Win32*.h"
     )
     list( APPEND files ${win32_files} )
 endif()

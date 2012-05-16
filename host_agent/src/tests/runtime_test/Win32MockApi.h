@@ -6,8 +6,8 @@
 // Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-#ifndef MOCK_API_H__
-#define MOCK_API_H__
+#ifndef WIN32_MOCK_API_H__
+#define WIN32_MOCK_API_H__
 #include "runtime_test.h"
 #include <runtime/win32/Api_ABC.h>
 

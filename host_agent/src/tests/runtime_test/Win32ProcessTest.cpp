@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "runtime_test.h"
-#include "MockApi.h"
+#include "Win32MockApi.h"
 #include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>
 #include <runtime/win32/Process.h>

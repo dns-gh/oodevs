@@ -8,12 +8,14 @@
 // *****************************************************************************
 
 #include "runtime_test.h"
-#include "MockApi.h"
+#include "Win32MockApi.h"
+
 #include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>
 #include <runtime/win32/Process.h>
 #include <runtime/win32/Runtime.h>
 #include <cpplog/cpplog.hpp>
+
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
