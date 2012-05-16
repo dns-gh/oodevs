@@ -46,4 +46,4 @@ public:
 
 }
 
-#endif // POOL_H
+#endif // POOL_ABC_H
