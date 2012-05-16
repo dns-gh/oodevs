@@ -9,9 +9,9 @@
 
 #include "preparation_pch.h"
 #include "UrbanPositions.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -20,10 +20,10 @@ namespace
         positions.push_back( converter.ConvertToXY( xis.attribute< std::string >( "location" ) ) );
     }
 
-    std::vector< geometry::Point2f > Convert( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+    std::vector< geometry::Point2f > Convert( xml::xistream& xis, EUrbanLevel level, const kernel::CoordinateConverter_ABC& converter )
     {
         std::vector< geometry::Point2f > positions;
-        if( xis.has_child( "footprint" ) )
+        if( level == eUrbanLevelBlock && xis.has_child( "footprint" ) )
         {
             xis >> xml::start( "footprint" )
                     >> xml::list( "point", boost::bind( &ReadPoint, _1, boost::ref( positions ), boost::ref( converter ) ) )
@@ -37,9 +37,8 @@ namespace
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( xml::xistream& xis, const std::string& name, const kernel::UrbanColor_ABC& color,
-                                const kernel::CoordinateConverter_ABC& converter )
-    : kernel::UrbanPositions( Convert( xis, converter ), name, color )
+UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+    : kernel::UrbanPositions( level, object, Convert( xis, level, converter ) )
 {
     // NOTHING
 }

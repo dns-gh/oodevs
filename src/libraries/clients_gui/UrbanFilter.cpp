@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "UrbanFilter.h"
-#include "TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace gui;
 
@@ -38,5 +38,5 @@ UrbanFilter::~UrbanFilter()
 // -----------------------------------------------------------------------------
 bool UrbanFilter::IsAllowed( const QString& typeName ) const
 {
-    return typeName != TerrainObjectProxy::typeName_;
+    return typeName != kernel::UrbanObject_ABC::typeName_;
 }

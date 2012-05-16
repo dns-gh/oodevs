@@ -25,6 +25,7 @@
 #include "preparation/Agent.h"
 #include "preparation/Ghost.h"
 #include "preparation/Object.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -157,7 +158,9 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( &entity != &model_.teams_.GetNoSideTeam() )
+    // TODO gérer suivant les modes
+    if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ )
+        return;    if( &entity != &model_.teams_.GetNoSideTeam() )
     {
         toDelete_ = &entity;
         menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );

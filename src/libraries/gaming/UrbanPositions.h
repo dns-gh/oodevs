@@ -15,6 +15,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace sword
@@ -34,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{s
              UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter,
-                             const std::string& name, const kernel::UrbanColor_ABC& color );
+                             const kernel::UrbanObject_ABC& object );
     virtual ~UrbanPositions();
     //@}
 };

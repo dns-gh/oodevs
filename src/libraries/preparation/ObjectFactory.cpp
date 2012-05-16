@@ -162,7 +162,7 @@ namespace
     struct AttributeBuilder< ResourceNetwork_ABC >
     {
         template< typename T  >
-        static void Attach( Object_ABC& result, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbans
+        static void Attach( Object_ABC& result, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbans
                                               , const tools::Resolver_ABC< Object_ABC >& objects
                                               , const tools::StringResolver< ResourceNetworkType >& resources
                                               , xml::xistream& xis, Controllers& controllers )

@@ -45,6 +45,61 @@
     </message>
 </context>
 <context>
+    <name>Block</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identificador</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nombre</translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total of inhabitants:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupation rate (%L1):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resident</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupation rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alerted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evacuated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angriness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupations/</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoordinateSystems</name>
     <message>
         <source>UTM MGRS</source>
@@ -388,6 +443,13 @@
     <message>
         <source>mines/m</source>
         <translation>minas/m</translation>
+    </message>
+</context>
+<context>
+    <name>Urban</name>
+    <message>
+        <source>Urban block[%L1]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

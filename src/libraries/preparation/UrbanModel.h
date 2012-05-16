@@ -18,11 +18,7 @@ namespace kernel
     class Controllers;
     class Object_ABC;
     class ObjectTypes;
-}
-
-namespace gui
-{
-    class TerrainObjectProxy;
+    class UrbanObject_ABC;
 }
 
 namespace tools
@@ -39,7 +35,7 @@ class UrbanFactory_ABC;
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
+class UrbanModel : public tools::Resolver< kernel::UrbanObject_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -60,12 +56,12 @@ private:
     //! @name Helpers
     //@{
     void ReadCity( xml::xistream& xis );
-    void ReadDistrict( xml::xistream& xis, gui::TerrainObjectProxy* parent );
-    void ReadBlock( xml::xistream& xis, gui::TerrainObjectProxy* parent );
+    void ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* parent );
+    void ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent );
     void ReadUrbanObject( xml::xistream& xis );
-    void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
+    void ReadCapacity( const std::string& capacity, xml::xistream& xis, kernel::UrbanObject_ABC& object );
     template< typename T, typename U >
-    void UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& proxy );
+    void UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object );
     //@}
 
     //! @name Copy/Assignment

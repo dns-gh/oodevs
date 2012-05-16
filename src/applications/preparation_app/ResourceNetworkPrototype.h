@@ -18,11 +18,7 @@ namespace kernel
     class Controllers;
     class Object_ABC;
     class ResourceNetworkType;
-}
-
-namespace gui
-{
-    class TerrainObjectProxy;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -37,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetworkPrototype( QWidget* parent, kernel::Object_ABC*& creation, kernel::Controllers& controllers
-                                     , const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbans
+                                     , const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbans
                                      , const tools::Resolver_ABC< kernel::Object_ABC >& objects
                                      , const tools::StringResolver< kernel::ResourceNetworkType >& resources );
     virtual ~ResourceNetworkPrototype();
@@ -53,7 +49,7 @@ private:
     //@{
     kernel::Object_ABC*& creation_;
     kernel::Controllers& controllers_;
-    const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbans_;
+    const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbans_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objects_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
     //@}

@@ -105,13 +105,13 @@ namespace
 // Name: UrbanDisplayOptions::SetColor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-bool UrbanDisplayOptions::SetColor( kernel::UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const kernel::Usages_ABC& usages )
+bool UrbanDisplayOptions::SetColor( kernel::UrbanColor_ABC& color, float livingSpace, const kernel::T_HumansStrMap& humans, const kernel::Usages_ABC& usages )
 {
     if( densityColor_ )
     {
         unsigned int nbrHumans = 0;
-        for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
-            for( CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
+        for( kernel::T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
+            for( kernel::CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
                 nbrHumans += it->second.first;
         if( nbrHumans == 0 )
             SetUrbanColor( unoccupiedDensity_, color );
@@ -126,11 +126,11 @@ bool UrbanDisplayOptions::SetColor( kernel::UrbanColor_ABC& color, float livingS
     else if( accommodationColor_ )
     {
         unsigned int nbrHumans = 0;
-        for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
+        for( kernel::T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
         {
             if( populationsDisplayed_.find( human->first ) != populationsDisplayed_.end() )
             {
-                CIT_BlockOccupation occupation = human->second.persons_.find( accommodationDisplayed_ );
+                kernel::CIT_BlockOccupation occupation = human->second.persons_.find( accommodationDisplayed_ );
                 if( occupation != human->second.persons_.end() )
                     nbrHumans += occupation->second.first;
             }

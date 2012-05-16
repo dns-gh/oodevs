@@ -158,7 +158,7 @@ void PerformanceIndicator::Update()
     values.units_           = model_.agents_.tools::Resolver< kernel::Agent_ABC >::Count();
     values.automats_        = model_.agents_.tools::Resolver< kernel::Automat_ABC >::Count();
     values.objects_         = model_.objects_.tools::Resolver< kernel::Object_ABC >::Count();
-    values.blocs_           = model_.urban_.tools::Resolver< gui::TerrainObjectProxy >::Count();
+    values.blocs_           = model_.urban_.tools::Resolver< kernel::UrbanObject_ABC >::Count();
     values.crowds_          = model_.agents_.tools::Resolver< kernel::Population_ABC >::Count();
     values.populations_     = model_.agents_.tools::Resolver< kernel::Inhabitant_ABC >::Count();
     values.knowledgeGroups_ = model_.knowledgeGroups_.tools::Resolver< kernel::KnowledgeGroup_ABC >::Count();

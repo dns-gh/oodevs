@@ -10,7 +10,7 @@
 #ifndef __HumanDefs_h_
 #define __HumanDefs_h_
 
-namespace gui
+namespace kernel
 {
     typedef std::map< std::string, unsigned int > T_Usages;
     typedef T_Usages::const_iterator            CIT_Usages;

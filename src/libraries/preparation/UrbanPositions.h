@@ -10,6 +10,7 @@
 #ifndef __UrbanPositions_h_
 #define __UrbanPositions_h_
 
+#include "clients_kernel/UrbanTypes.h"
 #include "clients_kernel/UrbanPositions.h"
 
 namespace xml
@@ -19,8 +20,8 @@ namespace xml
 
 namespace kernel
 {
-    class UrbanColor_ABC;
     class CoordinateConverter_ABC;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -34,8 +35,7 @@ class UrbanPositions : public kernel::UrbanPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( xml::xistream& xis, const std::string& name, const kernel::UrbanColor_ABC& pColor,
-                             const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
     //@}
 };

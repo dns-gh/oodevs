@@ -21,11 +21,7 @@ namespace kernel
     class Entity_ABC;
     class PropertiesDictionary;
     class InfrastructureType;
-}
-
-namespace gui
-{
-    class TerrainObjectProxy;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -40,7 +36,7 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( kernel::Controllers& controllers, gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
+             InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
     virtual ~InfrastructureAttribute();
     //@}
 

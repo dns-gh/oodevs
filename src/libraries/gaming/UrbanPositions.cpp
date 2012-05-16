@@ -30,8 +30,8 @@ namespace
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter,
-                                const std::string& name, const kernel::UrbanColor_ABC& color )
-    : kernel::UrbanPositions( Convert( location, converter ), name, color )
+                                const kernel::UrbanObject_ABC& object )
+    : kernel::UrbanPositions( eUrbanLevelBlock, object, Convert( location, converter ) )
 {
     // NOTHING
 }

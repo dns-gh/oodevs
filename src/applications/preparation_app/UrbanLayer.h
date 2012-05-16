@@ -24,7 +24,6 @@ namespace gui
     class ColorStrategy_ABC;
     class View_ABC;
     class LayerFilter_ABC;
-    class TerrainObjectProxy;
 }
 
 // =============================================================================

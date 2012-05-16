@@ -11,11 +11,11 @@
 #include "RcEntityResolver.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/InternalLinks.h"
+#include "clients_gui/Tools.h"
 
 using namespace kernel;
 using namespace gui;

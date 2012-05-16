@@ -514,7 +514,7 @@ void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
-                                     const std::string& name, unsigned int height, bool selected ) const
+                                     const std::string& name, unsigned int fontHeight, unsigned int height, bool selected ) const
 {
     // TODO renommer en DrawUrbanBlock?
     const T_PointVector& footprint = polygon.Vertices();
@@ -525,8 +525,9 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
     color[ 1 ] = static_cast< float >( urbanColor.Green() ) / 255.f;
     color[ 2 ] = static_cast< float >( urbanColor.Blue() ) / 255.f;
     color[ 3 ] = urbanColor.Alpha();
-    if( color[ 3 ] >= 0 )
-        color[ 3 ] *= 0.9f;
+    if( selected )
+        color[ 3 ] *= 0.6f;
+    glColor4fv( color );
 
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&footprint.front()) );
     glEnable( GL_STENCIL_TEST );
@@ -541,7 +542,6 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
     glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glColor4fv( color );
     glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( footprint.size() ) );
     glDisable( GL_STENCIL_TEST );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
@@ -554,7 +554,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
                 color[ 0 ] = 1.f - color[ 0 ];
                 color[ 1 ] = 1.f - color[ 1 ];
                 color[ 2 ] = 1.f - color[ 2 ];
-                color[ 3 ] = 0.9f;
+                color[ 3 ] = 0.5f;
             }
             else
                 color[ 3 ] = urbanColor.Alpha();
@@ -605,14 +605,14 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
         }
     glPopAttrib();
     if( !name.empty() )
-        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), 13 );
+        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawConcaveDecoratedPolygon
 // Created: JSR 2012-05-14
 // -----------------------------------------------------------------------------
-void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, bool selected ) const
+void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected ) const
 {
     // TODO renommer en DrawDistrict/City??
     const Polygon2f::T_Vertices& footprint = polygon.Vertices();
@@ -638,7 +638,7 @@ void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, c
     // TODO!!!
     // voir pour calculer la taille du texte en fonction de la hierarchie (dans urban/UrbanDrawer.cpp) 
     if( !name.empty() )
-        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), 13 );
+        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
 }
 
 // -----------------------------------------------------------------------------

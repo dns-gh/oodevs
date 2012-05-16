@@ -38,14 +38,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Architecture/Height</source>
         <translation>Eléments physiques/Architecture/Hauteur</translation>
     </message>
@@ -70,36 +62,8 @@
         <translation>Eléments physiques/Architecture/Traficabilité</translation>
     </message>
     <message>
-        <source>Density:</source>
-        <translation>Densité :</translation>
-    </message>
-    <message>
-        <source>Populations/</source>
-        <translation>Populations/</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Motivations/</source>
         <translation>Eléments physiques/Motivations/</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation>Résident</translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation>Alerté</translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation>Confiné</translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation>Evacué</translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation>Colère</translation>
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
@@ -121,22 +85,6 @@
         <source>/Maximal capacity</source>
         <translation>/Capacité maximale</translation>
     </message>
-    <message>
-        <source>Occupation rate</source>
-        <translation>Taux d&apos;occupation</translation>
-    </message>
-    <message>
-        <source>Occupations/</source>
-        <translation>Occupations/</translation>
-    </message>
-    <message>
-        <source>Total of inhabitants:</source>
-        <translation>Population totale:</translation>
-    </message>
-    <message>
-        <source>Occupation rate (%L1):</source>
-        <translation>&gt;Taux d&apos;occupation (%L1):</translation>
-    </message>
 </context>
 <context>
     <name>Règle GL</name>
@@ -154,13 +102,6 @@
     <message>
         <source>hh:mm:ss</source>
         <translation>hh:mm:ss</translation>
-    </message>
-</context>
-<context>
-    <name>Urban</name>
-    <message>
-        <source>Urban block[%L1]</source>
-        <translation>Bloc urbain[%L1]</translation>
     </message>
 </context>
 <context>

@@ -38,14 +38,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identificador</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nombre</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Architecture/Height</source>
         <translation>Eléments physiques/Architecture/Hauteur</translation>
     </message>
@@ -70,36 +62,8 @@
         <translation>Eléments physiques/Architecture/traficabilité</translation>
     </message>
     <message>
-        <source>Density:</source>
-        <translation>Densité :</translation>
-    </message>
-    <message>
-        <source>Populations/</source>
-        <translation>Populations/</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Motivations/</source>
         <translation>PhysicalFeatures/Motivations/</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
@@ -121,22 +85,6 @@
         <source>/Maximal capacity</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Occupation rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Occupations/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total of inhabitants:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Occupation rate (%L1):</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Règle GL</name>
@@ -152,13 +100,6 @@
     <message>
         <source>hh:mm:ss</source>
         <translation>hh:mm:ss</translation>
-    </message>
-</context>
-<context>
-    <name>Urban</name>
-    <message>
-        <source>Urban block[%L1]</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

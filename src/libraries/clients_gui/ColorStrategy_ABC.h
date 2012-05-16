@@ -23,12 +23,12 @@ namespace kernel
     class Knowledge_ABC;
     class TacticalLine_ABC;
     class Team_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace gui
 {
     class Drawing_ABC;
-    class TerrainObjectProxy;
 
 // =============================================================================
 /** @class  ColorStrategy_ABC
@@ -58,7 +58,7 @@ public:
     virtual void SelectColor( const kernel::TacticalLine_ABC& line ) = 0;
     virtual void SelectColor( const kernel::Team_ABC& team ) = 0;
     virtual void SelectColor( const Drawing_ABC& drawing ) = 0;
-    virtual void SelectColor( const TerrainObjectProxy& proxy ) = 0;
+    virtual void SelectColor( const kernel::UrbanObject_ABC& object ) = 0;
     virtual void SelectColor( const kernel::Ghost_ABC& ghost ) = 0;
     virtual QColor FindColor( const kernel::Entity_ABC& entity ) = 0;
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity ) = 0;

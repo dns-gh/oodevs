@@ -19,7 +19,7 @@
 #include "UrbanColor.h"
 #include "UrbanPositions.h"
 #include "Usages.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/Usages.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -63,11 +63,10 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
         return;
     }
     const kernel::ObjectType& type = static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, message.name(), id, type, *urbanDisplayOptions_, static_.accommodationTypes_ );
+    kernel::UrbanObject_ABC* pTerrainObject = new gui::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
-    const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, pTerrainObject->GetName().toStdString(), color ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, *pTerrainObject ) );
     if( message.attributes().has_architecture() )
         pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), dictionary ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, static_.accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
@@ -85,7 +84,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
     if( message.has_attributes() )
     {
         // TODO mettre toute cette partie dans une factory comme pour les Objets.
-        gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
+        kernel::UrbanObject_ABC* pTerrainObject = Find( message.object().id() );
         if( pTerrainObject )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
@@ -118,7 +117,7 @@ void UrbanModel::Update( const sword::ObjectUpdate& message )
 {
     if( message.has_attributes() )
     {
-        gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
+        kernel::UrbanObject_ABC* pTerrainObject = Find( message.object().id() );
         if( pTerrainObject && message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
             pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
     }
@@ -138,7 +137,7 @@ void UrbanModel::Purge()
 // Name: UrbanModel::GetObject
 // Created: SLG 2010-03-12
 // -----------------------------------------------------------------------------
-gui::TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
+kernel::UrbanObject_ABC& UrbanModel::GetObject( unsigned long id ) const
 {
     return Get( id );
 }
@@ -147,7 +146,7 @@ gui::TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
 // Name: UrbanModel::FindObject
 // Created: SLG 2011-01-03
 // -----------------------------------------------------------------------------
-gui::TerrainObjectProxy* UrbanModel::FindObject( unsigned long id ) const
+kernel::UrbanObject_ABC* UrbanModel::FindObject( unsigned long id ) const
 {
     return Find( id );
 }

@@ -17,11 +17,6 @@
 #include "clients_kernel/Positions.h"
 #include "tools/Resolver.h"
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 namespace kernel
 {
     class Controller;
@@ -29,6 +24,7 @@ namespace kernel
     class Displayer_ABC;
     class GlTools_ABC;
     class InhabitantType;
+    class UrbanObject_ABC;
 }
 
 namespace sword
@@ -90,7 +86,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, gui::TerrainObjectProxy* > T_UrbanObjectVector;
+    typedef std::map< unsigned int, kernel::UrbanObject_ABC* > T_UrbanObjectVector;
     typedef T_UrbanObjectVector::const_iterator              CIT_UrbanObjectVector;
 
     typedef std::map< std::string, unsigned int >       T_MotivationSatisfactions;

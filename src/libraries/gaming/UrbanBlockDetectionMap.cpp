@@ -13,7 +13,7 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Architecture_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDetectionMap constructor
@@ -39,7 +39,7 @@ UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 // Name: UrbanBlockDetectionMap::NotifyCreated
 // Created: LGY 2011-05-09
 // -----------------------------------------------------------------------------
-void UrbanBlockDetectionMap::NotifyCreated( const gui::TerrainObjectProxy& object )
+void UrbanBlockDetectionMap::NotifyCreated( const kernel::UrbanObject_ABC& object )
 {
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
         if( const kernel::Architecture_ABC* pArchitecture = object.Retrieve< kernel::Architecture_ABC >() )

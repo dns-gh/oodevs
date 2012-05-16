@@ -13,11 +13,6 @@
 #include "clients_gui/ResourceLinksDialog_ABC.h"
 #include <tools/Resolver.h>
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 namespace kernel
 {
     class EntityResolver_ABC;

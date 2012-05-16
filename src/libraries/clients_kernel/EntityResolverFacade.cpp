@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "EntityResolverFacade.h"
 #include "Model_ABC.h"
+#include "UrbanObject_ABC.h"
 
 using namespace kernel;
 
@@ -110,7 +111,7 @@ Object_ABC& EntityResolverFacade::GetObject( unsigned int id ) const
 // -----------------------------------------------------------------------------
 Object_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
 {
-    return model_.FindUrbanObject( id );
+    return model_.GetUrbanObjectResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +120,7 @@ Object_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
 // -----------------------------------------------------------------------------
 Object_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
 {
-    return model_.GetUrbanObject( id );
+    return model_.GetUrbanObjectResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 #include "StructuralStateAttribute.h"
 #include "UrbanFactory.h"
 #include "UrbanFactory_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
@@ -84,10 +84,10 @@ void UrbanModel::Load( const std::string& directoryPath )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadCity( xml::xistream& xis )
 {
-    std::auto_ptr< gui::TerrainObjectProxy > pTerrainObject( factory_->Create( xis, 0 ) );
+    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, 0 ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        gui::TerrainObjectProxy* ptr = pTerrainObject.release();
+        kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
         ptr->Polish();
         Register( ptr->GetId(), *ptr );
         xis >> xml::optional
@@ -101,12 +101,12 @@ void UrbanModel::ReadCity( xml::xistream& xis )
 // Name: UrbanModel::ReadDistrict
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadDistrict( xml::xistream& xis, gui::TerrainObjectProxy* parent )
+void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* parent )
 {
-    std::auto_ptr< gui::TerrainObjectProxy > pTerrainObject( factory_->Create( xis, parent ) );
+    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        gui::TerrainObjectProxy* ptr = pTerrainObject.release();
+        kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
         ptr->Polish();
         Register( ptr->GetId(), *ptr );
         xis >> xml::optional
@@ -120,12 +120,12 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, gui::TerrainObjectProxy* pare
 // Name: UrbanModel::ReadBlock
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadBlock( xml::xistream& xis, gui::TerrainObjectProxy* parent )
+void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent )
 {
-    std::auto_ptr< gui::TerrainObjectProxy > pTerrainObject( factory_->Create( xis, parent ) );
+    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        gui::TerrainObjectProxy* ptr = pTerrainObject.release();
+        kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
         ptr->Polish();
         Register( ptr->GetId(), *ptr );
     }
@@ -144,7 +144,7 @@ void UrbanModel::Serialize( const std::string& filename, const SchemaWriter_ABC&
     schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
     xos << xml::attribute( "model-version", urbanStateVersion_ )
             << xml::start( "urban-objects" );
-    for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
+    for( Resolver< kernel::UrbanObject_ABC >::CIT_Elements it = Resolver< kernel::UrbanObject_ABC >::elements_.begin(); it != Resolver< kernel::UrbanObject_ABC >::elements_.end(); ++it )
     {
         bool needsUpdate = false;
         it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );// Temp pour serializer l'attribut
@@ -182,26 +182,26 @@ void UrbanModel::LoadUrbanState( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadUrbanObject( xml::xistream& xis )
 {
-    gui::TerrainObjectProxy* proxy = Resolver< gui::TerrainObjectProxy >::Find( xis.attribute< unsigned int >( "id" ) );
-    if( proxy )
-        xis >> xml::list( *this, &UrbanModel::ReadCapacity, *proxy );
+    kernel::UrbanObject_ABC* object = Resolver< kernel::UrbanObject_ABC >::Find( xis.attribute< unsigned int >( "id" ) );
+    if( object )
+        xis >> xml::list( *this, &UrbanModel::ReadCapacity, *object );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ReadCapacity
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy )
+void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, kernel::UrbanObject_ABC& object )
 {
     // TODO faire ça proprement et de façon générique avec la factory d'objets quand elle sera implémentée (pour l'instant, c'est une par Team)
     if( capacity == "structural-state" )
-        UpdateCapacity< StructuralStateAttribute, StructuralStateAttribute_ABC >( xis, proxy );
+        UpdateCapacity< StructuralStateAttribute, StructuralStateAttribute_ABC >( xis, object );
     else if( capacity == "resources" )
-        UpdateCapacity< ResourceNetworkAttribute, ResourceNetwork_ABC >( xis, proxy );
+        UpdateCapacity< ResourceNetworkAttribute, ResourceNetwork_ABC >( xis, object );
     else if( capacity == "medical-treatment" )
-        UpdateCapacity< MedicalTreatmentAttribute, MedicalTreatmentAttribute_ABC >( xis, proxy );
+        UpdateCapacity< MedicalTreatmentAttribute, MedicalTreatmentAttribute_ABC >( xis, object );
     else if( capacity == "infrastructure" )
-        UpdateCapacity< InfrastructureAttribute, Infrastructure_ABC >( xis, proxy );
+        UpdateCapacity< InfrastructureAttribute, Infrastructure_ABC >( xis, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,9 +209,9 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
 template< typename T, typename U >
-void UrbanModel::UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& proxy )
+void UrbanModel::UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object )
 {
-    T* capacity = static_cast< T* >( proxy.Retrieve< U >() );
+    T* capacity = static_cast< T* >( object.Retrieve< U >() );
     if( capacity )
         capacity->Update( xis );
 }
@@ -222,6 +222,6 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& pr
 // -----------------------------------------------------------------------------
 void UrbanModel::Purge()
 {
-    Resolver< gui::TerrainObjectProxy >::DeleteAll();
+    Resolver< kernel::UrbanObject_ABC >::DeleteAll();
     urbanStateVersion_ = ::defaultUrbanStateVersion;
 }

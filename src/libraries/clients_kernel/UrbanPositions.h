@@ -11,10 +11,11 @@
 #define __kernel_UrbanPositions_h_
 
 #include "UrbanPositions_ABC.h"
+#include "UrbanTypes.h"
 
 namespace kernel
 {
-    class UrbanColor_ABC;
+class UrbanObject_ABC;
 
 // =============================================================================
 /** @class  UrbanPositions
@@ -27,8 +28,7 @@ class UrbanPositions : public UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( std::vector< geometry::Point2f > positions,
-                             const std::string& name, const UrbanColor_ABC& color );
+             UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, std::vector< geometry::Point2f > positions );
     virtual ~UrbanPositions();
     //@}
 
@@ -45,10 +45,17 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ComputeCachedValues( std::vector< geometry::Point2f >& points );
+    void ComputeConvexHull( std::vector< geometry::Point2f >& points ) const;
+    //@}
+
+private:
     //! @name Member Data
     //@{
-    const std::string name_;
-    const kernel::UrbanColor_ABC& color_;
+    EUrbanLevel level_;
+    const UrbanObject_ABC& object_;
     bool selected_;
     bool hasInfrastructure_;
     float area_;

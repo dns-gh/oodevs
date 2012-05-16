@@ -19,7 +19,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, gui::TerrainObjectProxy& object, PropertiesDictionary& dico,
+InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, PropertiesDictionary& dico,
                                                   const kernel::ObjectTypes& objectTypes )
     : type_     ( 0 )
     , enabled_  ( true )

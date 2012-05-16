@@ -255,7 +255,7 @@
     </message>
     <message>
         <source>Urban</source>
-        <translation>Urbain</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

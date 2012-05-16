@@ -21,15 +21,15 @@ using namespace kernel;
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
 ResourceNetworkPrototype::ResourceNetworkPrototype( QWidget* parent, Object_ABC*& creation, kernel::Controllers& controllers
-                                                  , const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbans
+                                                  , const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbans
                                                   , const tools::Resolver_ABC< kernel::Object_ABC >& objects
                                                   , const tools::StringResolver< kernel::ResourceNetworkType >& resources )
     : ResourceNetworkPrototype_ABC( parent )
-    , creation_                   ( creation )
-    , controllers_                ( controllers )
-    , urbans_                     ( urbans )
-    , objects_                    ( objects )
-    , resources_                  ( resources )
+    , creation_   ( creation )
+    , controllers_( controllers )
+    , urbans_     ( urbans )
+    , objects_    ( objects )
+    , resources_  ( resources )
 {
     // NOTHING
 }

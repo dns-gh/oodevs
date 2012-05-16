@@ -22,10 +22,10 @@ UrbanHierarchies::UrbanHierarchies( Controller& controller, Entity_ABC& entity, 
     if( superior )
     {
         const kernel::Hierarchies* superiorHierarchies = RetrieveHierarchies( *superior );
-        level_ = ( superiorHierarchies && superiorHierarchies->GetSuperior() ) ? eLevelBlock : eLevelDistrict;
+        level_ = ( superiorHierarchies && superiorHierarchies->GetSuperior() ) ? eUrbanLevelBlock : eUrbanLevelDistrict;
     }
     else 
-        level_ = eLevelCity;
+        level_ = eUrbanLevelCity;
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ UrbanHierarchies::~UrbanHierarchies()
 // Name: UrbanHierarchies::GetLevel
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------
-UrbanHierarchies::ELevel UrbanHierarchies::GetLevel() const
+EUrbanLevel UrbanHierarchies::GetLevel() const
 {
     return level_;
 }

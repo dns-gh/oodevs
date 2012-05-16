@@ -150,6 +150,8 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.cpp" />
@@ -280,8 +282,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawingCategoryItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawingPositions.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainObjectProxy.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Usages.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationsPanel.cpp" />
@@ -370,6 +370,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -878,6 +879,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedDragObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h" />
@@ -1638,10 +1641,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawingPositions.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\HumanDefs.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainObjectProxy.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Usages.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationsPanel.h">

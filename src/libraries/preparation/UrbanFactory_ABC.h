@@ -17,9 +17,9 @@ namespace xml
     class xistream;
 }
 
-namespace gui
+namespace kernel
 {
-    class TerrainObjectProxy;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual gui::TerrainObjectProxy* Create( xml::xistream& xis, gui::TerrainObjectProxy* parent ) const = 0;
+    virtual kernel::UrbanObject_ABC* Create( xml::xistream& xis, kernel::UrbanObject_ABC* parent ) const = 0;
     //@}
 };
 

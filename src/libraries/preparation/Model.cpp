@@ -34,7 +34,7 @@
 #include "SuccessFactorsModel.h"
 #include "SuccessFactorFactory.h"
 #include "UrbanModel.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -206,21 +206,12 @@ tools::Resolver_ABC< Inhabitant_ABC >& Model::GetInhabitantResolver() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::FindUrbanObject
-// Created: JSR 2011-06-28
+// Name: Model::GetUrbanObjectResolver
+// Created: JSR 2012-05-16
 // -----------------------------------------------------------------------------
-Object_ABC* Model::FindUrbanObject( unsigned int id ) const
+tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() const
 {
-    return urban_.tools::Resolver< gui::TerrainObjectProxy >::Find( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::GetUrbanObject
-// Created: JSR 2011-06-28
-// -----------------------------------------------------------------------------
-Object_ABC& Model::GetUrbanObject( unsigned int id ) const
-{
-    return urban_.tools::Resolver< gui::TerrainObjectProxy >::Get( id );
+    return urban_;
 }
 
 // -----------------------------------------------------------------------------

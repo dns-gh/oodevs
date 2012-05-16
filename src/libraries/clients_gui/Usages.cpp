@@ -28,7 +28,7 @@ Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::Accommod
     , livingSpace_       ( livingSpace )
 {
     usages_[ defaultStr_ ] = 100;
-    CIT_Usages it = usages_.find( defaultStr_ );
+    kernel::CIT_Usages it = usages_.find( defaultStr_ );
     static const QString defaultString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + tools::translate( "Block", "Default" );
     dictionary_.Register( *static_cast< const Usages* >( this ), defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( it->second ) );
     kernel::AccommodationType* accommodation = accommodationTypes_.Find( defaultStr_ );
@@ -87,7 +87,7 @@ void Usages::Add( const std::string& usage, unsigned int proportion )
 // -----------------------------------------------------------------------------
 unsigned int Usages::Find( const std::string& usage ) const
 {
-    CIT_Usages it = usages_.find( usage );
+    kernel::CIT_Usages it = usages_.find( usage );
     if( it != usages_.end() )
         return it->second;
     return 0u;

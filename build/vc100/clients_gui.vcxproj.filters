@@ -607,12 +607,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawingPositions.cpp">
       <Filter>Source Files\Creation\Drawings\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainObjectProxy.cpp">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp">
       <Filter>Source Files\Creation\Urban\Extensions</Filter>
     </ClCompile>
@@ -864,6 +858,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp">
+      <Filter>Source Files\Creation\Urban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1257,18 +1257,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawingPositions.h">
       <Filter>Source Files\Creation\Drawings\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\HumanDefs.h">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainObjectProxy.h">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h">
       <Filter>Source Files\Creation\Urban\Extensions</Filter>
     </ClInclude>
@@ -1403,6 +1391,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h">
+      <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h">
+      <Filter>Source Files\Creation\Urban</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
