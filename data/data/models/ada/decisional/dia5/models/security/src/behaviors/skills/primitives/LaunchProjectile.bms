@@ -57,7 +57,7 @@ rootnode
         end
 
         -- --------------------------------------------------------------------------------
-        -- Case 2: a position is issued
+        -- Case 2: a position is issued --> move toward it.
         -- --------------------------------------------------------------------------------
         if not self.arrived then -- First move toward the position 
             Activate( skill.links.reach, 1, { destination = self.params.position } )

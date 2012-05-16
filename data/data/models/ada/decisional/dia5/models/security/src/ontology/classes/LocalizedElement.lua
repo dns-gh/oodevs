@@ -41,8 +41,7 @@ method "isReached" (
 -- --------------------------------------------------------------------------------
 method "canBeHit" (
     function( self, dotation )
-        return integration.distance( meKnowledge, self ) 
-              < integration.porteePourAttentat( dotation )
+        return integration.isOnRangeFor( self, dotation )
     end )
 
 method "launchProjectileOnIt" ( masalife.brain.integration.startStopAction( 
