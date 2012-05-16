@@ -12,28 +12,13 @@
 
 #include "Package_ABC.h"
 #include <boost/filesystem/path.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace host
 {
     class FileSystem_ABC;
-
-// =============================================================================
-/** @class  SubPackage
-    @brief  SubPackage class definition
-*/
-// Created: BAX 2012-05-14
-// =============================================================================
-struct SubPackage
-{
-     SubPackage( const boost::filesystem::path& root );
-    ~SubPackage();
-    const std::string name_;
-    const std::string date_;
-    const std::string checksum_;
-    const std::string action_;
-private:
-    const SubPackage& operator=( const SubPackage& );
-};
+    class Pool_ABC;
+    struct SubPackage;
 
 // =============================================================================
 /** @class  Package
@@ -57,16 +42,9 @@ public:
     //@}
 
 private:
-    //! @name Private methods
-    //@{
-    void ParseModels();
-    void ParseTerrains();
-    void ParseExercises();
-    //@}
-
     //! @name Typedef helpers
     //@{
-    typedef std::vector< SubPackage > T_Packages;
+    typedef std::vector< boost::shared_ptr< SubPackage > > T_Packages;
     //@}
 
 private:
@@ -79,9 +57,7 @@ private:
     std::string name_;
     std::string description_;
     std::string version_;
-    T_Packages models;
-    T_Packages terrains;
-    T_Packages exercises;
+    T_Packages items_;
     //@}
 };
 
