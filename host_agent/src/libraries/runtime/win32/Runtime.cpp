@@ -109,6 +109,8 @@ boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
                                               const std::wstring& log )
 {
     int pid;
+    if( !log.empty() )
+        boost::filesystem::create_directories( boost::filesystem::path( log ).remove_filename() );
     HANDLE reply = api.MakeProcess( app.c_str(), &args[0], run.empty() ? 0 : run.c_str(), log.empty() ? 0 : log.c_str(), pid );
     if( !reply )
         throw std::runtime_error( "unable to create process" );
