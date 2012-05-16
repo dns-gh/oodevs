@@ -39,7 +39,7 @@ UrbanLayer::~UrbanLayer()
 bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
 {
     const UrbanHierarchies* hierarchies = static_cast< const UrbanHierarchies* >( entity.Retrieve< kernel::Hierarchies >() );
-    if( hierarchies && hierarchies->GetLevel() == UrbanHierarchies::eLevelBlock )
+    if( hierarchies && hierarchies->GetLevel() == eUrbanLevelBlock )
         return gui::UrbanLayer::IsInSelection( entity, point );
     return false;
 }

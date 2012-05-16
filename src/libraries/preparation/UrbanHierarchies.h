@@ -10,6 +10,7 @@
 #ifndef __UrbanHierarchies_h_
 #define __UrbanHierarchies_h_
 
+#include "UrbanTypes.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include <boost/noncopyable.hpp>
@@ -24,17 +25,6 @@ class UrbanHierarchies : public kernel::EntityHierarchies< kernel::Hierarchies >
                        , private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    enum ELevel
-    {
-        eLevelCity,
-        eLevelDistrict,
-        eLevelBlock
-    };
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              UrbanHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::Entity_ABC* superior );
@@ -43,13 +33,13 @@ public:
 
     //! @name Operations
     //@{
-    ELevel GetLevel() const;
+    EUrbanLevel GetLevel() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    ELevel level_;
+    EUrbanLevel level_;
     //@}
 };
 

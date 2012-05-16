@@ -223,7 +223,7 @@ void Gl3dWidget::DrawPolygon( const T_PointVector& points ) const
 // Name: Gl3dWidget::DrawDecoratedPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& /*name*/, unsigned int height, bool /*selected*/ ) const
+void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& /*name*/, unsigned int /*fontHeight*/, unsigned int height, bool /*selected*/ ) const
 {
     const T_PointVector& footprint = polygon.Vertices();
     if( footprint.empty() )
@@ -270,7 +270,7 @@ void Gl3dWidget::DrawSelectedPolygon( const T_PointVector& /*points*/ ) const
 // Name: Gl3dWidget::DrawConvexDecoratedPolygon
 // Created: JSR 2012-05-14
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const kernel::UrbanColor_ABC& /*urbanColor*/, const std::string& /*name*/, bool /*selected*/ ) const
+void Gl3dWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const kernel::UrbanColor_ABC& /*urbanColor*/, const std::string& /*name*/, unsigned int /*fontHeight*/, bool /*selected*/ ) const
 {
     // TODO
 }

@@ -266,18 +266,18 @@ void GlProxy::DrawSelectedPolygon( const T_PointVector& points ) const
 // Name: GlProxy::DrawDecoratedPolygon
 // Created: SLG 2009-12-14
 // -----------------------------------------------------------------------------
-void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int height, bool selected ) const
+void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, unsigned int height, bool selected ) const
 {
-    tools_->DrawDecoratedPolygon( polygon, urbanColor, name, height, selected );
+    tools_->DrawDecoratedPolygon( polygon, urbanColor, name, fontHeight, height, selected );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawConvexDecoratedPolygon
 // Created: JSR 2012-05-14
 // -----------------------------------------------------------------------------
-void GlProxy::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, bool selected ) const
+void GlProxy::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected ) const
 {
-    tools_->DrawConvexDecoratedPolygon( polygon, urbanColor, name, selected );
+    tools_->DrawConvexDecoratedPolygon( polygon, urbanColor, name, fontHeight, selected );
 }
 
 // -----------------------------------------------------------------------------

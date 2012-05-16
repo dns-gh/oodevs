@@ -70,17 +70,21 @@ gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis, gui::TerrainO
     // TODO voir quels attributs virer dans le cas d'une ville ou d'un quartier
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( xis, controllers_, objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), options_, accommodations_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
-    pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
+    UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
+    pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis ) );
     pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( xis, std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( xis, std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, accommodations_, pTerrainObject->GetLivingSpace() ) ) ) );
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, pTerrainObject->GetName().ascii(),
-                                                                               pTerrainObject->Get< kernel::UrbanColor_ABC >(), converter_,
-                                                                               pTerrainObject->Get< kernel::Architecture_ABC >() ) );
-    pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis,
-                                                                                          pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(),
-                                                                                          urbanObjects_, objects_, objectTypes_ ) );
-    pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, *pTerrainObject, dictionary, objectTypes_ ) );
-    pTerrainObject->Attach< kernel::Hierarchies >( *new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, hierarchies->GetLevel(), *pTerrainObject, converter_ ) );
+
+    if( hierarchies->GetLevel() == eUrbanLevelBlock )
+    {
+        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
+        pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis,
+            pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(),
+            urbanObjects_, objects_, objectTypes_ ) );
+        pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, *pTerrainObject, dictionary, objectTypes_ ) );
+    }
+
     return pTerrainObject;
 }

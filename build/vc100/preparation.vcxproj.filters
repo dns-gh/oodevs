@@ -1011,6 +1011,9 @@
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanTypes.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\preparation\preparation_es.ts">

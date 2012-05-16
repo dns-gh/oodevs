@@ -90,13 +90,13 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
             listViews_.push_back( searchListView->GetRichListView() );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockManager","Objects" ) );
         }
-        // Urban
+//         // Urban
 //         {
 //             searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder );
 //             listViews_.push_back( searchListView->GetRichListView() );
 //             pListsTabWidget->addTab( searchListView, tools::translate( "DockManager","Urban" ) );
 //         }
-        // Crowds
+//         // Crowds
         {
             searchListView = new gui::SearchListView< PopulationListView >( pListsTabWidget, controllers, factory, modelBuilder );
             listViews_.push_back( searchListView->GetRichListView() );

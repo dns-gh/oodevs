@@ -10,6 +10,7 @@
 #ifndef __UrbanPositions_h_
 #define __UrbanPositions_h_
 
+#include "UrbanTypes.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 
 namespace xml
@@ -17,11 +18,14 @@ namespace xml
     class xistream;
 }
 
+namespace gui
+{
+    class TerrainObjectProxy;
+}
+
 namespace kernel
 {
-    class UrbanColor_ABC;
     class CoordinateConverter_ABC;
-    class Architecture_ABC;
 }
 
 // =============================================================================
@@ -35,8 +39,7 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( xml::xistream& xis, const std::string& name, const kernel::UrbanColor_ABC& pColor,
-                             const kernel::CoordinateConverter_ABC& converter, const kernel::Architecture_ABC& architecture );
+             UrbanPositions( xml::xistream& xis, EUrbanLevel level, const gui::TerrainObjectProxy& object, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
     //@}
 
@@ -56,15 +59,16 @@ private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions, const kernel::CoordinateConverter_ABC& converter ) const;
+    void ComputeConvexHull( std::vector< geometry::Point2f >& points ) const;
+    void ComputeCachedValues( std::vector< geometry::Point2f >& points );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string name_;
-    const kernel::UrbanColor_ABC& color_;
+    EUrbanLevel level_;
+    const gui::TerrainObjectProxy& object_;
     bool selected_;
-    unsigned int height_;
     bool hasInfrastructure_;
     geometry::Polygon2f polygon_;
     geometry::Point2f barycenter_;
