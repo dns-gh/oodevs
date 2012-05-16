@@ -35,7 +35,6 @@ class MeteoModel;
 // Created: AGE 2006-04-04
 // =============================================================================
 class WeatherLayer : public gui::WeatherLayer
-                   , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< AmmoEffect >
 {
 public:
