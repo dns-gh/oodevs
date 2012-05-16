@@ -66,7 +66,7 @@ private:
     T* ref_;
 };
 
-struct Notifier
+struct Notifier : public boost::noncopyable
 {
     Notifier( boost::condition_variable& condition ) : condition_( condition )
     {
