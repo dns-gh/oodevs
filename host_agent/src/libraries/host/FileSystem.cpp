@@ -252,7 +252,7 @@ struct Unpacker : public Unpacker_ABC
         while( fill < 1 && !it->stream_.eof() )
         {
             it->stream_.read( &it->buffer_[ fill ], it->buffer_.size() - fill );
-            fill += it->stream_.gcount();
+            fill += static_cast< __LA_SSIZE_T >( it->stream_.gcount() );
         }
         return fill;
     }
