@@ -26,7 +26,7 @@ using test::MockApi;
 
 namespace
 {
-    const HANDLE dummy = reinterpret_cast< HANDLE >( 0xCAFEBABE );
+    void* const dummy = reinterpret_cast< void* >( 0xCAFEBABE );
     const std::wstring wname = L"Zebulon";
 
     MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
@@ -38,7 +38,7 @@ namespace
         }
     };
 
-    bool FakeEnumProcesses( DWORD* ids, int cb, DWORD* pBytesReturned, int size )
+    bool FakeEnumProcesses( unsigned long* ids, int cb, unsigned long* pBytesReturned, int size )
     {
         size = std::min< int >( size, cb / sizeof *ids );
         for( int i = 0; i < size; ++i )
@@ -63,7 +63,7 @@ namespace
         void* ptr_;
     };
 
-    int FakeGetProcessName( HANDLE handle, wchar_t* dst, int size, HANDLE dummy )
+    int FakeGetProcessName( void* handle, wchar_t* dst, int size, void* dummy )
     {
         BOOST_CHECK_EQUAL( handle, dummy );
         std::string name = boost::lexical_cast< std::string >( PtrPrinter( dummy ) );
@@ -79,14 +79,14 @@ namespace
         return Utf8Convert( actual ) == expected;
     }
 
-    void ExpectOpenProcess( MockApi& api, HANDLE handle, int pid )
+    void ExpectOpenProcess( MockApi& api, void* handle, int pid )
     {
         MOCK_EXPECT( api.OpenProcess ).once().with( mock::any, false, pid ).returns( handle );
         MOCK_EXPECT( api.GetProcessName ).once().calls( boost::bind( &FakeGetProcessName, _1, _2, _3, handle ) );
         MOCK_EXPECT( api.CloseHandle ).once().with( handle ).returns( true );
     }
 
-    void CheckProcess( const Process_ABC& process, int pid, HANDLE handle )
+    void CheckProcess( const Process_ABC& process, int pid, void* handle )
     {
         BOOST_CHECK_EQUAL( process.GetPid(),  pid );
         BOOST_CHECK_EQUAL( process.GetName(), boost::lexical_cast< std::string >( PtrPrinter( handle ) ) );
@@ -101,11 +101,11 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
     int size = 64;
     MOCK_EXPECT( api.EnumProcesses ).once().calls( boost::bind( &FakeEnumProcesses, _1, _2, _3, size ) );
     for( int i = 0; i < size; ++i )
-        ExpectOpenProcess( api, reinterpret_cast< HANDLE >( 0xDEADBEEF + i ), i + 1 );
+        ExpectOpenProcess( api, reinterpret_cast< void* >( 0xDEADBEEF + i ), i + 1 );
     Runtime::T_Processes list = runtime.GetProcesses();
     BOOST_CHECK_EQUAL( static_cast< size_t >( size ), list.size() );
     int idx = size >> 1;
-    CheckProcess( *list[ idx ], idx + 1, reinterpret_cast< HANDLE >( 0xDEADBEEF + idx ) );
+    CheckProcess( *list[ idx ], idx + 1, reinterpret_cast< void* >( 0xDEADBEEF + idx ) );
 }
 
 BOOST_AUTO_TEST_CASE( runtime_process_gets )

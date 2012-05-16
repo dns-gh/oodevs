@@ -9,7 +9,9 @@
 #include "Api.h"
 #include "runtime/Utf8.h"
 #include <cpplog/cpplog.hpp>
+
 #include <stdexcept>
+#include <windows.h>
 #include <psapi.h>
 #if ( PSAPI_VERSION == 1 )
     #pragma comment( lib, "psapi.lib" )
@@ -77,7 +79,7 @@ std::string Api::GetLastError() const
 // Name: Api::EnumProcesses
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------
-bool Api::EnumProcesses( DWORD* ids, int cb, DWORD* pBytesReturned ) const
+bool Api::EnumProcesses( unsigned long* ids, int cb, unsigned long* pBytesReturned ) const
 {
     bool reply = !!::EnumProcesses( ids, cb, pBytesReturned );
     LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to list processes, " << GetLastError();
@@ -135,7 +137,7 @@ bool Api::TerminateProcess( HANDLE hProcess, unsigned uExitCode ) const
 // Name: Api::GetExitCodeProcess
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------
-bool Api::GetExitCodeProcess( HANDLE hProcess, DWORD* lpExitCode ) const
+bool Api::GetExitCodeProcess( void* hProcess, unsigned long* lpExitCode ) const
 {
     return !!::GetExitCodeProcess( hProcess, lpExitCode );
 }
@@ -144,9 +146,10 @@ bool Api::GetExitCodeProcess( HANDLE hProcess, DWORD* lpExitCode ) const
 // Name: Api::CreateRemoteThreadExt
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------
-HANDLE Api::CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const
+HANDLE Api::CreateRemoteThreadExt( void* hProcess, size_t dwStackSize, void* lpStartAddress, void* lpParameter, int dwCreationFlags, unsigned long* lpThreadId ) const
 {
-    HANDLE reply = ::CreateRemoteThreadEx( hProcess, lpThreadAttributes, dwStackSize, lpStartAddress, lpParameter, dwCreationFlags, lpAttributeList, lpThreadId );
+    HANDLE reply = ::CreateRemoteThreadEx( hProcess, 0, dwStackSize, reinterpret_cast< LPTHREAD_START_ROUTINE >( lpStartAddress ),
+                                           lpParameter, dwCreationFlags, 0, lpThreadId );
     LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to create remote thread, " << GetLastError();
     return reply;
 }
@@ -155,7 +158,7 @@ HANDLE Api::CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThrea
 // Name: Api::GetExitProcessPointer
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------
-LPTHREAD_START_ROUTINE Api::GetExitProcessPointer() const
+void* Api::GetExitProcessPointer() const
 {
     return exit_;
 }

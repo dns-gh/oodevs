@@ -35,23 +35,23 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string            GetLastError         () const;
-    virtual bool                   EnumProcesses        ( DWORD* ids, int cb, DWORD* pBytesReturned ) const;
-    virtual bool                   CloseHandle          ( HANDLE hObject ) const;
-    virtual HANDLE                 OpenProcess          ( int dwDesiredAccess, bool bInheritHandle, int dwProcessId ) const;
-    virtual int                    GetProcessName       ( HANDLE hProcess, wchar_t* lpImageFileName, int nSize ) const;
-    virtual int                    WaitForSingleObjectEx( HANDLE hHandle, int dwMilliseconds, bool bAlertable ) const;
-    virtual bool                   TerminateProcess     ( HANDLE hProcess, unsigned uExitCode ) const;
-    virtual bool                   GetExitCodeProcess   ( HANDLE hProcess, DWORD* lpExitCode ) const;
-    virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const;
-    virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const;
-    virtual std::wstring           GetModuleFilename    () const;
-    virtual ProcessDescriptor      MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const;
+    virtual std::string       GetLastError         () const;
+    virtual bool              EnumProcesses        ( unsigned long* ids, int cb, unsigned long* pBytesReturned ) const;
+    virtual bool              CloseHandle          ( void* hObject ) const;
+    virtual void*             OpenProcess          ( int dwDesiredAccess, bool bInheritHandle, int dwProcessId ) const;
+    virtual int               GetProcessName       ( void* hProcess, wchar_t* lpImageFileName, int nSize ) const;
+    virtual int               WaitForSingleObjectEx( void* hHandle, int dwMilliseconds, bool bAlertable ) const;
+    virtual bool              TerminateProcess     ( void* hProcess, unsigned uExitCode ) const;
+    virtual bool              GetExitCodeProcess   ( void* hProcess, unsigned long* lpExitCode ) const;
+    virtual void*             CreateRemoteThreadExt( void* hProcess, size_t dwStackSize, void* lpStartAddress, void* lpParameter, int dwCreationFlags, unsigned long* lpThreadId ) const;
+    virtual void*             GetExitProcessPointer() const;
+    virtual std::wstring      GetModuleFilename    () const;
+    virtual ProcessDescriptor MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const;
     //@}
 
 private:
     mutable cpplog::BaseLogger& log_;
-    LPTHREAD_START_ROUTINE exit_;
+    void* exit_;
 };
 
 }

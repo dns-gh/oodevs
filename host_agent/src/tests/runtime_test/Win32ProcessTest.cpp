@@ -14,6 +14,9 @@
 #include <runtime/win32/Process.h>
 #include <boost/bind.hpp>
 
+#define  NOMINMAX
+#include <windows.h>
+
 using namespace runtime;
 using test::MockApi;
 

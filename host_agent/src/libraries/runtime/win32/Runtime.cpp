@@ -29,8 +29,8 @@ namespace
 template< typename T >
 bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
 {
-    DWORD size = 0;
-    bool done = api.EnumProcesses( &pids[0], static_cast< DWORD >( pids.size() * sizeof T ), &size );
+    unsigned long size = 0;
+    bool done = api.EnumProcesses( &pids[0], static_cast< int >( pids.size() * sizeof T ), &size );
     if( !done )
         return true;
     if( size == pids.size() * sizeof T )
@@ -77,7 +77,7 @@ Runtime::~Runtime()
 Runtime::T_Processes Runtime::GetProcesses() const
 {
     T_Processes list;
-    std::vector< DWORD > pids( 128, 0 );
+    std::vector< unsigned long > pids( 128, 0 );
     while( !Enumerate( log_, api_, list, pids ) )
         pids.resize( pids.size() * 2 );
     return list;

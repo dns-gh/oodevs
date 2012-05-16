@@ -14,6 +14,8 @@
 #include <boost/format.hpp>
 #include <boost/static_assert.hpp>
 
+#include <windows.h>
+
 using namespace runtime;
 
 BOOST_STATIC_ASSERT( sizeof Handle::pointer == sizeof HANDLE );
@@ -140,8 +142,8 @@ namespace
             return false;
 
         DWORD threadId;
-        LPTHREAD_START_ROUTINE exit = api.GetExitProcessPointer();
-        HANDLE thread = api.CreateRemoteThreadExt( process, 0, 0, exit, &code, 0, 0, &threadId );
+        LPTHREAD_START_ROUTINE exit = reinterpret_cast< LPTHREAD_START_ROUTINE >( api.GetExitProcessPointer() );
+        HANDLE thread = api.CreateRemoteThreadExt( process, 0, exit, &code, 0, &threadId );
         if( !thread )
             return false;
 
