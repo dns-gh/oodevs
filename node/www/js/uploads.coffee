@@ -28,6 +28,7 @@ class PackageView extends Backbone.View
         @model = new Package
         @model.bind 'change', @render
         @model.fetch()
+        setTimeout @delta, 5000
 
     render: =>
         $(@el).empty()
@@ -37,6 +38,15 @@ class PackageView extends Backbone.View
 
     update: (data) =>
         @model.set data
+
+    delta: =>
+        item = new Package
+        item.fetch
+            success: =>
+                @update item.attributes
+                setTimeout @delta, 5000
+            error: =>
+                setTimeout @delta, 5000
 
 package_view = new PackageView
 

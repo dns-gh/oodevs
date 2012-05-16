@@ -50,6 +50,7 @@
     __extends(PackageView, _super);
 
     function PackageView() {
+      this.delta = __bind(this.delta, this);
       this.update = __bind(this.update, this);
       this.render = __bind(this.render, this);
       PackageView.__super__.constructor.apply(this, arguments);
@@ -60,7 +61,8 @@
     PackageView.prototype.initialize = function(obj) {
       this.model = new Package;
       this.model.bind('change', this.render);
-      return this.model.fetch();
+      this.model.fetch();
+      return setTimeout(this.delta, 5000);
     };
 
     PackageView.prototype.render = function() {
@@ -72,6 +74,21 @@
 
     PackageView.prototype.update = function(data) {
       return this.model.set(data);
+    };
+
+    PackageView.prototype.delta = function() {
+      var item,
+        _this = this;
+      item = new Package;
+      return item.fetch({
+        success: function() {
+          _this.update(item.attributes);
+          return setTimeout(_this.delta, 5000);
+        },
+        error: function() {
+          return setTimeout(_this.delta, 5000);
+        }
+      });
     };
 
     return PackageView;
