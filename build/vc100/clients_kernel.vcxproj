@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
@@ -270,6 +272,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h" />

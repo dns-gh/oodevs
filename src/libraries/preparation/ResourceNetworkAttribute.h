@@ -15,16 +15,12 @@
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver.h"
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 namespace kernel
 {
     class Controllers;
     class Object_ABC;
     class ResourceNetworkType;
+    class UrbanObject_ABC;
 }
 
 namespace xml
@@ -45,7 +41,7 @@ class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
 private:
     //! @name Types
     //@{
-    typedef tools::Resolver_ABC< gui::TerrainObjectProxy > T_Urbans;
+    typedef tools::Resolver_ABC< kernel::UrbanObject_ABC > T_Urbans;
     typedef tools::Resolver_ABC< kernel::Object_ABC > T_Objects;
     typedef tools::StringResolver< kernel::ResourceNetworkType > T_Resources;
     //@}

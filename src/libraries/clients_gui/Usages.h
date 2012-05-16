@@ -11,7 +11,7 @@
 #define gui_Usages_h
 
 #include "clients_kernel/Usages_ABC.h"
-#include "HumanDefs.h"
+#include "clients_kernel/HumanDefs.h"
 
 namespace kernel
 {
@@ -55,7 +55,7 @@ private:
     kernel::PropertiesDictionary& dictionary_;
     const kernel::AccommodationTypes& accommodationTypes_;
     float livingSpace_;
-    T_Usages usages_;
+    kernel::T_Usages usages_;
     T_Occupations occupations_;
     static const std::string defaultStr_;
     //@}

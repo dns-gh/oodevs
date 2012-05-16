@@ -11,7 +11,7 @@
 #include "LivingArea.h"
 #include "UrbanModel.h"
 #include "clients_kernel/LivingAreaVisitor_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "protocol/Protocol.h"
 #include <boost/foreach.hpp>
 
@@ -26,7 +26,7 @@ LivingArea::LivingArea( const sword::PopulationCreation& message, unsigned long 
     for( int i = 0; i < message.objects_size(); ++i )
     {
         int id = message.objects( i ).id();
-        gui::TerrainObjectProxy& block = model.GetObject( id );
+        kernel::UrbanObject_ABC& block = model.GetObject( id );
         blocks_[ id ] = block.GetName();
     }
 }
@@ -53,7 +53,7 @@ void LivingArea::DoUpdate( const sword::PopulationUpdate& message )
         CIT_Blocks it = blocks_.find( id );
         if( it != blocks_.end() )
         {
-            gui::T_Human& humans = humans_[ id ];
+            kernel::T_Human& humans = humans_[ id ];
             for( int j = 0; j < occupation.persons_size(); ++j )
                 humans.persons_[ occupation.persons( j ).usage().c_str() ].first = occupation.persons( j ).number();
             humans.alerted_ = occupation.alerted();
@@ -73,11 +73,11 @@ void LivingArea::Accept( kernel::LivingAreaVisitor_ABC& visitor ) const
 {
     BOOST_FOREACH( const T_Blocks::value_type& block, blocks_ )
     {
-        gui::T_HumansIdMap::const_iterator it = humans_.find( block.first );
+        kernel::T_HumansIdMap::const_iterator it = humans_.find( block.first );
         if( it != humans_.end() )
         {
             unsigned int resident = 0;
-            BOOST_FOREACH( const gui::T_BlockOccupation::value_type& person, it->second.persons_ )
+            BOOST_FOREACH( const kernel::T_BlockOccupation::value_type& person, it->second.persons_ )
                 resident += person.second.first;
             visitor.Visit( block.first, resident, it->second.alerted_, it->second.angriness_, it->second.confined_, it->second.evacuated_ );
         }

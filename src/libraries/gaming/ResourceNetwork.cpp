@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "ResourceNetwork.h"
 #include "Tools.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
@@ -25,7 +25,6 @@
 #include <time.h>
 
 using namespace geometry;
-using namespace gui;
 using namespace kernel;
 
 int ResourceNetwork::maxFlow_ = 0;
@@ -35,7 +34,7 @@ double ResourceNetwork::stippleFactor_ = 1;
 // Name: ResourceNetwork constructor
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
@@ -50,7 +49,7 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
@@ -67,7 +66,7 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )

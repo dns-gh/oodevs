@@ -25,7 +25,7 @@
 #include "preparation/Agent.h"
 #include "preparation/Ghost.h"
 #include "preparation/Object.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -161,7 +161,7 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 void ModelBuilder::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
     // TODO gérer suivant les modes
-    if( entity.GetTypeName() == gui::TerrainObjectProxy::typeName_ )
+    if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ )
         return;
     toDelete_ = &entity;
     menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );

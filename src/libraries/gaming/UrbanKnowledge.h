@@ -22,17 +22,13 @@ namespace kernel
 {
     class Displayer_ABC;
     class Controller;
+    class UrbanObject_ABC;
 }
 
 namespace sword
 {
     class UrbanKnowledgeUpdate;
     class UrbanKnowledgeCreation;
-}
-
-namespace gui
-{
-    class TerrainObjectProxy;
 }
 
 // =============================================================================
@@ -51,7 +47,7 @@ public:
     //@{
              UrbanKnowledge( const kernel::Team_ABC& owner, const sword::UrbanKnowledgeCreation& message,
                              kernel::Controller& controller,
-                             const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver );
+                             const tools::Resolver< kernel::UrbanObject_ABC >& terrainObjectResolver );
     virtual ~UrbanKnowledge();
     //@}
 
@@ -83,9 +79,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver_;
+    const tools::Resolver< kernel::UrbanObject_ABC >& terrainObjectResolver_;
     const kernel::Team_ABC& owner_;
-    gui::TerrainObjectProxy* pRealUrban_;
+    kernel::UrbanObject_ABC* pRealUrban_;
     unsigned long entityId_;
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< int > rProgress_;

@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "ResourceNetworkDialog.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
@@ -131,7 +131,7 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
         return 0;
     int consumption = 0;
     if( inhabitantConsumption > 0)
-        if( const gui::TerrainObjectProxy* block = dynamic_cast< const gui::TerrainObjectProxy* >( object ) )
+        if( const kernel::UrbanObject_ABC* block = dynamic_cast< const kernel::UrbanObject_ABC* >( object ) )
         {
             double tmp = inhabitantConsumption * block->GetNominalCapacity();
             if( tmp >= std::numeric_limits< int >::max() )

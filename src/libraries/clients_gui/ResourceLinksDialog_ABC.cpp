@@ -14,13 +14,13 @@
 #include "moc_ResourceLinksDialog_ABC.cpp"
 #include "RichSpinBox.h"
 #include "SpinTableItem.h"
-#include "TerrainObjectProxy.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace gui;
 using namespace kernel;
@@ -129,10 +129,10 @@ void ResourceLinksDialog_ABC::AfterSelection()
 // Name: ResourceLinksDialog_ABC::Select
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::Select( const TerrainObjectProxy& proxy )
+void ResourceLinksDialog_ABC::Select( const UrbanObject_ABC& object)
 {
-    selected_ = const_cast< TerrainObjectProxy& >( proxy ).Retrieve< ResourceNetwork_ABC >();
-    id_ = proxy.GetId();
+    selected_ = const_cast< UrbanObject_ABC& >( object ).Retrieve< ResourceNetwork_ABC >();
+    id_ = object.GetId();
     urban_ = true;
 }
 

@@ -16,6 +16,7 @@ StockAttribute_ABC.cpp \
 Tools.cpp \
 TristateOption.cpp \
 Units.cpp \
+UrbanObject_ABC.cpp \
 XmlDescription.cpp \
 
 TRANSLATIONS = clients_kernel_fr.ts clients_kernel_es.ts

@@ -18,14 +18,10 @@ namespace xml
     class xistream;
 }
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -39,7 +35,7 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( xml::xistream& xis, EUrbanLevel level, const gui::TerrainObjectProxy& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
     //@}
 
@@ -67,7 +63,7 @@ private:
     //! @name Member data
     //@{
     EUrbanLevel level_;
-    const gui::TerrainObjectProxy& object_;
+    const kernel::UrbanObject_ABC& object_;
     bool selected_;
     bool hasInfrastructure_;
     geometry::Polygon2f polygon_;

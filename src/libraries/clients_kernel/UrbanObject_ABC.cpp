@@ -7,101 +7,88 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
-#include "TerrainObjectProxy.h"
+#include "clients_kernel_pch.h"
+#include "UrbanObject_ABC.h"
 #include "Tools.h"
-#include "UrbanDisplayOptions.h"
-#include "clients_kernel/AccommodationType.h"
-#include "clients_kernel/AccommodationTypes.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Architecture_ABC.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/UrbanColor_ABC.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/Usages_ABC.h"
+#include "AccommodationType.h"
+#include "AccommodationTypes.h"
+#include "ActionController.h"
+#include "Architecture_ABC.h"
+#include "PropertiesDictionary.h"
+#include "UrbanColor_ABC.h"
+#include "UrbanPositions_ABC.h"
+#include "Usages_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
-using namespace gui;
 using namespace kernel;
 
-const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
+const QString UrbanObject_ABC::typeName_ = "urbanObject";
 
 #pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy constructor
+// Name: UrbanObject_ABC constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, const std::string& name, unsigned int id, const ObjectType& type
-                                      , UrbanDisplayOptions& options, const AccommodationTypes& accommodations )
-    : EntityImplementation< Object_ABC >( controllers.controller_, id, name.c_str() )
-    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , controllers_    ( controllers )
+UrbanObject_ABC::UrbanObject_ABC( Controller& controller, const std::string& name, unsigned int id, const ObjectType& type
+                                , const AccommodationTypes& accommodations )
+    : EntityImplementation< Object_ABC >( controller, id, name.c_str() )
+    , Creatable< UrbanObject_ABC >( controller, this )
     , density_        ( 0 )
     , type_           ( type )
     , accommodations_ ( accommodations )
     , livingSpace_    ( 0 )
     , nominalCapacity_( 0 )
-    , options_        ( options )
 {
     RegisterSelf( *this );
-    CreateDictionary( controllers.controller_ );
-    UpdateColor();
-    controllers_.Register( *this );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy constructor
+// Name: UrbanObject_ABC constructor
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( xml::xistream& xis, kernel::Controllers& controllers,
-                                        const kernel::ObjectType& type, UrbanDisplayOptions& options,
-                                        const kernel::AccommodationTypes& accommodations )
-    : EntityImplementation< Object_ABC >( controllers.controller_, xis.attribute< unsigned int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , controllers_    ( controllers )
+UrbanObject_ABC::UrbanObject_ABC( xml::xistream& xis, kernel::Controller& controller
+                                , const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations )
+    : EntityImplementation< Object_ABC >( controller, xis.attribute< unsigned int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    , Creatable< UrbanObject_ABC >( controller, this )
     , density_        ( 0 )
     , type_           ( type )
     , accommodations_ ( accommodations )
     , livingSpace_    ( 0 )
     , nominalCapacity_( 0 )
-    , options_        ( options )
 {
     RegisterSelf( *this );
-    CreateDictionary( controllers.controller_ );
-    UpdateColor();
-    controllers_.Register( *this );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy destructor
+// Name: UrbanObject_ABC destructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::~TerrainObjectProxy()
+UrbanObject_ABC::~UrbanObject_ABC()
 {
     if( UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >() )
         pColor->Restore();
-    controllers_.Unregister( *this );
     Destroy();
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::Update
+// Name: UrbanObject_ABC::Update
 // Created: SLG 2010-06-22
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
+void UrbanObject_ABC::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 {
     Touch();
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy GetName
+// Name: UrbanObject_ABC GetName
 // Created: SLG 2009-11-2
 // -----------------------------------------------------------------------------
-QString TerrainObjectProxy::GetName() const
+QString UrbanObject_ABC::GetName() const
 {
     if( name_.isEmpty() )
         return QString( tools::translate( "Urban", "Urban block[%L1]" ).arg( id_ ) );
@@ -109,37 +96,37 @@ QString TerrainObjectProxy::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetTypeName
+// Name: UrbanObject_ABC::GetTypeName
 // Created: ABR 2011-02-18
 // -----------------------------------------------------------------------------
-QString TerrainObjectProxy::GetTypeName() const
+QString UrbanObject_ABC::GetTypeName() const
 {
     return typeName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::Select
+// Name: UrbanObject_ABC::Select
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::Select( ActionController& controller ) const
+void UrbanObject_ABC::Select( ActionController& controller ) const
 {
     controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::Activate
+// Name: UrbanObject_ABC::Activate
 // Created: LGY 2011-05-02
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::Activate( ActionController& controller ) const
+void UrbanObject_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *static_cast< const Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::CreateDictionary
+// Name: UrbanObject_ABC::CreateDictionary
 // Created: SLG 2009-12-08
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::CreateDictionary( Controller& controller )
+void UrbanObject_ABC::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     EntityImplementation< Object_ABC >::Attach( dictionary );
@@ -148,10 +135,10 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::DisplayInSummary
+// Name: UrbanObject_ABC::DisplayInSummary
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::DisplayInSummary( Displayer_ABC& displayer ) const
+void UrbanObject_ABC::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Block", "Density:" ), density_ );
     displayer.Display( tools::translate( "Block", "Total of inhabitants:" ), GetHumans() );
@@ -162,19 +149,19 @@ void TerrainObjectProxy::DisplayInSummary( Displayer_ABC& displayer ) const
 namespace
 {
     template< typename T >
-    void RegisterValue( TerrainObjectProxy& proxy, const QString& key, const T& value )
+    void RegisterValue( UrbanObject_ABC& object, const QString& key, const T& value )
     {
-        PropertiesDictionary& dico = proxy.Get< PropertiesDictionary >();
+        PropertiesDictionary& dico = object.Get< PropertiesDictionary >();
         if( !dico.HasKey( key ) )
-            dico.Register( static_cast< const Entity_ABC& >( proxy ), key, value );
+            dico.Register( static_cast< const Entity_ABC& >( object ), key, value );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::UpdateHumans
+// Name: UrbanObject_ABC::UpdateHumans
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation )
+void UrbanObject_ABC::UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation )
 {
     T_Human& mutableHuman = humans_[ inhabitant ];
     for( int i = 0; i < occupation.persons_size(); ++i )
@@ -218,41 +205,20 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const swor
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::NotifyUpdated
-// Created: LDC 2011-03-25
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::NotifyUpdated( const UrbanDisplayOptions& )
-{
-    UpdateColor();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::UpdateColor
-// Created: LDC 2011-03-25
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateColor()
-{
-    const Usages_ABC* pUsages = Retrieve< Usages_ABC >();
-    UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >();
-    if( pUsages && pColor && !options_.SetColor( *pColor, GetLivingSpace(), humans_, *pUsages ) )
-        pColor->Restore();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::UpdateDensity
+// Name: UrbanObject_ABC::UpdateDensity
 // Created: LGY 2011-01-07
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateDensity()
+void UrbanObject_ABC::UpdateDensity()
 {
     float livingSpace = GetLivingSpace();
     density_ = livingSpace == 0 ? 0 : GetHumans() / livingSpace;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetHumans
+// Name: UrbanObject_ABC::GetHumans
 // Created: LGY 2011-01-07
 // -----------------------------------------------------------------------------
-unsigned int TerrainObjectProxy::GetHumans() const
+unsigned int UrbanObject_ABC::GetHumans() const
 {
     unsigned int humans = 0;
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
@@ -262,10 +228,10 @@ unsigned int TerrainObjectProxy::GetHumans() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetLivingSpace
+// Name: UrbanObject_ABC::GetLivingSpace
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-float TerrainObjectProxy::GetLivingSpace() const
+float UrbanObject_ABC::GetLivingSpace() const
 {
     if( livingSpace_ == 0 )
         if( const UrbanPositions_ABC* positions = Retrieve< UrbanPositions_ABC >() )
@@ -278,10 +244,10 @@ float TerrainObjectProxy::GetLivingSpace() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetNominalCapacity
+// Name: UrbanObject_ABC::GetNominalCapacity
 // Created: JSR 2011-09-27
 // -----------------------------------------------------------------------------
-double TerrainObjectProxy::GetNominalCapacity() const
+double UrbanObject_ABC::GetNominalCapacity() const
 {
     if( nominalCapacity_ == 0 )
     {
@@ -297,10 +263,10 @@ double TerrainObjectProxy::GetNominalCapacity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetNominalCapacity
+// Name: UrbanObject_ABC::GetNominalCapacity
 // Created: JSR 2011-09-27
 // -----------------------------------------------------------------------------
-double TerrainObjectProxy::GetNominalCapacity( const std::string& motivation ) const
+double UrbanObject_ABC::GetNominalCapacity( const std::string& motivation ) const
 {
     if( const AccommodationType* acc = accommodations_.Find( motivation ) )
         return GetLivingSpace() * Get< Usages_ABC >().Find( motivation ) * 0.01 * acc->GetNominalCapacity();
@@ -308,10 +274,10 @@ double TerrainObjectProxy::GetNominalCapacity( const std::string& motivation ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetAccommodations
+// Name: UrbanObject_ABC::GetAccommodations
 // Created: MMC 2012-03-21
 // -----------------------------------------------------------------------------
-const kernel::AccommodationTypes& TerrainObjectProxy::GetAccommodations() const
+const kernel::AccommodationTypes& UrbanObject_ABC::GetAccommodations() const
 {
     return accommodations_;
 }

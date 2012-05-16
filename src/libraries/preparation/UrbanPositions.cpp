@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanPositions.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Hierarchies.h"
@@ -21,7 +21,7 @@
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const gui::TerrainObjectProxy& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : level_            ( level )
     , object_           ( object )
     , selected_         ( false )

@@ -22,7 +22,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include <boost/foreach.hpp>
 
 using namespace geometry;
@@ -60,9 +60,9 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
     for( int i = 0; i < message.objects_size(); ++i )
     {
         int id = message.objects( i ).id();
-        gui::TerrainObjectProxy& proxy = model.GetObject( id );
-        livingUrbanObject_[ id ] = &proxy;
-        if( const UrbanPositions_ABC* positions = proxy.Retrieve< UrbanPositions_ABC >() )
+        kernel::UrbanObject_ABC& object = model.GetObject( id );
+        livingUrbanObject_[ id ] = &object;
+        if( const UrbanPositions_ABC* positions = object.Retrieve< UrbanPositions_ABC >() )
         {
             polygon.Add( positions->Barycenter() );
             BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, positions->Vertices() )
@@ -294,21 +294,21 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const gui::TerrainObjectProxy* pProxy = it->second;
-        if( !pProxy )
+        const kernel::UrbanObject_ABC* pObject = it->second;
+        if( !pObject )
             continue;
-        nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
-        if( pProxy->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
+        nominalCapacity_ += static_cast< unsigned int >( pObject->GetNominalCapacity() );
+        if( pObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
             ++medicalInfrastructures_;
-        else if( const kernel::Infrastructure_ABC* infra = pProxy->Retrieve< kernel::Infrastructure_ABC >() )
+        else if( const kernel::Infrastructure_ABC* infra = pObject->Retrieve< kernel::Infrastructure_ABC >() )
             if( infra->HasValidType() )
                 ++infrastructures_;
-        const kernel::AccommodationTypes& accommodations = pProxy->GetAccommodations();
+        const kernel::AccommodationTypes& accommodations = pObject->GetAccommodations();
         tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();
         while( itAcco.HasMoreElements() )
         {
             const kernel::AccommodationType& accomodation = itAcco.NextElement();
-            accomodationCapacties_[ QString::fromStdString( accomodation.GetRole() ) ] += static_cast< unsigned int >( pProxy->GetNominalCapacity( accomodation.GetRole() ) );
+            accomodationCapacties_[ QString::fromStdString( accomodation.GetRole() ) ] += static_cast< unsigned int >( pObject->GetNominalCapacity( accomodation.GetRole() ) );
         }
     }
 

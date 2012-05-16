@@ -12,7 +12,7 @@
 
 #include "clients_kernel/LivingArea_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_gui/HumanDefs.h"
+#include "clients_kernel/HumanDefs.h"
 
 namespace sword
 {
@@ -68,7 +68,7 @@ private:
     unsigned long id_;
     kernel::Controller& controller_;
     T_Blocks blocks_;
-    gui::T_HumansIdMap humans_;
+    kernel::T_HumansIdMap humans_;
     //@}
 };
 

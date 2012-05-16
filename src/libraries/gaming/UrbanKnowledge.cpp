@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "UrbanKnowledge.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -19,7 +19,7 @@ using namespace kernel;
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message, Controller& controller,
-                                const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver )
+                                const tools::Resolver< kernel::UrbanObject_ABC >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , terrainObjectResolver_( terrainObjectResolver )
     , owner_                ( owner )

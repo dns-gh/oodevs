@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
-#include "TerrainObjectProxy.h"
 #include "View_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
@@ -28,7 +27,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile, filter )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, filter )
     , view_          ( view )
     , controllers_   ( controllers )
     , selectedObject_( 0 )
@@ -55,12 +54,12 @@ namespace
             , drawInfrastructure_( drawInfrastructure )
         {}
 
-        void operator()( const kernel::Entity_ABC& proxy )
+        void operator()( const kernel::Entity_ABC& object )
         {
-            if( const kernel::UrbanPositions_ABC* positions = proxy.Retrieve< kernel::UrbanPositions_ABC >() )
+            if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
             {
-                const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >();
-                const kernel::Infrastructure_ABC* infra = drawInfrastructure_ ? proxy.Retrieve< kernel::Infrastructure_ABC >() : 0;
+                const kernel::ResourceNetwork_ABC* resource = object.Retrieve< kernel::ResourceNetwork_ABC >();
+                const kernel::Infrastructure_ABC* infra = drawInfrastructure_ ? object.Retrieve< kernel::Infrastructure_ABC >() : 0;
                 if( resource ||  infra )
                 {
                     viewport_.SetHotpoint( positions->Barycenter() );
@@ -85,7 +84,7 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 {
     gl::Initialize();
     // dessin des blocs urbains
-    EntityLayer< TerrainObjectProxy >::Paint( viewport );
+    EntityLayer< kernel::UrbanObject_ABC >::Paint( viewport );
     // dessin des extensions(en deux temps pour les afficher par dessus les blocs)
     DrawExtensionsFunctor functor( viewport, tools_, controllers_.options_.GetOption( "Infra", true ).To< bool >() );
     Apply( functor );
@@ -98,32 +97,32 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 void UrbanLayer::Reset2d()
 {
     selectedObject_ = 0;
-    EntityLayer< TerrainObjectProxy >::Reset2d();
+    EntityLayer< kernel::UrbanObject_ABC >::Reset2d();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanLayer::NotifySelected
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::NotifySelected( const TerrainObjectProxy* object )
+void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
 {
     if( selectedObject_ )
         selectedObject_->Interface().Apply( &kernel::UrbanPositions_ABC::ToggleSelection );
     selectedObject_ = object;
     if( selectedObject_ )
         selectedObject_->Interface().Apply( &kernel::UrbanPositions_ABC::ToggleSelection );
-    EntityLayer< TerrainObjectProxy >::NotifySelected( object );
+    EntityLayer< kernel::UrbanObject_ABC >::NotifySelected( object );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanLayer::NotifyDeleted
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
+void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 {
     if( &object == selectedObject_ )
         selectedObject_ = 0;
-    EntityLayer< TerrainObjectProxy >::NotifyDeleted( object );
+    EntityLayer< kernel::UrbanObject_ABC >::NotifyDeleted( object );
 }
 
 // -----------------------------------------------------------------------------

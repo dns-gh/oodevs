@@ -21,11 +21,7 @@ namespace kernel
     class InfrastructureType;
     class PropertiesDictionary;
     class ObjectTypes;
-}
-
-namespace gui
-{
-    class TerrainObjectProxy;
+    class UrbanObject_ABC;
 }
 
 namespace xml
@@ -47,7 +43,7 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( xml::xistream& xis, gui::TerrainObjectProxy& object, kernel::PropertiesDictionary& dico,
+             InfrastructureAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico,
                                       const kernel::ObjectTypes& objectTypes );
     virtual ~InfrastructureAttribute();
     //@}

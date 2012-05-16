@@ -11,7 +11,7 @@
 #define __gui_UrbanLayer_h_
 
 #include "EntityLayer.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ namespace gui
 */
 // Created: SLG 2006-03-23
 // =============================================================================
-class UrbanLayer : public EntityLayer< TerrainObjectProxy >
+class UrbanLayer : public EntityLayer< kernel::UrbanObject_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,8 +49,8 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyDeleted( const TerrainObjectProxy& object );
-    virtual void NotifySelected( const TerrainObjectProxy* object );
+    virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
+    virtual void NotifySelected( const kernel::UrbanObject_ABC* object );
     virtual void ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     View_ABC& view_;
-    const TerrainObjectProxy* selectedObject_;
+    const kernel::UrbanObject_ABC* selectedObject_;
     //@}
 
 protected:

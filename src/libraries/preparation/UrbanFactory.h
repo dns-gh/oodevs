@@ -41,14 +41,14 @@ public:
     //@{
              UrbanFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes,
                            const tools::Resolver< kernel::Object_ABC >& objects, gui::UrbanDisplayOptions& options,
-                           const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanObjects,
+                           const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects,
                            const kernel::AccommodationTypes& accommodations, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual gui::TerrainObjectProxy* Create( xml::xistream& xis, gui::TerrainObjectProxy* parent ) const;
+    virtual kernel::UrbanObject_ABC* Create( xml::xistream& xis, kernel::UrbanObject_ABC* parent ) const;
     //@}
 
 private:
@@ -58,7 +58,7 @@ private:
     const kernel::ObjectTypes& objectTypes_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
     gui::UrbanDisplayOptions& options_;
-    const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanObjects_;
+    const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects_;
     const kernel::AccommodationTypes& accommodations_;
     const kernel::CoordinateConverter_ABC& converter_;
     //@}

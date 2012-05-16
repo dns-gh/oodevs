@@ -17,7 +17,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, gui::TerrainObjectProxy& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
+InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, kernel::UrbanObject_ABC& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
     : controllers_( controllers )
     , resolver_   ( resolver )
     , object_     ( object )

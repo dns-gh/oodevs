@@ -184,21 +184,12 @@ tools::Resolver_ABC< kernel::Inhabitant_ABC >& Model::GetInhabitantResolver() co
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::FindUrbanObject
-// Created: JSR 2011-06-28
+// Name: Model::GetUrbanObjectResolver
+// Created: JSR 2012-05-16
 // -----------------------------------------------------------------------------
-kernel::Object_ABC* Model::FindUrbanObject( unsigned int id ) const
+tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() const
 {
-    return urbanObjects_.Find( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::GetUrbanObject
-// Created: JSR 2011-06-28
-// -----------------------------------------------------------------------------
-kernel::Object_ABC& Model::GetUrbanObject( unsigned int id ) const
-{
-    return urbanObjects_.Get( id );
+    return urbanObjects_;
 }
 
 // -----------------------------------------------------------------------------

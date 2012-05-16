@@ -11,7 +11,6 @@
 #include "ColorStrategy.h"
 #include "ColorModifier_ABC.h"
 #include "Drawing_ABC.h"
-#include "TerrainObjectProxy.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -28,6 +27,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include <numeric>
 #include <boost/bind.hpp>
 
@@ -280,9 +280,9 @@ void ColorStrategy::SelectColor( const Drawing_ABC& drawing )
 // Name: ColorStrategy::SelectColor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const TerrainObjectProxy& proxy )
+void ColorStrategy::SelectColor( const UrbanObject_ABC& object )
 {
-    Process( proxy );
+    Process( object );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,6 +17,7 @@
 #include "StructuralStateAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "UrbanHierarchies.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanExtensions.h"
 #include "clients_kernel/UrbanColor_ABC.h"
@@ -28,7 +29,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/Architecture.h"
 #include "clients_gui/Usages.h"
 #include <xeumeuleu/xml.hpp>
@@ -39,7 +39,7 @@
 // -----------------------------------------------------------------------------
 UrbanFactory::UrbanFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes,
                             const tools::Resolver< kernel::Object_ABC >& objects, gui::UrbanDisplayOptions& options,
-                            const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanObjects,
+                            const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects,
                             const kernel::AccommodationTypes& accommodations, const kernel::CoordinateConverter_ABC& converter )
     : controllers_   ( controllers )
     , objectTypes_   ( objectTypes )
@@ -65,10 +65,10 @@ UrbanFactory::~UrbanFactory()
 // Name: UrbanFactory::CreateScore
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis, gui::TerrainObjectProxy* parent ) const
+kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::UrbanObject_ABC* parent ) const
 {
     // TODO voir quels attributs virer dans le cas d'une ville ou d'un quartier
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( xis, controllers_, objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), options_, accommodations_ );
+    kernel::UrbanObject_ABC* pTerrainObject = new gui::UrbanObject( xis, controllers_, objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), accommodations_, options_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );

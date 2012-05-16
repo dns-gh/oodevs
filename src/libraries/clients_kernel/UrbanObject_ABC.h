@@ -7,25 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __TerrainObjectProxy_h_
-#define __TerrainObjectProxy_h_
+#ifndef __UrbanObject_ABC_h_
+#define __UrbanObject_ABC_h_
 
 #include "HumanDefs.h"
-#include "clients_kernel/Creatable.h"
-#include "clients_kernel/EntityImplementation.h"
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Object_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-
-namespace kernel
-{
-    class AccommodationTypes;
-    class Controllers;
-    class Displayer_ABC;
-    class ObjectType;
-    class PropertiesDictionary;
-}
-
+#include "Creatable.h"
+#include "EntityImplementation.h"
+#include "Extension_ABC.h"
+#include "Object_ABC.h"
+#include <boost/noncopyable.hpp>
 namespace sword
 {
     class PopulationUpdate_BlockOccupation;
@@ -37,22 +27,25 @@ namespace xml
     class xistream;
 }
 
-namespace gui
+namespace kernel
 {
-    class UrbanDisplayOptions;
+    class AccommodationTypes;
+    class Controller;
+    class Displayer_ABC;
+    class ObjectType;
+    class PropertiesDictionary;
 
 // =============================================================================
-/** @class  TerrainObjectProxy
-    @brief  Terrain object proxy
+/** @class  UrbanObject_ABC
+    @brief  Urban Object
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class TerrainObjectProxy : public kernel::Extension_ABC
-                         , public kernel::EntityImplementation< kernel::Object_ABC >
-                         , public kernel::Updatable_ABC< sword::UrbanUpdate >
-                         , public kernel::Creatable< TerrainObjectProxy >
-                         , public tools::Observer_ABC
-                         , public tools::ElementObserver_ABC< UrbanDisplayOptions >
+class UrbanObject_ABC : public kernel::Extension_ABC
+                      , public kernel::EntityImplementation< kernel::Object_ABC >
+                      , public kernel::Updatable_ABC< sword::UrbanUpdate >
+                      , public kernel::Creatable< UrbanObject_ABC >
+                      , private boost::noncopyable
 {
 public:
     //! @name Static
@@ -63,12 +56,11 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, const std::string& name, unsigned int id,
-                                 const kernel::ObjectType& type, UrbanDisplayOptions& options,
-                                 const kernel::AccommodationTypes& accommodations );
-             TerrainObjectProxy( xml::xistream& xis, kernel::Controllers& controllers, const kernel::ObjectType& type,
-                                 UrbanDisplayOptions& options, const kernel::AccommodationTypes& accommodations );
-    virtual ~TerrainObjectProxy();
+             UrbanObject_ABC( kernel::Controller& controller, const std::string& name, unsigned int id,
+                              const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations );
+             UrbanObject_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::ObjectType& type,
+                              const kernel::AccommodationTypes& accommodations );
+    virtual ~UrbanObject_ABC();
     //@}
 
     //! @name Accessors
@@ -86,26 +78,25 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation );
-    void NotifyUpdated( const UrbanDisplayOptions& );
     float GetLivingSpace() const;
     double GetNominalCapacity() const;
     double GetNominalCapacity( const std::string& motivation ) const;
     const kernel::AccommodationTypes& GetAccommodations() const;
+    const T_HumansStrMap& GetHumansMap() const { return humans_; }
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    virtual void UpdateColor() = 0;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
-    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
     void UpdateDensity();
     unsigned int GetHumans() const;
-    void UpdateColor();
     //@}
 
     //! @name Types
@@ -116,7 +107,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     float density_;
     T_Humans humans_;
     T_BlockOccupation motivations_;
@@ -124,10 +114,9 @@ private:
     const kernel::AccommodationTypes& accommodations_;
     mutable float livingSpace_;
     mutable double nominalCapacity_;
-    UrbanDisplayOptions& options_;
     //@}
 };
 
 }
 
-#endif // __TerrainObjectProxy_h_
+#endif // __UrbanObject_ABC_h_

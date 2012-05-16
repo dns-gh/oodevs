@@ -24,11 +24,7 @@ namespace kernel
     class Inhabitant_ABC;
     class PropertiesDictionary;
     class Controller;
-}
-
-namespace gui
-{
-    class TerrainObjectProxy;
+    class UrbanObject_ABC;
 }
 
 namespace xml
@@ -51,7 +47,7 @@ class InhabitantPositions : public InhabitantPositions_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::tuple< unsigned long, std::string, const gui::TerrainObjectProxy* > T_UrbanObject;
+    typedef boost::tuple< unsigned long, std::string, const kernel::UrbanObject_ABC* > T_UrbanObject;
     typedef std::vector< T_UrbanObject >                                               T_UrbanObjectVector;
     typedef T_UrbanObjectVector::iterator                                             IT_UrbanObjectVector;
     typedef T_UrbanObjectVector::const_iterator                                      CIT_UrbanObjectVector;
@@ -94,8 +90,8 @@ private:
     void ReadLivingUrbanBlock( xml::xistream& xis );
     void ComputePosition();
     void UpdateDictionary();
-    void Add( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon );
-    void Remove( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon );
+    void Add( const kernel::UrbanObject_ABC& object, const geometry::Polygon2f& polygon );
+    void Remove( const kernel::UrbanObject_ABC& object, const geometry::Polygon2f& polygon );
     bool Exists( unsigned long id ) const;
     //@}
 

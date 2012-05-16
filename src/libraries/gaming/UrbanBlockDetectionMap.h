@@ -11,7 +11,7 @@
 #define __UrbanBlockDetectionMap_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 
@@ -29,7 +29,7 @@ namespace kernel
 // Created: SLG 2010-03-12
 // =============================================================================
 class UrbanBlockDetectionMap : public tools::Observer_ABC
-                             , public tools::ElementObserver_ABC< gui::TerrainObjectProxy >
+                             , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
                              , private boost::noncopyable
 {
 public:
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const gui::TerrainObjectProxy& object );
+    virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
     const boost::optional< std::string > GetEnvironment( const geometry::Point2f& point ) const;
     //@}
 

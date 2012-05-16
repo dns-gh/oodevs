@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "UrbanListView.h"
 #include "PreparationProfile.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "preparation/UrbanHierarchies.h"
 
@@ -97,5 +97,5 @@ void UrbanListView::NotifyDeleted( const kernel::Object_ABC& object )
 // -----------------------------------------------------------------------------
 bool UrbanListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
-    return entity.GetTypeName() != TerrainObjectProxy::typeName_;
+    return entity.GetTypeName() != kernel::UrbanObject_ABC::typeName_;
 }

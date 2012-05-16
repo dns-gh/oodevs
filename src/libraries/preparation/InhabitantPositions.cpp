@@ -19,7 +19,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/function.hpp>
@@ -30,7 +30,7 @@ namespace
     class IntersectionVisitor : public kernel::LocationVisitor_ABC
     {
     public:
-        IntersectionVisitor( const UrbanModel& model, boost::function< void( const gui::TerrainObjectProxy&, const geometry::Polygon2f& ) > fun )
+        IntersectionVisitor( const UrbanModel& model, boost::function< void( const kernel::UrbanObject_ABC&, const geometry::Polygon2f& ) > fun )
             : model_( model )
             , fun_  ( fun )
         {
@@ -43,7 +43,7 @@ namespace
         virtual void VisitPolygon( const T_PointVector& points )
         {
             const geometry::Polygon2f poly( points );
-            tools::Iterator< const gui::TerrainObjectProxy& > it = model_.tools::Resolver< gui::TerrainObjectProxy >::CreateIterator();
+            tools::Iterator< const kernel::UrbanObject_ABC& > it = model_.tools::Resolver< kernel::UrbanObject_ABC >::CreateIterator();
             while( it.HasMoreElements() )
                 fun_( it.NextElement(), poly );
         }
@@ -60,7 +60,7 @@ namespace
 
     private :
         const UrbanModel& model_;
-        boost::function< void( const gui::TerrainObjectProxy&, const geometry::Polygon2f& ) > fun_;
+        boost::function< void( const kernel::UrbanObject_ABC&, const geometry::Polygon2f& ) > fun_;
     };
 }
 
@@ -126,7 +126,7 @@ InhabitantPositions::~InhabitantPositions()
 // -----------------------------------------------------------------------------
 void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 {
-    gui::TerrainObjectProxy* pObject = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::Find( xis.attribute< unsigned long >( "id" ) );
+    kernel::UrbanObject_ABC* pObject = urbanModel_.tools::Resolver< kernel::UrbanObject_ABC >::Find( xis.attribute< unsigned long >( "id" ) );
     if( !pObject )
         xis.error( "error in loading living urban block for population" );
     else
@@ -254,7 +254,7 @@ void InhabitantPositions::UpdateDictionary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const gui::TerrainObjectProxy* pProxy = it->get< 2 >();
+        const kernel::UrbanObject_ABC* pProxy = it->get< 2 >();
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
         if( pProxy->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
             ++medicalInfrastructures_;
@@ -307,7 +307,7 @@ void InhabitantPositions::Remove( const kernel::Location_ABC& location )
 // Name: InhabitantPositions::Add
 // Created: LGY 2011-09-19
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Add( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon )
+void InhabitantPositions::Add( const kernel::UrbanObject_ABC& object, const geometry::Polygon2f& polygon )
 {
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
         if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
@@ -316,7 +316,7 @@ void InhabitantPositions::Add( const gui::TerrainObjectProxy& object, const geom
 
 namespace
 {
-    bool Check( InhabitantPositions::T_UrbanObject& urbanObject, const gui::TerrainObjectProxy& object )
+    bool Check( InhabitantPositions::T_UrbanObject& urbanObject, const kernel::UrbanObject_ABC& object )
     {
         return urbanObject.get< 2 >()->GetId() == object.GetId();
     }
@@ -326,7 +326,7 @@ namespace
 // Name: InhabitantPositions::Remove
 // Created: LGY 2011-09-19
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Remove( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon )
+void InhabitantPositions::Remove( const kernel::UrbanObject_ABC& object, const geometry::Polygon2f& polygon )
 {
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
         if( polygon.IsInside( positions->Barycenter() ) && Exists( object.GetId() ) )
@@ -387,10 +387,10 @@ void InhabitantPositions::Reject()
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Update( const geometry::Point2f& point )
 {
-    tools::Iterator< const gui::TerrainObjectProxy& > it = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::CreateIterator();
+    tools::Iterator< const kernel::UrbanObject_ABC& > it = urbanModel_.tools::Resolver< kernel::UrbanObject_ABC >::CreateIterator();
     while( it.HasMoreElements() )
     {
-        const gui::TerrainObjectProxy& object = it.NextElement();
+        const kernel::UrbanObject_ABC& object = it.NextElement();
         if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
             if( positions->IsInside( point ) )
             {

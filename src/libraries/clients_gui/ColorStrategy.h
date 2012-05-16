@@ -18,6 +18,7 @@ namespace kernel
 {
     class GlTools_ABC;
     class Controllers;
+    class UrbanObject_ABC;
 }
 
 namespace gui
@@ -54,7 +55,7 @@ public:
     virtual void SelectColor( const kernel::TacticalLine_ABC& line );
     virtual void SelectColor( const kernel::Team_ABC& team );
     virtual void SelectColor( const Drawing_ABC& drawing );
-    virtual void SelectColor( const TerrainObjectProxy& proxy );
+    virtual void SelectColor( const kernel::UrbanObject_ABC& object );
     virtual void SelectColor( const kernel::Ghost_ABC& ghost );
     virtual QColor FindColor( const kernel::Entity_ABC& entity );
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity );

@@ -15,6 +15,7 @@
 namespace kernel
 {
 class Agent_ABC;
+class UrbanObject_ABC;
 
 // =============================================================================
 /** @class  Model_ABC
@@ -33,17 +34,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual tools::Resolver_ABC< Team_ABC >& GetTeamResolver() const = 0;
-    virtual tools::Resolver_ABC< Formation_ABC >& GetFormationResolver() const = 0;
-    virtual tools::Resolver_ABC< Automat_ABC >& GetAutomatResolver() const = 0;
-    virtual tools::Resolver_ABC< Agent_ABC >& GetAgentResolver() const = 0;
+    virtual tools::Resolver_ABC< Team_ABC           >& GetTeamResolver() const = 0;
+    virtual tools::Resolver_ABC< Formation_ABC      >& GetFormationResolver() const = 0;
+    virtual tools::Resolver_ABC< Automat_ABC        >& GetAutomatResolver() const = 0;
+    virtual tools::Resolver_ABC< Agent_ABC          >& GetAgentResolver() const = 0;
     virtual tools::Resolver_ABC< KnowledgeGroup_ABC >& GetKnowledgeGroupResolver() const = 0;
-    virtual tools::Resolver_ABC< Object_ABC >& GetObjectResolver() const = 0;
-    virtual tools::Resolver_ABC< Population_ABC >& GetPopulationResolver() const = 0;
-    virtual tools::Resolver_ABC< Inhabitant_ABC >& GetInhabitantResolver() const = 0;
-    // $$$$ _RC_ JSR 2011-06-28: Passer TerrainObjectProxy dans clients_kernel pour remplacer ces méthodes
-    virtual Object_ABC* FindUrbanObject( unsigned int id ) const = 0;
-    virtual Object_ABC& GetUrbanObject( unsigned int id ) const = 0;
+    virtual tools::Resolver_ABC< Object_ABC         >& GetObjectResolver() const = 0;
+    virtual tools::Resolver_ABC< Population_ABC     >& GetPopulationResolver() const = 0;
+    virtual tools::Resolver_ABC< Inhabitant_ABC     >& GetInhabitantResolver() const = 0;
+    virtual tools::Resolver_ABC< UrbanObject_ABC    >& GetUrbanObjectResolver() const = 0;
     //@}
 };
 

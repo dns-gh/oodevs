@@ -15,7 +15,6 @@
 
 namespace gui
 {
-    class TerrainObjectProxy;
     class UrbanDisplayOptions;
 }
 
@@ -29,6 +28,7 @@ namespace sword
 namespace kernel
 {
     class Controllers;
+    class UrbanObject_ABC;
 }
 
 class ResourceNetworkModel;
@@ -40,7 +40,7 @@ class StaticModel;
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
+class UrbanModel : public tools::Resolver< kernel::UrbanObject_ABC >
                  , private boost::noncopyable
 {
 public:
@@ -57,8 +57,8 @@ public:
     void Update( const sword::ObjectUpdate& message );
 
     void Purge();
-    gui::TerrainObjectProxy& GetObject( unsigned long id ) const;
-    gui::TerrainObjectProxy* FindObject( unsigned long id ) const;
+    kernel::UrbanObject_ABC& GetObject( unsigned long id ) const;
+    kernel::UrbanObject_ABC* FindObject( unsigned long id ) const;
     //@}
 
 private:

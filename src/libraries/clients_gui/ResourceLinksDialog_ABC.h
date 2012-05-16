@@ -24,12 +24,11 @@ namespace kernel
     class Entity_ABC;
     class Object_ABC;
     class ResourceNetworkType;
+    class UrbanObject_ABC;
 }
 
 namespace gui
 {
-
-class TerrainObjectProxy;
 
 // =============================================================================
 /** @class  ResourceLinksDialog_ABC
@@ -39,7 +38,7 @@ class TerrainObjectProxy;
 // =============================================================================
 class ResourceLinksDialog_ABC : public RichDockWidget
                               , public tools::SelectionObserver_ABC
-                              , public tools::SelectionObserver_Base< TerrainObjectProxy >
+                              , public tools::SelectionObserver_Base< kernel::UrbanObject_ABC >
                               , public tools::SelectionObserver_Base< kernel::Object_ABC >
                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
@@ -76,7 +75,7 @@ private:
     virtual void DoValidate() = 0;
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const TerrainObjectProxy& proxy );
+    virtual void Select( const kernel::UrbanObject_ABC& object );
     virtual void Select( const kernel::Object_ABC& element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );

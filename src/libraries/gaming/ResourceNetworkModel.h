@@ -22,11 +22,6 @@ namespace kernel
     class ResourceNetworkSelectionObserver;
 }
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 // =============================================================================
 /** @class  ResourceNetworkModel
     @brief  ResourceNetworkModel
