@@ -46,7 +46,7 @@ public:
     virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const;
     virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const;
     virtual std::wstring           GetModuleFilename    () const;
-    virtual HANDLE                 MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid ) const;
+    virtual ProcessDescriptor      MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const;
     //@}
 
 private:

@@ -283,10 +283,11 @@ HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const
 // Name: Api::MakeProcess
 // Created: BAX 2012-05-15
 // -----------------------------------------------------------------------------
-HANDLE Api::MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid ) const
+ProcessDescriptor Api::MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const
 {
-    HANDLE reply = ::MakeProcess( app, args, run, log, pid );
-    if( !reply )
+    ProcessDescriptor proc;
+    proc.handle = ::MakeProcess( app, args, run, log, proc.pid );
+    if( !proc.handle )
         LOG_ERROR( log_ ) << "[win32] Unable to create process, " << GetLastError();
-    return reply;
+    return proc;
 }

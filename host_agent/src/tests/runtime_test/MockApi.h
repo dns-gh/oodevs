@@ -17,7 +17,7 @@ namespace test
     {
         MOCK_METHOD( GetLastError, 0 );
         MOCK_METHOD( EnumProcesses, 3 );
-        MOCK_METHOD( MakeProcess, 5 );
+        MOCK_METHOD( MakeProcess, 4 );
         MOCK_METHOD( CloseHandle, 1 );
         MOCK_METHOD( OpenProcess, 3 );
         MOCK_METHOD( GetProcessName, 3 );

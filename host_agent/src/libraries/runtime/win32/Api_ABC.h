@@ -15,6 +15,25 @@
 
 namespace runtime
 {
+// =============================================================================
+/** @class  ProcessDescriptor
+    @brief  ProcessDescriptor struct definition
+*/
+// Created: BAX 2012-05-16
+// =============================================================================
+struct ProcessDescriptor
+{
+    ProcessDescriptor() : handle( 0 ), pid( 0 )
+    {
+        // NOTHING
+    }
+    ProcessDescriptor( HANDLE handle, int pid ) : handle( handle ), pid( pid )
+    {
+        // NOTHING
+    }
+    HANDLE handle;
+    int pid;
+};
 
 // =============================================================================
 /** @class  Api_ABC
@@ -44,7 +63,7 @@ public:
     virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const = 0;
     virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const = 0;
     virtual std::wstring           GetModuleFilename    () const = 0;
-    virtual HANDLE                 MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log, int& pid ) const = 0;
+    virtual ProcessDescriptor      MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const = 0;
     //@}
 };
 

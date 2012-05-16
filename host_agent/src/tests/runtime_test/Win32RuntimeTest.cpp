@@ -132,8 +132,8 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
         boost::bind( &StringCompare, _1, app ),
         boost::bind( &StringCompare, _1, boost::algorithm::join( args, " " ) ),
         boost::bind( &StringCompare, _1, dir ),
-        boost::bind( &StringCompare, _1, logs ),
-        mock::any ).returns( dummy );
+        boost::bind( &StringCompare, _1, logs )
+        ).returns( ProcessDescriptor( dummy, 1337 ) );
     MOCK_EXPECT( api.CloseHandle ).once().with( dummy ).returns( true );
     MOCK_EXPECT( api.GetProcessName ).once().with( dummy, mock::any, mock::any ).returns( 0 );
     runtime.Start( app, args, dir, logs );
