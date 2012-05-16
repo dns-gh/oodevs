@@ -48,9 +48,9 @@ bool FileLoaderObserver::NotifySignatureError( const std::string& file, const to
 // Name: FileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::exception& )
+bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::exception& e )
 {
-    malformedFiles_.append( "\n" + bfs::path( file, bfs::native ).leaf() );
+    malformedFiles_.append( "\n" + bfs::path( file, bfs::native ).leaf() + " :\t" + e.what() );
     return true;
 }
 
