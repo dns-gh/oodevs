@@ -115,8 +115,6 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
     }
     else
     {
-        return; // temp
-
         if( polygon_.IsEmpty() )
         {
             std::vector< geometry::Point2f > points;
