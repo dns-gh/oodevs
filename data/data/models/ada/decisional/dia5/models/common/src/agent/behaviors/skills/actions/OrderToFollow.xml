@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.MakeFollow" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.OrderToFollow" source-version="1.0.0">
     <description>For an agent to make follow a given entity ('follower').</description>
     <parameters>
         <parameter name="follower">
@@ -13,7 +13,7 @@
         <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
-        <feedback name="makeFollowActionCompleted">
+        <feedback name="orderToFollowActionCompleted">
             <description>Sent upon action completion (follower has be told to follow agent).</description>
         </feedback>
     </feedbacks>

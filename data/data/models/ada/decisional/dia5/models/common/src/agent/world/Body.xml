@@ -571,7 +571,7 @@ Returns 'true' when checkPoint is filtering.</description>
                 </type>
             </return>
         </method>
-        <method name="makeFollow">
+        <method name="orderToFollow">
             <description>For the agent, to ask a follower to follow it. Returns 'true' upon action completion.</description>
             <argument name="follower">
                 <description>The entity to make follow the agent.</description>

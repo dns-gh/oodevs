@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.MakeFollow" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.OrderToFollow" source-version="1.0.0">
     <description>To order a set of given units (teammates) to follow agent.&#xD;
 The agent acts on each unit by following the order of the units into the 'units' list. &#xD;
 A unit won't follow if it cannot perform the mission (the mission is not activated in authoring tool for this type of unit).</description>
     <parameters>
         <parameter name="followers">
-            <description>The units to make follow me. </description>
+            <description>The units to order to follow me. </description>
             <type>
                 <list>
                     <class name="agent.world.Follower"/>
@@ -20,8 +20,8 @@ A unit won't follow if it cannot perform the mission (the mission is not activat
         <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To reach each unit and ask to follow.</description>
         </link>
-        <link name="makeFollow" skill="agent.behaviors.skills.actions.MakeFollow">
-            <description>To enact the decision of making follow the given followers.</description>
+        <link name="orderToFollow" skill="agent.behaviors.skills.actions.OrderToFollow">
+            <description>To enact the decision of ordering the given followers to follow.</description>
         </link>
     </links>
     <feedbacks>

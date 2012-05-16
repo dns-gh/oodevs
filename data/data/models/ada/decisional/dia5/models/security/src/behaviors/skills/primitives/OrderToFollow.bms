@@ -1,5 +1,5 @@
 -- **************************************************************************** 
--- To make follow a set of specified agents
+-- To order to follow a set of specified agents
 -- @params: self.params.Agents, a masalife list of Agents (teammate or 
 -- non-teammate units)
 -- @returns: follower: agent that have told to follow.
@@ -7,7 +7,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.reach, skill.links.makeFollow },
+    connections = { skill.links.reach, skill.links.orderToFollow },
     feedbacks   = { "followed", "notfollowed" },
 
     -- -------------------------------------------------------------------------------- 
@@ -17,13 +17,13 @@ rootnode
         self.arrived = true
     end,
 
-    makeFollowActionCompleted = function( self, params ) -- call by MakeFollow node
+    orderToFollowActionCompleted = function( self, params ) -- call by orderToFollow action skill
         Feedback( self.feedbacks.followed, { follower = params.follower }  )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
 
-    impossibleToMakeFollow = function( self, params ) -- call in this skill
+    impossibleToOrderToFollow = function( self, params ) -- call in this skill
         meKnowledge:sendReport( eRC_EntityCannotFollow )
         Feedback( self.feedbacks.notFollowed, { follower = params.follower } )
         self.nextTargetIndex = self.nextTargetIndex + 1
@@ -50,9 +50,9 @@ rootnode
                 self.follower = self.params.followers[ self.nextTargetIndex ]
                 if self.arrived then
                     if self.follower:canFollowMe() then
-                        Activate( skill.links.makeFollow, 1, { follower = self.follower } )
+                        Activate( skill.links.orderToFollow, 1, { follower = self.follower } )
                     else
-                        self:impossibleToMakeFollow( { follower = self.follower } )
+                        self:impossibleToOrderToFollow( { follower = self.follower } )
                     end
                 else
                     Activate( skill.links.reach, 1, { destination = self.follower } )

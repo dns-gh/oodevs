@@ -608,7 +608,7 @@ Agent can be decontaminated only if issued decontamination site is being operate
                 </type>
             </return>
         </method>
-        <method name="makeFollow" abstract="false">
+        <method name="orderToFollow" abstract="false">
             <description>For the agent, to ask a follower to follow it. Returns 'true' upon action completion.&#xD;
 &#xD;
 This implementation returns 'true' once the agent has sent a message to the follower asking to follow it. The follower is free to accept or decline the request. This implementation does not take this response into account (the method will return 'true' even if the follower declines the order).&#xD;

@@ -310,9 +310,9 @@ method "beDecontaminated" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Make agents follow me
+-- Order to agents to follow me
 -- --------------------------------------------------------------------------------
-method "makeFollow" ( masalife.brain.integration.startStopAction( 
+method "orderToFollow" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self, agent )
         meKnowledge:sendReport( eRC_EntityHasBeenOrderedToFollow )

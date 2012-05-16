@@ -2009,7 +2009,7 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.MoveTo" dia-type="behaviors.tasks.MoveTo" id="4442" name="MLSECURITY - Move toward">
       <description>
-        <doctrine><![CDATA[To move alonh waypoints to reach a specified destination. Agent will try to get as close as it is possible to the target destination.]]></doctrine>
+        <doctrine><![CDATA[To move along waypoints to reach a specified destination. Agent will try to get as close as it is possible to the target destination.]]></doctrine>
         <usage><![CDATA[The agent compute its path toward the issued destination. If urgency mode is set to "true" (optional parameter), agent will try to reach the destination as quick as possible depending on its physical capability.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2031,8 +2031,8 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.Follow" dia-type="behaviors.tasks.Follow" id="4443" name="MLSECURITY - Follow">
       <description>
-        <doctrine><![CDATA[To follow a set of motile agents (unit or crowd). A set of positions can be issued if necessary.]]></doctrine>
-        <usage><![CDATA[Agent will follow the nearest target, try to find position to stay nearby. If positions are issued, agent will choose the position allowing to stay as close as it is possible to the choosen target.]]></usage>
+        <doctrine><![CDATA[To follow a set of agents (unit or crowd).]]></doctrine>
+        <usage><![CDATA[The agent will follow the nearest target agent by trying to find nearby positions. If specific positions are issued, agent will choose the position allowing it to stay as close as it is possible to the choosen target.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2059,15 +2059,15 @@ overwhelming force.]]></doctrine>
     <mission dia-behavior="tasks.ConfineUrbanBlocksWithinArea" dia-type="tasks.ConfineUrbanBlocksWithinArea" id="4444" name="MLSECURITY - Confine urban blocks within area">
       <description>
         <doctrine><![CDATA[To confine a population into a set of given urban blocks located into a specific area.]]></doctrine>
-        <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent confine the populations therein, before moving to the next non visited urban block.  ]]></usage>
+        <usage><![CDATA[The agent visits each urban block within the specified area. Upon reaching a urban block, in case it is populated, the agent confine the populations therein, before moving to the next non visited urban block.  ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to confine" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="Area to confine urban blocks within" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoConfineUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="MLSECURITY - Lift urban blocks confinement within area">
+    <mission dia-behavior="behaviors.tasks.UndoConfineUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="MLSECURITY - Lift confinement on urban blocks  within area">
       <description>
         <doctrine><![CDATA[To lift the confinement of a population in several urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-confines the populations therein, before moving to the next non visited urban block.  ]]></usage>
@@ -2081,7 +2081,7 @@ overwhelming force.]]></doctrine>
     <mission dia-behavior="behaviors.tasks.IncreaseResourceNodeProduction" dia-type="behaviors.tasks.IncreaseResourceNodeProduction" id="4446" name="MLSECURITY - Increase resource node production">
       <description>
         <doctrine><![CDATA[To increase the production efficiency of a specified resource node. ]]></doctrine>
-        <usage><![CDATA[Agent moves toward the resource node and increase production with a specified quantity. Quantity is an optional parameter (default is 100).]]></usage>
+        <usage><![CDATA[Agent moves toward the resource node and increase its production with a specified quantity. Quantity is an optional parameter (default is 100).]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2093,7 +2093,7 @@ overwhelming force.]]></doctrine>
     <mission dia-behavior="behaviors.tasks.EvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="MLSECURITY - Evacuate urban blocks within area ">
       <description>
         <doctrine><![CDATA[To evacuate a population from several urban blocks located into the given area.]]></doctrine>
-        <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent Evacuate the populations therein, before moving to the next non visited urban block.]]></usage>
+        <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent evacuates it (it evacuates the populations therein), before moving to the next non visited urban block.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2101,7 +2101,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="MLSECURITY - Lift urban blocks evacuation within area">
+    <mission dia-behavior="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="MLSECURITY - Lift evacuation on urban blocks  within area">
       <description>
         <doctrine><![CDATA[To lift the evacuation of population from several urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-evacuates the populations therein, before moving to the next non visited urban block.]]></usage>
@@ -2114,26 +2114,26 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.EnsureVictimsEvacuation" dia-type="behaviors.tasks.EnsureVictimsEvacuation" id="4450" name="MLSECURITY - Ensure victims evacuation">
       <description>
-        <doctrine><![CDATA[To ensure evacuation of wounded humans of a specified agent, throught a medical unit (TC2)]]></doctrine>
-        <usage><![CDATA[Agent visits each units to extratct wounded humans from them. Order of traversal is user specified. Upon reaching a victim unit, in case there are victims therein, agent will make victims evcuate through the medical unit. Evacuation is possible only if target units are accessible and contain victims.]]></usage>
+        <doctrine><![CDATA[To ensure evacuation of wounded humans of a specified agent, throught a medical unit.]]></doctrine>
+        <usage><![CDATA[The agent visits each units to extratct wounded from. Order of traversal is user specified. Upon reaching a victim unit, in case there are victims therein, the agent will make victims evcuate through the medical unit. Evacuation becomes possible only if the target units (the victims) are accessible and contain victims.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="victimsUnits" max-occurs="unbounded" min-occurs="1" name="victim units" optional="false" type="Agent"/>
-      <parameter dia-name="medicalUnit" name="medical unit (TC2)" optional="false" type="Agent"/>
+      <parameter dia-name="medicalUnit" name="medical unit (such as TC2)" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.ExtractVictimsFromCrowds" dia-type="behaviors.tasks.ExtractVictimsFromCrowds" id="4451" name="MLSECURITY - Extract victims from crowds">
       <description>
-        <doctrine><![CDATA[To extract victims from a set of given crowds agent]]></doctrine>
-        <usage><![CDATA[Agent visits each crowds to extratct wounded humans from them. Order of traversal is user specified. Upon reaching a crowd, in case there are victims therein, agent will extract victims from it by creating a new crowd (with extracted victims) before moving to the next non visited Crowd. Ectraction is possible only if target crowds are accessible and contain victims.]]></usage>
+        <doctrine><![CDATA[To extract victims from a set of given crowds.]]></doctrine>
+        <usage><![CDATA[The agent visits each crowd to extract wounded humans from. Order of traversal is user specified. Upon reaching a crowd, in case there are victims therein, agent will extract victims from it by creating a new crowd (with only extracted victims) before moving to the next non visited crowd. The extraction is possible only if the target crowds are accessible and contain victims.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowds" max-occurs="unbounded" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
+      <parameter dia-name="crowds" max-occurs="unbounded" min-occurs="1" name="crowds to extract victims from" optional="false" type="LocationComposite">
         <choice>
           <parameter type="CrowdKnowledge"/>
         </choice>
@@ -2142,15 +2142,15 @@ overwhelming force.]]></doctrine>
     <mission dia-behavior="behaviors.tasks.AlertUrbanBlocksWithinArea" dia-type="behaviors.tasks.AlertUrbanBlocksWithinArea" id="4452" name="MLSECURITY - Alert urban blocks within area">
       <description>
         <doctrine><![CDATA[To alert populations from urban blocks located in the specified area.]]></doctrine>
-        <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
+        <usage><![CDATA[The agent visits each urban block within the specified area. Upon reaching a urban block, in case it is populated, it alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="Area to alert urban blocks therein" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" id="4453" name="MLSECURITY - Lift urban blocks alert within area">
+    <mission dia-behavior="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" id="4453" name="MLSECURITY - Lift alert on urban blocks within area">
       <description>
         <doctrine><![CDATA[To un-alert populations from urban blocks located in the specified area.]]></doctrine>
         <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
@@ -2163,8 +2163,8 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.ActivateResourceNodes" dia-type="behaviors.tasks.ActivateResourceNodes" id="4454" name="MLSECURITY - Enable resource nodes">
       <description>
-        <doctrine><![CDATA[To enable specified resource nodes in urban blocks.]]></doctrine>
-        <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are not already activated, agent activates them, before moving to the next urban block containng resource nodes to activate.]]></usage>
+        <doctrine><![CDATA[To enable a set of resource nodes.]]></doctrine>
+        <usage><![CDATA[The agent visits each urban block containing specified resource nodes. The order of traversal is that of inputed resource nodes. Upon reaching a node, in case the resource node is deactivated, the agent activates it, before moving to the next urban block containing the next resource node to activate.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2174,8 +2174,8 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.DeactivateResourceNodes" dia-type="behaviors.tasks.DeactivateResourceNodes" id="4455" name="MLSECURITY - Disable resource nodes">
       <description>
-        <doctrine><![CDATA[To disable specified resource nodes in urban blocks.]]></doctrine>
-        <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are activated, agent desactivates them, before moving to the next urban block containng resource nodes to desactivate.]]></usage>
+        <doctrine><![CDATA[To disable a set of resource nodes.]]></doctrine>
+        <usage><![CDATA[The agent visits each urban block containing specified resource nodes. The order of traversal is that of inputed resource nodes. Upon reaching a node, in case the resource node is activated, the agent deactivates it, before moving to the next urban block containing the next resource node to deactivate.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2203,9 +2203,9 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.Transport" dia-type="behaviors.tasks.Transport" id="4457" name="MLSECURITY - Transport units">
       <description>
-        <doctrine><![CDATA[To transport a set of units on a target position.]]></doctrine>
-        <usage><![CDATA[To transport entities ( agents and/or knowledge agents) on a specified position. 
-Entities are visited in the order of the list and are loaded on the agent. Once all elements are loaded (some entities could not be loaded), the agent moves toward issued destination and unload transported entities, one by one. ]]></usage>
+        <doctrine><![CDATA[To transport a set of units on a target position. Here, the agent loads as many units as it is specified (magic transport).]]></doctrine>
+        <usage><![CDATA[The agent moves toward each unit to transport and loads it. 
+Units are visited in the order of the list. Once all elements are loaded (some entities could not be loaded), the agent moves toward issued destination and unload transported entities, one by one. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2226,12 +2226,12 @@ Entities are visited in the order of the list and are loaded on the agent. Once 
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.TransportACrowd" dia-type="behaviors.tasks.TransportACrowd" id="4459" name="MLSECURITY - TransportACrowd">
+    <mission dia-behavior="behaviors.tasks.TransportACrowd" dia-type="behaviors.tasks.TransportACrowd" id="4459" name="MLSECURITY - Transport a crowd">
       <description>
-        <doctrine><![CDATA[To transport a entire 'Crowd' toward a given destination. 
+        <doctrine><![CDATA[To transport a entire 'Crowd' to a given destination. 
 ]]></doctrine>
-        <usage><![CDATA[Agent transports a Crowd's concentration nearby the loading position paramter. 
-Depending on its crowd transport capacity, agent will make as many round trips as necessary between loading position and target destination, until there is no more Crowd's concentration nearby the loading position.]]></usage>
+        <usage><![CDATA[The agent transports a Crowd's concentration nearby the loading position parameter. 
+Depending on its crowd transport capacity, the agent will make as many round trips as necessary between loading position and the target destination, until there is no more Crowd's concentration nearby the loading position.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2250,14 +2250,14 @@ Depending on its crowd transport capacity, agent will make as many round trips a
     </mission>
     <mission dia-behavior="behaviors.tasks.ExtinguishAFire" dia-type="behaviors.tasks.ExtinguishAFire" id="4460" name="MLSECURITY - Extinguish a fire">
       <description>
-        <doctrine><![CDATA[To extinguish  a given arson/fire, and then move to  a garage position.]]></doctrine>
-        <usage><![CDATA[The fiire won't be extinguished (agent unit won't act on it) if it is already extinguished or if it doesn't exist anymore.]]></usage>
+        <doctrine><![CDATA[To extinguish a given fire]]></doctrine>
+        <usage><![CDATA[Tha agent moves toward an extinguishing position and extinguishes the fire. Once it is done, it moves to a garage position. Beware of having adapted capabilities to extinguish the selected fire.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="fire" name="Fire to extinguish" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="fire" name="The fire to extinguish" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="garagePosition" name="Garage position" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2270,27 +2270,24 @@ Depending on its crowd transport capacity, agent will make as many round trips a
     <mission dia-behavior="behaviors.tasks.ExtinguishFiresWithinArea" dia-type="behaviors.tasks.ExtinguishFiresWithinArea" id="4461" name="MLSECURITY - Extinguish fires within area">
       <description>
         <doctrine><![CDATA[To extinguish a set of  arson/fire retrieved in the issued area.]]></doctrine>
-        <usage><![CDATA[To extinguish a set of 'Fire' in a specified zone.
-
-When several fires should be extinguished, the agent acts on each fire by following the order of the elements into the 'fires' list (the one returned by the query used in this task to retrieve fires in the given area). A visited fie won't be extinguished if it is already extinguished or if it doesn't exist anymore.]]></usage>
+        <usage><![CDATA[The agent visits each fire within the specified area. Upon reaching a fire, in case it is not already extinguished, it tries to extinguish it, before moving to the next fire.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="area" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="area to extinguish fires within" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.Decontaminate" dia-type="behaviors.tasks.Decontaminate" id="4462" name="MLSECURITY - Decontaminate">
       <description>
-        <doctrine><![CDATA[For an agent to know how to decontaminate a set of elements.
-Elements are visited in the order of the list. Agent will protect itself with NBC protection equipement before moving toward decontamination sites. Each decontamination may take time.]]></doctrine>
-        <usage><![CDATA[Decontaminating a site ("contaminated site") prevent units from being contaminated. It prevents the creation and the dispersion of a contaminated cloud that can cause injuries on units.]]></usage>
+        <doctrine><![CDATA[To go and decontaminate a set of contaminated sites (zones and/or urban blocks). An agent in a contaminated site, becomes "contaminated" (and may be wounded).]]></doctrine>
+        <usage><![CDATA[The agent visits each issued site to decontaminate (a zone or a urban block). Upon reaching a site, it decontaminates it before moving to the next non visited site. The agent will protect itself with NBC protection equipement before moving toward decontamination sites. Each decontamination may take time.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="contaminatedElements" max-occurs="unbounded" min-occurs="1" name="Elements to decontaminate" optional="false" type="LocationComposite">
+      <parameter dia-name="contaminatedElements" max-occurs="unbounded" min-occurs="1" name="Elements to decontaminate (zones and/or urban blocks)" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
@@ -2392,9 +2389,9 @@ A visited object won't be created and build if agent doesn't have the physical c
     </mission>
     <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks2" id="4475" name="MLSECURITY - Resume public works">
       <description>
-        <doctrine><![CDATA[To fix and/or resume already existing works.]]></doctrine>
-        <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
-A visited object won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources to do it. In that specific case, agent will decide to visit the next one. The mission is done when all works have been visited (even if one one the objects could be built).]]></usage>
+        <doctrine><![CDATA[To fix and/or build already existing works.]]></doctrine>
+        <usage><![CDATA[For the agent to know how to build a set of given objects. When several elements should be built, the agent acts on each object by following the order of the elements into the list. 
+A visited object won't be built if the agent doesn't have the physical capability or if it hasn't enough resources to do it. In that specific case, agent will decide to visit the next one. The mission is done when all works have been visited (even if some of them couldn't be built).]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2413,7 +2410,7 @@ A visited object won't be created and build if agent doesn't have the physical c
     <mission dia-behavior="behaviors.tasks.BuildAnObjectFromAPosition" dia-type="behaviors.tasks.BuildAnObjectFromAPosition" id="4476" name="MLSECURITY - Perform a bomb attack (from a position)">
       <description>
         <doctrine><![CDATA[To plant and activate a bomb on specific location]]></doctrine>
-        <usage><![CDATA[For an agent to know how to plant and activate a bomb on a sepcified location. The agent will move to the bomb location, then reach the  activation position and then activate the bomb.]]></usage>
+        <usage><![CDATA[For the agent to know how to plant and activate a bomb on a sepcified location. The agent will move to the bomb location, then reach the activation position and then activate the bomb. The explosion is here modeled with an "bomb" object]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2432,9 +2429,10 @@ A visited object won't be created and build if agent doesn't have the physical c
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks3" id="4477" name="MLSECURITY - Start up fires">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks3" id="4477" name="MLSECURITY - Light up fires">
       <description>
-        <doctrine><![CDATA[To start multiple fires]]></doctrine>
+        <doctrine><![CDATA[To light several fires up.]]></doctrine>
+        <usage><![CDATA[The agent moves toward each fire and light them up.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2450,8 +2448,8 @@ A visited object won't be created and build if agent doesn't have the physical c
     </mission>
     <mission dia-behavior="behaviors.tasks.CreateThenOperate" dia-type="behaviors.tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and operate">
       <description>
-        <doctrine><![CDATA[To create and operate a given system.]]></doctrine>
-        <usage><![CDATA[Agent moves toward the planned system (a planned object as a decontamination site), create it and then operate it. ]]></usage>
+        <doctrine><![CDATA[To create and operate a given element (a planned object as a decontamination site).]]></doctrine>
+        <usage><![CDATA[The agent moves toward the element (a planned object as a decontamination site), creates it and then operates it. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2469,7 +2467,7 @@ A visited object won't be created and build if agent doesn't have the physical c
     </mission>
     <mission dia-behavior="behaviors.tasks.CreateThenFilter" dia-type="behaviors.tasks.CreateThenFilter" id="4479" name="MLSECURITY - Create and use a checkpoint (filter crowds)">
       <description>
-        <doctrine><![CDATA[To create and use a given checkpoint object to filter encountered crowds.]]></doctrine>
+        <doctrine><![CDATA[To create and use a given checkpoint object to filter crowds.]]></doctrine>
         <usage><![CDATA[Agent moves toward the planned checkpoint, creates it and then uses it to filter crowds. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2486,8 +2484,8 @@ A visited object won't be created and build if agent doesn't have the physical c
     </mission>
     <mission dia-behavior="behaviors.tasks.Filter" dia-type="behaviors.tasks.Filter" id="4480" name="MLSECURITY - Use a checkpoint (filter crowds)">
       <description>
-        <doctrine><![CDATA[To use a given object to filter crowds]]></doctrine>
-        <usage><![CDATA[Agent moves toward the object, and uses it to filter crowds. ]]></usage>
+        <doctrine><![CDATA[To use a given' checkpoint' object to filter crowds]]></doctrine>
+        <usage><![CDATA[Agent moves toward the object, and uses it to filter crowds. If intensity is set to 100%, crowds trying to go through the checkpoint will be stopped.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2498,8 +2496,8 @@ A visited object won't be created and build if agent doesn't have the physical c
     </mission>
     <mission dia-behavior="behaviors.tasks.Operate" dia-type="behaviors.tasks.Operate" id="4482" name="MLSECURITY - Operate">
       <description>
-        <doctrine><![CDATA[To  operate a given object.]]></doctrine>
-        <usage><![CDATA[Agent moves toward the planned object, create it and then operate it. ]]></usage>
+        <doctrine><![CDATA[To  operate a given element (such as a decontamination site).]]></doctrine>
+        <usage><![CDATA[Agent moves toward the element to operate (such as a decontamination site) and then operate it. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2510,14 +2508,14 @@ A visited object won't be created and build if agent doesn't have the physical c
     <mission dia-behavior="behaviors.tasks.HealVictimsWithinCrowds" dia-type="behaviors.tasks.HealVictimsWithinCrowds" id="4483" name="MLSECURITY - Heal victims within crowds">
       <description>
         <doctrine><![CDATA[To heal all the victims within issued crowds.]]></doctrine>
-        <usage><![CDATA[When several crowds  should be healed, the agent acts on each one by following the order of the elements into the 'crowds' list. 
-A crowd won't be healed if it could not be reached (it has moved away or it is localized in a non accessible urban block).]]></usage>
+        <usage><![CDATA[The agent visits and heal wounded humans of each visted crowd. The order of visit depends on the order of elements into the 'crowds' list. 
+A visted crowd won't be healed if it could not be reached by the agent (it has moved away or it is localized in a non accessible urban block).]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowds" max-occurs="unbounded" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
+      <parameter dia-name="crowds" max-occurs="unbounded" min-occurs="1" name="crowds to heal victims within" optional="false" type="LocationComposite">
         <choice>
           <parameter type="CrowdKnowledge"/>
         </choice>
@@ -2525,10 +2523,10 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
     </mission>
     <mission dia-behavior="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" dia-type="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" id="4484" name="MLSECURITY - Attack urban blocks within area (with projectiles)">
       <description>
-        <doctrine><![CDATA[For an agent to launch a specified quantity of projectiles on a given set of urban blocks target within a specified area.]]></doctrine>
-        <usage><![CDATA[Agent will move toward each target until it is able to launch the projectile.
+        <doctrine><![CDATA[For an agent to launch a specified quantity of projectiles on a given set of urban blocks  within a specified area.]]></doctrine>
+        <usage><![CDATA[The agent will move toward each urban block until it is able to launch the projectile.
 
-A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation). In that specific case, agent will decide to act on the next urban block. In some cases (long range type of projectiles) the agent won't move.]]></usage>
+A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation. In that specific case, agent will decide to act on the next urban block. In some cases (long range type of projectiles) the agent won't move from its initial position.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2538,10 +2536,10 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
       <parameter dia-name="dotationType" name="dotation type" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CommitSuicideAttack" dia-type="behaviors.tasks.CommitSuicideAttack" id="4485" name="MLSECURITY - Commit suicide attack (on units)">
+    <mission dia-behavior="behaviors.tasks.CommitSuicideAttack" dia-type="behaviors.tasks.CommitSuicideAttack" id="4485" name="MLSECURITY - Commit a suicide attack (against units)">
       <description>
-        <doctrine><![CDATA[To commit a suicide attack on a given target agent.]]></doctrine>
-        <usage><![CDATA[Agent unit will follow the target agent (a non-teammate, a teammate or a crowd) and launch the choosen projectile on it. This skill make agent unit commit suicide, using the "commitSuicide" action on itself.]]></usage>
+        <doctrine><![CDATA[To commit a suicide attack on a given target agent. Here, the agent uses a projectile on its own position to simulate a bomb explosion.]]></doctrine>
+        <usage><![CDATA[The agent will follow the target agent (a non-teammate, a teammate or a crowd) to reach its position. Once the target is reached, the agent will launch the issued projectile on its own position. At the end of the mission, the agent is dead.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2555,12 +2553,12 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
         </choice>
       </parameter>
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
-      <parameter dia-name="dotationType" name="type of dotation" optional="false" type="ResourceType"/>
+      <parameter dia-name="dotationType" name="type of dotation to use" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.BeDecontaminated" dia-type="behaviors.tasks.BeDecontaminated" id="4486" name="MLSECURITY - Be decontaminated">
+    <mission dia-behavior="behaviors.tasks.BeDecontaminated" dia-type="behaviors.tasks.BeDecontaminated" id="4486" name="MLSECURITY - Go get decontaminated">
       <description>
-        <doctrine><![CDATA[To be decontaminated through a decontamination site.]]></doctrine>
-        <usage><![CDATA[The agent moves to the given decontamination site. Once it is reached, agent ask for decontamination. Once agent is decontaminated, it moves to a given garage position. Decontamination site must be operated to decontaminate. If not agent stays nearby the site until it can be decontaminated. ]]></usage>
+        <doctrine><![CDATA[To get decontaminated through a decontamination site.]]></doctrine>
+        <usage><![CDATA[The agent moves to the given decontamination site. Once it is reached, agent ask for decontamination. Once agent is decontaminated, it moves to a given garage position. Decontamination site must be operated to decontaminate. If it is not, agent stays nearby the site until it can be decontaminated or a new mission is issued. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2576,10 +2574,10 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.StayInCrowd" dia-type="behaviors.tasks.StayInCrowd" id="4487" name="MLSECURITY - Stay in crowd">
+    <mission dia-behavior="behaviors.tasks.StayInCrowd" dia-type="behaviors.tasks.StayInCrowd" id="4487" name="MLSECURITY - Stay/hide within a crowd">
       <description>
         <doctrine><![CDATA[To stay in a given crowd]]></doctrine>
-        <usage><![CDATA[Agent moves to the given crowd. Then, it stays within it, and moves with it if necessary.]]></usage>
+        <usage><![CDATA[The agent moves to the given crowd. Then, it stays within it by following the head of the crowd.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2589,8 +2587,8 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     </mission>
     <mission dia-behavior="behaviors.tasks.Reinforce" dia-type="behaviors.tasks.Reinforce" id="4488" name="MLSECURITY - Reinforce">
       <description>
-        <doctrine><![CDATA[To reinforce a given unit with agent's physical capabilities (target unit will be aumented with agent's physical capabilities).]]></doctrine>
-        <usage><![CDATA[Agent moves toward the unit. Once it is reached, agent reinforce it. The target unit won't be reinforced if it cannot be reached. In that specific case, the mission ends.]]></usage>
+        <doctrine><![CDATA[To reinforce a given unit with the agent's physical capabilities (target unit will be augmented with agent's physical capabilities).]]></doctrine>
+        <usage><![CDATA[The agent moves toward the unit. Once it is reached, the agent reinforces it. The target unit won't be reinforced if it cannot be reached. In that specific case, the mission ends.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2598,12 +2596,11 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="agent" name="unit to reinforce" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.MakeFollow" dia-type="behaviors.tasks.MakeFollow" id="4489" name="MLSECURITY - Make follow">
+    <mission dia-behavior="behaviors.tasks.OrderToFollow" dia-type="behaviors.tasks.OrderToFollow" id="4489" name="MLSECURITY - Order to follow">
       <description>
-        <doctrine><![CDATA[To order a set of given units (teammates) to follow the subject agent.]]></doctrine>
-        <usage><![CDATA[
-The agent moves to each unit by following the order of the units into the list. 
-A unit won't follow if it cannot perform the mission (mission is not set for this type of unit).]]></usage>
+        <doctrine><![CDATA[To order a set of given units (teammates) to follow.]]></doctrine>
+        <usage><![CDATA[The agent moves toward each unit and order it to follow. The agent visits each unit by following the order of the units into the list. 
+A unit won't follow the agent if it cannot perform the mission (mission is not set for this type of unit).]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2614,7 +2611,7 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <mission dia-behavior="behaviors.tasks.Deconstruct" dia-type="behaviors.tasks.Deconstruct" id="4493" name="MLSECURITY - Deconstruct (and remove) works">
       <description>
         <doctrine><![CDATA[To deconstruct (and remove) a given set of works.]]></doctrine>
-        <usage><![CDATA[For an gent to know how to deconstruct a set of given works (objects or urban blocks). When several elements  should be visited, the agent acts on each element by following the order of the elements into the list. ]]></usage>
+        <usage><![CDATA[For the agent to know how to deconstruct a set of given works (objects or urban blocks). When several elements  should be visited, the agent acts on each element by following the order of the elements into the list. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2627,7 +2624,7 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <mission dia-behavior="behaviors.tasks.PatrolWithinArea" dia-type="behaviors.tasks.PatrolWithinArea" id="4494" name="MLSECURITY - Patrol within area">
       <description>
         <doctrine><![CDATA[To visit a given set of entities within the issued area.]]></doctrine>
-        <usage><![CDATA[Agent will move along positions. When it has visited the last position, the agent starts over with the first one. The set of entities and the order of visit are user defined.]]></usage>
+        <usage><![CDATA[Agent will move along positions within area. When it has visited the last position, the agent starts over with the first one. The set of entities and the order of visit are user defined. Beware of issuing an area that contains key points to move along (such as crossroads, urban blocks)]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4386,4 +4383,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1965975834" -->
+<!-- signature="1209464545" -->

@@ -1,14 +1,14 @@
 -- **************************************************************************** 
 -- To make follow an agent
 -- @params: self.params.follower, a masalife follower (teammate or non-teammate units)
--- @returns: makeFollowActionDone when unit has been told to follow.
+-- @returns: orderToFollowActionCompleted when unit has been told to follow.
 -- ****************************************************************************
 rootnode
 {
-    feedbacks = { "makeFollowActionCompleted" },
+    feedbacks = { "orderToFollowActionCompleted" },
     select = function( self )
-        if meKnowledge:makeFollow( self.params.follower ) then
-            Feedback( self.feedbacks.makeFollowActionCompleted )
+        if meKnowledge:orderToFollow( self.params.follower ) then
+            Feedback( self.feedbacks.orderToFollowActionCompleted )
         end
     end
 }

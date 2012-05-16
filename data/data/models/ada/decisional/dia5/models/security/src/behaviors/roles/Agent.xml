@@ -71,9 +71,9 @@
         <skill name="behaviors.skills.primitives.BeDecontaminated"/>
         <skill name="agent.behaviors.skills.actions.SelfDestruct"/>
         <skill name="agent.behaviors.skills.actions.SelfDecontaminate"/>
-        <skill name="behaviors.skills.primitives.MakeFollow"/>
+        <skill name="behaviors.skills.primitives.OrderToFollow"/>
         <skill name="agent.behaviors.skills.actions.Reinforce"/>
-        <skill name="agent.behaviors.skills.actions.MakeFollow"/>
+        <skill name="agent.behaviors.skills.actions.OrderToFollow"/>
         <skill name="behaviors.skills.primitives.Reinforce"/>
         <skill name="agent.behaviors.skills.actions.Dismount"/>
         <skill name="behaviors.skills.Dismount"/>
