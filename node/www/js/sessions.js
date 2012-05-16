@@ -26,9 +26,15 @@
   session_error_template = Handlebars.compile($("#session_error_template").html());
 
   print_error = function(text) {
-    return $("#session_error").html(session_error_template({
+    var ctl;
+    ctl = $("#session_error");
+    ctl.html(session_error_template({
       content: text
     }));
+    ctl.show();
+    return setTimeout((function() {
+      return ctl.hide();
+    }), 3000);
   };
 
   SessionItem = (function(_super) {

@@ -1,6 +1,7 @@
 [#ftl]
 <div class="row">
     <div class="span9">
+        <div id="upload_error"></div>
         <div class="hide">
             <iframe id="upload_target" name="upload_target"></iframe>
         </div>
@@ -21,6 +22,11 @@
             </span>
         </div>
         <div id="packages">
+            [#-- auto-generated templates --]
+            <script type="text/template" id="upload_error_template">
+                <div class="alert alert-error"><b>Error</b> {{content}} </div>
+                </div>
+            </script>            
             <script type="text/template" id="package_template">
                 <form class="well package">
                     <div class="package_name"> {{name}} {{version}} </div>

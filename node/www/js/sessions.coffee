@@ -17,7 +17,10 @@ session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
 
 print_error = (text) ->
-    $("#session_error").html session_error_template content: text
+    ctl = $("#session_error")
+    ctl.html session_error_template content: text
+    ctl.show()
+    setTimeout (-> ctl.hide()), 3000
 
 class SessionItem extends Backbone.Model
     view: SessionItemView
