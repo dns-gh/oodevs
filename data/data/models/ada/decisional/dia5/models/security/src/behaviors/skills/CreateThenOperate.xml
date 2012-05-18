@@ -18,6 +18,15 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="instantaneously">
+            <description>If this parameter is set to 'true', the agent will decide to create and build the given element instantaneously, without any physical capability considerations.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <body-type>
         <class name="ontology.classes.MeKnowledge"/>
@@ -39,6 +48,10 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
                     <class name="ontology.classes.Object"/>
                 </type>
             </argument>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the issued planned object could not have been created by the agent. &#xD;
+</description>
         </feedback>
     </feedbacks>
 </skill>

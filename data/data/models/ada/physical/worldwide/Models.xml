@@ -2597,12 +2597,12 @@
         <mission name="MLSECURITY - Decontaminate"/>
         <mission name="MLSECURITY - Perform public works"/>
         <mission name="MLSECURITY - Resume public works"/>
-        <mission name="MLSECURITY - Create and operate"/>
-        <mission name="MLSECURITY - Create and use a checkpoint (filter crowds)"/>
+        <mission name="MLSECURITY - Create and operate a decontamination site"/>
+        <mission name="MLSECURITY - Create and operate a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Light up fires"/>
         <mission name="MLSECURITY - Perform a bomb attack (from a position)"/>
-        <mission name="MLSECURITY - Operate"/>
-        <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
+        <mission name="MLSECURITY - Operate a decontamination site"/>
+        <mission name="MLSECURITY - Operate a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Heal victims within crowds"/>
         <mission name="MLSECURITY - Go get decontaminated"/>
         <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
@@ -2627,13 +2627,14 @@
         <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
         <mission name="MLSECURITY - Commit a suicide attack (against units)"/>
         <mission name="MLSECURITY - Increase resource node production"/>
-        <mission name="MLSECURITY - Operate"/>
+        <mission name="MLSECURITY - Operate a decontamination site"/>
         <mission name="MLSECURITY - Transport units"/>
-        <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
+        <mission name="MLSECURITY - Operate a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Stay/hide within a crowd"/>
         <mission name="MLSECURITY - Order to follow"/>
         <mission name="MLSECURITY - Reinforce"/>
         <mission name="MLSECURITY - Deconstruct (and remove) works"/>
+        <mission name="MLSECURITY - Damage urban blocks within area"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3877,4 +3878,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0943879742" -->
+<!-- signature="1376641700" -->

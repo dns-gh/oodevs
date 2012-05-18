@@ -57,7 +57,7 @@ Returns true once the agent has reached the end-point of the path (please note t
 This implementation  returns 'true' if the distance between the agent and the target is smaller than the maximum firing distance allowed by the given dotation and if the distance between the agent and the target is greater than the minimum firing distance allowed by the given dotation.&#xD;
 It returns 'false' otherwise.  &#xD;
 &#xD;
-If agent doesn't have adapted launcher for the dotation,  it returns false as well.</description>
+If agent doesn't have adapted launcher for the dotation,  it returns 'false' as well.</description>
             <argument name="typeOfResource">
                 <description>Type of resource (dotation) to launch on this element.</description>
                 <type>

@@ -28,6 +28,15 @@ The object won't be created and build if agent doesn't have the physical capabil
                 <boolean>true</boolean>
             </default>
         </parameter>
+        <parameter name="instantaneously">
+            <description>If this parameter is set to 'true', the agent will decide to create and build the given element instantaneously, without any physical capability considerations.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Operate a checkpoint" permanent="true">
@@ -36,6 +45,11 @@ The object won't be created and build if agent doesn't have the physical capabil
                     <parameter name="plannedWork">
                         <value>
                             <parameter>plannedWork</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="instantaneously">
+                        <value>
+                            <parameter>instantaneously</parameter>
                         </value>
                     </parameter>
                     <parameter name="intensity">

@@ -10777,13 +10777,13 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Terrorist that can perform arson etc." id="111" name="SECURITY.Terrorist" protection="UnarmouredVehicle" size="Small" weight="0.5">
-    <speeds max="90">
-      <speed terrain="unknown" value="30"/>
-      <speed terrain="forest" value="20"/>
-      <speed terrain="orchard" value="20"/>
+    <speeds max="60">
+      <speed terrain="unknown" value="10"/>
+      <speed terrain="forest" value="10"/>
+      <speed terrain="orchard" value="10"/>
       <speed terrain="swamp" value="0"/>
       <speed terrain="dune" value="0"/>
-      <speed terrain="urban area" value="30"/>
+      <speed terrain="urban area" value="10"/>
       <speed terrain="lake" value="0"/>
       <speed terrain="glacier" value="0"/>
       <speed terrain="forest edge" value="10"/>
@@ -10793,7 +10793,7 @@
       <speed terrain="swamp edge" value="0"/>
       <speed terrain="dune edge" value="0"/>
       <speed terrain="glacier edge" value="0"/>
-      <speed terrain="country road" value="30"/>
+      <speed terrain="country road" value="50"/>
       <speed terrain="highway" value="50"/>
       <speed terrain="main road" value="50"/>
       <speed terrain="secondary road" value="50"/>
@@ -10803,17 +10803,14 @@
       <speed terrain="bridge" value="20"/>
       <speed terrain="cliff" value="0"/>
       <speed terrain="railroad" value="5"/>
-      <speed terrain="crossroad" value="30"/>
+      <speed terrain="crossroad" value="50"/>
       <speed terrain="mountain" value="0"/>
       <speed terrain="mountain edge" value="0"/>
     </speeds>
     <composition>
       <category name="munition">
-        <resource capacity="120" logistic-threshold="0" name="Air Bomb" normalized-consumption="0"/>
-        <resource capacity="120" logistic-threshold="0" name="125-mm High Explosive Shell" normalized-consumption="0"/>
-        <resource capacity="100" logistic-threshold="0" name="81-mm Smoke Shell" normalized-consumption="0"/>
-        <resource capacity="150" logistic-threshold="0" name="56-mm Explosive Grenade" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="0" name="Homemade bomb" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="0" name="56-mm Explosive Grenade" normalized-consumption="0"/>
       </category>
       <category name="carburant">
         <resource capacity="60" logistic-threshold="1" name="Gasoil" normalized-consumption="60"/>
@@ -10821,9 +10818,6 @@
       </category>
       <category name="explosif">
         <resource capacity="200" logistic-threshold="10" name="Standard Explosive" normalized-consumption="0"/>
-      </category>
-      <category name="barbele">
-        <resource capacity="200" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="0"/>
       </category>
     </composition>
     <sensors>
@@ -10841,17 +10835,15 @@
       </consumption>
     </consumptions>
     <weapon-systems>
-      <weapon-system launcher="81-mm Mortar" munition="81-mm High Explosive Shell"/>
-      <weapon-system launcher="81-mm Mortar" munition="81-mm Smoke Shell"/>
-      <weapon-system launcher="Bomber Launcher" munition="Air Bomb"/>
       <weapon-system launcher="Hand" munition="Homemade bomb"/>
-      <weapon-system launcher="Bomber Launcher" munition="Antitank Air Bomb"/>
+      <weapon-system launcher="Hand" munition="56-mm Explosive Grenade"/>
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object initial-construction-time="60s" type="Destruction Bomb"/>
+      <object initial-construction-time="10s" type="Destruction Bomb"/>
       <object initial-construction-time="2m" type="Arson"/>
       <object initial-construction-time="120s" type="barricade"/>
+      <object initial-destruction-time="1h" type="urban block"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="50" type="Tire flat"/>
@@ -10865,4 +10857,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2703772767" -->
+<!-- signature="0967380073" -->

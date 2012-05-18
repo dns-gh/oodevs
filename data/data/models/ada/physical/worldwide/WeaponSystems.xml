@@ -1451,12 +1451,17 @@
   <weapon-system launcher="Hand" munition="Homemade bomb">
     <burst duration="20s" munition="1"/>
     <reloading duration="20s" munition="1"/>
-    <indirect-fire average-speed="30" max-range="300" min-range="0"/>
+    <indirect-fire average-speed="30" max-range="100" min-range="0"/>
   </weapon-system>
   <weapon-system launcher="Bomber Launcher" munition="Antitank Air Bomb">
     <burst duration="10s" munition="5"/>
     <reloading duration="10s" munition="5"/>
     <indirect-fire average-speed="200" max-range="5000" min-range="0"/>
   </weapon-system>
+  <weapon-system launcher="Hand" munition="56-mm Explosive Grenade">
+    <burst duration="10s" munition="1"/>
+    <reloading duration="10s" munition="1"/>
+    <indirect-fire average-speed="30" max-range="30" min-range="0"/>
+  </weapon-system>
 </weapons>
-<!-- signature="2855964915" -->
+<!-- signature="3676985928" -->

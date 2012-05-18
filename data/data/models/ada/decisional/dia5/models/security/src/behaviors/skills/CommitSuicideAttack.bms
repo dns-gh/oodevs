@@ -23,16 +23,16 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
-        -- skill failed if the agent cannot launch the projectile on the target unit.
-        if not self.params.targetAgent:canBeHit( self.params.dotationType ) then
-            meKnowledge:sendReport( eRC_TirIndirectNoCapacity )
-            Feedback( self.feedbacks.failed )
-        end
-
-        -- 
+        --  The target unit can be hit
         if self.params.targetAgent:isReached() then
-            Activate( skill.links.launchProjectile, 1, { target = self.params.targetAgent, 
-                      quantity = self.params.quantity, dotationType = self.params.dotationType } )
+                    -- skill failed if the agent cannot launch the projectile on the target unit.
+            if not self.params.targetAgent:canBeHit( self.params.dotationType ) then
+                meKnowledge:sendReport( eRC_TirIndirectNoCapacity )
+                --Feedback( self.feedbacks.failed )
+            else
+                Activate( skill.links.launchProjectile, 1, { target = self.params.targetAgent, 
+                          quantity = self.params.quantity, dotationType = self.params.dotationType } )
+            end
         else -- target is not reached, follow it
            Activate( skill.links.follow, 1, { elementsToFollow = { self.params.targetAgent }, positions = NIL , minDistance = 0 } )
         end

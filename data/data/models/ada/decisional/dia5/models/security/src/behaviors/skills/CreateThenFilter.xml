@@ -19,6 +19,15 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
                 <number>100.0</number>
             </default>
         </parameter>
+        <parameter name="instantaneously">
+            <description>If this parameter is set to 'true', the agent will decide to create and build the given element instantaneously, without any physical capability considerations.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
         <parameter name="removeWork">
             <description>Define if planned work that is beeing used to filter crowds need to be destroyed at the end of the skill.</description>
             <type>
@@ -49,6 +58,9 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
                     <class name="ontology.classes.Object"/>
                 </type>
             </argument>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the issued planned object could not have been created by the agent. </description>
         </feedback>
     </feedbacks>
 </skill>

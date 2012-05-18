@@ -56,4 +56,5 @@ method "launchProjectileOnIt" ( masalife.brain.integration.startStopAction(
         return integration.stopLaunchProjectile( self, dotation )
     end
 } ) )
+
 return {}

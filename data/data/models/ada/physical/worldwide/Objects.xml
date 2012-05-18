@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/Objects.xsd">
-  <object name="Mine Cluster" type="mines">
+  <object name="Destruction Bomb" type="mines">
     <geometries>
       <geometry symbol="G*MPOMC---****X" type="point"/>
     </geometries>
@@ -774,7 +774,7 @@
     <extinguishable/>
     <universal/>
   </object>
-  <object name="Destruction Bomb" point-size="100" type="Destruction Bomb">
+  <object name="Destruction Bomb" point-size="50" type="Destruction Bomb">
     <geometries>
       <geometry symbol="O*VPA-----*****" type="point"/>
     </geometries>
@@ -787,6 +787,7 @@
       </buildable>
     </constructor>
     <interaction-height height="100"/>
+    <time-limited/>
     <urban-destruction>
       <urban-modifier material-type="Wood" value="0"/>
       <urban-modifier material-type="Concrete" value="0.2"/>
@@ -798,4 +799,4 @@
     </urban-destruction>
   </object>
 </objects>
-<!-- signature="0053799765" -->
+<!-- signature="2091949886" -->

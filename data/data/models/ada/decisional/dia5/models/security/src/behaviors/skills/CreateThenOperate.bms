@@ -18,9 +18,19 @@ rootnode
         self.createdWork = additionalParams.work
         self.isCreated = true
     end,
+    notCreated = function( self, params, additionalParams ) -- call by 'Create' skill
+        Feedback( self.feedbacks.failed )
+    end,
 
     operating = function( self, params ) -- called by 'Operate' skill
         Feedback( self.feedbacks.operating, { object = params.system } )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.isCreated = false
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -30,7 +40,7 @@ rootnode
         local Activate = Activate
 
         if not self.isCreated then
-            Activate( skill.links.create, 1, { works = { self.params.plannedWork } } )
+            Activate( skill.links.create, 1, { works = { self.params.plannedWork }, instantaneously = self.params.instantaneously } )
         else
             Activate( skill.links.operate, 1, { system = self.createdWork } )
         end

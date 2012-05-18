@@ -3264,14 +3264,14 @@
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
     <postures>
-      <posture name="PosteReflexe" setup-time="0s"/>
-      <posture name="Poste" setup-time="0s"/>
-      <posture name="PosteAmenage" setup-time="0s"/>
-      <posture name="PostePrepareGenie" setup-time="0s"/>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="2m"/>
+      <posture name="PosteAmenage" setup-time="10m"/>
+      <posture name="PostePrepareGenie" setup-time="10m"/>
     </postures>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="2918542620" -->
+<!-- signature="1886288001" -->
