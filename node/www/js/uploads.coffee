@@ -31,6 +31,8 @@ class Package extends Backbone.Model
                 options.success, options.error
         return Backbone.sync method, model, options
 
+lastPop = null
+
 class PackageView extends Backbone.View
     el: $("#packages")
 
@@ -47,9 +49,29 @@ class PackageView extends Backbone.View
             for it in @model.attributes.items
                 continue unless it.type == "exercise"
                 $("#package_" + it.id).popover
+                    trigger:   "manual",
                     placement: "bottom",
                     title:     it.name,
                     content:   $("#package_" + it.id + "_briefing").contents()
+                .click ->
+                    if lastPop?
+                        if lastPop == @
+                            lastPop = null
+                            $(@).popover "hide"
+                            return
+                        else
+                            $(lastPop).popover "hide"
+                            $(@).popover "show"
+                    lastPop = @
+                    return
+                .mouseenter ->
+                    unless lastPop?
+                        $(@).popover "show"
+                    return
+                .mouseleave ->
+                    unless lastPop?
+                        $(@).popover "hide"
+                    return
         return
 
     update: (data) =>
