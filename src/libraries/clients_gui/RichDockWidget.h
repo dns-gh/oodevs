@@ -46,13 +46,14 @@ public:
     virtual void SetVisible( bool visible );
     virtual void ForceEnabled( bool enabled );
     virtual void EnsureIsEnabled();
+    virtual bool IsVisible() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    bool needRegister_;
+    bool                 needRegister_;
     //@}
 };
 

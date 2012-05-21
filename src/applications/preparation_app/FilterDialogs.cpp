@@ -9,10 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "FilterDialogs.h"
-
+#include "moc_FilterDialogs.cpp"
 #include "FilterDialog.h"
 #include "FilterOrbatReIndexer.h"
-#include "Menu.h"
 #include "FilterCsv.h"
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
@@ -24,12 +23,11 @@
 // Name: FilterDialogs constructor
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
-FilterDialogs::FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
-                              Menu& menu, const kernel::CoordinateConverter_ABC& converter )
-    : parent_   ( parent )
+FilterDialogs::FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model, const kernel::CoordinateConverter_ABC& converter )
+    : QObject( parent )
+    , parent_   ( parent )
     , config_   ( config )
     , model_    ( model )
-    , menu_     ( menu )
     , converter_( converter )
 {
     // NOTHING
@@ -59,7 +57,7 @@ void FilterDialogs::Load()
     Get( "export" ).AddFilter( *new FilterCsv( &Get( "export" ), config_, model_, converter_ ) );
     Get( "import" ).AddFilter( *new FilterOrbatReIndexer( parent_, config_, model_ ) );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->InsertMenuEntry( menu_ );
+        emit AddFilterMenuEntry( it->second->GetName(), it->second, SLOT( exec() ), it->second->GetKeySequence() );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +85,7 @@ void FilterDialogs::Load( xml::xistream& xis )
 void FilterDialogs::Purge()
 {
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        menu_.RemoveFileMenuEntry( FilterDialog::menuIndex_ );
+        emit RemoveFilterMenuEntry( it->second->GetName() );
     DeleteAll();
 }
 

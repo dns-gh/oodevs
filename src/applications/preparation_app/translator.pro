@@ -7,7 +7,7 @@ ColorEditor.cpp \
 CommunicationListView.cpp \
 ControlsChecker.cpp \
 CsvExport.cpp \
-DockManager.cpp \
+DockContainer.cpp \
 DotationsEditor.cpp \
 EditorFactory.cpp \
 ExerciseCreationDialog.cpp \
@@ -71,8 +71,11 @@ SymbolEditor.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
+TerrainToolBar.cpp \
 UnitStateDialog.cpp \
 UnitStateTableResource.cpp \
+UrbanInfosDockWidget.cpp \
+UsagesDockWidget.cpp \
 UserProfileList.cpp \
 UserProfileControls_ABC.cpp \
 UserProfileRights_ABC.cpp \

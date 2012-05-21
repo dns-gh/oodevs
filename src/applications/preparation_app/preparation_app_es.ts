@@ -209,7 +209,15 @@
     </message>
 </context>
 <context>
-    <name>DockManager</name>
+    <name>DockContainer</name>
+    <message>
+        <source>ORBAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
     <message>
         <source>Tactical</source>
         <translation type="unfinished"></translation>
@@ -219,8 +227,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Units</source>
-        <translation type="unfinished">Unidades</translation>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Objects</source>
@@ -235,19 +243,11 @@
         <translation type="unfinished">Poblaciones</translation>
     </message>
     <message>
-        <source>ORBAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -926,10 +926,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading filters ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading options ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -966,7 +962,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Orbat</source>
+        <source>Loading graphical interface ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2366,6 +2362,29 @@
     </message>
 </context>
 <context>
+    <name>TerrainToolBar</name>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished">Terreno</translation>
+    </message>
+    <message>
+        <source>Edit urban area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual block creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic block creation on built-up area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UnitStateDialog</name>
     <message>
         <source>Initial state</source>
@@ -2424,6 +2443,28 @@
     </message>
     <message>
         <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UrbanInfosDockWidget</name>
+    <message>
+        <source>Urban informations</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UsagesDockWidget</name>
+    <message>
+        <source>Usages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Agregar</translation>
+    </message>
+    <message>
+        <source>Proportion(%)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

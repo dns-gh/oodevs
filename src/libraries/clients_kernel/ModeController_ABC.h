@@ -34,10 +34,8 @@ public:
 
     //! @name Abstract operations
     //@{
-    virtual void Initialize() = 0;
     virtual void ChangeMode( int newMode ) = 0;
     virtual int GetCurrentMode() const = 0;
-    virtual void SaveGeometry() = 0;
     virtual const QString& GetRegisteryEntry() const = 0;
     //@}
 

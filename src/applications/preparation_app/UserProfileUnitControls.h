@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileUnitControls( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                                      gui::EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model );
+                                      const gui::EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model );
     virtual ~UserProfileUnitControls();
     //@}
 

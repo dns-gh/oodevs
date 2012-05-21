@@ -145,8 +145,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ControlsChecker.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\DialogContainer.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\DockContainer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ExtensionsPanel.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\DockManager.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterCsv.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterInputArgument.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterProxyModel.cpp" />
@@ -202,6 +203,8 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\StockPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SupplyRoutePrototype.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\TerrainToolBar.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\ToolbarContainer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UndergroundPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateDialog.cpp" />
@@ -209,6 +212,8 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UrbanListView.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanInfosDockWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\UsagesDockWidget.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileUnitControls.cpp" />
@@ -225,7 +230,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LimitsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ObjectsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PopulationsLayer.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\Dialogs.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ProfileDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ProfileEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UserProfileList.cpp" />
@@ -284,7 +288,8 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ControlsChecker_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\DockManager.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\DialogContainer.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\DockContainer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitControls.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -705,6 +710,21 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TerrainToolBar.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\ToolbarContainer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\TrafficabilityPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\UndergroundPrototype.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UnitStateDialog.h">
@@ -877,7 +897,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\ObjectsLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PopulationsLayer.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\Dialogs.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\ProfileDialog.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
@@ -916,6 +935,21 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\UrbanListView.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanInfosDockWidget.h" />
+    <CustomBuild Include="..\..\src\applications\preparation_app\UsagesDockWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileControls_ABC.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfilePopulationControls.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
@@ -1502,7 +1536,20 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\preparation_app\FilterDialogs.h" />
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterDialogs.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\FilterManager.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterOrbatReIndexer.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -1558,7 +1605,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\Menu.h">
+    <CustomBuild Include="..\..\src\applications\preparation_app\Menu.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
@@ -1575,7 +1622,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </ClInclude>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\icons.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h" />
   </ItemGroup>

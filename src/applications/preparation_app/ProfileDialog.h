@@ -43,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                            gui::EntitySymbols& icons, Model& model, const kernel::ExtensionTypes& extensions );
+                            const gui::EntitySymbols& icons, Model& model, const kernel::ExtensionTypes& extensions );
     virtual ~ProfileDialog();
     //@}
 

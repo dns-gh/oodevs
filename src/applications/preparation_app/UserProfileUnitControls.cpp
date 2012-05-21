@@ -32,7 +32,7 @@ using namespace kernel;
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------
 UserProfileUnitControls::UserProfileUnitControls( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory,
-                                                  EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model )
+                                                  const EntitySymbols& icons, ControlsChecker_ABC& checker, Model& model )
     : HierarchyListView< ProfileHierarchies_ABC >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , UserProfileControls_ABC( this, checker )
     , model_  ( model )

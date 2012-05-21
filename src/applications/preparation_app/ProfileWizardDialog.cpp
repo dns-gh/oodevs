@@ -10,9 +10,10 @@
 #include "preparation_app_pch.h"
 #include "ProfileWizardDialog.h"
 #include "moc_ProfileWizardDialog.cpp"
+#include "icons.h"
+#include "preparation/Model.h"
 #include "preparation/ProfilesGenerator.h"
 #include "preparation/ProfilesModel.h"
-#include "icons.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
@@ -45,10 +46,10 @@ namespace
 // Name: ProfileWizardDialog constructor
 // Created: SBO 2007-11-07
 // -----------------------------------------------------------------------------
-ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, ProfilesModel& profiles )
+ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
     : ModalDialog( parent, "ProfileWizardDialog" )
-    , generator_   ( new ProfilesGenerator( model, profiles ) )
-    , profiles_    ( profiles )
+    , generator_   ( new ProfilesGenerator( model, model.profiles_ ) )
+    , profiles_    ( model.profiles_ )
     , confirmation_( new ConfirmationBox( tr( "Warning" ), tr( "All existing profiles will be deleted, do you want to continue?" ), boost::bind( &ProfileWizardDialog::OnConfirmation, this, _1 ) ) )
 {
     setCaption( tr( "User profiles creation wizard" ) );

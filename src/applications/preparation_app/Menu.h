@@ -19,7 +19,6 @@ class FilterDialogs;
 
 namespace kernel
 {
-    class ContextMenu;
     class Controllers;
     class ModelLoaded;
     class ModelUnLoaded;
@@ -30,7 +29,10 @@ namespace gui
     class ItemFactory_ABC;
     class HelpSystem;
     class RichAction;
+    class RichMenu;
 }
+
+class DialogContainer;
 
 // =============================================================================
 /** @class  Menu
@@ -41,35 +43,35 @@ namespace gui
 class Menu : public QMenuBar
            , private boost::noncopyable
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog,
-          QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, 
-          QDialog& consistencyDialog, QDialog& performanceDialog,
-          gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs,
+                   gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
-    //@}
-
-    //! @name Operations
-    //@{
-    void InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel = 0, int index = -1 );
-    void RemoveFileMenuEntry( int index );
     //@}
 
     //! @name Accessors
     //@{
-    QAction* GetNewAction() const; // $$$$ ABR 2012-05-14: Add and use a QActionFactory
+    QAction* GetNewAction() const;
     QAction* GetOpenAction() const;
     QAction* GetSaveAction() const;
     QAction* GetSaveAsAction() const;
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void InsertFileMenuEntry( const QString name, const QObject* receiver, const char* member, const QKeySequence accel );
+    void RemoveFileMenuEntry( const QString name );
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    void AddModdedAction( QAction* action, int defaultModes = 0, int hiddenModes = 0, int visibleModes = 0 );
+    void AddModdedAction( QAction* action, int hiddenModes = 0, int visibleModes = 0, bool visibleByDefault = true );
     //@}
 
 private:
@@ -77,11 +79,17 @@ private:
     //@{
     kernel::Controllers&            controllers_;
     std::vector< gui::RichAction* > moddedActions_;
-    kernel::ContextMenu*            fileMenu_;
+    gui::RichMenu*                  fileMenu_;
     QAction*                        newAction_;
     QAction*                        openAction_;
     QAction*                        saveAction_;
     QAction*                        saveAsAction_;
+    //@}
+
+private:
+    //! @name Static member data
+    //@{
+    static int filtersIndex_;
     //@}
 };
 

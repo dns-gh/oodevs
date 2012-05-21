@@ -66,3 +66,11 @@ void RichAction::EnsureIsEnabled()
     action_->setEnabled( true );
 }
 
+// -----------------------------------------------------------------------------
+// Name: RichAction::IsVisible
+// Created: ABR 2012-05-16
+// -----------------------------------------------------------------------------
+bool RichAction::IsVisible() const
+{
+    return action_->isVisible();
+}

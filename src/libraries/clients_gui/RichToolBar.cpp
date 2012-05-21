@@ -57,7 +57,7 @@ void RichToolBar::ForceEnabled( bool enabled )
     setEnabled( enabled );
     QAction* action = toggleViewAction();
     action->setEnabled( false );
-    action->setCheckable( false );
+    action->setCheckable( enabled );
     action->setChecked( enabled );
 }
 
@@ -74,3 +74,11 @@ void RichToolBar::EnsureIsEnabled()
     action->setChecked( isVisible() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: RichToolBar::IsVisible
+// Created: ABR 2012-05-15
+// -----------------------------------------------------------------------------
+bool RichToolBar::IsVisible() const
+{
+    return isVisible();
+}

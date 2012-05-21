@@ -209,7 +209,7 @@
     </message>
 </context>
 <context>
-    <name>DockManager</name>
+    <name>DockContainer</name>
     <message>
         <source>Tactical</source>
         <translation>Tactique</translation>
@@ -240,7 +240,7 @@
     </message>
     <message>
         <source>Properties</source>
-        <translation>Proprietés</translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>Creation</source>
@@ -926,10 +926,6 @@
         <translation>Chargement du modèle physique ...</translation>
     </message>
     <message>
-        <source>Loading filters ...</source>
-        <translation>Chargement des filtres ...</translation>
-    </message>
-    <message>
         <source>Loading options ...</source>
         <translation>Chargement des options ...</translation>
     </message>
@@ -966,8 +962,8 @@
         <translation>Préparation - [%1]</translation>
     </message>
     <message>
-        <source>Orbat</source>
-        <translation>ODB</translation>
+        <source>Loading graphical interface ...</source>
+        <translation>Chargement de l&apos;interface graphique ...</translation>
     </message>
 </context>
 <context>
@@ -2366,6 +2362,29 @@
     </message>
 </context>
 <context>
+    <name>TerrainToolBar</name>
+    <message>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>Edit urban area</source>
+        <translation>Editer la zone urbaine</translation>
+    </message>
+    <message>
+        <source>Manual block creation</source>
+        <translation>Création manuelle de blocs urbains</translation>
+    </message>
+    <message>
+        <source>Automatic block creation on built-up area</source>
+        <translation>Création automatique de blocs urbains</translation>
+    </message>
+    <message>
+        <source>Remove urban blocks</source>
+        <translation>Supprimer des blocs urbains</translation>
+    </message>
+</context>
+<context>
     <name>UnitStateDialog</name>
     <message>
         <source>Initial state</source>
@@ -2425,6 +2444,28 @@
     <message>
         <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
         <translation>Vos modifications seront appliquées à toutes les sous-unités de cette entité, voulez-vous valider?</translation>
+    </message>
+</context>
+<context>
+    <name>UrbanInfosDockWidget</name>
+    <message>
+        <source>Urban informations</source>
+        <translation>Informations urbaine</translation>
+    </message>
+</context>
+<context>
+    <name>UsagesDockWidget</name>
+    <message>
+        <source>Usages</source>
+        <translation>Usages</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Proportion(%)</source>
+        <translation>Proportion(%)</translation>
     </message>
 </context>
 <context>

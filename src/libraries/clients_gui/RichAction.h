@@ -43,15 +43,16 @@ public:
 
     //! @name Operations
     //@{
-    void SetVisible( bool visible );
-    void ForceEnabled( bool enabled );
-    void EnsureIsEnabled();
+    virtual void SetVisible( bool visible );
+    virtual void ForceEnabled( bool enabled );
+    virtual void EnsureIsEnabled();
+    virtual bool IsVisible() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QAction* action_;
+    QAction*             action_;
     kernel::Controllers& controllers_;
     //@}
 };

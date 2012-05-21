@@ -130,6 +130,7 @@
 #include "clients_gui/ElevationPainter.h"
 #include "clients_gui/SimpleFilter.h"
 #include "clients_gui/UrbanFilter.h"
+#include "clients_gui/TerrainProfiler.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -217,9 +218,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     logger.SetLogger( *pLogPanel_ );
 
     // Standard toolbars
-    
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
-    gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
+    gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_ );
     EventToolbar* eToolBar = new EventToolbar( this, controllers, profile );
     gui::DisplayToolbar* dToolBar = new gui::DisplayToolbar( this, controllers );
     SIMControlToolbar* sToolBar = new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
@@ -228,6 +228,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addToolBar( dToolBar );
     addToolBar( eToolBar );
     addToolBar( gToolBar );
+
+    // Terrain profile
+    gui::TerrainProfiler* terrainProfiler = new gui::TerrainProfiler( this, controllers, staticModel.detection_, *profilerLayer );
+    addDockWidget( Qt::RightDockWidgetArea, terrainProfiler );
+    connect( gToolBar->GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), terrainProfiler, SLOT( setVisible( bool ) ) );
+    connect( terrainProfiler, SIGNAL( visibilityChanged( bool ) ), gToolBar->GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
+
 
     // A few layers
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
@@ -445,7 +452,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( contour );                  preferences.AddLayer( tr( "Contour Lines" ), contour );         contour             .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main,miniviews" );
+    glProxy_->Register( urbanLayer );                                                                               urbanLayer          .SetPasses( "main,miniviews" );
     glProxy_->Register( watershed );                preferences.AddLayer( tr( "Watershed" ), watershed );           watershed           .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );

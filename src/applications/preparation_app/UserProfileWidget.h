@@ -50,7 +50,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
-                                gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions,
+                                const gui::EntitySymbols& icons, const kernel::ExtensionTypes& extensions,
                                 ControlsChecker_ABC& checker, Model& model );
     virtual ~UserProfileWidget();
     //@}

@@ -247,3 +247,12 @@ bool Layer_ABC::IsEnabled() const
 {
     return enabled_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::IsVisible
+// Created: ABR 2012-05-16
+// -----------------------------------------------------------------------------
+bool Layer_ABC::IsVisible() const
+{
+    return true;
+}

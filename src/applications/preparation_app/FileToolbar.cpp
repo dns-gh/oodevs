@@ -25,13 +25,10 @@ namespace
 // Name: FileToolbar constructor
 // Created: SBO 2006-12-13
 // -----------------------------------------------------------------------------
-FileToolbar::FileToolbar( QWidget* parent, kernel::Controllers& controllers, Menu& menu )
-    : gui::RichToolBar( controllers, parent, "filetoolbar", tr( "Standard" )/*, false*/ )
+FileToolbar::FileToolbar( QWidget* parent, kernel::Controllers& controllers )
+    : gui::RichToolBar( controllers, parent, "filetoolbar", tr( "Standard" ) )
 {
-    AddToolButton( this, menu.GetNewAction() );
-    AddToolButton( this, menu.GetOpenAction() );
-    AddToolButton( this, menu.GetSaveAction() );
-    AddToolButton( this, menu.GetSaveAsAction() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,4 +38,16 @@ FileToolbar::FileToolbar( QWidget* parent, kernel::Controllers& controllers, Men
 FileToolbar::~FileToolbar()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileToolbar::Fill
+// Created: ABR 2012-05-15
+// -----------------------------------------------------------------------------
+void FileToolbar::Fill( Menu& menu )
+{
+    AddToolButton( this, menu.GetNewAction() );
+    AddToolButton( this, menu.GetOpenAction() );
+    AddToolButton( this, menu.GetSaveAction() );
+    AddToolButton( this, menu.GetSaveAsAction() );
 }

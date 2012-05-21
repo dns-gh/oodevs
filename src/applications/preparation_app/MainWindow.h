@@ -11,10 +11,10 @@
 #define __MainWindow_h_
 
 #include "tools/ControllerObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
-    class Options;
     class Controllers;
     class Profile_ABC;
 }
@@ -28,8 +28,6 @@ namespace gui
     class ExclusiveEventStrategy;
     class LightingProxy;
     class GlSelector;
-    class PreferencesDialog;
-    class TerrainLayer;
     class Layer_ABC;
     class Painter_ABC;
     class TerrainPicker;
@@ -39,19 +37,15 @@ namespace gui
     class HelpSystem;
 }
 
-class AgentsLayer;
+class ColorController;
 class Config;
-class FileToolbar;
-class FilterDialogs;
+class DialogContainer;
+class DockContainer;
 class Menu;
 class Model;
 class ModelBuilder;
-class ModelConsistencyDialog;
-class ScoreDialog;
 class StaticModel;
-class ColorController;
-class DockManager;
-class PerformanceDialog;
+class ToolbarContainer;
 
 // =============================================================================
 /** @class  MainWindow
@@ -68,11 +62,12 @@ class PerformanceDialog;
 class MainWindow : public QMainWindow
                  , public tools::Observer_ABC
                  , public tools::ControllerObserver_ABC
+                 , private boost::noncopyable
 {
     Q_OBJECT;
 
 public:
-    //! @name Constructors/Destructor/Accessor
+    //! @name Constructors/Destructor
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration );
     virtual ~MainWindow();
@@ -80,8 +75,6 @@ public:
 
     //! @name Operations
     //@{
-    bool Load();
-    kernel::Options& GetOptions() const;
     bool CheckSaving();
     //@}
 
@@ -97,25 +90,24 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void ReloadExercise();
-    void CheckConsistency();
     void ClearLoadingErrors();
     void OnForceSaveAndAddActionPlanning( const std::string& filename );
+    void OnAddRaster();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void CheckConsistency();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MainWindow( const MainWindow& );
-    MainWindow& operator=( const MainWindow& );
-    //@}
-
     //! @name Helpers
     //@{
+    bool Load();
     void LoadExercise();
-    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
-                       gui::Layer_ABC& weather, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
-                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker,
-                       gui::AutomatsLayer& automats, gui::FormationLayer& formation );
+    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+                       const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();
     void ReadOptions();
@@ -134,33 +126,29 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    StaticModel& staticModel_;
-    Model& model_;
-    Config& config_;
-    std::auto_ptr< ModelBuilder > modelBuilder_;
-    std::auto_ptr< gui::CircularEventStrategy > forward_;
+    StaticModel&         staticModel_;
+    Model&               model_;
+    Config&              config_;
+    bool                 loading_;
+    bool                 needsSaving_;
+
+    std::auto_ptr< ModelBuilder >                modelBuilder_;
+    std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::auto_ptr< gui::Painter_ABC > pPainter_;
-    std::auto_ptr< gui::LayerFilter_ABC > simpleFilter_;
-    std::auto_ptr< gui::LayerFilter_ABC > urbanFilter_;
-    std::auto_ptr< ColorController > colorController_;
-    std::auto_ptr< DockManager > pDockManager_;
-    std::auto_ptr< gui::GlProxy > glProxy_;
-    std::auto_ptr< gui::LightingProxy > lighting_;
-    std::auto_ptr< gui::ColorStrategy > strategy_;
-    gui::GlSelector* selector_;
-    Menu* menu_;
-    FileToolbar* fileToolBar_;
-    bool loading_;
-    bool needsSaving_;
-    QString savedState_;
-    QByteArray states_;
-    ScoreDialog* pScoreDialog_;
-    FilterDialogs* filterDialogs_;
-    QProgressDialog* progressDialog_;
-    ModelConsistencyDialog* consistencyDialog_;
-    PerformanceDialog* performanceDialog_;
-    gui::HelpSystem* help_;
+    std::auto_ptr< gui::Painter_ABC >            pPainter_;
+    std::auto_ptr< gui::LayerFilter_ABC >        simpleFilter_;
+    std::auto_ptr< gui::LayerFilter_ABC >        urbanFilter_;
+    std::auto_ptr< ColorController >             colorController_;
+    std::auto_ptr< DockContainer >               dockContainer_;
+    std::auto_ptr< DialogContainer >             dialogContainer_;
+    std::auto_ptr< ToolbarContainer >            toolbarContainer_;
+    std::auto_ptr< gui::GlProxy >                glProxy_;
+    std::auto_ptr< gui::LightingProxy >          lighting_;
+    std::auto_ptr< gui::ColorStrategy >          strategy_;
+    std::auto_ptr< Menu >                        menu_;
+    std::auto_ptr< gui::GlSelector >             selector_;
+    std::auto_ptr< QProgressDialog >             progressDialog_;
+    std::auto_ptr< gui::HelpSystem >             help_;
     //@}
 };
 

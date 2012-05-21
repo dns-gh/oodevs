@@ -81,7 +81,7 @@ private:
     //! @name Member data
     //@{
     SearchLineEdit* searchLine_;
-    BaseListView*       listView_;
+    BaseListView*   listView_;
     //@}
 };
 

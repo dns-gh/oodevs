@@ -42,6 +42,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     setMinimumSize( 500, 500 );
 
     connect( this, SIGNAL( ClearLoadingErrors() ), parent, SLOT( ClearLoadingErrors() ) );
+    connect( parent, SIGNAL( CheckConsistency() ), this, SLOT( CheckConsistency() ) );
 
     // Model
     horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Description" );

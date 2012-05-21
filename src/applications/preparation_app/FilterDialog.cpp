@@ -18,8 +18,6 @@
 #include "clients_kernel/Tools.h"
 #include <string>
 
-const int FilterDialog::menuIndex_ = 6;
-
 // -----------------------------------------------------------------------------
 // Name: FilterDialog constructor
 // Created: ABR 2011-06-20
@@ -164,17 +162,25 @@ void FilterDialog::AddFilter( Filter_ABC& filter )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FilterDialog::InsertMenuEntry
-// Created: ABR 2011-06-24
+// Name: FilterDialog::GetName
+// Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-void FilterDialog::InsertMenuEntry( Menu& menu )
+const QString FilterDialog::GetName() const
 {
-    assert( filterManager_.get() );
+    return filterManager_->GetName().c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterDialog::GetKeySequence
+// Created: ABR 2012-05-15
+// -----------------------------------------------------------------------------
+const QKeySequence FilterDialog::GetKeySequence() const
+{
     const std::string& name = filterManager_->GetId();
     QKeySequence keys = 0;
     if( name == "import" )
         keys = Qt::CTRL + Qt::Key_I;
     else if( name == "export" )
         keys = Qt::CTRL + Qt::Key_E;
-    menu.InsertFileMenuEntry( filterManager_->GetName().c_str(), this, SLOT( exec() ), keys, menuIndex_ );
+    return keys;
 }
