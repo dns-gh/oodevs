@@ -15,6 +15,11 @@ Handlebars.registerHelper "equal", (lhs, rhs, options) ->
         return options.fn this
     return options.inverse this
 
+Handlebars.registerHelper "is_exercise", (type, options) ->
+    if type == "exercise"
+        return options.fn this
+    return options.inverse this
+
 package_template = Handlebars.compile $("#package_template").html()
 
 class Package extends Backbone.Model
@@ -39,13 +44,12 @@ class PackageView extends Backbone.View
         $(@el).empty()
         if @model.attributes.name?
             $(@el).html package_template @model.attributes
-            for tr in $(".package_row")
-                continue unless tr.id?.length
-                uid = "#" + tr.id + "_briefing"
-                $(tr).popover
+            for it in @model.attributes.items
+                continue unless it.type == "exercise"
+                $("#package_" + it.id).popover
                     placement: "bottom",
-                    title:     $(uid + " h1:nth-child(2)").contents()
-                    content:   $(uid).contents()
+                    title:     it.name,
+                    content:   $("#package_" + it.id + "_briefing").contents()
         return
 
     update: (data) =>

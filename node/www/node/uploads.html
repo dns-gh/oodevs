@@ -43,31 +43,19 @@
                         </thead>
                         <tbody>
                             {{#items}}
-                            <tr id="package_{{id}}" class="package_row" rel="popover">
+                            <tr id="package_{{id}}" class="package_row"{{#is_exercise type}} rel="popover"{{/is_exercise}}>
                                 <td class="type">{{type}}</td>
                                 <td class="name">
                                     {{name}}
+                                    {{#is_exercise type}}
                                     <div id="package_{{id}}_briefing" class="hide">
                                         <div class="item_briefing">
-                                            <div class="deps">
-                                                <div><b>Model</b> Worldwide</div>
-                                                <div><b>Terrain</b> Egypt</div>
-                                            </div>
-                                            <h1>Kabul</h1>
-                                            <p>This scenario takes place in North Egypt, with an opposition between a blue force, a local red asymetric force and a neutral population.</p>
-                                            <p>Some scores are calculated and allow the player to follow the mean operational state of the red units, the blue units and the combattant blue units.</p>
-                                            <h2>Profiles</h2>
-                                            <ul>
-                                                <li><b>Supervisor:</b> scripted actions allow you to demonstrate the scenario and the use of scores</li>
-                                                <li><b>Blue:</b> to actually play the scenario</li>
-                                            </ul>
-                                            <h2>Objectives</h2>
-                                            <ul>
-                                                <li>Destroy the red forces</li>
-                                                <li>Protect the population</li>
-                                            </ul>
+                                            {{#if model.length}}<div><b>Model</b> {{model}}</div>{{/if}}
+                                            {{#if terrain.length}}<div><b>Terrain</b> {{terrain}}</div>{{/if}}
+                                            <div class="briefing_content">{{{briefing}}}</div>
                                         </div>
-                                    </div>                                    
+                                    </div>
+                                    {{/is_exercise}}
                                 </td>
                                 <td class="date">{{date}}</td>
                                 <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
@@ -83,7 +71,7 @@
                                         <span class="badge badge-important">!</span>
                                         {{error}}
                                     </label>
-                                    {{/equal}}                            
+                                    {{/equal}}
                                 </td>
                             </tr>
                             {{/items}}

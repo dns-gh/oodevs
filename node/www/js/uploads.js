@@ -24,6 +24,11 @@
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper("is_exercise", function(type, options) {
+    if (type === "exercise") return options.fn(this);
+    return options.inverse(this);
+  });
+
   package_template = Handlebars.compile($("#package_template").html());
 
   Package = (function(_super) {
@@ -71,19 +76,18 @@
     };
 
     PackageView.prototype.render = function() {
-      var tr, uid, _i, _len, _ref, _ref2;
+      var it, _i, _len, _ref;
       $(this.el).empty();
       if (this.model.attributes.name != null) {
         $(this.el).html(package_template(this.model.attributes));
-        _ref = $(".package_row");
+        _ref = this.model.attributes.items;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          tr = _ref[_i];
-          if (!((_ref2 = tr.id) != null ? _ref2.length : void 0)) continue;
-          uid = "#" + tr.id + "_briefing";
-          $(tr).popover({
+          it = _ref[_i];
+          if (it.type !== "exercise") continue;
+          $("#package_" + it.id).popover({
             placement: "bottom",
-            title: $(uid + " h1:nth-child(2)").contents(),
-            content: $(uid).contents()
+            title: it.name,
+            content: $("#package_" + it.id + "_briefing").contents()
           });
         }
       }

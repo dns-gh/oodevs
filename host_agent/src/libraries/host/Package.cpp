@@ -118,6 +118,26 @@ std::string GetFilename( boost::filesystem::path path, const std::string& root )
     return Utf8Convert( reply );
 }
 
+template< typename T >
+bool MaybeGet( T& dst, const boost::property_tree::ptree& tree, const std::string& key )
+{
+    const boost::optional< T > value = tree.get_optional< T >( key );
+    if( value == boost::none )
+        return false;
+    dst = *value;
+    return true;
+}
+
+template< typename T >
+void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::string& srcKey, const std::string& default = std::string() )
+{
+    const boost::optional< std::string > value = src.get_optional< std::string >( srcKey );
+    if( value != boost::none )
+        dst.put( dstKey, *value );
+    else if( !default.empty() )
+        dst.put( dstKey, default );
+}
+
 struct Model : public SubPackage
 {
     Model( size_t id, const boost::filesystem::path& file )
@@ -156,19 +176,24 @@ struct Terrain : public SubPackage
 
 struct Exercise : public SubPackage
 {
-    Exercise( size_t id, const boost::filesystem::path& file )
+    Exercise( size_t id, const FileSystem_ABC& system, const boost::filesystem::path& file )
         : SubPackage( id, boost::filesystem::path( file ).remove_filename() )
     {
         tree_.put( "type", "exercise" );
         tree_.put( "name", GetFilename( file, "exercises" ) );
         tree_.put( "date", GetDate( file ) );
+        boost::property_tree::ptree more = FromXml( system.ReadFile( file ) );
+        MaybeCopy( tree_, "name", more, "exercise.meta.name" );
+        MaybeCopy( tree_, "briefing", more, "exercise.meta.briefing.text" );
+        MaybeCopy( tree_, "terrain", more, "exercise.terrain.<xmlattr>.name" );
+        MaybeCopy( tree_, "model", more, "exercise.model.<xmlattr>.dataset" );
     }
 
     template< typename T >
     static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
     {
         BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
-            items.push_back( boost::make_shared< Exercise >( ++idx, path ) );
+            items.push_back( boost::make_shared< Exercise >( ++idx, system, path ) );
     }
 };
 }
@@ -213,19 +238,6 @@ boost::property_tree::ptree Package::GetProperties() const
         items.push_back( std::make_pair( "", item->GetProperties() ) );
 
     return tree;
-}
-
-namespace
-{
-template< typename T >
-bool MaybeGet( T& dst, const boost::property_tree::ptree& tree, const std::string& key )
-{
-    const boost::optional< T > value = tree.get_optional< T >( key );
-    if( value == boost::none )
-        return false;
-    dst = *value;
-    return true;
-}
 }
 
 // -----------------------------------------------------------------------------

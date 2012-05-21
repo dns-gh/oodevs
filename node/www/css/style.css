@@ -33,6 +33,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .upload_alert span{margin-left:28px;}
 .item_briefing h2,.item_briefing h1{font-size:small;font-weight:bold;}
 .item_briefing h1:first-child{display:none;}
-.item_briefing .deps{margin-bottom:8px;}
+.item_briefing .briefing_content{margin-top:8px;}
 .package_row .type,.package_row .name{text-transform:capitalize;}
 .package .version{position:relative;top:-2px;}
