@@ -271,22 +271,21 @@
       <urban-modifier material-type="Vegetation" value="1"/>
     </urban-destruction>
   </object>
-  <object name="Roadblock" type="road destruction">
+  <object name="Roadblock" point-size="20" type="road destruction">
     <geometries>
       <geometry symbol="G*MPORC---****X" type="point"/>
     </geometries>
-    <activable/>
-    <avoidable distance="500"/>
+    <avoidable distance="100"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="300" name="Standard Explosive"/>
+          <resource count="2" name="Standard Barbed Wire"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="7" name="Standard Landmine"/>
+          <resource count="2" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -799,4 +798,4 @@
     </urban-destruction>
   </object>
 </objects>
-<!-- signature="2091949886" -->
+<!-- signature="3994121548" -->

@@ -45,5 +45,5 @@ integration.buildObjectInstantaneously = function( object )
 end
 
 integration.canFilter = function( object )
-    return DEC_ObjectKnowledge_HasCapacity( object.source, "workable" )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "population-filter" )
 end

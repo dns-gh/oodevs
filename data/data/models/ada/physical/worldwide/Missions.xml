@@ -2122,7 +2122,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="victimsUnits" max-occurs="unbounded" min-occurs="1" name="victim units" optional="false" type="Agent"/>
-      <parameter dia-name="medicalUnit" name="medical unit (such as TC2)" optional="false" type="Agent"/>
+      <parameter dia-name="medicalUnit" name="medical unit (medical chain)" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.ExtractVictimsFromCrowds" dia-type="behaviors.tasks.ExtractVictimsFromCrowds" id="4451" name="MLSECURITY - Extract victims from crowds">
       <description>
@@ -2170,7 +2170,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNodes" max-occurs="unbounded" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetworkNode"/>
+      <parameter dia-name="resourceNodes" max-occurs="unbounded" min-occurs="1" name="resource nodes to enable" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.DeactivateResourceNodes" dia-type="behaviors.tasks.DeactivateResourceNodes" id="4455" name="MLSECURITY - Disable resource nodes">
       <description>
@@ -2641,7 +2641,7 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="planned check point" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
+          <parameter type="Roadblock"/>
         </objects>
       </parameter>
       <parameter dia-name="intensity" name="intensity used to filter interacting crowds (%)" optional="true" type="Integer"/>
@@ -2664,7 +2664,7 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="area" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="area to damage urban blocks within" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -4417,4 +4417,4 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="4248866402" -->
+<!-- signature="0041035073" -->

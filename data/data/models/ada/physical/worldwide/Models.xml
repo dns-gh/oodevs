@@ -2612,6 +2612,8 @@
         <mission name="MLSECURITY - Reinforce"/>
         <mission name="MLSECURITY - Deconstruct (and remove) works"/>
         <mission name="MLSECURITY - Patrol within area"/>
+        <mission name="MLSECURITY - Operate a road block (prevent crowds from crossing)"/>
+        <mission name="MLSECURITY - Create and operate a roadblock (filter crowds)"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3878,4 +3880,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1376641700" -->
+<!-- signature="3787962315" -->
