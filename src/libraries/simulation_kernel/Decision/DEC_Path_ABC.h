@@ -13,6 +13,7 @@
 #define __DEC_Path_ABC_h_
 
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
+#include "MT_Tools/Mt_Vector2DTypes.h"
 
 class DEC_PathSection_ABC;
 class TerrainData;
@@ -58,6 +59,7 @@ public:
     //@{
     unsigned int GetID() const;
     E_State GetState() const;
+    const MT_Vector2D& GetLastWaypoint() const;
     //@}
 
     //! @name Operators
@@ -90,14 +92,21 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const unsigned int nID_;
     T_PathSectionVector pathSections_;
     unsigned int nNbrRefs_;              // nb of references on path
     E_State nState_;
     bool bJobCanceled_;
+    MT_Vector2D lastWaypoint_;
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     static unsigned int nIDIdx_;
+    //@}
 };
 
 #include "DEC_Path_ABC.inl"
