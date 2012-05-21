@@ -152,9 +152,25 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
         return eItineraireMustBeJoined;
     if( *itCurrentPathPoint_ )
         pPath->NotifyPointReached( itCurrentPathPoint_ );
-    if( ( pCurrentPath_->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
+    if( ( pPath->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
 	{
-        movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
+        bool isInsideObject = false;
+        const MT_Vector2D& lastWaypoint = pPath->GetLastWaypoint();
+        TER_Object_ABC::T_ObjectVector objects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( lastWaypoint, 100., objects );
+        for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
+        {
+            const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+            if( object.IsInside( lastWaypoint ) )
+            {
+                const std::string name = MIL_ObjectLoader::GetLoader().GetType( object.GetType().GetName() ).GetRealName();
+                movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
+                isInsideObject = true;
+                break;
+            }
+        }
+        if( !isInsideObject )
+            movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
 		rc = ePartialPath;
 	}
     itNextPathPoint_ = itCurrentPathPoint_;

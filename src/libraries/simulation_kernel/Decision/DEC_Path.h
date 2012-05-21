@@ -44,6 +44,7 @@ public:
     //! @name Accessors
     //@{
     virtual E_State GetState() const;
+    const MT_Vector2D& GetLastWaypoint() const;
     //@}
 
 protected:
@@ -81,6 +82,7 @@ private:
     T_PointVector computedWaypoints_;
     E_State nState_;
     bool bJobCanceled_;
+    MT_Vector2D lastWaypoint_;
     //@}
 };
 

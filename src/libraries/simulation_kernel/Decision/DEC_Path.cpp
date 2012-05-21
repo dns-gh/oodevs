@@ -89,6 +89,7 @@ void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
         throw std::runtime_error( "List of path sections is empty" );
     const DEC_PathResult::T_PathPointList& pathPoints = dynamic_cast< const DEC_PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
 
+    lastWaypoint_ = pathSections_.back()->GetPosEnd();
     computedWaypoints_.clear();
     nState_ = eComputing;
     for( T_PathSectionVector::iterator itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )

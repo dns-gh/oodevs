@@ -29,6 +29,16 @@ const T_PointVector& DEC_Path::GetComputedWaypoints() const
     return computedWaypoints_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::GetLastWaypoint
+// Created: CMA 2012-05-21
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& DEC_Path::GetLastWaypoint() const
+{
+    return lastWaypoint_;
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================
