@@ -58,7 +58,7 @@ void RichDockWidget::ForceEnabled( bool enabled )
     setFeatures( ( enabled ) ? QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable : QDockWidget::NoDockWidgetFeatures );
     QAction* action = toggleViewAction();
     action->setEnabled( false );
-    action->setCheckable( false );
+    action->setCheckable( enabled );
     action->setChecked( enabled );
 }
 
@@ -76,3 +76,11 @@ void RichDockWidget::EnsureIsEnabled()
     action->setChecked( isVisible() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: RichDockWidget::IsVisible
+// Created: ABR 2012-05-16
+// -----------------------------------------------------------------------------
+bool RichDockWidget::IsVisible() const
+{
+    return isVisible();
+}

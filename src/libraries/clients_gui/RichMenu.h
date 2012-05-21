@@ -47,6 +47,7 @@ public:
     virtual void SetVisible( bool visible );
     virtual void ForceEnabled( bool enabled );
     virtual void EnsureIsEnabled();
+    virtual bool IsVisible() const;
     //@}
 
 private:

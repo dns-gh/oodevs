@@ -29,7 +29,6 @@ namespace kernel
 }
 
 class FilterDialog;
-class Menu;
 class Model;
 
 // =============================================================================
@@ -38,15 +37,16 @@ class Model;
 */
 // Created: ABR 2011-06-21
 // =============================================================================
-class FilterDialogs : public tools::StringResolver< FilterDialog >
+class FilterDialogs : public QObject
+                    , public tools::StringResolver< FilterDialog >
                     , private boost::noncopyable
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
-                            Menu& menu, const kernel::CoordinateConverter_ABC& converter );
+             FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model, const kernel::CoordinateConverter_ABC& converter );
     virtual ~FilterDialogs();
     //@}
 
@@ -54,6 +54,13 @@ public:
     //@{
     void Load();
     void Purge();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void AddFilterMenuEntry( const QString name, const QObject* receiver, const char* eMember, QKeySequence keys );
+    void RemoveFilterMenuEntry( const QString name );
     //@}
 
 private:
@@ -70,7 +77,6 @@ private:
     //@{
     const tools::ExerciseConfig&           config_;
     Model&                                 model_;
-    Menu&                                  menu_;
     const kernel::CoordinateConverter_ABC& converter_;
     QWidget*                               parent_;
     int                                    menuSeparatorId_;

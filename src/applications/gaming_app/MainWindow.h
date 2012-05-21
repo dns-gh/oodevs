@@ -94,7 +94,6 @@ public:
     //! @name Operations
     //@{
     void Load();
-    kernel::Options& GetOptions() const;
     virtual QMenu* createPopupMenu();
     //@}
 

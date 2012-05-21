@@ -31,8 +31,13 @@ class FileToolbar : public gui::RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             FileToolbar( QWidget* parent, kernel::Controllers& controllers, Menu& menu );
+             FileToolbar( QWidget* parent, kernel::Controllers& controllers );
     virtual ~FileToolbar();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Fill( Menu& menu );
     //@}
 };
 

@@ -15,7 +15,6 @@
 #include "ColorButton.h"
 #include "ContourLinesObserver.h"
 #include "RichSpinBox.h"
-#include "TerrainProfiler.h"
 #include "Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -39,14 +38,11 @@ namespace
 // Name: GisToolbar constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
+GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection )
     : RichToolBar( controllers, parent, "gistoolbar", tools::translate( "gui::GisToolBar", "GIS tools" ), false )
     , controllers_      ( controllers )
     , detection_        ( detection )
-    , terrainProfiler_  ( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
-    parent->addDockWidget( Qt::RightDockWidgetArea, terrainProfiler_ );
-    terrainProfiler_->SetHiddenModes( ePreparationMode_Default | ePreparationMode_LivingArea ); // Should be in DockManager
     {
         Q3HBox* waterShedBox = new Q3HBox( this );
         watershedEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
@@ -69,12 +65,10 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
-        QToolButton* button = new QToolButton( this );
-        button->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
-        QToolTip::add( button, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
-        button->setToggleButton( true );
-        connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
-        connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
+        terrainProfilerButton_ = new QToolButton( this );
+        terrainProfilerButton_->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
+        QToolTip::add( terrainProfilerButton_, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
+        terrainProfilerButton_->setToggleButton( true );
 
         Q3HBox* contourBox = new Q3HBox( this );
         contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
@@ -99,7 +93,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         addWidget( mode_ );
         addWidget( height_ );
         addWidget( color_ );
-        addWidget( button );
+        addWidget( terrainProfilerButton_ );
         addWidget( contourBoxEnabled_ );
         addWidget( linesHeight_ );
         addWidget( colorContourLines_ );
@@ -259,10 +253,10 @@ void GisToolbar::OnColorChanged( const QColor& color )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GisToolbar::OnToggleCut
-// Created: SBO 2010-03-31
+// Name: GisToolbar::GetTerrainProfilerButton
+// Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-void GisToolbar::OnToggleCut( bool toggled )
+QToolButton* GisToolbar::GetTerrainProfilerButton() const
 {
-    terrainProfiler_->setShown( toggled );
+    return terrainProfilerButton_;
 }

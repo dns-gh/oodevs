@@ -214,3 +214,12 @@ void TerrainProfiler::SpinboxChanged( int value )
     height_->blockSignals( false );
     UpdateView();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TerrainProfiler::sizeHint
+// Created: ABR 2012-05-16
+// -----------------------------------------------------------------------------
+QSize TerrainProfiler::sizeHint() const
+{
+    return QSize( 300, 100 );
+}

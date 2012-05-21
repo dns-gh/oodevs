@@ -29,7 +29,7 @@ class ProfileWizardDialog : public ModalDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileWizardDialog( QWidget* parent, const Model& model, ProfilesModel& profiles );
+             ProfileWizardDialog( QWidget* parent, const Model& model );
     virtual ~ProfileWizardDialog();
     //@}
 

@@ -26,9 +26,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              ModesObserver_ABC()
-                 : defaultModes_( 0 ), visibleModes_( 0 ), hiddenModes_( 0 ) {}
-             ModesObserver_ABC( int defaultModes, int visibleModes, int hiddenModes )
-                 : defaultModes_( defaultModes ), visibleModes_( visibleModes ), hiddenModes_( hiddenModes ) {}
+                 : hiddenModes_( 0 ), visibleModes_( 0 ), currentMode_( -1 ), visible_( false ), visibleByDefault_( false ) {}
+             ModesObserver_ABC( int hiddenModes, int visibleModes, bool visibleByDefault )
+                 : hiddenModes_( hiddenModes ), visibleModes_( visibleModes ), currentMode_( -1 ), visible_( false ), visibleByDefault_( visibleByDefault ) {}
     virtual ~ModesObserver_ABC() {}
     //@}
 
@@ -37,27 +37,28 @@ public:
     virtual void SetVisible( bool visible ) = 0;
     virtual void ForceEnabled( bool enabled ) = 0;
     virtual void EnsureIsEnabled() = 0;
+    virtual bool IsVisible() const = 0;
     //@}
 
     //! @name Accessors
     //@{
-    void SetModes( int defaultModes, int hiddenModes = 0, int visibleModes = 0 )
+    void SetModes( int hiddenModes, int visibleModes = 0, bool visibleByDefault = false )
     {
-        defaultModes_ = defaultModes;
         hiddenModes_ = hiddenModes;
         visibleModes_ = visibleModes;
+        visibleByDefault_ = visibleByDefault;
     }
-    void SetDefaultModes( int modes ) { defaultModes_ = modes; }
     void SetHiddenModes( int modes ) { hiddenModes_ = modes; }
     void SetVisibleModes( int modes ) { visibleModes_ = modes; }
-    int GetDefaultModes() const { return defaultModes_; }
+    void SetVisibleByDefault( bool visibleByDefault ) { visibleByDefault_ = visibleByDefault; }
     int GetHiddenModes() const { return hiddenModes_; }
     int GetVisibleModes() const { return visibleModes_; }
+    bool GetVisibleByDefault() const { return visibleByDefault_; }
     //@}
 
     //! @name Observer operation
     //@{
-    void NotifyModeChange( int newMode, bool useDefault )
+    void NotifyModeChange( int newMode, bool useDefault, bool firstChangeToSavedMode )
     {
 #ifdef DEBUG
         if( newMode & hiddenModes_ && newMode & defaultModes_ )
@@ -67,32 +68,48 @@ public:
         if( newMode & visibleModes_ && newMode & hiddenModes_ )
             throw std::exception( __FUNCTION__ " This component tries to always be visible and hidden in the same time." );
 #endif
-        if( newMode & visibleModes_ )
-        {
-            SetVisible( true );
-            ForceEnabled( true );
-        }
-        else if( newMode & hiddenModes_ )
+        if( currentMode_ != -1 && IsOptional( currentMode_ ) )  // was optional
+            visible_ = IsVisible();             
+
+        if( newMode & hiddenModes_ )                            // becoming forbidden
         {
             SetVisible( false );
             ForceEnabled( false );
         }
-        else if( useDefault )
+        else if( newMode & visibleModes_ )                      // becoming mandatory
         {
-            SetVisible( ( newMode & defaultModes_ ) != 0 );
-            EnsureIsEnabled();
+            SetVisible( true );
+            ForceEnabled( true );
         }
-        else
+        else if( useDefault )                                   // becoming optional by default, let default choose if visible or not (only for savedMode without register)
+        {
             EnsureIsEnabled();
+            SetVisible( visibleByDefault_ );
+        }
+        else                                                    // becoming optional
+        {
+            EnsureIsEnabled();
+            if( !firstChangeToSavedMode )                       // first change to saved mode, let register choose if visible or not
+                SetVisible( visible_ );
+        }
+        currentMode_ = newMode;
     }
     //@}
 
 private:
+    bool IsOptional( int mode ) const
+    {
+        return !( mode & visibleModes_ || mode & hiddenModes_ );
+    }
+
+private:
     //! @name Member data
     //@{
-    int defaultModes_;
-    int hiddenModes_;
-    int visibleModes_;
+    int  hiddenModes_;
+    int  visibleModes_;
+    int  currentMode_;
+    bool visible_;
+    bool visibleByDefault_;
     //@}
 };
 

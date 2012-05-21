@@ -348,6 +348,10 @@
         <source>Fog of war</source>
         <translation>Brouillard de guerre</translation>
     </message>
+    <message>
+        <source>Add raster data</source>
+        <translation>Ajout de données raster</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawerLayer</name>

@@ -72,6 +72,7 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void showEvent( QShowEvent* e );
     virtual void hideEvent( QHideEvent* e );
+    virtual QSize sizeHint () const;
     void SetFromPosition( const geometry::Point2f& point, float height = 2.f );
     void SetToPosition( const geometry::Point2f& point );
     void UpdateView();

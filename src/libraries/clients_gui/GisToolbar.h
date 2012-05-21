@@ -48,14 +48,18 @@ class GisToolbar : public RichToolBar
                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                  , public tools::ElementObserver_ABC< ContourLinesObserver >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers
-                       , const kernel::DetectionMap& detection, TerrainProfilerLayer& layer );
+             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection );
     virtual ~GisToolbar();
+    //@}
+
+    //! @name Accessors
+    //@{
+    QToolButton* GetTerrainProfilerButton() const;
     //@}
 
 private slots:
@@ -65,7 +69,6 @@ private slots:
     void OnModeChanged( int mode );
     void OnHeightChanged( int height );
     void OnColorChanged( const QColor& color );
-    void OnToggleCut( bool toggled );
     void OnToggleContourLinesEnabled( bool toggled );
     void OnLinesHeightChanged();
     void OnColorContourChanged( const QColor& color );
@@ -99,6 +102,7 @@ private:
     QCheckBox* contourBoxEnabled_;
     ColorButton* colorContourLines_;
     QLabel* progress_;
+    QToolButton* terrainProfilerButton_;
     //@}
 };
 

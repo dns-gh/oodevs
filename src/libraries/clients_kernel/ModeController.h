@@ -31,31 +31,24 @@ class ModeController : public ModeController_ABC
 {
 
 public:
-    //! @name Types
-    //@{
-    typedef const std::string& (*T_Converter)( EnumType, ENT_Tr_ABC::E_Conversion );
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-             ModeController( QMainWindow* parent, EnumType initialMode, const QString& registeryEntry, T_Converter converter );
+             ModeController( QMainWindow* parent, EnumType savedMode, const QString& registeryEntry );
     virtual ~ModeController();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Initialize();
     virtual void ChangeMode( int newMode );
     virtual int GetCurrentMode() const;
-    virtual void SaveGeometry();
-    virtual const QString& GetRegisteryEntry() const { return registeryEntry_; }
+    virtual const QString& GetRegisteryEntry() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    bool LoadGeometry();
+    void LoadGeometry();
+    void SaveGeometry();
     //@}
 
 private:
@@ -63,8 +56,10 @@ private:
     //@{
     QMainWindow*  parent_;
     const QString registeryEntry_;
-    T_Converter   converter_;
     EnumType      currentMode_;
+    EnumType      savedMode_;
+    bool          useDefault_;
+    bool          firstChangeToSavedMode_;
     //@}
 };
 

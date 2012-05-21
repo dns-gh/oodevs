@@ -50,6 +50,8 @@ public:
     void Load();
     void AddFilter( Filter_ABC& filter );
     void InsertMenuEntry( Menu& menu );
+    const QString GetName() const;
+    const QKeySequence GetKeySequence() const;
     //@}
 
 private:
@@ -81,12 +83,6 @@ private:
     QLabel*                        description_;
     QPushButton*                   okButton_;
     Q3WidgetStack*                 stack_;
-    //@}
-
-public:
-    //! @name Public static member data
-    //@{
-    static const int               menuIndex_;
     //@}
 };
 

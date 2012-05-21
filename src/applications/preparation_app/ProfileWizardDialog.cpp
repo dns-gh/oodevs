@@ -10,18 +10,19 @@
 #include "preparation_app_pch.h"
 #include "ProfileWizardDialog.h"
 #include "moc_ProfileWizardDialog.cpp"
+#include "icons.h"
+#include "preparation/Model.h"
 #include "preparation/ProfilesGenerator.h"
 #include "preparation/ProfilesModel.h"
-#include "icons.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileWizardDialog constructor
 // Created: SBO 2007-11-07
 // -----------------------------------------------------------------------------
-ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, ProfilesModel& profiles )
+ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
     : ModalDialog( parent, "ProfileWizardDialog" )
-    , generator_( new ProfilesGenerator( model, profiles ) )
-    , profiles_( profiles )
+    , generator_   ( new ProfilesGenerator( model, model.profiles_ ) )
+    , profiles_    ( model.profiles_ )
 {
     setCaption( tr( "User profiles creation wizard" ) );
 

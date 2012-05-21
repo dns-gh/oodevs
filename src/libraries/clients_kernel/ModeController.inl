@@ -12,11 +12,13 @@
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
 template< typename EnumType >
-ModeController< EnumType >::ModeController( QMainWindow* parent, EnumType initialMode, const QString& registeryEntry, T_Converter converter )
-    : parent_           ( parent )
-    , currentMode_      ( initialMode )
-    , registeryEntry_   ( registeryEntry )
-    , converter_        ( converter)
+ModeController< EnumType >::ModeController( QMainWindow* parent, EnumType savedMode, const QString& registeryEntry )
+    : parent_                ( parent )
+    , currentMode_           ( static_cast< EnumType >( 0 ) )
+    , savedMode_             ( savedMode )
+    , registeryEntry_        ( registeryEntry )
+    , useDefault_            ( true )
+    , firstChangeToSavedMode_( true )
 {
     // NOTHING
 }
@@ -32,17 +34,6 @@ ModeController< EnumType >::~ModeController()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModeController::Initialize
-// Created: ABR 2012-05-10
-// -----------------------------------------------------------------------------
-template< typename EnumType >
-void ModeController< EnumType >::Initialize()
-{
-    bool useDefault = !LoadGeometry();
-    Apply( &ModesObserver_ABC::NotifyModeChange, currentMode_, useDefault );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ModeController::ChangeMode
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
@@ -51,10 +42,44 @@ void ModeController< EnumType >::ChangeMode( int newMode )
 {
     if( static_cast< EnumType >( newMode ) == currentMode_ )
         return;
-    SaveGeometry();
+    if( firstChangeToSavedMode_ && static_cast< EnumType >( newMode ) == savedMode_ )
+        LoadGeometry();
+    if( currentMode_ == savedMode_ )
+        SaveGeometry();
+
     currentMode_ = static_cast< EnumType >( newMode );
-    bool useDefault = !LoadGeometry();
-    Apply( &ModesObserver_ABC::NotifyModeChange, currentMode_, useDefault );
+    Apply( &ModesObserver_ABC::NotifyModeChange, currentMode_, useDefault_, firstChangeToSavedMode_ );
+
+    if( firstChangeToSavedMode_ && static_cast< EnumType >( newMode ) == savedMode_ )
+        firstChangeToSavedMode_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModeController::LoadGeometry
+// Created: ABR 2012-05-10
+// -----------------------------------------------------------------------------
+template< typename EnumType >
+void ModeController< EnumType >::LoadGeometry()
+{
+    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    settings.beginGroup( "/" + registeryEntry_ );
+    if( !settings.contains( "mainWindowState" ) )
+        return;
+    parent_->restoreState( settings.value("mainWindowState").toByteArray() );
+    useDefault_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModeController::SaveGeometry
+// Created: ABR 2012-05-10
+// -----------------------------------------------------------------------------
+template< typename EnumType >
+void ModeController< EnumType >::SaveGeometry()
+{
+    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    settings.beginGroup( "/" + registeryEntry_ );
+    settings.setValue( "mainWindowState", parent_->saveState() );
+    useDefault_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,30 +93,11 @@ int ModeController< EnumType >::GetCurrentMode() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModeController::LoadGeometry
-// Created: ABR 2012-05-10
+// Name: ModeController::GetRegisteryEntry
+// Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
 template< typename EnumType >
-bool ModeController< EnumType >::LoadGeometry()
+const QString& ModeController< EnumType >::GetRegisteryEntry() const
 {
-    const QString currentName = converter_( currentMode_, ENT_Tr_ABC::eToSim ).c_str();
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/" + registeryEntry_ + "/States/" + currentName);
-    if( !settings.contains( "mainWindowState" ) )
-        return false;
-    parent_->restoreState( settings.value("mainWindowState").toByteArray() );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModeController::SaveGeometry
-// Created: ABR 2012-05-10
-// -----------------------------------------------------------------------------
-template< typename EnumType >
-void ModeController< EnumType >::SaveGeometry()
-{
-    const QString currentName = converter_( currentMode_, ENT_Tr_ABC::eToSim ).c_str();
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/" + registeryEntry_ + "/States/" + currentName);
-    settings.setValue( "mainWindowState", parent_->saveState() );
+    return registeryEntry_;
 }

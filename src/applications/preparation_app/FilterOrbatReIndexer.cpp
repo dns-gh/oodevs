@@ -56,7 +56,7 @@ FilterOrbatReIndexer::FilterOrbatReIndexer( QWidget* mainwindow, const tools::Ex
     , checkedPixmap_        ( MAKE_PIXMAP( check ) )
     , uncheckedPixmap_      ( MAKE_PIXMAP( cross ) )
 {
-    connect( this, SIGNAL( DoConsistencyCheck() ), mainwindow, SLOT( CheckConsistency() ) );
+    connect( this, SIGNAL( DoConsistencyCheck() ), mainwindow, SIGNAL( CheckConsistency() ) );
 }
 
 // -----------------------------------------------------------------------------

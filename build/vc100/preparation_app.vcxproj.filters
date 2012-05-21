@@ -101,6 +101,9 @@
     <Filter Include="Source Files\Panels\Preferences">
       <UniqueIdentifier>{922beeb5-8e60-4730-9c60-ef9deec3624c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Panels\Urban">
+      <UniqueIdentifier>{67878d91-efdd-4c5d-9501-97f7325012a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -234,9 +237,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\PopulationsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\Dialogs.cpp">
-      <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ProfileDialog.cpp">
       <Filter>Source Files\Dialogs\Profiles</Filter>
@@ -463,9 +463,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\DockManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaPanel.cpp">
       <Filter>Source Files\Panels\Living area</Filter>
     </ClCompile>
@@ -478,9 +475,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\PerformanceDialog.cpp">
       <Filter>Source Files\Dialogs\Performance</Filter>
     </ClCompile>
@@ -489,6 +483,27 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\UrbanListView.cpp">
       <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\TerrainToolBar.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ToolbarContainer.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\DialogContainer.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\DockContainer.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanInfosDockWidget.cpp">
+      <Filter>Source Files\Panels\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UsagesDockWidget.cpp">
+      <Filter>Source Files\Panels\Urban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,9 +597,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\PopulationsLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\Dialogs.h">
-      <Filter>Source Files\Dialogs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ProfileEditor.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
@@ -613,9 +625,6 @@
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\Filter.h">
-      <Filter>Source Files\Dialogs\Filter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\FilterDialogs.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\FilterManager.h">
@@ -660,29 +669,35 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ProfilesChecker_ABC.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\DockManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UrbanLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\InhabitantLayer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LivingAreaEditor_ABC.h">
       <Filter>Source Files\Panels\Living area</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\Menu.h">
-      <Filter>Source Files\Menus</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\FileToolbar.h">
       <Filter>Source Files\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h">
+      <Filter>Source Files\Menus</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\UrbanListView.h">
       <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\DialogContainer.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\DockContainer.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ToolbarContainer.h">
+      <Filter>Source Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanInfosDockWidget.h">
+      <Filter>Source Files\Panels\Urban</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -909,6 +924,18 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\OrbatPanel.h">
       <Filter>Source Files\Panels\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TerrainToolBar.h">
+      <Filter>Source Files\Menus</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterDialogs.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\Menu.h">
+      <Filter>Source Files\Menus</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UsagesDockWidget.h">
+      <Filter>Source Files\Panels\Urban</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

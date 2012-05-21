@@ -35,7 +35,7 @@ using namespace kernel;
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory,
-                                      gui::EntitySymbols& icons, const ExtensionTypes& extensions,
+                                      const gui::EntitySymbols& icons, const ExtensionTypes& extensions,
                                       ProfilesChecker_ABC& checker, Model& model )
     : QTabWidget( parent, "UserProfileWidget" )
     , controllers_( controllers )

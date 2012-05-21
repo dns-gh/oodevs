@@ -68,3 +68,13 @@ void RichMenu::EnsureIsEnabled()
         action->setEnabled( true );
 }
 
+// -----------------------------------------------------------------------------
+// Name: RichMenu::IsVisible
+// Created: ABR 2012-05-16
+// -----------------------------------------------------------------------------
+bool RichMenu::IsVisible() const
+{
+    if( QAction* action = menuAction() )
+        return action->isVisible();
+    return false;
+}

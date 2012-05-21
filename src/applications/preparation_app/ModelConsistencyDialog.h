@@ -45,6 +45,7 @@ public slots:
     //! @name Slots
     //@{
     void CheckConsistency();
+    void Display();
     //@}
 
 private:
