@@ -10,7 +10,7 @@
 #include "host_test.h"
 #include "Mocks.h"
 #include <host/Node.h>
-#include <host/Json.h>
+#include <host/PropertyTree.h>
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>

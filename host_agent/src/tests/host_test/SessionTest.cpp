@@ -9,8 +9,8 @@
 
 #include "host_test.h"
 #include "Mocks.h"
+#include <host/PropertyTree.h>
 #include <host/Session.h>
-#include <host/Json.h>
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>

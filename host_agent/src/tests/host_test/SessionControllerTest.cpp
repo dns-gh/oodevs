@@ -9,7 +9,7 @@
 
 #include "host_test.h"
 #include "Mocks.h"
-#include <host/Json.h>
+#include <host/PropertyTree.h>
 #include <host/SessionController.h>
 #include <runtime/Utf8.h>
 

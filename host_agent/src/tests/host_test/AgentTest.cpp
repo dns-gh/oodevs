@@ -11,7 +11,7 @@
 #include "Mocks.h"
 
 #include <host/Agent.h>
-#include <host/Json.h>
+#include <host/PropertyTree.h>
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
