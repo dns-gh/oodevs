@@ -26,13 +26,14 @@ body{padding-top:60px;padding-bottom:40px;}
 .pull-right .label{float:left;margin-top:10px;}
 .sub_header th{border-top:0;padding-top:24px;}
 .package_name:first-letter,.package_description:first-letter{text-transform:uppercase;}
-.package_name,.package_description{margin-bottom:9px;}
-.package .form-actions{margin-top:0;margin-bottom:0;padding-right:0;text-align:right;}
-.package,.package table{margin-bottom:0;padding-bottom:0;}
-.package .badge{position:relative;top:-1px;}
+.package_name,.package_description{margin:20px;}
+.package .form-actions{margin:0;text-align:right;}
+.package table{margin-bottom:0;}
 .upload_alert span{margin-left:28px;}
 .item_briefing h2,.item_briefing h1{font-size:small;font-weight:bold;}
 .item_briefing h1:first-child{display:none;}
-.item_briefing .briefing_content{margin-top:8px;}
 .package_row .type:first-letter,.package_row .name:first-letter{text-transform:uppercase;}
 .package .version{position:relative;top:-2px;}
+.package th:first-child,.package td:first-child{padding-left:20px;}
+.item_briefing{padding-top:20px !important;}
+.briefing_content{margin-top:20px;}

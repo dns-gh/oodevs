@@ -31,8 +31,6 @@ class Package extends Backbone.Model
                 options.success, options.error
         return Backbone.sync method, model, options
 
-lastPop = null
-
 class PackageView extends Backbone.View
     el: $("#packages")
 
@@ -46,32 +44,9 @@ class PackageView extends Backbone.View
         $(@el).empty()
         if @model.attributes.name?
             $(@el).html package_template @model.attributes
-            for it in @model.attributes.items
-                continue unless it.type == "exercise"
-                $("#package_" + it.id).popover
-                    trigger:   "manual",
-                    placement: "bottom",
-                    title:     it.name,
-                    content:   $("#package_" + it.id + "_briefing").contents()
-                .click ->
-                    if lastPop?
-                        if lastPop == @
-                            lastPop = null
-                            $(@).popover "hide"
-                            return
-                        else
-                            $(lastPop).popover "hide"
-                            $(@).popover "show"
-                    lastPop = @
-                    return
-                .mouseenter ->
-                    unless lastPop?
-                        $(@).popover "show"
-                    return
-                .mouseleave ->
-                    unless lastPop?
-                        $(@).popover "hide"
-                    return
+            for it in $(@el).find(".action .more")
+                $(it).click ->
+                    $("#" + $(@).parent().parent().parent().attr "rel").toggle()
         return
 
     update: (data) =>

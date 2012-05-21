@@ -182,27 +182,18 @@ body
 
 .package_name, .package_description
 {
-    margin-bottom:  9px;
+    margin:  @topbar_margin;
 }
 
 .package .form-actions
 {
-    margin-top:     0;
-    margin-bottom:  0;
-    padding-right:  0;
-    text-align:     right;
+    margin:     0;
+    text-align: right;
 }
 
-.package, .package table
+.package table
 {
-    margin-bottom:  0;
-    padding-bottom: 0;
-}
-
-.package .badge
-{
-    position:   relative;
-    top:        -1px;
+    margin-bottom: 0;
 }
 
 .upload_alert span
@@ -221,11 +212,6 @@ body
     display:    none;
 }
 
-.item_briefing .briefing_content
-{
-    margin-top: 8px;
-}
-
 .package_row .type:first-letter, .package_row .name:first-letter
 {
     text-transform: uppercase;
@@ -235,4 +221,19 @@ body
 {
     position:   relative;
     top:        -2px;
+}
+
+.package th:first-child, .package td:first-child
+{
+    padding-left: @topbar_margin;
+}
+
+.item_briefing
+{
+    padding-top: @topbar_margin !important;
+}
+
+.briefing_content
+{
+    margin-top: @topbar_margin;
 }

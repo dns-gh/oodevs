@@ -1,5 +1,5 @@
 (function() {
-  var Package, PackageView, ajax, get_url, lastPop, package_template, package_view, spin_opts, spinner, toggle_load,
+  var Package, PackageView, ajax, get_url, package_template, package_view, spin_opts, spinner, toggle_load,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -55,8 +55,6 @@
 
   })(Backbone.Model);
 
-  lastPop = null;
-
   PackageView = (function(_super) {
 
     __extends(PackageView, _super);
@@ -82,31 +80,11 @@
       $(this.el).empty();
       if (this.model.attributes.name != null) {
         $(this.el).html(package_template(this.model.attributes));
-        _ref = this.model.attributes.items;
+        _ref = $(this.el).find(".action .more");
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           it = _ref[_i];
-          if (it.type !== "exercise") continue;
-          $("#package_" + it.id).popover({
-            trigger: "manual",
-            placement: "bottom",
-            title: it.name,
-            content: $("#package_" + it.id + "_briefing").contents()
-          }).click(function() {
-            if (lastPop != null) {
-              if (lastPop === this) {
-                lastPop = null;
-                $(this).popover("hide");
-                return;
-              } else {
-                $(lastPop).popover("hide");
-                $(this).popover("show");
-              }
-            }
-            lastPop = this;
-          }).mouseenter(function() {
-            if (lastPop == null) $(this).popover("show");
-          }).mouseleave(function() {
-            if (lastPop == null) $(this).popover("hide");
+          $(it).click(function() {
+            return $("#" + $(this).parent().parent().parent().attr("rel")).toggle();
           });
         }
       }
