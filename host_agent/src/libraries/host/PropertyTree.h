@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef JSON_H
-#define JSON_H
+#ifndef PROPERTY_TREE_H
+#define PROPERTY_TREE_H
 
 #include <boost/property_tree/ptree_fwd.hpp>
 
@@ -16,6 +16,8 @@ namespace host
 {
     std::string ToJson( const boost::property_tree::ptree& tree, bool isPretty = false );
     boost::property_tree::ptree FromJson( const std::string& data );
+    std::string ToXml( const boost::property_tree::ptree& tree );
+    boost::property_tree::ptree FromXml( const std::string& data );
 }
 
-#endif // JSON_H
+#endif // PROPERTY_TREE_H

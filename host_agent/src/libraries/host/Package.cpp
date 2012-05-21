@@ -10,7 +10,7 @@
 #include "Package.h"
 
 #include "FileSystem_ABC.h"
-#include "Json.h"
+#include "PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "TaskHandler.h"
 #include "UuidFactory.h"
@@ -20,7 +20,6 @@
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -242,9 +241,7 @@ bool Package::Parse()
     boost::property_tree::ptree tree;
     try
     {
-        const std::string data = system_.ReadFile( index);
-        std::istringstream input( data );
-        boost::property_tree::xml_parser::read_xml( input, tree );
+        tree = FromXml( system_.ReadFile( index) );
     }
     catch( const std::exception& /*err*/ )
     {

@@ -10,11 +10,11 @@
 #include <runtime/Factory.h>
 #include <host/Agent.h>
 #include <host/FileSystem.h>
-#include <host/Json.h>
 #include <host/Node_ABC.h>
 #include <host/NodeController.h>
 #include <host/Pool.h>
 #include <host/PortFactory.h>
+#include <host/PropertyTree.h>
 #include <host/Proxy.h>
 #include <host/SecurePool.h>
 #include <host/SessionController.h>

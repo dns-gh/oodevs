@@ -10,13 +10,13 @@
 #include "Session.h"
 
 #include "PortFactory_ABC.h"
+#include "PropertyTree.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
@@ -265,9 +265,7 @@ std::string GetConfiguration( const std::string& name, int base )
     tree.put( "session.meta.name", name );
     GetDispatcherConfiguration( tree, base );
     GetSimulationConfiguration( tree, base );
-    std::ostringstream output;
-    boost::property_tree::write_xml( output, tree, boost::property_tree::xml_writer_make_settings( ' ', 4 ) );
-    return output.str();
+    return ToXml( tree );
 }
 }
 
