@@ -26,7 +26,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ObjectManipulator( MIL_Object_ABC& object );
-    explicit MIL_ObjectManipulator( const MIL_Object_ABC& object );
     virtual ~MIL_ObjectManipulator();
     //@}
 

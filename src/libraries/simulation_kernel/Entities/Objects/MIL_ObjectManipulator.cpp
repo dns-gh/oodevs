@@ -58,16 +58,6 @@ MIL_ObjectManipulator::MIL_ObjectManipulator( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManipulator constructor
-// Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
-MIL_ObjectManipulator::MIL_ObjectManipulator( const MIL_Object_ABC& object )
-    : object_ ( const_cast< MIL_Object_ABC& >( object ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator destructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
