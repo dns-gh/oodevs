@@ -55,6 +55,7 @@ namespace mocks
         MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( GetPack, 1 );
         MOCK_METHOD( UploadPack, 2 );
+        MOCK_METHOD( DeletePack, 1 );
     };
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )
@@ -64,6 +65,7 @@ namespace mocks
         MOCK_METHOD( ReadPack, 3 );
         MOCK_METHOD( ParsePack, 2 );
         MOCK_METHOD( GetPack, 0 );
+        MOCK_METHOD( DeletePack, 0 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )

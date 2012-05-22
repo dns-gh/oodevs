@@ -56,6 +56,7 @@ public:
     virtual T_Node  Stop( const boost::uuids::uuid& id ) const = 0;
     virtual T_Tree  UploadPack( const boost::uuids::uuid& id, std::istream& src ) const = 0;
     virtual T_Tree  GetPack( const boost::uuids::uuid& id ) const = 0;
+    virtual T_Tree  DeletePack( const boost::uuids::uuid& id ) = 0;
     //@}
 };
 

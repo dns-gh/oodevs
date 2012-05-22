@@ -268,6 +268,15 @@ Reply Agent::GetPack( const boost::uuids::uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::DeletePack
+// Created: BAX 2012-05-22
+// -----------------------------------------------------------------------------
+Reply Agent::DeletePack( const boost::uuids::uuid& id )
+{
+    return TreeDispatch( boost::bind( &NodeController_ABC::DeletePack, &nodes_, id ), "delete pack" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------

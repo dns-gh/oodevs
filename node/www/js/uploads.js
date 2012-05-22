@@ -78,7 +78,8 @@
     };
 
     PackageView.prototype.render = function() {
-      var it, _i, _len, _ref;
+      var it, _i, _len, _ref,
+        _this = this;
       $(this.el).empty();
       if (!this.enabled) return;
       if (this.model.attributes.name != null) {
@@ -90,6 +91,17 @@
             return $("#" + $(this).parent().parent().parent().attr("rel")).toggle();
           });
         }
+        $(".form-actions .discard").click(function() {
+          _this.enabled = false;
+          _this.model.clear();
+          return ajax("/api/delete_pack", {
+            id: uuid
+          }, function() {
+            return _this.enabled = true;
+          }, function() {
+            return _this.enabled = true;
+          });
+        });
       }
     };
 

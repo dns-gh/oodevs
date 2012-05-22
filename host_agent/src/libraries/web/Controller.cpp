@@ -233,6 +233,7 @@ std::string Controller::Notify( Request_ABC& request )
             if( uri == "/start_node" )      return StartNode( request );
             if( uri == "/stop_node" )       return StopNode( request );
             if( uri == "/get_pack" )        return GetPack( request );
+            if( uri == "/delete_pack" )     return DeletePack( request );
             // sessions
             if( uri == "/list_sessions" )   return ListSessions( request );
             if( uri == "/count_sessions" )  return CountSessions( request );
@@ -367,6 +368,15 @@ std::string Controller::StopNode( const Request_ABC& request )
 std::string Controller::GetPack( const Request_ABC& request )
 {
     return UuidDispatch( request, "id", agent_, &Agent_ABC::GetPack );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::DeletePack
+// Created: BAX 2012-05-22
+// -----------------------------------------------------------------------------
+std::string Controller::DeletePack( const Request_ABC& request )
+{
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeletePack );
 }
 
 // -----------------------------------------------------------------------------

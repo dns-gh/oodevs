@@ -49,6 +49,12 @@ class PackageView extends Backbone.View
             for it in $(@el).find(".action .more")
                 $(it).click ->
                     $("#" + $(@).parent().parent().parent().attr "rel").toggle()
+            $(".form-actions .discard").click =>
+                @enabled = false
+                @model.clear()
+                ajax "/api/delete_pack", id: uuid,
+                    => @enabled = true
+                    => @enabled = true
         return
 
     update: (data) =>

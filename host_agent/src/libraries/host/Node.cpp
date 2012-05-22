@@ -249,3 +249,24 @@ boost::property_tree::ptree Node::GetPack() const
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     return stash_ ? stash_->GetProperties() : boost::property_tree::ptree();
 }
+
+namespace
+{
+template< typename T, typename U >
+U Steal( T& access, U& src )
+{
+    U reply;
+    boost::lock_guard< T > lock( access );
+    reply.swap( src );
+    return reply;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::DeletePack
+// Created: BAX 2012-05-22
+// -----------------------------------------------------------------------------
+boost::property_tree::ptree Node::DeletePack()
+{
+    return Steal( *access_, stash_ )->GetProperties();
+}

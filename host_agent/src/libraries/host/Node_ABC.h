@@ -47,6 +47,7 @@ public:
     virtual void ReadPack( const FileSystem_ABC& system, const boost::filesystem3::path& path, std::istream& src ) = 0;
     virtual void ParsePack( const FileSystem_ABC& system, const boost::filesystem3::path& path ) = 0;
     virtual boost::property_tree::ptree GetPack() const = 0;
+    virtual boost::property_tree::ptree DeletePack() = 0;
     //@}
 };
 

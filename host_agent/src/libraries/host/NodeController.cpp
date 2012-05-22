@@ -315,3 +315,9 @@ NodeController::T_Tree NodeController::UploadPack( const boost::uuids::uuid& id,
     }
     return node->GetPack();
 }
+
+NodeController::T_Tree NodeController::DeletePack( const boost::uuids::uuid& id )
+{
+    boost::shared_ptr< Node > node = nodes_->Get( id );
+    return node ? node->DeletePack() : T_Tree();
+}

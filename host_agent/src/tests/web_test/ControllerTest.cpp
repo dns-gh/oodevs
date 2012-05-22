@@ -58,6 +58,7 @@ namespace
         MOCK_METHOD( StopNode, 1 );
         MOCK_METHOD( UploadPack, 2 );
         MOCK_METHOD( GetPack, 1 );
+        MOCK_METHOD( DeletePack, 1 );
         // sessions
         MOCK_METHOD( ListSessions, 3 );
         MOCK_METHOD( CountSessions, 1 );
@@ -341,5 +342,21 @@ BOOST_FIXTURE_TEST_CASE( controller_upload_pack, Fixture )
     MOCK_EXPECT( request.ParseMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
     const std::string expected = "dummy reply";
     MOCK_EXPECT( agent.UploadPack ).once().with( defaultId, boost::ref( stream ) ).returns( expected );
+    CheckNotify( 200, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_get_pack, Fixture )
+{
+    SetRequest( "GET", "/get_pack", boost::assign::map_list_of( "id", defaultIdString ) );
+    const std::string expected = "a json pack";
+    MOCK_EXPECT( agent.GetPack ).once().with( defaultId ).returns( expected );
+    CheckNotify( 200, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_delete_pack, Fixture )
+{
+    SetRequest( "GET", "/delete_pack", boost::assign::map_list_of( "id", defaultIdString ) );
+    const std::string expected = "a json pack";
+    MOCK_EXPECT( agent.DeletePack ).once().with( defaultId ).returns( expected );
     CheckNotify( 200, expected );
 }
