@@ -62,6 +62,9 @@ public:
     const std::string& GetName() const;
     const MIL_Automate* GetTC2() const;
     bool HasCapacity( const std::string& capacity ) const;
+    int GetAltitudeMofider() const;
+    int GetTimeLimit() const;
+    bool GetMining() const;
     //@}
 
     //! @name Operations
@@ -89,6 +92,9 @@ private:
     unsigned int nActivationTime_;
     std::string name_;
     const MIL_Automate* pTC2_;
+    int altitudeModifier_;
+    int timeLimit_;
+    bool mining_;
     //@}
 };
 

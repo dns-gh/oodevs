@@ -66,7 +66,7 @@ class Param_ABC : public QObject
                 , private boost::noncopyable
 {
     Q_OBJECT
-
+    
 public:
     //! @name Constructors/Destructor
     //@{
@@ -95,12 +95,14 @@ public:
     const std::string& GetType() const;
     virtual int GetIndex( Param_ABC* ) const;
     virtual QString GetName() const;
+    virtual const std::string& GetKeyName() const;
     QString GetMenuName() const;
     virtual bool IsChecked() const;
     virtual bool IsOptional() const;
     void SetOptional( bool optional );
     virtual void SetParentList( ListParameterBase* parentList );
     virtual void SetName( const QString& name );
+    virtual void SetKeyName( const std::string& keyName );
     //@}
 
 public slots:

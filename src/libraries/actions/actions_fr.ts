@@ -77,6 +77,18 @@
         <source>Obstacle tc2</source>
         <translation>TC2 de l&apos;obstacle</translation>
     </message>
+    <message>
+        <source>Obstacle mining</source>
+        <translation>Valoriser</translation>
+    </message>
+    <message>
+        <source>Altitude modifier</source>
+        <translation>Modificateur d&apos;altitude</translation>
+    </message>
+    <message>
+        <source>Time limit</source>
+        <translation>Durée de vie</translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>

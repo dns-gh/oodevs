@@ -136,6 +136,12 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.cpp">
       <Filter>Source Files\Parameters\Resource Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamTime.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamQuantity.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions_gui\actions_gui_pch.h">
@@ -276,6 +282,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.h">
       <Filter>Source Files\Parameters\Resource Network</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamTime.h">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamQuantity.h">
+      <Filter>Source Files\Parameters\Common</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -172,3 +172,16 @@ void AltitudeModifierAttribute::ResetAltitude( const TER_Localisation& localisat
 {
     GetRawVisionData().ModifyAltitude( localisation, - static_cast< short >( height_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::SetHeight
+// Created: MMC 2012-04-27
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::SetHeight( unsigned int height )
+{
+    if( height_ != height )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        height_ = height;
+    }
+}

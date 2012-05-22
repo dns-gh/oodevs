@@ -103,6 +103,16 @@ void Parameter< T >::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Parameter::GetKeyName
+// Created: MMC 2012-05-16
+// -----------------------------------------------------------------------------
+template< typename T >
+std::string Parameter< T >::GetKeyName() const
+{
+    return parameter_.GetKeyName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Parameter::IsInRange
 // Created: LDC 2010-09-21
 // -----------------------------------------------------------------------------

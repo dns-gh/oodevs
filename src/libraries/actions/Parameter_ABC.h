@@ -62,6 +62,7 @@ public:
     virtual QString GetName() const;
     virtual std::string GetType() const;
     virtual geometry::Point2f GetPosition() const;
+    virtual std::string GetKeyName() const;
     //@}
 
     //! @name Operations

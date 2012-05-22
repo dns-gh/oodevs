@@ -91,6 +91,15 @@ std::string OrderParameter::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter::GetKeyName
+// Created: MMC 2012-05-15
+// -----------------------------------------------------------------------------
+std::string OrderParameter::GetKeyName() const
+{
+    return keyName_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter::IsOptional
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
@@ -143,6 +152,15 @@ void OrderParameter::SetMinMaxOccurs( unsigned int min, unsigned int max )
 {
     minOccurs_ = min;
     maxOccurs_ = max;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::SetKeyName
+// Created: MMC 2012-05-15
+// -----------------------------------------------------------------------------
+void OrderParameter::SetKeyName( const std::string& keyName )
+{
+    keyName_ = keyName;
 }
 
 // -----------------------------------------------------------------------------

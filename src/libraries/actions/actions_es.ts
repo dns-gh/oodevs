@@ -77,6 +77,18 @@
         <source>Obstacle tc2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Altitude modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle mining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time limit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>

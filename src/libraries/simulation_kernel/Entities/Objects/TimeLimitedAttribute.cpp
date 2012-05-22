@@ -166,3 +166,12 @@ bool TimeLimitedAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TimeLimitedAttribute::SetLifeTime
+// Created: MMC 2012-05-21
+// -----------------------------------------------------------------------------
+void TimeLimitedAttribute::SetLifeTime( unsigned int lifeTime )
+{
+    nLifeTime_ = lifeTime;
+}

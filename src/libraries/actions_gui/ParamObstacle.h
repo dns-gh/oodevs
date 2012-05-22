@@ -35,6 +35,9 @@ namespace actions
         class ParamLocation;
         template< typename T > class ParamNumericField;
         class ParamAutomat;
+        class ParamBool;
+        class ParamTime;
+        class ParamQuantity;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -45,7 +48,7 @@ namespace actions
 class ParamObstacle : public ParamLocationComposite
 {
     Q_OBJECT
-
+    
 public:
     //! @name Constructors/Destructor
     //@{
@@ -91,6 +94,9 @@ private:
     ParamLocation*                                      location_;
     ParamNumericField< float >*                         density_;
     ParamAutomat*                                       tc2_;
+    ParamQuantity*                                      altitudeModifier_;
+    ParamTime*                                          timeLimit_;
+    ParamBool*                                          mining_;
     //@}
 };
 

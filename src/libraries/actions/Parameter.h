@@ -41,6 +41,7 @@ public:
     virtual std::string GetType() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual std::string GetKeyName() const;
     void SetValue( const T& value );
     const T& GetValue() const;
     bool IsInRange() const;

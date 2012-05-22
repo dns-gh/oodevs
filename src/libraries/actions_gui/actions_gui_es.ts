@@ -135,10 +135,6 @@
         <translation type="unfinished">Tipo de blanco de demolición:</translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation type="unfinished">Tipo de obstáculo</translation>
-    </message>
-    <message>
         <source>Obstacle location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -148,6 +144,22 @@
     </message>
     <message>
         <source>TC2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Altitude modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle mining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time limit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

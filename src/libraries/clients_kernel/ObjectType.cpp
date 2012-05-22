@@ -190,6 +190,24 @@ bool ObjectType::HasMedicalCapacity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::HasAltitudeModifierCapacity
+// Created: MMC 2012-04-19
+// -----------------------------------------------------------------------------
+bool ObjectType::HasAltitudeModifierCapacity() const
+{
+    return( capacities_.find( "altitude-modifier" ) != capacities_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::HasTimeLimitedCapacity
+// Created: MMC 2012-04-19
+// -----------------------------------------------------------------------------
+bool ObjectType::HasTimeLimitedCapacity() const
+{
+    return( capacities_.find( "time-limited" ) != capacities_.end() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::IsUrban
 // Created: SLG 2011-01-06
 // -----------------------------------------------------------------------------

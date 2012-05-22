@@ -67,6 +67,9 @@ public:
     bool HasLogistic() const;
     bool HasSpawn() const;
     bool HasMedicalCapacity() const;
+    bool HasAltitudeModifierCapacity() const;
+    bool HasFirePropagationModifierCapacity() const;
+    bool HasTimeLimitedCapacity() const;
     bool IsUrban() const;
     bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;

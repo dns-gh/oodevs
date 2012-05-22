@@ -10,9 +10,12 @@
 #include "actions_pch.h"
 #include "EngineerConstruction.h"
 #include "Automat.h"
+#include "Bool.h"
+#include "DateTime.h"
 #include "Location.h"
 #include "Numeric.h"
 #include "ObstacleType.h"
+#include "Quantity.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -73,8 +76,23 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
     }
     if( message.density() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).ascii(), "density", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).ascii(), "float", false );
         AddParameter( *new Numeric( param, message.density() ) );
+    }
+    if( message.altitude_modifier() != 0 )
+    {
+        const OrderParameter param( tools::translate( "ActionParameter", "Altitude modifier" ).ascii(), "integer", false );
+        AddParameter( *new Quantity( param, message.altitude_modifier() ) );
+    }
+    if( message.mining() != false )
+    {
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle mining" ).ascii(), "boolean", false );
+        AddParameter( *new Bool( param, message.mining() ) );
+    }
+    if( message.time_limit() > 0 )
+    {
+        const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).ascii(), "integer", false );
+        AddParameter( *new Numeric( param, message.time_limit() ) );
     }
 }
 
@@ -123,6 +141,7 @@ EngineerConstruction::~EngineerConstruction()
 // -----------------------------------------------------------------------------
 void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
 {
+    std::string name = xis.attribute< std::string >( "name" );
     std::string type = xis.attribute< std::string >( "type" );
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
@@ -185,15 +204,23 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
     message.set_type( type_->GetType().c_str() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
+        const std::string keyName = it->second->GetKeyName();
         const std::string type = it->second->GetType();
+
         if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
             static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
-        else if( type == "density" )
+        else if( keyName == "density" && type == "float" )
             static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_density, boost::ref( message ), _1 ) );
-        else if( type == "tc2" || type == "automate" || type == "automat" )
+        else if( type == "tc2" || type == "automat" || type == "automate" )
             static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &sword::AutomatId::set_id, boost::ref( *message.mutable_combat_train() ), _1 ) );
+        else if( keyName == "altitude_modifier" && type == "quantity" )
+            static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
+        else if( keyName == "obstacle_mining" && type == "boolean" )
+            static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );        
+        else if( keyName == "time_limit" && type == "time" )
+            static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_time_limit, boost::ref( message ), _1 )  );
     }
 }
 

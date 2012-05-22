@@ -96,3 +96,33 @@ const std::string& DEC_Gen_Object::GetName() const
 {
     return name_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetAltitudeMofider
+// Created: MMC 2012-04-20
+// -----------------------------------------------------------------------------
+inline
+int DEC_Gen_Object::GetAltitudeMofider() const
+{
+    return altitudeModifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetTimeLimit
+// Created: MMC 2012-04-20
+// -----------------------------------------------------------------------------
+inline
+int DEC_Gen_Object::GetTimeLimit() const
+{
+    return timeLimit_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetMining
+// Created: MMC 2012-04-20
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Gen_Object::GetMining() const
+{
+    return mining_;
+}

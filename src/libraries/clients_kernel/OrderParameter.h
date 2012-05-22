@@ -60,9 +60,11 @@ public:
     //@{
     std::string GetName() const;
     std::string GetType() const;
+    std::string GetKeyName() const;
     void SetName( const std::string& name );
     void SetOptional( bool optional );
     void SetMinMaxOccurs( unsigned int min, unsigned int max );
+    void SetKeyName( const std::string& name );
     bool IsOptional() const;
     bool HasGenObject( const std::string& type ) const;
     unsigned int MinOccurs() const;
@@ -97,6 +99,7 @@ private:
     //@{
     std::string name_;
     std::string type_;
+    std::string keyName_;
     bool optional_;
     unsigned int minOccurs_;
     unsigned int maxOccurs_;

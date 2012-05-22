@@ -135,10 +135,6 @@
         <translation type="unfinished">Type de cible de démolition:</translation>
     </message>
     <message>
-        <source>Obstacle type</source>
-        <translation>Type d&apos;obstacle</translation>
-    </message>
-    <message>
         <source>Obstacle location</source>
         <translation>Position de l&apos;obstacle</translation>
     </message>
@@ -149,6 +145,22 @@
     <message>
         <source>TC2</source>
         <translation>TC2</translation>
+    </message>
+    <message>
+        <source>Altitude modifier</source>
+        <translation>Modificateur d&apos;altitude</translation>
+    </message>
+    <message>
+        <source>Obstacle mining</source>
+        <translation>Valoriser</translation>
+    </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation>Type d&apos;obstacle</translation>
+    </message>
+    <message>
+        <source>Time limit</source>
+        <translation>Durée de vie</translation>
     </message>
 </context>
 </TS>

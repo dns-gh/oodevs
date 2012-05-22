@@ -247,7 +247,9 @@
     <None Include="..\..\src\libraries\actions\Parameter.inl" />
     <None Include="..\..\src\libraries\actions\Knowledge_ABC.inl" />
     <None Include="..\..\src\libraries\actions\actions_es.ts" />
-    <None Include="..\..\src\libraries\actions\actions_fr.ts" />
+    <None Include="..\..\src\libraries\actions\actions_fr.ts">
+      <SubType>Designer</SubType>
+    </None>
     <CustomBuild Include="..\..\src\libraries\actions\translator.pro">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
 lrelease -verbose %(FullPath)

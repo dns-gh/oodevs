@@ -62,6 +62,7 @@ public:
     //! @name Accessors
     //@{
     bool IsTimeOver( unsigned int time ) const;
+    void SetLifeTime( unsigned int lifeTime );
     //@}
 
     //! @name Copy

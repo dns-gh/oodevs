@@ -34,10 +34,12 @@
 #include "ParamObjectKnowledge.h"
 #include "ParamPath.h"
 #include "ParamPopulationKnowledge.h"
+#include "ParamQuantity.h"
 #include "ParamResourceNetworkNode.h"
 #include "ParamResourceNetworkType.h"
 #include "ParamUrbanBlock.h"
 #include "ParamStringField.h"
+#include "ParamTime.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Time_ABC.h"
@@ -75,6 +77,8 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     AddFunctor< actions::gui::ParamStringField >        ( "string" );
     AddFunctor< actions::gui::ParamDateTime >           ( "datetime" );
     AddFunctor< actions::gui::ParamComboBox< int > >    ( "enumeration" );
+    AddFunctor< actions::gui::ParamTime >               ( "time" );
+    AddFunctor< actions::gui::ParamQuantity >           ( "quantity" );
     // Locations
     AddFunctor< actions::gui::ParamCircle >             ( "circle" );
     AddFunctor< actions::gui::ParamLine >               ( "line" );

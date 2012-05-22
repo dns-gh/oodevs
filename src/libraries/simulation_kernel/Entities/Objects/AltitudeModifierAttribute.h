@@ -76,6 +76,7 @@ public:
     //@{
     void ModifyAltitude( const TER_Localisation& localisation ) const;
     void ResetAltitude( const TER_Localisation& localisation ) const;
+    void SetHeight( unsigned int height );
     //@}
 
 private:

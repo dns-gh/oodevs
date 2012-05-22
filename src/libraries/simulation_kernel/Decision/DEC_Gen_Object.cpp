@@ -54,6 +54,9 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , nActivationTime_   ( msg.has_activation_time() ? msg.activation_time() : 0 )
     , name_              ( msg.has_name() ? msg.name() : std::string() )
     , pTC2_              ( 0 )
+    , altitudeModifier_  ( msg.has_altitude_modifier() ? msg.altitude_modifier() : 0 )
+    , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
+    , mining_            ( msg.has_mining() ? msg.mining() : false )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -81,6 +84,9 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , nActivationTime_   ( msg.has_activation_time() ? msg.activation_time() : 0 )
     , name_              ( msg.has_name() ? msg.name() : std::string() )
     , pTC2_              ( 0 )
+    , altitudeModifier_  ( msg.has_altitude_modifier() ? msg.altitude_modifier() : 0 )
+    , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
+    , mining_            ( msg.has_mining() ? msg.mining() : false )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -108,6 +114,9 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, TER_Localisation* location, bo
     , nMinesActivityTime_( 0 )
     , nActivationTime_   ( 0 )
     , pTC2_              ( 0 )
+    , altitudeModifier_  ( 0 )
+    , timeLimit_         ( 0 )
+    , mining_            ( false )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -127,6 +136,9 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , nActivationTime_   ( rhs.nActivationTime_ )
     , name_              ( rhs.name_ )
     , pTC2_              ( rhs.pTC2_ )
+    , altitudeModifier_  ( rhs.altitudeModifier_ )
+    , timeLimit_         ( rhs.timeLimit_ )
+    , mining_            ( rhs.mining_ )
 {
     // NOTHING
 }
@@ -155,6 +167,9 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     nActivationTime_    = rhs.nActivationTime_;
     name_               = rhs.name_;
     pTC2_               = rhs.pTC2_;
+    altitudeModifier_   = rhs.altitudeModifier_;
+    timeLimit_          = rhs.timeLimit_;
+    mining_             = rhs.mining_;
     return *this;
 }
 
@@ -173,6 +188,9 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
     if( !name_.empty() )
         msg.set_name( name_ );
     NET_ASN_Tools::WriteLocation( localisation_, *msg.mutable_position() );
+    msg.set_altitude_modifier( altitudeModifier_ );
+    msg.set_time_limit( timeLimit_ );
+    msg.set_mining( mining_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +219,10 @@ void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nMinesActivityTime_
          >> nActivationTime_
          >> name_
-         >> const_cast< MIL_Automate*& >( pTC2_ );
+         >> const_cast< MIL_Automate*& >( pTC2_ )
+         >> altitudeModifier_
+         >> timeLimit_
+         >> mining_;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,5 +239,8 @@ void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nMinesActivityTime_
          << nActivationTime_
          << name_
-         << const_cast< MIL_Automate*& >( pTC2_ );
+         << const_cast< MIL_Automate*& >( pTC2_ )
+         << altitudeModifier_
+         << timeLimit_
+         << mining_;
 }

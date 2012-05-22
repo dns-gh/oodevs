@@ -14,9 +14,11 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/AltitudeModifierAttribute.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/TimeLimitedAttribute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
@@ -28,7 +30,12 @@
 PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject, bool instantaneous )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_      ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() ) )
+    , pObject_      ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(),
+                                                                                       pGenObject->GetTypeName(),
+                                                                                       &pGenObject->GetLocalisation(),
+                                                                                       pGenObject->GetObstacleType(),
+                                                                                       pGenObject->GetExternalIdentifier(),
+                                                                                       pGenObject->GetName() ) )
     , instantaneous_( instantaneous )
 {
     role_.SetCreator( *pObject_ );
@@ -43,9 +50,14 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost
         }
         MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
         if( mineAttribute )
-        {
-            mineAttribute->Set(0.);//default valorization is set to 100%
-        }
+            mineAttribute->Set( pGenObject->GetMining() ? 1. : 0. ); //default valorization is set to 100%
+        TimeLimitedAttribute* timeLimitedAttribute = pObject_->RetrieveAttribute< TimeLimitedAttribute >();
+        if( timeLimitedAttribute )
+            timeLimitedAttribute->SetLifeTime( static_cast< unsigned int >( pGenObject->GetTimeLimit() ) );
+        AltitudeModifierAttribute* altitudeModifierAttribute = pObject_->RetrieveAttribute< AltitudeModifierAttribute >();
+        if( altitudeModifierAttribute )
+            if( pGenObject->GetAltitudeMofider() > 0 )
+                altitudeModifierAttribute->SetHeight( static_cast< unsigned int >( pGenObject->GetAltitudeMofider() ) );
     }
     Callback( role_.GetInitialReturnCode() );
 }

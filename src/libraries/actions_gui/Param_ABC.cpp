@@ -27,7 +27,7 @@ Param_ABC::Param_ABC( QObject* parent, const ParamInterface_ABC& paramInterface,
     , parentList_     ( 0 )
     , parentParameter_( 0 )
     , name_           ( parameter.GetName().c_str() )
-    , type_           ( parameter.GetName() )
+    , type_           ( parameter.GetType() )
     , controller_     ( 0 )
     , group_          ( 0 )
 {
@@ -195,6 +195,15 @@ QString Param_ABC::GetMenuName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Param_ABC::GetMenuName
+// Created: MMC 2012-05-15
+// -----------------------------------------------------------------------------
+const std::string& Param_ABC::GetKeyName() const
+{
+    return parameter_.GetKeyName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Param_ABC::ConnectAction
 // Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
@@ -313,6 +322,15 @@ void Param_ABC::SetName( const QString& name )
     name_ = name;
     if( group_ )
         group_->setTitle( name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetName
+// Created: MMC 2012-05-15
+// -----------------------------------------------------------------------------
+void Param_ABC::SetKeyName( const std::string& keyName )
+{
+    parameter_.SetKeyName( keyName );
 }
 
 // -----------------------------------------------------------------------------

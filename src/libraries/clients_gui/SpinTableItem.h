@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <Qt3Support/Q3Table.h>
+#include <QtCore/QLocale.h>
 
 namespace gui
 {
