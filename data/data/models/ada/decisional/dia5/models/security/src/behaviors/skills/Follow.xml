@@ -36,4 +36,15 @@
             <description>To reach positions to stay close to followed elements.</description>
         </link>
     </links>
+    <feedbacks>
+        <feedback name="followedEntity">
+            <description>Sent permanently, with the element that is being followed as argument.</description>
+            <argument name="entity">
+                <description>The entity that is being followed by the agent.</description>
+                <type>
+                    <class name="ontology.classes.Human"/>
+                </type>
+            </argument>
+        </feedback>
+    </feedbacks>
 </skill>

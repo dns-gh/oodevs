@@ -6,6 +6,7 @@
 rootnode
 {
     connections = { skill.links.reach },
+    feedbacks   = { "followedEntity" },
 
     -- -------------------------------------------------------------------------------- 
     -- Follow the nearest agent
@@ -34,6 +35,9 @@ rootnode
             nearestAgent = agent:getProximity( meKnowledge )
              > nearestAgent:getProximity( meKnowledge ) and agent or nearestAgent
         end
+
+        -- Notify the caller skill with the chosen entity.
+        Feedback( self.feedbacks.followedEntity, { entity = nearestAgent } ) 
 
         -- find nearest position
         local nearestPosition = self.positions[ 1 ]
