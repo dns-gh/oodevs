@@ -157,9 +157,9 @@
     return $("#upload_form").submit();
   });
 
-  $("#upload_target").load(function(data) {
+  $("#upload_target").load(function() {
     toggle_load();
-    return package_view.update(jQuery.parseJSON($(this).contents().find("body").html()));
+    return package_view.update(jQuery.parseJSON($(this).contents().text()));
   });
 
 }).call(this);

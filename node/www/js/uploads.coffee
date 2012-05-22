@@ -99,6 +99,6 @@ $("#upload_form .upload").click ->
     toggle_load()
     $("#upload_form").submit()
 
-$("#upload_target").load (data) ->
+$("#upload_target").load ->
     toggle_load()
-    package_view.update jQuery.parseJSON $(@).contents().find("body").html()
+    package_view.update jQuery.parseJSON $(@).contents().text()
