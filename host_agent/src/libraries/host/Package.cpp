@@ -74,6 +74,7 @@ struct host::SubPackage : public boost::noncopyable
     {
         return tree_;
     }
+
     void Join()
     {
         checksum_.wait();

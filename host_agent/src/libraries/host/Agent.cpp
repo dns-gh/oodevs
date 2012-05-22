@@ -95,15 +95,6 @@ Reply Dispatch( T& controller, const U& member, const boost::uuids::uuid& id, co
     return Reply( ptr->GetProperties() );
 }
 
-template< typename T >
-Reply TreeDispatch( const T& functor, const std::string& action )
-{
-    boost::property_tree::ptree tree = functor();
-    if( tree.empty() )
-        return Reply( "unable to " + action, false );
-    return Reply( tree );
-}
-
 template< typename T, typename U >
 Reply ClusterDispatch( T* controller, const U& member, const boost::uuids::uuid& id, const std::string& action )
 {
@@ -255,7 +246,7 @@ Reply Agent::StopNode( const boost::uuids::uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
 {
-    return TreeDispatch( boost::bind( &NodeController_ABC::UploadPack, &nodes_, id, boost::ref( src ) ), "upload pack" );
+    return Reply( nodes_.UploadPack( id, src ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +255,7 @@ Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
 // -----------------------------------------------------------------------------
 Reply Agent::GetPack( const boost::uuids::uuid& id ) const
 {
-    return TreeDispatch( boost::bind( &NodeController_ABC::GetPack, &nodes_, id ), "get pack" );
+    return Reply( nodes_.GetPack( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +264,7 @@ Reply Agent::GetPack( const boost::uuids::uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::DeletePack( const boost::uuids::uuid& id )
 {
-    return TreeDispatch( boost::bind( &NodeController_ABC::DeletePack, &nodes_, id ), "delete pack" );
+    return Reply( nodes_.DeletePack( id ) );
 }
 
 // -----------------------------------------------------------------------------

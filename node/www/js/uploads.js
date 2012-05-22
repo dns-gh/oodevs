@@ -116,7 +116,11 @@
       item = new Package;
       return item.fetch({
         success: function() {
-          _this.update(item.attributes);
+          if (item.attributes.name != null) {
+            _this.update(item.attributes);
+          } else {
+            _this.model.clear();
+          }
           return setTimeout(_this.delta, 5000);
         },
         error: function() {

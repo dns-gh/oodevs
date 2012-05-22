@@ -65,7 +65,10 @@ class PackageView extends Backbone.View
         item = new Package
         item.fetch
             success: =>
-                @update item.attributes
+                if item.attributes.name?
+                    @update item.attributes
+                else
+                    @model.clear()
                 setTimeout @delta, 5000
             error: =>
                 setTimeout @delta, 5000
