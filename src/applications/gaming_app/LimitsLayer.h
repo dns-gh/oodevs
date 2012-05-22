@@ -11,7 +11,6 @@
 #define __LimitsLayer_h_
 
 #include "clients_gui/TacticalLinesLayer.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/FourStateOption.h"
 
@@ -26,7 +25,6 @@ class TacticalLineFactory;
 class LimitsLayer : public gui::TacticalLinesLayer
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
-                  , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor

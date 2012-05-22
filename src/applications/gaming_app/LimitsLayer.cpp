@@ -31,7 +31,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, Co
     , factory_       ( factory )
     , selectedEntity_( controllers )
 {
-    controllers_.Update( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, Co
 // -----------------------------------------------------------------------------
 LimitsLayer::~LimitsLayer()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
