@@ -68,6 +68,8 @@
 
     PackageView.prototype.el = $("#packages");
 
+    PackageView.prototype.enabled = true;
+
     PackageView.prototype.initialize = function(obj) {
       this.model = new Package;
       this.model.bind('change', this.render);
@@ -78,6 +80,7 @@
     PackageView.prototype.render = function() {
       var it, _i, _len, _ref;
       $(this.el).empty();
+      if (!this.enabled) return;
       if (this.model.attributes.name != null) {
         $(this.el).html(package_template(this.model.attributes));
         _ref = $(this.el).find(".action .more");
@@ -91,6 +94,7 @@
     };
 
     PackageView.prototype.update = function(data) {
+      this.enabled = true;
       return this.model.set(data);
     };
 
@@ -154,6 +158,8 @@
   $("#upload_form .upload").click(function() {
     if ($(this).hasClass("disabled")) return;
     toggle_load();
+    package_view.enabled = false;
+    package_view.model.clear();
     return $("#upload_form").submit();
   });
 

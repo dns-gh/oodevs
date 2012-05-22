@@ -33,6 +33,7 @@ class Package extends Backbone.Model
 
 class PackageView extends Backbone.View
     el: $("#packages")
+    enabled: true
 
     initialize: (obj) ->
         @model = new Package
@@ -42,6 +43,7 @@ class PackageView extends Backbone.View
 
     render: =>
         $(@el).empty()
+        return unless @enabled
         if @model.attributes.name?
             $(@el).html package_template @model.attributes
             for it in $(@el).find(".action .more")
@@ -50,6 +52,7 @@ class PackageView extends Backbone.View
         return
 
     update: (data) =>
+        @enabled = true
         @model.set data
 
     delta: =>
@@ -97,6 +100,8 @@ toggle_load = ->
 $("#upload_form .upload").click ->
     return if $(@).hasClass "disabled"
     toggle_load()
+    package_view.enabled = false
+    package_view.model.clear()
     $("#upload_form").submit()
 
 $("#upload_target").load ->
