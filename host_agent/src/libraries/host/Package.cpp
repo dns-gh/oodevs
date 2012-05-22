@@ -253,7 +253,7 @@ bool Package::Parse()
     boost::property_tree::ptree tree;
     try
     {
-        tree = FromXml( system_.ReadFile( index) );
+        tree = FromXml( system_.ReadFile( index ) );
     }
     catch( const std::exception& /*err*/ )
     {
