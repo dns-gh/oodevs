@@ -70,8 +70,8 @@
                             {{#equal type "exercise"}}
                             <tr id="briefing_{{id}}" class="hide">
                                 <td colspan="5" class="item_briefing">
-                                    {{#if model.length}}<div><b>Model</b> {{model}}</div>{{/if}}
-                                    {{#if terrain.length}}<div><b>Terrain</b> {{terrain}}</div>{{/if}}
+                                    {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
+                                    {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
                                     <div class="briefing_content">{{{briefing}}}</div>
                                 </td>
                             </tr>
