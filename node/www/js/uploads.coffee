@@ -82,6 +82,14 @@ spin_opts =
 spinner = new Spinner(spin_opts).spin()
 $(".spin_btn").html spinner.el
 
+$("#upload_form input:file").change ->
+    ctl = $("#upload_form .upload")
+    if @value?
+        ctl.removeClass "disabled"
+    else
+        ctl.addClass "disabled"
+    return
+
 toggle_load = ->
     $("#upload_form .upload").toggleClass "disabled"
     $(".upload_alert").toggle()

@@ -136,6 +136,16 @@
 
   $(".spin_btn").html(spinner.el);
 
+  $("#upload_form input:file").change(function() {
+    var ctl;
+    ctl = $("#upload_form .upload");
+    if (this.value != null) {
+      ctl.removeClass("disabled");
+    } else {
+      ctl.addClass("disabled");
+    }
+  });
+
   toggle_load = function() {
     $("#upload_form .upload").toggleClass("disabled");
     return $(".upload_alert").toggle();
