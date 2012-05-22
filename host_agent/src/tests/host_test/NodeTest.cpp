@@ -17,10 +17,12 @@
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
+using mocks::MockFileSystem;
 using mocks::MockPort;
 using mocks::MockPortFactory;
 using mocks::MockProcess;
 using mocks::MockRuntime;
+using mocks::MockUnpack;
 
 namespace
 {
@@ -35,6 +37,7 @@ namespace
     {
         typedef boost::shared_ptr< Node > NodePtr;
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
+        MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
         MOCK_FUNCTOR( Starter, ProcessPtr( const Node& ) );
@@ -144,4 +147,39 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
     NodePtr node = MakeNode();
     StartNode( *node, processPid, processName );
     BOOST_CHECK( node->Start( Starter ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( node_pack, Fixture )
+{
+    NodePtr node = MakeNode();
+    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
+
+    MOCK_EXPECT( system.Remove ).once().with( "a" );
+    MOCK_EXPECT( system.MakeDirectory ).once().with( "a" );
+
+    boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
+    std::stringstream stream;
+    MOCK_EXPECT( system.Unpack ).once().with( "a", boost::ref( stream ) ).returns( unpack );
+    MOCK_EXPECT( unpack->Unpack ).once();
+
+    MOCK_EXPECT( system.IsFile ).with( "a/content.xml" ).returns( true );
+    MOCK_EXPECT( system.ReadFile ).with( "a/content.xml" ).returns(
+        "<content>"
+        "<name>my_name</name>"
+        "<description>my_version</description>"
+        "<version>some_version</version>"
+        "</content>" );
+    MOCK_EXPECT( system.Glob ).with( "a/data/models", mock::any ).returns( false );
+    MOCK_EXPECT( system.Glob ).with( "a/data/terrains", mock::any ).returns( false );
+    MOCK_EXPECT( system.Glob ).with( "a/exercises", mock::any ).returns( false );
+
+    const std::string expected = "{\"name\":\"my_name\",\"description\":\"my_version\",\"version\":\"some_version\",\"items\":\"\"}";
+    node->ReadPack( system, "a", stream );
+    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), expected );
+
+    node->ParsePack( system, "a" );
+    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), expected );
+
+    BOOST_CHECK_EQUAL( ToJson( node->DeletePack() ), expected );
+    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
 }
