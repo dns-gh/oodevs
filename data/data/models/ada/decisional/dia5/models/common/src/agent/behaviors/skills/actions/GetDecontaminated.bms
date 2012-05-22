@@ -1,15 +1,15 @@
 -- ****************************************************************************
 -- To be decontaminated within a decontamination plot.
 -- @params self.params.decontaminationPlot, a 'decontaminationPlot' ML object
--- @return beDecontaminatedActionCompleted once action is completed
+-- @return getDecontaminatedActionCompleted once action is completed
 -- ****************************************************************************
 rootnode
 {
-    feedbacks = { "beDecontaminatedActionCompleted" },
+    feedbacks = { "getDecontaminatedActionCompleted" },
 
     select = function( self )
         if meKnowledge:beDecontaminated( self.params.decontaminationPlot ) then
-            Feedback( self.feedbacks.beDecontaminatedActionCompleted )
+            Feedback( self.feedbacks.getDecontaminatedActionCompleted )
         end
     end
 }

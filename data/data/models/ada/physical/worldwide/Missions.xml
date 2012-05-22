@@ -2038,19 +2038,18 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="agents to follow" optional="false" type="LocationComposite">
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="agent units to follow" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
           <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
@@ -2553,7 +2552,7 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
       <parameter dia-name="dotationType" name="type of dotation to use" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.BeDecontaminated" dia-type="behaviors.tasks.BeDecontaminated" id="4486" name="MLSECURITY - Go get decontaminated">
+    <mission dia-behavior="behaviors.tasks.GoGetDecontaminated" dia-type="behaviors.tasks.GoGetDecontaminated" id="4486" name="MLSECURITY - Go get decontaminated">
       <description>
         <doctrine><![CDATA[To get decontaminated through a decontamination site.]]></doctrine>
         <usage><![CDATA[The agent moves to the given decontamination site. Once it is reached, agent ask for decontamination. Once agent is decontaminated, it moves to a given garage position. Decontamination site must be operated to decontaminate. If it is not, agent stays nearby the site until it can be decontaminated or a new mission is issued. ]]></usage>
@@ -4417,4 +4416,4 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0041035073" -->
+<!-- signature="4097036619" -->

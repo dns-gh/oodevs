@@ -67,8 +67,8 @@
         <skill name="behaviors.skills.primitives.Filter"/>
         <skill name="behaviors.skills.CreateThenFilter"/>
         <skill name="behaviors.skills.LaunchProjectileOnTargets"/>
-        <skill name="agent.behaviors.skills.actions.BeDecontaminated"/>
-        <skill name="behaviors.skills.primitives.BeDecontaminated"/>
+        <skill name="agent.behaviors.skills.actions.GetDecontaminated"/>
+        <skill name="behaviors.skills.primitives.GetDecontaminated"/>
         <skill name="agent.behaviors.skills.actions.SelfDestruct"/>
         <skill name="agent.behaviors.skills.actions.SelfDecontaminate"/>
         <skill name="behaviors.skills.primitives.OrderToFollow"/>

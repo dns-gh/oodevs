@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.BeDecontaminated" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.GoGetDecontaminated" source-version="1.0.0">
     <description>To be decontaminated through a decontamination site. &#xD;
 The agent moves to decontamination site, and when it is reached, ask for decontamination. Once agent is decontaminated, it moves to a given garage position.</description>
     <parameters>
@@ -20,7 +20,7 @@ The agent moves to decontamination site, and when it is reached, ask for deconta
         <stage label="move to decontamination plot">
             <description>Move to decontamination site and ask to be decontaminated.</description>
             <skills>
-                <skill name="behaviors.skills.primitives.BeDecontaminated" main="true">
+                <skill name="behaviors.skills.primitives.GetDecontaminated" main="true">
                     <parameter name="decontaminationPlot">
                         <value>
                             <parameter>decontaminationPlot</parameter>

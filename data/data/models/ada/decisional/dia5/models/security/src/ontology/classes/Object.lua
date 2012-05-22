@@ -201,6 +201,11 @@ method "decontaminateMe" (
         return false
     end )
 
+method "canBeUsedToGetDecontaminate" ( 
+    function( self )
+        return integration.canDecontaminateAgents( self )
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Specific classe methods
 -- --------------------------------------------------------------------------------

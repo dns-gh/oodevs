@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.BeDecontaminated" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.GetDecontaminated" source-version="1.0.0">
     <description>To be decontaminated by a decontamination plot.</description>
     <parameters>
         <parameter name="decontaminationPlot">
@@ -13,7 +13,7 @@
         <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
-        <feedback name="beDecontaminatedActionCompleted">
+        <feedback name="getDecontaminatedActionCompleted">
             <description>Sent when the agent is decontaminated.</description>
         </feedback>
     </feedbacks>

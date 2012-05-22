@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.BeDecontaminated" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.GetDecontaminated" source-version="1.0.0">
     <parameters>
         <parameter name="decontaminationPlot">
             <description>The decontamination plot to use for decontamination.</description>
@@ -11,7 +11,7 @@
     <stages>
         <stage label="move to decontamination plot" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.BeDecontaminated" main="true">
+                <skill name="behaviors.skills.primitives.GetDecontaminated" main="true">
                     <parameter name="decontaminationPlot">
                         <value>
                             <parameter>decontaminationPlot</parameter>

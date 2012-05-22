@@ -47,3 +47,7 @@ end
 integration.canFilter = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "population-filter" )
 end
+
+integration.canDecontaminateAgents = function( object )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "decontamination" )
+end

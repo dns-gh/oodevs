@@ -173,7 +173,7 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
   </object>
-  <object name="Barricade" type="barricade">
+  <object name="Barricade" point-size="50" type="barricade">
     <geometries>
       <geometry symbol="G*MPORC---****X" type="point"/>
     </geometries>
@@ -798,4 +798,4 @@
     </urban-destruction>
   </object>
 </objects>
-<!-- signature="3994121548" -->
+<!-- signature="1202022738" -->

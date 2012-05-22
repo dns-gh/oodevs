@@ -269,5 +269,15 @@ If this element's construction level is smaller than 100%, this impementation al
                 </type>
             </return>
         </method>
+        <method name="canBeUsedToGetDecontaminate" abstract="false">
+            <description>Returns 'true' if this entity can be used by the agent to get decontaminated.&#xD;
+&#xD;
+This implementation returns 'true' if this element has the capacity to decontaminate (see 'capacity' properties for 'Objects' in authoring tool).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>
