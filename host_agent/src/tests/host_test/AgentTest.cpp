@@ -286,3 +286,28 @@ BOOST_FIXTURE_TEST_CASE( agent_list_empty_exercises, Fixture<> )
     MOCK_EXPECT( sessions.GetExercises ).once().returns( list );
     CheckReply( agent.CountExercises(), "{\"count\":\"3\"}" );
 }
+
+BOOST_FIXTURE_TEST_CASE( agent_upload_pack, Fixture<> )
+{
+    NodeController_ABC::T_Tree tree;
+    tree.put( "some", "data" );
+    std::istringstream stream;
+    MOCK_EXPECT( nodes.UploadPack ).once().with( defaultNode, boost::ref( stream ) ).returns( tree );
+    CheckReply( agent.UploadPack( defaultNode, stream ), ToJson( tree ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_get_pack, Fixture<> )
+{
+    NodeController_ABC::T_Tree tree;
+    tree.put( "some", "data" );
+    MOCK_EXPECT( nodes.GetPack ).once().with( defaultNode ).returns( tree );
+    CheckReply( agent.GetPack( defaultNode ), ToJson( tree ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_delete_pack, Fixture<> )
+{
+    NodeController_ABC::T_Tree tree;
+    tree.put( "some", "data" );
+    MOCK_EXPECT( nodes.DeletePack ).once().with( defaultNode ).returns( tree );
+    CheckReply( agent.DeletePack( defaultNode ), ToJson( tree ) );
+}
