@@ -29,6 +29,7 @@ using mocks::MockPool;
 using mocks::MockPort;
 using mocks::MockPortFactory;
 using mocks::MockProcess;
+using mocks::MockUnpack;
 
 namespace
 {
@@ -182,4 +183,31 @@ BOOST_FIXTURE_TEST_CASE( node_controller_stops, Fixture<> )
     MOCK_EXPECT( ptr->Kill ).once().returns( true );
     NodeController::T_Node node = control.Stop( idActive );
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
+}
+
+BOOST_FIXTURE_TEST_CASE( node_controller_upload_pack, Fixture<> )
+{
+    Reload();
+    std::istringstream stream;
+    MOCK_EXPECT( sub.system.Remove );
+    MOCK_EXPECT( sub.system.MakeDirectory );
+    boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
+    MOCK_EXPECT( sub.system.Unpack ).once().with( mock::any, boost::ref( stream ) ).returns( unpack );
+    MOCK_EXPECT( unpack->Unpack ).once();
+    NodeController::T_Tree tree = control.UploadPack( idIdle, stream );
+    BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
+}
+
+BOOST_FIXTURE_TEST_CASE( node_controller_get_pack, Fixture<> )
+{
+    Reload();
+    NodeController::T_Tree tree = control.GetPack( idIdle );
+    BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
+}
+
+BOOST_FIXTURE_TEST_CASE( node_controller_delete_pack, Fixture<> )
+{
+    Reload();
+    NodeController::T_Tree tree = control.DeletePack( idIdle );
+    BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }

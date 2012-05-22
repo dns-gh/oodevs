@@ -145,6 +145,11 @@ namespace mocks
         MOCK_METHOD( Unpack, 2 );
     };
 
+    MOCK_BASE_CLASS( MockUnpack, host::Unpacker_ABC )
+    {
+        MOCK_METHOD( Unpack, 0 );
+    };
+
     MOCK_BASE_CLASS( MockClient, web::Client_ABC )
     {
         MOCK_METHOD( Get, 4 );

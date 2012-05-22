@@ -268,5 +268,6 @@ U Steal( T& access, U& src )
 // -----------------------------------------------------------------------------
 boost::property_tree::ptree Node::DeletePack()
 {
-    return Steal( *access_, stash_ )->GetProperties();
+    boost::shared_ptr< Package_ABC > next = Steal( *access_, stash_ );
+    return next ? next->GetProperties() : boost::property_tree::ptree();
 }
