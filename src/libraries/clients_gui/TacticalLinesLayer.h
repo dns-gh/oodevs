@@ -15,6 +15,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -38,6 +39,7 @@ class TacticalLinesLayer : public QObject
                          , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                          , private ShapeHandler_ABC
                          , private kernel::LocationVisitor_ABC
+                         , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
@@ -69,6 +71,7 @@ protected:
     virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void NotifyContextMenu     ( const kernel::Nothing&, kernel::ContextMenu& menu );
     virtual void NotifySelected        ( const kernel::TacticalLine_ABC* element );
+    virtual void OptionChanged         ( const std::string& /*name*/, const kernel::OptionVariant& /*value*/ ) {}
 
     virtual void Handle( kernel::Location_ABC& location );
 
