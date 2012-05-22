@@ -319,7 +319,6 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup )
+void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* /*subGroup*/ )
 {
-
 }

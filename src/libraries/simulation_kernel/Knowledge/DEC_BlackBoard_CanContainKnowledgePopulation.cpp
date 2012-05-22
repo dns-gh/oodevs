@@ -130,7 +130,6 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::Accept( KnowledgesVisitor_ABC
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulation::Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& subGroup )
+void DEC_BlackBoard_CanContainKnowledgePopulation::Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& /*subGroup*/ )
 {
-
 }

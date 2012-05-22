@@ -156,7 +156,7 @@ void CrowdCapacity::SetDensityFactor( double densityFactor )
 // Name: CrowdCapacity::ProcessAgentEntering
 // Created: LGY 2012-03-26
 // -----------------------------------------------------------------------------
-void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
+void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
     if( role && !role->HasInhabitantCollision() )
@@ -173,7 +173,7 @@ void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC&
 // Name: CrowdCapacity::ProcessAgentExiting
 // Created: LGY 2012-03-26
 // -----------------------------------------------------------------------------
-void CrowdCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
+void CrowdCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
     if( role && role->HasInhabitantCollision() )

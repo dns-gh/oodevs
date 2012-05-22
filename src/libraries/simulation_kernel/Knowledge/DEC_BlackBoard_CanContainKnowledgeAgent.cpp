@@ -340,7 +340,6 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::Accept( KnowledgesVisitor_ABC& vis
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeAgent::Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& subGroup )
+void DEC_BlackBoard_CanContainKnowledgeAgent::Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& /*subGroup*/ )
 {
-
 }
