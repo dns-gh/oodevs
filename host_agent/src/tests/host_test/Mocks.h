@@ -61,7 +61,8 @@ namespace mocks
     {
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetProperties, 0 );
-        MOCK_METHOD( Unpack, 3 );
+        MOCK_METHOD( ReadPack, 3 );
+        MOCK_METHOD( ParsePack, 2 );
         MOCK_METHOD( GetPack, 0 );
     };
 

@@ -41,6 +41,7 @@ namespace
             MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
+            MOCK_EXPECT( system.IsFile ).returns( false );
             MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
         };
