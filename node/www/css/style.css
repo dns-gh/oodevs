@@ -30,7 +30,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .package .form-actions{margin:0;text-align:right;}
 .package table{margin-bottom:0;}
 .upload_alert span{margin-left:28px;}
-.item_briefing h2,.item_briefing h1{font-size:small;font-weight:bold;}
+.item_briefing h3,.item_briefing h2,.item_briefing h1{font-size:small;font-weight:bold;}
 .item_briefing h1:first-child{display:none;}
 .package_row .type:first-letter,.package_row .name:first-letter{text-transform:uppercase;}
 .package .version{position:relative;top:-2px;}
