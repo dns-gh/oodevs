@@ -96,9 +96,9 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         }
         // Urban
         {
-            searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            listViews_.push_back( searchListView->GetRichListView() );
-            pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Urban" ) );
+            //searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder );
+            //listViews_.push_back( searchListView->GetRichListView() );
+            //pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Urban" ) );
         }
         // Crowds
         {
@@ -143,15 +143,15 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Urban informations
     {
-        gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, staticModel, model.urban_ );
-        pInformations->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, pInformations );
+        //gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, staticModel, model.urban_ );
+        //pInformations->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
+        //parent->addDockWidget( Qt::LeftDockWidgetArea, pInformations );
     }
     // Usages
     {
-        gui::RichDockWidget* pUsages = new UsagesDockWidget( parent, controllers, staticModel );
-        pUsages->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, pUsages );
+        //gui::RichDockWidget* pUsages = new UsagesDockWidget( parent, controllers, staticModel );
+        //pUsages->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain );
+        //parent->addDockWidget( Qt::LeftDockWidgetArea, pUsages );
     }
     // ResourceNetwork panel
     {

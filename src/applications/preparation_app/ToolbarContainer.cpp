@@ -38,9 +38,9 @@ ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& co
     }
     // Terrain
     {
-        gui::RichToolBar* terrainToolBar = new TerrainToolBar( parent, controllers );
-        terrainToolBar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain, true );
-        parent->addToolBar( terrainToolBar );
+        //gui::RichToolBar* terrainToolBar = new TerrainToolBar( parent, controllers );
+        //terrainToolBar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain, true );
+        //parent->addToolBar( terrainToolBar );
     }
     // Location editor
     {
