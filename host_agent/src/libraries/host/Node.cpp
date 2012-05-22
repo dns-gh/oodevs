@@ -16,6 +16,7 @@
 #include "Package.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -75,7 +76,7 @@ Node::Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr
     , name_   ( name )
     , port_   ( port )
     , access_ ( new boost::shared_mutex() )
-    , packer_ ( new boost::mutex() )
+    , package_( new boost::mutex() )
     , process_()
 {
     // NOTHING
@@ -90,7 +91,7 @@ Node::Node( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC&
     , name_   ( tree.get< std::string >( "name" ) )
     , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
     , access_ ( new boost::shared_mutex() )
-    , packer_ ( new boost::mutex() )
+    , package_( new boost::mutex() )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
 {
     // NOTHING
@@ -186,41 +187,57 @@ bool Node::Stop()
     return true;
 }
 
+namespace
+{
+template< typename T, typename U >
+void Reset( T& access, U& dst )
+{
+    boost::lock_guard< T > lock( access );
+    dst.reset();
+}
+
+template< typename T, typename U >
+void Parse( T& access, U& dst, const FileSystem_ABC& system, const boost::filesystem::path& path )
+{
+    U next = boost::make_shared< Package >( system, path );
+    bool valid = next->Parse();
+    if( !valid )
+        return;
+
+    boost::lock_guard< T > write( access );
+    dst = next;
+}
+}
+
 // -----------------------------------------------------------------------------
-// Name: Node::Unpack
+// Name: Node::ReadPack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::Unpack( const FileSystem_ABC& system, const boost::filesystem::path& path, std::istream& src )
+void Node::ReadPack( const FileSystem_ABC& system, const boost::filesystem::path& path, std::istream& src )
 {
-    boost::mutex::scoped_try_lock lock( *packer_ );
+    boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )
         return;
 
-    try
-    {
-        system.Remove( path );
-        system.MakeDirectory( path );
-        FileSystem_ABC::T_Unpacker unpacker = system.Unpack( path, src );
-        unpacker->Unpack();
-    }
-    catch( const std::exception& /*err*/ )
-    {
+    Reset( *access_, stash_ );
+    system.Remove( path );
+    system.MakeDirectory( path );
+    FileSystem_ABC::T_Unpacker unpacker = system.Unpack( path, src );
+    unpacker->Unpack();
+    ::Parse( *access_, stash_, system, path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::ParsePack
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+void Node::ParsePack( const FileSystem_ABC& system, const boost::filesystem::path& path )
+{
+    boost::mutex::scoped_try_lock lock( *package_ );
+    if( !lock.owns_lock() )
         return;
-    }
-
-    try
-    {
-        boost::shared_ptr< Package_ABC > next( new Package( system, path ) );
-        bool valid = next->Parse();
-        if( !valid )
-            return;
-
-        boost::lock_guard< boost::shared_mutex > write( *access_ );
-        package_ = next;
-    }
-    catch( const std::exception& /*err*/ )
-    {
-    }
+    Reset( *access_, stash_ );
+    ::Parse( *access_, stash_, system, path );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,5 +247,5 @@ void Node::Unpack( const FileSystem_ABC& system, const boost::filesystem::path& 
 boost::property_tree::ptree Node::GetPack() const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    return package_ ? package_->GetProperties() : boost::property_tree::ptree();
+    return stash_ ? stash_->GetProperties() : boost::property_tree::ptree();
 }

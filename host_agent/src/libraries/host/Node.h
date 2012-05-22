@@ -53,7 +53,8 @@ public:
     //@{
     virtual boost::uuids::uuid GetId() const;
     virtual boost::property_tree::ptree GetProperties() const;
-    virtual void Unpack( const FileSystem_ABC& system, const boost::filesystem3::path& path, std::istream& src );
+    virtual void ParsePack( const FileSystem_ABC& system, const boost::filesystem3::path& path );
+    virtual void ReadPack( const FileSystem_ABC& system, const boost::filesystem3::path& path, std::istream& src );
     virtual boost::property_tree::ptree GetPack() const;
     //@}
 
@@ -87,8 +88,8 @@ private:
     //! @name Private members
     //@{
     const std::auto_ptr< boost::shared_mutex > access_;
-    const std::auto_ptr< boost::mutex > packer_;
-    boost::shared_ptr< Package_ABC > package_;
+    const std::auto_ptr< boost::mutex > package_;
+    boost::shared_ptr< Package_ABC > stash_;
     T_Process process_;
     //@}
 };

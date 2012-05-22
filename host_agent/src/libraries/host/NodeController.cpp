@@ -119,6 +119,7 @@ void NodeController::Reload()
                 continue;
             nodes_->Attach( node );
             Create( *node, true );
+            pool_->Post( boost::bind( &Node::ParsePack, node.get(), boost::cref( system_ ), GetPath( root_, *node ) / "pack" ) );
         }
         catch( const std::exception& err )
         {
@@ -304,6 +305,13 @@ NodeController::T_Tree NodeController::UploadPack( const boost::uuids::uuid& id,
     boost::shared_ptr< Node > node = nodes_->Get( id );
     if( !node )
         return T_Tree();
-    node->Unpack( system_, GetPath( root_, *node ) / "pack", src );
+    try
+    {
+        node->ReadPack( system_, GetPath( root_, *node ) / "pack", src );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[" << type_ << "] " << " Unable to unpack - " << err.what();
+    }
     return node->GetPack();
 }
