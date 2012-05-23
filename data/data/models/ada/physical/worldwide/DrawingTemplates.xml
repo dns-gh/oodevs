@@ -710,7 +710,7 @@
         <template code="O*VPA-----*****" name="Arson/Fire" type="point">
             <segment/>
             <marker-start unit="m">
-                <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.2)">
+                <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.8)">
                     <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5"/>
                     <g font-family="Arial" font-size="200" fill="currentColor">
                         <g transform="matrix( 1 0 0 -1 0 0 )">
@@ -867,4 +867,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="1817647906" -->
+<!-- signature="2410481135" -->

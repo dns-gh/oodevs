@@ -17,6 +17,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        Activate( skill.links.create, 1, { work  = self.params.work } )
+        Activate( skill.links.create, 1, 
+          { work  = self.params.work, instantaneously = self.params.instantaneously } )
     end
 }

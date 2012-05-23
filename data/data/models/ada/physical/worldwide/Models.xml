@@ -2582,7 +2582,7 @@
         <mission name="MLSECURITY - Lift confinement on urban blocks  within area"/>
         <mission name="MLSECURITY - Increase resource node production"/>
         <mission name="MLSECURITY - Evacuate urban blocks within area "/>
-        <mission name="MLSECURITY - Lift evacuation on urban blocks  within area"/>
+        <mission name="MLSECURITY - Lift evacuation on urban blocks within area"/>
         <mission name="MLSECURITY - Ensure victims evacuation"/>
         <mission name="MLSECURITY - Extract victims from crowds"/>
         <mission name="MLSECURITY - Alert urban blocks within area"/>
@@ -2614,6 +2614,8 @@
         <mission name="MLSECURITY - Patrol within area"/>
         <mission name="MLSECURITY - Operate a road block (prevent crowds from crossing)"/>
         <mission name="MLSECURITY - Create and operate a roadblock (filter crowds)"/>
+        <mission name="MLSECURITY - Build a dyke"/>
+        <mission name="MLSECURITY - Build a firebreak"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3880,4 +3882,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3787962315" -->
+<!-- signature="3092383675" -->

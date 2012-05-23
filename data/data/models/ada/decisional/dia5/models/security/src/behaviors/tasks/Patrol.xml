@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Patrol" source-version="1.0.0">
+    <description>$$$ todo</description>
     <parameters>
         <parameter name="destinations">
             <description>The set of position that agent will move along.</description>

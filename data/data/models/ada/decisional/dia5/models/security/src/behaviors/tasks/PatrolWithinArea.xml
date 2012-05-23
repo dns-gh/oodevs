@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.PatrolWithinArea" source-version="1.0.0">
-    <description>To patrol around urban blocks within a given area.&#xD;
-In this mission, the agent moves to next urban blocks only after being installed on it (if it can reach it, nearby otherwise). Being installed takes time, as it is defined in the &quot;Stances&quot; section of the authoring tool.</description>
+    <description>To patrol around way-points within a given area.&#xD;
+Upon reaching a target way-point, the agent will move to the next one only after being installed. Being installed takes time, as it is defined in the &quot;Stances&quot; section of the authoring tool.</description>
     <parameters>
         <parameter name="area">
             <description>The area to find urban blocks within.</description>

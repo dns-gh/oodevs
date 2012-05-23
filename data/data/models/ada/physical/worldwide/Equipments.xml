@@ -10764,6 +10764,7 @@
       <object initial-construction-time="120s" type="ressource node"/>
       <object construction-time-factor="0s" initial-construction-time="120s" initial-destruction-time="120s" type="decontamination site"/>
       <object initial-construction-time="4m" type="Arson"/>
+      <object initial-construction-time="10m" initial-destruction-time="5m" type="firebreak area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="50" type="Tire flat"/>
@@ -10857,4 +10858,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0967380073" -->
+<!-- signature="1245434526" -->

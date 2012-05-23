@@ -725,7 +725,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -808,7 +807,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -891,7 +889,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -974,7 +971,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2100,7 +2096,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="MLSECURITY - Lift evacuation on urban blocks  within area">
+    <mission dia-behavior="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="MLSECURITY - Lift evacuation on urban blocks within area">
       <description>
         <doctrine><![CDATA[To lift the evacuation of population from several urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[Agent visits each urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-evacuates the populations therein, before moving to the next non visited urban block.]]></usage>
@@ -2236,8 +2232,8 @@ Depending on its crowd transport capacity, the agent will make as many round tri
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowd" name="The crowd to transport" optional="false" type="CrowdKnowledge"/>
-      <parameter dia-name="targetDestination" name="Target destination" optional="false" type="LocationComposite">
+      <parameter dia-name="crowd" name="the crowd to transport" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="targetDestination" name="target destination" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -2245,7 +2241,7 @@ Depending on its crowd transport capacity, the agent will make as many round tri
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="loadingPosition" name="Crowd's concentration position" optional="false" type="Point"/>
+      <parameter dia-name="loadingPosition" name="loading position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.ExtinguishAFire" dia-type="behaviors.tasks.ExtinguishAFire" id="4460" name="MLSECURITY - Extinguish a fire">
       <description>
@@ -2345,7 +2341,7 @@ Depending on its crowd transport capacity, the agent will make as many round tri
       <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
       <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks" id="4474" name="MLSECURITY - Perform public works">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Create" id="4474" name="MLSECURITY - Perform public works">
       <description>
         <doctrine><![CDATA[To create and build public works.]]></doctrine>
         <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
@@ -2384,9 +2380,10 @@ A visited object won't be created and build if agent doesn't have the physical c
           <parameter type="Secondary road"/>
         </objects>
       </parameter>
-      <parameter dia-name="waitForReinforcement" name="waitForReinforcement" optional="true" type="Boolean"/>
+      <parameter dia-name="waitForReinforcement" name="wait for reinforcement" optional="true" type="Boolean"/>
+      <parameter dia-name="instantaneously" name="instantaneously" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks2" id="4475" name="MLSECURITY - Resume public works">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Resume" id="4475" name="MLSECURITY - Resume public works">
       <description>
         <doctrine><![CDATA[To fix and/or build already existing works.]]></doctrine>
         <usage><![CDATA[For the agent to know how to build a set of given objects. When several elements should be built, the agent acts on each object by following the order of the elements into the list. 
@@ -2405,6 +2402,8 @@ A visited object won't be built if the agent doesn't have the physical capabilit
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="instantaneously" name="instantaneously" optional="true" type="Boolean"/>
+      <parameter dia-name="waitForReinforcement" name="wait for reinforcement" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.BuildAnObjectFromAPosition" dia-type="behaviors.tasks.BuildAnObjectFromAPosition" id="4476" name="MLSECURITY - Perform a bomb attack (from a position)">
       <description>
@@ -2417,7 +2416,7 @@ A visited object won't be built if the agent doesn't have the physical capabilit
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Bomb" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
+          <parameter type="Terrorist Bomb"/>
         </objects>
       </parameter>
       <parameter dia-name="position" name="Position of bomb activation" optional="false" type="LocationComposite">
@@ -2439,7 +2438,6 @@ A visited object won't be built if the agent doesn't have the physical capabilit
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="fires to start up" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Fire"/>
           <parameter type="Arson"/>
         </objects>
       </parameter>
@@ -2488,7 +2486,7 @@ A visited object won't be built if the agent doesn't have the physical capabilit
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="checkpoint" name="check point" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="checkpoint" name="checkpoint" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="intensity" name="intensity (%)" optional="true" type="Integer"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.Operate" dia-type="behaviors.tasks.Operate" id="4482" name="MLSECURITY - Operate a decontamination site">
@@ -2655,8 +2653,7 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="checkpoint" name="check point" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="intensity" name="intensity (%)" optional="true" type="Integer"/>
+      <parameter dia-name="checkpoint" name="road block" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="behaviors.tasks.DamageUrbanBlocksWithinArea" dia-type="behaviors.tasks.DamageUrbanBlocksWithinArea" id="4498" name="MLSECURITY - Damage urban blocks within area">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2664,6 +2661,36 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="area to damage urban blocks within" optional="false" type="Polygon"/>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_dyke" id="4499" name="MLSECURITY - Build a dyke">
+      <description>
+        <doctrine><![CDATA[To create and build a dyke.]]></doctrine>
+        <usage><![CDATA[For the  agent to know how to create and build a dyke. The dyke won't be created if agent doesn't have the physical capability or if it hasn't enough resources to do it.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="dyke to build" optional="false" type="PlannedWork">
+        <objects>
+          <parameter type="Dyke"/>
+        </objects>
+      </parameter>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_firebreak" id="4500" name="MLSECURITY - Build a firebreak">
+      <description>
+        <doctrine><![CDATA[To create and build a dyke.]]></doctrine>
+        <usage><![CDATA[For the agent to know how to create and build a firebreak. The firebreak won't be created if agent doesn't have the physical capability or if it hasn't enough resources to do it.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="the firebreak to build" optional="false" type="PlannedWork">
+        <objects>
+          <parameter type="Firebreak"/>
+        </objects>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -3155,7 +3182,6 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3242,7 +3268,6 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3325,7 +3350,6 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3425,7 +3449,6 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4297,7 +4320,6 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Destruction Bomb"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4416,4 +4438,4 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="4097036619" -->
+<!-- signature="2304294507" -->
