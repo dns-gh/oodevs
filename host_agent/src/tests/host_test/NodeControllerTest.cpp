@@ -35,9 +35,9 @@ namespace
 {
     struct SubFixture
     {
-        SubFixture( const std::string& root, const std::string& java, const std::string& jar, const std::string& web )
+        SubFixture( const Path& root, const Path& java, const Path& jar, const Path& web )
         {
-            MOCK_EXPECT( system.MakeDirectory ).with( root + "/node" );
+            MOCK_EXPECT( system.MakeDirectory ).with( root / "node" );
             MOCK_EXPECT( system.Exists ).with( java ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
@@ -88,29 +88,29 @@ namespace
         {
             // NOTHING
         }
-        const std::string root;
-        const std::string java;
-        const std::string jar;
-        const std::string web;
+        const Path root;
+        const Path java;
+        const Path jar;
+        const Path web;
         const std::string type;
         SubFixture sub;
         NodeController control;
 
         boost::shared_ptr< MockProcess > Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( root + "/node", L"node.id" ).returns( boost::assign::list_of< Path >( "a/b/c/node.id" )( "node.id" ) );
+            MOCK_EXPECT( sub.system.Glob ).once().with( root / "node", L"node.id" ).returns( boost::assign::list_of< Path >( "a/b/c/node.id" )( "node.id" ) );
 
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "a/b/c/node.id" ).returns( nodeActive );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1337 ).returns( new MockPort( 1337 ) );
             boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >( 1234, "e:/java/some_java.exe" );
             MOCK_EXPECT( sub.runtime.GetProcess ).once().with( 1234 ).returns( process );
             MOCK_EXPECT( sub.proxy.Register ).once().with( idActiveText, "localhost", 1337 );
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( root + "/node/" + idActiveText + "/node.id", mock::any );
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "node" / idActiveText / "node.id", mock::any );
 
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "node.id" ).returns( nodeIdle );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1338 ).returns( new MockPort( 1338 ) );
             MOCK_EXPECT( sub.proxy.Register ).once().with( idIdleText, "localhost", 1338 );
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( root + "/node/" + idIdleText + "/node.id", mock::any );
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "node" / idIdleText / "node.id", mock::any );
             control.Reload();
             return process;
         }
@@ -140,9 +140,9 @@ BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
         ( "--type \"node\"" )
         ( "--name \"zebulon\"" )
         ( "--port \"1337\"" ),
-        "e:/jar", mock::any ).returns( boost::make_shared< MockProcess >( 1377, java ) );
+        "e:/jar", mock::any ).returns( boost::make_shared< MockProcess >( 1377, java.string() ) );
     MOCK_EXPECT( sub.system.WriteFile ).once();
-    MOCK_EXPECT( sub.system.MakeDirectory ).once().with( root + "/node/" + idIdleText );
+    MOCK_EXPECT( sub.system.MakeDirectory ).once().with( root / "node" / idIdleText );
     NodeController::T_Node node = control.Create( "zebulon" );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
@@ -173,7 +173,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_starts, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( sub.system.WriteFile ).once();
-    MOCK_EXPECT( sub.runtime.Start ).once().returns( boost::make_shared< MockProcess >( 1398, java ) );
+    MOCK_EXPECT( sub.runtime.Start ).once().returns( boost::make_shared< MockProcess >( 1398, java.string() ) );
     NodeController::T_Node node = control.Start( idIdle );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
 }
