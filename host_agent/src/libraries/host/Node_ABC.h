@@ -47,8 +47,9 @@ public:
     //@{
     virtual Uuid GetId() const = 0;
     virtual Tree GetProperties() const = 0;
-    virtual void ReadPack( const FileSystem_ABC& system, const Path& path, std::istream& src ) = 0;
-    virtual void ParsePack( const FileSystem_ABC& system, const Path& path ) = 0;
+    virtual Path GetStashPath() const = 0;
+    virtual Path GetInstallPath() const = 0;
+    virtual void ReadPack( std::istream& src ) = 0;
     virtual Tree GetPack() const = 0;
     virtual Tree DeletePack() = 0;
     //@}

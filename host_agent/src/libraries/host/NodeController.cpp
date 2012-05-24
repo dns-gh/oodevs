@@ -114,12 +114,11 @@ void NodeController::Reload()
     BOOST_FOREACH( const Path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
         try
         {
-            boost::shared_ptr< Node > node = boost::make_shared< Node >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
+            boost::shared_ptr< Node > node = boost::make_shared< Node >( system_, FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
             if( !node )
                 continue;
             nodes_->Attach( node );
             Create( *node, true );
-            pool_->Post( boost::bind( &Node::ParsePack, node.get(), boost::cref( system_ ), GetPath( root_, *node ) / "pack" ) );
         }
         catch( const std::exception& err )
         {
@@ -187,7 +186,7 @@ void NodeController::Create( Node& node, bool isReload )
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Create( const std::string& name )
 {
-    boost::shared_ptr< Node > node = boost::make_shared< Node >( uuids_.Create(), name, ports_.Create() );
+    boost::shared_ptr< Node > node = boost::make_shared< Node >( system_, root_, uuids_.Create(), name, ports_.Create() );
     nodes_->Attach( node );
     Create( *node, false );
     return node;
@@ -307,7 +306,7 @@ Tree NodeController::UploadPack( const Uuid& id, std::istream& src ) const
         return Tree();
     try
     {
-        node->ReadPack( system_, GetPath( root_, *node ) / "pack", src );
+        node->ReadPack( src );
     }
     catch( const std::exception& err )
     {

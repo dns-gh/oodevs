@@ -61,6 +61,7 @@ namespace
                                    "\"id\":\"" + idActiveText + "\","
                                    "\"name\":\"myName\","
                                    "\"port\":\"1337\","
+                                   "\"root\":\"root\","
                                    "\"process\":{\"pid\":\"1234\",\"name\":\"e:/java/some_java.exe\"}"
                                    "}";
 
@@ -69,7 +70,8 @@ namespace
     const std::string nodeIdle = "{"
                                  "\"id\":\"" + idIdleText + "\","
                                  "\"name\":\"myName2\","
-                                 "\"port\":\"1338\""
+                                 "\"port\":\"1338\","
+                                 "\"root\":\"root\""
                                  "}";
 
     template< bool isCluster = false >

@@ -9,13 +9,15 @@
 
 #include "Node.h"
 
+#include "FileSystem_ABC.h"
+#include "Package.h"
 #include "PortFactory_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
-#include "FileSystem_ABC.h"
-#include "Package.h"
+#include "runtime/Utf8.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
@@ -33,6 +35,7 @@
 #endif
 
 using namespace host;
+using runtime::Utf8Convert;
 
 namespace
 {
@@ -71,13 +74,16 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
-    : id_     ( id )
-    , name_   ( name )
-    , port_   ( port )
-    , access_ ( new boost::shared_mutex() )
-    , package_( new boost::mutex() )
-    , process_()
+Node::Node( const FileSystem_ABC& system, const Path& root,
+            const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
+    : system_   ( system )
+    , id_       ( id )
+    , name_     ( name )
+    , root_     ( root )
+    , port_     ( port )
+    , access_   ( new boost::shared_mutex() )
+    , package_  ( new boost::mutex() )
+    , process_  ()
 {
     // NOTHING
 }
@@ -86,15 +92,19 @@ Node::Node( const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > p
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
-    : id_     ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
-    , name_   ( tree.get< std::string >( "name" ) )
-    , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
-    , access_ ( new boost::shared_mutex() )
-    , package_( new boost::mutex() )
-    , process_( AcquireProcess( tree, runtime, port_->Get() ) )
+Node::Node( const FileSystem_ABC& system,
+            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+    : system_   ( system )
+    , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
+    , name_     ( tree.get< std::string >( "name" ) )
+    , root_     ( Utf8Convert( tree.get< std::string >( "root" ) ) )
+    , port_     ( AcquirePort( tree.get< int >( "port" ), ports ) )
+    , access_   ( new boost::shared_mutex() )
+    , package_  ( new boost::mutex() )
+    , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
 {
-    // NOTHING
+    ParseInstall();
+    ParsePack();
 }
 
 // -----------------------------------------------------------------------------
@@ -140,12 +150,32 @@ Tree Node::GetProperties() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Node::GetStashPath
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+Path Node::GetStashPath() const
+{
+    return root_ / boost::lexical_cast< std::string >( id_ ) / "stash";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetInstallPath
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+Path Node::GetInstallPath() const
+{
+    return root_ / boost::lexical_cast< std::string >( id_ ) / "install";
+}
+
+// -----------------------------------------------------------------------------
 // Name: Node::Save
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Tree Node::Save() const
 {
     Tree tree = GetCommonProperties();
+    tree.put( "root", Utf8Convert( root_ ) );
+
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     if( !process_ )
         return tree;
@@ -197,7 +227,7 @@ void Reset( T& access, U& dst )
 }
 
 template< typename T, typename U >
-void Parse( T& access, U& dst, const FileSystem_ABC& system, const Path& path )
+void Parse( T& access, const FileSystem_ABC& system, U& dst, const Path& path )
 {
     U next = boost::make_shared< Package >( system, path );
     bool valid = next->Parse();
@@ -207,37 +237,63 @@ void Parse( T& access, U& dst, const FileSystem_ABC& system, const Path& path )
     boost::lock_guard< T > write( access );
     dst = next;
 }
+
+template< typename T, typename U >
+U Steal( T& access, U& src )
+{
+    U reply;
+    boost::lock_guard< T > lock( access );
+    reply.swap( src );
+    return reply;
+}
+
+template< typename T, typename U >
+void ParsePackage( boost::mutex& pack, T& access, const FileSystem_ABC& system, U& ptr, const Path& path )
+{
+    boost::mutex::scoped_try_lock lock( pack );
+    if( !lock.owns_lock() )
+        return;
+    Reset( access, ptr );
+    Parse( access, system, ptr, path );
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::ReadPack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::ReadPack( const FileSystem_ABC& system, const Path& path, std::istream& src )
+void Node::ReadPack( std::istream& src )
 {
     boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )
         return;
 
+
     Reset( *access_, stash_ );
-    system.Remove( path );
-    system.MakeDirectory( path );
-    FileSystem_ABC::T_Unpacker unpacker = system.Unpack( path, src );
+    const Path path = GetStashPath();
+    system_.Remove( path );
+    system_.MakeDirectory( path );
+    FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( path, src );
     unpacker->Unpack();
-    ::Parse( *access_, stash_, system, path );
+    ::Parse( *access_, system_, stash_, path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::ParseInstall
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+void Node::ParseInstall()
+{
+    ::ParsePackage( *package_, *access_, system_, install_, GetInstallPath() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::ParsePack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::ParsePack( const FileSystem_ABC& system, const Path& path )
+void Node::ParsePack()
 {
-    boost::mutex::scoped_try_lock lock( *package_ );
-    if( !lock.owns_lock() )
-        return;
-    Reset( *access_, stash_ );
-    ::Parse( *access_, stash_, system, path );
+    ::ParsePackage( *package_, *access_, system_, stash_, GetStashPath() );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,18 +304,6 @@ Tree Node::GetPack() const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     return stash_ ? stash_->GetProperties() : Tree();
-}
-
-namespace
-{
-template< typename T, typename U >
-U Steal( T& access, U& src )
-{
-    U reply;
-    boost::lock_guard< T > lock( access );
-    reply.swap( src );
-    return reply;
-}
 }
 
 // -----------------------------------------------------------------------------

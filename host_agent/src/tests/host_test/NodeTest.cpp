@@ -32,6 +32,7 @@ namespace
     const int defaultPort = 1337;
     const int processPid = 7331;
     const std::string processName = "myProcessName";
+    const std::string defaultRoot = "root";
 
     struct Fixture
     {
@@ -43,12 +44,12 @@ namespace
         MOCK_FUNCTOR( Starter, ProcessPtr( const Node& ) );
         Fixture()
         {
-            // NOTHING
+            MOCK_EXPECT( system.IsFile ).returns( false );
         }
 
         NodePtr MakeNode()
         {
-            return boost::make_shared< Node >( defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Node >( system, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -56,7 +57,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( tree, runtime, ports );
+            return boost::make_shared< Node >( system, tree, runtime, ports );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
@@ -99,13 +100,15 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+        "\"root\":\"root\""
         "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"running\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+        "\"root\":\"root\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
@@ -114,7 +117,8 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+        "\"root\":\"root\""
         "}" );
 }
 
@@ -154,32 +158,30 @@ BOOST_FIXTURE_TEST_CASE( node_pack, Fixture )
     NodePtr node = MakeNode();
     BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
 
-    MOCK_EXPECT( system.Remove ).once().with( "a" );
-    MOCK_EXPECT( system.MakeDirectory ).once().with( "a" );
+    mock::reset( system );
+    const host::Path stash = host::Path( "root" ) / defaultIdString / "stash";
+    MOCK_EXPECT( system.Remove ).once().with( stash );
+    MOCK_EXPECT( system.MakeDirectory ).once().with( stash );
 
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
     std::stringstream stream;
-    MOCK_EXPECT( system.Unpack ).once().with( "a", boost::ref( stream ) ).returns( unpack );
+    MOCK_EXPECT( system.Unpack ).once().with( stash, boost::ref( stream ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
-    MOCK_EXPECT( system.IsFile ).with( "a/content.xml" ).returns( true );
-    MOCK_EXPECT( system.ReadFile ).with( "a/content.xml" ).returns(
+    MOCK_EXPECT( system.IsFile ).with( stash / "content.xml" ).returns( true );
+    MOCK_EXPECT( system.ReadFile ).with( stash / "content.xml" ).returns(
         "<content>"
         "<name>my_name</name>"
         "<description>my_version</description>"
         "<version>some_version</version>"
         "</content>" );
-    MOCK_EXPECT( system.Glob ).with( "a/data/models", mock::any ).returns( false );
-    MOCK_EXPECT( system.Glob ).with( "a/data/terrains", mock::any ).returns( false );
-    MOCK_EXPECT( system.Glob ).with( "a/exercises", mock::any ).returns( false );
+    MOCK_EXPECT( system.Glob ).with( stash / "data/models", mock::any ).returns( false );
+    MOCK_EXPECT( system.Glob ).with( stash / "data/terrains", mock::any ).returns( false );
+    MOCK_EXPECT( system.Glob ).with( stash / "exercises", mock::any ).returns( false );
 
     const std::string expected = "{\"name\":\"my_name\",\"description\":\"my_version\",\"version\":\"some_version\",\"items\":\"\"}";
-    node->ReadPack( system, "a", stream );
+    node->ReadPack( stream );
     BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), expected );
-
-    node->ParsePack( system, "a" );
-    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), expected );
-
     BOOST_CHECK_EQUAL( ToJson( node->DeletePack() ), expected );
     BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
 }
