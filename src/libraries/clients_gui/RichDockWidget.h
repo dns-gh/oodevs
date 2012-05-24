@@ -12,7 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ namespace gui
 // =============================================================================
 class RichDockWidget : public QDockWidget
                      , public tools::Observer_ABC
-                     , public kernel::ModesObserver_ABC
+                     , public kernel::DisplayableModesObserver_ABC
                      , private boost::noncopyable
 {
 

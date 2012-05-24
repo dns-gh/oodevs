@@ -48,7 +48,8 @@ void ModeController< EnumType >::ChangeMode( int newMode )
         SaveGeometry();
 
     currentMode_ = static_cast< EnumType >( newMode );
-    Apply( &ModesObserver_ABC::NotifyModeChange, currentMode_, useDefault_, firstChangeToSavedMode_ );
+    Apply( &ModesObserver_ABC::NotifyModeChanged, currentMode_ );
+    Apply( &DisplayableModesObserver_ABC::NotifyModeChanged, currentMode_, useDefault_, firstChangeToSavedMode_ );
 
     if( firstChangeToSavedMode_ && static_cast< EnumType >( newMode ) == savedMode_ )
         firstChangeToSavedMode_ = false;

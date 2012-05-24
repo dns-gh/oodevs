@@ -17,99 +17,27 @@ namespace kernel
 /** @class  ModesObserver_ABC
     @brief  ModesObserver_ABC
 */
-// Created: ABR 2012-05-09
+// Created: JSR 2012-05-24
 // =============================================================================
 class ModesObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ModesObserver_ABC()
-                 : hiddenModes_( 0 ), visibleModes_( 0 ), currentMode_( -1 ), visible_( false ), visibleByDefault_( false ) {}
-             ModesObserver_ABC( int hiddenModes, int visibleModes, bool visibleByDefault )
-                 : hiddenModes_( hiddenModes ), visibleModes_( visibleModes ), currentMode_( -1 ), visible_( false ), visibleByDefault_( visibleByDefault ) {}
+             ModesObserver_ABC() : currentMode_( 0 ) {}
     virtual ~ModesObserver_ABC() {}
     //@}
 
     //! @name Abstract operations
     //@{
-    virtual void SetVisible( bool visible ) = 0;
-    virtual void ForceEnabled( bool enabled ) = 0;
-    virtual void EnsureIsEnabled() = 0;
-    virtual bool IsVisible() const = 0;
+    virtual void NotifyModeChanged( int newMode ) { currentMode_ = newMode; }
+    int GetCurrentMode() const { return currentMode_; }
     //@}
-
-    //! @name Accessors
-    //@{
-    void SetModes( int hiddenModes, int visibleModes = 0, bool visibleByDefault = false )
-    {
-        hiddenModes_ = hiddenModes;
-        visibleModes_ = visibleModes;
-        visibleByDefault_ = visibleByDefault;
-    }
-    void SetHiddenModes( int modes ) { hiddenModes_ = modes; }
-    void SetVisibleModes( int modes ) { visibleModes_ = modes; }
-    void SetVisibleByDefault( bool visibleByDefault ) { visibleByDefault_ = visibleByDefault; }
-    int GetHiddenModes() const { return hiddenModes_; }
-    int GetVisibleModes() const { return visibleModes_; }
-    bool GetVisibleByDefault() const { return visibleByDefault_; }
-    //@}
-
-    //! @name Observer operation
-    //@{
-    void NotifyModeChange( int newMode, bool useDefault, bool firstChangeToSavedMode )
-    {
-#ifdef DEBUG
-        if( newMode & hiddenModes_ && newMode & defaultModes_ )
-            throw std::exception( __FUNCTION__ " This component tries to always be hidden but it's used by default." );
-        if( newMode & visibleModes_ && !( newMode & defaultModes_ ) )
-            throw std::exception( __FUNCTION__ " This component tries to always be visible but it's not used by default." );
-        if( newMode & visibleModes_ && newMode & hiddenModes_ )
-            throw std::exception( __FUNCTION__ " This component tries to always be visible and hidden in the same time." );
-#endif
-        if( currentMode_ != -1 && IsOptional( currentMode_ ) )  // was optional
-            visible_ = IsVisible();             
-
-        if( newMode & hiddenModes_ )                            // becoming forbidden
-        {
-            SetVisible( false );
-            ForceEnabled( false );
-        }
-        else if( newMode & visibleModes_ )                      // becoming mandatory
-        {
-            SetVisible( true );
-            ForceEnabled( true );
-        }
-        else if( useDefault )                                   // becoming optional by default, let default choose if visible or not (only for savedMode without register)
-        {
-            EnsureIsEnabled();
-            SetVisible( visibleByDefault_ );
-        }
-        else                                                    // becoming optional
-        {
-            EnsureIsEnabled();
-            if( !firstChangeToSavedMode )                       // first change to saved mode, let register choose if visible or not
-                SetVisible( visible_ );
-        }
-        currentMode_ = newMode;
-    }
-    //@}
-
-private:
-    bool IsOptional( int mode ) const
-    {
-        return !( mode & visibleModes_ || mode & hiddenModes_ );
-    }
 
 private:
     //! @name Member data
     //@{
-    int  hiddenModes_;
-    int  visibleModes_;
-    int  currentMode_;
-    bool visible_;
-    bool visibleByDefault_;
+    int currentMode_;
     //@}
 };
 

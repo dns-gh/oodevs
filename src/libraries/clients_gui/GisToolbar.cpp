@@ -21,7 +21,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Units.h"
-#include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "tools/GeneralConfig.h"
 
 using namespace gui;
