@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 
 #include "clients_kernel/ContextMenu.h"
-#include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
 namespace kernel
@@ -32,7 +32,7 @@ namespace gui
 // =============================================================================
 class RichMenu : public kernel::ContextMenu
                , public tools::Observer_ABC
-               , public kernel::ModesObserver_ABC
+               , public kernel::DisplayableModesObserver_ABC
 {
 
 public:

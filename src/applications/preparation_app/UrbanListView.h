@@ -11,6 +11,7 @@
 #define __UrbanListView_h_
 
 #include "clients_gui/EntityListView.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -35,6 +36,7 @@ class ModelBuilder;
 // =============================================================================
 class UrbanListView : public gui::EntityListView
                     , public tools::ElementObserver_ABC< kernel::Object_ABC >
+                    , public kernel::ModesObserver_ABC
 {
 
 public:
@@ -52,6 +54,7 @@ protected:
     virtual void NotifyCreated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
+    virtual void NotifyModeChanged( int newMode );
     //@}
 
 private:

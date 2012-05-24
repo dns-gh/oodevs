@@ -769,7 +769,7 @@ void MainWindow::ToggleDocks()
         QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this , QString() );
         for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
         {
-            if( kernel::ModesObserver_ABC* observer = dynamic_cast< kernel::ModesObserver_ABC* >( *it ) )
+            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
                 if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() & observer->GetVisibleModes() )
                     continue;
             (*it)->hide();
@@ -777,7 +777,7 @@ void MainWindow::ToggleDocks()
         QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
         for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
         {
-            if( kernel::ModesObserver_ABC* observer = dynamic_cast< kernel::ModesObserver_ABC* >( *it ) )
+            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
                 if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() & observer->GetVisibleModes() )
                     continue;
             (*it)->hide();

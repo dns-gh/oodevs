@@ -11,7 +11,7 @@
 #define __gui_RichAction_h_
 
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
 class QAction;
@@ -31,7 +31,7 @@ namespace gui
 // Created: ABR 2012-05-14
 // =============================================================================
 class RichAction : public tools::Observer_ABC
-                 , public kernel::ModesObserver_ABC
+                 , public kernel::DisplayableModesObserver_ABC
                  , private boost::noncopyable
 {
 public:

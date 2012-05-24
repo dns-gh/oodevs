@@ -14,7 +14,7 @@
 #include <string>
 #include <boost/noncopyable.hpp>
 #include "tools/Observer_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 
 class ViewFrustum;
 
@@ -37,7 +37,7 @@ namespace gui
 // =============================================================================
 class Layer_ABC : public MapLayer_ABC
                 , public tools::Observer_ABC
-                , public kernel::ModesObserver_ABC
+                , public kernel::DisplayableModesObserver_ABC
                 , private boost::noncopyable
 {
 public:

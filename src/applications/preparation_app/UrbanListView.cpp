@@ -99,3 +99,12 @@ bool UrbanListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 {
     return entity.GetTypeName() != kernel::UrbanObject_ABC::typeName_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::NotifyModeChanged
+// Created: JSR 2012-05-24
+// -----------------------------------------------------------------------------
+void UrbanListView::NotifyModeChanged( int newMode )
+{
+    ModesObserver_ABC::NotifyModeChanged( newMode );
+}

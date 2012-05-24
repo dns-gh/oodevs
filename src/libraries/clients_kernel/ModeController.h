@@ -13,6 +13,7 @@
 #include "ENT/ENT_Tr_ABC.h"
 #include "ModeController_ABC.h"
 #include "ModesObserver_ABC.h"
+#include "DisplayableModesObserver_ABC.h"
 
 class QMainWindow;
 
