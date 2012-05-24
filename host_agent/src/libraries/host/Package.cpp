@@ -23,9 +23,9 @@
 using namespace host;
 using runtime::Utf8Convert;
 
-struct host::SubPackage : public boost::noncopyable
+struct Package::Item : public boost::noncopyable
 {
-    explicit SubPackage( const FileSystem_ABC& system, const Path& root, size_t id )
+    Item( const FileSystem_ABC& system, const Path& root, size_t id )
         : root_( root )
         , id_  ( id )
     {
@@ -33,7 +33,7 @@ struct host::SubPackage : public boost::noncopyable
         checksum_ = TaskHandler< std::string >::Go( boost::bind( &FileSystem_ABC::Checksum, &system, root_ ) );
     }
 
-    virtual ~SubPackage()
+    virtual ~Item()
     {
         // NOTHING
     }
@@ -117,10 +117,10 @@ void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::stri
         dst.put( dstKey, default );
 }
 
-struct Model : public SubPackage
+struct Model : public Package::Item
 {
     Model( const FileSystem_ABC& system, const Path& file, size_t id )
-        : SubPackage( system, Path( file ).remove_filename().remove_filename(), id )
+        : Item( system, Path( file ).remove_filename().remove_filename(), id )
     {
         tree_.put( "type", "model" );
         tree_.put( "name", Utf8Convert( root_.filename() ) );
@@ -135,10 +135,10 @@ struct Model : public SubPackage
     }
 };
 
-struct Terrain : public SubPackage
+struct Terrain : public Package::Item
 {
     Terrain( const FileSystem_ABC& system, const Path& file, size_t id )
-        : SubPackage( system, Path( file ).remove_filename(), id )
+        : Item( system, Path( file ).remove_filename(), id )
     {
         tree_.put( "type", "terrain" );
         tree_.put( "name", GetFilename( file, "terrains" ) );
@@ -153,10 +153,10 @@ struct Terrain : public SubPackage
     }
 };
 
-struct Exercise : public SubPackage
+struct Exercise : public Package::Item
 {
     Exercise( const FileSystem_ABC& system, const Path& file, size_t id )
-        : SubPackage( system, Path( file ).remove_filename(), id )
+        : Item( system, Path( file ).remove_filename(), id )
     {
         tree_.put( "type", "exercise" );
         tree_.put( "name", GetFilename( file, "exercises" ) );
@@ -212,7 +212,7 @@ Tree Package::GetProperties() const
     tree.put( "version", version_ );
     tree.put_child( "items", Tree() );
     Tree& items = tree.get_child( "items" );
-    BOOST_FOREACH( const T_Packages::value_type& item, items_ )
+    BOOST_FOREACH( const T_Items::value_type& item, items_ )
         items.push_back( std::make_pair( "", item->GetProperties() ) );
     return tree;
 }
@@ -257,7 +257,7 @@ bool Package::Parse()
     Model::Parse( system_, path_, items_, idx );
     Terrain::Parse( system_, path_, items_, idx );
     Exercise::Parse( system_, path_, items_, idx );
-    BOOST_FOREACH( const T_Packages::value_type& value, items_ )
+    BOOST_FOREACH( const T_Items::value_type& value, items_ )
         value->Join();
 
     return true;
@@ -269,6 +269,6 @@ bool Package::Parse()
 // -----------------------------------------------------------------------------
 void Package::Identify( const Package_ABC& ref )
 {
-    BOOST_FOREACH( T_Packages::value_type value, items_ )
+    BOOST_FOREACH( const T_Items::value_type& value, items_ )
         value->Identify( ref );
 }

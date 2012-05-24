@@ -18,7 +18,6 @@ namespace host
 {
     class FileSystem_ABC;
     class Pool_ABC;
-    struct SubPackage;
     typedef boost::filesystem3::path Path;
 
 // =============================================================================
@@ -43,10 +42,11 @@ public:
     virtual void Identify( const Package_ABC& reference );
     //@}
 
-private:
+public:
     //! @name Typedef helpers
     //@{
-    typedef std::vector< boost::shared_ptr< SubPackage > > T_Packages;
+    struct Item;
+    typedef std::vector< boost::shared_ptr< Item > > T_Items;
     //@}
 
 private:
@@ -59,7 +59,7 @@ private:
     std::string name_;
     std::string description_;
     std::string version_;
-    T_Packages items_;
+    T_Items items_;
     //@}
 };
 
