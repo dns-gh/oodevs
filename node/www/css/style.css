@@ -38,3 +38,4 @@ body{padding-top:60px;padding-bottom:40px;}
 .item_briefing{padding-top:20px !important;}
 .briefing_content{margin-top:20px;}
 .item_label{float:left;font-weight:bold;width:64px;}
+.package_row .error{position:relative;top:-1px;}

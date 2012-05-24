@@ -49,8 +49,8 @@ class PackageView extends Backbone.View
             for it in $(@el).find(".action .more")
                 $(it).click ->
                     $("#" + $(@).parent().parent().parent().attr "rel").toggle "fast"
-            for it in $(@el).find(".action .error")
-                $(it).popover placement: "bottom"
+            for it in $(@el).find(".name .error")
+                $(it).tooltip placement: "right"
             $(".form-actions .discard").click =>
                 @enabled = false
                 @model.clear()

@@ -45,7 +45,14 @@
                             {{#items}}
                             <tr rel="briefing_{{id}}" class="package_row">
                                 <td class="type">{{type}}</td>
-                                <td class="name"> {{name}}</td>
+                                <td class="name">
+                                    {{name}}
+                                    {{#equal action "error"}}
+                                    <span>
+                                        <a class="label label-important error" rel="tooltip" title="{{error}}">Error</a>
+                                    </span>
+                                    {{/equal}}
+                                </td>
                                 <td class="date">{{date}}</td>
                                 <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
                                 <td class="action">
@@ -57,25 +64,20 @@
                                         <a class="btn add" data-toggle="button"><i class="icon-plus"></i> Add </a>
                                         {{/equal}}
                                         {{#equal action "update"}}
-                                        <a class="btn update" data-toggle="button"><i class="icon-retweet"></i> Update </a>
+                                        <a class="btn update" data-toggle="button"><i class="icon-chevron-up"></i> Update </a>
                                         {{/equal}}
                                     </span>
-                                    {{#equal action "error"}}
-                                    <span>
-                                        <a class="btn btn-danger error" rel="popover" data-content="{{error}}"> Error</a>
-                                    </span>
-                                    {{/equal}}
                                 </td>
                             </tr>
                             {{#equal type "exercise"}}
                             <tr id="briefing_{{id}}" class="hide">
-                                <td colspan="5" class="item_briefing">
+                                <td colspan="100%" class="item_briefing">
                                     {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
                                     {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
                                     <div class="briefing_content">{{{briefing}}}</div>
                                 </td>
                             </tr>
-                            <tr class="hide"><td colspan="5"></td></tr>
+                            <tr class="hide"><td colspan="100%"></td></tr>
                             {{/equal}}
                             {{/items}}
                         </tbody>

@@ -91,11 +91,11 @@
             return $("#" + $(this).parent().parent().parent().attr("rel")).toggle("fast");
           });
         }
-        _ref2 = $(this.el).find(".action .error");
+        _ref2 = $(this.el).find(".name .error");
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           it = _ref2[_j];
-          $(it).popover({
-            placement: "bottom"
+          $(it).tooltip({
+            placement: "right"
           });
         }
         $(".form-actions .discard").click(function() {
