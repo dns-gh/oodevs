@@ -41,7 +41,7 @@
       <geometry symbol="G*EW***********" type="polygon"/>
     </geometries>
     <avoidable distance="250"/>
-    <interact-with-enemy/>
+    <interact-with-enemy enemy="true"/>
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -798,4 +798,4 @@
     </urban-destruction>
   </object>
 </objects>
-<!-- signature="1746516178" -->
+<!-- signature="2720146568" -->
