@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     Logger( RotatingLog& log, const std::string& prefix, T_Callback callback )
-        : log_     ( log )
+        : log_     ( &log )
         , prefix_  ( prefix )
         , callback_( callback )
     {}
@@ -47,7 +47,7 @@ public:
     //@{
     void operator()( const std::string& link, const T& message ) const
     {
-        log_.Write( MessageSerializer< T >( prefix_, message ) );
+        log_->Write( MessageSerializer< T >( prefix_, message ) );
         callback_( link, message );
     }
     //@}
@@ -76,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    RotatingLog& log_;
+    RotatingLog* log_;
     std::string prefix_;
     T_Callback callback_;
     //@}
