@@ -16,7 +16,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
@@ -197,15 +196,6 @@ void PHY_PerceptionRecoLocalisation::Execute( const TER_Agent_ABC::T_AgentPtrVec
 const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const MIL_Agent_ABC& agent ) const
 {//@TODO move to  private
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoLocalisation::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const DEC_Knowledge_Agent & knowledge ) const
-{
-    return Compute( knowledge.GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

@@ -655,18 +655,6 @@ void MIL_Automate::Engage()
 // Name: MIL_Automate::IsPerceived
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
-{
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        if( ( **it ).GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
-            return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::IsPerceived
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )

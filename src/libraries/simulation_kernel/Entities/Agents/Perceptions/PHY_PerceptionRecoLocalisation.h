@@ -67,7 +67,6 @@ public:
 
     virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputer );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
-    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
     void                               Update();
     //@}
 };

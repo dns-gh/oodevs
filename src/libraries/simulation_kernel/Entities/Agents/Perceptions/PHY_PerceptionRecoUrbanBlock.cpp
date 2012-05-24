@@ -9,10 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoUrbanBlock.h"
+#include "PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
@@ -149,15 +149,6 @@ void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVecto
 const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MIL_Agent_ABC& agent ) const
 {
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoUrbanBlock::Compute
-// Created: MGD 2010-02-11
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const DEC_Knowledge_Agent & knowledge ) const
-{
-    return Compute( knowledge.GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
@@ -44,23 +43,6 @@ PHY_PerceptionCoupDeSonde::~PHY_PerceptionCoupDeSonde()
 const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MT_Vector2D& vTargetPos ) const
 {
     const MT_Vector2D& vSourcePos = GetPerceiverPosition();
-    if( vSourcePos.Distance( vTargetPos ) >  rLength_ )
-        return PHY_PerceptionLevel::notSeen_;
-
-    if( fabs( ( vSourcePos - vTargetPos ) * GetPerceiverDirection() ) <= rWidth_ )
-        return PHY_PerceptionLevel::recognized_;
-
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionCoupDeSonde::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const DEC_Knowledge_Agent& target ) const
-{
-    const MT_Vector2D& vSourcePos = GetPerceiverPosition();
-    const MT_Vector2D& vTargetPos = target.GetPosition();
     if( vSourcePos.Distance( vTargetPos ) >  rLength_ )
         return PHY_PerceptionLevel::notSeen_;
 

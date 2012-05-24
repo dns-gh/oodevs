@@ -23,7 +23,6 @@ namespace client
 }
 
 class DEC_Decision_ABC;
-class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class PHY_PerceptionLevel;
 class PHY_RadarClass;
@@ -91,7 +90,6 @@ public:
     virtual void ExecutePerceptions() = 0;
     virtual const PHY_PerceptionLevel& ComputePerception( const MT_Vector2D& vPoint ) const = 0;
     virtual const PHY_PerceptionLevel& ComputePerception( const DEC_Knowledge_Object& knowledge ) const = 0;
-    virtual const PHY_PerceptionLevel& ComputePerception( const DEC_Knowledge_Agent & knowledge ) const = 0;
 
     virtual void SetVisionModeNormal() = 0;;
     virtual void SetVisionModeDirection( const MT_Vector2D& vDirection ) = 0;

@@ -35,7 +35,6 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/PHY_Precipitation.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
 #include <xeumeuleu/xml.hpp>
@@ -399,27 +398,6 @@ double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::GetTargetFactor
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
-{
-    // LTO begin
-    if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target.GetAgentKnown() ) == false )
-        return 0;
-    // LTO end
-
-    const unsigned int nOldPostureIdx = target.GetLastPosture   ().GetID();
-    const unsigned int nCurPostureIdx = target.GetCurrentPosture().GetID();
-
-    assert( postureTargetFactors_.size() > nOldPostureIdx );
-    assert( postureTargetFactors_.size() > nCurPostureIdx );
-    double rModifier = postureTargetFactors_[ nOldPostureIdx ] + target.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
-
-    return rModifier * GetPopulationFactor( target.GetPopulationDensity() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ContainsSensorFromLimitedList
 // Created: JSR 2010-03-16
 // LTO
@@ -675,33 +653,6 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double     rTargetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetAltitude() + 2;
-
-    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputePerception
-// Created: NLD 2004-09-07
-// Modified: JVT 2004-09-28
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const DEC_Knowledge_Agent& target, double rSensorHeight ) const
-{
-    const MT_Vector2D& vTargetPos = target.GetPosition();
-
-    if( target.IsDead() )
-        return ComputePerception( source, vTargetPos, rSensorHeight );
-
-    const PHY_Volume* pSignificantVolume = target.GetSignificantVolume( *this );
-    if( !pSignificantVolume )
-        return PHY_PerceptionLevel::notSeen_;
-
-    double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
-             rDistanceMaxModificator *= GetTargetFactor( target );
-             rDistanceMaxModificator *= GetSourceFactor( source );
-
-    const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const double     rTargetAltitude = target.GetAltitude() + 2;
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }

@@ -103,7 +103,6 @@ public:
     void                       ExecutePerceptions();
     const PHY_PerceptionLevel& ComputePerception ( const MT_Vector2D& vPoint             ) const;
     const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Object& knowledge ) const;
-    const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Agent & knowledge ) const;
 
     void SetVisionModeNormal   ();
     void SetVisionModeDirection( const MT_Vector2D& vDirection );

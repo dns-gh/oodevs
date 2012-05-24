@@ -70,31 +70,6 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoin
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Agent & knowledge ) const
-{
-    const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-
-    if( bIsEnabled_ )
-    {
-        const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-        {
-            const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, knowledge );
-            if( currentLevel > *pBestLevel )
-            {
-                pBestLevel = &currentLevel;
-                if( pBestLevel->IsBestLevel() )
-                    return *pBestLevel;
-            }
-        }
-    }
-    return *pBestLevel;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& target )

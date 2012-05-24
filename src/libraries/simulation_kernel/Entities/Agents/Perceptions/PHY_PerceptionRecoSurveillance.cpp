@@ -18,7 +18,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_World.h"
@@ -230,15 +229,6 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_Agent_ABC& agent ) const
 {
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const DEC_Knowledge_Agent & knowledge ) const
-{
-    return Compute( knowledge.GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

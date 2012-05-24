@@ -43,7 +43,6 @@ namespace xml
 }
 
 class DEC_Decision_ABC;
-class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_Automate;
 class DEC_Knowledge_Object;
 class MIL_Formation;
@@ -169,7 +168,6 @@ public:
             functor( **it );
     }
 
-    bool IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const;
     bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const;
     //@}
 

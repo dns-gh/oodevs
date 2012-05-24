@@ -35,7 +35,6 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -950,23 +949,6 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
     NotifyPerception( owner_, PHY_PerceptionLevel::identified_, false );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::ComputePerception
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Agent& knowledge ) const
-{
-    if( !CanPerceive() || !knowledge.IsValid() )
-        return PHY_PerceptionLevel::notSeen_;
-    const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-    {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( knowledge );
-        if( pBestPerceptionLevel_->IsBestLevel() )
-            return *pBestPerceptionLevel_;
-    }
-    return *pBestPerceptionLevel_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::ComputePerception

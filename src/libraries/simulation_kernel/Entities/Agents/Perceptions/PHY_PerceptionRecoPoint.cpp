@@ -18,7 +18,6 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
@@ -136,15 +135,6 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
 const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const MIL_Agent_ABC& agent ) const
 {
     return Compute( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoPoint::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge_Agent & knowledge ) const
-{
-    return Compute( knowledge.GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

@@ -28,7 +28,6 @@ class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
-class DEC_Knowledge_Agent;
 class UrbanObjectWrapper;
 class PHY_SensorType;
 
@@ -60,7 +59,6 @@ public:
     //@{
     const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MT_Vector2D& target, double rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target, double rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Agent& target, double rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, double rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight, T_PointVector& shape ) const;
     double ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow& target, double rSensorHeight ) const;
@@ -103,7 +101,6 @@ private:
 
     double GetSourceFactor    ( const MIL_Agent_ABC&       source ) const;
     double GetTargetFactor    ( const MIL_Agent_ABC&       target ) const;
-    double GetTargetFactor    ( const DEC_Knowledge_Agent& target ) const;
 
     bool ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const; // LTO
 

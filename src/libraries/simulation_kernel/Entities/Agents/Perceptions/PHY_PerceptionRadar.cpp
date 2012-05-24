@@ -151,15 +151,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MIL_Agent_ABC& /*
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadar::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const DEC_Knowledge_Agent & /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------

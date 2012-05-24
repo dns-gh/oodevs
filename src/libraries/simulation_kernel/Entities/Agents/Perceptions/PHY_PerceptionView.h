@@ -30,7 +30,6 @@ public:
 
     virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent );
-    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
 
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;

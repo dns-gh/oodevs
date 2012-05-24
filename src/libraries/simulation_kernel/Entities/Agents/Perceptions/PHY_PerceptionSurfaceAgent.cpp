@@ -165,16 +165,6 @@ void PHY_PerceptionSurfaceAgent::FinalizePerception()
     perceptionsBuffer_.clear();
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionSurfaceAgent::ComputePerception
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Agent&  target ) const
-{
-    assert( pSensorType_ );
-    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
-    return GetLevelWithDelay( level, &target );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception

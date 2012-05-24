@@ -11,7 +11,6 @@
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 
 class DEC_Knowledge_Object;
-class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
@@ -38,7 +37,6 @@ public:
 
     virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent );
-    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
 
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;

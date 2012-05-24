@@ -359,23 +359,6 @@ void MIL_KnowledgeGroup::CleanKnowledges()
 // Name: MIL_KnowledgeGroup::IsPerceived
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Agent& knowledge ) const
-{
-    // Hack : Pour éviter les destructions de connaissances dues à la posture du l'unité source
-    //  => On triche en forcant la connaissance à ne pas être détruite si la connaissance et l'
-    //     unité réelle se trouvent au même endroit
-    if( knowledge.GetPosition() == knowledge.GetAgentKnown().GetRole< PHY_RoleInterface_Location >().GetPosition() )
-        return false;
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
-        if( (*it)->IsPerceived( knowledge ) )
-            return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::IsPerceived
-// Created: NLD 2004-03-22
-// -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
