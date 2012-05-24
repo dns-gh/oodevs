@@ -21,7 +21,17 @@
 #include <libarchive/archive_entry.h>
 #undef   CopyFile
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4244 4245 )
+#endif
+#include <boost/crc.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
 using namespace host;
+using runtime::Utf8Convert;
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::FileSystem
@@ -314,4 +324,32 @@ struct Unpacker : public Unpacker_ABC
 FileSystem_ABC::T_Unpacker FileSystem::Unpack( const boost::filesystem::path& output, std::istream& src ) const
 {
     return boost::make_shared< Unpacker >( log_, output, src );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::Checksum
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+std::string FileSystem::Checksum( const boost::filesystem3::path& root ) const
+{
+    boost::crc_32_type sum;
+    std::vector< char > buffer( UINT16_MAX );
+    for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+    {
+        if( !boost::filesystem::is_regular_file( it.status() ) )
+            continue;
+#ifdef _MSC_VER
+        // msvc does not support utf-8 strings
+        std::ifstream in( it->path().wstring(), std::ifstream::binary );
+#else
+        std::ifstream in( Utf8Convert( *it ), std::ifstream::binary );
+#endif
+        while( in.good() )
+        {
+            in.read( &buffer[0], buffer.size() );
+            sum.process_bytes( &buffer[0], static_cast< size_t >( in.gcount() ) );
+        }
+    }
+    const size_t size = sprintf( &buffer[0], "%08X", sum.checksum() );
+    return std::string( &buffer[0], size );
 }

@@ -49,6 +49,7 @@ public:
     virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const;
     virtual std::vector< boost::filesystem3::path > Walk( const boost::filesystem3::path& path, bool recurse ) const;
     virtual T_Unpacker Unpack( const boost::filesystem3::path& output, std::istream& src ) const;
+    virtual std::string Checksum( const boost::filesystem3::path& root ) const;
     //@}
 
 private:

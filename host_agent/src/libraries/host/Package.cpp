@@ -21,48 +21,17 @@
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 4245 )
-#endif
-#include <boost/crc.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 using namespace host;
 using runtime::Utf8Convert;
 
-namespace
-{
-std::string Checksum( const boost::filesystem::path& root )
-{
-    boost::crc_32_type sum;
-    std::vector< char > buffer( UINT16_MAX );
-    for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
-    {
-        if( !boost::filesystem::is_regular_file( it.status() ) )
-            continue;
-        std::ifstream in( Utf8Convert( *it ), std::ifstream::binary );
-        while( in.good() )
-        {
-            in.read( &buffer[0], buffer.size() );
-            sum.process_bytes( &buffer[0], static_cast< size_t >( in.gcount() ) );
-        }
-    }
-    const size_t size = sprintf( &buffer[0], "%08X", sum.checksum() );
-    return std::string( &buffer[0], size );
-}
-}
-
 struct host::SubPackage : public boost::noncopyable
 {
-    explicit SubPackage( size_t id, const boost::filesystem::path& root )
+    explicit SubPackage( const FileSystem_ABC& system, const boost::filesystem::path& root, size_t id )
         : root_( root )
         , id_  ( id )
     {
         tree_.put( "id", id_ );
-        checksum_ = TaskHandler< std::string >::Go( boost::bind( &Checksum, root_ ) );
+        checksum_ = TaskHandler< std::string >::Go( boost::bind( &FileSystem_ABC::Checksum, &system, root_ ) );
     }
 
     virtual ~SubPackage()
@@ -141,8 +110,8 @@ void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::stri
 
 struct Model : public SubPackage
 {
-    Model( size_t id, const boost::filesystem::path& file )
-        : SubPackage( id, boost::filesystem::path( file ).remove_filename().remove_filename() )
+    Model( const FileSystem_ABC& system, const boost::filesystem::path& file, size_t id )
+        : SubPackage( system, boost::filesystem::path( file ).remove_filename().remove_filename(), id )
     {
         tree_.put( "type", "model" );
         tree_.put( "name", Utf8Convert( root_.filename() ) );
@@ -153,14 +122,14 @@ struct Model : public SubPackage
     static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
     {
         BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
-            items.push_back( boost::make_shared< Model >( ++idx, path ) );
+            items.push_back( boost::make_shared< Model >( system, path, ++idx ) );
     }
 };
 
 struct Terrain : public SubPackage
 {
-    Terrain( size_t id, const boost::filesystem::path& file )
-        : SubPackage( id, boost::filesystem::path( file ).remove_filename() )
+    Terrain( const FileSystem_ABC& system, const boost::filesystem::path& file, size_t id )
+        : SubPackage( system, boost::filesystem::path( file ).remove_filename(), id )
     {
         tree_.put( "type", "terrain" );
         tree_.put( "name", GetFilename( file, "terrains" ) );
@@ -171,19 +140,19 @@ struct Terrain : public SubPackage
     static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
     {
         BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
-            items.push_back( boost::make_shared< Terrain >( ++idx, path ) );
+            items.push_back( boost::make_shared< Terrain >( system, path, ++idx ) );
     }
 };
 
 struct Exercise : public SubPackage
 {
-    Exercise( size_t id, const FileSystem_ABC& system, const boost::filesystem::path& file )
-        : SubPackage( id, boost::filesystem::path( file ).remove_filename() )
+    Exercise( const FileSystem_ABC& system, const boost::filesystem::path& file, size_t id )
+        : SubPackage( system, boost::filesystem::path( file ).remove_filename(), id )
     {
         tree_.put( "type", "exercise" );
         tree_.put( "name", GetFilename( file, "exercises" ) );
         tree_.put( "date", GetDate( file ) );
-        boost::property_tree::ptree more = FromXml( system.ReadFile( file ) );
+        const boost::property_tree::ptree more = FromXml( system.ReadFile( file ) );
         MaybeCopy( tree_, "name", more, "exercise.meta.name" );
         MaybeCopy( tree_, "briefing", more, "exercise.meta.briefing.text" );
         MaybeCopy( tree_, "terrain", more, "exercise.terrain.<xmlattr>.name" );
@@ -194,7 +163,7 @@ struct Exercise : public SubPackage
     static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
     {
         BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
-            items.push_back( boost::make_shared< Exercise >( ++idx, system, path ) );
+            items.push_back( boost::make_shared< Exercise >( system, path, ++idx ) );
     }
 };
 }
