@@ -78,7 +78,7 @@
     };
 
     PackageView.prototype.render = function() {
-      var it, _i, _len, _ref,
+      var it, _i, _j, _len, _len2, _ref, _ref2,
         _this = this;
       $(this.el).empty();
       if (!this.enabled) return;
@@ -89,6 +89,13 @@
           it = _ref[_i];
           $(it).click(function() {
             return $("#" + $(this).parent().parent().parent().attr("rel")).toggle("fast");
+          });
+        }
+        _ref2 = $(this.el).find(".action .error");
+        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+          it = _ref2[_j];
+          $(it).popover({
+            placement: "bottom"
           });
         }
         $(".form-actions .discard").click(function() {
