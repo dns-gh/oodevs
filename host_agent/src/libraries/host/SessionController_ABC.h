@@ -19,6 +19,7 @@
 namespace host
 {
     class Session_ABC;
+    typedef boost::uuids::uuid Uuid;
 
 // =============================================================================
 /** @class  SessionController_ABC
@@ -49,12 +50,12 @@ public:
     virtual void        Reload( T_Predicate predicate ) = 0;
     virtual T_Sessions  List( T_Predicate predicate = T_Predicate(), int offset = 0, int limit = INT_MAX ) const = 0;
     virtual size_t      Count( T_Predicate predicate = T_Predicate() ) const = 0;
-    virtual bool        Has( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Session   Get( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Session   Create( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise ) = 0;
-    virtual T_Session   Delete( const boost::uuids::uuid& id ) = 0;
-    virtual T_Session   Start( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Session   Stop( const boost::uuids::uuid& id ) const = 0;
+    virtual bool        Has( const Uuid& id ) const = 0;
+    virtual T_Session   Get( const Uuid& id ) const = 0;
+    virtual T_Session   Create( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
+    virtual T_Session   Delete( const Uuid& id ) = 0;
+    virtual T_Session   Start( const Uuid& id ) const = 0;
+    virtual T_Session   Stop( const Uuid& id ) const = 0;
     virtual T_Exercises GetExercises() const = 0;
     //@}
 };

@@ -15,6 +15,7 @@
 
 namespace host
 {
+    typedef boost::property_tree::ptree Tree;
 
 // =============================================================================
 /** @class  Package_ABC
@@ -33,7 +34,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::property_tree::ptree GetProperties() const = 0;
+    virtual Tree GetProperties() const = 0;
     virtual bool Parse() = 0;
     //@}
 };

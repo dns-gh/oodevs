@@ -54,25 +54,25 @@ public:
     //@{
     virtual Reply ListNodes ( int offset, int limit ) const;
     virtual Reply CountNodes() const;
-    virtual Reply GetNode   ( const boost::uuids::uuid& id ) const;
+    virtual Reply GetNode   ( const Uuid& id ) const;
     virtual Reply CreateNode( const std::string& name );
-    virtual Reply DeleteNode( const boost::uuids::uuid& id );
-    virtual Reply StartNode ( const boost::uuids::uuid& id ) const;
-    virtual Reply StopNode  ( const boost::uuids::uuid& id ) const;
-    virtual Reply UploadPack( const boost::uuids::uuid& id, std::istream& src );
-    virtual Reply GetPack   ( const boost::uuids::uuid& id ) const;
-    virtual Reply DeletePack( const boost::uuids::uuid& id );
+    virtual Reply DeleteNode( const Uuid& id );
+    virtual Reply StartNode ( const Uuid& id ) const;
+    virtual Reply StopNode  ( const Uuid& id ) const;
+    virtual Reply UploadPack( const Uuid& id, std::istream& src );
+    virtual Reply GetPack   ( const Uuid& id ) const;
+    virtual Reply DeletePack( const Uuid& id );
     //@}
 
     //! @name Session Methods
     //@{
-    virtual Reply ListSessions ( const boost::uuids::uuid& node, int offset, int limit ) const;
-    virtual Reply CountSessions( const boost::uuids::uuid& node ) const;
-    virtual Reply GetSession   ( const boost::uuids::uuid& id ) const;
-    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise );
-    virtual Reply DeleteSession( const boost::uuids::uuid& id );
-    virtual Reply StartSession ( const boost::uuids::uuid& id ) const;
-    virtual Reply StopSession  ( const boost::uuids::uuid& id ) const;
+    virtual Reply ListSessions ( const Uuid& node, int offset, int limit ) const;
+    virtual Reply CountSessions( const Uuid& node ) const;
+    virtual Reply GetSession   ( const Uuid& id ) const;
+    virtual Reply CreateSession( const Uuid& node, const std::string& name, const std::string& exercise );
+    virtual Reply DeleteSession( const Uuid& id );
+    virtual Reply StartSession ( const Uuid& id ) const;
+    virtual Reply StopSession  ( const Uuid& id ) const;
     //@}
 
     //! @name Other Methods
@@ -87,7 +87,7 @@ private:
     mutable cpplog::BaseLogger& log_;
     const std::auto_ptr< boost::mutex > access_;
     NodeController_ABC* cluster_;
-    boost::uuids::uuid clusterId_;
+    Uuid clusterId_;
     NodeController_ABC& nodes_;
     SessionController_ABC& sessions_;
     //@}

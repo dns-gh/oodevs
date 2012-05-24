@@ -56,7 +56,7 @@ namespace
     };
 
     const std::string idActiveText = "12345678-1234-1234-1234-123456789abc";
-    const boost::uuids::uuid idActive = boost::uuids::string_generator()( idActiveText );
+    const Uuid idActive = boost::uuids::string_generator()( idActiveText );
     const std::string nodeActive = "{"
                                    "\"id\":\"" + idActiveText + "\","
                                    "\"name\":\"myName\","
@@ -65,7 +65,7 @@ namespace
                                    "}";
 
     const std::string idIdleText = "87654321-4321-4321-4321-cba987654321";
-    const boost::uuids::uuid idIdle = boost::uuids::string_generator()( idIdleText );
+    const Uuid idIdle = boost::uuids::string_generator()( idIdleText );
     const std::string nodeIdle = "{"
                                  "\"id\":\"" + idIdleText + "\","
                                  "\"name\":\"myName2\","
@@ -194,20 +194,20 @@ BOOST_FIXTURE_TEST_CASE( node_controller_upload_pack, Fixture<> )
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
     MOCK_EXPECT( sub.system.Unpack ).once().with( mock::any, boost::ref( stream ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
-    NodeController::T_Tree tree = control.UploadPack( idIdle, stream );
+    Tree tree = control.UploadPack( idIdle, stream );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_controller_get_pack, Fixture<> )
 {
     Reload();
-    NodeController::T_Tree tree = control.GetPack( idIdle );
+    Tree tree = control.GetPack( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_controller_delete_pack, Fixture<> )
 {
     Reload();
-    NodeController::T_Tree tree = control.DeletePack( idIdle );
+    Tree tree = control.DeletePack( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }

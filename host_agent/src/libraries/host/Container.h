@@ -48,7 +48,7 @@ class Container : public boost::noncopyable
 public:
     typedef T T_Object;
     typedef boost::shared_ptr< T_Object > T_ObjectPtr;
-    typedef boost::unordered_map< boost::uuids::uuid, T_ObjectPtr > T_Objects;
+    typedef boost::unordered_map< Uuid, T_ObjectPtr > T_Objects;
 
 public:
     Container()
@@ -92,13 +92,13 @@ public:
         return reply;
     }
 
-    bool Has( const boost::uuids::uuid& id ) const
+    bool Has( const Uuid& id ) const
     {
         boost::shared_lock< boost::shared_mutex > lock( access_ );
         return !!objects_.count( id );
     }
 
-    T_ObjectPtr Get( const boost::uuids::uuid& id ) const
+    T_ObjectPtr Get( const Uuid& id ) const
     {
         boost::shared_lock< boost::shared_mutex > lock( access_ );
         typename T_Objects::const_iterator it = objects_.find( id );
@@ -111,7 +111,7 @@ public:
         return objects_.insert( std::make_pair( ptr->GetId(), ptr ) ).second;
     }
 
-    T_ObjectPtr Detach( const boost::uuids::uuid& id )
+    T_ObjectPtr Detach( const Uuid& id )
     {
         boost::lock_guard< boost::shared_mutex > lock( access_ );
         typename T_Objects::const_iterator it = objects_.find( id );

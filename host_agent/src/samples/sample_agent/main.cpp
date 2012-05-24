@@ -35,6 +35,9 @@ using runtime::Utf8Convert;
 
 namespace
 {
+typedef boost::filesystem::path Path;
+typedef boost::property_tree::ptree Tree;
+
 template< typename T >
 bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const char* argv[] )
 {
@@ -126,7 +129,7 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
 }
 
 template< typename T >
-T GetTree( boost::property_tree::ptree& tree, const std::string& key, const T& value )
+T GetTree( Tree& tree, const std::string& key, const T& value )
 {
     const boost::optional< T > opt = tree.get_optional< T >( key );
     if( opt != boost::none )
@@ -172,7 +175,7 @@ int StartServer( int argc, const char* argv[] )
         const runtime::Runtime_ABC& runtime = factory.GetRuntime();
         host::FileSystem system( log );
 
-        boost::property_tree::ptree tree;
+        Tree tree;
         const Path config = root / "host" / "host_agent.config";
         if( system.IsFile( config ) )
             tree = host::FromJson( system.ReadFile( config ) );

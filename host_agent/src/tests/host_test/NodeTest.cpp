@@ -27,7 +27,7 @@ using mocks::MockUnpack;
 namespace
 {
     const std::string defaultIdString = "12345678-90ab-cdef-9876-543210123456";
-    const boost::uuids::uuid defaultId = boost::uuids::string_generator()( defaultIdString );
+    const Uuid defaultId = boost::uuids::string_generator()( defaultIdString );
     const std::string defaultName = "myName";
     const int defaultPort = 1337;
     const int processPid = 7331;
@@ -51,7 +51,7 @@ namespace
             return boost::make_shared< Node >( defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
-        NodePtr ReloadNode( const boost::property_tree::ptree& tree, ProcessPtr process = ProcessPtr() )
+        NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
         {
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
@@ -120,7 +120,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( node_reloads, Fixture )
 {
-    const boost::property_tree::ptree save = MakeNode()->Save();
+    const Tree save = MakeNode()->Save();
     ReloadNode( save );
 }
 
@@ -128,7 +128,7 @@ BOOST_FIXTURE_TEST_CASE( node_starts_and_reloads, Fixture )
 {
     NodePtr node = MakeNode();
     ProcessPtr process = StartNode( *node, processPid, processName );
-    const boost::property_tree::ptree save = node->Save();
+    const Tree save = node->Save();
     node = ReloadNode( save, process );
     StopNode( *node, process );
 }
@@ -137,7 +137,7 @@ BOOST_FIXTURE_TEST_CASE( node_rejects_bind_to_another_process, Fixture )
 {
     NodePtr node = MakeNode();
     StartNode( *node, processPid, processName );
-    const boost::property_tree::ptree save = node->Save();
+    const Tree save = node->Save();
     node = ReloadNode( save, boost::make_shared< MockProcess >( processPid, processName + "_" ) );
     BOOST_CHECK( node->Stop() );
 }

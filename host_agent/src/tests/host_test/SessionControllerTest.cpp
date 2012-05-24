@@ -63,10 +63,10 @@ namespace
     };
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
-    const boost::uuids::uuid idNode = boost::uuids::string_generator()( idNodeText );
+    const Uuid idNode = boost::uuids::string_generator()( idNodeText );
 
     const std::string idActiveText = "12345678-1234-1234-1234-123456789abc";
-    const boost::uuids::uuid idActive = boost::uuids::string_generator()( idActiveText );
+    const Uuid idActive = boost::uuids::string_generator()( idActiveText );
     const std::string sessionActive = "{"
                                    "\"id\":\"" + idActiveText + "\","
                                    "\"node\":\"" + idNodeText + "\","
@@ -78,7 +78,7 @@ namespace
                                    "}";
 
     const std::string idIdleText = "87654321-4321-4321-4321-cba987654321";
-    const boost::uuids::uuid idIdle = boost::uuids::string_generator()( idIdleText );
+    const Uuid idIdle = boost::uuids::string_generator()( idIdleText );
     const std::string sessionIdle = "{"
                                  "\"id\":\"" + idIdleText + "\","
                                  "\"node\":\"" + idNodeText + "\","

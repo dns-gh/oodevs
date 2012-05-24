@@ -38,7 +38,7 @@ public:
 
     //! @name Package_ABC methods
     //@{
-    virtual boost::property_tree::ptree GetProperties() const;
+    virtual Tree GetProperties() const;
     virtual bool Parse();
     //@}
 

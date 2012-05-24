@@ -22,6 +22,8 @@
 #include <boost/function.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+using namespace host;
+
 namespace boost
 {
 namespace property_tree
@@ -75,16 +77,16 @@ namespace json_parser
 namespace
 {
 template< typename T >
-boost::property_tree::ptree Read( const std::string& data, const T& functor )
+Tree Read( const std::string& data, const T& functor )
 {
     std::istringstream input( data );
-    boost::property_tree::ptree tree;
+    Tree tree;
     functor( input, tree );
     return tree;
 }
 
 template< typename T >
-std::string Write( const boost::property_tree::ptree& tree, const T& functor )
+std::string Write( const Tree& tree, const T& functor )
 {
     std::ostringstream out;
     functor( out, tree );
@@ -96,9 +98,9 @@ std::string Write( const boost::property_tree::ptree& tree, const T& functor )
 // Name: ToJson
 // Created: BAX 2012-04-18
 // -----------------------------------------------------------------------------
-std::string host::ToJson( const boost::property_tree::ptree& tree, bool isPretty )
+std::string host::ToJson( const Tree& tree, bool isPretty )
 {
-    const std::string reply = Write( tree, boost::bind( &boost::property_tree::write_json< boost::property_tree::ptree >, _1, _2, isPretty ) );
+    const std::string reply = Write( tree, boost::bind( &boost::property_tree::write_json< Tree >, _1, _2, isPretty ) );
     return reply.substr( 0, reply.size() - 1 );
 }
 
@@ -106,18 +108,18 @@ std::string host::ToJson( const boost::property_tree::ptree& tree, bool isPretty
 // Name: FromJson
 // Created: BAX 2012-04-18
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree host::FromJson( const std::string& data )
+Tree host::FromJson( const std::string& data )
 {
-    return Read( data, boost::bind( &boost::property_tree::read_json< boost::property_tree::ptree >, _1, _2 ) );
+    return Read( data, boost::bind( &boost::property_tree::read_json< Tree >, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ToXml
 // Created: BAX 2012-05-21
 // -----------------------------------------------------------------------------
-std::string host::ToXml( const boost::property_tree::ptree& tree )
+std::string host::ToXml( const Tree& tree )
 {
-    return Write( tree, boost::bind( &boost::property_tree::write_xml< boost::property_tree::ptree >,
+    return Write( tree, boost::bind( &boost::property_tree::write_xml< Tree >,
                   _1, _2, boost::property_tree::xml_writer_make_settings( ' ', 4 ) ) );
 }
 
@@ -125,7 +127,7 @@ std::string host::ToXml( const boost::property_tree::ptree& tree )
 // Name: FromXml
 // Created: BAX 2012-05-21
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree host::FromXml( const std::string& data )
+Tree host::FromXml( const std::string& data )
 {
-    return Read( data, boost::bind( &boost::property_tree::read_xml< boost::property_tree::ptree >, _1, _2, 0 ) );
+    return Read( data, boost::bind( &boost::property_tree::read_xml< Tree >, _1, _2, 0 ) );
 }

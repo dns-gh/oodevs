@@ -32,7 +32,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::uuids::uuid Create() const;
+    virtual Uuid Create() const;
     //@}
 };
 

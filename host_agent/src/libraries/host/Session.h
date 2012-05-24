@@ -42,16 +42,16 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const boost::uuids::uuid& id, const boost::uuids::uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
-             Session( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Session( const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
+             Session( const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
 
     //! @name Session_ABC methods
     //@{
-    virtual boost::uuids::uuid GetId() const;
-    virtual boost::uuids::uuid GetNode() const;
-    virtual boost::property_tree::ptree GetProperties() const;
+    virtual Uuid GetId() const;
+    virtual Uuid GetNode() const;
+    virtual Tree GetProperties() const;
     //@}
 
     //! @name Typedef helpers
@@ -62,7 +62,7 @@ public:
 
     //! @name Public methods
     //@{
-    boost::property_tree::ptree Save() const;
+    Tree Save() const;
     std::string GetConfiguration() const;
     bool Start( const T_Starter& starter );
     bool Stop();
@@ -70,8 +70,8 @@ public:
 
     //! @name Public members
     //@{
-    const boost::uuids::uuid id_;
-    const boost::uuids::uuid node_;
+    const Uuid id_;
+    const Uuid node_;
     const std::string name_;
     const std::string exercise_;
     const std::auto_ptr< Port_ABC > port_;

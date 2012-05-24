@@ -39,7 +39,7 @@ struct host::SubPackage : public boost::noncopyable
         // NOTHING
     }
 
-    virtual boost::property_tree::ptree GetProperties() const
+    virtual Tree GetProperties() const
     {
         return tree_;
     }
@@ -54,7 +54,7 @@ struct host::SubPackage : public boost::noncopyable
 protected:
     const Path root_;
     const size_t id_;
-    boost::property_tree::ptree tree_;
+    Tree tree_;
     TaskHandler< std::string >::Future checksum_;
 };
 
@@ -89,7 +89,7 @@ std::string GetFilename( Path path, const std::string& root )
 }
 
 template< typename T >
-bool MaybeGet( T& dst, const boost::property_tree::ptree& tree, const std::string& key )
+bool MaybeGet( T& dst, const Tree& tree, const std::string& key )
 {
     const boost::optional< T > value = tree.get_optional< T >( key );
     if( value == boost::none )
@@ -152,7 +152,7 @@ struct Exercise : public SubPackage
         tree_.put( "type", "exercise" );
         tree_.put( "name", GetFilename( file, "exercises" ) );
         tree_.put( "date", GetDate( file ) );
-        const boost::property_tree::ptree more = FromXml( system.ReadFile( file ) );
+        const Tree more = FromXml( system.ReadFile( file ) );
         MaybeCopy( tree_, "name", more, "exercise.meta.name" );
         MaybeCopy( tree_, "briefing", more, "exercise.meta.briefing.text" );
         MaybeCopy( tree_, "terrain", more, "exercise.terrain.<xmlattr>.name" );
@@ -193,17 +193,17 @@ Package::~Package()
 // Name: Package::GetProperties
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Package::GetProperties() const
+Tree Package::GetProperties() const
 {
-    boost::property_tree::ptree tree;
+    Tree tree;
     if( !valid_ )
         return tree;
 
     tree.put( "name", name_ );
     tree.put( "description", description_ );
     tree.put( "version", version_ );
-    tree.put_child( "items", boost::property_tree::ptree() );
-    boost::property_tree::ptree& items = tree.get_child( "items" );
+    tree.put_child( "items", Tree() );
+    Tree& items = tree.get_child( "items" );
     BOOST_FOREACH( const T_Packages::value_type& item, items_ )
         items.push_back( std::make_pair( "", item->GetProperties() ) );
 
@@ -220,7 +220,7 @@ bool Package::Parse()
     if( !system_.IsFile( index ) )
         return false;
 
-    boost::property_tree::ptree tree;
+    Tree tree;
     try
     {
         tree = FromXml( system_.ReadFile( index ) );

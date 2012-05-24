@@ -172,7 +172,7 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
     return *value;
 }
 
-boost::uuids::uuid Convert( const std::string& uuid )
+Uuid Convert( const std::string& uuid )
 {
     if( uuid.empty() )
         return boost::uuids::nil_uuid();
@@ -472,7 +472,7 @@ std::string Controller::CountExercises( const Request_ABC& /*request*/ )
 
 namespace
 {
-void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, const boost::uuids::uuid& id, std::istream& stream )
+void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, const Uuid& id, std::istream& stream )
 {
     reply = agent.UploadPack( id, stream );
 }

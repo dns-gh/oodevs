@@ -35,7 +35,7 @@ UuidFactory::~UuidFactory()
 // Name: UuidFactory::GetRandom
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-boost::uuids::uuid UuidFactory::Create() const
+Uuid UuidFactory::Create() const
 {
     return boost::uuids::random_generator()();
 }

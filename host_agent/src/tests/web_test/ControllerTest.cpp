@@ -26,12 +26,13 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/xpressive/xpressive.hpp>
 
+using namespace host;
 using namespace web;
 
 namespace
 {
     const std::string defaultIdString = "0123456789abcdef0123456789abcdef";
-    const boost::uuids::uuid defaultId = boost::uuids::string_generator()( defaultIdString );
+    const Uuid defaultId = boost::uuids::string_generator()( defaultIdString );
 
     MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
     {

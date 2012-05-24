@@ -48,7 +48,7 @@ std::auto_ptr< Port_ABC > AcquirePort( int wanted, PortFactory_ABC& ports )
     }
 }
 
-Node::T_Process GetProcess( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime )
+Node::T_Process GetProcess( const Tree& tree, const runtime::Runtime_ABC& runtime )
 {
     const boost::optional< int > pid = tree.get_optional< int >( "process.pid" );
     if( pid == boost::none )
@@ -56,7 +56,7 @@ Node::T_Process GetProcess( const boost::property_tree::ptree& tree, const runti
     return runtime.GetProcess( *pid );
 }
 
-Node::T_Process AcquireProcess( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, int expected )
+Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& runtime, int expected )
 {
     Node::T_Process ptr = GetProcess( tree, runtime );
     if( !ptr  )
@@ -71,7 +71,7 @@ Node::T_Process AcquireProcess( const boost::property_tree::ptree& tree, const r
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
+Node::Node( const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
     : id_     ( id )
     , name_   ( name )
     , port_   ( port )
@@ -86,7 +86,7 @@ Node::Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+Node::Node( const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : id_     ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
     , name_   ( tree.get< std::string >( "name" ) )
     , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
@@ -110,7 +110,7 @@ Node::~Node()
 // Name: Node::GetId
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::uuids::uuid Node::GetId() const
+Uuid Node::GetId() const
 {
     return id_;
 }
@@ -119,9 +119,9 @@ boost::uuids::uuid Node::GetId() const
 // Name: Node::GetCommonProperties
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Node::GetCommonProperties() const
+Tree Node::GetCommonProperties() const
 {
-    boost::property_tree::ptree tree;
+    Tree tree;
     tree.put( "id", id_ );
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
@@ -132,9 +132,9 @@ boost::property_tree::ptree Node::GetCommonProperties() const
 // Name: Node::GetProperties
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Node::GetProperties() const
+Tree Node::GetProperties() const
 {
-    boost::property_tree::ptree tree = GetCommonProperties();
+    Tree tree = GetCommonProperties();
     tree.put( "status", process_ ? "running" : "stopped" );
     return tree;
 }
@@ -143,9 +143,9 @@ boost::property_tree::ptree Node::GetProperties() const
 // Name: Node::Save
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Node::Save() const
+Tree Node::Save() const
 {
-    boost::property_tree::ptree tree = GetCommonProperties();
+    Tree tree = GetCommonProperties();
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     if( !process_ )
         return tree;
@@ -244,10 +244,10 @@ void Node::ParsePack( const FileSystem_ABC& system, const Path& path )
 // Name: Node::GetPack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Node::GetPack() const
+Tree Node::GetPack() const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    return stash_ ? stash_->GetProperties() : boost::property_tree::ptree();
+    return stash_ ? stash_->GetProperties() : Tree();
 }
 
 namespace
@@ -266,8 +266,8 @@ U Steal( T& access, U& src )
 // Name: Node::DeletePack
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Node::DeletePack()
+Tree Node::DeletePack()
 {
     boost::shared_ptr< Package_ABC > next = Steal( *access_, stash_ );
-    return next ? next->GetProperties() : boost::property_tree::ptree();
+    return next ? next->GetProperties() : Tree();
 }

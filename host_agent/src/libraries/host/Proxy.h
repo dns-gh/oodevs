@@ -41,6 +41,7 @@ namespace host
     class Pool_ABC;
     class SecurePool;
     typedef boost::filesystem3::path Path;
+    typedef boost::property_tree::ptree Tree;
 
 // =============================================================================
 /** @class  Proxy
@@ -70,7 +71,7 @@ public:
 private:
     //! @name Private methods
     Path GetPath() const;
-    boost::property_tree::ptree GetProperties() const;
+    Tree GetProperties() const;
     void Save() const;
     bool Reload( const Path& path );
     void Start();

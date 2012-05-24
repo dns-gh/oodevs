@@ -68,15 +68,15 @@ public:
     virtual void    Reload();
     virtual T_Nodes List( int offset, int limit ) const;
     virtual size_t  Count() const;
-    virtual bool    Has( const boost::uuids::uuid& id ) const;
-    virtual T_Node  Get( const boost::uuids::uuid& id ) const;
+    virtual bool    Has( const Uuid& id ) const;
+    virtual T_Node  Get( const Uuid& id ) const;
     virtual T_Node  Create( const std::string& name );
-    virtual T_Node  Delete( const boost::uuids::uuid& id );
-    virtual T_Node  Start( const boost::uuids::uuid& id ) const;
-    virtual T_Node  Stop( const boost::uuids::uuid& id ) const;
-    virtual T_Tree  UploadPack( const boost::uuids::uuid& id, std::istream& src ) const;
-    virtual T_Tree  GetPack( const boost::uuids::uuid& id ) const;
-    virtual T_Tree  DeletePack( const boost::uuids::uuid& id );
+    virtual T_Node  Delete( const Uuid& id );
+    virtual T_Node  Start( const Uuid& id ) const;
+    virtual T_Node  Stop( const Uuid& id ) const;
+    virtual Tree    UploadPack( const Uuid& id, std::istream& src ) const;
+    virtual Tree    GetPack( const Uuid& id ) const;
+    virtual Tree    DeletePack( const Uuid& id );
     //@}
 
 private:

@@ -150,7 +150,7 @@ size_t NodeController::Count() const
 // Name: NodeController::Has
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool NodeController::Has( const boost::uuids::uuid& id ) const
+bool NodeController::Has( const Uuid& id ) const
 {
     return nodes_->Has( id );
 }
@@ -159,7 +159,7 @@ bool NodeController::Has( const boost::uuids::uuid& id ) const
 // Name: NodeController::Get
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Get( const boost::uuids::uuid& id ) const
+NodeController::T_Node NodeController::Get( const Uuid& id ) const
 {
     return nodes_->Get( id );
 }
@@ -207,7 +207,7 @@ void NodeController::Save( const Node& node ) const
 // Name: NodeController::Delete
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Delete( const boost::uuids::uuid& id )
+NodeController::T_Node NodeController::Delete( const Uuid& id )
 {
     boost::shared_ptr< Node > node = nodes_->Detach( id );
     if( !node )
@@ -242,7 +242,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node&
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Start( const boost::uuids::uuid& id ) const
+NodeController::T_Node NodeController::Start( const Uuid& id ) const
 {
     boost::shared_ptr< Node > node = nodes_->Get( id );
     if( !node )
@@ -255,7 +255,7 @@ NodeController::T_Node NodeController::Start( const boost::uuids::uuid& id ) con
 // Name: NodeController::Stop
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Stop( const boost::uuids::uuid& id ) const
+NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 {
     boost::shared_ptr< Node > node = nodes_->Get( id );
     if( !node )
@@ -290,21 +290,21 @@ void NodeController::Stop( Node& node, bool skipSave ) const
 // Name: NodeController::GetStash
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-NodeController::T_Tree NodeController::GetPack( const boost::uuids::uuid& id ) const
+Tree NodeController::GetPack( const Uuid& id ) const
 {
     boost::shared_ptr< Node > node = nodes_->Get( id );
-    return node ? node->GetPack() : T_Tree();
+    return node ? node->GetPack() : Tree();
 }
 
 // -----------------------------------------------------------------------------
 // Name: NodeController::UploadPack
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-NodeController::T_Tree NodeController::UploadPack( const boost::uuids::uuid& id, std::istream& src ) const
+Tree NodeController::UploadPack( const Uuid& id, std::istream& src ) const
 {
     boost::shared_ptr< Node > node = nodes_->Get( id );
     if( !node )
-        return T_Tree();
+        return Tree();
     try
     {
         node->ReadPack( system_, GetPath( root_, *node ) / "pack", src );
@@ -316,8 +316,12 @@ NodeController::T_Tree NodeController::UploadPack( const boost::uuids::uuid& id,
     return node->GetPack();
 }
 
-NodeController::T_Tree NodeController::DeletePack( const boost::uuids::uuid& id )
+// -----------------------------------------------------------------------------
+// Name: NodeController::DeletePack
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+Tree NodeController::DeletePack( const Uuid& id )
 {
     boost::shared_ptr< Node > node = nodes_->Get( id );
-    return node ? node->DeletePack() : T_Tree();
+    return node ? node->DeletePack() : Tree();
 }

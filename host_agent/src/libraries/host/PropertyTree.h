@@ -14,10 +14,11 @@
 
 namespace host
 {
-    std::string ToJson( const boost::property_tree::ptree& tree, bool isPretty = false );
-    boost::property_tree::ptree FromJson( const std::string& data );
-    std::string ToXml( const boost::property_tree::ptree& tree );
-    boost::property_tree::ptree FromXml( const std::string& data );
+    typedef boost::property_tree::ptree Tree;
+    std::string ToJson( const Tree& tree, bool isPretty = false );
+    Tree FromJson( const std::string& data );
+    std::string ToXml( const Tree& tree );
+    Tree FromXml( const std::string& data );
 }
 
 #endif // PROPERTY_TREE_H

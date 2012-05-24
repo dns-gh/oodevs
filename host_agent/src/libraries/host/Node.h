@@ -44,19 +44,19 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
-             Node( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Node( const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
+             Node( const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
     //! @name Node_ABC methods
     //@{
-    virtual boost::uuids::uuid GetId() const;
-    virtual boost::property_tree::ptree GetProperties() const;
+    virtual Uuid GetId() const;
+    virtual Tree GetProperties() const;
     virtual void ParsePack( const FileSystem_ABC& system, const Path& path );
     virtual void ReadPack( const FileSystem_ABC& system, const Path& path, std::istream& src );
-    virtual boost::property_tree::ptree GetPack() const;
-    virtual boost::property_tree::ptree DeletePack();
+    virtual Tree GetPack() const;
+    virtual Tree DeletePack();
     //@}
 
     //! @name Typedef helpers
@@ -67,14 +67,14 @@ public:
 
     //! @name Public methods
     //@{
-    boost::property_tree::ptree Save() const;
+    Tree Save() const;
     bool Start( const T_Starter& starter );
     bool Stop();
     //@}
 
     //! @name Public members
     //@{
-    const boost::uuids::uuid id_;
+    const Uuid id_;
     const std::string name_;
     const std::auto_ptr< Port_ABC > port_;
     //@}
@@ -82,7 +82,7 @@ public:
 private:
     //! @name Public methods
     //@{
-    boost::property_tree::ptree GetCommonProperties() const;
+    Tree GetCommonProperties() const;
     //@}
 
 private:

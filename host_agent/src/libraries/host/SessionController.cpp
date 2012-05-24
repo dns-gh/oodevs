@@ -154,7 +154,7 @@ size_t SessionController::Count( T_Predicate predicate ) const
 // Name: SessionController::Has
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-bool SessionController::Has( const boost::uuids::uuid& id ) const
+bool SessionController::Has( const Uuid& id ) const
 {
     return sessions_->Has( id );
 }
@@ -163,7 +163,7 @@ bool SessionController::Has( const boost::uuids::uuid& id ) const
 // Name: SessionController::Get
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Get( const boost::uuids::uuid& id ) const
+SessionController::T_Session SessionController::Get( const Uuid& id ) const
 {
     return sessions_->Get( id );
 }
@@ -172,7 +172,7 @@ SessionController::T_Session SessionController::Get( const boost::uuids::uuid& i
 // Name: SessionController::Create
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Create( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise )
+SessionController::T_Session SessionController::Create( const Uuid& node, const std::string& name, const std::string& exercise )
 {
     std::auto_ptr< Port_ABC > ptrPort = ports_.Create();
     boost::shared_ptr< Session > session = boost::make_shared< Session >( uuids_.Create(), node, name, exercise, ptrPort );
@@ -201,7 +201,7 @@ void SessionController::Save( const Session& session ) const
 // Name: SessionController::Delete
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Delete( const boost::uuids::uuid& id )
+SessionController::T_Session SessionController::Delete( const Uuid& id )
 {
     boost::shared_ptr< Session > session = sessions_->Detach( id );
     if( !session )
@@ -233,7 +233,7 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Start( const boost::uuids::uuid& id ) const
+SessionController::T_Session SessionController::Start( const Uuid& id ) const
 {
     boost::shared_ptr< Session > session = sessions_->Get( id );
     if( !session )
@@ -246,7 +246,7 @@ SessionController::T_Session SessionController::Start( const boost::uuids::uuid&
 // Name: SessionController::Stop
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Stop( const boost::uuids::uuid& id ) const
+SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 {
     boost::shared_ptr< Session > session = sessions_->Get( id );
     if( !session )

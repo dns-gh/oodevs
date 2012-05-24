@@ -34,7 +34,7 @@
 
 using namespace host;
 
-Reply::Reply( const boost::property_tree::ptree& tree )
+Reply::Reply( const Tree& tree )
     : data ( ToJson( tree ) )
     , valid( true )
 {
@@ -57,7 +57,7 @@ bool HasKnownNode( const Session_ABC& session, const NodeController_ABC& nodes )
     return nodes.Has( session.GetNode() );
 }
 
-bool IsNode( const Session_ABC& session, const boost::uuids::uuid& id )
+bool IsNode( const Session_ABC& session, const Uuid& id )
 {
     return session.GetNode() == id;
 }
@@ -73,7 +73,7 @@ Reply List( const T& list )
 
 Reply Count( size_t count )
 {
-    boost::property_tree::ptree tree;
+    Tree tree;
     tree.put( "count", count );
     return Reply( tree );
 }
@@ -87,7 +87,7 @@ Reply Create( T ptr, const std::string& name )
 }
 
 template< typename T, typename U >
-Reply Dispatch( T& controller, const U& member, const boost::uuids::uuid& id, const std::string& action )
+Reply Dispatch( T& controller, const U& member, const Uuid& id, const std::string& action )
 {
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
@@ -96,7 +96,7 @@ Reply Dispatch( T& controller, const U& member, const boost::uuids::uuid& id, co
 }
 
 template< typename T, typename U >
-Reply ClusterDispatch( T* controller, const U& member, const boost::uuids::uuid& id, const std::string& action )
+Reply ClusterDispatch( T* controller, const U& member, const Uuid& id, const std::string& action )
 {
     if( !controller )
         return Reply( "Cluster not enabled", false );
@@ -186,7 +186,7 @@ Reply Agent::CountNodes() const
 // Name: Agent::GetNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::GetNode( const boost::uuids::uuid& id ) const
+Reply Agent::GetNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Get, id, "find node" );
 }
@@ -205,7 +205,7 @@ Reply Agent::CreateNode( const std::string& name )
 // Name: Agent::DeleteNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteNode( const boost::uuids::uuid& id )
+Reply Agent::DeleteNode( const Uuid& id )
 {
     NodeController_ABC::T_Node ptr;
     SessionController_ABC::T_Sessions invalid;
@@ -226,7 +226,7 @@ Reply Agent::DeleteNode( const boost::uuids::uuid& id )
 // Name: Agent::StartNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::StartNode( const boost::uuids::uuid& id ) const
+Reply Agent::StartNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Start, id, "start node" );
 }
@@ -235,7 +235,7 @@ Reply Agent::StartNode( const boost::uuids::uuid& id ) const
 // Name: Agent::StopNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::StopNode( const boost::uuids::uuid& id ) const
+Reply Agent::StopNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Stop, id, "stop node" );
 }
@@ -244,7 +244,7 @@ Reply Agent::StopNode( const boost::uuids::uuid& id ) const
 // Name: Agent::UploadPack
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
+Reply Agent::UploadPack( const Uuid& id, std::istream& src )
 {
     return Reply( nodes_.UploadPack( id, src ) );
 }
@@ -253,7 +253,7 @@ Reply Agent::UploadPack( const boost::uuids::uuid& id, std::istream& src )
 // Name: Agent::GetPack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Reply Agent::GetPack( const boost::uuids::uuid& id ) const
+Reply Agent::GetPack( const Uuid& id ) const
 {
     return Reply( nodes_.GetPack( id ) );
 }
@@ -262,7 +262,7 @@ Reply Agent::GetPack( const boost::uuids::uuid& id ) const
 // Name: Agent::DeletePack
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-Reply Agent::DeletePack( const boost::uuids::uuid& id )
+Reply Agent::DeletePack( const Uuid& id )
 {
     return Reply( nodes_.DeletePack( id ) );
 }
@@ -271,7 +271,7 @@ Reply Agent::DeletePack( const boost::uuids::uuid& id )
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::ListSessions( const boost::uuids::uuid& node, int offset, int limit ) const
+Reply Agent::ListSessions( const Uuid& node, int offset, int limit ) const
 {
     SessionController_ABC::T_Predicate predicate;
     if( !node.is_nil() )
@@ -283,7 +283,7 @@ Reply Agent::ListSessions( const boost::uuids::uuid& node, int offset, int limit
 // Name: Agent::CountSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CountSessions( const boost::uuids::uuid& node ) const
+Reply Agent::CountSessions( const Uuid& node ) const
 {
     return Count( node.is_nil() ? sessions_.Count() : sessions_.Count( boost::bind( &IsNode, _1, node ) ) );
 }
@@ -292,7 +292,7 @@ Reply Agent::CountSessions( const boost::uuids::uuid& node ) const
 // Name: Agent::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::GetSession( const boost::uuids::uuid& id ) const
+Reply Agent::GetSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Get, id, "find session" );
 }
@@ -301,7 +301,7 @@ Reply Agent::GetSession( const boost::uuids::uuid& id ) const
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CreateSession( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise )
+Reply Agent::CreateSession( const Uuid& node, const std::string& name, const std::string& exercise )
 {
     boost::lock_guard< boost::mutex > lock( *access_ );
     if( !nodes_.Has( node ) )
@@ -313,7 +313,7 @@ Reply Agent::CreateSession( const boost::uuids::uuid& node, const std::string& n
 // Name: Agent::DeleteSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteSession( const boost::uuids::uuid& id )
+Reply Agent::DeleteSession( const Uuid& id )
 {
     return Dispatch( sessions_, &SessionController_ABC::Delete, id, "delete session" );
 }
@@ -322,7 +322,7 @@ Reply Agent::DeleteSession( const boost::uuids::uuid& id )
 // Name: Agent::StartSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Reply Agent::StartSession( const boost::uuids::uuid& id ) const
+Reply Agent::StartSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Start, id, "start session" );
 }
@@ -331,7 +331,7 @@ Reply Agent::StartSession( const boost::uuids::uuid& id ) const
 // Name: Agent::StopSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Reply Agent::StopSession( const boost::uuids::uuid& id ) const
+Reply Agent::StopSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Stop, id, "stop session" );
 }

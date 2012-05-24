@@ -30,27 +30,27 @@ using mocks::MockSessionController;
 namespace
 {
     const std::string defaultNodeString = "0123456789abcdef0123456789abcdef";
-    const boost::uuids::uuid defaultNode = boost::uuids::string_generator()( defaultNodeString );
+    const Uuid defaultNode = boost::uuids::string_generator()( defaultNodeString );
     const std::string anotherNodeString = "0123456bcde4567f0123456789abcdef";
-    const boost::uuids::uuid anotherNode = boost::uuids::string_generator()( anotherNodeString );
+    const Uuid anotherNode = boost::uuids::string_generator()( anotherNodeString );
 
     static boost::shared_ptr< MockNode > CreateMockNode( const std::string& id, const std::string& name )
     {
         boost::shared_ptr< MockNode > ptr = boost::make_shared< MockNode >();
         MOCK_EXPECT( ptr->GetId ).returns( boost::uuids::string_generator()( id ) );
-        boost::property_tree::ptree tree;
+        Tree tree;
         tree.put( "id", id );
         tree.put( "name", name );
         MOCK_EXPECT( ptr->GetProperties ).returns( tree );
         return ptr;
     }
 
-    static boost::shared_ptr< MockSession > CreateMockSession( const boost::uuids::uuid& node, const std::string& id, const std::string& exercise, const std::string& name )
+    static boost::shared_ptr< MockSession > CreateMockSession( const Uuid& node, const std::string& id, const std::string& exercise, const std::string& name )
     {
         boost::shared_ptr< MockSession > ptr = boost::make_shared< MockSession >();
         MOCK_EXPECT( ptr->GetId ).returns( boost::uuids::string_generator()( id ) );
         MOCK_EXPECT( ptr->GetNode ).returns( node );
-        boost::property_tree::ptree tree;
+        Tree tree;
         tree.put( "id", id );
         tree.put( "node", node );
         tree.put( "name", name );
@@ -102,7 +102,7 @@ namespace
             // NOTHING
         }
 
-        boost::shared_ptr< MockSession > AddSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name, int idx )
+        boost::shared_ptr< MockSession > AddSession( const Uuid& node, const std::string& exercise, const std::string& name, int idx )
         {
             const std::string uuid = CreatePrefixedUuid( idx );
             boost::shared_ptr< MockSession > session = CreateMockSession( node, uuid, exercise, name );
@@ -120,7 +120,7 @@ namespace
             return node;
         }
 
-        bool CheckIsNodePredicate( SessionController_ABC::T_Predicate predicate, const boost::uuids::uuid& id )
+        bool CheckIsNodePredicate( SessionController_ABC::T_Predicate predicate, const Uuid& id )
         {
             BOOST_FOREACH( boost::shared_ptr< Session_ABC > ptr, mockSessions )
                 BOOST_CHECK_EQUAL( predicate( *ptr ), ptr->GetNode() == id );
@@ -289,7 +289,7 @@ BOOST_FIXTURE_TEST_CASE( agent_list_empty_exercises, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_upload_pack, Fixture<> )
 {
-    NodeController_ABC::T_Tree tree;
+    Tree tree;
     tree.put( "some", "data" );
     std::istringstream stream;
     MOCK_EXPECT( nodes.UploadPack ).once().with( defaultNode, boost::ref( stream ) ).returns( tree );
@@ -298,7 +298,7 @@ BOOST_FIXTURE_TEST_CASE( agent_upload_pack, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_get_pack, Fixture<> )
 {
-    NodeController_ABC::T_Tree tree;
+    Tree tree;
     tree.put( "some", "data" );
     MOCK_EXPECT( nodes.GetPack ).once().with( defaultNode ).returns( tree );
     CheckReply( agent.GetPack( defaultNode ), ToJson( tree ) );
@@ -306,7 +306,7 @@ BOOST_FIXTURE_TEST_CASE( agent_get_pack, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_pack, Fixture<> )
 {
-    NodeController_ABC::T_Tree tree;
+    Tree tree;
     tree.put( "some", "data" );
     MOCK_EXPECT( nodes.DeletePack ).once().with( defaultNode ).returns( tree );
     CheckReply( agent.DeletePack( defaultNode ), ToJson( tree ) );

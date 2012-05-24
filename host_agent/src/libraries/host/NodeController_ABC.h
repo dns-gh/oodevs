@@ -19,6 +19,8 @@
 namespace host
 {
     class Node_ABC;
+    typedef boost::property_tree::ptree Tree;
+    typedef boost::uuids::uuid Uuid;
 
 // =============================================================================
 /** @class  NodeController_ABC
@@ -40,7 +42,6 @@ public:
     typedef Node_ABC T_Base;
     typedef boost::shared_ptr< T_Base > T_Node;
     typedef std::vector< T_Node > T_Nodes;
-    typedef boost::property_tree::ptree T_Tree;
     //@}
 
     //! @name Methods
@@ -48,15 +49,15 @@ public:
     virtual void    Reload() = 0;
     virtual T_Nodes List( int offset, int limit ) const = 0;
     virtual size_t  Count() const = 0;
-    virtual bool    Has( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Node  Get( const boost::uuids::uuid& id ) const = 0;
+    virtual bool    Has( const Uuid& id ) const = 0;
+    virtual T_Node  Get( const Uuid& id ) const = 0;
     virtual T_Node  Create( const std::string& name ) = 0;
-    virtual T_Node  Delete( const boost::uuids::uuid& id ) = 0;
-    virtual T_Node  Start( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Node  Stop( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Tree  UploadPack( const boost::uuids::uuid& id, std::istream& src ) const = 0;
-    virtual T_Tree  GetPack( const boost::uuids::uuid& id ) const = 0;
-    virtual T_Tree  DeletePack( const boost::uuids::uuid& id ) = 0;
+    virtual T_Node  Delete( const Uuid& id ) = 0;
+    virtual T_Node  Start( const Uuid& id ) const = 0;
+    virtual T_Node  Stop( const Uuid& id ) const = 0;
+    virtual Tree    UploadPack( const Uuid& id, std::istream& src ) const = 0;
+    virtual Tree    GetPack( const Uuid& id ) const = 0;
+    virtual Tree    DeletePack( const Uuid& id ) = 0;
     //@}
 };
 

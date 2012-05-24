@@ -19,6 +19,8 @@
 
 namespace host
 {
+    typedef boost::property_tree::ptree Tree;
+    typedef boost::uuids::uuid Uuid;
 // =============================================================================
 /** @class  Reply
     @brief  Reply struct definition
@@ -35,7 +37,7 @@ struct Reply
     {
         // NOTHING
     }
-    Reply( const boost::property_tree::ptree& tree );
+    Reply( const Tree& tree );
 };
 
 // =============================================================================
@@ -64,25 +66,25 @@ public:
     //@{
     virtual Reply ListNodes( int offset, int limit ) const = 0;
     virtual Reply CountNodes() const = 0;
-    virtual Reply GetNode( const boost::uuids::uuid& id ) const = 0;
+    virtual Reply GetNode( const Uuid& id ) const = 0;
     virtual Reply CreateNode( const std::string& name ) = 0;
-    virtual Reply DeleteNode( const boost::uuids::uuid& id ) = 0;
-    virtual Reply StartNode( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply StopNode( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply UploadPack( const boost::uuids::uuid& id, std::istream& src ) = 0;
-    virtual Reply GetPack( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply DeletePack( const boost::uuids::uuid& id ) = 0;
+    virtual Reply DeleteNode( const Uuid& id ) = 0;
+    virtual Reply StartNode( const Uuid& id ) const = 0;
+    virtual Reply StopNode( const Uuid& id ) const = 0;
+    virtual Reply UploadPack( const Uuid& id, std::istream& src ) = 0;
+    virtual Reply GetPack( const Uuid& id ) const = 0;
+    virtual Reply DeletePack( const Uuid& id ) = 0;
     //@}
 
     //! @name Session Methods
     //@{
-    virtual Reply ListSessions ( const boost::uuids::uuid& node, int offset, int limit ) const = 0;
-    virtual Reply CountSessions( const boost::uuids::uuid& node ) const = 0;
-    virtual Reply GetSession   ( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise ) = 0;
-    virtual Reply DeleteSession( const boost::uuids::uuid& id ) = 0;
-    virtual Reply StartSession ( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply StopSession  ( const boost::uuids::uuid& id ) const = 0;
+    virtual Reply ListSessions ( const Uuid& node, int offset, int limit ) const = 0;
+    virtual Reply CountSessions( const Uuid& node ) const = 0;
+    virtual Reply GetSession   ( const Uuid& id ) const = 0;
+    virtual Reply CreateSession( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
+    virtual Reply DeleteSession( const Uuid& id ) = 0;
+    virtual Reply StartSession ( const Uuid& id ) const = 0;
+    virtual Reply StopSession  ( const Uuid& id ) const = 0;
     //@}
 
     //! @name Other Methods

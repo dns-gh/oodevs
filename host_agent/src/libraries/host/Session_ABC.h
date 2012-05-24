@@ -16,6 +16,8 @@
 
 namespace host
 {
+    typedef boost::property_tree::ptree Tree;
+    typedef boost::uuids::uuid Uuid;
 
 // =============================================================================
 /** @class  Session_ABC
@@ -34,9 +36,9 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::uuids::uuid GetId() const = 0;
-    virtual boost::uuids::uuid GetNode() const = 0;
-    virtual boost::property_tree::ptree GetProperties() const = 0;
+    virtual Uuid GetId() const = 0;
+    virtual Uuid GetNode() const = 0;
+    virtual Tree GetProperties() const = 0;
     //@}
 };
 

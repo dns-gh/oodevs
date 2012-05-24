@@ -109,9 +109,9 @@ Path Proxy::GetPath() const
 // Name: Proxy::ToXml
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree Proxy::GetProperties() const
+Tree Proxy::GetProperties() const
 {
-    boost::property_tree::ptree tree;
+    Tree tree;
     tree.put( "port", port_ );
     tree.put( "process.pid", process_->GetPid() );
     tree.put( "process.name", process_->GetName() );
@@ -126,7 +126,7 @@ bool Proxy::Reload( const Path& path )
 {
     try
     {
-        const boost::property_tree::ptree tree = FromJson( system_.ReadFile( path ) );
+        const Tree tree = FromJson( system_.ReadFile( path ) );
         const boost::optional< int > port = tree.get_optional< int >( "port" );
         if( port == boost::none || *port != port_ )
             return false;

@@ -25,9 +25,9 @@ using mocks::MockRuntime;
 namespace
 {
     const std::string defaultIdString = "12345678-90AB-CDEF-9876-543210123456";
-    const boost::uuids::uuid defaultId = boost::uuids::string_generator()( defaultIdString );
+    const Uuid defaultId = boost::uuids::string_generator()( defaultIdString );
     const std::string defaultNodeString = "10123456-CDEF-9876-90AB-543212345678";
-    const boost::uuids::uuid defaultNode = boost::uuids::string_generator()( defaultNodeString );
+    const Uuid defaultNode = boost::uuids::string_generator()( defaultNodeString );
     const std::string defaultName = "myName";
     const std::string defaultExercise = "MyExercise";
     const int defaultPort = 1337;
@@ -51,7 +51,7 @@ namespace
             return boost::make_shared< Session >( defaultId, defaultNode, defaultName, defaultExercise, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
-        SessionPtr ReloadSession( const boost::property_tree::ptree& tree, ProcessPtr process = ProcessPtr() )
+        SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
         {
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
@@ -125,7 +125,7 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
 {
-    const boost::property_tree::ptree save = MakeSession()->Save();
+    const Tree save = MakeSession()->Save();
     ReloadSession( save );
 }
 
@@ -133,7 +133,7 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_reloads, Fixture )
 {
     SessionPtr session = MakeSession();
     ProcessPtr process = StartSession( *session, processPid, processName );
-    const boost::property_tree::ptree save = session->Save();
+    const Tree save = session->Save();
     session = ReloadSession( save, process );
     StopSession( *session, process );
 }
@@ -142,7 +142,7 @@ BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )
 {
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
-    const boost::property_tree::ptree save = session->Save();
+    const Tree save = session->Save();
     session = ReloadSession( save, boost::make_shared< MockProcess >( processPid, processName + "_" ) );
     BOOST_CHECK( session->Stop() );
 }

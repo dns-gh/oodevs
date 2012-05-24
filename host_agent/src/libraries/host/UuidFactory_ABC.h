@@ -15,6 +15,7 @@
 
 namespace host
 {
+    typedef boost::uuids::uuid Uuid;
 
 // =============================================================================
 /** @class  UuidFactory_ABC
@@ -33,7 +34,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::uuids::uuid Create() const = 0;
+    virtual Uuid Create() const = 0;
     //@}
 };
 
