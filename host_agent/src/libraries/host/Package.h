@@ -40,12 +40,12 @@ public:
     virtual Tree GetProperties() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
+    virtual Item* Find( const Item& item ) const;
     //@}
 
 public:
     //! @name Typedef helpers
     //@{
-    struct Item;
     typedef std::vector< boost::shared_ptr< Item > > T_Items;
     //@}
 

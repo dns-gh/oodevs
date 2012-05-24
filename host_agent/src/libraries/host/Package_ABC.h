@@ -41,11 +41,17 @@ struct Package_ABC : public boost::noncopyable
     virtual ~Package_ABC() {}
     //@}
 
+    //! @name Opaque Item
+    //@{
+    struct Item;
+    //@}
+
     //! @name Methods
     //@{
     virtual Tree GetProperties() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
+    virtual Item* Find( const Item& item ) const = 0;
     //@}
 };
 
