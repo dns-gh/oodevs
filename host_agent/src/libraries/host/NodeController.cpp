@@ -42,7 +42,7 @@ std::string MakeOption( const std::string& option, const T& value )
     return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
 }
 
-boost::filesystem::path GetPath( const boost::filesystem::path& root, const Node& node )
+Path GetPath( const Path& root, const Node& node )
 {
     return root / boost::lexical_cast< std::wstring >( node.id_ );
 }
@@ -62,10 +62,10 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const FileSystem_ABC& system,
                                 const UuidFactory_ABC& uuids,
                                 const Proxy_ABC& proxy,
-                                const boost::filesystem::path& root,
-                                const boost::filesystem::path& java,
-                                const boost::filesystem::path& jar,
-                                const boost::filesystem::path& web,
+                                const Path& root,
+                                const Path& java,
+                                const Path& jar,
+                                const Path& web,
                                 const std::string& type,
                                 Pool_ABC& pool,
                                 PortFactory_ABC& ports )
@@ -111,7 +111,7 @@ NodeController::~NodeController()
 // -----------------------------------------------------------------------------
 void NodeController::Reload()
 {
-    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
+    BOOST_FOREACH( const Path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
         try
         {
             boost::shared_ptr< Node > node = boost::make_shared< Node >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
@@ -199,7 +199,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
 // -----------------------------------------------------------------------------
 void NodeController::Save( const Node& node ) const
 {
-    const boost::filesystem::path path = GetPath( root_, node ) / ( type_ + ".id" );
+    const Path path = GetPath( root_, node ) / ( type_ + ".id" );
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
 }
 
@@ -225,7 +225,7 @@ NodeController::T_Node NodeController::Delete( const boost::uuids::uuid& id )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node& node ) const
 {
-    boost::filesystem::path jar_path = jar_;
+    Path jar_path = jar_;
     return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
         ( " " "-jar \"" + Utf8Convert( jar_.filename() ) + "\"" )
         ( MakeOption( "root",  Utf8Convert( web_ ) ) )

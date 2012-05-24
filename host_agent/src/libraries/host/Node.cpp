@@ -197,7 +197,7 @@ void Reset( T& access, U& dst )
 }
 
 template< typename T, typename U >
-void Parse( T& access, U& dst, const FileSystem_ABC& system, const boost::filesystem::path& path )
+void Parse( T& access, U& dst, const FileSystem_ABC& system, const Path& path )
 {
     U next = boost::make_shared< Package >( system, path );
     bool valid = next->Parse();
@@ -213,7 +213,7 @@ void Parse( T& access, U& dst, const FileSystem_ABC& system, const boost::filesy
 // Name: Node::ReadPack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::ReadPack( const FileSystem_ABC& system, const boost::filesystem::path& path, std::istream& src )
+void Node::ReadPack( const FileSystem_ABC& system, const Path& path, std::istream& src )
 {
     boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )
@@ -231,7 +231,7 @@ void Node::ReadPack( const FileSystem_ABC& system, const boost::filesystem::path
 // Name: Node::ParsePack
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::ParsePack( const FileSystem_ABC& system, const boost::filesystem::path& path )
+void Node::ParsePack( const FileSystem_ABC& system, const Path& path )
 {
     boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )

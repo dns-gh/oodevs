@@ -53,8 +53,8 @@ public:
     //@{
     virtual boost::uuids::uuid GetId() const;
     virtual boost::property_tree::ptree GetProperties() const;
-    virtual void ParsePack( const FileSystem_ABC& system, const boost::filesystem3::path& path );
-    virtual void ReadPack( const FileSystem_ABC& system, const boost::filesystem3::path& path, std::istream& src );
+    virtual void ParsePack( const FileSystem_ABC& system, const Path& path );
+    virtual void ReadPack( const FileSystem_ABC& system, const Path& path, std::istream& src );
     virtual boost::property_tree::ptree GetPack() const;
     virtual boost::property_tree::ptree DeletePack();
     //@}

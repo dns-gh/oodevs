@@ -40,11 +40,11 @@ std::string MakeOption( const std::string& option, const T& value )
     return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
 }
 
-SessionController_ABC::T_Exercises GetExercises( const FileSystem_ABC& system, const boost::filesystem::path& root )
+SessionController_ABC::T_Exercises GetExercises( const FileSystem_ABC& system, const Path& root )
 {
     SessionController_ABC::T_Exercises reply;
     const size_t offset = root.string().size() + 1;
-    BOOST_FOREACH( boost::filesystem::path path, system.Glob( root, L"exercise.xml" ) )
+    BOOST_FOREACH( Path path, system.Glob( root, L"exercise.xml" ) )
     {
         std::wstring leaf = path.remove_filename().wstring();
         leaf = leaf.substr( offset, leaf.size() - offset );
@@ -63,9 +63,9 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const runtime::Runtime_ABC& runtime,
                                       const FileSystem_ABC& system,
                                       const UuidFactory_ABC& uuids,
-                                      const boost::filesystem::path& logs,
-                                      const boost::filesystem::path& data,
-                                      const boost::filesystem::path& apps,
+                                      const Path& logs,
+                                      const Path& data,
+                                      const Path& apps,
                                       Pool_ABC& pool,
                                       PortFactory_ABC& ports )
     : log_      ( log )
@@ -85,7 +85,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
         throw std::runtime_error( runtime::Utf8Convert( data_ ) + " is not a directory" );
     if( !system_.IsDirectory( apps_ ) )
         throw std::runtime_error( runtime::Utf8Convert( apps_ ) + " is not a directory" );
-    const boost::filesystem::path app = apps_ / L"simulation_app.exe";
+    const Path app = apps_ / L"simulation_app.exe";
     if( !system_.Exists( app ) )
         throw std::runtime_error( Utf8Convert( app ) + " is missing" );
     if( !system_.IsFile( app ) )
@@ -105,7 +105,7 @@ SessionController::~SessionController()
 // Name: SessionController::GetPath
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-boost::filesystem::path SessionController::GetPath( const Session& session ) const
+Path SessionController::GetPath( const Session& session ) const
 {
     return data_ / "exercises" / Utf8Convert( session.exercise_ ) / "sessions" / boost::lexical_cast< std::string >( session.id_ );
 }
@@ -116,7 +116,7 @@ boost::filesystem::path SessionController::GetPath( const Session& session ) con
 // -----------------------------------------------------------------------------
 void SessionController::Reload( T_Predicate predicate )
 {
-    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( data_ / "exercises", L"session.id" ) )
+    BOOST_FOREACH( const Path& path, system_.Glob( data_ / "exercises", L"session.id" ) )
         try
         {
             boost::shared_ptr< Session > ptr = boost::make_shared< Session >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
@@ -180,7 +180,7 @@ SessionController::T_Session SessionController::Create( const boost::uuids::uuid
     if( !valid )
         return T_Session();
     LOG_INFO( log_ ) << "[session] Added " << session->id_ << " " << session->name_ << " :" << session->port_->Get();
-    const boost::filesystem::path path = GetPath( *session );
+    const Path path = GetPath( *session );
     system_.MakeDirectory( path );
     system_.WriteFile( path / "session.xml", session->GetConfiguration() );
     Start( *session, true );
@@ -193,7 +193,7 @@ SessionController::T_Session SessionController::Create( const boost::uuids::uuid
 // -----------------------------------------------------------------------------
 void SessionController::Save( const Session& session ) const
 {
-    const boost::filesystem::path path = GetPath( session ) / "session.id";
+    const Path path = GetPath( session ) / "session.id";
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
 }
 

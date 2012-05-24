@@ -40,6 +40,7 @@ namespace host
     class FileSystem_ABC;
     class Pool_ABC;
     class SecurePool;
+    typedef boost::filesystem3::path Path;
 
 // =============================================================================
 /** @class  Proxy
@@ -53,8 +54,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-                    const FileSystem_ABC& system, const boost::filesystem::path& logs,
-                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
+                    const FileSystem_ABC& system, const Path& logs,
+                    const Path& java, const Path& jar,
                     int port, web::Client_ABC& client, Pool_ABC& pool );
     virtual ~Proxy();
     //@}
@@ -68,10 +69,10 @@ public:
 
 private:
     //! @name Private methods
-    boost::filesystem::path GetPath() const;
+    Path GetPath() const;
     boost::property_tree::ptree GetProperties() const;
     void Save() const;
-    bool Reload( const boost::filesystem::path& path );
+    bool Reload( const Path& path );
     void Start();
     void Stop();
     //@}
@@ -81,9 +82,9 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::path logs_;
-    const boost::filesystem::path java_;
-    const boost::filesystem::path jar_;
+    const Path logs_;
+    const Path java_;
+    const Path jar_;
     const int port_;
     const std::auto_ptr< SecurePool > pool_;
     const std::auto_ptr< boost::mutex > access_;

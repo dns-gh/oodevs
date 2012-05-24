@@ -143,7 +143,7 @@ struct NullLogger : public cpplog::BaseLogger
     }
 };
 
-boost::filesystem::path GetRootDir( int argc, const char* argv[] )
+Path GetRootDir( int argc, const char* argv[] )
 {
     std::wstring dir;
     for( int i = 0; i < argc; ++i )
@@ -151,7 +151,7 @@ boost::filesystem::path GetRootDir( int argc, const char* argv[] )
             return dir;
     NullLogger nil;
     runtime::Factory factory( nil );
-    boost::filesystem::path reply = factory.GetRuntime().GetModuleFilename();
+    Path reply = factory.GetRuntime().GetModuleFilename();
     reply.remove_filename();
     reply.remove_filename();
     return reply;
@@ -159,7 +159,7 @@ boost::filesystem::path GetRootDir( int argc, const char* argv[] )
 
 int StartServer( int argc, const char* argv[] )
 {
-    const boost::filesystem::path root = GetRootDir( argc-1, argv+1 );
+    const Path root = GetRootDir( argc-1, argv+1 );
     cpplog::TeeLogger tee(
         new cpplog::FileLogger( ( root / "log" / "host_agent.log" ).string(), true ), true,
         new cpplog::StdErrLogger(), true );
@@ -173,7 +173,7 @@ int StartServer( int argc, const char* argv[] )
         host::FileSystem system( log );
 
         boost::property_tree::ptree tree;
-        const boost::filesystem::path config = root / "host" / "host_agent.config";
+        const Path config = root / "host" / "host_agent.config";
         if( system.IsFile( config ) )
             tree = host::FromJson( system.ReadFile( config ) );
 
@@ -182,7 +182,7 @@ int StartServer( int argc, const char* argv[] )
         if( java.empty() )
             throw std::runtime_error( "Missing JAVA_HOME environment variable. Please install a Java Runtime Environment" );
 
-        const boost::filesystem::path bin = runtime.GetModuleFilename().remove_filename();
+        const Path bin = runtime.GetModuleFilename().remove_filename();
         Configuration cfg;
         cfg.root                 = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
         cfg.ports.period         = GetTree( tree, "ports.period", 40 );

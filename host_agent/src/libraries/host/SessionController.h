@@ -34,6 +34,7 @@ namespace host
     class Session;
     class UuidFactory_ABC;
     template< typename T > class Container;
+    typedef boost::filesystem::path Path;
 
 // =============================================================================
 /** @class  SessionFactory
@@ -50,9 +51,9 @@ public:
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
                                 const UuidFactory_ABC& uuids,
-                                const boost::filesystem::path& logs,
-                                const boost::filesystem::path& data,
-                                const boost::filesystem::path& apps,
+                                const Path& logs,
+                                const Path& data,
+                                const Path& apps,
                                 Pool_ABC& pool,
                                 PortFactory_ABC& ports
                            );
@@ -80,7 +81,7 @@ private:
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Session& session ) const;
     void Start( Session& session, bool mustSave ) const;
     void Stop( Session& session, bool skipSave ) const;
-    boost::filesystem::path GetPath( const Session& session ) const;
+    Path GetPath( const Session& session ) const;
     //@}
 
 private:
@@ -90,9 +91,9 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
-    const boost::filesystem::path logs_;
-    const boost::filesystem::path data_;
-    const boost::filesystem::path apps_;
+    const Path logs_;
+    const Path data_;
+    const Path apps_;
     const std::vector< std::string > exercises_;
     const std::auto_ptr< SecurePool > pool_;
     const std::auto_ptr< Container< Session > > sessions_;

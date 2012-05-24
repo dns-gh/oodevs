@@ -25,6 +25,7 @@ namespace filesystem3
 namespace host
 {
     class FileSystem_ABC;
+    typedef boost::filesystem3::path Path;
 // =============================================================================
 /** @class  Node_ABC
     @brief  Node_ABC interface
@@ -44,8 +45,8 @@ public:
     //@{
     virtual boost::uuids::uuid GetId() const = 0;
     virtual boost::property_tree::ptree GetProperties() const = 0;
-    virtual void ReadPack( const FileSystem_ABC& system, const boost::filesystem3::path& path, std::istream& src ) = 0;
-    virtual void ParsePack( const FileSystem_ABC& system, const boost::filesystem3::path& path ) = 0;
+    virtual void ReadPack( const FileSystem_ABC& system, const Path& path, std::istream& src ) = 0;
+    virtual void ParsePack( const FileSystem_ABC& system, const Path& path ) = 0;
     virtual boost::property_tree::ptree GetPack() const = 0;
     virtual boost::property_tree::ptree DeletePack() = 0;
     //@}

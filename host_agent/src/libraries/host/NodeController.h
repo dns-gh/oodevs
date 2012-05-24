@@ -34,6 +34,7 @@ namespace host
     class SecurePool;
     class UuidFactory_ABC;
     template< typename T > class Container;
+    typedef boost::filesystem::path Path;
 
 // =============================================================================
 /** @class  NodeController
@@ -51,10 +52,10 @@ public:
                              const FileSystem_ABC& system,
                              const UuidFactory_ABC& uuids,
                              const Proxy_ABC& proxy,
-                             const boost::filesystem::path& root,
-                             const boost::filesystem::path& java,
-                             const boost::filesystem::path& jar,
-                             const boost::filesystem::path& web,
+                             const Path& root,
+                             const Path& java,
+                             const Path& jar,
+                             const Path& web,
                              const std::string& type,
                              Pool_ABC& pool,
                              PortFactory_ABC& ports
@@ -96,10 +97,10 @@ private:
     const FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
     const Proxy_ABC& proxy_;
-    const boost::filesystem::path root_;
-    const boost::filesystem::path java_;
-    const boost::filesystem::path jar_;
-    const boost::filesystem::path web_;
+    const Path root_;
+    const Path java_;
+    const Path jar_;
+    const Path web_;
     const std::string type_;
     const std::auto_ptr< SecurePool > pool_;
     const std::auto_ptr< Container< Node > > nodes_;

@@ -40,8 +40,8 @@ using runtime::Utf8Convert;
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
 Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-              const FileSystem_ABC& system, const boost::filesystem::path& logs,
-              const boost::filesystem::path& java, const boost::filesystem::path& jar,
+              const FileSystem_ABC& system, const Path& logs,
+              const Path& java, const Path& jar,
               int port, web::Client_ABC& client, Pool_ABC& pool )
     : log_    ( log )
     , runtime_( runtime )
@@ -62,7 +62,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
         throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is missing" );
     if( !system_.IsFile( jar_ ) )
         throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
-    const boost::filesystem::path tag = GetPath() / L"proxy.id";
+    const Path tag = GetPath() / L"proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << port;
     bool hasProcess = system_.IsFile( tag );
     if( hasProcess )
@@ -99,9 +99,9 @@ int Proxy::GetPort() const
 // Name: Proxy::GetPath
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-boost::filesystem::path Proxy::GetPath() const
+Path Proxy::GetPath() const
 {
-    boost::filesystem::path path = jar_;
+    Path path = jar_;
     return path.remove_filename();
 }
 
@@ -122,7 +122,7 @@ boost::property_tree::ptree Proxy::GetProperties() const
 // Name: Proxy::Reload
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-bool Proxy::Reload( const boost::filesystem::path& path )
+bool Proxy::Reload( const Path& path )
 {
     try
     {
@@ -155,8 +155,8 @@ void Proxy::Start()
 {
     boost::lock_guard< boost::mutex > lock( *access_ );
     if( process_ ) return;
-    const boost::filesystem::path path = GetPath();
-    boost::filesystem::path jar_path = jar_;
+    const Path path = GetPath();
+    Path jar_path = jar_;
     process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
             ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_ ) + "\"" ),
@@ -186,7 +186,7 @@ void Proxy::Stop()
 // -----------------------------------------------------------------------------
 void Proxy::Save() const
 {
-    const boost::filesystem::path path = GetPath();
+    const Path path = GetPath();
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToJson( GetProperties() ) ) );
 }
 

@@ -56,7 +56,7 @@ FileSystem::~FileSystem()
 // Name: FileSystem::IsFile
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::IsFile( const boost::filesystem::path& path ) const
+bool FileSystem::IsFile( const Path& path ) const
 {
     return boost::filesystem::is_regular_file( path );
 }
@@ -65,7 +65,7 @@ bool FileSystem::IsFile( const boost::filesystem::path& path ) const
 // Name: FileSystem::IsDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::IsDirectory( const boost::filesystem::path& path ) const
+bool FileSystem::IsDirectory( const Path& path ) const
 {
     return boost::filesystem::is_directory( path );
 }
@@ -74,7 +74,7 @@ bool FileSystem::IsDirectory( const boost::filesystem::path& path ) const
 // Name: FileSystem::Exists
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::Exists( const boost::filesystem::path& path ) const
+bool FileSystem::Exists( const Path& path ) const
 {
     return boost::filesystem::exists( path );
 }
@@ -83,14 +83,14 @@ bool FileSystem::Exists( const boost::filesystem::path& path ) const
 // Name: FileSystem::CopyDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::CopyDirectory( const boost::filesystem::path& src, const boost::filesystem::path& dst ) const
+void FileSystem::CopyDirectory( const Path& src, const Path& dst ) const
 {
     // TODO Use wrecursive_directory_iterator
     if( IsFile( src ) )
         return boost::filesystem::copy_file( src, dst / src.filename() );
     else if( !IsDirectory( src ) )
         return;
-    const boost::filesystem::path sub = dst / src.filename();
+    const Path sub = dst / src.filename();
     if( !boost::filesystem::create_directory( sub ) )
         throw std::runtime_error( "unable to create " + sub.string() );
     for( boost::filesystem::directory_iterator it( src ); it != boost::filesystem::directory_iterator(); ++it )
@@ -101,7 +101,7 @@ void FileSystem::CopyDirectory( const boost::filesystem::path& src, const boost:
 // Name: FileSystem::CopyFile
 // Created: BAX 2012-03-29
 // -----------------------------------------------------------------------------
-void FileSystem::CopyFile( const boost::filesystem::path& src, const boost::filesystem::path& dst ) const
+void FileSystem::CopyFile( const Path& src, const Path& dst ) const
 {
     boost::filesystem::copy_file( src, dst / src.filename() );
 }
@@ -110,14 +110,14 @@ void FileSystem::CopyFile( const boost::filesystem::path& src, const boost::file
 // Name: FileSystem::MakeDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::MakeDirectory( const boost::filesystem::path& path ) const
+void FileSystem::MakeDirectory( const Path& path ) const
 {
     boost::filesystem::create_directories( path );
 }
 
 namespace
 {
-    std::string TryRemove( const boost::filesystem::path& path )
+    std::string TryRemove( const Path& path )
     {
         try
         {
@@ -135,7 +135,7 @@ namespace
 // Name: FileSystem::Remove
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::Remove( const boost::filesystem::path& path ) const
+void FileSystem::Remove( const Path& path ) const
 {
     std::string reply = TryRemove( path );
     if( !reply.empty() )
@@ -148,7 +148,7 @@ void FileSystem::Remove( const boost::filesystem::path& path ) const
 // Name: FileSystem::WriteFile
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-void FileSystem::WriteFile( const boost::filesystem::path& path, const std::string& content ) const
+void FileSystem::WriteFile( const Path& path, const std::string& content ) const
 {
     boost::filesystem::ofstream( path ) << content;
 }
@@ -157,7 +157,7 @@ void FileSystem::WriteFile( const boost::filesystem::path& path, const std::stri
 // Name: FileSystem::ReadFile
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::string FileSystem::ReadFile( const boost::filesystem::path& path ) const
+std::string FileSystem::ReadFile( const Path& path ) const
 {
     boost::filesystem::ifstream ifs( path );
     return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
@@ -167,9 +167,9 @@ std::string FileSystem::ReadFile( const boost::filesystem::path& path ) const
 // Name: FileSystem::Glob
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::vector< boost::filesystem::path > FileSystem::Glob( const boost::filesystem::path& path, const std::wstring& name ) const
+std::vector< Path > FileSystem::Glob( const Path& path, const std::wstring& name ) const
 {
-    std::vector< boost::filesystem::path > paths;
+    std::vector< Path > paths;
     if( IsDirectory( path ) )
         for( boost::filesystem::recursive_directory_iterator it( path ); it != boost::filesystem::recursive_directory_iterator(); ++it )
             if( IsFile( *it ) && it->path().filename() == name )
@@ -180,9 +180,9 @@ std::vector< boost::filesystem::path > FileSystem::Glob( const boost::filesystem
 namespace
 {
 template< typename T >
-std::vector< boost::filesystem::path > Iterate( const boost::filesystem::path& path )
+std::vector< Path > Iterate( const Path& path )
 {
-    std::vector< boost::filesystem::path > paths;
+    std::vector< Path > paths;
     if( boost::filesystem::is_directory( path ) )
         for( T it( path); it != T(); ++it )
             paths.push_back( *it );
@@ -194,7 +194,7 @@ std::vector< boost::filesystem::path > Iterate( const boost::filesystem::path& p
 // Name: FileSystem::Walk
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-std::vector< boost::filesystem::path > FileSystem::Walk( const boost::filesystem::path& path, bool recurse ) const
+std::vector< Path > FileSystem::Walk( const Path& path, bool recurse ) const
 {
     if( recurse )
         return Iterate< boost::filesystem::recursive_directory_iterator >( path );
@@ -240,7 +240,7 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst )
 
 struct Unpacker : public Unpacker_ABC
 {
-    Unpacker( cpplog::BaseLogger& log, const boost::filesystem::path& output, std::istream& stream )
+    Unpacker( cpplog::BaseLogger& log, const Path& output, std::istream& stream )
         : log_   ( log )
         , output_( output )
         , stream_( stream )
@@ -294,7 +294,7 @@ struct Unpacker : public Unpacker_ABC
             if( err != ARCHIVE_OK )
                 CheckArchiveCode( log_, src.get(), err );
 
-            const boost::filesystem::path next = output_ / archive_entry_pathname_w( entry );
+            const Path next = output_ / archive_entry_pathname_w( entry );
             archive_entry_update_pathname_utf8( entry, runtime::Utf8Convert( next ).c_str() );
 
             err = archive_write_header( dst.get(), entry );
@@ -311,7 +311,7 @@ struct Unpacker : public Unpacker_ABC
     }
 
     cpplog::BaseLogger& log_;
-    const boost::filesystem::path output_;
+    const Path output_;
     std::istream& stream_;
     std::vector< char > buffer_;
 };
@@ -321,7 +321,7 @@ struct Unpacker : public Unpacker_ABC
 // Name: FileSystem::Unpack
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Unpacker FileSystem::Unpack( const boost::filesystem::path& output, std::istream& src ) const
+FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, std::istream& src ) const
 {
     return boost::make_shared< Unpacker >( log_, output, src );
 }
@@ -330,7 +330,7 @@ FileSystem_ABC::T_Unpacker FileSystem::Unpack( const boost::filesystem::path& ou
 // Name: FileSystem::Checksum
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-std::string FileSystem::Checksum( const boost::filesystem3::path& root ) const
+std::string FileSystem::Checksum( const Path& root ) const
 {
     boost::crc_32_type sum;
     std::vector< char > buffer( UINT16_MAX );

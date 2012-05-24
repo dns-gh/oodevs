@@ -34,7 +34,7 @@ namespace
 {
     std::string GetApp( const std::string& apps, bool replace = true )
     {
-        std::string reply = runtime::Utf8Convert( boost::filesystem::path( apps ) / "simulation_app.exe" );
+        std::string reply = runtime::Utf8Convert( Path( apps ) / "simulation_app.exe" );
         if( replace )
             std::replace( reply.begin(), reply.end(), '\\', '/' );
         return reply;
@@ -112,10 +112,10 @@ namespace
 
         boost::shared_ptr< MockProcess > Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( "e:/data/exercises", L"session.id" ).returns( boost::assign::list_of< boost::filesystem::path >( "a/b/c/session.id" )( "session.id" ) );
+            MOCK_EXPECT( sub.system.Glob ).once().with( "e:/data/exercises", L"session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "a/b/c/session.id" ).returns( sessionActive );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1337 ).returns( new MockPort( 1337 ) );
-            const boost::filesystem::path app = apps;
+            const Path app = apps;
             boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >( 1234, "e:/apps/simulation_app.exe" );
             MOCK_EXPECT( sub.runtime.GetProcess ).once().with( 1234 ).returns( process );
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "session.id" ).returns( sessionIdle );

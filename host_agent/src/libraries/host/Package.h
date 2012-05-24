@@ -19,6 +19,7 @@ namespace host
     class FileSystem_ABC;
     class Pool_ABC;
     struct SubPackage;
+    typedef boost::filesystem3::path Path;
 
 // =============================================================================
 /** @class  Package
@@ -31,7 +32,7 @@ class Package : public Package_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Package( const FileSystem_ABC& system, const boost::filesystem::path& path );
+             Package( const FileSystem_ABC& system, const Path& path );
     virtual ~Package();
     //@}
 
@@ -52,7 +53,7 @@ private:
     //! @name Private members
     //@{
     const FileSystem_ABC& system_;
-    const boost::filesystem::path path_;
+    const Path path_;
     bool valid_;
     std::string name_;
     std::string description_;

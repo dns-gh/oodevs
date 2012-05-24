@@ -37,19 +37,19 @@ public:
 
     //! @name Methods
     //@{
-    virtual bool IsFile( const boost::filesystem3::path& path ) const;
-    virtual bool IsDirectory( const boost::filesystem3::path& path ) const;
-    virtual bool Exists( const boost::filesystem3::path& path ) const;
-    virtual void CopyDirectory( const boost::filesystem3::path& dst, const boost::filesystem3::path& src ) const;
-    virtual void CopyFile( const boost::filesystem3::path& dst, const boost::filesystem3::path& src ) const;
-    virtual void MakeDirectory( const boost::filesystem3::path& path ) const;
-    virtual void Remove( const boost::filesystem3::path& path ) const;
-    virtual void WriteFile( const boost::filesystem3::path& path, const std::string& content ) const;
-    virtual std::string ReadFile( const boost::filesystem3::path& path ) const;
-    virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const;
-    virtual std::vector< boost::filesystem3::path > Walk( const boost::filesystem3::path& path, bool recurse ) const;
-    virtual T_Unpacker Unpack( const boost::filesystem3::path& output, std::istream& src ) const;
-    virtual std::string Checksum( const boost::filesystem3::path& root ) const;
+    virtual bool IsFile( const Path& path ) const;
+    virtual bool IsDirectory( const Path& path ) const;
+    virtual bool Exists( const Path& path ) const;
+    virtual void CopyDirectory( const Path& dst, const Path& src ) const;
+    virtual void CopyFile( const Path& dst, const Path& src ) const;
+    virtual void MakeDirectory( const Path& path ) const;
+    virtual void Remove( const Path& path ) const;
+    virtual void WriteFile( const Path& path, const std::string& content ) const;
+    virtual std::string ReadFile( const Path& path ) const;
+    virtual std::vector< Path > Glob( const Path& path, const std::wstring& name ) const;
+    virtual std::vector< Path > Walk( const Path& path, bool recurse ) const;
+    virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const;
+    virtual std::string Checksum( const Path& root ) const;
     //@}
 
 private:

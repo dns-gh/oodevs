@@ -26,7 +26,7 @@ using runtime::Utf8Convert;
 
 struct host::SubPackage : public boost::noncopyable
 {
-    explicit SubPackage( const FileSystem_ABC& system, const boost::filesystem::path& root, size_t id )
+    explicit SubPackage( const FileSystem_ABC& system, const Path& root, size_t id )
         : root_( root )
         , id_  ( id )
     {
@@ -52,7 +52,7 @@ struct host::SubPackage : public boost::noncopyable
     }
 
 protected:
-    const boost::filesystem::path root_;
+    const Path root_;
     const size_t id_;
     boost::property_tree::ptree tree_;
     TaskHandler< std::string >::Future checksum_;
@@ -67,21 +67,21 @@ std::string Format( const std::time_t& time )
     return std::string( tmp, size );
 }
 
-std::string GetDate( const boost::filesystem::path& file )
+std::string GetDate( const Path& file )
 {
     return Format( boost::filesystem::last_write_time( file ) );
 }
 
-boost::filesystem::path PopFilename( boost::filesystem::path& path )
+Path PopFilename( Path& path )
 {
-    boost::filesystem::path reply = path.filename();
+    Path reply = path.filename();
     path.remove_filename();
     return reply;
 }
 
-std::string GetFilename( boost::filesystem::path path, const std::string& root )
+std::string GetFilename( Path path, const std::string& root )
 {
-    boost::filesystem::path reply;
+    Path reply;
     path.remove_filename();
     while( path.filename() != root )
         reply = PopFilename( path ) / reply;
@@ -110,8 +110,8 @@ void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::stri
 
 struct Model : public SubPackage
 {
-    Model( const FileSystem_ABC& system, const boost::filesystem::path& file, size_t id )
-        : SubPackage( system, boost::filesystem::path( file ).remove_filename().remove_filename(), id )
+    Model( const FileSystem_ABC& system, const Path& file, size_t id )
+        : SubPackage( system, Path( file ).remove_filename().remove_filename(), id )
     {
         tree_.put( "type", "model" );
         tree_.put( "name", Utf8Convert( root_.filename() ) );
@@ -119,17 +119,17 @@ struct Model : public SubPackage
     }
 
     template< typename T >
-    static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
+    static void Parse( const FileSystem_ABC& system, const Path& root, T& items, size_t& idx )
     {
-        BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
             items.push_back( boost::make_shared< Model >( system, path, ++idx ) );
     }
 };
 
 struct Terrain : public SubPackage
 {
-    Terrain( const FileSystem_ABC& system, const boost::filesystem::path& file, size_t id )
-        : SubPackage( system, boost::filesystem::path( file ).remove_filename(), id )
+    Terrain( const FileSystem_ABC& system, const Path& file, size_t id )
+        : SubPackage( system, Path( file ).remove_filename(), id )
     {
         tree_.put( "type", "terrain" );
         tree_.put( "name", GetFilename( file, "terrains" ) );
@@ -137,17 +137,17 @@ struct Terrain : public SubPackage
     }
 
     template< typename T >
-    static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
+    static void Parse( const FileSystem_ABC& system, const Path& root, T& items, size_t& idx )
     {
-        BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
             items.push_back( boost::make_shared< Terrain >( system, path, ++idx ) );
     }
 };
 
 struct Exercise : public SubPackage
 {
-    Exercise( const FileSystem_ABC& system, const boost::filesystem::path& file, size_t id )
-        : SubPackage( system, boost::filesystem::path( file ).remove_filename(), id )
+    Exercise( const FileSystem_ABC& system, const Path& file, size_t id )
+        : SubPackage( system, Path( file ).remove_filename(), id )
     {
         tree_.put( "type", "exercise" );
         tree_.put( "name", GetFilename( file, "exercises" ) );
@@ -160,9 +160,9 @@ struct Exercise : public SubPackage
     }
 
     template< typename T >
-    static void Parse( const FileSystem_ABC& system, const boost::filesystem::path& root, T& items, size_t& idx )
+    static void Parse( const FileSystem_ABC& system, const Path& root, T& items, size_t& idx )
     {
-        BOOST_FOREACH( const boost::filesystem::path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
             items.push_back( boost::make_shared< Exercise >( system, path, ++idx ) );
     }
 };
@@ -172,7 +172,7 @@ struct Exercise : public SubPackage
 // Name: Package::Package
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Package::Package( const FileSystem_ABC& system, const boost::filesystem::path& path )
+Package::Package( const FileSystem_ABC& system, const Path& path )
     : system_( system )
     , path_  ( path )
     , valid_ ( false )
@@ -216,7 +216,7 @@ boost::property_tree::ptree Package::GetProperties() const
 // -----------------------------------------------------------------------------
 bool Package::Parse()
 {
-    const boost::filesystem::path index = path_ / "content.xml";
+    const Path index = path_ / "content.xml";
     if( !system_.IsFile( index ) )
         return false;
 
