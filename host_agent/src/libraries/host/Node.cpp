@@ -10,7 +10,7 @@
 #include "Node.h"
 
 #include "FileSystem_ABC.h"
-#include "Package.h"
+#include "Package_ABC.h"
 #include "PortFactory_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
@@ -74,9 +74,10 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const FileSystem_ABC& system, const Path& root,
-            const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
-    : system_   ( system )
+Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
+            const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
+    : packages_ ( packages )
+    , system_   ( system )
     , id_       ( id )
     , name_     ( name )
     , root_     ( root )
@@ -85,16 +86,17 @@ Node::Node( const FileSystem_ABC& system, const Path& root,
     , package_  ( new boost::mutex() )
     , process_  ()
 {
-    // NOTHING
+    install_ = packages_.Make( GetInstallPath(), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const FileSystem_ABC& system,
+Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
             const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
-    : system_   ( system )
+    : packages_ ( packages )
+    , system_   ( system )
     , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
     , name_     ( tree.get< std::string >( "name" ) )
     , root_     ( Utf8Convert( tree.get< std::string >( "root" ) ) )
@@ -123,6 +125,24 @@ Node::~Node()
 Uuid Node::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetName
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+std::string Node::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetPort
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+int Node::GetPort() const
+{
+    return port_->Get();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,15 +246,17 @@ void Reset( T& access, U& dst )
     dst.reset();
 }
 
-template< typename T, typename U >
-void Parse( T& access, const FileSystem_ABC& system, U& dst, const Path& path )
+template< typename T, typename U, typename V >
+void Parse( T& access, const U& packages, V& dst, const Path& path, V reference )
 {
-    U next = boost::make_shared< Package >( system, path );
+    V next = packages.Make( path, !reference );
     bool valid = next->Parse();
     if( !valid )
         return;
 
     boost::lock_guard< T > write( access );
+    if( reference )
+        next->Identify( *reference );
     dst = next;
 }
 
@@ -247,14 +269,14 @@ U Steal( T& access, U& src )
     return reply;
 }
 
-template< typename T, typename U >
-void ParsePackage( boost::mutex& pack, T& access, const FileSystem_ABC& system, U& ptr, const Path& path )
+template< typename T, typename U, typename V >
+void ParsePackage( boost::mutex& pack, T& access, const U& packages, V& ptr, const Path& path, V ref = V() )
 {
     boost::mutex::scoped_try_lock lock( pack );
     if( !lock.owns_lock() )
         return;
     Reset( access, ptr );
-    Parse( access, system, ptr, path );
+    Parse( access, packages, ptr, path, ref );
 }
 }
 
@@ -275,7 +297,7 @@ void Node::ReadPack( std::istream& src )
     system_.MakeDirectory( path );
     FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( path, src );
     unpacker->Unpack();
-    ::Parse( *access_, system_, stash_, path );
+    ::Parse( *access_, packages_, stash_, path, install_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +306,7 @@ void Node::ReadPack( std::istream& src )
 // -----------------------------------------------------------------------------
 void Node::ParseInstall()
 {
-    ::ParsePackage( *package_, *access_, system_, install_, GetInstallPath() );
+    ::ParsePackage( *package_, *access_, packages_, install_, GetInstallPath() );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +315,7 @@ void Node::ParseInstall()
 // -----------------------------------------------------------------------------
 void Node::ParsePack()
 {
-    ::ParsePackage( *package_, *access_, system_, stash_, GetStashPath() );
+    ::ParsePackage( *package_, *access_, packages_, stash_, GetStashPath(), install_ );
 }
 
 // -----------------------------------------------------------------------------

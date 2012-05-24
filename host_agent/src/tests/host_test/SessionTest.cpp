@@ -40,7 +40,7 @@ namespace
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
         MockRuntime runtime;
         MockPortFactory ports;
-        MOCK_FUNCTOR( Starter, ProcessPtr( const Session& ) );
+        MOCK_FUNCTOR( Starter, ProcessPtr( const Session_ABC& ) );
         Fixture()
         {
             // NOTHING

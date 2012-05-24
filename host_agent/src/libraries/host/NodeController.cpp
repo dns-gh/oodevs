@@ -12,7 +12,7 @@
 #include "Container.h"
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
-#include "Node.h"
+#include "Node_ABC.h"
 #include "Pool_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
@@ -42,14 +42,14 @@ std::string MakeOption( const std::string& option, const T& value )
     return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
 }
 
-Path GetPath( const Path& root, const Node& node )
+Path GetPath( const Path& root, const Node_ABC& node )
 {
-    return root / boost::lexical_cast< std::wstring >( node.id_ );
+    return root / boost::lexical_cast< std::wstring >( node.GetId() );
 }
 
-std::string GetPrefix( const std::string& type, const Node& node )
+std::string GetPrefix( const std::string& type, const Node_ABC& node )
 {
-    return type == "cluster" ? type : boost::lexical_cast< std::string >( node.id_ );
+    return type == "cluster" ? type : boost::lexical_cast< std::string >( node.GetId() );
 }
 }
 
@@ -60,28 +60,26 @@ std::string GetPrefix( const std::string& type, const Node& node )
 NodeController::NodeController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
-                                const UuidFactory_ABC& uuids,
                                 const Proxy_ABC& proxy,
+                                const NodeFactory_ABC& nodes,
                                 const Path& root,
                                 const Path& java,
                                 const Path& jar,
                                 const Path& web,
                                 const std::string& type,
-                                Pool_ABC& pool,
-                                PortFactory_ABC& ports )
-    : log_    ( log )
-    , runtime_( runtime )
-    , system_ ( system )
-    , uuids_  ( uuids )
-    , proxy_  ( proxy )
-    , root_   ( root / type )
-    , java_   ( java )
-    , jar_    ( jar )
-    , web_    ( web )
-    , type_   ( type )
-    , pool_   ( new SecurePool( log, type, pool ) )
-    , ports_  ( ports )
-    , nodes_  ( new Container< Node >() )
+                                Pool_ABC& pool )
+    : log_     ( log )
+    , runtime_ ( runtime )
+    , system_  ( system )
+    , proxy_   ( proxy )
+    , factory_ ( nodes )
+    , root_    ( root / type )
+    , java_    ( java )
+    , jar_     ( jar )
+    , web_     ( web )
+    , type_    ( type )
+    , pool_    ( new SecurePool( log, type, pool ) )
+    , nodes_   ( new Container< Node_ABC >() )
 {
     system.MakeDirectory( root_ );
     if( !system_.Exists( java_ ) )
@@ -114,7 +112,7 @@ void NodeController::Reload()
     BOOST_FOREACH( const Path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
         try
         {
-            boost::shared_ptr< Node > node = boost::make_shared< Node >( system_, FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
+            boost::shared_ptr< Node_ABC > node = factory_.Make( FromJson( system_.ReadFile( path ) ) );
             if( !node )
                 continue;
             nodes_->Attach( node );
@@ -133,7 +131,7 @@ void NodeController::Reload()
 // -----------------------------------------------------------------------------
 NodeController::T_Nodes NodeController::List( int offset, int limit ) const
 {
-    return nodes_->List< Node_ABC >( boost::function< bool( const Node& ) >(), offset, limit );
+    return nodes_->List< Node_ABC >( boost::function< bool( const Node_ABC& ) >(), offset, limit );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +165,10 @@ NodeController::T_Node NodeController::Get( const Uuid& id ) const
 // Name: NodeController::Create
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-void NodeController::Create( Node& node, bool isReload )
+void NodeController::Create( Node_ABC& node, bool isReload )
 {
-    const int port = node.port_->Get();
-    LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.id_ << " " << node.name_ << " :" << port;
+    const int port = node.GetPort();
+    LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetName() << " :" << port;
     if( !isReload )
         system_.MakeDirectory( GetPath( root_, node ) );
     proxy_.Register( GetPrefix( type_, node ), "localhost", port );
@@ -186,7 +184,7 @@ void NodeController::Create( Node& node, bool isReload )
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Create( const std::string& name )
 {
-    boost::shared_ptr< Node > node = boost::make_shared< Node >( system_, root_, uuids_.Create(), name, ports_.Create() );
+    boost::shared_ptr< Node_ABC > node = factory_.Make( root_, name );
     nodes_->Attach( node );
     Create( *node, false );
     return node;
@@ -196,7 +194,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
 // Name: NodeController::Save
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Save( const Node& node ) const
+void NodeController::Save( const Node_ABC& node ) const
 {
     const Path path = GetPath( root_, node ) / ( type_ + ".id" );
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
@@ -208,10 +206,10 @@ void NodeController::Save( const Node& node ) const
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Delete( const Uuid& id )
 {
-    boost::shared_ptr< Node > node = nodes_->Detach( id );
+    boost::shared_ptr< Node_ABC > node = nodes_->Detach( id );
     if( !node )
         return node;
-    LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
+    LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
     proxy_.Unregister( GetPrefix( type_, *node ) );
     Stop( *node, true );
     pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( root_, *node ) ) );
@@ -222,7 +220,7 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node& node ) const
+boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node_ABC& node ) const
 {
     Path jar_path = jar_;
     return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
@@ -231,8 +229,8 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node&
         ( MakeOption( "proxy", proxy_.GetPort() ) )
         ( MakeOption( "uuid", node.GetId() ) )
         ( MakeOption( "type", type_ ) )
-        ( MakeOption( "name", node.name_ ) )
-        ( MakeOption( "port", node.port_->Get() ) ),
+        ( MakeOption( "name", node.GetName() ) )
+        ( MakeOption( "port", node.GetPort() ) ),
         Utf8Convert( jar_path.remove_filename() ),
         Utf8Convert( GetPath( root_, node ) / ( type_ + ".log" ) ) );
 }
@@ -243,7 +241,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node&
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Start( const Uuid& id ) const
 {
-    boost::shared_ptr< Node > node = nodes_->Get( id );
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     if( !node )
         return T_Node();
     Start( *node, false );
@@ -256,7 +254,7 @@ NodeController::T_Node NodeController::Start( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 {
-    boost::shared_ptr< Node > node = nodes_->Get( id );
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     if( !node )
         return T_Node();
     Stop( *node, false );
@@ -267,7 +265,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Start( Node& node, bool mustSave ) const
+void NodeController::Start( Node_ABC& node, bool mustSave ) const
 {
     bool valid = node.Start( boost::bind( &NodeController::StartWith, this, _1 ) );
     if( valid || mustSave )
@@ -278,7 +276,7 @@ void NodeController::Start( Node& node, bool mustSave ) const
 // Name: NodeController::Stop
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Stop( Node& node, bool skipSave ) const
+void NodeController::Stop( Node_ABC& node, bool skipSave ) const
 {
     bool valid = node.Stop();
     if( valid && !skipSave )
@@ -291,7 +289,7 @@ void NodeController::Stop( Node& node, bool skipSave ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::GetPack( const Uuid& id ) const
 {
-    boost::shared_ptr< Node > node = nodes_->Get( id );
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     return node ? node->GetPack() : Tree();
 }
 
@@ -301,7 +299,7 @@ Tree NodeController::GetPack( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::UploadPack( const Uuid& id, std::istream& src ) const
 {
-    boost::shared_ptr< Node > node = nodes_->Get( id );
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     if( !node )
         return Tree();
     try
@@ -321,6 +319,6 @@ Tree NodeController::UploadPack( const Uuid& id, std::istream& src ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::DeletePack( const Uuid& id )
 {
-    boost::shared_ptr< Node > node = nodes_->Get( id );
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     return node ? node->DeletePack() : Tree();
 }

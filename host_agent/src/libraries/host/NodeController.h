@@ -27,12 +27,10 @@ namespace runtime
 namespace host
 {
     class FileSystem_ABC;
-    class Node;
+    struct NodeFactory_ABC;
     class Pool_ABC;
-    class PortFactory_ABC;
     class Proxy_ABC;
     class SecurePool;
-    class UuidFactory_ABC;
     template< typename T > class Container;
     typedef boost::filesystem::path Path;
 
@@ -50,16 +48,14 @@ public:
              NodeController( cpplog::BaseLogger& log,
                              const runtime::Runtime_ABC& runtime,
                              const FileSystem_ABC& system,
-                             const UuidFactory_ABC& uuids,
                              const Proxy_ABC& proxy,
+                             const NodeFactory_ABC& nodes,
                              const Path& root,
                              const Path& java,
                              const Path& jar,
                              const Path& web,
                              const std::string& type,
-                             Pool_ABC& pool,
-                             PortFactory_ABC& ports
-                           );
+                             Pool_ABC& pool );
     virtual ~NodeController();
     //@}
 
@@ -82,11 +78,11 @@ public:
 private:
     //! @name Private methods
     //@{
-    void Save( const Node& node ) const;
-    void Create( Node& node, bool isReload );
-    boost::shared_ptr< runtime::Process_ABC > StartWith( const Node& node ) const;
-    void Start( Node& node, bool mustSave ) const;
-    void Stop( Node& node, bool skipSave ) const;
+    void Save( const Node_ABC& node ) const;
+    void Create( Node_ABC& node, bool isReload );
+    boost::shared_ptr< runtime::Process_ABC > StartWith( const Node_ABC& node ) const;
+    void Start( Node_ABC& node, bool mustSave ) const;
+    void Stop( Node_ABC& node, bool skipSave ) const;
     //@}
 
 private:
@@ -95,16 +91,15 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const UuidFactory_ABC& uuids_;
     const Proxy_ABC& proxy_;
+    const NodeFactory_ABC& factory_;
     const Path root_;
     const Path java_;
     const Path jar_;
     const Path web_;
     const std::string type_;
     const std::auto_ptr< SecurePool > pool_;
-    const std::auto_ptr< Container< Node > > nodes_;
-    PortFactory_ABC& ports_;
+    const std::auto_ptr< Container< Node_ABC > > nodes_;
     //@}
 };
 

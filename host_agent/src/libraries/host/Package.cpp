@@ -13,7 +13,6 @@
 #include "PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "TaskHandler.h"
-#include "UuidFactory.h"
 
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -49,6 +48,11 @@ struct host::SubPackage : public boost::noncopyable
         checksum_.wait();
         if( checksum_.has_value() )
             tree_.put( "checksum", checksum_.get() );
+    }
+
+    void Identify( const Package_ABC& /*ref*/ )
+    {
+        // TODO
     }
 
 protected:
@@ -88,14 +92,19 @@ std::string GetFilename( Path path, const std::string& root )
     return Utf8Convert( reply );
 }
 
+void MaybePut( Tree& dst, const std::string& key, const std::string& value )
+{
+    if( !value.empty() )
+        dst.put( key, value );
+}
+
 template< typename T >
-bool MaybeGet( T& dst, const Tree& tree, const std::string& key )
+void MaybeGet( T& dst, const Tree& tree, const std::string& key )
 {
     const boost::optional< T > value = tree.get_optional< T >( key );
     if( value == boost::none )
-        return false;
+        return;
     dst = *value;
-    return true;
 }
 
 template< typename T >
@@ -172,10 +181,10 @@ struct Exercise : public SubPackage
 // Name: Package::Package
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Package::Package( const FileSystem_ABC& system, const Path& path )
-    : system_( system )
-    , path_  ( path )
-    , valid_ ( false )
+Package::Package( const FileSystem_ABC& system, const Path& path, bool reference )
+    : system_   ( system )
+    , path_     ( path )
+    , reference_( reference )
 {
     // NOTHING
 }
@@ -196,9 +205,8 @@ Package::~Package()
 Tree Package::GetProperties() const
 {
     Tree tree;
-    if( !valid_ )
+    if( name_.empty() )
         return tree;
-
     tree.put( "name", name_ );
     tree.put( "description", description_ );
     tree.put( "version", version_ );
@@ -206,7 +214,6 @@ Tree Package::GetProperties() const
     Tree& items = tree.get_child( "items" );
     BOOST_FOREACH( const T_Packages::value_type& item, items_ )
         items.push_back( std::make_pair( "", item->GetProperties() ) );
-
     return tree;
 }
 
@@ -216,42 +223,52 @@ Tree Package::GetProperties() const
 // -----------------------------------------------------------------------------
 bool Package::Parse()
 {
-    const Path index = path_ / "content.xml";
-    if( !system_.IsFile( index ) )
-        return false;
-
-    Tree tree;
-    try
+    if( !reference_ )
     {
-        tree = FromXml( system_.ReadFile( index ) );
+        const Path index = path_ / "content.xml";
+        if( !system_.IsFile( index ) )
+            return false;
+
+        Tree tree;
+        try
+        {
+            tree = FromXml( system_.ReadFile( index ) );
+        }
+        catch( const std::exception& /*err*/ )
+        {
+            return false;
+        }
+
+        std::string name, description;
+        MaybeGet( name, tree, "content.name" );
+        MaybeGet( description, tree, "content.description" );
+        if( name.empty() || description.empty() )
+            return false;
+
+        name_ = name;
+        description_ = description;
+        MaybeGet( version_, tree, "content.version" );
+        if( version_.empty() )
+            version_ = "Unversioned";
     }
-    catch( const std::exception& /*err*/ )
-    {
-        return false;
-    }
-
-    std::string name, description;
-
-    bool valid = true;
-    valid &= MaybeGet( name, tree, "content.name" );
-    valid &= MaybeGet( description, tree, "content.description" );
-    if( !valid )
-        return false;
-
-    name_ = name;
-    description_ = description;
-    MaybeGet( version_, tree, "content.version" );
-    if( version_.empty() )
-        version_ = "Unversioned";
 
     items_.clear();
     size_t idx = 0;
     Model::Parse( system_, path_, items_, idx );
     Terrain::Parse( system_, path_, items_, idx );
     Exercise::Parse( system_, path_, items_, idx );
-    BOOST_FOREACH( T_Packages::value_type value, items_ )
+    BOOST_FOREACH( const T_Packages::value_type& value, items_ )
         value->Join();
 
-    valid_ = true;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Identify
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+void Package::Identify( const Package_ABC& ref )
+{
+    BOOST_FOREACH( T_Packages::value_type value, items_ )
+        value->Identify( ref );
 }

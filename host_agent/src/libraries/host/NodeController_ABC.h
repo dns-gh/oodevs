@@ -18,7 +18,7 @@
 
 namespace host
 {
-    class Node_ABC;
+    struct Node_ABC;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 

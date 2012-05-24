@@ -18,6 +18,8 @@
 
 using namespace host;
 using mocks::MockFileSystem;
+using mocks::MockPackage;
+using mocks::MockPackageFactory;
 using mocks::MockPort;
 using mocks::MockPortFactory;
 using mocks::MockProcess;
@@ -41,23 +43,35 @@ namespace
         MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
-        MOCK_FUNCTOR( Starter, ProcessPtr( const Node& ) );
+        MockPackageFactory packages;
+        boost::shared_ptr< MockPackage > installed;
+        boost::shared_ptr< MockPackage > stash;
+        MOCK_FUNCTOR( Starter, ProcessPtr( const Node_ABC& ) );
+
         Fixture()
+            : installed( boost::make_shared< MockPackage >() )
+            , stash    ( boost::make_shared< MockPackage >() )
         {
             MOCK_EXPECT( system.IsFile ).returns( false );
         }
 
         NodePtr MakeNode()
         {
-            return boost::make_shared< Node >( system, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
+            MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
+            return boost::make_shared< Node >( packages, system, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
         {
+            MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
+            MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( stash );
+            MOCK_EXPECT( installed->Parse ).once().returns( true );
+            MOCK_EXPECT( stash->Parse ).once().returns( true );
+            MOCK_EXPECT( stash->Identify ).once().with( mock::same( *installed ) );
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( system, tree, runtime, ports );
+            return boost::make_shared< Node >( packages, system, tree, runtime, ports );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
@@ -159,27 +173,22 @@ BOOST_FIXTURE_TEST_CASE( node_pack, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
 
     mock::reset( system );
-    const host::Path stash = host::Path( "root" ) / defaultIdString / "stash";
-    MOCK_EXPECT( system.Remove ).once().with( stash );
-    MOCK_EXPECT( system.MakeDirectory ).once().with( stash );
+    const host::Path path = host::Path( "root" ) / defaultIdString / "stash";
+    MOCK_EXPECT( system.Remove ).once().with( path );
+    MOCK_EXPECT( system.MakeDirectory ).once().with( path );
 
-    boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
     std::stringstream stream;
-    MOCK_EXPECT( system.Unpack ).once().with( stash, boost::ref( stream ) ).returns( unpack );
+    boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
+    MOCK_EXPECT( system.Unpack ).once().with( path, boost::ref( stream ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
-    MOCK_EXPECT( system.IsFile ).with( stash / "content.xml" ).returns( true );
-    MOCK_EXPECT( system.ReadFile ).with( stash / "content.xml" ).returns(
-        "<content>"
-        "<name>my_name</name>"
-        "<description>my_version</description>"
-        "<version>some_version</version>"
-        "</content>" );
-    MOCK_EXPECT( system.Glob ).with( stash / "data/models", mock::any ).returns( false );
-    MOCK_EXPECT( system.Glob ).with( stash / "data/terrains", mock::any ).returns( false );
-    MOCK_EXPECT( system.Glob ).with( stash / "exercises", mock::any ).returns( false );
-
-    const std::string expected = "{\"name\":\"my_name\",\"description\":\"my_version\",\"version\":\"some_version\",\"items\":\"\"}";
+    MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( this->stash );
+    MOCK_EXPECT( this->stash->Parse ).once().returns( true );
+    MOCK_EXPECT( this->stash->Identify ).once().with( mock::same( *installed ) );
+    Tree tree;
+    tree.put( "some", "data" );
+    const std::string expected = ToJson( tree );
+    MOCK_EXPECT( this->stash->GetProperties ).returns( tree );
     node->ReadPack( stream );
     BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), expected );
     BOOST_CHECK_EQUAL( ToJson( node->DeletePack() ), expected );

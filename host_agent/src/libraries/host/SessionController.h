@@ -31,7 +31,7 @@ namespace host
     class Pool_ABC;
     class PortFactory_ABC;
     class SecurePool;
-    class Session;
+    struct SessionFactory_ABC;
     class UuidFactory_ABC;
     template< typename T > class Container;
     typedef boost::filesystem::path Path;
@@ -50,13 +50,11 @@ public:
              SessionController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
-                                const UuidFactory_ABC& uuids,
+                                const SessionFactory_ABC& sessions,
                                 const Path& logs,
                                 const Path& data,
                                 const Path& apps,
-                                Pool_ABC& pool,
-                                PortFactory_ABC& ports
-                           );
+                                Pool_ABC& pool );
     virtual ~SessionController();
     //@}
 
@@ -77,11 +75,12 @@ public:
 private:
     //! @name Private methods
     //@{
-    void Save( const Session& session ) const;
-    boost::shared_ptr< runtime::Process_ABC > StartWith( const Session& session ) const;
-    void Start( Session& session, bool mustSave ) const;
-    void Stop( Session& session, bool skipSave ) const;
-    Path GetPath( const Session& session ) const;
+    void Create( Session_ABC& session, bool isReload );
+    void Save( const Session_ABC& session ) const;
+    boost::shared_ptr< runtime::Process_ABC > StartWith( const Session_ABC& session ) const;
+    void Start( Session_ABC& session, bool mustSave ) const;
+    void Stop( Session_ABC& session, bool skipSave ) const;
+    Path GetPath( const Session_ABC& session ) const;
     //@}
 
 private:
@@ -90,14 +89,13 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const UuidFactory_ABC& uuids_;
+    const SessionFactory_ABC& factory_;
     const Path logs_;
     const Path data_;
     const Path apps_;
     const std::vector< std::string > exercises_;
     const std::auto_ptr< SecurePool > pool_;
-    const std::auto_ptr< Container< Session > > sessions_;
-    PortFactory_ABC& ports_;
+    const std::auto_ptr< Container< Session_ABC > > sessions_;
     //@}
 };
 

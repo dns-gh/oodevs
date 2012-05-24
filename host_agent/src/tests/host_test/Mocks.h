@@ -13,6 +13,7 @@
 #include <host/FileSystem_ABC.h>
 #include <host/Node_ABC.h>
 #include <host/NodeController_ABC.h>
+#include <host/Package_ABC.h>
 #include <host/Pool_ABC.h>
 #include <host/PortFactory_ABC.h>
 #include <host/Proxy_ABC.h>
@@ -60,10 +61,22 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )
     {
+        MockNode( const host::Uuid& id, const host::Tree& tree )
+        {
+            MOCK_EXPECT( GetId ).returns( id );
+            MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
+            MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
+            MOCK_EXPECT( Save ).returns( tree );
+        }
         MOCK_METHOD( GetId, 0 );
+        MOCK_METHOD( GetName, 0 );
+        MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
         MOCK_METHOD( GetStashPath, 0 );
         MOCK_METHOD( GetInstallPath, 0 );
+        MOCK_METHOD( Save, 0 );
+        MOCK_METHOD( Start, 1 );
+        MOCK_METHOD( Stop, 0 );
         MOCK_METHOD( ReadPack, 1 );
         MOCK_METHOD( GetPack, 0 );
         MOCK_METHOD( DeletePack, 0 );
@@ -89,9 +102,36 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockSession, host::Session_ABC )
     {
+        MockSession()
+        {
+            // NOTHING
+        }
+        MockSession( const host::Uuid& id, const host::Uuid& node, const host::Tree& tree )
+        {
+            MOCK_EXPECT( GetId ).returns( id );
+            MOCK_EXPECT( GetExercise ).returns( tree.get< std::string >( "exercise" ) );
+            MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
+            MOCK_EXPECT( GetNode ).returns( node );
+            MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
+            MOCK_EXPECT( GetConfiguration ).returns( "some config" );
+            MOCK_EXPECT( Save ).returns( tree );
+        }
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetNode, 0 );
+        MOCK_METHOD( GetExercise, 0 );
+        MOCK_METHOD( GetName, 0 );
+        MOCK_METHOD( GetPort, 0 );
+        MOCK_METHOD( GetConfiguration, 0 );
         MOCK_METHOD( GetProperties, 0 );
+        MOCK_METHOD( Save, 0 );
+        MOCK_METHOD( Start, 1 );
+        MOCK_METHOD( Stop, 0 );
+    };
+
+    MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
+    {
+        MOCK_METHOD_EXT( Make, 1, host::SessionFactory_ABC::Ptr( const host::Tree& tree ), Make1 );
+        MOCK_METHOD_EXT( Make, 3, host::SessionFactory_ABC::Ptr( const host::Uuid& node, const std::string& name, const std::string& exercise ), Make3 );
     };
 
     MOCK_BASE_CLASS( MockPort, host::Port_ABC )
@@ -184,6 +224,24 @@ namespace mocks
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( Register, 3 );
         MOCK_METHOD( Unregister, 1 );
+    };
+
+    MOCK_BASE_CLASS( MockPackage, host::Package_ABC )
+    {
+        MOCK_METHOD( GetProperties, 0 );
+        MOCK_METHOD( Parse, 0 );
+        MOCK_METHOD( Identify, 1 );
+    };
+
+    MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )
+    {
+        MOCK_METHOD( Make, 2 );
+    };
+
+    MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )
+    {
+        MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Tree& tree ), Make1 );
+        MOCK_METHOD_EXT( Make, 2, host::NodeFactory_ABC::Ptr( const host::Path& root, const std::string& name ), Make2 );
     };
 };
 

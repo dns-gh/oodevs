@@ -18,7 +18,7 @@
 
 namespace host
 {
-    class Session_ABC;
+    struct Session_ABC;
     typedef boost::uuids::uuid Uuid;
 
 // =============================================================================

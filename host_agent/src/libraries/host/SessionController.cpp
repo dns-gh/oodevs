@@ -19,7 +19,7 @@
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
 #include "SecurePool.h"
-#include "Session.h"
+#include "Session_ABC.h"
 #include "UuidFactory_ABC.h"
 
 #include <boost/assign/list_of.hpp>
@@ -62,23 +62,21 @@ SessionController_ABC::T_Exercises GetExercises( const FileSystem_ABC& system, c
 SessionController::SessionController( cpplog::BaseLogger& log,
                                       const runtime::Runtime_ABC& runtime,
                                       const FileSystem_ABC& system,
-                                      const UuidFactory_ABC& uuids,
+                                      const SessionFactory_ABC& sessions,
                                       const Path& logs,
                                       const Path& data,
                                       const Path& apps,
-                                      Pool_ABC& pool,
-                                      PortFactory_ABC& ports )
+                                      Pool_ABC& pool )
     : log_      ( log )
     , runtime_  ( runtime )
     , system_   ( system )
-    , uuids_    ( uuids )
+    , factory_  ( sessions )
     , logs_     ( logs / "sessions" )
     , data_     ( data )
     , apps_     ( apps )
     , exercises_( ::GetExercises( system_, data_ / L"exercises" ) )
     , pool_     ( new SecurePool( log, "session", pool ) )
-    , ports_    ( ports )
-    , sessions_ ( new Container< Session >() )
+    , sessions_ ( new Container< Session_ABC >() )
 {
     system_.MakeDirectory( logs_ );
     if( !system_.IsDirectory( data_ ) )
@@ -105,9 +103,9 @@ SessionController::~SessionController()
 // Name: SessionController::GetPath
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-Path SessionController::GetPath( const Session& session ) const
+Path SessionController::GetPath( const Session_ABC& session ) const
 {
-    return data_ / "exercises" / Utf8Convert( session.exercise_ ) / "sessions" / boost::lexical_cast< std::string >( session.id_ );
+    return data_ / "exercises" / Utf8Convert( session.GetExercise() ) / "sessions" / boost::lexical_cast< std::string >( session.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,11 +117,11 @@ void SessionController::Reload( T_Predicate predicate )
     BOOST_FOREACH( const Path& path, system_.Glob( data_ / "exercises", L"session.id" ) )
         try
         {
-            boost::shared_ptr< Session > ptr = boost::make_shared< Session >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
+            boost::shared_ptr< Session_ABC > ptr = factory_.Make( FromJson( system_.ReadFile( path ) ) );
             if( !ptr || !predicate( *ptr ) )
                 continue;
             sessions_->Attach( ptr );
-            LOG_INFO( log_ ) << "[session] Reloaded " << ptr->id_ << " " << ptr->name_ << " :" << ptr->port_->Get();
+            Create( *ptr, true );
         }
         catch( const std::exception& err )
         {
@@ -170,20 +168,35 @@ SessionController::T_Session SessionController::Get( const Uuid& id ) const
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Create
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+void SessionController::Create( Session_ABC& session, bool isReload )
+{
+    LOG_INFO( log_ ) << "[session] " << ( isReload ? "Reloaded " : "Added " )
+                     << session.GetId() << " "
+                     << session.GetName() << " "
+                     << session.GetExercise() << " :" << session.GetPort();
+    if( !isReload )
+    {
+        const Path path = GetPath( session );
+        system_.MakeDirectory( path );
+        system_.WriteFile( path / "session.xml", session.GetConfiguration() );
+    }
+    if( isReload )
+        Save( session );
+    else
+        Start( session, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Create
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Create( const Uuid& node, const std::string& name, const std::string& exercise )
 {
-    std::auto_ptr< Port_ABC > ptrPort = ports_.Create();
-    boost::shared_ptr< Session > session = boost::make_shared< Session >( uuids_.Create(), node, name, exercise, ptrPort );
-    bool valid = sessions_->Attach( session );
-    if( !valid )
-        return T_Session();
-    LOG_INFO( log_ ) << "[session] Added " << session->id_ << " " << session->name_ << " :" << session->port_->Get();
-    const Path path = GetPath( *session );
-    system_.MakeDirectory( path );
-    system_.WriteFile( path / "session.xml", session->GetConfiguration() );
-    Start( *session, true );
+    boost::shared_ptr< Session_ABC > session = factory_.Make( node, name, exercise );
+    sessions_->Attach( session );
+    Create( *session, false );
     return session;
 }
 
@@ -191,7 +204,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
 // Name: SessionController::Save
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-void SessionController::Save( const Session& session ) const
+void SessionController::Save( const Session_ABC& session ) const
 {
     const Path path = GetPath( session ) / "session.id";
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
@@ -203,10 +216,10 @@ void SessionController::Save( const Session& session ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Delete( const Uuid& id )
 {
-    boost::shared_ptr< Session > session = sessions_->Detach( id );
+    boost::shared_ptr< Session_ABC > session = sessions_->Detach( id );
     if( !session )
         return session;
-    LOG_INFO( log_ ) << "[session] Removed " << session->id_ << " " << session->name_ << " :" << session->port_->Get();
+    LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     Stop( *session, true );
     pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( *session ) ) );
     return session;
@@ -216,17 +229,17 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
 // Name: SessionController::StartWith
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Session& session ) const
+boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Session_ABC& session ) const
 {
     return runtime_.Start( Utf8Convert( apps_ / "simulation_app.exe" ), boost::assign::list_of
         ( MakeOption( "root-dir", Utf8Convert( data_ ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( data_ / "exercises" ) ) )
         ( MakeOption( "terrains-dir", Utf8Convert( data_ / "data/terrains" ) ) )
         ( MakeOption( "models-dir", Utf8Convert( data_ / "data/models" ) ) )
-        ( MakeOption( "exercise", session.exercise_ ) )
-        ( MakeOption( "session",  session.id_ ) ),
+        ( MakeOption( "exercise", session.GetExercise() ) )
+        ( MakeOption( "session",  session.GetId() ) ),
         Utf8Convert( apps_ ),
-        Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( session.id_ ) + ".log" ) ) );
+        Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( session.GetId() ) + ".log" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +248,7 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& id ) const
 {
-    boost::shared_ptr< Session > session = sessions_->Get( id );
+    boost::shared_ptr< Session_ABC > session = sessions_->Get( id );
     if( !session )
         return T_Session();
     Start( *session, false );
@@ -248,7 +261,7 @@ SessionController::T_Session SessionController::Start( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 {
-    boost::shared_ptr< Session > session = sessions_->Get( id );
+    boost::shared_ptr< Session_ABC > session = sessions_->Get( id );
     if( !session )
         return T_Session();
     Stop( *session, false );
@@ -259,7 +272,7 @@ SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-void SessionController::Start( Session& session, bool mustSave ) const
+void SessionController::Start( Session_ABC& session, bool mustSave ) const
 {
     bool valid = session.Start( boost::bind( &SessionController::StartWith, this, _1 ) );
     if( valid || mustSave )
@@ -270,7 +283,7 @@ void SessionController::Start( Session& session, bool mustSave ) const
 // Name: SessionController::Stop
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-void SessionController::Stop( Session& session, bool skipSave ) const
+void SessionController::Stop( Session_ABC& session, bool skipSave ) const
 {
     bool valid = session.Stop();
     if( valid && !skipSave )

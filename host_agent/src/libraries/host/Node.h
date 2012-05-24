@@ -30,7 +30,9 @@ namespace runtime
 
 namespace host
 {
-    class Package_ABC;
+    class FileSystem_ABC;
+    struct Package_ABC;
+    struct PackageFactory_ABC;
     class Port_ABC;
     class PortFactory_ABC;
 
@@ -45,42 +47,27 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const FileSystem_ABC& system, const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
-             Node( const FileSystem_ABC& system, const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
+                   const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
+             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
+                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
     //! @name Node_ABC methods
     //@{
     virtual Uuid GetId() const;
+    virtual int  GetPort() const;
+    virtual std::string GetName() const;
     virtual Tree GetProperties() const;
     virtual Path GetStashPath() const;
     virtual Path GetInstallPath() const;
+    virtual Tree Save() const;
+    virtual bool Start( const T_Starter& starter );
+    virtual bool Stop();
     virtual void ReadPack( std::istream& src );
     virtual Tree GetPack() const;
     virtual Tree DeletePack();
-    //@}
-
-    //! @name Typedef helpers
-    //@{
-    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
-    typedef boost::function< T_Process( const Node& ) > T_Starter;
-    //@}
-
-    //! @name Public methods
-    //@{
-    Tree Save() const;
-    bool Start( const T_Starter& starter );
-    bool Stop();
-    //@}
-
-    //! @name Public members
-    //@{
-    const FileSystem_ABC& system_;
-    const Uuid id_;
-    const std::string name_;
-    const Path root_;
-    const std::auto_ptr< Port_ABC > port_;
     //@}
 
 private:
@@ -94,8 +81,14 @@ private:
 private:
     //! @name Private members
     //@{
+    const FileSystem_ABC& system_;
+    const PackageFactory_ABC& packages_;
+    const Uuid id_;
+    const std::string name_;
+    const Path root_;
     const std::auto_ptr< boost::shared_mutex > access_;
     const std::auto_ptr< boost::mutex > package_;
+    const std::auto_ptr< Port_ABC > port_;
     boost::shared_ptr< Package_ABC > install_;
     boost::shared_ptr< Package_ABC > stash_;
     T_Process process_;

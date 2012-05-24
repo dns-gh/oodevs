@@ -12,9 +12,6 @@
 
 #include "Session_ABC.h"
 
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
-
 namespace boost
 {
     class shared_mutex;
@@ -23,7 +20,6 @@ namespace boost
 namespace runtime
 {
     class Runtime_ABC;
-    class Process_ABC;
 }
 
 namespace host
@@ -51,30 +47,18 @@ public:
     //@{
     virtual Uuid GetId() const;
     virtual Uuid GetNode() const;
+    virtual std::string GetExercise() const;
+    virtual std::string GetName() const;
+    virtual int GetPort() const;
+    virtual std::string GetConfiguration() const;
     virtual Tree GetProperties() const;
-    //@}
-
-    //! @name Typedef helpers
-    //@{
-    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
-    typedef boost::function< T_Process( const Session& ) > T_Starter;
     //@}
 
     //! @name Public methods
     //@{
     Tree Save() const;
-    std::string GetConfiguration() const;
     bool Start( const T_Starter& starter );
     bool Stop();
-    //@}
-
-    //! @name Public members
-    //@{
-    const Uuid id_;
-    const Uuid node_;
-    const std::string name_;
-    const std::string exercise_;
-    const std::auto_ptr< Port_ABC > port_;
     //@}
 
     //! @name Status enumeration
@@ -92,7 +76,12 @@ public:
 private:
     //! @name Private members
     //@{
+    const Uuid id_;
+    const Uuid node_;
+    const std::string name_;
+    const std::string exercise_;
     const std::auto_ptr< boost::shared_mutex > access_;
+    const std::auto_ptr< Port_ABC > port_;
     T_Process process_;
     Status status_;
     //@}

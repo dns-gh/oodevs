@@ -32,7 +32,7 @@ class Package : public Package_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Package( const FileSystem_ABC& system, const Path& path );
+             Package( const FileSystem_ABC& system, const Path& path, bool reference );
     virtual ~Package();
     //@}
 
@@ -40,6 +40,7 @@ public:
     //@{
     virtual Tree GetProperties() const;
     virtual bool Parse();
+    virtual void Identify( const Package_ABC& reference );
     //@}
 
 private:
@@ -54,7 +55,7 @@ private:
     //@{
     const FileSystem_ABC& system_;
     const Path path_;
-    bool valid_;
+    const bool reference_;
     std::string name_;
     std::string description_;
     std::string version_;

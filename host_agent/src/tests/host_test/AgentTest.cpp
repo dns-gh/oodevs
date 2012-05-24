@@ -36,12 +36,15 @@ namespace
 
     static boost::shared_ptr< MockNode > CreateMockNode( const std::string& id, const std::string& name )
     {
-        boost::shared_ptr< MockNode > ptr = boost::make_shared< MockNode >();
-        MOCK_EXPECT( ptr->GetId ).returns( boost::uuids::string_generator()( id ) );
         Tree tree;
         tree.put( "id", id );
         tree.put( "name", name );
-        MOCK_EXPECT( ptr->GetProperties ).returns( tree );
+        tree.put( "port", 1337 );
+        boost::shared_ptr< MockNode > ptr = boost::make_shared< MockNode >( boost::uuids::string_generator()( id ), tree );
+        Tree props;
+        props.put( "id", id );
+        props.put( "name", name );
+        MOCK_EXPECT( ptr->GetProperties ).returns( props );
         return ptr;
     }
 

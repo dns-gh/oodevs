@@ -16,25 +16,24 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_serialize.hpp>
-#include <boost/uuid/string_generator.hpp>
 
 using namespace host;
-using mocks::MockLog;
-using mocks::MockRuntime;
+using runtime::Utf8Convert;
 using mocks::MockFileSystem;
-using mocks::MockUuidFactory;
+using mocks::MockLog;
 using mocks::MockPool;
-using mocks::MockPort;
-using mocks::MockPortFactory;
-using mocks::MockProcess;
+using mocks::MockRuntime;
+using mocks::MockSession;
+using mocks::MockSessionFactory;
 
 namespace
 {
-    std::string GetApp( const std::string& apps, bool replace = true )
+    std::string GetApp( const Path& apps, bool replace = true )
     {
-        std::string reply = runtime::Utf8Convert( Path( apps ) / "simulation_app.exe" );
+        std::string reply = Utf8Convert( apps / "simulation_app.exe" );
         if( replace )
             std::replace( reply.begin(), reply.end(), '\\', '/' );
         return reply;
@@ -42,24 +41,23 @@ namespace
 
     struct SubFixture
     {
-        SubFixture( const std::string& logs, const std::string& data, const std::string& apps )
+        SubFixture( const Path& logs, const Path& data, const Path& apps )
         {
-            MOCK_EXPECT( system.MakeDirectory ).with( logs + "/sessions" );
+            MOCK_EXPECT( system.MakeDirectory ).with( logs / "sessions" );
             MOCK_EXPECT( system.IsDirectory ).with( data ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
             MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( GetApp( apps ) ).returns( true );
-            MOCK_EXPECT( system.Glob ).with( data + "/exercises", L"exercise.xml" ).returns( boost::assign::list_of< std::string >
-                ( "e:/data/exercises/baroud/exercise.xml" )
-                ( "e:/data/exercises/test/musoria/exercise.xml" )
+            MOCK_EXPECT( system.Glob ).with( data / "exercises", L"exercise.xml" ).returns( boost::assign::list_of
+                ( data / "exercises/baroud/exercise.xml" )
+                ( data / "exercises/test/musoria/exercise.xml" )
             );
         };
         MockLog log;
         MockRuntime runtime;
         MockFileSystem system;
-        MockUuidFactory uuids;
         MockPool pool;
-        MockPortFactory ports;
+        MockSessionFactory factory;
     };
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
@@ -74,7 +72,7 @@ namespace
                                    "\"exercise\":\"myExercise\","
                                    "\"port\":\"1337\","
                                    "\"status\":\"playing\","
-                                   "\"process\":{\"pid\":\"1234\",\"name\":\"e:/apps/simulation_app.exe\"}"
+                                   "\"process\":{\"pid\":\"1234\",\"name\":\"e:\\/apps\\/simulation_app.exe\"}"
                                    "}";
 
     const std::string idIdleText = "87654321-4321-4321-4321-cba987654321";
@@ -100,46 +98,48 @@ namespace
             , data   ( "e:/data" )
             , apps   ( "e:/apps" )
             , sub    ( logs, data, apps )
-            , control( sub.log, sub.runtime, sub.system, sub.uuids, logs, data, apps, sub.pool, sub.ports )
+            , control( sub.log, sub.runtime, sub.system, sub.factory, logs, data, apps, sub.pool )
         {
             // NOTHING
         }
-        const std::string logs;
-        const std::string data;
-        const std::string apps;
+        const Path logs;
+        const Path data;
+        const Path apps;
         SubFixture sub;
         SessionController control;
+        boost::shared_ptr< MockSession > active;
+        boost::shared_ptr< MockSession > idle;
 
-        boost::shared_ptr< MockProcess > Reload()
+        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const Uuid& node, const std::string& text, const Path& path = Path() )
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( "e:/data/exercises", L"session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
-            MOCK_EXPECT( sub.system.ReadFile ).once().with( "a/b/c/session.id" ).returns( sessionActive );
-            MOCK_EXPECT( sub.ports.Create1 ).once().with( 1337 ).returns( new MockPort( 1337 ) );
-            const Path app = apps;
-            boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >( 1234, "e:/apps/simulation_app.exe" );
-            MOCK_EXPECT( sub.runtime.GetProcess ).once().with( 1234 ).returns( process );
-            MOCK_EXPECT( sub.system.ReadFile ).once().with( "session.id" ).returns( sessionIdle );
-            MOCK_EXPECT( sub.ports.Create1 ).once().with( 1338 ).returns( new MockPort( 1338 ) );
+            const Tree tree = FromJson( text );
+            boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
+            const std::string idText = tree.get< std::string >( "id" );
+            const Path root = data / "exercises" / session->GetExercise() / "sessions" / idText;
+            if( path.empty() )
+            {
+                MOCK_EXPECT( sub.system.MakeDirectory ).once().with( root );
+                MOCK_EXPECT( sub.factory.Make3 ).once().with( node, session->GetName(), session->GetExercise() ).returns( session );
+                MOCK_EXPECT( session->Start ).once().returns( true );
+                MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.xml", session->GetConfiguration() );
+            }
+            else
+            {
+                MOCK_EXPECT( sub.system.ReadFile ).once().with( path ).returns( text );
+                MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
+            }
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.id", text );
+            return session;
+        }
+
+        void Reload()
+        {
+            MOCK_EXPECT( sub.system.Glob ).once().with( data / "exercises", L"session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
+            active = AddSession( idActive, idNode, sessionActive, "a/b/c/session.id" );
+            idle = AddSession( idIdle, idNode, sessionIdle, "session.id" );
             control.Reload( &IsKnownNode );
-            return process;
         }
     };
-
-    bool CheckParameters( const std::vector< std::string >& actual, const std::vector< std::string >& expected )
-    {
-        if( actual.size() != expected.size() )
-            return false;
-        for( std::vector< std::string >::const_iterator a = actual.begin(), b = expected.begin(); a < actual.end(); ++a, ++b )
-        {
-            if( a->size() != b->size() )
-                return false;
-            std::string ra = *a;
-            std::replace( ra.begin(), ra.end(), '\\', '/' );
-            if( ra != *b )
-                return false;
-        }
-        return true;
-    }
 }
 
 BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
@@ -154,19 +154,8 @@ BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
 {
-    MOCK_EXPECT( sub.ports.Create0 ).once().returns( new MockPort( 1337 ) );
-    MOCK_EXPECT( sub.uuids.Create ).once().returns( idIdle );
-    MOCK_EXPECT( sub.runtime.Start ).once().with( GetApp( apps, false ), boost::bind( &CheckParameters, _1, boost::assign::list_of< std::string >
-        ( "--root-dir \"" + data + "\"" )
-        ( "--exercises-dir \"" + data + "/exercises\"" )
-        ( "--terrains-dir \"" + data + "/data/terrains\"" )
-        ( "--models-dir \"" + data + "/data/models\"" )
-        ( "--exercise \"baroud\"" )
-        ( "--session \"" + idIdleText + "\"" ) ),
-        apps, mock::any ).returns( boost::make_shared< MockProcess >( 1377, GetApp( apps ) ) );
-    MOCK_EXPECT( sub.system.WriteFile ).exactly( 2 );
-    MOCK_EXPECT( sub.system.MakeDirectory ).once().with( "e:/data/exercises/baroud/sessions/" + idIdleText );
-    SessionController::T_Session session = control.Create( idNode, "zebulon", "baroud" );
+    AddSession( idIdle, idNode, sessionIdle );
+    SessionController::T_Session session = control.Create( idNode, "myName2", "myExercise2" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK( control.Has( idIdle ) );
@@ -178,13 +167,17 @@ BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
 {
-    boost::shared_ptr< MockProcess > process = Reload();
-    MOCK_EXPECT( process->Kill ).once().returns( true );
-    MOCK_EXPECT( sub.system.Remove );
+    Reload();
+
+    MOCK_EXPECT( sub.system.Remove ).once();
+    MOCK_EXPECT( active->Stop ).once().returns( true );
     SessionController::T_Session session = control.Delete( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
+
+    MOCK_EXPECT( sub.system.Remove ).once();
+    MOCK_EXPECT( idle->Stop ).once().returns( true );
     session = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 0 ) );
@@ -193,17 +186,17 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
+    MOCK_EXPECT( idle->Start ).once().returns( true );
     MOCK_EXPECT( sub.system.WriteFile ).once();
-    MOCK_EXPECT( sub.runtime.Start ).once().returns( boost::make_shared< MockProcess >( 1398, GetApp( apps ) ) );
     SessionController::T_Session session = control.Start( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 {
-    boost::shared_ptr< MockProcess > ptr = Reload();
+    Reload();
+    MOCK_EXPECT( active->Stop ).once().returns( true );
     MOCK_EXPECT( sub.system.WriteFile ).once();
-    MOCK_EXPECT( ptr->Kill ).once().returns( true );
     SessionController::T_Session session = control.Stop( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }
