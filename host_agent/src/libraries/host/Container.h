@@ -30,6 +30,8 @@
 
 namespace host
 {
+typedef boost::uuids::uuid Uuid;
+
 template< typename T >
 T Clip( T value, T min, T max )
 {
