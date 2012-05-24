@@ -173,7 +173,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     // Windows
     if( QMenu* menu = pParent->createPopupMenu() )
     {
-        QAction* action = menu->actions().value( 6 );
+        QAction* action = menu->actions().value( 8 );
         AddModdedAction( action, ePreparationMode_All, ePreparationMode_None, false );
         if( QAction* action = addMenu( menu ) )
         {

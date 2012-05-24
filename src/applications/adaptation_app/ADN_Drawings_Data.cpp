@@ -56,6 +56,7 @@ namespace
         virtual void SetCurrentCursor ( const QCursor& ) {}
         virtual void DrawCross        ( const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawLine         ( const geometry::Point2f&, const geometry::Point2f& ) const {}
+        virtual void DrawStippledLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const {}
         virtual void DrawLines        ( const T_PointVector& ) const {}
         virtual void DrawRectangle    ( const T_PointVector& ) const {}
         virtual void DrawPolygon      ( const T_PointVector& ) const {}

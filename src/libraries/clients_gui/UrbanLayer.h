@@ -51,10 +51,12 @@ protected:
     //@{
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual void NotifySelected( const kernel::UrbanObject_ABC* object );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
+    virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
     //@}
 
@@ -62,7 +64,7 @@ private:
     //! @name Member data
     //@{
     View_ABC& view_;
-    const kernel::UrbanObject_ABC* selectedObject_;
+    std::vector< const kernel::UrbanObject_ABC* > selectedObjects_;
     //@}
 
 protected:

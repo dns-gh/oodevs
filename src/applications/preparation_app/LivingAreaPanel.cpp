@@ -92,7 +92,7 @@ LivingAreaPanel::~LivingAreaPanel()
 void LivingAreaPanel::closeEvent( QCloseEvent* /*pEvent*/ )
 {
     Reset();
-    controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
+    controllers_.ChangeMode( ePreparationMode_Exercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ void LivingAreaPanel::Remove()
 void LivingAreaPanel::Update()
 {
     assert( controllers_.modes_ );
-    controllers_.modes_->ChangeMode( ePreparationMode_LivingArea );
+    controllers_.ChangeMode( ePreparationMode_LivingArea );
     if( selected_ )
         if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
             positions->StartEdition();
@@ -214,7 +214,7 @@ void LivingAreaPanel::Accept()
     if( selected_ )
         if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
             positions->Accept();
-    controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
+    controllers_.ChangeMode( ePreparationMode_Exercise );
     Reset();
 }
 
@@ -227,7 +227,7 @@ void LivingAreaPanel::Reject()
     if( selected_ )
         if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
             positions->Reject();
-    controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
+    controllers_.ChangeMode( ePreparationMode_Exercise );
     Reset();
 }
 

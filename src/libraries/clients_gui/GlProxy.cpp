@@ -227,6 +227,15 @@ void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawStippledLine
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+void GlProxy::DrawStippledLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
+{
+    tools_->DrawStippledLine( from, to );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawLines
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

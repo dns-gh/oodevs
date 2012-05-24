@@ -24,6 +24,7 @@ namespace kernel
 // =============================================================================
 class ModeController_ABC : protected tools::SortedInterfaceContainer< tools::Observer_ABC >
 {
+    friend void Controllers::ChangeMode( int newMode );
 
 public:
     //! @name Constructors/Destructor
@@ -34,7 +35,6 @@ public:
 
     //! @name Abstract operations
     //@{
-    virtual void ChangeMode( int newMode ) = 0;
     virtual int GetCurrentMode() const = 0;
     virtual const QString& GetRegisteryEntry() const = 0;
     //@}
@@ -49,6 +49,12 @@ public:
     {
         tools::SortedInterfaceContainer< tools::Observer_ABC >::Unregister( observer );
     }
+    //@}
+
+private:
+    //! @name Abstract operations
+    //@{
+    virtual void ChangeMode( int newMode ) = 0;
     //@}
 };
 

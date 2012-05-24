@@ -64,6 +64,7 @@
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
+#include "clients_gui/SelectionLayer.h"
 #include "clients_gui/Settings.h"
 #include "clients_gui/SimpleFilter.h"
 #include "clients_gui/StatusBar.h"
@@ -227,7 +228,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Initialize
     SetWindowTitle( false );
     controllers_.Register( *this );
-    controllers_.modes_->ChangeMode( ePreparationMode_Default );
+    controllers_.ChangeMode( ePreparationMode_Default );
     setLocale( QLocale() );
     setMinimumSize( 800, 600 );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
@@ -294,6 +295,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     gui::Layer_ABC& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, dockContainer_->GetLivingAreaPanel() );
     gui::Layer_ABC& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer_ABC& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 
     // Display modes
     // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer_ABC or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer_ABC.
@@ -302,6 +304,8 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     populations.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     ghosts.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+
+    controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Terrain, &urbanLayer );
 
     // Drawing order
     AddLayer( *glProxy_, preferences, defaultLayer );
@@ -329,6 +333,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     AddLayer( *glProxy_, preferences, locations,                "main" );
     AddLayer( *glProxy_, preferences, profilerLayer,            "main" );
     AddLayer( *glProxy_, preferences, drawerLayer,              "main" );
+    AddLayer( *glProxy_, preferences, selection,                "main" );
     AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
 
     // events order
@@ -347,6 +352,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
+    forward_->Register( selection );
     forward_->SetDefault( defaultLayer );
 }
 
@@ -494,7 +500,7 @@ bool MainWindow::Close()
     selector_->Close();
     dialogContainer_->Purge();
     SetWindowTitle( false );
-    controllers_.modes_->ChangeMode( ePreparationMode_Default );
+    controllers_.ChangeMode( ePreparationMode_Default );
     return true;
 }
 
@@ -522,7 +528,7 @@ void MainWindow::LoadExercise()
             return;
         }
         loading_ = false;
-        controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
+        controllers_.ChangeMode( ePreparationMode_Exercise );
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() );
         emit CheckConsistency();
     }
@@ -607,7 +613,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
         return;
     }
     assert( controllers_.modes_ );
-    controllers_.modes_->ChangeMode( ePreparationMode_Default );
+    controllers_.ChangeMode( ePreparationMode_Default );
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
     settings.setValue( "mainWindowGeometry", saveGeometry() );

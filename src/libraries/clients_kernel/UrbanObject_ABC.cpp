@@ -114,6 +114,22 @@ void UrbanObject_ABC::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObject_ABC::MultipleSelect
+// Created: JSR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanObject_ABC::MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const
+{
+    std::vector< const UrbanObject_ABC* > first;
+    std::vector< const Entity_ABC* > second;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const UrbanObject_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObject_ABC::Activate
 // Created: LGY 2011-05-02
 // -----------------------------------------------------------------------------

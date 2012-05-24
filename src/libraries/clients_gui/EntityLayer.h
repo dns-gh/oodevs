@@ -13,8 +13,10 @@
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/RectangleSelectionHandler_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "Layer_ABC.h"
 
@@ -65,6 +67,7 @@ protected:
     //! @name Helpers
     //@{
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
+    virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
 
     template< typename Functor >
@@ -80,13 +83,15 @@ protected:
     virtual void SelectEntity( const kernel::Entity_ABC& );
 
     virtual void SelectColor( const kernel::Entity_ABC& );
-    virtual void Select     ( const kernel::Entity_ABC&, bool );
+    virtual void Select     ( const kernel::Entity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
     virtual bool ShouldDisplayTooltip( std::size_t i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( std::size_t i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
+
+    virtual void SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     //@}
 
 protected:
@@ -109,7 +114,7 @@ protected:
 private:
     //! @name Private Member data
     //@{
-    kernel::Controllers&                    controllers_;
+    kernel::Controllers&                    controllers_; // TODO protected?? utilisé dans EntityLayer
     ColorStrategy_ABC&                      strategy_;
     View_ABC&                               view_;
     std::size_t                             tooltiped_;
@@ -127,8 +132,10 @@ private:
 template< typename ConcreteEntity >
 class EntityLayer : public EntityLayerBase
                   , public tools::SelectionObserver< ConcreteEntity >
+                  , public kernel::MultipleSelectionObserver< ConcreteEntity >
                   , public tools::ElementObserver_ABC< ConcreteEntity >
                   , public kernel::ActivationObserver_ABC< ConcreteEntity >
+                  , public kernel::RectangleSelectionHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -144,8 +151,10 @@ protected:
     virtual void NotifyDeleted( const ConcreteEntity& );
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelected( const ConcreteEntity* );
+    virtual void NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements );
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     //@}
 
 protected:

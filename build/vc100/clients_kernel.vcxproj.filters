@@ -1071,6 +1071,15 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

@@ -250,6 +250,10 @@
         <source>Creation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DotationsEditor</name>

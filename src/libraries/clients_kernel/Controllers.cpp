@@ -87,3 +87,14 @@ void Controllers::SetModeController( ModeController_ABC* modeController )
 {
     modes_ = modeController;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Controllers::ChangeMode
+// Created: JSR 2012-05-21
+// -----------------------------------------------------------------------------
+void Controllers::ChangeMode( int newMode )
+{
+    if( modes_ )
+        modes_->ChangeMode( newMode );
+    actions_.ChangeMode( newMode );
+}

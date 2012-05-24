@@ -111,7 +111,7 @@ bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( entities_.empty() || !event || event->state() == Qt::NoButton )
+    if( entities_.empty() || !event || event->buttons() == Qt::NoButton )
         return false;
     const int button = event->button();
     if( button != Qt::LeftButton && button != Qt::RightButton )
@@ -121,17 +121,17 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( selected_ >= entities_.size()
      || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ( selected_ + 1 ) > entities_.size() ) )
+     || ( button == Qt::LeftButton && ( ++selected_ ) > entities_.size() ) )
         selected_ = 0;
 
-    for( ; selected_ < entities_.size(); ++selected_ )
+    for( int i = 0; i < entities_.size(); ++i, selected_ = ( selected_ + 1 ) % entities_.size() )
     {
         const Entity_ABC& entity = *entities_[ selected_ ];
         tooltiped_ = selected_;
         if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
         {
             if( button == Qt::LeftButton )
-                Select( entity, ( event->state() & Qt::ShiftModifier ) != 0 );
+                Select( entity, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
             else if( button == Qt::RightButton )
                 ContextMenu( entity, point, event->globalPos() );
             return true;
@@ -145,9 +145,9 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const Entity_ABC& entity, bool )
+void EntityLayerBase::Select( const Entity_ABC& entity, bool control, bool /*shift*/ )
 {
-    entity.Select( controllers_.actions_ );
+    controllers_.actions_.SetSelected( this, entity, control );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,6 +230,15 @@ bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::P
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayerBase::IsInside
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const
+{
+    return entity.Get< Positions >().IsIn( rectangle );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::AddEntity
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
@@ -286,4 +295,30 @@ void EntityLayerBase::SelectEntity( const Entity_ABC& entity )
 void EntityLayerBase::SelectColor( const Entity_ABC& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::SelectInRectangle
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight )
+{
+    if( controllers_.actions_.IsSingleSelection( this ) )
+        return;
+    geometry::Rectangle2f rectangle( topLeft, bottomRight );
+    selected_ = 0;
+    tooltiped_ = 0;
+    kernel::ActionController::T_Selectables selectables;
+    for( int i = 0; i < entities_.size(); ++i )
+    {
+        const Entity_ABC& entity = *entities_[ i ];
+        if( ShouldDisplay( entity ) && ( IsInside( entity, rectangle ) || IsInSelection( entity, topLeft ) ) )
+        {
+            selected_ = i;
+            tooltiped_ = i;
+            selectables.push_back( &entity );
+        }
+    }
+    if( !selectables.empty() )
+        controllers_.actions_.AddToSelection( this, selectables );
 }

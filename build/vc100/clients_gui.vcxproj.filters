@@ -862,6 +862,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp">
       <Filter>Source Files\Creation\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1394,6 +1397,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h">
       <Filter>Source Files\Creation\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
