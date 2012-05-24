@@ -88,7 +88,7 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           it = _ref[_i];
           $(it).click(function() {
-            return $("#" + $(this).parent().parent().parent().attr("rel")).toggle();
+            return $("#" + $(this).parent().parent().parent().attr("rel")).toggle("fast");
           });
         }
         $(".form-actions .discard").click(function() {

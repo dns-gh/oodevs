@@ -48,7 +48,7 @@ class PackageView extends Backbone.View
             $(@el).html package_template @model.attributes
             for it in $(@el).find(".action .more")
                 $(it).click ->
-                    $("#" + $(@).parent().parent().parent().attr "rel").toggle()
+                    $("#" + $(@).parent().parent().parent().attr "rel").toggle "fast"
             $(".form-actions .discard").click =>
                 @enabled = false
                 @model.clear()
