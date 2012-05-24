@@ -75,12 +75,12 @@ void TerrainToolBar::OnSwitchMode()
     EnableBlockCreationButtons( false );
     if( switchModeButton_->isChecked() )
     {
-        controllers_.modes_->ChangeMode( ePreparationMode_Terrain );
+        controllers_.ChangeMode( ePreparationMode_Terrain );
         blockRemoveButton_->setEnabled( true );
     }
     else
     {
-        controllers_.modes_->ChangeMode( ePreparationMode_Exercise );
+        controllers_.ChangeMode( ePreparationMode_Exercise );
         blockRemoveButton_->setEnabled( false );
     }
 }

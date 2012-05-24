@@ -16,7 +16,14 @@
 #include "ActivationObserver_ABC.h"
 #include "ContextMenu.h"
 #include "ContextMenuObserver_ABC.h"
+#include "Controllers.h"
+#include "MultipleSelectionObserver_ABC.h"
 #include "OverFlyingObserver_ABC.h"
+#include "Selectable_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <geometry/Types.h>
+
+class MapLayer_ABC;
 
 namespace kernel
 {
@@ -28,7 +35,10 @@ namespace kernel
 // Created: AGE 2006-02-16
 // =============================================================================
 class ActionController : private tools::SortedInterfaceContainer< tools::Observer_ABC >
+                       , private boost::noncopyable
 {
+    friend void Controllers::ChangeMode( int newMode );
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,11 +52,40 @@ public:
     void Unregister( tools::Observer_ABC& observer );
     //@}
 
+public:
+    //! @name Types
+    //@{
+    typedef std::vector< const Selectable_ABC* > T_Selectables;
+    typedef T_Selectables::iterator             IT_Selectables;
+    typedef T_Selectables::const_iterator      CIT_Selectables;
+
+    typedef std::map< const MapLayer_ABC*, T_Selectables > T_SelectedMap;
+    typedef T_SelectedMap::iterator                       IT_SelectedMap;
+    typedef T_SelectedMap::const_iterator                CIT_SelectedMap;
+
+    typedef std::vector< const MapLayer_ABC* > T_Layers;
+    typedef T_Layers::iterator                IT_Layers;
+    typedef T_Layers::const_iterator         CIT_Layers;
+
+    typedef std::map< int, T_Layers >          T_MultipleLayers;
+    typedef T_MultipleLayers::iterator        IT_MultipleLayers;
+    typedef T_MultipleLayers::const_iterator CIT_MultipleLayers;
+    //@}
+
+public:
     //! @name Operations
     //@{
+    void AllowLayerMultipleSelection( int mode, const MapLayer_ABC* layer );
+    bool IsSingleSelection( const MapLayer_ABC* layer ) const;
+    bool HasMultipleLayers() const;
+
     // -----------------------------------------------------------------------------
     // Select
     // -----------------------------------------------------------------------------
+    void SetSelected( const MapLayer_ABC* layer, const Selectable_ABC& selectable, bool append );
+    void AddToSelection( const MapLayer_ABC* layer, const T_Selectables& selectables );
+    void NotifyRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight, bool append );
+
     template< typename T >
     void Select( const T& element )
     {
@@ -86,6 +125,55 @@ public:
             Apply( & tools::SelectionObserver_Base< T2 >::Select, secondElement );
             Apply( & tools::SelectionObserver_Base< T3 >::Select, thirdElement );
             Apply( & tools::SelectionObserver_ABC::AfterSelection );
+        }
+        selecting_ = false;
+    }
+
+    template< typename T >
+    void MultipleSelect( const std::vector< const T* >& elements )
+    {
+        // avoid re entrance
+        if( ! selecting_ )
+        {
+            selecting_ = true;
+            if( !selectInRectangle_ )
+                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+            Apply( & kernel::MultipleSelectionObserver_Base< T >::MultipleSelect, element );
+            if( !selectInRectangle_ )
+                Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+        }
+        selecting_ = false;
+    }
+    template< typename T1, typename T2 >
+    void MultipleSelect( const std::vector< const T1* >& firstElements, const std::vector< const T2* >& secondElements )
+    {
+        // avoid re entrance
+        if( ! selecting_ )
+        {
+            selecting_ = true;
+            if( !selectInRectangle_ )
+                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+            Apply( & kernel::MultipleSelectionObserver_Base< T1 >::MultipleSelect, firstElements );
+            Apply( & kernel::MultipleSelectionObserver_Base< T2 >::MultipleSelect, secondElements );
+            if( !selectInRectangle_ )
+                Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+        }
+        selecting_ = false;
+    }
+    template< typename T1, typename T2, typename T3 >
+    void MultipleSelect( const std::vector< const T1* >& firstElements, const std::vector< const T2* >& secondElements, const std::vector< const T3* >& thirdElements )
+    {
+        // avoid re entrance
+        if( ! selecting_ )
+        {
+            selecting_ = true;
+            if( !selectInRectangle_ )
+                Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+            Apply( & kernel::MultipleSelectionObserver_Base< T1 >::MultipleSelect, firstElements );
+            Apply( & kernel::MultipleSelectionObserver_Base< T2 >::MultipleSelect, secondElements );
+            Apply( & kernel::MultipleSelectionObserver_Base< T3 >::MultipleSelect, thirdElements );
+            if( !selectInRectangle_ )
+                Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
         }
         selecting_ = false;
     }
@@ -166,25 +254,27 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionController( const ActionController& );            //!< Copy constructor
-    ActionController& operator=( const ActionController& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    void ChangeMode( int newMode );
     void ShowMenu( const QPoint& where );
+    void ClearSingleSelection();
+    void ClearMultipleSelection();
+    void CleanSelectedMap();
     //@}
 
 private:
     //! @name Member data
     //@{
+    int currentMode_;
     bool selecting_;
     bool overFlying_;
+    bool selectInRectangle_;
     kernel::ContextMenu menu_;
+    T_MultipleLayers multipleLayers_;
+    T_SelectedMap selectedMap_;
+    static const T_Selectables emptyList_;
     //@}
-
 };
 
 }

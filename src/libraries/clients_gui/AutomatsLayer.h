@@ -62,7 +62,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
-    virtual void Select( const kernel::Entity_ABC&, bool );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;

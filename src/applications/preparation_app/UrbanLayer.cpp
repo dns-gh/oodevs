@@ -45,6 +45,18 @@ bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanLayer::IsInside
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const
+{
+    const UrbanHierarchies* hierarchies = static_cast< const UrbanHierarchies* >( entity.Retrieve< kernel::Hierarchies >() );
+    if( hierarchies && hierarchies->GetLevel() == eUrbanLevelBlock )
+        return gui::UrbanLayer::IsInside( entity, rectangle );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanLayer::HandleMousePress
 // Created: LGY 2012-01-16
 // -----------------------------------------------------------------------------

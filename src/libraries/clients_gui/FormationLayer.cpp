@@ -143,15 +143,6 @@ void FormationLayer::NotifySelected( const kernel::Formation_ABC* formation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::Select
-// Created: LGY 2011-03-08
-// -----------------------------------------------------------------------------
-void FormationLayer::Select( const kernel::Entity_ABC& entity, bool )
-{
-    entity.Select( controllers_.actions_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: FormationLayer::IsAggregated
 // Created: LGY 2011-03-07
 // -----------------------------------------------------------------------------

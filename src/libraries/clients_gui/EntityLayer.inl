@@ -86,6 +86,26 @@ void EntityLayer< ConcreteEntity >::NotifySelected( const ConcreteEntity* entity
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayer::NotifySelectionChanged
+// Created: JSR 2012-05-22
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityLayer< ConcreteEntity >::NotifySelectionChanged( const std::vector< const ConcreteEntity* >& /*elements*/ )
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::HandleRectangleSelection
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityLayer< ConcreteEntity >::HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight )
+{
+    EntityLayerBase::SelectInRectangle( topLeft, bottomRight );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayer::SelectColor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------

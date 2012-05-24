@@ -108,15 +108,6 @@ void AutomatsLayer::NotifyActivated( const kernel::Automat_ABC& automat )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatsLayer::Select
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void AutomatsLayer::Select( const Entity_ABC& entity, bool )
-{
-    entity.Select( controllers_.actions_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AutomatsLayer::Toggle
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------

@@ -46,6 +46,7 @@ public:
     void Register( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
     void Update( tools::Observer_ABC& observer );
+    void ChangeMode( int newMode );
     //@}
 
     //! @name Setters

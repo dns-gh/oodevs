@@ -3,39 +3,39 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __UrbanSelection_ABC_h_
-#define __UrbanSelection_ABC_h_
-
-#include <boost/noncopyable.hpp>
+#ifndef __Selectable_ABC_h_
+#define __Selectable_ABC_h_
 
 namespace kernel
 {
-// =============================================================================
-/** @class  UrbanSelection_ABC
-    @brief  Urban selection declaration
-*/
-// Created: LGY 2011-04-19
-// =============================================================================
-class UrbanSelection_ABC : private boost::noncopyable
-{
+    class ActionController;
 
+// =============================================================================
+/** @class  Selectable_ABC
+    @brief  Selectable extension definition
+*/
+// Created: JSR 2012-05-21
+// =============================================================================
+class Selectable_ABC
+{
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanSelection_ABC() {}
-    virtual ~UrbanSelection_ABC() {}
+             Selectable_ABC() {}
+    virtual ~Selectable_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void SetSelection( bool selected ) = 0;
+    virtual void Select( ActionController& controller ) const = 0;
+    virtual void MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const = 0;
     //@}
 };
 
 }
 
-#endif // __UrbanSelection_ABC_h_
+#endif // __Selectable_ABC_h_

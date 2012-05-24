@@ -74,6 +74,7 @@ public:
     //@{
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void Select( kernel::ActionController& controller ) const;
+    virtual void MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& ) const {}

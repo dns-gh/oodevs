@@ -187,6 +187,15 @@ void Gl3dWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawStippledLine
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawStippledLine( const geometry::Point2f& /*from*/, const geometry::Point2f& /*to*/ ) const
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawLines
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

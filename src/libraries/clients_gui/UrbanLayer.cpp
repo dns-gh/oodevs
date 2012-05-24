@@ -30,7 +30,6 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
     : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, filter )
     , view_          ( view )
     , controllers_   ( controllers )
-    , selectedObject_( 0 )
 {
     // NOTHING
 }
@@ -96,7 +95,7 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void UrbanLayer::Reset2d()
 {
-    selectedObject_ = 0;
+    selectedObjects_.clear();
     EntityLayer< kernel::UrbanObject_ABC >::Reset2d();
 }
 
@@ -106,12 +105,36 @@ void UrbanLayer::Reset2d()
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
 {
-    if( selectedObject_ )
-        selectedObject_->Interface().Apply( &kernel::UrbanPositions_ABC::ToggleSelection );
-    selectedObject_ = object;
-    if( selectedObject_ )
-        selectedObject_->Interface().Apply( &kernel::UrbanPositions_ABC::ToggleSelection );
+    static const bool bTrue = true;
+    static const bool bFalse = false;
+    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = selectedObjects_.begin(); it != selectedObjects_.end(); ++it )
+        ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
+    selectedObjects_.clear();
+    if( object )
+    {
+        selectedObjects_.push_back( object );
+        object->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+    }
     EntityLayer< kernel::UrbanObject_ABC >::NotifySelected( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::NotifySelectionChanged
+// Created: JSR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements )
+{
+    static const bool bTrue = true;
+    static const bool bFalse = false;
+    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = selectedObjects_.begin(); it != selectedObjects_.end(); ++it )
+        ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
+    selectedObjects_.clear();
+    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    {
+        selectedObjects_.push_back( *it );
+         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+    }
+    EntityLayer< kernel::UrbanObject_ABC >::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,8 +143,9 @@ void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 {
-    if( &object == selectedObject_ )
-        selectedObject_ = 0;
+    std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = std::find( selectedObjects_.begin(), selectedObjects_.end(), &object );
+    if( it != selectedObjects_.end() )
+        selectedObjects_.erase( it );
     EntityLayer< kernel::UrbanObject_ABC >::NotifyDeleted( object );
 }
 
@@ -151,6 +175,17 @@ bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry
 {
     if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
         return positions->IsInside( point );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::IsInside
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const
+{
+    if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+        return positions->IsInside( rectangle );
     return false;
 }
 

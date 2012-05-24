@@ -250,7 +250,10 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h" />

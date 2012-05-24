@@ -60,6 +60,7 @@ public:
 
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
+    virtual void DrawStippledLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
     virtual void DrawLines        ( const T_PointVector& points ) const;
     virtual void DrawRectangle    ( const T_PointVector& points ) const;
     virtual void DrawPolygon      ( const T_PointVector& points ) const;

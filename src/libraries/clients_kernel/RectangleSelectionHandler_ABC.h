@@ -3,39 +3,38 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __UrbanSelection_ABC_h_
-#define __UrbanSelection_ABC_h_
+#ifndef __RectangleSelectionHandler_ABC_h_
+#define __RectangleSelectionHandler_ABC_h_
 
-#include <boost/noncopyable.hpp>
+#include <geometry/Types.h>
 
 namespace kernel
 {
 // =============================================================================
-/** @class  UrbanSelection_ABC
-    @brief  Urban selection declaration
+/** @class  RectangleSelectionHandler_ABC
+    @brief  RectangleSelectionHandler_ABC
 */
-// Created: LGY 2011-04-19
+// Created: JSR 2012-05-23
 // =============================================================================
-class UrbanSelection_ABC : private boost::noncopyable
+class RectangleSelectionHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanSelection_ABC() {}
-    virtual ~UrbanSelection_ABC() {}
+             RectangleSelectionHandler_ABC() {}
+    virtual ~RectangleSelectionHandler_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void SetSelection( bool selected ) = 0;
+    virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight ) = 0;
     //@}
 };
 
 }
 
-#endif // __UrbanSelection_ABC_h_
+#endif // __RectangleSelectionHandler_ABC_h_

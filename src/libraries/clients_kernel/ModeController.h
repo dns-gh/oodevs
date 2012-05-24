@@ -29,7 +29,6 @@ namespace kernel
 template< typename EnumType >
 class ModeController : public ModeController_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,9 +38,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ChangeMode( int newMode );
     virtual int GetCurrentMode() const;
     virtual const QString& GetRegisteryEntry() const;
+    //@}
+
+private:
+    //! @name Abstract operations
+    //@{
+    virtual void ChangeMode( int newMode );
     //@}
 
 private:

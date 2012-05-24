@@ -40,16 +40,16 @@ AgentsLayer::~AgentsLayer()
 // Name: AgentsLayer::Select
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
-void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
+void AgentsLayer::Select( const Entity_ABC& entity, bool control, bool shift )
 {
     const Entity_ABC* superior = entity.Get< CommunicationHierarchies >().GetSuperior();
     if( shift && superior )
     {
-        superior->Select( controllers_.actions_ );
+        controllers_.actions_.SetSelected( this, *superior, control );
         superior->Activate( controllers_.actions_ );
     }
     else
-        entity.Select( controllers_.actions_ );
+        controllers_.actions_.SetSelected( this, entity, control );
 }
 
 // -----------------------------------------------------------------------------

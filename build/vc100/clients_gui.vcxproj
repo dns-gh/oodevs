@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExtensionsPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InfoPanel_ABC.cpp" />
@@ -799,6 +800,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchListView.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SpinTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h" />

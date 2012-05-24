@@ -255,7 +255,7 @@
     </message>
     <message>
         <source>Urban</source>
-        <translation type="unfinished"></translation>
+        <translation>Zone urbaine</translation>
     </message>
 </context>
 <context>

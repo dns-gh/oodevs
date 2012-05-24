@@ -85,6 +85,15 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanPositions::IsInside
+// Created: JSR 2012-05-23
+// -----------------------------------------------------------------------------
+bool UrbanPositions::IsInside( const geometry::Rectangle2f& rectangle ) const
+{
+    return rectangle.IsInside( barycenter_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanPositions::SetInfrastructurePresent
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
@@ -94,12 +103,12 @@ void UrbanPositions::SetInfrastructurePresent()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanPositions::ToggleSelection
-// Created: LGY 2012-05-07
+// Name: UrbanPositions::SetSelection
+// Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void UrbanPositions::ToggleSelection()
+void UrbanPositions::SetSelection( bool selected )
 {
-    selected_ = !selected_;
+    selected_ = selected;
 }
 
 // -----------------------------------------------------------------------------
