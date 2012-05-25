@@ -14,6 +14,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
+#include "SchemaWriter_ABC.h"
 
 using namespace tools;
 
@@ -32,6 +33,15 @@ WorldParameters::WorldParameters()
 }
 
 // -----------------------------------------------------------------------------
+// Name: WorldParameters destructor
+// Created: AGE 2006-03-15
+// -----------------------------------------------------------------------------
+WorldParameters::~WorldParameters()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: WorldParameters constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
@@ -40,14 +50,50 @@ WorldParameters::WorldParameters( const tools::ExerciseConfig& config )
     Load( config );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: WorldParameters destructor
-// Created: AGE 2006-03-15
+// Name: WorldParameters::Serialize
+// Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-WorldParameters::~WorldParameters()
+void WorldParameters::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    // NOTHING
+    xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
+    xos << xml::start( "terrain" );
+    schemaWriter.WriteSchema( xos, "terrain", "terrain" );
+    xos << xml::start( "data" )
+            << xml::start( "location" )
+                << xml::start( "center" )
+                    << xml::attribute( "latitude", latitude_ )
+                    << xml::attribute( "longitude", longitude_ )
+                << xml::end()
+                << xml::start( "dimension" )
+                    << xml::attribute( "width", width_ )
+                    << xml::attribute( "height", height_ )
+                << xml::end
+                << xml::start( "extent" )
+                    << xml::attribute( "x-min", xMin_ )
+                    << xml::attribute( "x-max", xMax_ )
+                    << xml::attribute( "y-min", yMin_ )
+                    << xml::attribute( "y-max", yMax_ )
+                << xml::end
+            << xml::end
+            << xml::start( "pathfind" )
+                << xml::attribute( "directory", "Pathfind" )
+            << xml::end
+            << xml::start( "detection" )
+                << xml::attribute( "directory", "Detection" )
+            << xml::end
+            << xml::start( "graphics" )
+                << xml::attribute( "directory", "Graphics" )
+            << xml::end
+            << xml::start( "urban" )
+                << xml::attribute( "file", "urban/urban.xml" )
+            << xml::end
+            << xml::start( "model" )
+                << xml::attribute( "dataset", dataset_ )
+                << xml::attribute( "physical", physical_ )
+            << xml::end
+        << xml::end // data
+    << xml::end; // terrain
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +105,8 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
     config.GetLoader().LoadFile( config.GetTerrainFile(), boost::bind( &WorldParameters::ReadTerrain, this, boost::ref( config ), _1 ) );
     if( !config.GetPopulationFile().empty() )
         config.GetLoader().LoadFile( config.GetPopulationFile(), boost::bind( &WorldParameters::ReadPopulation, this, boost::ref( config ), _1 ) );
+    dataset_ = config.GetDataSet();
+    physical_ = config.GetPhysicalBase();
 }
 
 // -----------------------------------------------------------------------------

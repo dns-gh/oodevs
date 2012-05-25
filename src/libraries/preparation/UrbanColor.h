@@ -10,6 +10,7 @@
 #ifndef __UrbanColor_h_
 #define __UrbanColor_h_
 
+#include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 
 namespace xml
@@ -24,6 +25,7 @@ namespace xml
 // Created: LGY 2011-04-19
 // =============================================================================
 class UrbanColor : public kernel::UrbanColor_ABC
+                 , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -40,6 +42,11 @@ public:
     virtual float Alpha() const;
     virtual void SetColor( unsigned short red, unsigned short green, unsigned short blue );
     virtual void Restore();
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
 private:

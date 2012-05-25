@@ -12,6 +12,7 @@
 
 #include "ListView.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"

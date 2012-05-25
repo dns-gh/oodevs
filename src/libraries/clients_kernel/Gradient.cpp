@@ -3,11 +3,11 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "clients_kernel_pch.h"
 #include "Gradient.h"
 #include "clients_kernel/Options.h"
 #include <graphics/extensions.h>
@@ -18,7 +18,7 @@
 #pragma warning( pop )
 #include <boost/bind.hpp>
 
-using namespace gui;
+using namespace kernel;
 
 namespace
 {
@@ -41,7 +41,7 @@ Gradient::Gradient( xml::xistream& xis )
 {
     std::string name;
     xis >> xml::attribute( "name", name )
-            >> xml::list( "color", *this, &Gradient::LoadValue );
+        >> xml::list( "color", *this, &Gradient::LoadValue );
     name_ = name.c_str();
 }
 
@@ -213,7 +213,7 @@ QColor Gradient::Compute( float density, float alpha, float min, float max )
                 from = *it;
                 end = ( ( it + 1 ) == colors_.end() ) ? *it : *( it + 1 );
             }
-        ratio = ( percent - from.first ) / ( end.first - from.first );
+            ratio = ( percent - from.first ) / ( end.first - from.first );
     }
     Color result( alpha );
     result = MakeColor( from.second, end.second, result, ratio, 1.f );
@@ -348,3 +348,4 @@ Gradient& Gradient::operator=( const Gradient& rhs )
     usedRatio_ = rhs.usedRatio_;
     return *this;
 }
+

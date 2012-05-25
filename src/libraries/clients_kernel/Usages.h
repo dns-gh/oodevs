@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef gui_Usages_h
-#define gui_Usages_h
+#ifndef __kernel_Usages_h_
+#define __kernel_Usages_h_
 
 #include "clients_kernel/Usages_ABC.h"
 #include "clients_kernel/HumanDefs.h"
@@ -17,23 +17,19 @@ namespace kernel
 {
     class AccommodationTypes;
     class PropertiesDictionary;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  Usages
     @brief  Usages
 */
-// Created: LGY 2011-04-14
+// Created: ABR 2012-05-22
 // =============================================================================
-class Usages : public kernel::Usages_ABC
+class Usages : public Usages_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
-                     float livingSpace );
+             Usages( PropertiesDictionary& dictionary, const AccommodationTypes& accommodationTypes, float livingSpace );
     virtual ~Usages();
     //@}
 
@@ -43,24 +39,24 @@ public:
     virtual unsigned int Find( const std::string& usage ) const;
     //@}
 
-private:
+protected:
     //! @name Types
     //@{
     typedef std::map< std::string, std::pair< unsigned int, unsigned int > > T_Occupations;
     //@}
 
-private:
+protected:
     //! @name Member Data
     //@{
-    kernel::PropertiesDictionary& dictionary_;
-    const kernel::AccommodationTypes& accommodationTypes_;
-    float livingSpace_;
-    kernel::T_Usages usages_;
-    T_Occupations occupations_;
-    static const std::string defaultStr_;
+    PropertiesDictionary&     dictionary_;
+    const AccommodationTypes& accommodationTypes_;
+    float                     livingSpace_;
+    T_Usages                  usages_;
+    T_Occupations             occupations_;
+    static const std::string  defaultStr_;
     //@}
 };
 
-}
+} //! namespace kernel
 
-#endif // gui_Usages_h
+#endif // __kernel_Usages_h_

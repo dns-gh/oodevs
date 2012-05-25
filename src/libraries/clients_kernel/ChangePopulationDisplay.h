@@ -3,16 +3,16 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ChangePopulationDisplay_h_
-#define __ChangePopulationDisplay_h_
+#ifndef __kernel_ChangePopulationDisplay_h_
+#define __kernel_ChangePopulationDisplay_h_
 
 #include <boost/noncopyable.hpp>
 
-namespace gui
+namespace kernel
 {
 // =============================================================================
 /** @class  ChangePopulationDisplay
@@ -40,6 +40,6 @@ public:
     //@}
 };
 
-}
+} //! namespace kernel
 
-#endif // __ChangePopulationDisplay_h_
+#endif // __kernel_ChangePopulationDisplay_h_

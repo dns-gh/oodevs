@@ -13,30 +13,39 @@
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor
+// Created: ABR 2012-05-24
+// -----------------------------------------------------------------------------
+Architecture::Architecture( kernel::PropertiesDictionary& dictionary )
+    : kernel::Architecture( dictionary )
+{
+    Initialize( 20.f, 6, 0, "default", "default", 0.5f, 0.5f ); // $$$$ ABR 2012-05-24: TODO Use RoofShapeType && MaterialCompositionType
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Architecture::Architecture( xml::xistream& xis, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
-    : pArchitecture_( pArchitecture )
+Architecture::Architecture( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+    : kernel::Architecture( dictionary )
 {
-    xis >> xml::optional
-            >> xml::start( "physical" );
-        if( xis.has_child( "architecture" ) )
-        {
-            unsigned int height, floorNumber, parkingFloors;
-            std::string roofShape, material;
-            float occupation, trafficability;
-            xis >> xml::start( "architecture" )
-                    >> xml::optional >> xml::attribute( "height", height )
-                    >> xml::optional >> xml::attribute( "floor-number", floorNumber )
-                    >> xml::optional >> xml::attribute( "roof-shape", roofShape )
-                    >> xml::optional >> xml::attribute( "material", material )
-                    >> xml::optional >> xml::attribute( "occupation", occupation )
-                    >> xml::optional >> xml::attribute( "trafficability", trafficability )
-                    >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
-                >> xml::end;
-            Initialize( static_cast< float >( height ), floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
-        }
-    xis     >> xml::end;
+    unsigned int height = 0;
+    unsigned int floorNumber = 0;
+    unsigned int parkingFloors = 0;
+    std::string roofShape;
+    std::string material;
+    float occupation = 0.f;
+    float trafficability = 0.f;
+    // $$$$ _RC_ JSR 2011-05-25: virer les optional (après avoir vérifié les terrains)
+    xis >> xml::start( "architecture" )
+            >> xml::optional >> xml::attribute( "height", height )
+            >> xml::optional >> xml::attribute( "floor-number", floorNumber )
+            >> xml::optional >> xml::attribute( "roof-shape", roofShape )
+            >> xml::optional >> xml::attribute( "material", material )
+            >> xml::optional >> xml::attribute( "occupation", occupation )
+            >> xml::optional >> xml::attribute( "trafficability", trafficability )
+            >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
+        >> xml::end;
+    Initialize( static_cast< float >( height ), floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,47 +58,19 @@ Architecture::~Architecture()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Architecture::Initialize
-// Created: LGY 2011-04-15
+// Name: Architecture::SerializeAttributes
+// Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-                               const std::string& material, float occupation, float trafficability )
+void Architecture::SerializeAttributes( xml::xostream& xos ) const
 {
-    pArchitecture_->Initialize( height, floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetMaterial
-// Created: LGY 2011-04-15
-// -----------------------------------------------------------------------------
-const std::string& Architecture::GetMaterial() const
-{
-    return pArchitecture_->GetMaterial();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetFloorNumber
-// Created: LGY 2011-04-19
-// -----------------------------------------------------------------------------
-unsigned int Architecture::GetFloorNumber() const
-{
-    return pArchitecture_->GetFloorNumber();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetOccupation
-// Created: LGY 2011-04-19
-// -----------------------------------------------------------------------------
-unsigned int Architecture::GetOccupation() const
-{
-    return pArchitecture_->GetOccupation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetHeight
-// Created: LGY 2012-04-10
-// -----------------------------------------------------------------------------
-unsigned int Architecture::GetHeight() const
-{
-    return pArchitecture_->GetHeight();
+    xos << xml::start( "architecture" )
+            << xml::attribute( "height", height_ )
+            << xml::attribute( "floor-number", floorNumber_ )
+            << xml::attribute( "roof-shape", roofShape_ )
+            << xml::attribute( "material", material_ )
+            << xml::attribute( "occupation", occupation_ / 100.f )
+            << xml::attribute( "trafficability", trafficability_ );
+    if( parkingFloors_ > 0 )
+        xos << xml::attribute( "parking-floors", parkingFloors_ );
+    xos << xml::end;
 }

@@ -98,7 +98,8 @@ public:
     //! @name Operations
     //@
     void Load( const tools::ExerciseConfig& config );
-    void Save( const tools::ExerciseConfig& config );
+    void SaveExercise( const tools::ExerciseConfig& config );
+    void SaveTerrain( const tools::ExerciseConfig& config );
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
     const T_LoadingErrors& GetLoadingErrors() const;
     void ClearLoadingErrors();

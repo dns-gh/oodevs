@@ -236,3 +236,13 @@ void ActionController::CleanSelectedMap()
             ++it;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionController::DeselectAll
+// Created: ABR 2012-05-24
+// -----------------------------------------------------------------------------
+void ActionController::DeselectAll()
+{
+    ClearSingleSelection();
+    ClearMultipleSelection();
+}

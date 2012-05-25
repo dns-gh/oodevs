@@ -10,8 +10,12 @@
 #ifndef __Architecture_h_
 #define __Architecture_h_
 
-#include "clients_kernel/Architecture_ABC.h"
-#include <memory>
+#include "clients_kernel/Architecture.h"
+
+namespace kernel
+{
+    class PropertiesDictionary;
+}
 
 namespace xml
 {
@@ -24,29 +28,19 @@ namespace xml
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Architecture : public kernel::Architecture_ABC
+class Architecture : public kernel::Architecture
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( xml::xistream& xis, std::auto_ptr< kernel::Architecture_ABC > pArchitecture );
+    explicit Architecture( kernel::PropertiesDictionary& dictionary );
+             Architecture( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~Architecture();
     //@}
 
-    //! @name Operations
+    //! @name Serializable_ABC
     //@{
-    virtual void Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-                             const std::string& material, float occupation, float trafficability );
-    virtual const std::string& GetMaterial() const;
-    virtual unsigned int GetFloorNumber() const;
-    virtual unsigned int GetOccupation() const;
-    virtual unsigned int GetHeight() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< kernel::Architecture_ABC > pArchitecture_;
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 };
 

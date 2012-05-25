@@ -13,11 +13,6 @@
 #include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
 
-namespace gui
-{
-    class UrbanDisplayOptions;
-}
-
 namespace sword
 {
     class UrbanCreation;
@@ -28,6 +23,7 @@ namespace sword
 namespace kernel
 {
     class Controllers;
+    class UrbanDisplayOptions;
     class UrbanObject_ABC;
 }
 
@@ -67,7 +63,7 @@ private:
     kernel::Controllers& controllers_;
     ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
-    std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
+    std::auto_ptr< kernel::UrbanDisplayOptions > urbanDisplayOptions_;
     //@}
 };
 

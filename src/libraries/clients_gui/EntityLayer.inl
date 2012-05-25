@@ -49,7 +49,7 @@ EntityLayer< ConcreteEntity >::~EntityLayer()
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyCreated( const ConcreteEntity& entity )
 {
-    if( filter_.IsAllowed( entity.GetTypeName() ) )
+    if( filter_.IsAllowed( entity.GetTypeName() ) ) // $$$$ ABR 2012-05-22: Still needed ? (now that urban as been removed)
         AddEntity( entity );
 }
 
@@ -123,6 +123,16 @@ template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
 {
     controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( entity ), geoPoint, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::IsIn
+// Created: JSR 2012-05-24
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+bool EntityLayer< ConcreteEntity >::IsIn( const kernel::Selectable_ABC& selectable ) const
+{
+    return dynamic_cast< const ConcreteEntity* >( &selectable ) != 0;
 }
 
 }

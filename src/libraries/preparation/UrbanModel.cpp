@@ -16,7 +16,11 @@
 #include "StructuralStateAttribute.h"
 #include "UrbanFactory.h"
 #include "UrbanFactory_ABC.h"
+#include "UrbanHierarchies.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
@@ -25,25 +29,16 @@
 
 namespace bfs = boost::filesystem;
 
-using namespace kernel;
-using namespace tools;
-
-namespace
-{
-    const std::string defaultUrbanStateVersion = "4.2.3";
-}
-
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( Controllers& controllers, const ::StaticModel& staticModel, const Resolver< Object_ABC >& objects )
+UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects )
     : controllers_        ( controllers )
     , objectTypes_        ( staticModel.objectTypes_ )
     , accommodationTypes_ ( staticModel.accommodationTypes_ )
     , objects_            ( objects )
-    , urbanStateVersion_  ( ::defaultUrbanStateVersion )
-    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, accommodationTypes_ ) )
+    , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, objectTypes_, objects_,
                                               *urbanDisplayOptions_, *this, accommodationTypes_, staticModel.coordinateConverter_ ) )
 {
@@ -56,26 +51,21 @@ UrbanModel::UrbanModel( Controllers& controllers, const ::StaticModel& staticMod
 // -----------------------------------------------------------------------------
 UrbanModel::~UrbanModel()
 {
-    Purge();
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::Load
+// Name: UrbanModel::LoadUrban
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-void UrbanModel::Load( const std::string& directoryPath )
+void UrbanModel::LoadUrban( xml::xistream& xis )
 {
-    Purge();
-    const bfs::path fullPath = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-    if( bfs::exists( fullPath ) )
-    {
-        xml::xifstream input( fullPath.native_file_string() );
-        input >> xml::start( "urban" )
-                >> xml::start( "urban-objects" )
-                   >> xml::list( "urban-object", *this, &UrbanModel::ReadCity )
-                >> xml::end
-              >> xml::end;
-    }
+    DeleteAll();
+    xis >> xml::start( "urban" )
+            >> xml::start( "urban-objects" )
+                >> xml::list( "urban-object", *this, &UrbanModel::ReadCity )
+            >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,29 +125,78 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
 // Name: UrbanModel::Serialize
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::Serialize( const std::string& filename, const SchemaWriter_ABC& schemaWriter ) const
+void UrbanModel::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     if( filename.empty() )
         return;
+    assert( controllers_.modes_ != 0 );
+    if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
+        SerializeExercise( filename, schemaWriter );
+    else
+        SerializeTerrain( filename, schemaWriter );
+}
+
+namespace
+{
+    template< typename ConcretType, typename AbstractType >
+    void SerializeIFN( const kernel::Entity_ABC& entity, xml::xostream& xos )
+    {
+        const ConcretType& extension = static_cast< const ConcretType& >( entity.Get< AbstractType >() );
+        if( extension.IsOverriden() )
+            extension.SerializeAttributes( xos );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::SerializeExercise
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanModel::SerializeExercise( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+{
     xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
     xos << xml::start( "urban-state" );
     schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
-    xos << xml::attribute( "model-version", urbanStateVersion_ )
-            << xml::start( "urban-objects" );
-    for( Resolver< kernel::UrbanObject_ABC >::CIT_Elements it = Resolver< kernel::UrbanObject_ABC >::elements_.begin(); it != Resolver< kernel::UrbanObject_ABC >::elements_.end(); ++it )
+    xos << xml::start( "urban-objects" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        bool needsUpdate = false;
-        it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );// Temp pour serializer l'attribut
-        if( needsUpdate )
+        const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( it->second->Retrieve< kernel::Hierarchies >() );
+        if( hierarchy.GetLevel() != eUrbanLevelBlock ) // only city here, UrbanHierarchy proceed the recursion
+            continue;
+        xos << xml::start( "urban-object" )
+            << xml::attribute( "id", it->second->GetId() );
+
+        SerializeIFN< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( *it->second, xos );
+        SerializeIFN< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( *it->second, xos );
+        SerializeIFN< InfrastructureAttribute, kernel::Infrastructure_ABC >( *it->second, xos );
+
+        xos << xml::end;
+    }
+    xos << xml::end  // urban-objects
+        << xml::end; // urban-state
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::SerializeTerrain
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanModel::SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+{
+    xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
+    xos << xml::start( "urban" );
+    schemaWriter.WriteSchema( xos, "terrain", "urban" );
+    xos<< xml::start( "urban-objects" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( it->second->Retrieve< kernel::Hierarchies >() );
+        if( hierarchy.GetLevel() == eUrbanLevelCity ) // only city here, UrbanHierarchy proceed the recursion
         {
-            xos << xml::start( "urban-object" )
-                << xml::attribute( "id", it->second->GetId() );
-            it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-            xos << xml::end;
+            xos << xml::start( "urban-object" );
+            it->second->Interface().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
+            xos << xml::end; // urban-object
         }
     }
-    xos     << xml::end // urban-objects
-        << xml::end;  // urban-state
+    xos << xml::end  // urban-objects
+        << xml::end; // urban
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +206,7 @@ void UrbanModel::Serialize( const std::string& filename, const SchemaWriter_ABC&
 void UrbanModel::LoadUrbanState( xml::xistream& xis )
 {
     xis >> xml::start( "urban-state" )
-        >> xml::optional >> xml::attribute( "model-version", urbanStateVersion_ );
-    if( urbanStateVersion_.empty() )
-        urbanStateVersion_ = ::defaultUrbanStateVersion;
-    xis     >> xml::start( "urban-objects" )
+            >> xml::start( "urban-objects" )
                 >> xml::list( "urban-object", *this, &UrbanModel::ReadUrbanObject )
             >> xml::end
         >> xml::end;
@@ -195,13 +231,13 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
 {
     // TODO faire ça proprement et de façon générique avec la factory d'objets quand elle sera implémentée (pour l'instant, c'est une par Team)
     if( capacity == "structural-state" )
-        UpdateCapacity< StructuralStateAttribute, StructuralStateAttribute_ABC >( xis, object );
+        UpdateCapacity< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( xis, object );
     else if( capacity == "resources" )
-        UpdateCapacity< ResourceNetworkAttribute, ResourceNetwork_ABC >( xis, object );
+        UpdateCapacity< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( xis, object );
     else if( capacity == "medical-treatment" )
-        UpdateCapacity< MedicalTreatmentAttribute, MedicalTreatmentAttribute_ABC >( xis, object );
+        UpdateCapacity< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( xis, object );
     else if( capacity == "infrastructure" )
-        UpdateCapacity< InfrastructureAttribute, Infrastructure_ABC >( xis, object );
+        UpdateCapacity< InfrastructureAttribute, kernel::Infrastructure_ABC >( xis, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,14 +250,4 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& ob
     T* capacity = static_cast< T* >( object.Retrieve< U >() );
     if( capacity )
         capacity->Update( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::Purge
-// Created: SLG 2009-10-20
-// -----------------------------------------------------------------------------
-void UrbanModel::Purge()
-{
-    Resolver< kernel::UrbanObject_ABC >::DeleteAll();
-    urbanStateVersion_ = ::defaultUrbanStateVersion;
 }

@@ -75,7 +75,8 @@ public:
 
     //! @name Operations
     //@{
-    bool CheckSaving();
+    bool CheckSaving( bool switchingMode = false );
+    bool SwitchToTerrainMode( bool terrainMode );
     //@}
 
 public slots:
@@ -85,7 +86,7 @@ public slots:
     void New();
     void Open();
     bool Close();
-    bool Save();
+    void Save( bool checkConsistency = true );
     void SaveAs();
     void ToggleFullScreen();
     void ToggleDocks();

@@ -36,7 +36,6 @@ class ModelBuilder;
 // =============================================================================
 class UrbanListView : public gui::EntityListView
                     , public tools::ElementObserver_ABC< kernel::Object_ABC >
-                    , public kernel::ModesObserver_ABC
 {
 
 public:

@@ -37,9 +37,9 @@ PropertiesPanelBase::~PropertiesPanelBase()
 // Name: PropertiesPanel constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const gui::GlProxy& glProxy )
     : PropertiesPanelBase( controllers, model, staticModel )
-    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_ )
+    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_, glProxy )
 {
     // NOTHING
 }

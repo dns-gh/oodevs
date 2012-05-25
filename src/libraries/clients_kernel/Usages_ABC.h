@@ -12,6 +12,7 @@
 
 #include "Extension_ABC.h"
 #include "Displayable_ABC.h"
+#include "Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -24,6 +25,7 @@ namespace kernel
 // =============================================================================
 class Usages_ABC : public Extension_ABC
                  , public Displayable_ABC
+                 , public Serializable_ABC
                  , private boost::noncopyable
 {
 public:

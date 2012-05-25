@@ -73,18 +73,21 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
             {
                 searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_, glProxy );
                 listViews_.push_back( searchListView->GetRichListView() );
+                searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Tactical" ) );
             }
             // Communication
             {
                 searchListView = new gui::SearchListView< CommunicationListView >( pListsTabWidget, controllers, factory, icons, modelBuilder );
                 listViews_.push_back( searchListView->GetRichListView() );
+                searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Communication" ) );
             }
             // Logistic
             {
                 searchListView = new gui::SearchListView< LogisticListView >( pListsTabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
                 listViews_.push_back( searchListView->GetRichListView() );
+                searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer", "Logistic" ) );
             }
         }
@@ -92,6 +95,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         {
             searchListView = new gui::SearchListView< ObjectListView >( pListsTabWidget, controllers, factory, modelBuilder );
             listViews_.push_back( searchListView->GetRichListView() );
+            searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Objects" ) );
         }
         // Urban
@@ -104,12 +108,14 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         {
             searchListView = new gui::SearchListView< PopulationListView >( pListsTabWidget, controllers, factory, modelBuilder );
             listViews_.push_back( searchListView->GetRichListView() );
+            searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Crowds" ) );
         }
         // Populations
         {
             searchListView = new gui::SearchListView< InhabitantListView >( pListsTabWidget, controllers, factory, modelBuilder );
             listViews_.push_back( searchListView->GetRichListView() );
+            searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Populations" ) );
         }
     }
@@ -117,7 +123,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         gui::RichDockWidget* pPropertiesDockWnd = new gui::RichDockWidget( controllers, parent, "properties", tools::translate( "DockContainer", "Properties" ) );
         pPropertiesDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
-        PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel );
+        PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel, glProxy );
         pPropertiesDockWnd->setWidget( propertiesPanel );
         parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
     }

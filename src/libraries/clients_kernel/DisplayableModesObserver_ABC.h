@@ -42,6 +42,7 @@ public:
 
     //! @name Accessors
     //@{
+    int GetCurrentMode() const { return currentMode_; }
     void SetModes( int hiddenModes, int visibleModes = 0, bool visibleByDefault = false )
     {
         hiddenModes_ = hiddenModes;

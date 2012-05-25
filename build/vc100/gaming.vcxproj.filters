@@ -796,6 +796,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\CommandPostAttributes.cpp">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\PhysicalAttribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1505,6 +1508,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\CommandPostAttributes.h">
       <Filter>Source Files\Model\Agents\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

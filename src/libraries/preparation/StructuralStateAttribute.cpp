@@ -9,6 +9,8 @@
 
 #include "preparation_pch.h"
 #include "StructuralStateAttribute.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -17,10 +19,13 @@
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( unsigned int value, kernel::PropertiesDictionary& dico )
+StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& controllers, unsigned int value, kernel::PropertiesDictionary& dico )
     : structuralState_( value )
+    , controllers_    ( controllers )
 {
     CreateDictionary( dico );
+    assert( controllers_.modes_ );
+    controllers_.modes_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +34,8 @@ StructuralStateAttribute::StructuralStateAttribute( unsigned int value, kernel::
 // -----------------------------------------------------------------------------
 StructuralStateAttribute::~StructuralStateAttribute()
 {
-    // NOTHING
+    assert( controllers_.modes_ );
+    controllers_.modes_->Unregister( *this );
 }
 
 namespace
@@ -58,22 +64,19 @@ void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& d
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( structuralState_ != 100 )
-    {
+    if( GetCurrentMode() == ePreparationMode_Exercise )
         xos << xml::start( "structural-state" )
-            << xml::attribute( "value", structuralState_ )
+                << xml::attribute( "value", structuralState_ )
             << xml::end;
-    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::SetOverriden
+// Name: StructuralStateAttribute::IsOverriden
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::SetOverriden( bool& overriden ) const
+bool StructuralStateAttribute::IsOverriden() const
 {
-    if( structuralState_ != 100 )
-        overriden = true;
+    return structuralState_ != 100;
 }
 
 // -----------------------------------------------------------------------------

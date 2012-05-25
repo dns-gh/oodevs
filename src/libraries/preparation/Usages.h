@@ -10,8 +10,13 @@
 #ifndef __Usages_h_
 #define __Usages_h_
 
-#include "clients_kernel/Usages_ABC.h"
-#include <memory>
+#include "clients_kernel/Usages.h"
+
+namespace kernel
+{
+    class AccommodationTypes;
+    class PropertiesDictionary;
+}
 
 namespace xml
 {
@@ -24,31 +29,25 @@ namespace xml
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Usages : public kernel::Usages_ABC
+class Usages : public kernel::Usages
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( xml::xistream& xis, std::auto_ptr< kernel::Usages_ABC > pUsages );
+             Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,
+                     const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
     virtual ~Usages();
     //@}
 
-    //! @name Operations
+    //! @name Serializable_ABC
     //@{
-    virtual void Add( const std::string& usage, unsigned int proportion );
-    virtual unsigned int Find( const std::string& usage ) const;
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadUsages( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< kernel::Usages_ABC > pUsages_;
     //@}
 };
 

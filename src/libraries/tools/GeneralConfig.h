@@ -57,6 +57,7 @@ public:
     std::string GetTerrainsDir() const;
     std::string GetTerrainDir( const std::string& terrain ) const;
     std::string GetTerrainFile( const std::string& terrain ) const;
+    std::string GetUrbanFile( const std::string& terrain ) const;
 
     std::string GetSessionsDir( const std::string& exercise ) const;
     std::string BuildSessionDir( const std::string& exercise, const std::string& session ) const;

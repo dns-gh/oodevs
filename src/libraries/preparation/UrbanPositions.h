@@ -12,6 +12,7 @@
 
 #include "UrbanTypes.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace xml
 {
@@ -31,6 +32,7 @@ namespace kernel
 // Created: JSR 2010-09-06
 // =============================================================================
 class UrbanPositions : public kernel::UrbanPositions_ABC
+                     , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -52,17 +54,25 @@ public:
     virtual void SetInfrastructurePresent();
     //@}
 
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    void ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions, const kernel::CoordinateConverter_ABC& converter ) const;
+    void ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions ) const;
     void ComputeConvexHull( std::vector< geometry::Point2f >& points ) const;
     void ComputeCachedValues( std::vector< geometry::Point2f >& points );
+    void EliminateRedundantVertices( const T_PointVector& vertices, float epsilon );
+    void ChopSpikes( float epsilon );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     EUrbanLevel level_;
     const kernel::UrbanObject_ABC& object_;
     bool selected_;
@@ -71,6 +81,11 @@ private:
     geometry::Point2f barycenter_;
     geometry::Rectangle2f boundingBox_;
     float area_;
+    //@}
+
+    //! @name Static Member
+    //@{
+    static float epsilon_;
     //@}
 };
 

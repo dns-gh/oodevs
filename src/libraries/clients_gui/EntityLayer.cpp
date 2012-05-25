@@ -121,18 +121,19 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( selected_ >= entities_.size()
      || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ( ++selected_ ) > entities_.size() ) )
+     || ( button == Qt::LeftButton && ( ++selected_ ) >= entities_.size() ) )
         selected_ = 0;
 
     for( int i = 0; i < entities_.size(); ++i, selected_ = ( selected_ + 1 ) % entities_.size() )
     {
+        assert( selected_ >= 0 && selected_ < entities_.size() );
         const Entity_ABC& entity = *entities_[ selected_ ];
         tooltiped_ = selected_;
         if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
         {
             if( button == Qt::LeftButton )
                 Select( entity, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
-            else if( button == Qt::RightButton )
+            else if( button == Qt::RightButton && !IsReadOnly() )
                 ContextMenu( entity, point, event->globalPos() );
             return true;
         }

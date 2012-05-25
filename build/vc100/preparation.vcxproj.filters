@@ -535,6 +535,12 @@
     <ClCompile Include="..\..\src\libraries\preparation\UrbanHierarchies.cpp">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\PhysicalAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -1013,6 +1019,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanTypes.h">
       <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\PhysicalAttribute.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

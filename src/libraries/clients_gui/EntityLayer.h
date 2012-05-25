@@ -155,6 +155,7 @@ protected:
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
+    virtual bool IsIn( const kernel::Selectable_ABC& selectable ) const;
     //@}
 
 protected:

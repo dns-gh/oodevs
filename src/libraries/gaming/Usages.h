@@ -10,7 +10,13 @@
 #ifndef __Usages_h_
 #define __Usages_h_
 
-#include "clients_kernel/Usages_ABC.h"
+#include "clients_kernel/Usages.h"
+
+namespace kernel
+{
+    class AccommodationTypes;
+    class PropertiesDictionary;
+}
 
 namespace sword
 {
@@ -23,25 +29,14 @@ namespace sword
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Usages : public kernel::Usages_ABC
+class Usages : public kernel::Usages
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( const sword::UrbanAttributes& message, std::auto_ptr< kernel::Usages_ABC > pUsages );
+             Usages( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary,
+                     const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
     virtual ~Usages();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Add( const std::string& usage, unsigned int proportion );
-    virtual unsigned int Find( const std::string& usage ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< kernel::Usages_ABC > pUsages_;
     //@}
 };
 

@@ -41,6 +41,20 @@ UrbanColor::~UrbanColor()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanColor::SerializeAttributes
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanColor::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::start( "color" )
+            << xml::attribute< unsigned short >( "red", initial_.red_ )
+            << xml::attribute< unsigned short >( "green", initial_.green_ )
+            << xml::attribute< unsigned short >( "blue", initial_.blue_ )
+            << xml::attribute< float >( "alpha", Alpha() )
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanColor::Red
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------

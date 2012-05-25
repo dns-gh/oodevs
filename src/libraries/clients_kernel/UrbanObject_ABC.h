@@ -80,6 +80,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation );
     float GetLivingSpace() const;
+    float GetLivingSpace( unsigned int floorNumber, unsigned int occupation ) const;
     double GetNominalCapacity() const;
     double GetNominalCapacity( const std::string& motivation ) const;
     const kernel::AccommodationTypes& GetAccommodations() const;

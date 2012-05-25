@@ -16,13 +16,13 @@
 namespace kernel
 {
     class Controllers;
+    class Gradient;
     class Options;
 }
 
 namespace gui
 {
     class Elevation2dLayer;
-    class Gradient;
     class ColorButton;
     class GradientPreferences;
     class GradientWidget;
@@ -57,7 +57,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnGradientChanged( Gradient& gradient );
+    void OnGradientChanged( kernel::Gradient& gradient );
     void OnEnableVariableGradient( bool );
     void OnEnableHillshade( bool );
     void OnHillShadeDirection( int );

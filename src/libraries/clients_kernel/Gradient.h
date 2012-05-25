@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Gradient_h_
-#define __Gradient_h_
+#ifndef __kernel_Gradient_h_
+#define __kernel_Gradient_h_
 
 namespace xml
 {
@@ -19,10 +19,6 @@ namespace kernel
 {
     class Options;
     class OptionVariant;
-}
-
-namespace gui
-{
 
 class GradientVisitor_ABC
 {
@@ -86,13 +82,13 @@ private:
 private:
     //! @name Member data
     //@{
-    QString name_;
+    QString  name_;
     T_Colors colors_;
     unsigned textureSize_;
-    float usedRatio_;
+    float    usedRatio_;
     //@}
 };
 
-}
+} //! namespace kernel
 
-#endif // __Gradient_h_
+#endif // __kernel_Gradient_h_

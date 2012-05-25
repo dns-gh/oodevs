@@ -13,16 +13,21 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "geometry/Polygon2.h"
+
+float UrbanPositions::epsilon_ = 0.0001f;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : level_            ( level )
+    : converter_        ( converter )
+    , level_            ( level )
     , object_           ( object )
     , selected_         ( false )
     , hasInfrastructure_( false )
@@ -32,7 +37,7 @@ UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const ker
     {
         std::vector< geometry::Point2f > points;
         xis >> xml::start( "footprint" )
-                >> xml::list( "point", *this, &UrbanPositions::ReadPoint, points, converter )
+                >> xml::list( "point", *this, &UrbanPositions::ReadPoint, points )
             >> xml::end;
         ComputeCachedValues( points );
     }
@@ -51,9 +56,24 @@ UrbanPositions::~UrbanPositions()
 // Name: UrbanPositions::ReadPoint
 // Created: LGY 2012-04-10
 // -----------------------------------------------------------------------------
-void UrbanPositions::ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions, const kernel::CoordinateConverter_ABC& converter ) const
+void UrbanPositions::ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions ) const
 {
-    positions.push_back( converter.ConvertToXY( xis.attribute< std::string >( "location" ) ) );
+    positions.push_back( converter_.ConvertToXY( xis.attribute< std::string >( "location" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::SerializeAttributes
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanPositions::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::start( "footprint" );
+    const geometry::Polygon2f::T_Vertices& locations = polygon_.Vertices();
+    for( geometry::Polygon2f::CIT_Vertices it = locations.begin(); it != locations.end(); ++it )
+        xos << xml::start( "point" )
+                << xml::attribute( "location", converter_.ConvertToMgrs( *it ) )
+            << xml::end;
+    xos << xml::end; // footprint
 }
 
 // -----------------------------------------------------------------------------
@@ -266,8 +286,84 @@ void UrbanPositions::ComputeCachedValues( std::vector< geometry::Point2f >& poin
         if( points.front() == points.back() )
             points.pop_back();
         polygon_ = geometry::Polygon2f( points );
+
+        EliminateRedundantVertices( points, epsilon_ );
+        ChopSpikes( epsilon_ );
+
         boundingBox_ = polygon_.BoundingBox();
         barycenter_ = polygon_.Barycenter();
         area_ = polygon_.ComputeArea();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::EliminateRedundantVertices
+// Created: CMA 2011-12-15
+// -----------------------------------------------------------------------------
+void UrbanPositions::EliminateRedundantVertices( const T_PointVector& vertices, float epsilon )
+{
+    if( vertices.size() < 4 )
+    {
+        polygon_ = geometry::Polygon2f( vertices );
+        return;
+    }
+
+    T_PointVector result;
+    unsigned int first  = 0;
+    unsigned int second = 1;
+    unsigned int third  = 2;
+    while( third <= vertices.size() )
+    {
+        geometry::Segment2f segment( vertices[first], vertices[third % vertices.size()] );
+        if( segment.SquareDistance( vertices[second] ) <= epsilon )
+            second = third++;
+        else
+        {
+            result.push_back( vertices[second] );
+            first = second;
+            second = third++;
+        }
+    }
+
+    if( result.empty() )
+    {
+        polygon_ = geometry::Polygon2f( vertices );
+        return;
+    }
+
+    geometry::Segment2f segment( result.front(), result.back() );
+    if( segment.SquareDistance( vertices[0] ) >= epsilon )
+        result.push_back( vertices[0] );
+    polygon_ = geometry::Polygon2f( result );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::ChopSpikes
+// Created: CMA 2011-12-15
+// -----------------------------------------------------------------------------
+void UrbanPositions::ChopSpikes( float epsilon )
+{
+    std::set< geometry::Point2f > spikeTips;
+    for( geometry::Polygon2f::CIT_Edges it = polygon_.Edges_begin(); it != polygon_.Edges_end(); ++it )
+    {
+        geometry::Polygon2f::CIT_Edges it1 = it;
+        geometry::Polygon2f::CIT_Edges it2 = it;
+        ++it2;
+        if( it2 == polygon_.Edges_end() )
+            it2 = polygon_.Edges_begin();
+
+        geometry::Segment2f segment1( *it1 );
+        geometry::Segment2f segment2( *it2 );
+        if( ( segment1.SquareDistance( segment2.End() ) <= epsilon ) || ( segment2.SquareDistance( segment1.Start() ) <= epsilon ) )
+            spikeTips.insert( segment1.End() );
+    }
+
+    std::vector< geometry::Point2f > vertices;
+    for( geometry::Polygon2f::CIT_Vertices it = polygon_.Vertices().begin(); it != polygon_.Vertices().end(); ++it )
+    {
+        geometry::Point2f point( *it );
+        if( spikeTips.find( point ) == spikeTips.end() )
+            vertices.push_back( point );
+    }
+    polygon_ = geometry::Polygon2f( vertices );
 }

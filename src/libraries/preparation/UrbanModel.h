@@ -11,7 +11,7 @@
 #define __preparation_UrbanModel_h_
 
 #include "tools/Resolver.h"
-#include "clients_gui/UrbanDisplayOptions.h"
+#include "clients_kernel/UrbanDisplayOptions.h"
 
 namespace kernel
 {
@@ -46,10 +46,9 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& directoryPath );
-    void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void LoadUrban( xml::xistream& xis );
     void LoadUrbanState( xml::xistream& xis );
-    void Purge();
+    void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     //@}
 
 private:
@@ -62,6 +61,8 @@ private:
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, kernel::UrbanObject_ABC& object );
     template< typename T, typename U >
     void UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object );
+    void SerializeExercise( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     //@}
 
     //! @name Copy/Assignment
@@ -77,8 +78,7 @@ private:
     const kernel::ObjectTypes& objectTypes_;
     const kernel::AccommodationTypes& accommodationTypes_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
-    std::string urbanStateVersion_;
-    std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
+    std::auto_ptr< kernel::UrbanDisplayOptions > urbanDisplayOptions_;
     std::auto_ptr< UrbanFactory_ABC > factory_;
     //@}
 };

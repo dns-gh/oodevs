@@ -1,0 +1,99 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "clients_kernel_pch.h"
+#include "Architecture.h"
+#include "PropertiesDictionary.h"
+#include "Tools.h"
+
+using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: Architecture constructor
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+Architecture::Architecture( PropertiesDictionary& dictionary )
+    : dictionary_    ( dictionary )
+    , height_        ( 0 )
+    , floorNumber_   ( 0 )
+    , parkingFloors_ ( 0 )
+    , occupation_    ( 0 )
+    , trafficability_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture destructor
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+Architecture::~Architecture()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::Initialize
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
+    const std::string& material, float occupation, float trafficability )
+{
+    roofShape_ = roofShape;
+    material_ = material;
+    height_ = height;
+    floorNumber_ = floorNumber;
+    parkingFloors_ = parkingFloors;
+    occupation_ = static_cast< unsigned int >( occupation * 100u );
+    trafficability_ = trafficability;
+    const Architecture& architecture = *this;
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture.height_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture.floorNumber_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), architecture.parkingFloors_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture.roofShape_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture.material_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture.occupation_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture.trafficability_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetMaterial
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+const std::string& Architecture::GetMaterial() const
+{
+    return material_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetFloorNumber
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetFloorNumber() const
+{
+    return floorNumber_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetOccupation
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetOccupation() const
+{
+    return occupation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetHeight
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetHeight() const
+{
+    return static_cast< unsigned int >( height_ );
+}

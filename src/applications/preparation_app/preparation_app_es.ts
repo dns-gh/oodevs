@@ -965,6 +965,16 @@
         <source>Loading graphical interface ...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the terrain &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -2624,10 +2634,6 @@
     <message>
         <source>Error reading xml file: </source>
         <translation>Error leyendo archivo xml: </translation>
-    </message>
-    <message>
-        <source>Save modifications?</source>
-        <translation>¿Grabar modificaciones?</translation>
     </message>
     <message>
         <source>Error loading exercise: </source>

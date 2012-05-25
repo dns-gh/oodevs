@@ -10,9 +10,11 @@
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -22,19 +24,18 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
-
 #define DEFAULT_THRESHOLD 30
+
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, PropertiesDictionary& dico,
-                                                  const kernel::ObjectTypes& objectTypes )
-    : type_     ( 0 )
-    , enabled_  ( true )
-    , threshold_( DEFAULT_THRESHOLD )
-    , position_ ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
+InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico, const kernel::ObjectTypes& objectTypes )
+    : controllers_( controllers )
+    , type_       ( 0 )
+    , enabled_    ( true )
+    , threshold_  ( DEFAULT_THRESHOLD )
+    , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
 {
     std::string type;
     xis >> xml::optional
@@ -48,10 +49,12 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Ur
     {
         role_ = type_->GetName();
         CreateDictionary( dico );
-        if( type_->FindCapacity( "medical" ) )
-            object.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes, dico ) );
+        //if( type_->FindCapacity( "medical" ) )
+        //    object.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes, dico ) );
         object.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent();
     }
+    assert( controllers_.modes_ );
+    controllers_.modes_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +63,8 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Ur
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::~InfrastructureAttribute()
 {
-    //NOTHING
+    assert( controllers_.modes_ );
+    controllers_.modes_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +87,7 @@ void InfrastructureAttribute::Update( xml::xistream& xis )
 // Name: InfrastructureAttribute::Display
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Display( Displayer_ABC& displayer ) const
+void InfrastructureAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Infrastructure", "Infrastructure" ) )
              .Display( tools::translate( "Infrastructure", "Enable:" ), enabled_ );
@@ -95,7 +99,7 @@ void InfrastructureAttribute::Display( Displayer_ABC& displayer ) const
 // Name: InfrastructureAttribute::DisplayInTooltip
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
+void InfrastructureAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
@@ -106,22 +110,31 @@ void InfrastructureAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( type_ && ( enabled_ != true || threshold_ != DEFAULT_THRESHOLD ) )
+    if( GetCurrentMode() == ePreparationMode_Exercise && type_ && IsOverriden() )
+    {
         xos << xml::start( "infrastructure" )
                 << xml::attribute( "role", type_->GetName() )
                 << xml::attribute( "enabled", enabled_ )
                 << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100.f )
             << xml::end;
+    }
+    else if( GetCurrentMode() == ePreparationMode_Terrain && type_ && enabled_ == true )
+    {
+        xos << xml::start( "infrastructures" )
+                << xml::start( "infrastructure" )
+                    << xml::attribute( "type", type_->GetName() )
+                << xml::end
+            << xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::SetOverriden
 // Created: JSR 2011-02-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::SetOverriden( bool& overriden ) const
+bool InfrastructureAttribute::IsOverriden() const
 {
-    if( enabled_ != true || threshold_ != DEFAULT_THRESHOLD )
-        overriden = true;
+    return enabled_ != true || threshold_ != DEFAULT_THRESHOLD;
 }
 
 namespace
@@ -139,7 +152,7 @@ namespace
 // Name: InfrastructureAttribute::CreateDictionary
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
+void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_->GetName() );
     dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
@@ -150,7 +163,7 @@ void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( type_ && viewport.IsHotpointVisible() )
         tools.DrawApp6Symbol( type_->GetSymbol(), position_, 0.1f, 0.1f );

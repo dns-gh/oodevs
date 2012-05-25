@@ -15,6 +15,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "GlProxy.h"
 #include "PropertiesWidget.h"
 #include "TableItemDisplayer.h"
 #include "Tools.h"
@@ -25,9 +26,10 @@ using namespace gui;
 // Name: PropertiesPanel constructor
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer )
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer, const GlProxy& glProxy )
     : QScrollArea( parent )
     , controllers_( controllers )
+    , glProxy_    ( glProxy )
     , selected_   ( 0 )
     , displayer_  ( displayer )
 {
@@ -72,6 +74,8 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
                 dico->Display( *table_ );
     }
     setWidget( table_ );
+    if( element )
+        table_->setEnabled( glProxy_.ShouldEdit( *element ) );
 }
 
 // -----------------------------------------------------------------------------

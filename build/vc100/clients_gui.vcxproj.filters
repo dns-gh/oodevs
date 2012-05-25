@@ -83,12 +83,6 @@
     <Filter Include="Source Files\Creation\Drawings\Extensions">
       <UniqueIdentifier>{35dcc7ee-145e-4039-9c32-2c344e369eae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Creation\Urban">
-      <UniqueIdentifier>{d33f7a9b-71ac-433b-9a58-cd1688e55101}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Creation\Urban\Extensions">
-      <UniqueIdentifier>{9e08875e-dd6b-49cf-9332-a11109239cef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Creation\Crowds">
       <UniqueIdentifier>{6475c875-5f89-410f-8805-f1268df1fd46}</UniqueIdentifier>
     </Filter>
@@ -607,12 +601,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawingPositions.cpp">
       <Filter>Source Files\Creation\Drawings\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp">
-      <Filter>Source Files\Creation\Urban\Extensions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\Usages.cpp">
-      <Filter>Source Files\Creation\Urban\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationsPanel.cpp">
       <Filter>Source Files\Creation\Crowds</Filter>
     </ClCompile>
@@ -726,9 +714,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\VisualisationScalesPanel.cpp">
       <Filter>Source Files\Preferences\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp">
-      <Filter>Source Files\Preferences\Gradient</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\GradientButton.cpp">
       <Filter>Source Files\Preferences\Gradient</Filter>
@@ -855,12 +840,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp">
       <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp">
-      <Filter>Source Files\Creation\Urban</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp">
       <Filter>Source Files\gl\Layers</Filter>
@@ -1257,12 +1236,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawingPositions.h">
       <Filter>Source Files\Creation\Drawings\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h">
-      <Filter>Source Files\Creation\Urban\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Usages.h">
-      <Filter>Source Files\Creation\Urban\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\WeatherWidget.h">
       <Filter>Source Files\Creation\Weather</Filter>
     </ClInclude>
@@ -1313,9 +1286,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PreferencePanel_ABC.h">
       <Filter>Source Files\Preferences\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h">
-      <Filter>Source Files\Preferences\Gradient</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\GradientItem.h">
       <Filter>Source Files\Preferences\Gradient</Filter>
@@ -1388,15 +1358,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h">
       <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h">
-      <Filter>Source Files\Creation\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h">
-      <Filter>Source Files\Creation\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h">
       <Filter>Source Files\gl\Layers</Filter>

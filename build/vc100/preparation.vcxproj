@@ -99,6 +99,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\MoveableProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\PerformanceIndicator.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\PhysicalAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -162,6 +163,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\WeatherModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileSelection.cpp" />
@@ -249,6 +251,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\ModelConsistencyChecker.h" />
     <ClInclude Include="..\..\src\libraries\preparation\MoveableProxy.h" />
     <ClInclude Include="..\..\src\libraries\preparation\PerformanceIndicator.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\PhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Color.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ColorController.h" />
@@ -314,6 +317,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanTypes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\WeatherModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory.h" />

@@ -285,7 +285,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Properties
     QDockWidget* pPropertiesWnd = new QDockWidget( "properties", this );
     pPropertiesWnd->setObjectName( "properties" );
-    Properties* properties = new Properties( pPropertiesWnd, controllers );
+    Properties* properties = new Properties( pPropertiesWnd, controllers, *glProxy_ );
     pPropertiesWnd->setWidget( properties );
     pPropertiesWnd->setWindowTitle( tr( "Properties" ) );
     addDockWidget( Qt::LeftDockWidgetArea, pPropertiesWnd );

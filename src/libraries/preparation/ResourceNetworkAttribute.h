@@ -50,7 +50,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
-                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving );
              ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
     virtual ~ResourceNetworkAttribute();
@@ -61,10 +61,14 @@ public:
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
     virtual kernel::ResourceNetwork_ABC::ResourceNode& FindOrCreateResourceNode( std::string resource );
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void SerializeAttributes( xml::xostream& ) const;
-    virtual void SetOverriden( bool& overriden ) const;
+    virtual bool IsOverriden() const;
     void Update( xml::xistream& xis );
     void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
 private:

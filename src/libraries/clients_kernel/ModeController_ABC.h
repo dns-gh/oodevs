@@ -10,6 +10,7 @@
 #ifndef __ModeController_ABC_h_
 #define __ModeController_ABC_h_
 
+#include "Controllers.h"
 #include "tools/SortedInterfaceContainer.h"
 #include "tools/Observer_ABC.h"
 

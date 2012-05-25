@@ -21,10 +21,6 @@ namespace kernel
     class Object_ABC;
     class ObjectTypes;
     class PropertiesDictionary;
-}
-
-namespace gui
-{
     class UrbanDisplayOptions;
 }
 
@@ -40,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UrbanFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes,
-                           const tools::Resolver< kernel::Object_ABC >& objects, gui::UrbanDisplayOptions& options,
+                           const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options,
                            const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects,
                            const kernel::AccommodationTypes& accommodations, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanFactory();
@@ -57,7 +53,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::ObjectTypes& objectTypes_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
-    gui::UrbanDisplayOptions& options_;
+    kernel::UrbanDisplayOptions& options_;
     const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects_;
     const kernel::AccommodationTypes& accommodations_;
     const kernel::CoordinateConverter_ABC& converter_;

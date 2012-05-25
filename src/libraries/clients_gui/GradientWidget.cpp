@@ -14,11 +14,11 @@
 #include "moc_GradientWidget.cpp"
 #include "GradientButton.h"
 #include "ColorButton.h"
-#include "Gradient.h"
 #include "GradientPreferences.h"
 #include "resources.h"
 #include "PresetDialog.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Gradient.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
@@ -64,7 +64,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     color_->setMaximumHeight( 30 );
 
     connect( gradientEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
-    connect( gradientEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
+    connect( gradientEditor_, SIGNAL( GradientChanged( kernel::Gradient& ) ), SLOT( OnGradientEdited( kernel::Gradient& ) ) );
     connect( this, SIGNAL( ToggleVariableGradient( bool ) ), gradientEditor_, SLOT( OnEnableVariableGradient( bool ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
@@ -108,9 +108,9 @@ void GradientWidget::OnSelectionChanged( const QColor& color )
 // Name: GradientWidget::OnGradientEdited
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientWidget::OnGradientEdited( Gradient& gradient )
+void GradientWidget::OnGradientEdited( kernel::Gradient& gradient )
 {
-    if( Gradient* current = CurrentPreset() )
+    if( kernel::Gradient* current = CurrentPreset() )
         *current = gradient;
     emit GradientChanged( gradient );
 }
@@ -121,7 +121,7 @@ void GradientWidget::OnGradientEdited( Gradient& gradient )
 // -----------------------------------------------------------------------------
 void GradientWidget::OnPresetChanged()
 {
-    if( const Gradient* current = CurrentPreset() )
+    if( const kernel::Gradient* current = CurrentPreset() )
         gradientEditor_->LoadGradient( *current );
 }
 
@@ -131,9 +131,9 @@ void GradientWidget::OnPresetChanged()
 // -----------------------------------------------------------------------------
 void GradientWidget::OnPresetCopied()
 {
-    if( const Gradient* current = CurrentPreset() )
+    if( const kernel::Gradient* current = CurrentPreset() )
     {
-        Gradient* gradient = new Gradient( *current );
+        kernel::Gradient* gradient = new kernel::Gradient( *current );
         unsigned int i = 1;
         QString newName;
         bool valid;
@@ -155,7 +155,7 @@ void GradientWidget::OnPresetCopied()
 
 namespace
 {
-    void Update( Gradient* gradient, std::vector< std::string >& presets )
+    void Update( kernel::Gradient* gradient, std::vector< std::string >& presets )
     {
         presets.push_back( gradient->GetName().ascii() );
     }
@@ -167,7 +167,7 @@ namespace
 // -----------------------------------------------------------------------------
 void GradientWidget::OnPresetRenamed()
 {
-    if( Gradient* current = CurrentPreset() )
+    if( kernel::Gradient* current = CurrentPreset() )
     {
         std::vector< std::string > presets;
         std::for_each( presets_.begin(), presets_.end(), boost::bind( ::Update, _1, boost::ref( presets ) ) );
@@ -185,7 +185,7 @@ void GradientWidget::OnPresetDeleted()
 {
     if( presets_.size() == 1 )
         return;
-    if( Gradient* current = CurrentPreset() )
+    if( kernel::Gradient* current = CurrentPreset() )
     {
         presetCombo_->removeItem( presetCombo_->currentItem() );
         options_.Remove( std::string( "Gradients/" ) + current->GetName().ascii() );
@@ -201,7 +201,7 @@ void GradientWidget::OnPresetDeleted()
 // Name: GradientWidget::CurrentPreset
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-Gradient* GradientWidget::CurrentPreset() const
+kernel::Gradient* GradientWidget::CurrentPreset() const
 {
     const int current = presetCombo_->currentItem();
     if( current < 0 || current > static_cast< int >( presets_.size() ) - 1 )
@@ -215,7 +215,7 @@ Gradient* GradientWidget::CurrentPreset() const
 // -----------------------------------------------------------------------------
 void GradientWidget::Commit()
 {
-    if( const Gradient* current = CurrentPreset() )
+    if( const kernel::Gradient* current = CurrentPreset() )
         options_.Change( "Gradient", current->GetName() );
     preferences_.Commit( presets_ );
 }
@@ -227,12 +227,12 @@ void GradientWidget::Commit()
 void GradientWidget::Reset()
 {
     Clear();
-    tools::Iterator< const Gradient& > it = preferences_.CreateIterator();
+    tools::Iterator< const kernel::Gradient& > it = preferences_.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const Gradient& item = it.NextElement();
+        const kernel::Gradient& item = it.NextElement();
         presetCombo_->insertItem( tools::translate( "gradients",item.GetName() ) );
-        presets_.push_back( new Gradient( item ) );
+        presets_.push_back( new kernel::Gradient( item ) );
     }
     Select( options_.GetOption( "Gradient", QString( "default" ) ).To< QString >() );
 }

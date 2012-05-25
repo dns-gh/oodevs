@@ -26,6 +26,8 @@ Layer_ABC::Layer_ABC()
     , currentWidget_( 0 )
     , currentProxy_ ( 0 )
     , enabled_      ( true )
+    , readOnly_     ( false )
+    , readOnlyModes_( 0 )
 {
     // NOTHING
 }
@@ -255,4 +257,22 @@ bool Layer_ABC::IsEnabled() const
 bool Layer_ABC::IsVisible() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::IsReadOnly
+// Created: ABR 2012-05-23
+// -----------------------------------------------------------------------------
+bool Layer_ABC::IsReadOnly() const
+{
+    return ( readOnlyModes_ & GetCurrentMode() ) != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::SetReadOnlyModes
+// Created: ABR 2012-05-23
+// -----------------------------------------------------------------------------
+void Layer_ABC::SetReadOnlyModes( int modes )
+{
+    readOnlyModes_ = modes;
 }

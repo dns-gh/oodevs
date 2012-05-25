@@ -63,7 +63,7 @@ void UrbanListView::NotifyDeleted( const kernel::Team_ABC& team )
 void UrbanListView::NotifyCreated( const kernel::Object_ABC& object )
 {
     const kernel::Hierarchies* hierarchies = object.Retrieve< kernel::Hierarchies >();
-    if( !hierarchies )
+    if( !hierarchies ) // $$$$ ABR 2012-05-22: Only urban block have hierarchies
         return;
     const kernel::Entity_ABC* superior = hierarchies->GetSuperior();
     ValuedListItem* item = 0;

@@ -14,6 +14,7 @@
 #include "AccommodationTypes.h"
 #include "ActionController.h"
 #include "Architecture_ABC.h"
+#include "PhysicalAttribute_ABC.h"
 #include "PropertiesDictionary.h"
 #include "UrbanColor_ABC.h"
 #include "UrbanPositions_ABC.h"
@@ -245,17 +246,28 @@ unsigned int UrbanObject_ABC::GetHumans() const
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject_ABC::GetLivingSpace
-// Created: LGY 2011-04-19
+// Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-float UrbanObject_ABC::GetLivingSpace() const
+float UrbanObject_ABC::GetLivingSpace( unsigned int floorNumber, unsigned int occupation ) const
 {
     if( livingSpace_ == 0 )
         if( const UrbanPositions_ABC* positions = Retrieve< UrbanPositions_ABC >() )
         {
             livingSpace_ = positions->ComputeArea();
-            if( const Architecture_ABC* architecture = Retrieve< Architecture_ABC >() )
-                livingSpace_ *= ( architecture->GetFloorNumber() + 1 ) * ( static_cast< float >( architecture->GetOccupation() ) * 0.01f );
+            livingSpace_ *= ( floorNumber + 1 ) * ( static_cast< float >( occupation ) * 0.01f );
         }
+    return livingSpace_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject_ABC::GetLivingSpace
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+float UrbanObject_ABC::GetLivingSpace() const
+{
+    if( livingSpace_ == 0 )
+        if( const Architecture_ABC* architecture = Get< PhysicalAttribute_ABC >().GetArchitecture() )
+            return GetLivingSpace( architecture->GetFloorNumber(), architecture->GetOccupation() );
     return livingSpace_;
 }
 
@@ -271,7 +283,7 @@ double UrbanObject_ABC::GetNominalCapacity() const
         while( it.HasMoreElements() )
         {
             const AccommodationType& acc = it.NextElement();
-            double proportion = Get< Usages_ABC >().Find( acc.GetRole() ) * 0.01;
+            double proportion = Get< PhysicalAttribute_ABC >().FindUsagesValue( acc.GetRole() ) * 0.01;
             nominalCapacity_ += GetLivingSpace() * proportion * acc.GetNominalCapacity();
         }
     }
@@ -285,7 +297,7 @@ double UrbanObject_ABC::GetNominalCapacity() const
 double UrbanObject_ABC::GetNominalCapacity( const std::string& motivation ) const
 {
     if( const AccommodationType* acc = accommodations_.Find( motivation ) )
-        return GetLivingSpace() * Get< Usages_ABC >().Find( motivation ) * 0.01 * acc->GetNominalCapacity();
+        return GetLivingSpace() * Get< PhysicalAttribute_ABC >().FindUsagesValue( motivation ) * 0.01 * acc->GetNominalCapacity();
     return 0;
 }
 

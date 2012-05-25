@@ -30,7 +30,6 @@
 #include "ObjectsLayer.h"
 #include "PopulationsLayer.h"
 #include "PreparationProfile.h"
-#include "PropertiesPanel.h"
 #include "ScoreDialog.h"
 #include "ToolbarContainer.h"
 #include "LocationEditorToolbar.h"
@@ -49,7 +48,6 @@
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GisToolbar.h"
-//#include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
@@ -112,9 +110,6 @@
 #include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
-
-//using namespace kernel;
-//using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -262,6 +257,7 @@ namespace
             preference.AddLayer( text, layer );
         if( !passes.empty() )
             layer.SetPasses( passes );
+        layer.SetReadOnlyModes( ePreparationMode_Terrain );
     }
 }
 
@@ -297,15 +293,6 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     gui::Layer_ABC& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
     gui::Layer_ABC& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 
-    // Display modes
-    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer_ABC or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer_ABC.
-    agents.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    limits.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    populations.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    ghosts.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-
-    controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Terrain, &urbanLayer );
 
     // Drawing order
     AddLayer( *glProxy_, preferences, defaultLayer );
@@ -335,6 +322,19 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     AddLayer( *glProxy_, preferences, drawerLayer,              "main" );
     AddLayer( *glProxy_, preferences, selection,                "main" );
     AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
+
+    // Display modes
+    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer_ABC or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer_ABC.
+    agents.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+    limits.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+    objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+    populations.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+    ghosts.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+    // Readonly modes
+    urbanLayer.SetReadOnlyModes( ePreparationMode_None );
+    // Multiple Selection
+    controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Exercise, &urbanLayer );
+    controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Terrain, &urbanLayer );
 
     // events order
     forward_->Register( terrain );
@@ -555,16 +555,24 @@ void MainWindow::ReloadExercise()
 // Name: MainWindow::Save
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-bool MainWindow::Save()
+void MainWindow::Save( bool checkConsistency /* = true */ )
 {
-    bool result = false;
     if( needsSaving_ )
     {
-        emit CheckConsistency();
-        model_.Save( config_ );
+        assert( controllers_.modes_ );
+        if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
+        {
+            if( checkConsistency )
+                emit CheckConsistency();
+            model_.SaveExercise( config_ );
+        }
+        else
+        {
+            assert( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain );
+            model_.SaveTerrain( config_ );
+        }
         SetWindowTitle( false );
     }
-    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -733,16 +741,36 @@ void MainWindow::SetNeedsSaving( bool status )
 // Name: MainWindow::CheckSaving
 // Created: RPD 2010-02-01
 // -----------------------------------------------------------------------------
-bool MainWindow::CheckSaving()
+bool MainWindow::CheckSaving( bool switchingMode /* = false */ )
 {
     if( needsSaving_ )
     {
+        assert( controllers_.modes_ != 0 );
         int result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
-                                                , tr( "Save modifications?" )
-                                                , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
-        if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
+                                                , controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise
+                                                ? tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() )
+                                                : tr( "Unsaved modification detected.\nDo you want to save the terrain \'%1\'?" ).arg( config_.GetTerrainName().c_str() )
+                                                , QMessageBox::Yes, ( !switchingMode ) ? QMessageBox::No : 0, QMessageBox::Cancel );
+        if( result == QMessageBox::Cancel )
             return false;
+        else if( result == QMessageBox::Yes )
+            Save( !switchingMode );
     }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SwitchToTerrainMode
+// Created: ABR 2012-05-23
+// -----------------------------------------------------------------------------
+bool MainWindow::SwitchToTerrainMode( bool terrainMode )
+{
+    if( !CheckSaving( true ) )
+        return false;
+    assert( controllers_.modes_ != 0 );
+    controllers_.actions_.DeselectAll();
+    controllers_.ChangeMode( terrainMode ? ePreparationMode_Terrain : ePreparationMode_Exercise );
+    SetWindowTitle( false );
     return true;
 }
 

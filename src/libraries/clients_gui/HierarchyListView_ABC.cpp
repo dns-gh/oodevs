@@ -195,7 +195,7 @@ void HierarchyListView_ABC::OnSelectionChange( Q3ListViewItem* item )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int )
 {
-    if( item )
+    if( item && !IsReadOnly() )
         static_cast< ValuedListItem* >( item )->ContextMenu( controllers_.actions_, pos );
 }
 
@@ -321,6 +321,8 @@ void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
 // -----------------------------------------------------------------------------
 Q3DragObject* HierarchyListView_ABC::dragObject()
 {
+    if( IsReadOnly() )
+        return 0;
     ListView< HierarchyListView_ABC >::dragObject();
     ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
     if( !pItem )
@@ -334,6 +336,11 @@ Q3DragObject* HierarchyListView_ABC::dragObject()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 {
+    if( IsReadOnly() )
+    {
+        pEvent->ignore();
+        return;
+    }
     ListView< HierarchyListView_ABC >::viewportDragEnterEvent( pEvent );
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
@@ -344,6 +351,11 @@ void HierarchyListView_ABC::viewportDragEnterEvent( QDragEnterEvent* pEvent )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::viewportDragMoveEvent( QDragMoveEvent* pEvent )
 {
+    if( IsReadOnly() )
+    {
+        pEvent->ignore();
+        return;
+    }
     ListView< HierarchyListView_ABC >::viewportDragMoveEvent( pEvent );
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
@@ -354,6 +366,11 @@ void HierarchyListView_ABC::viewportDragMoveEvent( QDragMoveEvent* pEvent )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
 {
+    if( IsReadOnly() )
+    {
+        pEvent->ignore();
+        return;
+    }
     ListView< HierarchyListView_ABC >::viewportDropEvent( pEvent );
     const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent );
     if( entity )
@@ -375,6 +392,8 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
 // -----------------------------------------------------------------------------
 bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& target )
 {
+    if( IsReadOnly() )
+        return false;
     return target.IsA< const Entity_ABC >()
         && Drop( entity, *target.GetValueNoCheck< const Entity_ABC >() );
 }

@@ -307,9 +307,9 @@ std::string ExerciseConfig::GetOrbatFile() const
 // -----------------------------------------------------------------------------
 std::string ExerciseConfig::GetUrbanFile() const
 {
-    if( urban_.empty() )
-        return urban_;
-    return BuildExerciseChildFile( urban_ );
+    if( !urban_.empty() )
+        return BuildExerciseChildFile( urban_ );
+    return GeneralConfig::GetUrbanFile( terrain_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -680,4 +680,22 @@ bool ExerciseConfig::IsDispatcherProtobufLogInBytes() const
 bool ExerciseConfig::IsLoggerPluginLogInBytes() const
 {
     return simLoggerPluginSettings_.IsSizeInBytes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDataSet
+// Created: ABR 2012-05-24
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetDataSet() const
+{
+    return dataset_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetPhysicalBase
+// Created: ABR 2012-05-24
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetPhysicalBase() const
+{
+    return physical_;
 }
