@@ -92,7 +92,7 @@ void EntityLayer< ConcreteEntity >::NotifySelected( const ConcreteEntity* entity
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifySelectionChanged( const std::vector< const ConcreteEntity* >& /*elements*/ )
 {
-
+    // TODO
 }
 
 // -----------------------------------------------------------------------------

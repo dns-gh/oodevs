@@ -61,10 +61,17 @@ protected:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void DeselectAll();
+    void DoSelect( const kernel::Entity_ABC* urbanObject );
+    //@}
+
+private:
     //! @name Member data
     //@{
     View_ABC& view_;
-    std::vector< const kernel::UrbanObject_ABC* > selectedObjects_;
+    std::set< const kernel::Entity_ABC* > selectedObjects_;
     //@}
 
 protected:

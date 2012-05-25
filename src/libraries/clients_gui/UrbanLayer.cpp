@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
 #include "View_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/Options.h"
@@ -105,16 +106,8 @@ void UrbanLayer::Reset2d()
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
 {
-    static const bool bTrue = true;
-    static const bool bFalse = false;
-    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = selectedObjects_.begin(); it != selectedObjects_.end(); ++it )
-        ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
-    selectedObjects_.clear();
-    if( object )
-    {
-        selectedObjects_.push_back( object );
-        object->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
-    }
+    DeselectAll();
+    DoSelect( object );
     EntityLayer< kernel::UrbanObject_ABC >::NotifySelected( object );
 }
 
@@ -124,17 +117,55 @@ void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements )
 {
-    static const bool bTrue = true;
+    DeselectAll();
+    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+        DoSelect( *it );
+    EntityLayer< kernel::UrbanObject_ABC >::NotifySelectionChanged( elements );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::DeselectAll
+// Created: JSR 2012-05-25
+// -----------------------------------------------------------------------------
+void UrbanLayer::DeselectAll()
+{
     static const bool bFalse = false;
-    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = selectedObjects_.begin(); it != selectedObjects_.end(); ++it )
+    for( std::set< const kernel::Entity_ABC* >::const_iterator it = selectedObjects_.begin(); it != selectedObjects_.end(); ++it )
         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
     selectedObjects_.clear();
-    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::DoSelect
+// Created: JSR 2012-05-25
+// -----------------------------------------------------------------------------
+void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
+{
+    static const bool bTrue = true;
+    if( !urbanObject )
+        return;
+    const kernel::Hierarchies* hierarchies = urbanObject->Retrieve< kernel::Hierarchies >();
+    
+    // TODO hack for gaming before UrbanHierarchies are implemented
+    if( !hierarchies )
     {
-        selectedObjects_.push_back( *it );
-         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+        selectedObjects_.insert( urbanObject );
+        urbanObject->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+        return;
     }
-    EntityLayer< kernel::UrbanObject_ABC >::NotifySelectionChanged( elements );
+    //
+
+    tools::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+    if( it.HasMoreElements() )
+    {
+        while( it.HasMoreElements() )
+            DoSelect( &it.NextElement() );
+    }
+    else
+    {
+        selectedObjects_.insert( urbanObject );
+        urbanObject->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +174,7 @@ void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanO
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 {
-    std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = std::find( selectedObjects_.begin(), selectedObjects_.end(), &object );
+    std::set< const kernel::Entity_ABC* >::const_iterator it = selectedObjects_.find( &object );
     if( it != selectedObjects_.end() )
         selectedObjects_.erase( it );
     EntityLayer< kernel::UrbanObject_ABC >::NotifyDeleted( object );
