@@ -61,6 +61,12 @@ public:
     virtual Reply StopNode  ( const Uuid& id ) const;
     //@}
 
+    //! @name Install Methods
+    //@{
+    virtual Reply GetInstall   ( const Uuid& id ) const;
+    virtual Reply DeleteInstall( const Uuid& id, const std::vector< size_t >& list  );
+    //@}
+
     //! @name Cache Methods
     //@{
     virtual Reply UploadCache     ( const Uuid& id, std::istream& src );

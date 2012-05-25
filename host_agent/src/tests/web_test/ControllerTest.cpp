@@ -57,6 +57,10 @@ namespace
         MOCK_METHOD( DeleteNode, 1 );
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
+        // install
+        MOCK_METHOD( GetInstall, 1 );
+        MOCK_METHOD( DeleteInstall, 2 );
+        // cache
         MOCK_METHOD( UploadCache, 2 );
         MOCK_METHOD( GetCache, 1 );
         MOCK_METHOD( DeleteCache, 1 );

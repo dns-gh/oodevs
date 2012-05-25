@@ -241,6 +241,24 @@ Reply Agent::StopNode( const Uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::GetInstall
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+Reply Agent::GetInstall( const Uuid& id ) const
+{
+    return Reply( nodes_.GetInstall( id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DeleteInstall
+// Created: BAX 2012-05-25
+// -----------------------------------------------------------------------------
+Reply Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
+{
+    return Reply( nodes_.DeleteInstall( id, list ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
