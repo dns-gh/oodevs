@@ -213,59 +213,63 @@ std::string UuidDispatch( const Request_ABC& request, const std::string& name, A
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::Notify
+// Name: Controller::DoGet
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string Controller::Notify( Request_ABC& request )
+std::string Controller::DoGet( Request_ABC& request )
 {
     const std::string& uri = request.GetUri();
-    const std::string& method = request.GetMethod();
-    if( method == "GET" )
-        try
-        {
-            if( uri == "/get_cluster" )        return GetCluster( request );
-            if( uri == "/start_cluster" )      return StartCluster( request );
-            if( uri == "/stop_cluster" )       return StopCluster( request );
-            // nodes
-            if( uri == "/list_nodes" )         return ListNodes( request );
-            if( uri == "/count_nodes" )        return CountNodes( request );
-            if( uri == "/get_node" )           return GetNode( request );
-            if( uri == "/create_node" )        return CreateNode( request );
-            if( uri == "/delete_node" )        return DeleteNode( request );
-            if( uri == "/start_node" )         return StartNode( request );
-            if( uri == "/stop_node" )          return StopNode( request );
-            // cache
-            if( uri == "/get_cache" )          return GetCache( request );
-            if( uri == "/delete_cache" )       return DeleteCache( request );
-            if( uri == "/install_from_cache" ) return InstallFromCache( request );
-            // sessions
-            if( uri == "/list_sessions" )      return ListSessions( request );
-            if( uri == "/count_sessions" )     return CountSessions( request );
-            if( uri == "/get_session" )        return GetSession( request );
-            if( uri == "/create_session" )     return CreateSession( request );
-            if( uri == "/delete_session" )     return DeleteSession( request );
-            if( uri == "/start_session" )      return StartSession( request );
-            if( uri == "/stop_session" )       return StopSession( request );
-            // exercises
-            if( uri == "/list_exercises")      return ListExercises( request );
-            if( uri == "/count_exercises" )    return CountExercises( request );
-        }
-        catch( const HttpException& err )
-        {
-            return WriteHttpReply( err.GetCode(), err.what() );
-        }
-    else if( method == "POST" )
-        try
-        {
-            if( uri == "/upload_cache" ) return UploadCache( request );
-        }
-        catch( const HttpException& err )
-        {
-            return WriteHttpReply( err.GetCode(), err.what() );
-        }
-    else
-        return WriteHttpReply( BadRequest, "Invalid method type" );
+    try
+    {
+        if( uri == "/get_cluster" )        return GetCluster( request );
+        if( uri == "/start_cluster" )      return StartCluster( request );
+        if( uri == "/stop_cluster" )       return StopCluster( request );
+        // nodes
+        if( uri == "/list_nodes" )         return ListNodes( request );
+        if( uri == "/count_nodes" )        return CountNodes( request );
+        if( uri == "/get_node" )           return GetNode( request );
+        if( uri == "/create_node" )        return CreateNode( request );
+        if( uri == "/delete_node" )        return DeleteNode( request );
+        if( uri == "/start_node" )         return StartNode( request );
+        if( uri == "/stop_node" )          return StopNode( request );
+        // cache
+        if( uri == "/get_cache" )          return GetCache( request );
+        if( uri == "/delete_cache" )       return DeleteCache( request );
+        if( uri == "/install_from_cache" ) return InstallFromCache( request );
+        // sessions
+        if( uri == "/list_sessions" )      return ListSessions( request );
+        if( uri == "/count_sessions" )     return CountSessions( request );
+        if( uri == "/get_session" )        return GetSession( request );
+        if( uri == "/create_session" )     return CreateSession( request );
+        if( uri == "/delete_session" )     return DeleteSession( request );
+        if( uri == "/start_session" )      return StartSession( request );
+        if( uri == "/stop_session" )       return StopSession( request );
+        // exercises
+        if( uri == "/list_exercises")      return ListExercises( request );
+        if( uri == "/count_exercises" )    return CountExercises( request );
+    }
+    catch( const HttpException& err )
+    {
+        return WriteHttpReply( err.GetCode(), err.what() );
+    }
+    return WriteHttpReply( NotFound, "Unknown URI" );
+}
 
+// -----------------------------------------------------------------------------
+// Name: Controller::DoPost
+// Created: BAX 2012-03-07
+// -----------------------------------------------------------------------------
+std::string Controller::DoPost( Request_ABC& request )
+{
+    const std::string& uri = request.GetUri();
+    try
+    {
+        if( uri == "/upload_cache" ) return UploadCache( request );
+    }
+    catch( const HttpException& err )
+    {
+        return WriteHttpReply( err.GetCode(), err.what() );
+    }
     return WriteHttpReply( NotFound, "Unknown URI" );
 }
 

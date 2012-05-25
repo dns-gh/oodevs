@@ -76,7 +76,6 @@ namespace
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
     {
-        MOCK_METHOD( GetMethod, 0 );
         MOCK_METHOD( GetUri, 0 );
         MOCK_METHOD( GetParameter, 1 );
         MOCK_METHOD( GetHeader, 1 );
@@ -98,6 +97,12 @@ namespace
         return boost::xpressive::regex_replace( data, httpHeaderRegex, "" );
     }
 
+    void CheckReply( int code, const std::string& expected, const std::string& reply )
+    {
+        BOOST_CHECK( CheckHttpCode( code, reply ) );
+        BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ));
+    }
+
     struct Fixture
     {
         Fixture()
@@ -107,17 +112,10 @@ namespace
         }
         void SetRequest( const std::string& method, const std::string& uri, const std::map< std::string, std::string >& parameters = std::map< std::string, std::string >() )
         {
-            MOCK_EXPECT( request.GetMethod ).once().returns( method );
             MOCK_EXPECT( request.GetUri ).once().returns( uri );
             typedef std::map< std::string, std::string > Pair;
             BOOST_FOREACH( const Pair::value_type& pair, parameters )
                 MOCK_EXPECT( request.GetParameter ).once().with( pair.first ).returns( pair.second );
-        }
-        void CheckNotify( int code, const std::string& expected )
-        {
-            const std::string reply = controller.Notify( request );
-            BOOST_CHECK( CheckHttpCode( code, reply ) );
-            BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ));
         }
         MockLog log;
         MockRequest request;
@@ -131,7 +129,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_cluster, Fixture )
     SetRequest( "GET", "/get_cluster" );
     const std::string expected = "a json cluster";
     MOCK_EXPECT( agent.GetCluster ).once().returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_start_cluster, Fixture )
@@ -139,7 +137,7 @@ BOOST_FIXTURE_TEST_CASE( controller_start_cluster, Fixture )
     SetRequest( "GET", "/start_cluster" );
     const std::string expected = "a json cluster";
     MOCK_EXPECT( agent.StartCluster ).once().returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_stop_cluster, Fixture )
@@ -147,7 +145,7 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_cluster, Fixture )
     SetRequest( "GET", "/stop_cluster" );
     const std::string expected = "a json cluster";
     MOCK_EXPECT( agent.StopCluster ).once().returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_list_nodes, Fixture )
@@ -158,7 +156,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_nodes, Fixture )
     );
     const std::string expected = "a json list";
     MOCK_EXPECT( agent.ListNodes ).once().with( 5, 3 ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_count_nodes, Fixture )
@@ -166,7 +164,7 @@ BOOST_FIXTURE_TEST_CASE( controller_count_nodes, Fixture )
     SetRequest( "GET", "/count_nodes" );
     const std::string expected = "a json number";
     MOCK_EXPECT( agent.CountNodes ).once().returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_get_node, Fixture )
@@ -174,7 +172,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_node, Fixture )
     SetRequest( "GET", "/get_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json node";
     MOCK_EXPECT( agent.GetNode ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
@@ -185,7 +183,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
     );
     const std::string expected = "a json node";
     MOCK_EXPECT( agent.CreateNode ).once().with( name ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture )
@@ -193,7 +191,7 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_node, Fixture )
     SetRequest( "GET", "/delete_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json node";
     MOCK_EXPECT( agent.DeleteNode ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_start_node, Fixture )
@@ -201,7 +199,7 @@ BOOST_FIXTURE_TEST_CASE( controller_start_node, Fixture )
     SetRequest( "GET", "/start_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json node";
     MOCK_EXPECT( agent.StartNode ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_stop_node, Fixture )
@@ -209,7 +207,7 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_node, Fixture )
     SetRequest( "GET", "/stop_node", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json node";
     MOCK_EXPECT( agent.StopNode ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture )
@@ -221,7 +219,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture )
     );
     const std::string expected = "a json list";
     MOCK_EXPECT( agent.ListSessions ).once().with( defaultId, 5, 3 ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture )
@@ -229,7 +227,7 @@ BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture )
     SetRequest( "GET", "/count_sessions", boost::assign::map_list_of( "node", defaultIdString ) );
     const std::string expected = "a json number";
     MOCK_EXPECT( agent.CountSessions ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
@@ -237,7 +235,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
     SetRequest( "GET", "/get_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json session";
     MOCK_EXPECT( agent.GetSession ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
@@ -251,15 +249,14 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
     );
     const std::string expected = "a json session";
     MOCK_EXPECT( agent.CreateSession ).once().with( defaultId, name, exercise ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_returns_bad_request, Fixture )
 {
-    MOCK_EXPECT( request.GetMethod ).once().returns( "GET" );
     MOCK_EXPECT( request.GetUri ).once().returns( "/create_session" );
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
-    CheckNotify( 400, "missing node parameter" );
+    CheckReply( 400, "missing node parameter", controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
@@ -267,7 +264,7 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
     SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json session";
     MOCK_EXPECT( agent.DeleteSession ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
@@ -275,7 +272,7 @@ BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
     SetRequest( "GET", "/start_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json session";
     MOCK_EXPECT( agent.StartSession ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
@@ -283,7 +280,7 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
     SetRequest( "GET", "/stop_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json session";
     MOCK_EXPECT( agent.StopSession ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
@@ -294,7 +291,7 @@ BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
     );
     const std::string expected = "a json list";
     MOCK_EXPECT( agent.ListExercises ).once().with( 5, 3 ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
@@ -302,7 +299,7 @@ BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
     SetRequest( "GET", "/count_exercises" );
     const std::string expected = "a json number";
     MOCK_EXPECT( agent.CountExercises ).once().returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
@@ -315,14 +312,14 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
     for( size_t i = 0; i < sizeof( targets ) / sizeof*( targets ); ++i )
     {
         SetRequest( "GET", targets[i], boost::assign::map_list_of( "id", "1" ) );
-        CheckNotify( 400, "invalid \"uuid\" 1" );
+        CheckReply( 400, "invalid \"uuid\" 1", controller.DoGet( request ) );
     }
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture )
 {
     SetRequest( "GET", "/list_exercises", boost::assign::map_list_of( "offset", "abc" ) );
-    CheckNotify( 400, "invalid parameter \"offset\"=\"abc\"" );
+    CheckReply( 400, "invalid parameter \"offset\"=\"abc\"", controller.DoGet( request ) );
 }
 
 namespace
@@ -344,7 +341,7 @@ BOOST_FIXTURE_TEST_CASE( controller_upload_cache, Fixture )
     MOCK_EXPECT( request.ParseMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
     const std::string expected = "dummy reply";
     MOCK_EXPECT( agent.UploadCache ).once().with( defaultId, boost::ref( stream ) ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoPost( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_get_cache, Fixture )
@@ -352,7 +349,7 @@ BOOST_FIXTURE_TEST_CASE( controller_get_cache, Fixture )
     SetRequest( "GET", "/get_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json package";
     MOCK_EXPECT( agent.GetCache ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
@@ -360,5 +357,5 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
     SetRequest( "GET", "/delete_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json pack";
     MOCK_EXPECT( agent.DeleteCache ).once().with( defaultId ).returns( expected );
-    CheckNotify( 200, expected );
+    CheckReply( 200, expected, controller.DoGet( request ) );
 }

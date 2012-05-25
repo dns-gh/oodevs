@@ -34,7 +34,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetMethod() const = 0;
     virtual std::string GetUri() const = 0;
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const = 0;
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const = 0;

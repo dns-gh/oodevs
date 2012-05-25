@@ -77,11 +77,6 @@ public:
         // NOTHING
     }
 
-    virtual std::string GetMethod() const
-    {
-        return request_.method;
-    }
-
     virtual std::string GetUri() const
     {
         return uri_.path();
@@ -230,13 +225,13 @@ private:
     std::string Get( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
         WebRequest next( request );
-        return observer_.Notify( next );
+        return observer_.DoGet( next );
     }
 
     std::string Post( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
         MimeWebRequest next( log_, pool_.Get(), request, link );
-        return observer_.Notify( next );
+        return observer_.DoPost( next );
     }
 
 private:

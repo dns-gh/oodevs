@@ -44,7 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string Notify( Request_ABC& request );
+    virtual std::string DoGet ( Request_ABC& request );
+    virtual std::string DoPost( Request_ABC& request );
     //@}
 
 private:
