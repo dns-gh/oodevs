@@ -14,6 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <vector>
 
 namespace boost
 {
@@ -76,6 +77,7 @@ struct Node_ABC : public boost::noncopyable
     virtual void ReadPack( std::istream& src ) = 0;
     virtual Tree GetPack() const = 0;
     virtual Tree DeletePack() = 0;
+    virtual Tree UpdatePack( const std::vector< size_t >& list ) = 0;
     //@}
 };
 

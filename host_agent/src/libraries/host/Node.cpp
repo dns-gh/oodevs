@@ -18,6 +18,7 @@
 #include "SecurePool.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -273,11 +274,8 @@ U Steal( T& access, U& src )
 }
 
 template< typename T, typename U, typename V >
-void ParsePackage( boost::mutex& pack, T& access, const U& packages, V& ptr, const Path& path, V ref = V() )
+void ParsePackage( T& access, const U& packages, V& ptr, const Path& path, V ref = V() )
 {
-    boost::mutex::scoped_try_lock lock( pack );
-    if( !lock.owns_lock() )
-        return;
     Reset( access, ptr );
     Parse( access, packages, ptr, path, ref );
 }
@@ -292,7 +290,6 @@ void Node::ReadPack( std::istream& src )
     boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )
         return;
-
 
     Reset( *access_, stash_ );
     const Path path = GetStashPath();
@@ -309,8 +306,11 @@ void Node::ReadPack( std::istream& src )
 // -----------------------------------------------------------------------------
 void Node::ParsePackages()
 {
-    ::ParsePackage( *package_, *access_, packages_, install_, GetInstallPath() );
-    ::ParsePackage( *package_, *access_, packages_, stash_, GetStashPath(), install_ );
+    boost::mutex::scoped_try_lock lock( *package_ );
+    if( !lock.owns_lock() )
+        return;
+    ::ParsePackage( *access_, packages_, install_, GetInstallPath() );
+    ::ParsePackage( *access_, packages_, stash_, GetStashPath(), install_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,4 +331,21 @@ Tree Node::DeletePack()
 {
     boost::shared_ptr< Package_ABC > next = Steal( *access_, stash_ );
     return next ? next->GetProperties() : Tree();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::UpdatePack
+// Created: BAX 2012-05-22
+// -----------------------------------------------------------------------------
+Tree Node::UpdatePack( const std::vector< size_t >& list )
+{
+    boost::mutex::scoped_try_lock lock( *package_ );
+    if( !lock.owns_lock() )
+        return Tree();
+    if( !stash_ )
+        return Tree();
+    install_->Install( *stash_, list );
+    ::ParsePackage( *access_, packages_, install_, GetInstallPath() );
+    ::ParsePackage( *access_, packages_, stash_, GetStashPath(), install_ );
+    return GetPack();
 }

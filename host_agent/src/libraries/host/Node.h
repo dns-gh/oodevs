@@ -72,6 +72,7 @@ public:
     virtual void ReadPack( std::istream& src );
     virtual Tree GetPack() const;
     virtual Tree DeletePack();
+    virtual Tree UpdatePack( const std::vector< size_t >& list );
     //@}
 
 private:

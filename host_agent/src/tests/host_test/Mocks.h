@@ -80,6 +80,7 @@ namespace mocks
         MOCK_METHOD( ReadPack, 1 );
         MOCK_METHOD( GetPack, 0 );
         MOCK_METHOD( DeletePack, 0 );
+        MOCK_METHOD( UpdatePack, 1 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )
