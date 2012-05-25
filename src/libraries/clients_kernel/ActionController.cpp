@@ -85,6 +85,19 @@ bool ActionController::HasMultipleLayers() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionController::GetMultipleLayers
+// Created: JSR 2012-05-24
+// -----------------------------------------------------------------------------
+ActionController::T_Layers ActionController::GetMultipleLayers() const
+{
+    T_Layers layers;
+    CIT_MultipleLayers it = multipleLayers_.find( currentMode_ );
+    if( it != multipleLayers_.end() )
+        layers = it->second;
+    return layers;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionController::SetSelected
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
@@ -107,7 +120,7 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
         // Déselection d'un éventuel élément simple
         ClearSingleSelection();
         // Sélection multiple
-        CIT_SelectedMap it = selectedMap_.find( layer );
+        IT_SelectedMap it = selectedMap_.find( layer );
         if( it != selectedMap_.end() )
         {
             CIT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
@@ -163,6 +176,23 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionController::SetMultipleSelection
+// Created: JSR 2012-05-24
+// -----------------------------------------------------------------------------
+void ActionController::SetMultipleSelection( const T_SelectedMap& selectables )
+{
+    ClearSingleSelection();
+    ClearMultipleSelection();
+    selectedMap_ = selectables;
+    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+    CleanSelectedMap(); // utile?
+    if( !selectedMap_.empty() )
+        for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+            it->second.front()->MultipleSelect( *this, it->second );
+    Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionController::IsSingleSelection
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
@@ -189,7 +219,7 @@ void ActionController::ClearSingleSelection()
 {
     if( !selectedMap_.empty() )
     {
-        CIT_SelectedMap it = selectedMap_.begin();
+        IT_SelectedMap it = selectedMap_.begin();
         while( it!= selectedMap_.end() )
         {
             if( IsSingleSelection( it->first ) )
@@ -227,7 +257,7 @@ void ActionController::CleanSelectedMap()
 {
     if( selectedMap_.empty() )
         return;
-    CIT_SelectedMap it = selectedMap_.begin();
+    IT_SelectedMap it = selectedMap_.begin();
     while( it != selectedMap_.end() )
     {
         if( it->second.empty() )

@@ -969,7 +969,7 @@
         <source>Unsaved modification detected.
 Do you want to save the exercise &apos;%1&apos;?</source>
         <translation>Modifications détectées.
-Voulez-vous sauvegarder l'exercice &apos;%1&apos; ?</translation>
+Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
     </message>
     <message>
         <source>Unsaved modification detected.

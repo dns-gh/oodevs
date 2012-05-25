@@ -333,7 +333,6 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     // Readonly modes
     urbanLayer.SetReadOnlyModes( ePreparationMode_None );
     // Multiple Selection
-    controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Exercise, &urbanLayer );
     controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Terrain, &urbanLayer );
 
     // events order
