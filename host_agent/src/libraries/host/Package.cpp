@@ -23,16 +23,44 @@
 using namespace host;
 using runtime::Utf8Convert;
 
-struct Package_ABC::Item : public boost::noncopyable
+struct Package_ABC::Item_ABC : public boost::noncopyable
 {
-    Item( const FileSystem_ABC& system, const Path& root, size_t id, const boost::optional< std::string >& version )
+    virtual Tree        GetProperties() const = 0;
+    virtual std::string GetType() const = 0;
+    virtual std::string GetName() const = 0;
+    virtual Path        GetSuffix() const = 0;
+    virtual std::string GetChecksum() const = 0;
+    virtual bool        Compare( size_t id ) const = 0;
+    virtual bool        Compare( const Item_ABC& item ) const = 0;
+    virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
+    virtual void        Join() = 0;
+    virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const std::vector< Item_ABC* >& targets ) const = 0;
+};
+
+std::string GetVersion( const FileSystem_ABC& system, const Path& root, const boost::optional< std::string >& version )
+{
+    if( version != boost::none )
+        return *version;
+    const std::string& data = system.ReadFile( root / "version.tag" );
+    if( data.empty() )
+        return "Unversioned";
+    const boost::optional< std::string > next = FromJson( data ).get_optional< std::string >( "version" );
+    return next == boost::none ? "Unversioned" : *next;
+}
+
+namespace
+{
+struct Item : Package_ABC::Item_ABC
+{
+    Item( const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const boost::optional< std::string >& version )
         : root_( root )
         , id_  ( id )
+        , name_( name )
     {
         tree_.put( "id", id_ );
         if( !root_.empty() )
-            future_ = TaskHandler< std::string >::Go( boost::bind( &FileSystem_ABC::Checksum, &system, root_ ) );
-        tree_.put( "version", GetVersion( system, version ) );
+            future_ = TaskHandler< std::string >::Go( boost::bind( &FileSystem_ABC::Checksum, &system, root_, "version.tag" ) );
+        tree_.put( "version", GetVersion( system, root_, version ) );
     }
 
     virtual ~Item()
@@ -45,15 +73,46 @@ struct Package_ABC::Item : public boost::noncopyable
         return tree_;
     }
 
-    virtual std::string GetVersion( const FileSystem_ABC& system, const boost::optional< std::string >& version )
+    virtual std::string GetName() const
     {
-        if( version != boost::none )
-            return *version;
-        const std::string& data = system.ReadFile( root_ / "version.tag" );
-        if( data.empty() )
-            return "Unversioned";
-        const boost::optional< std::string > next = FromJson( data ).get_optional< std::string >( "version" );
-        return next == boost::none ? "Unversioned" : *next;
+        return name_;
+    }
+
+    virtual std::string GetChecksum() const
+    {
+        return checksum_;
+    }
+
+    virtual bool Compare( size_t id ) const
+    {
+        return id == id_;
+    }
+
+    virtual bool Compare( const Item_ABC& item ) const
+    {
+        return name_ == item.GetName() && GetType() == item.GetType();
+    }
+
+    typedef std::vector< boost::shared_ptr< Item > > T_Dependencies;
+    virtual T_Dependencies GetDependencies() const
+    {
+        return T_Dependencies();
+    }
+
+    virtual void Identify( const Package_ABC& ref, const Package_ABC& root )
+    {
+        BOOST_FOREACH( const boost::shared_ptr< Item >& dep, GetDependencies() )
+            if( !ref.Find( *dep ) && !root.Find( *dep ) )
+            {
+                tree_.put( "action", "error" );
+                tree_.put( "error", "Missing " + dep->GetType() + " " + dep->name_ );
+                return;
+            }
+        Item_ABC* iref = ref.Find( *this );
+        if( !iref )
+            tree_.put( "action", "add" );
+        else if( checksum_ != iref->GetChecksum() )
+            tree_.put( "action", "update" );
     }
 
     void Join()
@@ -65,45 +124,37 @@ struct Package_ABC::Item : public boost::noncopyable
         tree_.put( "checksum", checksum_ );
     }
 
-    virtual std::string GetType() const = 0;
-    virtual std::string GetName() const = 0;
-
-    virtual bool Compare( const Item& item )
+    virtual bool IsContained( const std::vector< Item_ABC* > items )
     {
-        return GetType() == item.GetType() && GetName() == item.GetName();
+        BOOST_FOREACH( const Item_ABC* it, items )
+            if( Compare( *it ) )
+                return true;
+        return false;
     }
 
-    virtual void Identify( const Package_ABC& ref, const Package_ABC& root )
+    void Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const std::vector< Item_ABC* >& targets ) const
     {
         BOOST_FOREACH( const boost::shared_ptr< Item >& dep, GetDependencies() )
-            if( !ref.Find( *dep ) && !root.Find( *dep ) )
-            {
-                tree_.put( "action", "error" );
-                tree_.put( "error", "Missing " + dep->GetType() + " " + dep->GetName() );
+            if( !dst.Find( *dep ) && !dep->IsContained( targets ) )
                 return;
-            }
-        Item* iref = ref.Find( *this );
-        if( !iref )
-            tree_.put( "action", "add" );
-        else if( checksum_ != iref->checksum_ )
-            tree_.put( "action", "update" );
-    }
-
-    virtual std::vector< boost::shared_ptr< Item > > GetDependencies() const
-    {
-        return std::vector< boost::shared_ptr< Item > >();
+        const Path& next = output / GetSuffix();
+        system.Remove( next );
+        system.MakeDirectory( next );
+        system.CopyDirectory( root_, next );
+        Tree data;
+        data.put( "version", tree_.get< std::string >( "version" ) );
+        system.WriteFile( next / "version.tag", ToJson( data ) );
     }
 
 protected:
     const Path root_;
     const size_t id_;
+    const std::string name_;
     Tree tree_;
     TaskHandler< std::string >::Future future_;
     std::string checksum_;
 };
 
-namespace
-{
 std::string Format( const std::time_t& time )
 {
     char tmp[64];
@@ -157,11 +208,10 @@ void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::stri
         dst.put( dstKey, default );
 }
 
-struct Model : public Package::Item
+struct Model : public Item
 {
     Model( const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version )
-        : Item ( system, Path( file ).remove_filename().remove_filename(), id, version )
-        , name_( Utf8Convert( root_.filename() ) )
+        : Item( system, Path( file ).remove_filename().remove_filename(), id, Utf8Convert( root_.filename() ), version )
     {
         tree_.put( "type", GetType() );
         tree_.put( "name", name_ );
@@ -173,26 +223,23 @@ struct Model : public Package::Item
         return "model";
     }
 
-    std::string GetName() const
+    Path GetSuffix() const
     {
-        return name_;
+        return Path( "data" ) / "models" / name_;
     }
 
     template< typename T >
     static void Parse( const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const boost::optional< std::string >& version )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models%", L"decisional.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
             items.push_back( boost::make_shared< Model >( system, path, ++idx, version ) );
     }
-
-    const std::string name_;
 };
 
-struct Terrain : public Package::Item
+struct Terrain : public Item
 {
     Terrain( const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version )
-        : Item ( system, Path( file ).remove_filename(), id, version )
-        , name_( GetFilename( file, "terrains" ) )
+        : Item ( system, Path( file ).remove_filename(), id, GetFilename( file, "terrains" ), version )
     {
         tree_.put( "type", GetType() );
         tree_.put( "name", name_ );
@@ -204,9 +251,9 @@ struct Terrain : public Package::Item
         return "terrain";
     }
 
-    std::string GetName() const
+    Path GetSuffix() const
     {
-        return name_;
+        return Path( "data" ) / "terrains" / name_;
     }
 
     template< typename T >
@@ -215,16 +262,13 @@ struct Terrain : public Package::Item
         BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
             items.push_back( boost::make_shared< Terrain >( system, path, ++idx, version ) );
     }
-
-    const std::string name_;
 };
 
-struct Dependency : public Package::Item
+struct Dependency : public Item
 {
     Dependency( const FileSystem_ABC& system, const std::string& type, const std::string& name )
-        : Item ( system, "", 0, boost::none )
+        : Item ( system, "", 0, name, boost::none )
         , type_( type )
-        , name_( name )
     {
         // NOTHING
     }
@@ -234,21 +278,19 @@ struct Dependency : public Package::Item
         return type_;
     }
 
-    std::string GetName() const
+    Path GetSuffix() const
     {
-        return name_;
+        return Path();
     }
 
     const std::string type_;
-    const std::string name_;
 };
 
-struct Exercise : public Package::Item
+struct Exercise : public Item
 {
     Exercise( const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version, const Tree& more )
-        : Item    ( system, Path( file ).remove_filename(), id, version )
+        : Item    ( system, Path( file ).remove_filename(), id, GetFilename( file, "exercises" ), version )
         , system_ ( system )
-        , name_   ( GetFilename( file, "exercises" ) )
         , model_  ( GetDependency( more, "exercise.model.<xmlattr>.dataset" ) )
         , terrain_( GetDependency( more, "exercise.terrain.<xmlattr>.name" ) )
     {
@@ -266,9 +308,9 @@ struct Exercise : public Package::Item
         return "exercise";
     }
 
-    std::string GetName() const
+    Path GetSuffix() const
     {
-        return name_;
+        return Path( "exercises" ) / name_;
     }
 
     std::string GetDependency( const Tree& tree, const std::string& key )
@@ -298,7 +340,6 @@ struct Exercise : public Package::Item
     }
 
     const FileSystem_ABC& system_;
-    const std::string name_;
     const std::string model_;
     const std::string terrain_;
 };
@@ -405,10 +446,43 @@ void Package::Identify( const Package_ABC& ref )
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::Item* Package::Find( const Item& item ) const
+Package_ABC::Item_ABC* Package::Find( size_t id ) const
+{
+    BOOST_FOREACH( const T_Items::value_type& value, items_ )
+        if( value->Compare( id ) )
+            return value.get();
+    return NULL;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Find
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+Package_ABC::Item_ABC* Package::Find( const Item_ABC& item ) const
 {
     BOOST_FOREACH( const T_Items::value_type& value, items_ )
         if( value->Compare( item ) )
             return value.get();
     return NULL;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Find
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+void Package::Install( const Package_ABC& src, const std::vector< size_t >& ids )
+{
+    std::vector< Item_ABC* > targets;
+    BOOST_FOREACH( size_t id, ids )
+    {
+        Item_ABC* item = src.Find( id );
+        if( item )
+            targets.push_back( item );
+    }
+    std::vector< TaskHandler< void >::Future > futures;
+    BOOST_FOREACH( Item_ABC* item, targets )
+        futures.push_back( TaskHandler< void >::Go(
+            boost::bind( &Item_ABC::Install, item,
+                boost::cref( system_ ), boost::cref( path_ ), boost::cref( *this ), boost::cref( targets ) ) ) );
+    boost::wait_for_all( futures.begin(), futures.end() );
 }

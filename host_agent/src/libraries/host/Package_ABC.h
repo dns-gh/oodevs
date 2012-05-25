@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <vector>
 
 namespace boost
 {
@@ -43,7 +44,7 @@ struct Package_ABC : public boost::noncopyable
 
     //! @name Opaque Item
     //@{
-    struct Item;
+    struct Item_ABC;
     //@}
 
     //! @name Methods
@@ -51,7 +52,9 @@ struct Package_ABC : public boost::noncopyable
     virtual Tree GetProperties() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
-    virtual Item* Find( const Item& item ) const = 0;
+    virtual Item_ABC* Find( size_t id ) const = 0;
+    virtual Item_ABC* Find( const Item_ABC& item ) const = 0;
+    virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
     //@}
 };
 
