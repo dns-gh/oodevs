@@ -284,7 +284,7 @@ void NodeController::Stop( Node_ABC& node, bool skipSave ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeController::GetStash
+// Name: NodeController::GetCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
 Tree NodeController::GetCache( const Uuid& id ) const

@@ -50,12 +50,12 @@ namespace
         MockPool pool;
         MockPackageFactory packages;
         boost::shared_ptr< MockPackage > installed;
-        boost::shared_ptr< MockPackage > stash;
+        boost::shared_ptr< MockPackage > cache;
         MOCK_FUNCTOR( Starter, ProcessPtr( const Node_ABC& ) );
 
         Fixture()
             : installed( boost::make_shared< MockPackage >() )
-            , stash    ( boost::make_shared< MockPackage >() )
+            , cache    ( boost::make_shared< MockPackage >() )
         {
             MOCK_EXPECT( system.IsFile ).returns( false );
         }
@@ -70,10 +70,10 @@ namespace
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
         {
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
-            MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( stash );
+            MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
             MOCK_EXPECT( installed->Parse ).once().returns( true );
-            MOCK_EXPECT( stash->Parse ).once().returns( true );
-            MOCK_EXPECT( stash->Identify ).once().with( mock::same( *installed ) );
+            MOCK_EXPECT( cache->Parse ).once().returns( true );
+            MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
@@ -180,7 +180,7 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 
     mock::reset( system );
-    const host::Path path = host::Path( "root" ) / defaultIdString / "stash";
+    const host::Path path = host::Path( "root" ) / defaultIdString / "cache";
     MOCK_EXPECT( system.Remove ).once().with( path );
     MOCK_EXPECT( system.MakeDirectory ).once().with( path );
 
@@ -189,13 +189,13 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( system.Unpack ).once().with( path, boost::ref( stream ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
-    MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( this->stash );
-    MOCK_EXPECT( this->stash->Parse ).once().returns( true );
-    MOCK_EXPECT( this->stash->Identify ).once().with( mock::same( *installed ) );
+    MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( this->cache );
+    MOCK_EXPECT( this->cache->Parse ).once().returns( true );
+    MOCK_EXPECT( this->cache->Identify ).once().with( mock::same( *installed ) );
     Tree tree;
     tree.put( "some", "data" );
     const std::string expected = ToJson( tree );
-    MOCK_EXPECT( this->stash->GetProperties ).returns( tree );
+    MOCK_EXPECT( this->cache->GetProperties ).returns( tree );
     node->UploadCache( stream );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
     BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );

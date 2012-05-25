@@ -179,7 +179,7 @@ Tree Node::GetProperties() const
 // -----------------------------------------------------------------------------
 Path Node::GetCachePath() const
 {
-    return root_ / boost::lexical_cast< std::string >( id_ ) / "stash";
+    return root_ / boost::lexical_cast< std::string >( id_ ) / "cache";
 }
 
 // -----------------------------------------------------------------------------
