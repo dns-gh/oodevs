@@ -17,6 +17,7 @@
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
+#include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 
@@ -34,7 +35,8 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        Compare( const Item_ABC& item ) const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
     virtual void        Join() = 0;
-    virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const std::vector< Item_ABC* >& targets ) const = 0;
+    virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
+    virtual void        Remove( const FileSystem_ABC& system ) const = 0;
 };
 
 std::string GetVersion( const FileSystem_ABC& system, const Path& root, const boost::optional< std::string >& version )
@@ -50,6 +52,24 @@ std::string GetVersion( const FileSystem_ABC& system, const Path& root, const bo
 
 namespace
 {
+template< typename T, typename U >
+bool ItemCompare( const T& lhs, const U& rhs )
+{
+    return lhs->Compare( rhs );
+}
+
+template< typename T, typename U >
+typename T::const_iterator FindItem( const T& list, const U& item )
+{
+    return std::find_if( list.begin(), list.end(), boost::bind( &ItemCompare< typename T::value_type, U >, _1, boost::cref( item ) ) );
+}
+
+template< typename T, typename U >
+bool HasItem( const T& list, const U& item )
+{
+    return FindItem( list, item ) != list.end();
+}
+
 struct Item : Package_ABC::Item_ABC
 {
     Item( const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const boost::optional< std::string >& version )
@@ -108,10 +128,10 @@ struct Item : Package_ABC::Item_ABC
                 tree_.put( "error", "Missing " + dep->GetType() + " " + dep->name_ );
                 return;
             }
-        Item_ABC* iref = ref.Find( *this );
-        if( !iref )
+        Package_ABC::T_Item next = ref.Find( *this );
+        if( !next )
             tree_.put( "action", "add" );
-        else if( checksum_ != iref->GetChecksum() )
+        else if( checksum_ != next->GetChecksum() )
             tree_.put( "action", "update" );
     }
 
@@ -124,18 +144,10 @@ struct Item : Package_ABC::Item_ABC
         tree_.put( "checksum", checksum_ );
     }
 
-    virtual bool IsContained( const std::vector< Item_ABC* > items )
-    {
-        BOOST_FOREACH( const Item_ABC* it, items )
-            if( Compare( *it ) )
-                return true;
-        return false;
-    }
-
-    void Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const std::vector< Item_ABC* >& targets ) const
+    void Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const
     {
         BOOST_FOREACH( const boost::shared_ptr< Item >& dep, GetDependencies() )
-            if( !dst.Find( *dep ) && !dep->IsContained( targets ) )
+            if( !dst.Find( *dep ) && !HasItem( targets, *dep ) )
                 return;
         const Path& next = output / GetSuffix();
         system.Remove( next );
@@ -144,6 +156,11 @@ struct Item : Package_ABC::Item_ABC
         Tree data;
         data.put( "version", tree_.get< std::string >( "version" ) );
         system.WriteFile( next / "version.tag", ToJson( data ) );
+    }
+
+    void Remove( const FileSystem_ABC& system ) const
+    {
+        system.Remove( root_ );
     }
 
 protected:
@@ -447,24 +464,20 @@ void Package::Identify( const Package_ABC& ref )
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::Item_ABC* Package::Find( size_t id ) const
+Package_ABC::T_Item Package::Find( size_t id ) const
 {
-    BOOST_FOREACH( const T_Items::value_type& value, items_ )
-        if( value->Compare( id ) )
-            return value.get();
-    return NULL;
+    T_Items::const_iterator it = FindItem( items_, id );
+    return it == items_.end() ? T_Item() : *it;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::Item_ABC* Package::Find( const Item_ABC& item ) const
+Package_ABC::T_Item Package::Find( const Item_ABC& item ) const
 {
-    BOOST_FOREACH( const T_Items::value_type& value, items_ )
-        if( value->Compare( item ) )
-            return value.get();
-    return NULL;
+    T_Items::const_iterator it = FindItem( items_, item );
+    return it == items_.end() ? T_Item() : *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -473,17 +486,39 @@ Package_ABC::Item_ABC* Package::Find( const Item_ABC& item ) const
 // -----------------------------------------------------------------------------
 void Package::Install( const Package_ABC& src, const std::vector< size_t >& ids )
 {
-    std::vector< Item_ABC* > targets;
+    T_Items targets;
     BOOST_FOREACH( size_t id, ids )
     {
-        Item_ABC* item = src.Find( id );
+        T_Item item = src.Find( id );
         if( item )
             targets.push_back( item );
     }
-    std::vector< TaskHandler< void >::Future > futures;
-    BOOST_FOREACH( Item_ABC* item, targets )
-        futures.push_back( TaskHandler< void >::Go(
-            boost::bind( &Item_ABC::Install, item,
-                boost::cref( system_ ), boost::cref( path_ ), boost::cref( *this ), boost::cref( targets ) ) ) );
-    boost::wait_for_all( futures.begin(), futures.end() );
+    Async<> async;
+    BOOST_FOREACH( const T_Items::value_type& item, targets )
+        async.Go( boost::bind( &Item_ABC::Install, item, boost::cref( system_ ), boost::cref( path_ ), boost::cref( *this ), boost::cref( targets ) ) );
+}
+
+namespace
+{
+bool IsItemIn( const std::vector< size_t >& list, const boost::shared_ptr< Package_ABC::Item_ABC >& item )
+{
+    BOOST_FOREACH( const size_t& id, list )
+        if( item->Compare( id ) )
+            return true;
+    return false;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Remove
+// Created: BAX 2012-05-25
+// -----------------------------------------------------------------------------
+void Package::Remove( const std::vector< size_t >& ids )
+{
+    T_Items::iterator next = std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) );
+    Async<> async;
+    for( T_Items::iterator it = next; it != items_.end(); ++it )
+        async.Go( boost::bind( &Item_ABC::Remove, *it, boost::cref( system_ ) ) );
+    async.Join();
+    items_.erase( next, items_.end() );
 }

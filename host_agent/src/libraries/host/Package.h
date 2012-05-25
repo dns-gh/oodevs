@@ -40,9 +40,10 @@ public:
     virtual Tree GetProperties() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
-    virtual Item_ABC* Find( size_t id ) const;
-    virtual Item_ABC* Find( const Item_ABC& item ) const;
+    virtual T_Item Find( size_t id ) const;
+    virtual T_Item Find( const Item_ABC& item ) const;
     virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids );
+    virtual void Remove( const std::vector< size_t >& ids );
     //@}
 
 public:

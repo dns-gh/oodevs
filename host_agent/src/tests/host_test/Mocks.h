@@ -234,8 +234,9 @@ namespace mocks
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
         MOCK_METHOD( Install, 2 );
-        MOCK_METHOD_EXT( Find, 1, host::Package_ABC::Item_ABC*( size_t ), FindId );
-        MOCK_METHOD_EXT( Find, 1, host::Package_ABC::Item_ABC*( const host::Package_ABC::Item_ABC& ), FindItem );
+        MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( size_t ), FindId );
+        MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC& ), FindItem );
+        MOCK_METHOD( Remove, 1 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

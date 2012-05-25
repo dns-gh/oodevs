@@ -14,7 +14,7 @@
 
 namespace host
 {
-template< typename T >
+template< typename T = void >
 struct TaskHandler
 {
     typedef boost::packaged_task< T > Package;
