@@ -27,7 +27,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetOverriden( bool& overriden ) const = 0;
+    virtual bool IsOverriden() const = 0;
     //@}
 
 };

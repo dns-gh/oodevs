@@ -10,9 +10,9 @@
 #include "gaming_app_pch.h"
 #include "PopulationOptionChooser.h"
 #include "moc_PopulationOptionChooser.cpp"
-#include "clients_gui/ChangePopulationDisplay.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/ChangePopulationDisplay.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Inhabitant_ABC.h"
@@ -178,7 +178,7 @@ void PopulationOptionChooser::OnPopulationToggled( bool toggled )
     const QAbstractButton* senderObject = dynamic_cast< const QAbstractButton* >( sender() );
     if( senderObject )
     {
-        gui::ChangePopulationDisplay display( senderObject->text().ascii(), toggled );
+        kernel::ChangePopulationDisplay display( senderObject->text().ascii(), toggled );
         controllers_.controller_.Update( display );
     }
 }

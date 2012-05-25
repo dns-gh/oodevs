@@ -152,7 +152,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const std::
 }
 
 // -----------------------------------------------------------------------------
-// Name: RealFileLoader::LoadFile
+// Name: RealFileLoader::CheckIfAddedFile
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
 const std::string& RealFileLoader::CheckIfAddedFile( const std::string& initialInputFileName ) const

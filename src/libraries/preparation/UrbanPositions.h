@@ -12,6 +12,7 @@
 
 #include "clients_kernel/UrbanTypes.h"
 #include "clients_kernel/UrbanPositions.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace xml
 {
@@ -31,12 +32,24 @@ namespace kernel
 // Created: JSR 2010-09-06
 // =============================================================================
 class UrbanPositions : public kernel::UrbanPositions
+                     , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 

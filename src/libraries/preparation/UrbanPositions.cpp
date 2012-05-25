@@ -12,6 +12,7 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
+#include "geometry/Polygon2.h"
 
 namespace
 {
@@ -39,6 +40,7 @@ namespace
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : kernel::UrbanPositions( level, object, Convert( xis, level, converter ) )
+    , converter_( converter )
 {
     // NOTHING
 }
@@ -50,4 +52,19 @@ UrbanPositions::UrbanPositions( xml::xistream& xis, EUrbanLevel level, const ker
 UrbanPositions::~UrbanPositions()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::SerializeAttributes
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+void UrbanPositions::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::start( "footprint" );
+    const geometry::Polygon2f::T_Vertices& locations = polygon_.Vertices();
+    for( geometry::Polygon2f::CIT_Vertices it = locations.begin(); it != locations.end(); ++it )
+        xos << xml::start( "point" )
+        << xml::attribute( "location", converter_.ConvertToMgrs( *it ) )
+        << xml::end;
+    xos << xml::end; // footprint
 }

@@ -15,8 +15,8 @@
 #include "ColorButton.h"
 #include "GradientButton.h"
 #include "Painter_ABC.h"
-#include "Gradient.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Gradient.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include <boost/lexical_cast.hpp>
@@ -88,7 +88,7 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers,
     QPushButton* button = new QPushButton( tr( "Reset" ), this );
 
     connect( densityEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
-    connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
+    connect( densityEditor_, SIGNAL( GradientChanged( kernel::Gradient& ) ), SLOT( OnGradientEdited( kernel::Gradient& ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
     connect( unoccupiedColor_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnUnoccupiedColorChanged( const QColor& ) ) );
     connect( button, SIGNAL( clicked() ), SLOT( Reset() ) );
@@ -138,7 +138,7 @@ void DensityWidget::OnUnoccupiedColorChanged( const QColor& color )
 // Name: DensityWidget::OnGradientEdited
 // Created: LGY 2011-01-07
 // -----------------------------------------------------------------------------
-void DensityWidget::OnGradientEdited( Gradient& gradient )
+void DensityWidget::OnGradientEdited( kernel::Gradient& gradient )
 {
     gradient.SetName( "urbanBlock" );
     gradient.Save( options_, category_ + "/" );
@@ -150,7 +150,7 @@ void DensityWidget::OnGradientEdited( Gradient& gradient )
 // -----------------------------------------------------------------------------
 void DensityWidget::Reset()
 {
-    Gradient gradient;
+    kernel::Gradient gradient;
     gradient.AddColor( 0, Qt::green );
     gradient.AddColor( 1, Qt::red );
     densityEditor_->LoadGradient( gradient );
@@ -187,7 +187,7 @@ void DensityWidget::OptionChanged( const std::string& name, const kernel::Option
     if( !blockLoaded_ && name == category_ + "/urbanBlock"  )
     {
         blockLoaded_ = true;
-        Gradient gradient;
+        kernel::Gradient gradient;
         const QString colors = value.To< QString >();
         gradient.LoadValues( colors );
         densityEditor_->LoadGradient( gradient );

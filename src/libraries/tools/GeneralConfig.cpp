@@ -250,6 +250,15 @@ std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetUrbanFile
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetUrbanFile( const std::string& terrain ) const
+{
+    return ( bfs::path( GetTerrainDir( terrain ), bfs::native ) / "urban" / "urban.xml" ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetSessionsDir
 // Created: AGE 2008-01-04
 // -----------------------------------------------------------------------------

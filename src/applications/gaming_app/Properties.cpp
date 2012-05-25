@@ -36,9 +36,9 @@ PropertiesBase::~PropertiesBase()
 // Name: Properties constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-Properties::Properties( QWidget* parent, kernel::Controllers& controllers )
+Properties::Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy )
     : PropertiesBase()
-    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_ )
+    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *tableItemDisplayer_, glProxy )
 {
     // NOTHING
 }

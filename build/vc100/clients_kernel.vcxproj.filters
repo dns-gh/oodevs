@@ -68,6 +68,12 @@
     <Filter Include="Source Files\Model\Entities\Ghost">
       <UniqueIdentifier>{6d183e51-f4bb-417a-9583-9cc291dafc24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Extensions\Urban">
+      <UniqueIdentifier>{eec664e2-bf1e-47dd-9b3b-ed8ec244f324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Entities\Urban">
+      <UniqueIdentifier>{be79ce9d-0e9f-4bb3-98df-ae385d46baf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp">
@@ -409,9 +415,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Team_ABC.cpp">
       <Filter>Source Files\Model\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp">
-      <Filter>Source Files\Model\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Population_ABC.cpp">
       <Filter>Source Files\Model\Entities\Population</Filter>
     </ClCompile>
@@ -460,14 +463,35 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Architecture.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Usages.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp">
+      <Filter>Source Files\Model\Entities\Urban</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp">
-      <Filter>Source Files\Model\Entities</Filter>
+      <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Team.cpp">
       <Filter>Source Files\Model\Entities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\UserRights.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject.cpp">
+      <Filter>Source Files\Model\Entities\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanDisplayOptions.cpp">
+      <Filter>Source Files\Options</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Gradient.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -852,9 +876,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Aggregatable_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -933,21 +954,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanExtensions.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanSelection_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Agent_ABC.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
@@ -988,9 +994,6 @@
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Team_ABC.h">
-      <Filter>Source Files\Model\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Population_ABC.h">
@@ -1098,8 +1101,32 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanExtensions.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanSelection_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h">
-      <Filter>Source Files\Model\Entities</Filter>
+      <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h">
       <Filter>Source Files\Tools</Filter>
@@ -1115,6 +1142,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h">
       <Filter>Source Files\kernel\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h">
+      <Filter>Source Files\Model\Entities\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject.h">
+      <Filter>Source Files\Model\Entities\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanDisplayOptions.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ChangePopulationDisplay.h">
+      <Filter>Source Files\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Gradient.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

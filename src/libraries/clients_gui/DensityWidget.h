@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class Gradient;
     class Options;
 }
 
@@ -24,7 +25,6 @@ namespace gui
     class GradientButton;
     class ColorButton;
     class Painter_ABC;
-    class Gradient;
 
 // =============================================================================
 /** @class  DensityWidget
@@ -63,7 +63,7 @@ private slots:
     void OnSelectionChanged( const QColor& color );
     void OnColorChanged( const QColor& color );
     void OnUnoccupiedColorChanged( const QColor& color );
-    void OnGradientEdited( Gradient& gradient );
+    void OnGradientEdited( kernel::Gradient& gradient );
     void Reset();
     void OnMinChanged( const QString& value );
     void OnMaxChanged( const QString& value );

@@ -1,0 +1,55 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __UrbanObject_h_
+#define __UrbanObject_h_
+
+#include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/UrbanObject.h"
+
+namespace kernel
+{
+    class AccommodationTypes;
+    class Controllers;
+    class UrbanDisplayOptions;
+}
+
+namespace xml
+{
+    class xostream;
+}
+
+// =============================================================================
+/** @class  UrbanObject
+    @brief  UrbanObject
+*/
+// Created: ABR 2012-05-23
+// =============================================================================
+class UrbanObject : public kernel::UrbanObject
+                  , public kernel::Serializable_ABC
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             UrbanObject( kernel::Controllers& controllers, const std::string& name, unsigned int id,
+                          const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations,
+                          kernel::UrbanDisplayOptions& options );
+             UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, const kernel::ObjectType& type,
+                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options );
+    virtual ~UrbanObject();
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+};
+
+#endif // __UrbanObject_h_

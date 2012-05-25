@@ -15,8 +15,9 @@
 // Name: Usages constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Usages::Usages( const sword::UrbanAttributes& message, std::auto_ptr< kernel::Usages_ABC > pUsages )
-    : pUsages_( pUsages )
+Usages::Usages( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary,
+                const kernel::AccommodationTypes& accommodationTypes, float livingSpace )
+    : kernel::Usages( dictionary, accommodationTypes, livingSpace )
 {
     for( int i = 0; i <  message.usages_size(); ++i )
     {
@@ -32,22 +33,4 @@ Usages::Usages( const sword::UrbanAttributes& message, std::auto_ptr< kernel::Us
 Usages::~Usages()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Usages::Add
-// Created: LGY 2011-04-15
-// -----------------------------------------------------------------------------
-void Usages::Add( const std::string& usage, unsigned int proportion )
-{
-    return pUsages_->Add( usage, proportion );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Usages::Find
-// Created: LGY 2011-04-14
-// -----------------------------------------------------------------------------
-unsigned int Usages::Find( const std::string& usage ) const
-{
-    return pUsages_->Find( usage );
 }

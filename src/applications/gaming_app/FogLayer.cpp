@@ -12,7 +12,6 @@
 #include "gaming/VisionCones.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_gui/Viewport2d.h"
-#include "clients_gui/Gradient.h"
 #include <graphics/extensions.h>
 
 // -----------------------------------------------------------------------------

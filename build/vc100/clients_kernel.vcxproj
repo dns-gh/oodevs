@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Availability.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Architecture.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -102,10 +103,12 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp" />
@@ -122,10 +125,13 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanDisplayOptions.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UserRights.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Usages.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp" />
@@ -233,6 +239,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Availability.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ChangePopulationDisplay.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
@@ -241,6 +249,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Gradient.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
@@ -255,6 +264,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h" />
@@ -283,11 +293,14 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanDisplayOptions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UserRights.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h" />

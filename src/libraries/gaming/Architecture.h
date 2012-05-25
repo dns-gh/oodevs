@@ -10,11 +10,16 @@
 #ifndef __Architecture_h_
 #define __Architecture_h_
 
-#include "clients_gui/Architecture.h"
+#include "clients_kernel/Architecture.h"
 
 namespace sword
 {
     class UrbanAttributes;
+}
+
+namespace kernel
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -23,7 +28,7 @@ namespace sword
 */
 // Created: LGY 2011-04-15
 // =============================================================================
-class Architecture : public gui::Architecture
+class Architecture : public kernel::Architecture
 {
 public:
     //! @name Constructors/Destructor

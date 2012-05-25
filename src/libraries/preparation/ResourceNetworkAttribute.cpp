@@ -12,6 +12,7 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -25,17 +26,16 @@ using namespace geometry;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
-                                                  , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position,
+                                                    const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving )
     : controllers_( controllers )
     , position_   ( position )
     , urbans_     ( urbans )
     , objects_    ( objects )
     , resources_  ( resources )
-    , needSaving_ ( true )
+    , needSaving_ ( needSaving )
 {
-    xis >> xml::optional
-        >> xml::start( "resources" )
+    xis >> xml::optional >> xml::start( "resources" )
             >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode )
         >> xml::end;
 }
@@ -44,7 +44,8 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position, const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position,
+                                                    const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , position_   ( position )
     , urbans_     ( urbans )
@@ -144,28 +145,35 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( needSaving_ )
+    if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain && !resourceNodes_.empty() || IsOverriden() )
     {
         xos << xml::start( "resources" );
         for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
             const ResourceNetwork_ABC::ResourceNode& node = it->second;
             xos << xml::start( "node" )
-                << xml::attribute( "resource-type", node.resource_ )
-                << xml::attribute( "enabled", node.isEnabled_ )
-                << xml::attribute( "production", node.production_ )
-                << xml::attribute( "consumption", node.consumption_ )
-                << xml::attribute( "stock", node.maxStock_ )
-                << xml::attribute( "initial-stock", node.stock_ )
-                << xml::attribute( "critical-consumption", node.critical_ );
-                for( unsigned int i = 0; i < node.links_.size(); ++i )
-                {
-                    xos << xml::start( "link" )
-                        << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" )
-                        << xml::attribute( "target", node.links_[ i ].id_ )
-                        << xml::attribute( "capacity", node.links_[ i ].capacity_ )
-                        << xml::end;
-                }
+                << xml::attribute( "resource-type", node.resource_ );
+            if( !node.isEnabled_ )
+                xos << xml::attribute( "enabled", false );
+            if( node.production_ )
+                xos << xml::attribute( "production", node.production_ );
+            if( node.consumption_ )
+                xos << xml::attribute( "consumption", node.consumption_ );
+            if( node.critical_ )
+                xos << xml::attribute( "critical-consumption", true );
+            if( node.maxStock_ )
+                xos << xml::attribute( "stock", node.maxStock_ );
+            if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
+                xos << xml::attribute( "initial-stock", node.stock_ );
+            for( unsigned int i = 0; i < node.links_.size(); ++i )
+            {
+                xos << xml::start( "link" );
+                if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
+                    xos << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" );
+                xos << xml::attribute( "target", node.links_[ i ].id_ )
+                    << xml::attribute( "capacity", node.links_[ i ].capacity_ )
+                    << xml::end();
+            }
             xos << xml::end;
         }
         xos << xml::end;
@@ -173,13 +181,12 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkAttribute::SetOverriden
+// Name: ResourceNetworkAttribute::IsOverriden
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SetOverriden( bool& overriden ) const
+bool ResourceNetworkAttribute::IsOverriden() const
 {
-    if( needSaving_ )
-        overriden = true;
+    return needSaving_;
 }
 
 // -----------------------------------------------------------------------------

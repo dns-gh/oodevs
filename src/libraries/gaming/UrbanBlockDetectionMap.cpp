@@ -9,11 +9,12 @@
 
 #include "gaming_pch.h"
 #include "UrbanBlockDetectionMap.h"
-#include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Architecture_ABC.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDetectionMap constructor
@@ -42,7 +43,7 @@ UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 void UrbanBlockDetectionMap::NotifyCreated( const kernel::UrbanObject_ABC& object )
 {
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-        if( const kernel::Architecture_ABC* pArchitecture = object.Retrieve< kernel::Architecture_ABC >() )
+        if( const kernel::Architecture_ABC* pArchitecture = object.Get< kernel::PhysicalAttribute_ABC >().GetArchitecture() )
         {
             const float cellsize = map_.GetCellSize();
             const float halfcellsize = 0.5f * map_.GetCellSize();

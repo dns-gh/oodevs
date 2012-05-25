@@ -10,8 +10,12 @@
 #ifndef __Architecture_h_
 #define __Architecture_h_
 
-#include "clients_gui/Architecture.h"
-#include <memory>
+#include "clients_kernel/Architecture.h"
+
+namespace kernel
+{
+    class PropertiesDictionary;
+}
 
 namespace xml
 {
@@ -24,13 +28,19 @@ namespace xml
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Architecture : public gui::Architecture
+class Architecture : public kernel::Architecture
 {
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit Architecture( kernel::PropertiesDictionary& dictionary );
              Architecture( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~Architecture();
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 };
 

@@ -22,6 +22,7 @@
 // Created: JSR 2012-05-14
 // =============================================================================
 class UrbanHierarchies : public kernel::EntityHierarchies< kernel::Hierarchies >
+                       , public kernel::Serializable_ABC
                        , private boost::noncopyable
 {
 public:
@@ -34,6 +35,11 @@ public:
     //! @name Operations
     //@{
     EUrbanLevel GetLevel() const;
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
 private:

@@ -73,8 +73,9 @@ EntityListView::~EntityListView()
 // -----------------------------------------------------------------------------
 void EntityListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int )
 {
-    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( i ) )
-        value->ContextMenu( controllers_.actions_, pos );
+    if( !IsReadOnly() )
+        if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( i ) )
+            value->ContextMenu( controllers_.actions_, pos );
 }
 
 // -----------------------------------------------------------------------------

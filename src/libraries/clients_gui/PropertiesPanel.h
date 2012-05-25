@@ -13,6 +13,7 @@
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -23,6 +24,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlProxy;
     class PropertiesWidget;
     class TableItemDisplayer;
 
@@ -37,21 +39,16 @@ class PropertiesPanel : public QScrollArea
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                      , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer );
+             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, gui::TableItemDisplayer& displayer, const GlProxy& glProxy );
     virtual ~PropertiesPanel();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PropertiesPanel( const PropertiesPanel& );            //!< Copy constructor
-    PropertiesPanel& operator=( const PropertiesPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );
@@ -62,10 +59,11 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    gui::PropertiesWidget* table_;
-    const kernel::Entity_ABC* selected_;
-    gui::TableItemDisplayer& displayer_;
+    kernel::Controllers&        controllers_;
+    const GlProxy&              glProxy_;
+    gui::PropertiesWidget*      table_;
+    const kernel::Entity_ABC*   selected_;
+    gui::TableItemDisplayer&    displayer_;
     //@}
 };
 

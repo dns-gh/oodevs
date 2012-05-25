@@ -232,7 +232,7 @@ void Model::Purge()
     ClearLoadingErrors();
     UpdateName( "orbat" );
     profiles_.Purge();
-    urban_.Purge();
+    urban_.DeleteAll();
     successFactors_.Purge();
     scores_.Purge();
     weather_.Purge();
@@ -272,19 +272,9 @@ void Model::Load( const tools::ExerciseConfig& config )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
+    config.GetLoader().LoadFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) );
+    config.GetLoader().LoadFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
     symbolsFactory_.Load( config );
-
-    //$$ LOADING DE FICHIERS A UNIFIER
-    const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
-    const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-    if( bfs::exists( urbanFile ) )
-    {
-        config.GetLoader().CheckFile( urbanFile.native_file_string() );
-        urban_.Load( directoryPath );
-        const std::string urbanStateFile = config.GetUrbanStateFile() ;
-        if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
-            config.GetLoader().LoadFile( urbanStateFile, boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
-    }
 
     const std::string orbatFile = config.GetOrbatFile();
     if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
@@ -295,7 +285,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     }
 
     const tools::SchemaWriter schemaWriter;
-    if( ! LoadOptional( config.GetLoader(), config.GetWeatherFile(), weather_, schemaWriter ) )
+    if( !LoadOptional( config.GetLoader(), config.GetWeatherFile(), weather_, schemaWriter ) )
         controllers_.controller_.Update( weather_);
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
@@ -316,10 +306,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::Save
+// Name: Model::SaveExercise
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
-void Model::Save( const tools::ExerciseConfig& config )
+void Model::SaveExercise( const tools::ExerciseConfig& config )
 {
     if( !loaded_ )
         return;
@@ -342,6 +332,21 @@ void Model::Save( const tools::ExerciseConfig& config )
     SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
     successFactors_.SerializeScript( config );
     UpdateName( config.GetOrbatFile() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::SaveTerrain
+// Created: ABR 2012-05-22
+// -----------------------------------------------------------------------------
+void Model::SaveTerrain( const tools::ExerciseConfig& config )
+{
+    if( !loaded_ )
+        return;
+    const tools::SchemaWriter schemaWriter;
+    SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
+    tools::WorldParameters parameter( config );
+    SerializeAndSign( config.GetTerrainFile(), parameter, schemaWriter );
+    // $$$$ ABR 2012-05-22: TODO Add WorldParameter save in terrain.xml
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,11 @@
 #include "View_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 
+namespace kernel
+{
+    class Selectable_ABC;
+}
+
 namespace gui
 {
     class GlWidget;
@@ -58,6 +63,7 @@ public:
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
+    virtual bool ShouldEdit( const kernel::Selectable_ABC& selectable ) const;
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
@@ -100,8 +106,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* > T_Layers;
-    typedef T_Layers::iterator       IT_Layers;
+    typedef std::vector< Layer_ABC* >  T_Layers;
+    typedef T_Layers::iterator        IT_Layers;
+    typedef T_Layers::const_iterator CIT_Layers;
     //@}
 
 private:

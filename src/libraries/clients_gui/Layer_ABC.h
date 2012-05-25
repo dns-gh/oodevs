@@ -21,6 +21,7 @@ class ViewFrustum;
 namespace kernel
 {
     class Controllers;
+    class Selectable_ABC;
     class Viewport_ABC;
 }
 
@@ -70,6 +71,8 @@ public:
     void SetPasses( const std::string& passes );
     std::string GetCurrentPass() const;
     bool ShouldDrawPass() const;
+
+    virtual bool IsIn( const kernel::Selectable_ABC& ) const { return false; }
     //@}
 
     //! @name ModesObserver implementation
@@ -80,6 +83,12 @@ public:
     virtual bool IsVisible() const;
     //@}
 
+    //! @name ReadOnly management // $$$$ ABR 2012-05-24: Factorize this to tools::ReadOnlyModable and use it on HierarchyListView_ABC
+    //@{
+    virtual bool IsReadOnly() const;
+    void SetReadOnlyModes( int modes );
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -88,7 +97,8 @@ private:
     float         alpha_;
     std::string   passes_;
     bool          enabled_;
-    float         alphaBackUp_;
+    int           readOnlyModes_;
+    bool          readOnly_;
     //@}
 };
 

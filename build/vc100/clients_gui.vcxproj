@@ -151,8 +151,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.cpp" />
@@ -283,8 +281,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawingCategoryItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawingPositions.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Usages.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationsPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationTypesListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\WeatherListView.cpp" />
@@ -323,7 +319,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\OptionsPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PreferencePanel_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\VisualisationScalesPanel.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GradientButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GradientItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GradientPreferences.cpp" />
@@ -371,7 +366,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ChangePopulationDisplay.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -881,8 +875,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedDragObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h" />
@@ -1643,8 +1635,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawingPositions.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\Usages.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationsPanel.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
@@ -2098,7 +2088,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\GradientButton.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

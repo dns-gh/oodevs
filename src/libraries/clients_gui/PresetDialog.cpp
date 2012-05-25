@@ -12,7 +12,7 @@
 #include "clients_gui_pch.h"
 #include "PresetDialog.h"
 #include "moc_PresetDialog.cpp"
-#include "Gradient.h"
+#include "clients_kernel/Gradient.h"
 #include "clients_kernel/Options.h"
 
 using namespace gui;
@@ -21,7 +21,7 @@ using namespace gui;
 // Name: PresetDialog constructor
 // Created: LGY 2010-09-24
 // -----------------------------------------------------------------------------
-PresetDialog::PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options& options,
+PresetDialog::PresetDialog( QWidget* parent, kernel::Gradient& gradient, kernel::Options& options,
                             const std::vector< std::string >& presets )
     : QDialog( parent )
     , pLayout_ ( new Q3VBoxLayout( this ) )

@@ -18,6 +18,7 @@ namespace xml
 namespace tools
 {
     class ExerciseConfig;
+    class SchemaWriter_ABC;
 
 // =============================================================================
 /** @class  WorldParameters
@@ -38,6 +39,7 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
+    void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
     geometry::Point2f Clip( const geometry::Point2f& point ) const;
@@ -70,6 +72,8 @@ public:
     std::string xMax_;
     std::string yMin_;
     std::string yMax_;
+    std::string dataset_;
+    std::string physical_;
     std::vector< unsigned char > utmZones_;
     //@}
 };

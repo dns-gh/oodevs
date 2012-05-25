@@ -78,6 +78,9 @@ public:
 
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
+
+    std::string GetDataSet() const;
+    std::string GetPhysicalBase() const;
     //@}
 
     //! @name Operations

@@ -20,6 +20,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlProxy;
     class TableItemDisplayer;
 }
 
@@ -36,13 +37,6 @@ public:
     //@{
              PropertiesBase();
     virtual ~PropertiesBase();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PropertiesBase( const PropertiesBase& );            //!< Copy constructor
-    PropertiesBase& operator=( const PropertiesBase& ); //!< Assignment operator
     //@}
 
 protected:
@@ -65,15 +59,8 @@ class Properties : private PropertiesBase
 public:
     //! @name Constructors/Destructor
     //@{
-             Properties( QWidget* parent, kernel::Controllers& controllers );
+             Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy );
     virtual ~Properties();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Properties( const Properties& );            //!< Copy constructor
-    Properties& operator=( const Properties& ); //!< Assignment operator
     //@}
 };
 

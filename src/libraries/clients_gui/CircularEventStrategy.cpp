@@ -99,6 +99,8 @@ namespace
             : key_( key ){};
         bool operator()( MapLayer_ABC& layer )
         {
+            if( layer.IsReadOnly() )
+                return false;
             return layer.HandleKeyPress( key_ ) && exclusive_;
         }
         QKeyEvent* key_;
@@ -107,18 +109,22 @@ namespace
     template< typename Event >
     struct EventFunctor : public ExclusiveFunctor
     {
-        EventFunctor( Event* button, const geometry::Point2f& point, bool (MapLayer_ABC::*func)( Event* button, const geometry::Point2f& point ) )
+        EventFunctor( Event* button, const geometry::Point2f& point, bool (MapLayer_ABC::*func)( Event* button, const geometry::Point2f& point ), bool testReadOnly = true )
             : button_( button )
             , point_( point )
             , func_( func )
+            , testReadOnly_( testReadOnly )
         {};
         bool operator()( MapLayer_ABC& layer )
         {
+            if( testReadOnly_ && layer.IsReadOnly() )
+                return false;
             return (layer.*func_)( button_,point_ ) && exclusive_;
         }
         Event* button_;
         geometry::Point2f point_;
         bool (MapLayer_ABC::*func_)( Event* button, const geometry::Point2f& point );
+        bool testReadOnly_;
     };
     typedef EventFunctor< QMouseEvent >     MouseFunctor;
     typedef EventFunctor< QDropEvent >      DropFunctor;
@@ -194,7 +200,7 @@ void CircularEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMousePress  ) ) && default_ )
+    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMousePress, false ) ) && default_ )
         default_->HandleMousePress( mouse, point );
 }
 
@@ -204,7 +210,7 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseDoubleClick ) ) && default_ )
+    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseDoubleClick, false ) ) && default_ )
         default_->HandleMousePress( mouse, point );
 }
 
@@ -214,7 +220,7 @@ void CircularEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const ge
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseMove ) ) && default_ )
+    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseMove, false ) ) && default_ )
         default_->HandleMouseMove( mouse, point );
 }
 

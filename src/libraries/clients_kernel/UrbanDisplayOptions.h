@@ -3,31 +3,28 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __UrbanDisplayOptions_h_
-#define __UrbanDisplayOptions_h_
+#ifndef __kernel_UrbanDisplayOptions_h_
+#define __kernel_UrbanDisplayOptions_h_
 
-#include "clients_kernel/HumanDefs.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
+#include "Gradient.h"
+#include "HumanDefs.h"
+#include "OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
-#include "Gradient.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class AccommodationTypes;
-    class Controllers;
-    class Usages_ABC;
-    class UrbanColor_ABC;
-}
-
-namespace gui
-{
     struct ChangePopulationDisplay;
+    class Controllers;
+    class UrbanColor_ABC;
+    class Usages_ABC;
+
 // =============================================================================
 /** @class  UrbanDisplayOptions
     @brief  UrbanDisplayOptions
@@ -35,30 +32,30 @@ namespace gui
 // Created: LDC 2011-03-25
 // =============================================================================
 class UrbanDisplayOptions : public tools::Observer_ABC
-                          , public kernel::OptionsObserver_ABC
-                          , public tools::ElementObserver_ABC< gui::ChangePopulationDisplay >
+                          , public OptionsObserver_ABC
+                          , public tools::ElementObserver_ABC< kernel::ChangePopulationDisplay >
                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanDisplayOptions( kernel::Controllers& controllers, const kernel::AccommodationTypes& accommodationTypes );
+             UrbanDisplayOptions( Controllers& controllers, const AccommodationTypes& accommodationTypes );
     virtual ~UrbanDisplayOptions();
     //@}
 
     //! @name Operations
     //@{
-    void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    bool SetColor( kernel::UrbanColor_ABC& color, float livingSpace, const kernel::T_HumansStrMap& humans, const kernel::Usages_ABC& usages );
+    void OptionChanged( const std::string& name, const OptionVariant& value );
+    bool SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages );
     void ChangePopulationDisplay( const std::string& name, bool visible );
-    void NotifyUpdated( const gui::ChangePopulationDisplay& population );
+    void NotifyUpdated( const kernel::ChangePopulationDisplay& population );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::AccommodationTypes& accommodationTypes_;
+    Controllers& controllers_;
+    const AccommodationTypes& accommodationTypes_;
     bool densityColor_;
     bool accommodationColor_;
     QString accommodationDisplayed_;
@@ -74,6 +71,6 @@ private:
     //@}
 };
 
-}
+} //! namespace kernel
 
-#endif // __UrbanDisplayOptions_h_
+#endif // __kernel_UrbanDisplayOptions_h_

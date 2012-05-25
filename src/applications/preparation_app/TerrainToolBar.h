@@ -29,10 +29,6 @@ public:
     virtual ~TerrainToolBar();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Helpers
     //@{

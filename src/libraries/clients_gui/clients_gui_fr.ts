@@ -62,28 +62,8 @@
         <translation>Eléments physiques/Architecture/Traficabilité</translation>
     </message>
     <message>
-        <source>PhysicalFeatures/Motivations/</source>
-        <translation>Eléments physiques/Motivations/</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
         <translation>Eléments physiques/Architecture/Etages de parking</translation>
-    </message>
-    <message>
-        <source>/Percentage</source>
-        <translation>/Pourcentage</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Défaut</translation>
-    </message>
-    <message>
-        <source>/Nominal capacity</source>
-        <translation>/Capacité nominale</translation>
-    </message>
-    <message>
-        <source>/Maximal capacity</source>
-        <translation>/Capacité maximale</translation>
     </message>
 </context>
 <context>

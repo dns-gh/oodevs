@@ -62,27 +62,7 @@
         <translation>Eléments physiques/Architecture/traficabilité</translation>
     </message>
     <message>
-        <source>PhysicalFeatures/Motivations/</source>
-        <translation>PhysicalFeatures/Motivations/</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>/Percentage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>/Nominal capacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>/Maximal capacity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

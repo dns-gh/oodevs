@@ -9,19 +9,17 @@
 
 #include "gaming_pch.h"
 #include "UrbanModel.h"
-#include "Architecture.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
+#include "PhysicalAttribute.h"
 #include "ResourceNetwork.h"
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
 #include "UrbanColor.h"
 #include "UrbanPositions.h"
-#include "Usages.h"
-#include "clients_gui/UrbanObject.h"
-#include "clients_gui/UrbanDisplayOptions.h"
-#include "clients_gui/Usages.h"
+#include "clients_kernel/UrbanObject.h"
+#include "clients_kernel/UrbanDisplayOptions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
@@ -34,7 +32,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& 
     : controllers_        ( controllers )
     , resourceNetwork_    ( resourceNetwork )
     , static_             ( staticModel )
-    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
 {
     // NOTHING
 }
@@ -63,13 +61,11 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
         return;
     }
     const kernel::ObjectType& type = static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" );
-    kernel::UrbanObject_ABC* pTerrainObject = new gui::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
+    kernel::UrbanObject* pTerrainObject = new kernel::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, *pTerrainObject ) );
-    if( message.attributes().has_architecture() )
-        pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), dictionary ) );
-    pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, static_.accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
+    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( message.attributes(), dictionary, static_.accommodationTypes_, *pTerrainObject ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );

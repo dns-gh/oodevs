@@ -50,9 +50,11 @@ private:
     //@{
     void ComputeCachedValues( std::vector< geometry::Point2f >& points );
     void ComputeConvexHull( std::vector< geometry::Point2f >& points ) const;
+    void EliminateRedundantVertices( const T_PointVector& vertices, float epsilon );
+    void ChopSpikes( float epsilon );
     //@}
 
-private:
+protected:
     //! @name Member Data
     //@{
     EUrbanLevel level_;
@@ -63,6 +65,11 @@ private:
     geometry::Polygon2f polygon_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f barycenter_;
+    //@}
+
+    //! @name Static Member
+    //@{
+    static float epsilon_;
     //@}
 };
 

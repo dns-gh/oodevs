@@ -48,6 +48,7 @@ public:
 
     //! @name Operations
     //@{
+    void DeselectAll();
     void Register  ( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
     //@}

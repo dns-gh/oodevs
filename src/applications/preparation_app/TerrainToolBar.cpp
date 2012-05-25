@@ -13,6 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "MainWindow.h"
 
 namespace
 {
@@ -37,7 +38,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     : gui::RichToolBar( controllers, parent, "terrainToolBar", tr( "Terrain" )/*, false*/ )
 {
     // Terrain button
-    switchModeButton_ = AddButton( this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true ); // $$$$ ABR 2012-05-15: Find a better icon
+    switchModeButton_ = AddButton( this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
     // Block creation button
     blockCreationButton_ = AddButton( this, this, SLOT( OnBlockCreationMode() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
     // Multi blocks creation button
@@ -70,18 +71,20 @@ TerrainToolBar::~TerrainToolBar()
 // -----------------------------------------------------------------------------
 void TerrainToolBar::OnSwitchMode()
 {
-    assert( controllers_.modes_ != 0 );
-    UncheckBlockCreationButtons();
-    EnableBlockCreationButtons( false );
-    if( switchModeButton_->isChecked() )
+    if( static_cast< MainWindow* >( parent() )->SwitchToTerrainMode( switchModeButton_->isChecked() ) )
     {
-        controllers_.ChangeMode( ePreparationMode_Terrain );
-        blockRemoveButton_->setEnabled( true );
+        // Succeed
+        UncheckBlockCreationButtons();
+        EnableBlockCreationButtons( false );
+        blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );
     }
     else
     {
-        controllers_.ChangeMode( ePreparationMode_Exercise );
-        blockRemoveButton_->setEnabled( false );
+        // Canceled
+        switchModeButton_->disconnect( this, SLOT( OnSwitchMode() ) );
+        switchModeButton_->setChecked( !switchModeButton_->isChecked() );
+        QObject::connect( switchModeButton_, SIGNAL( clicked() ), this, SLOT( OnSwitchMode() ) );
+        blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );
     }
 }
 

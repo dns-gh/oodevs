@@ -167,7 +167,7 @@ namespace
                                               , const tools::StringResolver< ResourceNetworkType >& resources
                                               , xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach< ResourceNetwork_ABC >( *new T( controllers, xis, result.Get< Positions >().GetPosition(), urbans, objects, resources ) );
+            result.Attach< ResourceNetwork_ABC >( *new T( controllers, xis, result.Get< Positions >().GetPosition(), urbans, objects, resources, true ) );
         }
     };
 }

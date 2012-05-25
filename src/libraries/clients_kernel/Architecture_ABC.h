@@ -10,8 +10,9 @@
 #ifndef __Architecture_ABC_h_
 #define __Architecture_ABC_h_
 
-#include "Extension_ABC.h"
 #include "Displayable_ABC.h"
+#include "Extension_ABC.h"
+#include "Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -24,6 +25,7 @@ namespace kernel
 // =============================================================================
 class Architecture_ABC : public Extension_ABC
                        , public Displayable_ABC
+                       , public Serializable_ABC
                        , private boost::noncopyable
 {
 public:
@@ -35,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
+    virtual void Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
                              const std::string& material, float occupation, float trafficability ) = 0;
     virtual const std::string& GetMaterial() const = 0;
     virtual unsigned int GetFloorNumber() const = 0;

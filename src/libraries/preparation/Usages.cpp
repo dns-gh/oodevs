@@ -9,21 +9,21 @@
 
 #include "preparation_pch.h"
 #include "Usages.h"
+#include "clients_kernel/ModeController_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
+#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Usages constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Usages::Usages( xml::xistream& xis, std::auto_ptr< kernel::Usages_ABC > pUsages )
-    : pUsages_( pUsages )
+Usages::Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,
+                const kernel::AccommodationTypes& accommodationTypes, float livingSpace )
+    : kernel::Usages( dictionary, accommodationTypes, livingSpace )
 {
-    xis >> xml::optional
-        >> xml::start( "physical" )
-            >> xml::optional
-                >> xml::start( "usages" )
-                    >> xml::list( "usage", *this, &Usages::ReadUsages )
-                >> xml::end
+    xis >> xml::start( "usages" )
+            >> xml::list( "usage", *this, &Usages::ReadUsages )
         >> xml::end;
 }
 
@@ -46,19 +46,23 @@ void Usages::ReadUsages( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Usages::Add
-// Created: LGY 2011-04-15
+// Name: Usages::SerializeAttributes
+// Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-void Usages::Add( const std::string& usage, unsigned int proportion )
+void Usages::SerializeAttributes( xml::xostream& xos ) const
 {
-    pUsages_->Add( usage, proportion );
-}
+    if( usages_.empty() )
+        return;
 
-// -----------------------------------------------------------------------------
-// Name: Usages::Find
-// Created: LGY 2011-04-15
-// -----------------------------------------------------------------------------
-unsigned int Usages::Find( const std::string& usage ) const
-{
-    return pUsages_->Find( usage );
+    xos << xml::start( "usages" );
+    BOOST_FOREACH( const kernel::T_Usages::value_type& usage, usages_ )
+    {
+        if( usage.first == defaultStr_ )
+            continue;
+        xos << xml::start( "usage" )
+            << xml::attribute( "type", usage.first )
+            << xml::attribute( "proportion", usage.second / 100.f )
+            << xml::end;
+    }
+    xos << xml::end;
 }

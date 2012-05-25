@@ -21,8 +21,8 @@ namespace kernel
 */
 // Created: LGY 2011-04-19
 // =============================================================================
-class UrbanColor_ABC : public Extension_ABC,
-                       private boost::noncopyable
+class UrbanColor_ABC : public Extension_ABC
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -45,3 +45,24 @@ EUrbanLevel UrbanHierarchies::GetLevel() const
 {
     return level_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanHierarchies::SerializeAttributes
+// Created: ABR 2012-05-24
+// -----------------------------------------------------------------------------
+void UrbanHierarchies::SerializeAttributes( xml::xostream& xos ) const
+{
+    if( level_ != eUrbanLevelBlock && Count() )
+    {
+        xos << xml::start( "urban-objects" );
+        tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Entity_ABC& entity = it.NextElement();
+            xos << xml::start( "urban-object" );
+            entity.Interface().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
+            xos << xml::end; // urban-object
+        }
+        xos << xml::end; // urban-objects
+    }
+}

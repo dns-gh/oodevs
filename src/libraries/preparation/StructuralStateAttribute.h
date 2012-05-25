@@ -11,11 +11,15 @@
 #define __StructuralStateAttribute_h_
 
 #include "Overridable_ABC.h"
-#include "clients_kernel/UrbanExtensions.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/UrbanExtensions.h"
+#include "tools/Observer_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
+    class Controllers;
     class PropertiesDictionary;
 }
 
@@ -31,30 +35,31 @@ namespace xml
 // Created: JSR 2010-09-01
 // =============================================================================
 class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
-                               , public kernel::Serializable_ABC
                                , public Overridable_ABC
+                               , public tools::Observer_ABC
+                               , public kernel::ModesObserver_ABC
+                               , public kernel::Serializable_ABC
+                               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( unsigned int value, kernel::PropertiesDictionary& dico );
+             StructuralStateAttribute( kernel::Controllers& controllers, unsigned int value, kernel::PropertiesDictionary& dico );
     virtual ~StructuralStateAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void SetOverriden( bool& overriden ) const;
+    virtual bool IsOverriden() const;
     void Update( xml::xistream& xis );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serializable_ABC
     //@{
-    StructuralStateAttribute( const StructuralStateAttribute& );            //!< Copy constructor
-    StructuralStateAttribute& operator=( const StructuralStateAttribute& ); //!< Assignment operator
+    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
+private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico );
@@ -63,6 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     unsigned int structuralState_;
     //@}
 };
