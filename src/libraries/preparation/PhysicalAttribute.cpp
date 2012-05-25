@@ -29,6 +29,8 @@ PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDict
             architecture_.reset( new Architecture( dictionary ) );
         if( xis.has_child( "usages" ) )
             usages_.reset( new Usages( xis, dictionary, accommodationTypes, ( architecture_.get() ) ? urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ) : urbanObject.GetLivingSpace( 0, 0 ) ) );
+        else
+            usages_.reset( new Usages( dictionary, accommodationTypes, ( architecture_.get() ) ? urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ) : urbanObject.GetLivingSpace( 0, 0 ) ) );
         xis >> xml::end;
     }
     else

@@ -767,8 +767,8 @@ bool MainWindow::SwitchToTerrainMode( bool terrainMode )
     if( !CheckSaving( true ) )
         return false;
     assert( controllers_.modes_ != 0 );
-    controllers_.actions_.DeselectAll();
     controllers_.ChangeMode( terrainMode ? ePreparationMode_Terrain : ePreparationMode_Exercise );
+    controllers_.actions_.DeselectAll();
     SetWindowTitle( false );
     return true;
 }

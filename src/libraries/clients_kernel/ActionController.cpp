@@ -113,6 +113,10 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
             // Sélection d'un élément
             selectedMap_[ layer ].push_back( &selectable );
             selectable.Select( *this );
+
+            ActionController::T_Selectables list;
+            list.push_back( &selectable );
+            selectable.MultipleSelect( *this, list );
         }
     }
     else

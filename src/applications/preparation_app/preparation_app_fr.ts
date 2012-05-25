@@ -2464,6 +2464,38 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Urban informations</source>
         <translation>Informations urbaine</translation>
     </message>
+    <message>
+        <source>Total urban blocks number: </source>
+        <translation>Nombre total de blocs urbains: </translation>
+    </message>
+    <message>
+        <source>Selected urban blocks number: </source>
+        <translation>Nombre de blocs urbains sélectionnés: </translation>
+    </message>
+    <message>
+        <source>Non medical infrastructures: </source>
+        <translation>Infrastructures non médicales: </translation>
+    </message>
+    <message>
+        <source>Medical infrastructures: </source>
+        <translation>Infrastructures médicales: </translation>
+    </message>
+    <message>
+        <source>Total capacity: </source>
+        <translation>Capacité totale: </translation>
+    </message>
+    <message>
+        <source>Capacity  %1: </source>
+        <translation>Capacité %1: </translation>
+    </message>
+    <message>
+        <source>Resource %1 production: </source>
+        <translation>Production de la ressource %1: </translation>
+    </message>
+    <message>
+        <source>Resource %1 consumption: </source>
+        <translation>Consommation de la ressource %1: </translation>
+    </message>
 </context>
 <context>
     <name>UsagesDockWidget</name>

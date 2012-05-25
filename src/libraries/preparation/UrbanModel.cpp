@@ -78,8 +78,8 @@ void UrbanModel::ReadCity( xml::xistream& xis )
     if( !Find( pTerrainObject->GetId() ) )
     {
         kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
-        ptr->Polish();
         Register( ptr->GetId(), *ptr );
+        ptr->Polish();
         xis >> xml::optional
                 >> xml::start( "urban-objects" )
                     >> xml::list( "urban-object", *this, &UrbanModel::ReadDistrict, ptr )
@@ -97,8 +97,8 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
     if( !Find( pTerrainObject->GetId() ) )
     {
         kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
-        ptr->Polish();
         Register( ptr->GetId(), *ptr );
+        ptr->Polish();
         xis >> xml::optional
             >> xml::start( "urban-objects" )
                 >> xml::list( "urban-object", *this, &UrbanModel::ReadBlock, ptr )
@@ -116,8 +116,8 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
     if( !Find( pTerrainObject->GetId() ) )
     {
         kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
-        ptr->Polish();
         Register( ptr->GetId(), *ptr );
+        ptr->Polish();
     }
 }
 

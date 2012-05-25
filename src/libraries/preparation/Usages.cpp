@@ -16,6 +16,16 @@
 
 // -----------------------------------------------------------------------------
 // Name: Usages constructor
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace )
+    : kernel::Usages( dictionary, accommodationTypes, livingSpace )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Usages constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
 Usages::Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,

@@ -40,12 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StructuralStateAttribute( const StructuralStateAttribute& );            //!< Copy constructor
-    StructuralStateAttribute& operator=( const StructuralStateAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;

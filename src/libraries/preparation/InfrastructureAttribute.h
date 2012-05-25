@@ -43,7 +43,6 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
                               , public tools::Observer_ABC
                               , public kernel::Serializable_ABC
                               , public kernel::ModesObserver_ABC
-                              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -57,6 +56,7 @@ public:
     virtual bool IsEnabled() const;
     virtual bool HasValidType() const;
     virtual unsigned int GetThreshold() const;
+    virtual const kernel::InfrastructureType* GetType() const;
     //@}
 
     //! @name Operations

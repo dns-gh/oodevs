@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -30,7 +29,6 @@ namespace kernel
 // Created: JSR 2010-09-01
 // =============================================================================
 class InfrastructureAttribute : public kernel::Infrastructure_ABC
-                              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,6 +42,7 @@ public:
     virtual bool IsEnabled() const;
     virtual bool HasValidType() const;
     virtual unsigned int GetThreshold() const;
+    virtual const kernel::InfrastructureType* GetType() const;
     //@}
 
     //! @name Operations
@@ -66,14 +65,14 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controllers&                                       controllers_;
     const tools::StringResolver< kernel::InfrastructureType >& resolver_;
-    kernel::Entity_ABC& object_;
-    const geometry::Point2f position_;
-    bool enabled_;
-    unsigned int threshold_;
-    std::string role_;
-    const kernel::InfrastructureType* type_;
+    kernel::Entity_ABC&                                        object_;
+    const geometry::Point2f                                    position_;
+    bool                                                       enabled_;
+    unsigned int                                               threshold_;
+    std::string                                                role_;
+    const kernel::InfrastructureType*                          type_;
     //@}
 };
 

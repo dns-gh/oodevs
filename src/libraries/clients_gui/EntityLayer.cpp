@@ -117,7 +117,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( button != Qt::LeftButton && button != Qt::RightButton )
         return false;
 
-    std::size_t oldSelected = selected_;
+    //std::size_t oldSelected = selected_;
     if( selected_ >= entities_.size()
      || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
@@ -138,7 +138,7 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
             return true;
         }
     }
-    selected_ = oldSelected;
+    //selected_ = oldSelected;
     return false;
 }
 
