@@ -32,12 +32,12 @@ struct TaskHandler
         // NOTHING
     }
 
-    void operator()()
+    void operator()() const
     {
         (*package_)();
     }
 
-    Future GetFuture()
+    Future GetFuture() const
     {
         return future_;
     }
