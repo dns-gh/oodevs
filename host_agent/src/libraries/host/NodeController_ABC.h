@@ -57,6 +57,12 @@ public:
     virtual T_Node  Stop( const Uuid& id ) const = 0;
     //@}
 
+    //! @name Install Methods
+    //@{
+    virtual Tree    GetInstall( const Uuid& id ) const = 0;
+    virtual Tree    DeleteInstall( const Uuid& id, const std::vector< size_t >& list ) = 0;
+    //@}
+
     //! @name Cache Methods
     //@{
     virtual Tree    UploadCache( const Uuid& id, std::istream& src ) const = 0;

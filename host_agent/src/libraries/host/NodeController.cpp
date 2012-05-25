@@ -284,6 +284,26 @@ void NodeController::Stop( Node_ABC& node, bool skipSave ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeController::GetInstall
+// Created: BAX 2012-05-25
+// -----------------------------------------------------------------------------
+Tree NodeController::GetInstall( const Uuid& id ) const
+{
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    return node ? node->GetInstall() : Tree();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::DeleteInstall
+// Created: BAX 2012-05-25
+// -----------------------------------------------------------------------------
+Tree NodeController::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
+{
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    return node ? node->DeleteInstall( list ) : Tree();
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeController::GetCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
