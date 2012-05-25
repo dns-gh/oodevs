@@ -42,7 +42,7 @@ UrbanListView::~UrbanListView()
 // Name: UrbanListView::NotifyCreated
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------
-void UrbanListView::NotifyCreated( const kernel::Team_ABC& team )
+void UrbanListView::NotifyCreated( const kernel::Team_ABC& /*team*/ )
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ void UrbanListView::NotifyCreated( const kernel::Team_ABC& team )
 // Name: UrbanListView::NotifyDeleted
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------
-void UrbanListView::NotifyDeleted( const kernel::Team_ABC& team )
+void UrbanListView::NotifyDeleted( const kernel::Team_ABC& /*team*/ )
 {
     // NOTHING
 }
@@ -107,4 +107,5 @@ bool UrbanListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
 void UrbanListView::NotifyModeChanged( int newMode )
 {
     ModesObserver_ABC::NotifyModeChanged( newMode );
+    setSelectionMode( newMode == ePreparationMode_Terrain ? Q3ListView::Extended : Q3ListView::Single );
 }

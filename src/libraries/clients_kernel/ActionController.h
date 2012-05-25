@@ -79,6 +79,7 @@ public:
     void AllowLayerMultipleSelection( int mode, const MapLayer_ABC* layer );
     bool IsSingleSelection( const MapLayer_ABC* layer ) const;
     bool HasMultipleLayers() const;
+    T_Layers GetMultipleLayers() const;
 
     // -----------------------------------------------------------------------------
     // Select
@@ -86,6 +87,7 @@ public:
     void SetSelected( const MapLayer_ABC* layer, const Selectable_ABC& selectable, bool append );
     void AddToSelection( const MapLayer_ABC* layer, const T_Selectables& selectables );
     void NotifyRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight, bool append );
+    void SetMultipleSelection( const T_SelectedMap& selectables );
 
     template< typename T >
     void Select( const T& element )
