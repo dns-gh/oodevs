@@ -73,6 +73,7 @@ public:
     virtual Tree    UploadPack( const Uuid& id, std::istream& src ) const;
     virtual Tree    GetPack( const Uuid& id ) const;
     virtual Tree    DeletePack( const Uuid& id );
+    virtual Tree    UpdatePack( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
 private:

@@ -57,6 +57,7 @@ namespace mocks
         MOCK_METHOD( GetPack, 1 );
         MOCK_METHOD( UploadPack, 2 );
         MOCK_METHOD( DeletePack, 1 );
+        MOCK_METHOD( UpdatePack, 2 );
     };
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )

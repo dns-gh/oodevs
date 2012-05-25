@@ -322,3 +322,13 @@ Tree NodeController::DeletePack( const Uuid& id )
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     return node ? node->DeletePack() : Tree();
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::UpdatePack
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+Tree NodeController::UpdatePack( const Uuid& id, const std::vector< size_t >& list )
+{
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    return node ? node->UpdatePack( list ) : Tree();
+}

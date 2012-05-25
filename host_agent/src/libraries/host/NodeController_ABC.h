@@ -58,6 +58,7 @@ public:
     virtual Tree    UploadPack( const Uuid& id, std::istream& src ) const = 0;
     virtual Tree    GetPack( const Uuid& id ) const = 0;
     virtual Tree    DeletePack( const Uuid& id ) = 0;
+    virtual Tree    UpdatePack( const Uuid& id, const std::vector< size_t >& list ) = 0;
     //@}
 };
 
