@@ -13,8 +13,10 @@
 #include "host/Agent_ABC.h"
 #include "Request_ABC.h"
 
+#include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
@@ -234,6 +236,7 @@ std::string Controller::Notify( Request_ABC& request )
             if( uri == "/stop_node" )       return StopNode( request );
             if( uri == "/get_pack" )        return GetPack( request );
             if( uri == "/delete_pack" )     return DeletePack( request );
+            if( uri == "/update_pack" )     return UpdatePack( request );
             // sessions
             if( uri == "/list_sessions" )   return ListSessions( request );
             if( uri == "/count_sessions" )  return CountSessions( request );
@@ -377,6 +380,23 @@ std::string Controller::GetPack( const Request_ABC& request )
 std::string Controller::DeletePack( const Request_ABC& request )
 {
     return UuidDispatch( request, "id", agent_, &Agent_ABC::DeletePack );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UpdatePack
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+std::string Controller::UpdatePack( const Request_ABC& request )
+{
+    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
+    std::vector< std::string > tokens;
+    boost::algorithm::split( tokens, RequireParameter< std::string >( "packs", request ), boost::is_any_of( "," ) );
+    if( tokens.empty() )
+        throw HttpException( BadRequest, "missing pack ids" );
+    std::vector< size_t > packs;
+    BOOST_FOREACH( const std::string& item, tokens )
+        packs.push_back( boost::lexical_cast< size_t >( item ) );
+    return WriteHttpReply( agent_.UpdatePack( id, packs ) );
 }
 
 // -----------------------------------------------------------------------------
