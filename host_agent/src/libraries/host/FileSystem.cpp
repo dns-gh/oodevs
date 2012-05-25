@@ -79,22 +79,26 @@ bool FileSystem::Exists( const Path& path ) const
     return boost::filesystem::exists( path );
 }
 
+namespace
+{
+Path MovePath( const Path& dst, const std::string& prefix, const Path& src )
+{
+    return dst / Utf8Convert( src ).substr( prefix.size() );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: FileSystem::CopyDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
 void FileSystem::CopyDirectory( const Path& src, const Path& dst ) const
 {
-    // TODO Use wrecursive_directory_iterator
-    if( IsFile( src ) )
-        return boost::filesystem::copy_file( src, dst / src.filename() );
-    else if( !IsDirectory( src ) )
-        return;
-    const Path sub = dst / src.filename();
-    if( !boost::filesystem::create_directory( sub ) )
-        throw std::runtime_error( "unable to create " + sub.string() );
-    for( boost::filesystem::directory_iterator it( src ); it != boost::filesystem::directory_iterator(); ++it )
-        CopyDirectory( *it, sub );
+    const std::string prefix = Utf8Convert( src );
+    for( boost::filesystem::recursive_directory_iterator it( src ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+        if( boost::filesystem::is_directory( it->status() ) )
+            boost::filesystem::create_directory( MovePath( dst, prefix, *it ) );
+        else if( boost::filesystem::is_regular_file( it->status() ) )
+            boost::filesystem::copy_file( *it, MovePath( dst, prefix, *it ) );
 }
 
 // -----------------------------------------------------------------------------
