@@ -171,7 +171,7 @@
           }, "fast");
           return ajax("/api/install_from_cache", {
             id: uuid,
-            packs: list.join(',')
+            items: list.join(',')
           }, function(item) {
             _this["switch"](true);
             return _this.update(item, true);

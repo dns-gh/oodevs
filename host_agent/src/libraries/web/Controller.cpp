@@ -384,14 +384,14 @@ std::string Controller::GetInstall( const Request_ABC& request )
 namespace
 {
 template< typename T >
-std::string ListDispatch( const Request_ABC& request, const T& functor, const std::string& name )
+std::string ListDispatch( const Request_ABC& request, const T& functor )
 {
     const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
-    const std::string join = RequireParameter< std::string >( name, request );
+    const std::string join = RequireParameter< std::string >( "items", request );
     std::vector< std::string > tokens;
     boost::algorithm::split( tokens, join, boost::is_any_of( "," ) );
     if( tokens.empty() )
-        throw HttpException( BadRequest, "missing " + name );
+        throw HttpException( BadRequest, "missing items" );
     std::vector< size_t > list;
     BOOST_FOREACH( const std::string& item, tokens )
         list.push_back( boost::lexical_cast< size_t >( item ) );
@@ -405,7 +405,7 @@ std::string ListDispatch( const Request_ABC& request, const T& functor, const st
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteInstall( const Request_ABC& request )
 {
-    return ListDispatch( request, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ), "items" );
+    return ListDispatch( request, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -432,7 +432,7 @@ std::string Controller::DeleteCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::InstallFromCache( const Request_ABC& request )
 {
-    return ListDispatch( request, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ), "packs" );
+    return ListDispatch( request, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
