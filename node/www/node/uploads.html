@@ -1,7 +1,6 @@
 [#ftl]
 <div class="row">
     <div class="span9">
-        <div id="upload_error"></div>
         <div class="hide">
             <iframe id="upload_target" name="upload_target"></iframe>
         </div>
@@ -14,6 +13,7 @@
                 </div>
             </div>
         </form>
+        <div id="upload_error"></div>
         <div class="hide alert alert-info upload_alert">
             <a class="spin_btn"></a>
             <span>
@@ -56,17 +56,15 @@
                                 <td class="date">{{date}}</td>
                                 <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
                                 <td class="action">
-                                    <span class="btn-group">
-                                        {{#equal type "exercise"}}
-                                        <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-                                        {{/equal}}
-                                        {{#equal action "add"}}
-                                        <a class="btn add" data-toggle="button"><i class="icon-plus"></i> Add </a>
-                                        {{/equal}}
-                                        {{#equal action "update"}}
-                                        <a class="btn update" data-toggle="button"><i class="icon-chevron-up"></i> Update </a>
-                                        {{/equal}}
-                                    </span>
+                                    {{#equal type "exercise"}}
+                                    <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                                    {{/equal}}
+                                    {{#equal action "add"}}
+                                    <a class="btn add" data-toggle="button"><i class="icon-plus"></i> Add </a>
+                                    {{/equal}}
+                                    {{#equal action "update"}}
+                                    <a class="btn update" data-toggle="button"><i class="icon-chevron-up"></i> Update </a>
+                                    {{/equal}}
                                 </td>
                             </tr>
                             {{#equal type "exercise"}}

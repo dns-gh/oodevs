@@ -15,12 +15,15 @@ Handlebars.registerHelper "equal", (lhs, rhs, options) ->
         return options.fn this
     return options.inverse this
 
-Handlebars.registerHelper "is_exercise", (type, options) ->
-    if type == "exercise"
-        return options.fn this
-    return options.inverse this
-
 package_template = Handlebars.compile $("#package_template").html()
+upload_error_template = Handlebars.compile $("#upload_error_template").html()
+
+print_error = (text) ->
+    ctl = $("#upload_error")
+    ctl.html upload_error_template content: text
+    ctl.show()
+    $("html, body").animate scrollTop: 0, "fast"
+    setTimeout (-> ctl.hide()), 3000
 
 class Package extends Backbone.Model
     view: PackageView
@@ -30,6 +33,23 @@ class Package extends Backbone.Model
             return ajax "/api/get_pack", id: uuid,
                 options.success, options.error
         return Backbone.sync method, model, options
+
+setSpinner = (btn) ->
+    spin_opts =
+        lines:      12
+        length:     4
+        width:      2
+        radius:     4
+        rotate:     0
+        color:      '#000'
+        speed:      1
+        trail:      60
+        shadow:     false
+        hwaccel:    true
+        className:  'spinner'
+        zIndex:     2e9
+    spinner = new Spinner(spin_opts).spin()
+    btn.html spinner.el
 
 class PackageView extends Backbone.View
     el: $("#packages")
@@ -41,26 +61,63 @@ class PackageView extends Backbone.View
         @model.fetch()
         setTimeout @delta, 5000
 
+    switch: (next, reset) =>
+        @enabled = next
+        if reset? and !next
+            $(@el).empty()
+
     render: =>
-        $(@el).empty()
         return unless @enabled
+        $(@el).empty()
         if @model.attributes.name?
             $(@el).html package_template @model.attributes
-            for it in $(@el).find(".action .more")
+
+            for it in $(@el).find ".action .more"
                 $(it).click ->
-                    $("#" + $(@).parent().parent().parent().attr "rel").toggle "fast"
-            for it in $(@el).find(".name .error")
+                    $("#" + $(@).parent().parent().attr "rel").toggle "fast"
+
+            for it in $(@el).find ".name .error"
                 $(it).tooltip placement: "right"
+
             $(".form-actions .discard").click =>
-                @enabled = false
-                @model.clear()
+                @switch false, true
                 ajax "/api/delete_pack", id: uuid,
-                    => @enabled = true
-                    => @enabled = true
+                    => @switch true
+                    => @switch true
+
+            $(".form-actions .save").click =>
+                list = []
+                for it in $(@el).find ".action .add, .action .update"
+                    continue unless $(it).hasClass "active"
+                    @switch false
+                    spin = $ "<a class='btn disabled spin_btn'></a>"
+                    setSpinner spin
+                    spin.appendTo $(it).parent()
+                    $(it).hide()
+                    rel = $(it).parent().parent().attr "rel"
+                    rel = rel.replace /^briefing_/, ''
+                    list.push rel if rel?
+                if !list.length
+                    print_error "Please select package(s) to save"
+                    return
+                $("html, body").animate scrollTop: 0, "fast"
+                ajax "/api/update_pack", id: uuid, packs: list.join ',',
+                    (item) =>
+                        @switch true
+                        @update item, true
+                    () =>
+                        @switch true
+                        print_error "Unable to save package(s)"
         return
 
-    update: (data) =>
-        @enabled = true
+    update: (data, buttons) =>
+        if buttons?
+            for it in $(@el).find ".btn"
+                if $(it).hasClass "spin_btn"
+                    $(it).remove()
+                else
+                    $(it).show()
+                    $(it).removeClass "active"
         @model.set data
 
     delta: =>
@@ -79,22 +136,7 @@ package_view = new PackageView
 
 $("#upload_form").attr "action", (get_url "/api/upload_pack") + "?id=" + uuid
 
-spin_opts =
-    lines:      12
-    length:     4
-    width:      2
-    radius:     4
-    rotate:     0
-    color:      '#000'
-    speed:      1
-    trail:      60
-    shadow:     false
-    hwaccel:    true
-    className:  'spinner'
-    zIndex:     2e9
-
-spinner = new Spinner(spin_opts).spin()
-$(".spin_btn").html spinner.el
+setSpinner $(".spin_btn")
 
 $("#upload_form input:file").change ->
     ctl = $("#upload_form .upload")
@@ -111,10 +153,10 @@ toggle_load = ->
 $("#upload_form .upload").click ->
     return if $(@).hasClass "disabled"
     toggle_load()
-    package_view.enabled = false
-    package_view.model.clear()
+    package_view.switch false, true
     $("#upload_form").submit()
 
 $("#upload_target").load ->
     toggle_load()
+    package_view.switch true
     package_view.update jQuery.parseJSON $(@).contents().text()
