@@ -54,6 +54,34 @@ private:
     boost::shared_ptr< Package > package_;
     Future future_;
 };
+
+template< typename T = void >
+struct Async
+{
+    Async()
+    {
+        // NOTHING
+    }
+
+    ~Async()
+    {
+        Join();
+    }
+
+    template< typename U >
+    void Go( const U& task )
+    {
+        futures_.push_back( TaskHandler< T >::Go< U >( task ) );
+    }
+
+    void Join()
+    {
+        boost::wait_for_all( futures_.begin(), futures_.end() );
+    }
+
+private:
+    std::vector< typename TaskHandler< T >::Future > futures_;
+};
 }
 
 #endif // TASK_HANDLER_H
