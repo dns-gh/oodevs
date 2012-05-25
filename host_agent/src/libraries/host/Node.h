@@ -33,8 +33,10 @@ namespace host
     class FileSystem_ABC;
     struct Package_ABC;
     struct PackageFactory_ABC;
+    class Pool_ABC;
     class Port_ABC;
     class PortFactory_ABC;
+    class SecurePool;
 
 // =============================================================================
 /** @class  Node_ABC
@@ -48,9 +50,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
+                   const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port,
+                   std::auto_ptr< SecurePool > pool );
              Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports,
+                   std::auto_ptr< SecurePool > pool );
     virtual ~Node();
     //@}
 
@@ -73,8 +77,7 @@ public:
 private:
     //! @name Private methods
     //@{
-    void ParseInstall();
-    void ParsePack();
+    void ParsePackages();
     Tree GetCommonProperties() const;
     //@}
 
@@ -92,6 +95,7 @@ private:
     boost::shared_ptr< Package_ABC > install_;
     boost::shared_ptr< Package_ABC > stash_;
     T_Process process_;
+    const std::auto_ptr< SecurePool > pool_;
     //@}
 };
 }

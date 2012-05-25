@@ -112,35 +112,43 @@ struct Configuration
 
 struct NodeFactory : public NodeFactory_ABC
 {
-    NodeFactory( const PackageFactory_ABC& packages,
+    NodeFactory( cpplog::BaseLogger& log,
+                 const PackageFactory_ABC& packages,
                  const FileSystem_ABC& system,
                  const runtime::Runtime_ABC& runtime,
                  const UuidFactory_ABC& uuids,
-                 PortFactory_ABC& ports )
-        : packages( packages )
+                 PortFactory_ABC& ports,
+                 Pool_ABC& pool )
+        : log     ( log )
+        , packages( packages )
         , system  ( system )
         , runtime ( runtime )
         , uuids   ( uuids )
         , ports   ( ports )
+        , pool    ( pool )
     {
         // NOTHING
     }
 
     Ptr Make( const Path& root, const std::string& name ) const
     {
-        return boost::make_shared< Node >( packages, system, root, uuids.Create(), name, ports.Create() );
+        std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
+        return boost::make_shared< Node >( packages, system, root, uuids.Create(), name, ports.Create(), secure );
     }
 
     Ptr Make( const Tree& tree ) const
     {
-        return boost::make_shared< Node >( packages, system, tree, runtime, ports );
+        std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
+        return boost::make_shared< Node >( packages, system, tree, runtime, ports, secure );
     }
 
+    mutable cpplog::BaseLogger& log;
     const PackageFactory_ABC& packages;
     const FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
     PortFactory_ABC& ports;
+    Pool_ABC& pool;
 };
 
 struct PackageFactory : public PackageFactory_ABC
@@ -192,7 +200,7 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     Proxy proxy( log, runtime, system, cfg.root + L"/log", cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( system );
-    NodeFactory fnodes( packages, system, runtime, uuids, ports );
+    NodeFactory fnodes( log, packages, system, runtime, uuids, ports, pool );
     NodeController nodes( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool );
     NodeController cluster( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool );
     SessionFactory fsessions( runtime, uuids, ports );

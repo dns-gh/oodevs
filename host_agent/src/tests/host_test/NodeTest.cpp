@@ -11,15 +11,18 @@
 #include "Mocks.h"
 #include <host/Node.h>
 #include <host/PropertyTree.h>
+#include <host/SecurePool.h>
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
+using mocks::MockLog;
 using mocks::MockFileSystem;
 using mocks::MockPackage;
 using mocks::MockPackageFactory;
+using mocks::MockPool;
 using mocks::MockPort;
 using mocks::MockPortFactory;
 using mocks::MockProcess;
@@ -43,6 +46,8 @@ namespace
         MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
+        MockLog log;
+        MockPool pool;
         MockPackageFactory packages;
         boost::shared_ptr< MockPackage > installed;
         boost::shared_ptr< MockPackage > stash;
@@ -58,7 +63,8 @@ namespace
         NodePtr MakeNode()
         {
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
-            return boost::make_shared< Node >( packages, system, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
+            std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
+            return boost::make_shared< Node >( packages, system, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ), secure );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -71,7 +77,8 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( packages, system, tree, runtime, ports );
+            std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
+            return boost::make_shared< Node >( packages, system, tree, runtime, ports, secure );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )

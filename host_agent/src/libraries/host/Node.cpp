@@ -15,6 +15,7 @@
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
+#include "SecurePool.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/lexical_cast.hpp>
@@ -75,7 +76,8 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
+            const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port,
+            std::auto_ptr< SecurePool > pool )
     : packages_ ( packages )
     , system_   ( system )
     , id_       ( id )
@@ -84,7 +86,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , port_     ( port )
     , access_   ( new boost::shared_mutex() )
     , package_  ( new boost::mutex() )
-    , process_  ()
+    , pool_     ( pool )
 {
     install_ = packages_.Make( GetInstallPath(), true );
 }
@@ -94,7 +96,8 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports,
+            std::auto_ptr< SecurePool > pool )
     : packages_ ( packages )
     , system_   ( system )
     , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
@@ -104,9 +107,9 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , access_   ( new boost::shared_mutex() )
     , package_  ( new boost::mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , pool_     ( pool )
 {
-    ParseInstall();
-    ParsePack();
+    pool_->Post( boost::bind( &Node::ParsePackages, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,20 +304,12 @@ void Node::ReadPack( std::istream& src )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::ParseInstall
-// Created: BAX 2012-05-23
+// Name: Node::ParsePackages
+// Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Node::ParseInstall()
+void Node::ParsePackages()
 {
     ::ParsePackage( *package_, *access_, packages_, install_, GetInstallPath() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::ParsePack
-// Created: BAX 2012-05-14
-// -----------------------------------------------------------------------------
-void Node::ParsePack()
-{
     ::ParsePackage( *package_, *access_, packages_, stash_, GetStashPath(), install_ );
 }
 
