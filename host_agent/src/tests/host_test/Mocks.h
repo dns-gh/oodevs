@@ -184,7 +184,7 @@ namespace mocks
         MOCK_METHOD( Glob, 2 );
         MOCK_METHOD( Walk, 2 );
         MOCK_METHOD( Unpack, 2 );
-        MOCK_METHOD( Checksum, 1 );
+        MOCK_METHOD( Checksum, 2 );
     };
 
     MOCK_BASE_CLASS( MockUnpack, host::Unpacker_ABC )

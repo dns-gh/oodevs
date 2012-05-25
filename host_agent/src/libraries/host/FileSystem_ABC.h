@@ -80,7 +80,7 @@ public:
     virtual std::vector< Path > Glob( const Path& path, const std::wstring& name ) const = 0;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
-    virtual std::string Checksum( const Path& root ) const = 0;
+    virtual std::string Checksum( const Path& root, const Path& exclude ) const = 0;
     //@}
 };
 
