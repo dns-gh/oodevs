@@ -123,7 +123,7 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
         IT_SelectedMap it = selectedMap_.find( layer );
         if( it != selectedMap_.end() )
         {
-            CIT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
+            IT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
             if( itSelectable != it->second.end() )
             {
                 if( it->second.size() == 1 )
