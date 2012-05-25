@@ -232,6 +232,9 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/delete_node" )        return DeleteNode( request );
         if( uri == "/start_node" )         return StartNode( request );
         if( uri == "/stop_node" )          return StopNode( request );
+        // install
+        if( uri == "/get_install" )        return GetInstall( request );
+        if( uri == "/delete_install" )     return DeleteInstall( request );
         // cache
         if( uri == "/get_cache" )          return GetCache( request );
         if( uri == "/delete_cache" )       return DeleteCache( request );
@@ -370,6 +373,42 @@ std::string Controller::StopNode( const Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Controller::GetInstall
+// Created: BAX 2012-05-25
+// -----------------------------------------------------------------------------
+std::string Controller::GetInstall( const Request_ABC& request )
+{
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetInstall );
+}
+
+namespace
+{
+template< typename T >
+std::string ListDispatch( const Request_ABC& request, const T& functor, const std::string& name )
+{
+    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
+    const std::string join = RequireParameter< std::string >( name, request );
+    std::vector< std::string > tokens;
+    boost::algorithm::split( tokens, join, boost::is_any_of( "," ) );
+    if( tokens.empty() )
+        throw HttpException( BadRequest, "missing " + name );
+    std::vector< size_t > list;
+    BOOST_FOREACH( const std::string& item, tokens )
+        list.push_back( boost::lexical_cast< size_t >( item ) );
+    return WriteHttpReply( functor( id, list ) );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::DeleteCache
+// Created: BAX 2012-05-22
+// -----------------------------------------------------------------------------
+std::string Controller::DeleteInstall( const Request_ABC& request )
+{
+    return ListDispatch( request, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ), "items" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Controller::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
@@ -393,16 +432,7 @@ std::string Controller::DeleteCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::InstallFromCache( const Request_ABC& request )
 {
-    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
-    std::vector< std::string > tokens;
-    const std::string query = RequireParameter< std::string >( "packs", request );
-    boost::algorithm::split( tokens, query, boost::is_any_of( "," ) );
-    if( tokens.empty() )
-        throw HttpException( BadRequest, "missing pack ids" );
-    std::vector< size_t > packs;
-    BOOST_FOREACH( const std::string& item, tokens )
-        packs.push_back( boost::lexical_cast< size_t >( item ) );
-    return WriteHttpReply( agent_.InstallFromCache( id, packs ) );
+    return ListDispatch( request, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ), "packs" );
 }
 
 // -----------------------------------------------------------------------------

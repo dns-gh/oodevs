@@ -67,6 +67,12 @@ private:
     std::string StopNode  ( const Request_ABC& request );
     //@}
 
+    //! @name Install Methods
+    //@{
+    std::string GetInstall   ( const Request_ABC& request );
+    std::string DeleteInstall( const Request_ABC& request );
+    //@}
+
     //! @name Cache Methods
     //@{
     std::string UploadCache     ( Request_ABC& request );
