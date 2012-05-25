@@ -211,7 +211,8 @@ void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::stri
 struct Model : public Item
 {
     Model( const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version )
-        : Item( system, Path( file ).remove_filename().remove_filename(), id, Utf8Convert( root_.filename() ), version )
+        : Item( system, Path( file ).remove_filename().remove_filename(), id,
+                Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), version )
     {
         tree_.put( "type", GetType() );
         tree_.put( "name", name_ );
