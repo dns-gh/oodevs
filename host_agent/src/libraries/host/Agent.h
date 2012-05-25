@@ -59,10 +59,14 @@ public:
     virtual Reply DeleteNode( const Uuid& id );
     virtual Reply StartNode ( const Uuid& id ) const;
     virtual Reply StopNode  ( const Uuid& id ) const;
-    virtual Reply UploadPack( const Uuid& id, std::istream& src );
-    virtual Reply GetPack   ( const Uuid& id ) const;
-    virtual Reply DeletePack( const Uuid& id );
-    virtual Reply UpdatePack( const Uuid& id, const std::vector< size_t >& list );
+    //@}
+
+    //! @name Cache Methods
+    //@{
+    virtual Reply UploadCache     ( const Uuid& id, std::istream& src );
+    virtual Reply GetCache        ( const Uuid& id ) const;
+    virtual Reply DeleteCache     ( const Uuid& id );
+    virtual Reply InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
     //! @name Session Methods

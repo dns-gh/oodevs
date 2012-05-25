@@ -57,10 +57,10 @@ namespace
         MOCK_METHOD( DeleteNode, 1 );
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
-        MOCK_METHOD( UploadPack, 2 );
-        MOCK_METHOD( GetPack, 1 );
-        MOCK_METHOD( DeletePack, 1 );
-        MOCK_METHOD( UpdatePack, 2 );
+        MOCK_METHOD( UploadCache, 2 );
+        MOCK_METHOD( GetCache, 1 );
+        MOCK_METHOD( DeleteCache, 1 );
+        MOCK_METHOD( InstallFromCache, 2 );
         // sessions
         MOCK_METHOD( ListSessions, 3 );
         MOCK_METHOD( CountSessions, 1 );
@@ -334,31 +334,31 @@ bool RegisterMime( Request_ABC::MimeHandler& dst, const Request_ABC::MimeHandler
 }
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_upload_pack, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_upload_cache, Fixture )
 {
-    SetRequest( "POST", "/upload_pack", boost::assign::map_list_of( "id", defaultIdString ) );
+    SetRequest( "POST", "/upload_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     Request_ABC::MimeHandler handler;
-    MOCK_EXPECT( request.RegisterMime ).once().with( "pack", boost::bind( &RegisterMime, boost::ref( handler ), _1 ) );
+    MOCK_EXPECT( request.RegisterMime ).once().with( "cache", boost::bind( &RegisterMime, boost::ref( handler ), _1 ) );
     const std::string dummy = "dummy mime file";
     std::stringstream stream( dummy );
     MOCK_EXPECT( request.ParseMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
     const std::string expected = "dummy reply";
-    MOCK_EXPECT( agent.UploadPack ).once().with( defaultId, boost::ref( stream ) ).returns( expected );
+    MOCK_EXPECT( agent.UploadCache ).once().with( defaultId, boost::ref( stream ) ).returns( expected );
     CheckNotify( 200, expected );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_get_pack, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_get_cache, Fixture )
 {
-    SetRequest( "GET", "/get_pack", boost::assign::map_list_of( "id", defaultIdString ) );
-    const std::string expected = "a json pack";
-    MOCK_EXPECT( agent.GetPack ).once().with( defaultId ).returns( expected );
+    SetRequest( "GET", "/get_cache", boost::assign::map_list_of( "id", defaultIdString ) );
+    const std::string expected = "a json package";
+    MOCK_EXPECT( agent.GetCache ).once().with( defaultId ).returns( expected );
     CheckNotify( 200, expected );
 }
 
-BOOST_FIXTURE_TEST_CASE( controller_delete_pack, Fixture )
+BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
 {
-    SetRequest( "GET", "/delete_pack", boost::assign::map_list_of( "id", defaultIdString ) );
+    SetRequest( "GET", "/delete_cache", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json pack";
-    MOCK_EXPECT( agent.DeletePack ).once().with( defaultId ).returns( expected );
+    MOCK_EXPECT( agent.DeleteCache ).once().with( defaultId ).returns( expected );
     CheckNotify( 200, expected );
 }

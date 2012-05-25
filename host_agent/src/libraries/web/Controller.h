@@ -64,9 +64,14 @@ private:
     std::string DeleteNode( const Request_ABC& request );
     std::string StartNode ( const Request_ABC& request );
     std::string StopNode  ( const Request_ABC& request );
-    std::string GetPack   ( const Request_ABC& request );
-    std::string DeletePack( const Request_ABC& request );
-    std::string UpdatePack( const Request_ABC& request );
+    //@}
+
+    //! @name Cache Methods
+    //@{
+    std::string UploadCache     ( Request_ABC& request );
+    std::string GetCache        ( const Request_ABC& request );
+    std::string DeleteCache     ( const Request_ABC& request );
+    std::string InstallFromCache( const Request_ABC& request );
     //@}
 
     //! @name Session Methods
@@ -84,11 +89,6 @@ private:
     //@{
     std::string ListExercises ( const Request_ABC& request );
     std::string CountExercises( const Request_ABC& request );
-    //@}
-
-    //! @name Pack Methods
-    //@{
-    std::string UploadPack( Request_ABC& request );
     //@}
 
 private:

@@ -174,10 +174,10 @@ Tree Node::GetProperties() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::GetStashPath
+// Name: Node::GetCachePath
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-Path Node::GetStashPath() const
+Path Node::GetCachePath() const
 {
     return root_ / boost::lexical_cast< std::string >( id_ ) / "stash";
 }
@@ -282,22 +282,22 @@ void ParsePackage( T& access, const U& packages, V& ptr, const Path& path, V ref
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::ReadPack
+// Name: Node::UploadCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void Node::ReadPack( std::istream& src )
+void Node::UploadCache( std::istream& src )
 {
     boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )
         return;
 
-    Reset( *access_, stash_ );
-    const Path path = GetStashPath();
+    Reset( *access_, cache_ );
+    const Path path = GetCachePath();
     system_.Remove( path );
     system_.MakeDirectory( path );
     FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( path, src );
     unpacker->Unpack();
-    ::Parse( *access_, packages_, stash_, path, install_ );
+    ::Parse( *access_, packages_, cache_, path, install_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,42 +310,42 @@ void Node::ParsePackages()
     if( !lock.owns_lock() )
         return;
     ::ParsePackage( *access_, packages_, install_, GetInstallPath() );
-    ::ParsePackage( *access_, packages_, stash_, GetStashPath(), install_ );
+    ::ParsePackage( *access_, packages_, cache_, GetCachePath(), install_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::GetPack
+// Name: Node::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Tree Node::GetPack() const
+Tree Node::GetCache() const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    return stash_ ? stash_->GetProperties() : Tree();
+    return cache_ ? cache_->GetProperties() : Tree();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::DeletePack
+// Name: Node::DeleteCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-Tree Node::DeletePack()
+Tree Node::DeleteCache()
 {
-    boost::shared_ptr< Package_ABC > next = Steal( *access_, stash_ );
+    boost::shared_ptr< Package_ABC > next = Steal( *access_, cache_ );
     return next ? next->GetProperties() : Tree();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::UpdatePack
+// Name: Node::InstallFromCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-Tree Node::UpdatePack( const std::vector< size_t >& list )
+Tree Node::InstallFromCache( const std::vector< size_t >& list )
 {
     boost::mutex::scoped_try_lock lock( *package_ );
     if( !lock.owns_lock() )
         return Tree();
-    if( !stash_ )
+    if( !cache_ )
         return Tree();
-    install_->Install( *stash_, list );
+    install_->Install( *cache_, list );
     ::ParsePackage( *access_, packages_, install_, GetInstallPath() );
-    ::ParsePackage( *access_, packages_, stash_, GetStashPath(), install_ );
-    return GetPack();
+    ::ParsePackage( *access_, packages_, cache_, GetCachePath(), install_ );
+    return GetCache();
 }

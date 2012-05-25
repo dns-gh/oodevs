@@ -287,48 +287,48 @@ void NodeController::Stop( Node_ABC& node, bool skipSave ) const
 // Name: NodeController::GetStash
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Tree NodeController::GetPack( const Uuid& id ) const
+Tree NodeController::GetCache( const Uuid& id ) const
 {
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
-    return node ? node->GetPack() : Tree();
+    return node ? node->GetCache() : Tree();
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeController::UploadPack
+// Name: NodeController::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Tree NodeController::UploadPack( const Uuid& id, std::istream& src ) const
+Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
 {
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     if( !node )
         return Tree();
     try
     {
-        node->ReadPack( src );
+        node->UploadCache( src );
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[" << type_ << "] " << " Unable to unpack - " << err.what();
     }
-    return node->GetPack();
+    return node->GetCache();
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeController::DeletePack
+// Name: NodeController::DeleteCache
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-Tree NodeController::DeletePack( const Uuid& id )
+Tree NodeController::DeleteCache( const Uuid& id )
 {
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
-    return node ? node->DeletePack() : Tree();
+    return node ? node->DeleteCache() : Tree();
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeController::UpdatePack
+// Name: NodeController::InstallFromCache
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Tree NodeController::UpdatePack( const Uuid& id, const std::vector< size_t >& list )
+Tree NodeController::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
-    return node ? node->UpdatePack( list ) : Tree();
+    return node ? node->InstallFromCache( list ) : Tree();
 }

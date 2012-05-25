@@ -174,10 +174,10 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
     BOOST_CHECK( node->Start( Starter ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( node_pack, Fixture )
+BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
 {
     NodePtr node = MakeNode();
-    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
+    BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 
     mock::reset( system );
     const host::Path path = host::Path( "root" ) / defaultIdString / "stash";
@@ -196,8 +196,8 @@ BOOST_FIXTURE_TEST_CASE( node_pack, Fixture )
     tree.put( "some", "data" );
     const std::string expected = ToJson( tree );
     MOCK_EXPECT( this->stash->GetProperties ).returns( tree );
-    node->ReadPack( stream );
-    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), expected );
-    BOOST_CHECK_EQUAL( ToJson( node->DeletePack() ), expected );
-    BOOST_CHECK_EQUAL( ToJson( node->GetPack() ), "{}" );
+    node->UploadCache( stream );
+    BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
+    BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );
+    BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 }

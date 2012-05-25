@@ -55,10 +55,14 @@ public:
     virtual T_Node  Delete( const Uuid& id ) = 0;
     virtual T_Node  Start( const Uuid& id ) const = 0;
     virtual T_Node  Stop( const Uuid& id ) const = 0;
-    virtual Tree    UploadPack( const Uuid& id, std::istream& src ) const = 0;
-    virtual Tree    GetPack( const Uuid& id ) const = 0;
-    virtual Tree    DeletePack( const Uuid& id ) = 0;
-    virtual Tree    UpdatePack( const Uuid& id, const std::vector< size_t >& list ) = 0;
+    //@}
+
+    //! @name Cache Methods
+    //@{
+    virtual Tree    UploadCache( const Uuid& id, std::istream& src ) const = 0;
+    virtual Tree    GetCache( const Uuid& id ) const = 0;
+    virtual Tree    DeleteCache( const Uuid& id ) = 0;
+    virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;
     //@}
 };
 

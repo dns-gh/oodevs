@@ -64,17 +64,21 @@ public:
 
     //! @name Node Methods
     //@{
-    virtual Reply ListNodes( int offset, int limit ) const = 0;
+    virtual Reply ListNodes ( int offset, int limit ) const = 0;
     virtual Reply CountNodes() const = 0;
-    virtual Reply GetNode( const Uuid& id ) const = 0;
+    virtual Reply GetNode   ( const Uuid& id ) const = 0;
     virtual Reply CreateNode( const std::string& name ) = 0;
     virtual Reply DeleteNode( const Uuid& id ) = 0;
-    virtual Reply StartNode( const Uuid& id ) const = 0;
-    virtual Reply StopNode( const Uuid& id ) const = 0;
-    virtual Reply UploadPack( const Uuid& id, std::istream& src ) = 0;
-    virtual Reply GetPack( const Uuid& id ) const = 0;
-    virtual Reply DeletePack( const Uuid& id ) = 0;
-    virtual Reply UpdatePack( const Uuid& id, const std::vector< size_t >& list ) = 0;
+    virtual Reply StartNode ( const Uuid& id ) const = 0;
+    virtual Reply StopNode  ( const Uuid& id ) const = 0;
+    //@}
+
+    //! @name Cache Methods
+    //@{
+    virtual Reply UploadCache     ( const Uuid& id, std::istream& src ) = 0;
+    virtual Reply GetCache        ( const Uuid& id ) const = 0;
+    virtual Reply DeleteCache     ( const Uuid& id ) = 0;
+    virtual Reply InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;
     //@}
 
     //! @name Session Methods

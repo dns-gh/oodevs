@@ -54,10 +54,10 @@ namespace mocks
         MOCK_METHOD( Delete, 1 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 1 );
-        MOCK_METHOD( GetPack, 1 );
-        MOCK_METHOD( UploadPack, 2 );
-        MOCK_METHOD( DeletePack, 1 );
-        MOCK_METHOD( UpdatePack, 2 );
+        MOCK_METHOD( GetCache, 1 );
+        MOCK_METHOD( UploadCache, 2 );
+        MOCK_METHOD( DeleteCache, 1 );
+        MOCK_METHOD( InstallFromCache, 2 );
     };
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )
@@ -73,15 +73,15 @@ namespace mocks
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
-        MOCK_METHOD( GetStashPath, 0 );
+        MOCK_METHOD( GetCachePath, 0 );
         MOCK_METHOD( GetInstallPath, 0 );
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 0 );
-        MOCK_METHOD( ReadPack, 1 );
-        MOCK_METHOD( GetPack, 0 );
-        MOCK_METHOD( DeletePack, 0 );
-        MOCK_METHOD( UpdatePack, 1 );
+        MOCK_METHOD( UploadCache, 1 );
+        MOCK_METHOD( GetCache, 0 );
+        MOCK_METHOD( DeleteCache, 0 );
+        MOCK_METHOD( InstallFromCache, 1 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )

@@ -187,28 +187,28 @@ BOOST_FIXTURE_TEST_CASE( node_controller_stops, Fixture<> )
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
 }
 
-BOOST_FIXTURE_TEST_CASE( node_controller_upload_pack, Fixture<> )
+BOOST_FIXTURE_TEST_CASE( node_controller_upload_cache, Fixture<> )
 {
     Reload();
     std::istringstream stream;
-    MOCK_EXPECT( idle->ReadPack ).once().with( boost::ref( stream ) );
-    MOCK_EXPECT( idle->GetPack ).once().returns( Tree() );
-    Tree tree = control.UploadPack( idIdle, stream );
+    MOCK_EXPECT( idle->UploadCache ).once().with( boost::ref( stream ) );
+    MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
+    Tree tree = control.UploadCache( idIdle, stream );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
 
-BOOST_FIXTURE_TEST_CASE( node_controller_get_pack, Fixture<> )
+BOOST_FIXTURE_TEST_CASE( node_controller_get_cache, Fixture<> )
 {
     Reload();
-    MOCK_EXPECT( idle->GetPack ).once().returns( Tree() );
-    Tree tree = control.GetPack( idIdle );
+    MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
+    Tree tree = control.GetCache( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
 
-BOOST_FIXTURE_TEST_CASE( node_controller_delete_pack, Fixture<> )
+BOOST_FIXTURE_TEST_CASE( node_controller_delete_cache, Fixture<> )
 {
     Reload();
-    MOCK_EXPECT( idle->DeletePack ).once().returns( Tree() );
-    Tree tree = control.DeletePack( idIdle );
+    MOCK_EXPECT( idle->DeleteCache ).once().returns( Tree() );
+    Tree tree = control.DeleteCache( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }

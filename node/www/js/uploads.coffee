@@ -30,7 +30,7 @@ class Package extends Backbone.Model
 
     sync: (method, model, options) =>
         if method == "read"
-            return ajax "/api/get_pack", id: uuid,
+            return ajax "/api/get_cache", id: uuid,
                 options.success, options.error
         return Backbone.sync method, model, options
 
@@ -81,7 +81,7 @@ class PackageView extends Backbone.View
 
             $(".form-actions .discard").click =>
                 @switch false, true
-                ajax "/api/delete_pack", id: uuid,
+                ajax "/api/delete_cache", id: uuid,
                     => @switch true
                     => @switch true
 
@@ -98,10 +98,10 @@ class PackageView extends Backbone.View
                     rel = rel.replace /^briefing_/, ''
                     list.push rel if rel?
                 if !list.length
-                    print_error "Please select package(s) to save"
+                    print_error "Please select at least one package to install"
                     return
                 $("html, body").animate scrollTop: 0, "fast"
-                ajax "/api/update_pack", id: uuid, packs: list.join ',',
+                ajax "/api/install_from_cache", id: uuid, packs: list.join ',',
                     (item) =>
                         @switch true
                         @update item, true
@@ -134,7 +134,7 @@ class PackageView extends Backbone.View
 
 package_view = new PackageView
 
-$("#upload_form").attr "action", (get_url "/api/upload_pack") + "?id=" + uuid
+$("#upload_form").attr "action", (get_url "/api/upload_cache") + "?id=" + uuid
 
 setSpinner $(".spin_btn")
 

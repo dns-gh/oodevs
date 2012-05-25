@@ -223,31 +223,32 @@ std::string Controller::Notify( Request_ABC& request )
     if( method == "GET" )
         try
         {
-            if( uri == "/get_cluster" )     return GetCluster( request );
-            if( uri == "/start_cluster" )   return StartCluster( request );
-            if( uri == "/stop_cluster" )    return StopCluster( request );
+            if( uri == "/get_cluster" )        return GetCluster( request );
+            if( uri == "/start_cluster" )      return StartCluster( request );
+            if( uri == "/stop_cluster" )       return StopCluster( request );
             // nodes
-            if( uri == "/list_nodes" )      return ListNodes( request );
-            if( uri == "/count_nodes" )     return CountNodes( request );
-            if( uri == "/get_node" )        return GetNode( request );
-            if( uri == "/create_node" )     return CreateNode( request );
-            if( uri == "/delete_node" )     return DeleteNode( request );
-            if( uri == "/start_node" )      return StartNode( request );
-            if( uri == "/stop_node" )       return StopNode( request );
-            if( uri == "/get_pack" )        return GetPack( request );
-            if( uri == "/delete_pack" )     return DeletePack( request );
-            if( uri == "/update_pack" )     return UpdatePack( request );
+            if( uri == "/list_nodes" )         return ListNodes( request );
+            if( uri == "/count_nodes" )        return CountNodes( request );
+            if( uri == "/get_node" )           return GetNode( request );
+            if( uri == "/create_node" )        return CreateNode( request );
+            if( uri == "/delete_node" )        return DeleteNode( request );
+            if( uri == "/start_node" )         return StartNode( request );
+            if( uri == "/stop_node" )          return StopNode( request );
+            // cache
+            if( uri == "/get_cache" )          return GetCache( request );
+            if( uri == "/delete_cache" )       return DeleteCache( request );
+            if( uri == "/install_from_cache" ) return InstallFromCache( request );
             // sessions
-            if( uri == "/list_sessions" )   return ListSessions( request );
-            if( uri == "/count_sessions" )  return CountSessions( request );
-            if( uri == "/get_session" )     return GetSession( request );
-            if( uri == "/create_session" )  return CreateSession( request );
-            if( uri == "/delete_session" )  return DeleteSession( request );
-            if( uri == "/start_session" )   return StartSession( request );
-            if( uri == "/stop_session" )    return StopSession( request );
+            if( uri == "/list_sessions" )      return ListSessions( request );
+            if( uri == "/count_sessions" )     return CountSessions( request );
+            if( uri == "/get_session" )        return GetSession( request );
+            if( uri == "/create_session" )     return CreateSession( request );
+            if( uri == "/delete_session" )     return DeleteSession( request );
+            if( uri == "/start_session" )      return StartSession( request );
+            if( uri == "/stop_session" )       return StopSession( request );
             // exercises
-            if( uri == "/list_exercises")   return ListExercises( request );
-            if( uri == "/count_exercises" ) return CountExercises( request );
+            if( uri == "/list_exercises")      return ListExercises( request );
+            if( uri == "/count_exercises" )    return CountExercises( request );
         }
         catch( const HttpException& err )
         {
@@ -256,7 +257,7 @@ std::string Controller::Notify( Request_ABC& request )
     else if( method == "POST" )
         try
         {
-            if( uri == "/upload_pack" ) return UploadPack( request );
+            if( uri == "/upload_cache" ) return UploadCache( request );
         }
         catch( const HttpException& err )
         {
@@ -365,28 +366,28 @@ std::string Controller::StopNode( const Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::GetPack
+// Name: Controller::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-std::string Controller::GetPack( const Request_ABC& request )
+std::string Controller::GetCache( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetPack );
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetCache );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::DeletePack
+// Name: Controller::DeleteCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-std::string Controller::DeletePack( const Request_ABC& request )
+std::string Controller::DeleteCache( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeletePack );
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteCache );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::UpdatePack
+// Name: Controller::InstallFromCache
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-std::string Controller::UpdatePack( const Request_ABC& request )
+std::string Controller::InstallFromCache( const Request_ABC& request )
 {
     const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
     std::vector< std::string > tokens;
@@ -397,7 +398,7 @@ std::string Controller::UpdatePack( const Request_ABC& request )
     std::vector< size_t > packs;
     BOOST_FOREACH( const std::string& item, tokens )
         packs.push_back( boost::lexical_cast< size_t >( item ) );
-    return WriteHttpReply( agent_.UpdatePack( id, packs ) );
+    return WriteHttpReply( agent_.InstallFromCache( id, packs ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -493,22 +494,22 @@ std::string Controller::CountExercises( const Request_ABC& /*request*/ )
 
 namespace
 {
-void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, const Uuid& id, std::istream& stream )
+void OnUploadCache( host::Reply& reply, host::Agent_ABC& agent, const Uuid& id, std::istream& stream )
 {
-    reply = agent.UploadPack( id, stream );
+    reply = agent.UploadCache( id, stream );
 }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::UploadPack
+// Name: Controller::UploadCache
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
-std::string Controller::UploadPack( Request_ABC& request )
+std::string Controller::UploadCache( Request_ABC& request )
 {
     const std::string id = RequireParameter< std::string >( "id", request );
-    LOG_INFO( log_ ) << "[web] /upload_pack id: " << id;
-    host::Reply reply( "Unable to find mime part 'pack'", false );
-    request.RegisterMime( "pack", boost::bind( &OnUploadPack, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
+    LOG_INFO( log_ ) << "[web] /upload_cache id: " << id;
+    host::Reply reply( "Unable to find mime part 'cache'", false );
+    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
     request.ParseMime();
     return WriteHttpReply( reply );
 }

@@ -64,15 +64,15 @@ public:
     virtual int  GetPort() const;
     virtual std::string GetName() const;
     virtual Tree GetProperties() const;
-    virtual Path GetStashPath() const;
+    virtual Path GetCachePath() const;
     virtual Path GetInstallPath() const;
     virtual Tree Save() const;
     virtual bool Start( const T_Starter& starter );
     virtual bool Stop();
-    virtual void ReadPack( std::istream& src );
-    virtual Tree GetPack() const;
-    virtual Tree DeletePack();
-    virtual Tree UpdatePack( const std::vector< size_t >& list );
+    virtual void UploadCache( std::istream& src );
+    virtual Tree GetCache() const;
+    virtual Tree DeleteCache();
+    virtual Tree InstallFromCache( const std::vector< size_t >& list );
     //@}
 
 private:
@@ -94,7 +94,7 @@ private:
     const std::auto_ptr< boost::mutex > package_;
     const std::auto_ptr< Port_ABC > port_;
     boost::shared_ptr< Package_ABC > install_;
-    boost::shared_ptr< Package_ABC > stash_;
+    boost::shared_ptr< Package_ABC > cache_;
     T_Process process_;
     const std::auto_ptr< SecurePool > pool_;
     //@}

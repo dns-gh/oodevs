@@ -241,39 +241,39 @@ Reply Agent::StopNode( const Uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::UploadPack
+// Name: Agent::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Reply Agent::UploadPack( const Uuid& id, std::istream& src )
+Reply Agent::UploadCache( const Uuid& id, std::istream& src )
 {
-    return Reply( nodes_.UploadPack( id, src ) );
+    return Reply( nodes_.UploadCache( id, src ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetPack
+// Name: Agent::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Reply Agent::GetPack( const Uuid& id ) const
+Reply Agent::GetCache( const Uuid& id ) const
 {
-    return Reply( nodes_.GetPack( id ) );
+    return Reply( nodes_.GetCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::DeletePack
+// Name: Agent::DeleteCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-Reply Agent::DeletePack( const Uuid& id )
+Reply Agent::DeleteCache( const Uuid& id )
 {
-    return Reply( nodes_.DeletePack( id ) );
+    return Reply( nodes_.DeleteCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::UpdatePack
+// Name: Agent::InstallFromCache
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Reply Agent::UpdatePack( const Uuid& id, const std::vector< size_t >& list )
+Reply Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Reply( nodes_.UpdatePack( id, list ) );
+    return Reply( nodes_.InstallFromCache( id, list ) );
 }
 
 // -----------------------------------------------------------------------------

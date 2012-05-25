@@ -56,7 +56,7 @@
 
     Package.prototype.sync = function(method, model, options) {
       if (method === "read") {
-        return ajax("/api/get_pack", {
+        return ajax("/api/get_cache", {
           id: uuid
         }, options.success, options.error);
       }
@@ -138,7 +138,7 @@
         }
         $(".form-actions .discard").click(function() {
           _this["switch"](false, true);
-          return ajax("/api/delete_pack", {
+          return ajax("/api/delete_cache", {
             id: uuid
           }, function() {
             return _this["switch"](true);
@@ -163,13 +163,13 @@
             if (rel != null) list.push(rel);
           }
           if (!list.length) {
-            print_error("Please select package(s) to save");
+            print_error("Please select at least one package to install");
             return;
           }
           $("html, body").animate({
             scrollTop: 0
           }, "fast");
-          return ajax("/api/update_pack", {
+          return ajax("/api/install_from_cache", {
             id: uuid,
             packs: list.join(',')
           }, function(item) {
@@ -225,7 +225,7 @@
 
   package_view = new PackageView;
 
-  $("#upload_form").attr("action", (get_url("/api/upload_pack")) + "?id=" + uuid);
+  $("#upload_form").attr("action", (get_url("/api/upload_cache")) + "?id=" + uuid);
 
   setSpinner($(".spin_btn"));
 
