@@ -21,7 +21,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
@@ -731,7 +731,7 @@ void DEC_Knowledge_Agent::KillOfficers()
 // Name: DEC_Knowledge_Agent::GetSignificantVolume
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
+const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
     double rSignificantVolumeFactor     = 0.;

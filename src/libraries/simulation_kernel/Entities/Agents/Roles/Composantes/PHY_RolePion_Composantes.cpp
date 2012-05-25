@@ -15,7 +15,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -639,7 +639,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
 // Name: PHY_RolePion_Composantes::GetSignificantVolume
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
+const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
     double rSignificantVolumeFactor = 0.;

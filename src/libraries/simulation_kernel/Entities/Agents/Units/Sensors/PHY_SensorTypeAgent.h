@@ -12,6 +12,7 @@
 #ifndef __PHY_SensorTypeAgent_h_
 #define __PHY_SensorTypeAgent_h_
 
+#include "PHY_SensorTypeAgent_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
@@ -36,10 +37,10 @@ class PHY_SensorType;
 // Created: JVT 2004-08-03
 // Modified: JVT 2004-09-28
 // =============================================================================
-class PHY_SensorTypeAgent : private boost::noncopyable
+class PHY_SensorTypeAgent : public PHY_SensorTypeAgent_ABC
 {
 public:
-     PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );
+             PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis );
     virtual ~PHY_SensorTypeAgent();
 
     //! @name Accessors
@@ -47,7 +48,7 @@ public:
           double        GetSquareProximityDistance() const;
           double        GetMaxDistance            () const;
           double        GetAngle                  () const;
-          double        GetFactor                 ( const PHY_Volume& volume ) const;
+    virtual double      GetFactor                 ( const PHY_Volume& volume ) const;
           double        GetUrbanBlockFactor( const UrbanObjectWrapper& target ) const;
           bool            CanScan                   () const;
           bool            CanDetectFirer            ( double distance ) const;

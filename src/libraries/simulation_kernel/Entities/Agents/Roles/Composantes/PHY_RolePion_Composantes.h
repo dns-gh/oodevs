@@ -200,7 +200,7 @@ public:
 
     //! @name Perception / Knowledge
     //@{
-    virtual const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const;
+    virtual const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const;
     virtual void GetVisibleVolumes( T_ComposanteVolumeSet& volumes ) const;
     virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion* GetMajorComposante() const;

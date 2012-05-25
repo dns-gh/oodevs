@@ -32,7 +32,7 @@ class MIL_KnowledgeGroup;
 class MIL_Automate;
 class PHY_PerceptionLevel;
 class PHY_Posture;
-class PHY_SensorTypeAgent;
+class PHY_SensorTypeAgent_ABC;
 class DEC_Knowledge_AgentPerception;
 class PHY_NatureAtlas;
 class PHY_ComposantePion;
@@ -129,7 +129,7 @@ public:
 
     //! @name Perception
     //@{
-    const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const;
+    const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const;
     const PHY_Posture& GetLastPosture() const;
     const PHY_Posture& GetCurrentPosture() const;
     double GetPostureCompletionPercentage() const;
