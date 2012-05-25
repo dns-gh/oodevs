@@ -73,11 +73,13 @@ namespace mocks
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
-        MOCK_METHOD( GetCachePath, 0 );
-        MOCK_METHOD( GetInstallPath, 0 );
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 0 );
+        MOCK_METHOD( GetInstallPath, 0 );
+        MOCK_METHOD( GetInstall, 0 );
+        MOCK_METHOD( DeleteInstall, 1 );
+        MOCK_METHOD( GetCachePath, 0 );
         MOCK_METHOD( UploadCache, 1 );
         MOCK_METHOD( GetCache, 0 );
         MOCK_METHOD( DeleteCache, 0 );

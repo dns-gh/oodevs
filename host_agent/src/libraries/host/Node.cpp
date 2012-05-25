@@ -314,6 +314,16 @@ void Node::ParsePackages()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Node::GetInstall
+// Created: BAX 2012-05-14
+// -----------------------------------------------------------------------------
+Tree Node::GetInstall() const
+{
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    return install_ ? install_->GetProperties() : Tree();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Node::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
@@ -321,6 +331,17 @@ Tree Node::GetCache() const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     return cache_ ? cache_->GetProperties() : Tree();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::DeleteInstall
+// Created: BAX 2012-05-22
+// -----------------------------------------------------------------------------
+Tree Node::DeleteInstall( const std::vector< size_t >& ids )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    install_->Remove( ids );
+    return install_->GetProperties();
 }
 
 // -----------------------------------------------------------------------------

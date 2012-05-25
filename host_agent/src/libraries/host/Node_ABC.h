@@ -61,8 +61,6 @@ struct Node_ABC : public boost::noncopyable
     virtual int  GetPort() const = 0;
     virtual std::string GetName() const = 0;
     virtual Tree GetProperties() const = 0;
-    virtual Path GetCachePath() const = 0;
-    virtual Path GetInstallPath() const = 0;
     //@}
 
     //! @name Public methods
@@ -72,8 +70,16 @@ struct Node_ABC : public boost::noncopyable
     virtual bool Stop() = 0;
     //@}
 
+    //! @name Install methods
+    //@{
+    virtual Path GetInstallPath() const = 0;
+    virtual Tree GetInstall() const = 0;
+    virtual Tree DeleteInstall( const std::vector< size_t >& list ) = 0;
+    //@}
+
     //! @name Cache methods
     //@{
+    virtual Path GetCachePath() const = 0;
     virtual void UploadCache( std::istream& src ) = 0;
     virtual Tree GetCache() const = 0;
     virtual Tree DeleteCache() = 0;

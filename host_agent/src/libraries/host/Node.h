@@ -64,11 +64,26 @@ public:
     virtual int  GetPort() const;
     virtual std::string GetName() const;
     virtual Tree GetProperties() const;
-    virtual Path GetCachePath() const;
-    virtual Path GetInstallPath() const;
+
+    //@}
+
+    //! @name Public methods
+    //@{
     virtual Tree Save() const;
     virtual bool Start( const T_Starter& starter );
     virtual bool Stop();
+    //@}
+
+    //! @name Node_ABC methods
+    //@{
+    virtual Path GetInstallPath() const;
+    virtual Tree GetInstall() const;
+    virtual Tree DeleteInstall( const std::vector< size_t >& list );
+    //@}
+
+    //! @name Node_ABC methods
+    //@{
+    virtual Path GetCachePath() const;
     virtual void UploadCache( std::istream& src );
     virtual Tree GetCache() const;
     virtual Tree DeleteCache();
