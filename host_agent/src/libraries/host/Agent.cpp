@@ -268,6 +268,15 @@ Reply Agent::DeletePack( const Uuid& id )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::UpdatePack
+// Created: BAX 2012-05-24
+// -----------------------------------------------------------------------------
+Reply Agent::UpdatePack( const Uuid& id, const std::vector< size_t >& list )
+{
+    return Reply( nodes_.UpdatePack( id, list ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------

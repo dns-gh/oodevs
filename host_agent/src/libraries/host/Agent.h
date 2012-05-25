@@ -62,6 +62,7 @@ public:
     virtual Reply UploadPack( const Uuid& id, std::istream& src );
     virtual Reply GetPack   ( const Uuid& id ) const;
     virtual Reply DeletePack( const Uuid& id );
+    virtual Reply UpdatePack( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
     //! @name Session Methods
