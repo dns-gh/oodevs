@@ -11,10 +11,13 @@
 #define __UrbanInfosDockWidget_h_
 
 #include "clients_gui/RichDockWidget.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
+    class UrbanObject_ABC;
 }
 
 class StaticModel;
@@ -27,8 +30,8 @@ class UrbanModel;
 // Created: ABR 2012-05-16
 // =============================================================================
 class UrbanInfosDockWidget : public gui::RichDockWidget
-                           //, public MultipleSelectionObserver_ABC
-                           //, public tools::ElementObserver_ABC< urban::TerrainObject_ABC >
+                           , public kernel::MultipleSelectionObserver< kernel::UrbanObject_ABC >
+                           , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
 
 public:
@@ -40,6 +43,11 @@ public:
 
     //! @name Observers implementation
     //@{
+    virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
+    virtual void NotifyCreated( const kernel::UrbanObject_ABC& element );
+    virtual void NotifyDeleted( const kernel::UrbanObject_ABC& element );
+    virtual void NotifyUpdated( const kernel::UrbanObject_ABC& element );
+
     //virtual void SelectionChanged();
     //virtual void NotifyCreated( const urban::TerrainObject_ABC& element );
     //virtual void NotifyDeleted( const urban::TerrainObject_ABC& element );
@@ -49,19 +57,9 @@ public:
 private:
     //! @name Types
     //@{
-    //class TerrainVisitor : public urban::TerrainObjectVisitor_ABC
-    //{
-    //public:
-    //    virtual void VisitBlock( urban::TerrainObject_ABC& object ) { urbanBlocks_.insert( &object ); }
-    //    std::set< urban::TerrainObject_ABC* > urbanBlocks_;
-    //};
-
-    //class MotivationsVisitor : public urban::MotivationsVisitor_ABC
-    //{
-    //public:
-    //    virtual void Visit( const std::string& motivation, float proportion ) { proportions_[ motivation ] = proportion; }
-    //    std::map< std::string, float > proportions_;
-    //};
+    typedef std::vector< const kernel::UrbanObject_ABC* >    T_UrbanObjects;
+    typedef T_UrbanObjects::iterator                        IT_UrbanObjects;
+    typedef T_UrbanObjects::const_iterator                 CIT_UrbanObjects;
     //@}
 
     //! @name Helpers
@@ -80,6 +78,7 @@ private:
     QTextEdit*           infoEditText_;
     QStringList          infos_;
     QStringList          values_;
+    T_UrbanObjects       selectedElements_;
     //@}
 };
 

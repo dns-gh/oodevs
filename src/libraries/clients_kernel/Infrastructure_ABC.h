@@ -14,8 +14,9 @@
 
 namespace kernel
 {
-class GlTools_ABC;
-class Viewport_ABC;
+    class GlTools_ABC;
+    class InfrastructureType;
+    class Viewport_ABC;
 
 // =============================================================================
 /** @class  Infrastructure_ABC
@@ -38,18 +39,12 @@ public:
     virtual bool IsEnabled() const = 0;
     virtual bool HasValidType() const = 0;
     virtual unsigned int GetThreshold() const = 0;
+    virtual const InfrastructureType* GetType() const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Infrastructure_ABC( const Infrastructure_ABC& );            //!< Copy constructor
-    Infrastructure_ABC& operator=( const Infrastructure_ABC& ); //!< Assignment operator
+    virtual void Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
     //@}
 };
 

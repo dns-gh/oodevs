@@ -37,12 +37,7 @@ public:
     //@{
     virtual void Add( const std::string& usage, unsigned int proportion );
     virtual unsigned int Find( const std::string& usage ) const;
-    //@}
-
-protected:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::pair< unsigned int, unsigned int > > T_Occupations;
+    virtual const T_Occupations& GetOccupations() const { return occupations_; }
     //@}
 
 protected:
@@ -53,6 +48,11 @@ protected:
     float                     livingSpace_;
     T_Usages                  usages_;
     T_Occupations             occupations_;
+    //@}
+
+public:
+    //! @name Static member data
+    //@{
     static const std::string  defaultStr_;
     //@}
 };

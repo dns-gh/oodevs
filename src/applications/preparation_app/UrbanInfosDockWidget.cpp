@@ -11,35 +11,18 @@
 #include "UrbanInfosDockWidget.h"
 
 #include "clients_kernel/Controllers.h"
-#include "preparation/StaticModel.h"
-#include "preparation/UrbanModel.h"
+#include "clients_kernel/Infrastructure_ABC.h"
+#include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Usages.h"
+#include "clients_kernel/Usages_ABC.h"
 
-//namespace
-//{
-//    bool IsMedicalInfrastructure( urban::StaticModel& staticModel, const urban::InfrastructureAttribute& infrastructure )
-//    {
-//        tools::Iterator< const urban::InfrastructureType& > it = staticModel.CreateIterator< urban::InfrastructureType >();
-//        while( it.HasMoreElements() )
-//        {
-//            const urban::InfrastructureType& infraType = it.NextElement();
-//            if( infraType.GetName() == infrastructure.GetType() )
-//                return infraType.HasMedicalCapacity();
-//        }
-//        return false;
-//    }
-//
-//    unsigned int GetMotivationCapacity( urban::StaticModel& staticModel, const std::string motivation, double surface, double proportion )
-//    {
-//        tools::Iterator< const urban::MotivationType& > it = staticModel.CreateIterator< urban::MotivationType >();
-//        while( it.HasMoreElements() )
-//        {
-//            const urban::MotivationType& motivationType = it.NextElement();
-//            if( motivationType.GetName() == motivation )
-//                return static_cast< unsigned int >( surface * motivationType.GetNominalCapacity() * proportion );
-//        }
-//        return 0;
-//    }
-//}
+#include "preparation/StaticModel.h"
+#include "preparation/UrbanHierarchies.h"
+#include "preparation/UrbanModel.h"
+#include "preparation/UrbanTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanInfosDockWidget constructor
@@ -80,41 +63,42 @@ UrbanInfosDockWidget::~UrbanInfosDockWidget()
     controllers_.Unregister( *this );
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: UrbanInfosDockWidget::SelectionChanged
-//// Created: ABR 2012-05-16
-//// -----------------------------------------------------------------------------
-//void UrbanInfosDockWidget::SelectionChanged()
-//{
-//    Update();
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: UrbanInfosDockWidget::NotifyCreated
-//// Created: ABR 2012-05-16
-//// -----------------------------------------------------------------------------
-//void UrbanInfosDockWidget::NotifyCreated( const urban::TerrainObject_ABC& element )
-//{
-//    Update();
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: UrbanInfosDockWidget::NotifyDeleted
-//// Created: ABR 2012-05-16
-//// -----------------------------------------------------------------------------
-//void UrbanInfosDockWidget::NotifyDeleted( const urban::TerrainObject_ABC& element )
-//{
-//    Update();
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: UrbanInfosDockWidget::NotifyUpdated
-//// Created: ABR 2012-05-16
-//// -----------------------------------------------------------------------------
-//void UrbanInfosDockWidget::NotifyUpdated( const urban::TerrainObject_ABC& element )
-//{
-//    Update();
-//}
+// -----------------------------------------------------------------------------
+// Name: UrbanInfosDockWidget::NotifySelectionChanged
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UrbanInfosDockWidget::NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements )
+{
+    selectedElements_ = elements;
+    Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanInfosDockWidget::NotifyCreated
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UrbanInfosDockWidget::NotifyCreated( const kernel::UrbanObject_ABC& )
+{
+    Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanInfosDockWidget::NotifyDeleted
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UrbanInfosDockWidget::NotifyDeleted( const kernel::UrbanObject_ABC& )
+{
+    Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanInfosDockWidget::NotifyUpdated
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UrbanInfosDockWidget::NotifyUpdated( const kernel::UrbanObject_ABC& )
+{
+    Update();
+}
 
 // -----------------------------------------------------------------------------
 // Name: UrbanInfosDockWidget::InsertLine
@@ -126,93 +110,114 @@ void UrbanInfosDockWidget::InsertLine( const QString& line /* = "" */, const QSt
     values_ << value;
 }
 
+namespace
+{
+    void ComputeInformations( const kernel::UrbanObject_ABC& urbanObject, unsigned int& nonMedicalInfrastructures, unsigned int& medicalInfrastructures, unsigned int& totalCapacity,
+                              std::map< std::string, unsigned int >& motivationsCapacities, std::map< std::string, unsigned int >& resourcesProd, std::map< std::string, unsigned int >& resourceConso )
+    {
+        // Infra
+        const kernel::Infrastructure_ABC* infrastructure = urbanObject.Retrieve< kernel::Infrastructure_ABC >();
+        if( infrastructure )
+        {
+            const kernel::InfrastructureType* infraType = infrastructure->GetType();
+            if( infraType && infraType->FindCapacity( "medical" ) )
+                ++medicalInfrastructures;
+            else
+                ++nonMedicalInfrastructures;
+        }
+
+        // Usages
+        const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject.Get< kernel::PhysicalAttribute_ABC >();
+        if( kernel::Usages_ABC* usages = pPhysical.GetUsages() )
+        {
+            const kernel::Usages_ABC::T_Occupations& occupations = usages->GetOccupations();
+            for( kernel::Usages_ABC::CIT_Occupations it = occupations.begin(); it != occupations.end(); ++it )
+                if(it->first != kernel::Usages::defaultStr_ )
+                {
+                    totalCapacity += it->second.first;
+                    motivationsCapacities[ it->first ] += it->second.first;
+                }
+        }
+        // Resource Network
+        const kernel::ResourceNetwork_ABC* resourceAttribute = urbanObject.Retrieve< kernel::ResourceNetwork_ABC >();
+        if( resourceAttribute )
+        {
+            const kernel::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes = resourceAttribute->GetResourceNodes();
+            for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes itResource = resourceNodes.begin(); itResource != resourceNodes.end(); ++itResource )
+            {
+                const kernel::ResourceNetwork_ABC::ResourceNode& resourceNode = itResource->second;
+                resourcesProd[ itResource->first ] += resourceNode.production_;
+                resourceConso[ itResource->first ] += resourceNode.consumption_;
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanInfosDockWidget::Update
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
 void UrbanInfosDockWidget::Update()
 {
-    //TerrainVisitor terrainVisitor;
-    //T_TerrainObjects& selected = const_cast< T_TerrainObjects& >( controller_.GetSelected() );
-    //if( selected.empty() )
-    //    model_.Accept( terrainVisitor );
-    //else
-    //    for( IT_TerrainObjects it = selected.begin(); it != selected.end(); ++it )
-    //        (*it)->Accept( terrainVisitor );
+    int nbUrbanBlocks = static_cast< int >( selectedElements_.size() );
+    unsigned int nonMedicalInfrastructures = 0;
+    unsigned int medicalInfrastructures = 0;
+    unsigned int totalCapacity = 0;
+    std::map< std::string, unsigned int > motivationsCapacities;
+    std::map< std::string, unsigned int > resourcesProd;
+    std::map< std::string, unsigned int > resourceConso;
 
-    //unsigned int nonMedicalInfrastructures = 0, medicalInfrastructures = 0, totalCapacity = 0;
-    //std::map< std::string, unsigned int > motivationsCapacities, resourcesProd, resourceConso;
-    //for( std::set< urban::TerrainObject_ABC* >::iterator it = terrainVisitor.urbanBlocks_.begin(); it != terrainVisitor.urbanBlocks_.end(); ++it )
-    //{
-    //    urban::TerrainObject_ABC* pTerrainObject = *it;
-    //    urban::InfrastructureAttribute* infrastructure = pTerrainObject->Retrieve< urban::InfrastructureAttribute >();
-    //    if( infrastructure )
-    //    {
-    //        if( IsMedicalInfrastructure( staticModel_, *infrastructure ) )
-    //            ++medicalInfrastructures;
-    //        else
-    //            ++nonMedicalInfrastructures;
-    //    }
+    if( selectedElements_.empty() )
+    {
+        tools::Iterator< const kernel::UrbanObject_ABC& > it = model_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::UrbanObject_ABC& urbanObject = it.NextElement();
+            const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() );
+            if( hierarchy.GetLevel() != eUrbanLevelBlock ) // only urban block here
+                continue;
+            ComputeInformations( urbanObject, nonMedicalInfrastructures, medicalInfrastructures, totalCapacity, motivationsCapacities, resourcesProd, resourceConso );
+            nbUrbanBlocks++;
+        }
+        //nbUrbanBlocks = model_.Count();
+    }
+    else
+        for( CIT_UrbanObjects it = selectedElements_.begin(); it != selectedElements_.end(); ++it )
+            ComputeInformations( **it, nonMedicalInfrastructures, medicalInfrastructures, totalCapacity, motivationsCapacities, resourcesProd, resourceConso );
 
-    //    MotivationsVisitor motivationsVisitor;
-    //    pTerrainObject->Accept( motivationsVisitor );
-    //    for( std::map< std::string, float >::iterator itMotiv = motivationsVisitor.proportions_.begin(); 
-    //        itMotiv != motivationsVisitor.proportions_.end(); ++itMotiv  )
-    //    {
-    //        unsigned int curCapacity = GetMotivationCapacity( staticModel_, itMotiv->first, pTerrainObject->GetLivingSpace(), itMotiv->second );
-    //        totalCapacity += curCapacity;
-    //        motivationsCapacities[ itMotiv->first ] += curCapacity;
-    //    }
+    infos_.clear();
+    values_.clear();
+    InsertLine( ( selectedElements_.empty() ) ? tr( "Total urban blocks number: " ) : tr( "Selected urban blocks number: " ), locale().toString( nbUrbanBlocks ) );
 
-    //    urban::ResourceNetworkAttribute* resourceAttribute = pTerrainObject->Retrieve< urban::ResourceNetworkAttribute >();
-    //    if( resourceAttribute )
-    //    {
-    //        const urban::ResourceNetworkAttribute::T_ResourceNodes& resourceNodes = resourceAttribute->GetResourceNodes();
-    //        for( urban::ResourceNetworkAttribute::CIT_ResourceNodes itResource = resourceNodes.begin(); itResource != resourceNodes.end(); ++itResource )
-    //        {
-    //            const urban::ResourceNetworkAttribute::ResourceNode& resourceNode = itResource->second;
-    //            resourcesProd[ itResource->first ] += resourceNode.production_;
-    //            resourceConso[ itResource->first ] += resourceNode.consumption_;
-    //        }
-    //    }
-    //}
+    InsertLine();
+    InsertLine( tr( "Non medical infrastructures: " ), locale().toString( nonMedicalInfrastructures ) );
+    InsertLine( tr( "Medical infrastructures: " ), locale().toString( medicalInfrastructures ) );
+    InsertLine();
+    InsertLine( tr( "Total capacity: " ), locale().toString( totalCapacity ) );
+    for( std::map< std::string, unsigned int >::const_iterator it = motivationsCapacities.begin(); it != motivationsCapacities.end(); ++it )
+        InsertLine( tr( "Capacity  %1: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
+    InsertLine();
+    for( std::map< std::string, unsigned int >::const_iterator it = resourcesProd.begin(); it != resourcesProd.end(); ++it )
+        InsertLine( tr( "Resource %1 production: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
+    InsertLine();
+    for( std::map< std::string, unsigned int >::const_iterator it = resourceConso.begin(); it != resourceConso.end(); ++it )
+        InsertLine( tr( "Resource %1 consumption: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
 
-    //infos_.clear();
-    //values_.clear();
-    //if( selected.empty() )
-    //    InsertLine( tr( "Total urban blocks number: " ), locale().toString( terrainVisitor.urbanBlocks_.size() ) );
-    //else
-    //    InsertLine( tr( "Selected urban blocks number: " ), locale().toString( terrainVisitor.urbanBlocks_.size() ) );
-
-    //InsertLine();
-    //InsertLine( tr( "Non medical infrastructures: " ), locale().toString( nonMedicalInfrastructures ) );
-    //InsertLine( tr( "Medical infrastructures: " ), locale().toString( medicalInfrastructures ) );
-    //InsertLine();
-    //InsertLine( tr( "Total capacity: " ), locale().toString( totalCapacity ) );
-    //for( std::map< std::string, unsigned int >::iterator it = motivationsCapacities.begin(); it != motivationsCapacities.end(); ++it )
-    //    InsertLine( tr( "Capacity  %1: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
-    //InsertLine();
-    //for( std::map< std::string, unsigned int >::iterator it = resourcesProd.begin(); it != resourcesProd.end(); ++it )
-    //    InsertLine( tr( "Resource %1 production: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
-    //InsertLine();
-    //for( std::map< std::string, unsigned int >::iterator it = resourceConso.begin(); it != resourceConso.end(); ++it )
-    //    InsertLine( tr( "Resource %1 consumption: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
-
-    //assert( infos_.size() == values_.size() );
-    //QString info;
-    //int maxSize = -1;
-    //for( int i = 0; i < infos_.size(); ++i )
-    //    maxSize = std::max< int >( maxSize, infos_[ i ].size() );
-    //for( int i = 0; i < infos_.size(); ++i )
-    //{
-    //    info += infos_[ i ];
-    //    if( !values_[ i ].isEmpty() )
-    //    {
-    //        for( int j = infos_[ i ].size(); j < maxSize; ++j )
-    //            info += " ";
-    //        info += values_[ i ];
-    //    }
-    //    info += "\n";
-    //}
-    //infoEditText_->setText( info );
+    assert( infos_.size() == values_.size() );
+    QString info;
+    int maxSize = -1;
+    for( int i = 0; i < infos_.size(); ++i )
+        maxSize = std::max< int >( maxSize, infos_[ i ].size() );
+    for( int i = 0; i < infos_.size(); ++i )
+    {
+        info += infos_[ i ];
+        if( !values_[ i ].isEmpty() )
+        {
+            for( int j = infos_[ i ].size(); j < maxSize; ++j )
+                info += " ";
+            info += values_[ i ];
+        }
+        info += "\n";
+    }
+    infoEditText_->setText( info );
 }

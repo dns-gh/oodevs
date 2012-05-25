@@ -144,3 +144,12 @@ unsigned int InfrastructureAttribute::GetThreshold() const
 {
     return threshold_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::GetType
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
+{
+    return type_;
+}

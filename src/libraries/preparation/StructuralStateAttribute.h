@@ -15,7 +15,6 @@
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/UrbanExtensions.h"
 #include "tools/Observer_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -39,7 +38,6 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
                                , public tools::Observer_ABC
                                , public kernel::ModesObserver_ABC
                                , public kernel::Serializable_ABC
-                               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -69,7 +67,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    unsigned int structuralState_;
+    unsigned int         structuralState_;
     //@}
 };
 

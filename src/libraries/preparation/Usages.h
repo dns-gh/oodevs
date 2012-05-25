@@ -34,6 +34,7 @@ class Usages : public kernel::Usages
 public:
     //! @name Constructors/Destructor
     //@{
+             Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
              Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,
                      const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
     virtual ~Usages();

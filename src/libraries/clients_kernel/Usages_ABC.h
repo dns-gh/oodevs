@@ -35,10 +35,18 @@ public:
     virtual ~Usages_ABC() {}
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::pair< unsigned int, unsigned int > > T_Occupations;
+    typedef T_Occupations::iterator                                         IT_Occupations;
+    typedef T_Occupations::const_iterator                                  CIT_Occupations;
+    //@}
+
     //! @name Operations
     //@{
     virtual void Add( const std::string& usage, unsigned int proportion ) = 0;
     virtual unsigned int Find( const std::string& usage ) const = 0;
+    virtual const T_Occupations& GetOccupations() const = 0;
     //@}
 };
 

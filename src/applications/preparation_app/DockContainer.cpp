@@ -139,6 +139,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         terrainProfiler_ = new gui::TerrainProfiler( parent, controllers, staticModel.detection_, terrainProfileLayer );
         terrainProfiler_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
+        terrainProfiler_->hide();
         parent->addDockWidget( Qt::RightDockWidgetArea, terrainProfiler_ );
     }
     // Extensions panel

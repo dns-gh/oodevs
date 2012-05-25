@@ -2414,6 +2414,38 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <source>Urban informations</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Total urban blocks number: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected urban blocks number: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non medical infrastructures: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical infrastructures: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total capacity: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity  %1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource %1 production: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource %1 consumption: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UsagesDockWidget</name>

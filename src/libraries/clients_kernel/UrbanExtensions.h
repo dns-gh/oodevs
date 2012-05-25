@@ -14,6 +14,7 @@
 #include "Extension_ABC.h"
 #include "Serializable_ABC.h"
 #include "Updatable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -26,6 +27,7 @@ class extension : public kernel::Extension_ABC                         \
                 , public kernel::Displayable_ABC                       \
                 , public kernel::Updatable_ABC< sword::UrbanUpdate >   \
                 , public kernel::Updatable_ABC< sword::UrbanCreation > \
+                , private boost::noncopyable                           \
 {                                                                      \
 public:                                                                \
              extension() {}                                            \

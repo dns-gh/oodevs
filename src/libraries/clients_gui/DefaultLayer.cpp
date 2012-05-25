@@ -50,10 +50,15 @@ void DefaultLayer::Paint( kernel::Viewport_ABC& )
 // -----------------------------------------------------------------------------
 bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( mouse && mouse->state() != Qt::NoButton )
+    if( mouse && mouse->buttons() != Qt::NoButton )
     {
         point_ = point;
-        if( mouse->button() == Qt::RightButton )
+        if( controllers_.actions_.HasMultipleLayers() && mouse->button() == Qt::LeftButton )
+        {
+            controllers_.actions_.DeselectAll();
+            controllers_.actions_.Select( point_ );
+        }
+        else if( mouse->button() == Qt::RightButton )
             controllers_.actions_.ContextMenu( point_, kernel::Nothing(), mouse->globalPos() );
     }
     return false;

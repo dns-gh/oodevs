@@ -49,6 +49,7 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     {
         role_ = type_->GetName();
         CreateDictionary( dico );
+        // $$$$ ABR 2012-05-25: TODO repair this shit, and pay attention to serialization : serialize on object but not on urbanobject.
         //if( type_->FindCapacity( "medical" ) )
         //    object.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes, dico ) );
         object.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent();
@@ -194,4 +195,13 @@ bool InfrastructureAttribute::HasValidType() const
 unsigned int InfrastructureAttribute::GetThreshold() const
 {
     return threshold_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::GetType
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
+{
+    return type_;
 }
