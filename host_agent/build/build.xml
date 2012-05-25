@@ -70,6 +70,7 @@
         <cppcheck-report>
             <arg line="--suppress=useAutoPointerCopy"/>
             <arg line="--suppress=unusedFunction"/>
+            <arg line="--suppress=variableHidingTypedef"/>
         </cppcheck-report>
         <headers name="host"/>
         <headers name="runtime"/>
