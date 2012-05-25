@@ -390,7 +390,8 @@ std::string Controller::UpdatePack( const Request_ABC& request )
 {
     const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
     std::vector< std::string > tokens;
-    boost::algorithm::split( tokens, RequireParameter< std::string >( "packs", request ), boost::is_any_of( "," ) );
+    const std::string query = RequireParameter< std::string >( "packs", request );
+    boost::algorithm::split( tokens, query, boost::is_any_of( "," ) );
     if( tokens.empty() )
         throw HttpException( BadRequest, "missing pack ids" );
     std::vector< size_t > packs;
