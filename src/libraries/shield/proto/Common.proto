@@ -113,6 +113,7 @@ enum EnumAmmunitionFamily {
    missile_sol                                      = 1;
    missile_air                                      = 2;
    mitraille                                        = 3;
+   alr                                              = 4;
 }
 ///////////// end <not used by protocol> /////////////
 

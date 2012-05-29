@@ -398,7 +398,6 @@ enum E_MissionParameterType
     eMissionParameterTypePath,
     eMissionParameterTypePoint,
     eMissionParameterTypePolygon,
-    eMissionParameterTypeLocation,
     eMissionParameterTypeEquipmentType,
     eMissionParameterTypeDotationType,
     eMissionParameterTypeMaintenancePriorities,

@@ -768,7 +768,13 @@
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-				</xs:extension>
+					<xs:attribute name="overridden-symbol" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines if the symbol has been manually overridden in preparation.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit si le symbole a été surchargé en préparation.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+	</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
@@ -844,6 +850,12 @@
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="overridden-symbol" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines if the symbol has been manually overridden in preparation.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit si le symbole a été surchargé en préparation.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
@@ -1124,11 +1136,11 @@
 	</xs:complexType>
 	<xs:simpleType name="app6SymbolType">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">Defines a symbol string conforming to MIL2525B/APP6 symbology, with 'symbols/' prepended.</xs:documentation>
-			<xs:documentation xml:lang="fr">Format des symboles MIL2525B/APP6 avec 'symbols/' en préposition.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines a symbol string conforming to MIL2525B/APP6 symbology.</xs:documentation>
+			<xs:documentation xml:lang="fr">Format des symboles MIL2525B/APP6.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:maxLength value="23" fixed="true"/>
+			<xs:maxLength value="15" fixed="true"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:element name="intelligence">

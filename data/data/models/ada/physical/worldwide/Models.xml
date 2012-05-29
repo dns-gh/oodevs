@@ -1734,7 +1734,6 @@
         <mission name="Engineer - enhance mobility"/>
         <mission name="Engineer - bypass"/>
         <mission name="Engineer - breach"/>
-        <mission name="Engineer - breach (an area)"/>
         <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - open a route"/>
         <mission name="Engineer - perform counter-mobility work"/>
@@ -3690,7 +3689,6 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - resupply"/>
         <mission name="Common - park"/>
-        <mission name="Engineer - breach (an area)"/>
         <mission name="Engineer - support a crossing site"/>
         <mission name="Engineer - bypass (an area)"/>
         <mission name="Engineer - open routes"/>
@@ -4201,4 +4199,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1013308011" -->
+<!-- signature="0080143833" -->

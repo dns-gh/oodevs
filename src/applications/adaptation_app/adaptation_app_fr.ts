@@ -5052,10 +5052,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Polygone</translation>
     </message>
     <message>
-        <source>Location</source>
-        <translation>Localisation</translation>
-    </message>
-    <message>
         <source>EquipmentType</source>
         <translation>Type d&apos;Equipement</translation>
     </message>

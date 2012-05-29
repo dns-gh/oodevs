@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.3">
+	<xs:include schemaLocation="EnumSHIELD.xsd"/>
+	<xs:include schemaLocation="../physical/tools.xsd"/>
+	<xs:element name="ReferentielSHIELD">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ReferentielEDT">
+					<xs:annotation>
+						<xs:documentation>Informations nécessaires à l'interprétation du référentiel SIM par l'EDT</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="app6-translations">
+								<xs:annotation>
+									<xs:documentation>Mapping entre référentiel SIM et référentiel EDT des symboles ponctuels APP6 des unités, populations, etc</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="app6-translation" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="orbat-app6" use="required">
+													<xs:annotation>
+														<xs:documentation>Symbole APP6 de l'unité dans l'orbat</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string"/>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="app6-symbol" type="E_app6Symbol" use="required">
+													<xs:annotation>
+														<xs:documentation>Symbole APP6 de l'unité du style 1.X.3.1</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="nature-app6" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Nature du symbole APP6 du référentiel SIM</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="symbole-reco" type="E_app6Symbol" use="required">
+													<xs:annotation>
+														<xs:documentation>Symbole APP6 de la connaissance de l'unité dans l'état "reconnu"</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="mission-translations">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="mission-translation" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="symbol" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Symbole de la mission dans le référentiel SIM</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="id-symbol" type="E_MissionGraphicalSymbol" use="required">
+													<xs:annotation>
+														<xs:documentation>Symbole de la mission dans l'éditeur</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="mission-location-algos">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="mission-location-algo" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="needed-anchor" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Sert à savoir quels anchor sont nécessaire pour cet algorithme</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="anchor" type="T_AnchorType" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="id-algo" type="E_MissionLocGenAlgo" use="required">
+													<xs:annotation>
+														<xs:documentation>Symbole algorithme de génération de la mission</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="reports">
+								<xs:annotation>
+									<xs:documentation>Compte rendus spécifiques induisant une fonctionnalité dans l'edt. Par exmple (pris à parti, CR modifiant une demande de tir, etc)</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="report">
+											<xs:annotation>
+												<xs:documentation>Compte rendu possibles</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+													<xs:annotation>
+														<xs:documentation>Id unique du CR</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="message" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Texte du CR intégrant les éventuels paramètres</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="edt-special-function" type="T_ReportClientFunctionTrigger" use="required">
+													<xs:annotation>
+														<xs:documentation>Compte rendu nécessitant des actions dans l'EDT</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ReferentielSIC">
+					<xs:annotation>
+						<xs:documentation>Informations nécéssaires à l'interprétation du référentiel SIM par les traducteurs de l'Estafette c'est à dire la description des données ATLAS (lanceurs, mun) </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="equipments">
+								<xs:annotation>
+									<xs:documentation>Liste les types d'équipements</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="equipment" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>nom de l'équipement</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="IdLanceur_ATLAS" type="xs:int"/>
+												<xs:attribute name="CategorieMoyenEvacuation" type="T_SIC_CategorieMoyenEvacuation">
+													<xs:annotation>
+														<xs:documentation>Catégorie d'un moyen d'évacuation. Valable que pour les équipements pouvant réaliser de l'évacuation de maintenance</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="SpecialiteReparation" type="T_SIC_SpecialiteReparation">
+													<xs:annotation>
+														<xs:documentation>Spécialité de réparation Valable que pour les équipements pouvant réaliser de la réparation</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="EstEquipeChirugicale" type="xs:boolean">
+													<xs:annotation>
+														<xs:documentation>Identifie les équipes chirurgicales</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="EstSectionTriage" type="xs:boolean">
+													<xs:annotation>
+														<xs:documentation>Identifie les sections de triage</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="PeutFaireDuRamassage" type="xs:boolean">
+													<xs:annotation>
+														<xs:documentation>Identifie les équipements pouvant faire du ramassage médical</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="PeutFaireDeLaReleve" type="xs:boolean">
+													<xs:annotation>
+														<xs:documentation>Identifie les équipements pouvant faire de la relève médicale</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="RefSIM2NCi" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Identifie une correspondance entre E_EquipementCategorieMateriel et T_SIC_NCiCategorieEquipement</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="RefSIM-Categorie" type="T_EquipmentCategory" use="required"/>
+												<xs:attribute name="NCi-Categorie" type="T_SIC_NCiCategorieEquipement" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ressources">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ressource" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Définit un type de dotation</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Munition_ATLAS" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Valable que pour les ressources pour lesquelles d-type = true</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="IdMunition_ATLAS" type="xs:int" use="required"/>
+															<xs:attribute name="IdModeleDeFusee_ATLAS" type="xs:int" use="required"/>
+															<xs:attribute name="IdPreReglageFusee_ATLAS" type="xs:int" use="required"/>
+															<xs:attribute name="Masse_ATLAS" type="xs:int" use="required"/>
+															<xs:attribute name="IdTypeDeChargement_ATLAS" type="xs:int" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>Nom identifiant la ressource</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="info-ATLAS" type="CT_Info_ATLAS"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="VersionFormatReferentielSHIELD" type="T_NumVersionFichier" use="required">
+				<xs:annotation>
+					<xs:documentation>Numéro de version de format. Pour assurer la compatibilité.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

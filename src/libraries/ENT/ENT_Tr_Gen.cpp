@@ -351,7 +351,7 @@ ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
 {
     T_ConverterHumanRank( "Officier", QT_TRANSLATE_NOOP( "ENT_Tr", "Officer" ), eHumanRank_Officier ),
     T_ConverterHumanRank( "SousOfficier", QT_TRANSLATE_NOOP( "ENT_Tr", "Warrant officer" ), eHumanRank_SousOfficer ),
-    T_ConverterHumanRank( "MilitaireDuRang", QT_TRANSLATE_NOOP( "ENT_Tr", "Trooper" ), eHumanRank_Mdr ),
+    T_ConverterHumanRank( "Crew", QT_TRANSLATE_NOOP( "ENT_Tr", "Trooper" ), eHumanRank_Mdr ),
     T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
 };
 

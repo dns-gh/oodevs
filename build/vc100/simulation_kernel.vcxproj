@@ -1695,7 +1695,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_ActionFunctions.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_GeometryFunctions.inl" />

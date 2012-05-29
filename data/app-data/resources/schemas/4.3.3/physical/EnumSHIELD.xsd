@@ -1,0 +1,1949 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>Types de base</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="T_NumVersionFichier">
+		<xs:annotation>
+			<xs:documentation>Le format du numéro de version est Vx.y.z, avec les règles d’incrémentation des indices x, y et z suivantes :
+•	z : pas d’impact sur la compatibilité de l’interface (par exemple, ajout de balises optionnelles) ;
+•	y : impact mineur sur la compatibilité de l’interface ;
+•	x : impact majeur sur la compatibilité de l’interface. 
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]+.[0-9]+.[0-9]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:documentation>Enumérés</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="E_NBCAgentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Chemical"/>
+			<xs:enumeration value="Nuclear"/>
+			<xs:enumeration value="Biological"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="E_app6Symbol">
+		<xs:annotation>
+			<xs:documentation>Symbol App6 pour une unité.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1.X"/>
+			<xs:enumeration value="1.X.1"/>
+			<xs:enumeration value="1.X.1.1"/>
+			<xs:enumeration value="1.X.1.2"/>
+			<xs:enumeration value="1.X.1.3"/>
+			<xs:enumeration value="1.X.2"/>
+			<xs:enumeration value="1.X.2.1"/>
+			<xs:enumeration value="1.X.2.1.1"/>
+			<xs:enumeration value="1.X.2.1.1.1"/>
+			<xs:enumeration value="1.X.2.1.1.10"/>
+			<xs:enumeration value="1.X.2.1.1.10.1"/>
+			<xs:enumeration value="1.X.2.1.1.10.2"/>
+			<xs:enumeration value="1.X.2.1.1.10.3"/>
+			<xs:enumeration value="1.X.2.1.1.11"/>
+			<xs:enumeration value="1.X.2.1.1.11.1"/>
+			<xs:enumeration value="1.X.2.1.1.11.2"/>
+			<xs:enumeration value="1.X.2.1.1.12"/>
+			<xs:enumeration value="1.X.2.1.1.12.1"/>
+			<xs:enumeration value="1.X.2.1.1.12.2"/>
+			<xs:enumeration value="1.X.2.1.1.12.3"/>
+			<xs:enumeration value="1.X.2.1.1.13"/>
+			<xs:enumeration value="1.X.2.1.1.14"/>
+			<xs:enumeration value="1.X.2.1.1.15"/>
+			<xs:enumeration value="1.X.2.1.1.16"/>
+			<xs:enumeration value="1.X.2.1.1.17"/>
+			<xs:enumeration value="1.X.2.1.1.18"/>
+			<xs:enumeration value="1.X.2.1.1.2"/>
+			<xs:enumeration value="1.X.2.1.1.2.1"/>
+			<xs:enumeration value="1.X.2.1.1.3"/>
+			<xs:enumeration value="1.X.2.1.1.4"/>
+			<xs:enumeration value="1.X.2.1.1.5"/>
+			<xs:enumeration value="1.X.2.1.1.6"/>
+			<xs:enumeration value="1.X.2.1.1.7"/>
+			<xs:enumeration value="1.X.2.1.1.7.1"/>
+			<xs:enumeration value="1.X.2.1.1.7.2"/>
+			<xs:enumeration value="1.X.2.1.1.7.3"/>
+			<xs:enumeration value="1.X.2.1.1.8"/>
+			<xs:enumeration value="1.X.2.1.1.9"/>
+			<xs:enumeration value="1.X.2.1.2"/>
+			<xs:enumeration value="1.X.2.1.2.1"/>
+			<xs:enumeration value="1.X.2.1.2.10"/>
+			<xs:enumeration value="1.X.2.1.2.11"/>
+			<xs:enumeration value="1.X.2.1.2.12"/>
+			<xs:enumeration value="1.X.2.1.2.13"/>
+			<xs:enumeration value="1.X.2.1.2.14"/>
+			<xs:enumeration value="1.X.2.1.2.2"/>
+			<xs:enumeration value="1.X.2.1.2.3"/>
+			<xs:enumeration value="1.X.2.1.2.3.1"/>
+			<xs:enumeration value="1.X.2.1.2.3.2"/>
+			<xs:enumeration value="1.X.2.1.2.3.3"/>
+			<xs:enumeration value="1.X.2.1.2.4"/>
+			<xs:enumeration value="1.X.2.1.2.5"/>
+			<xs:enumeration value="1.X.2.1.2.6"/>
+			<xs:enumeration value="1.X.2.1.2.7"/>
+			<xs:enumeration value="1.X.2.1.2.8"/>
+			<xs:enumeration value="1.X.2.1.2.8.1"/>
+			<xs:enumeration value="1.X.2.1.2.8.2"/>
+			<xs:enumeration value="1.X.2.1.2.8.3"/>
+			<xs:enumeration value="1.X.2.1.2.9"/>
+			<xs:enumeration value="1.X.2.1.3"/>
+			<xs:enumeration value="1.X.2.2"/>
+			<xs:enumeration value="1.X.2.2.1"/>
+			<xs:enumeration value="1.X.2.2.1.1"/>
+			<xs:enumeration value="1.X.2.2.1.1.1"/>
+			<xs:enumeration value="1.X.2.2.1.1.2"/>
+			<xs:enumeration value="1.X.2.2.1.2"/>
+			<xs:enumeration value="1.X.2.2.1.2.1"/>
+			<xs:enumeration value="1.X.2.2.1.2.2"/>
+			<xs:enumeration value="1.X.2.2.1.3"/>
+			<xs:enumeration value="1.X.2.2.1.4"/>
+			<xs:enumeration value="1.X.2.2.2"/>
+			<xs:enumeration value="1.X.2.3"/>
+			<xs:enumeration value="1.X.2.3.1"/>
+			<xs:enumeration value="1.X.2.3.2"/>
+			<xs:enumeration value="1.X.2.3.3"/>
+			<xs:enumeration value="1.X.3"/>
+			<xs:enumeration value="1.X.3.1"/>
+			<xs:enumeration value="1.X.3.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.1.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.1.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.1.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.3"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.4"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.4.1"/>
+			<xs:enumeration value="1.X.3.1.1.1.2.4.2"/>
+			<xs:enumeration value="1.X.3.1.1.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.1.4"/>
+			<xs:enumeration value="1.X.3.1.1.1.5"/>
+			<xs:enumeration value="1.X.3.1.1.1.6"/>
+			<xs:enumeration value="1.X.3.1.1.10"/>
+			<xs:enumeration value="1.X.3.1.1.10.1"/>
+			<xs:enumeration value="1.X.3.1.1.10.2"/>
+			<xs:enumeration value="1.X.3.1.1.10.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.10.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.10.2.3"/>
+			<xs:enumeration value="1.X.3.1.1.10.3"/>
+			<xs:enumeration value="1.X.3.1.1.10.4"/>
+			<xs:enumeration value="1.X.3.1.1.10.5"/>
+			<xs:enumeration value="1.X.3.1.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.4"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.5"/>
+			<xs:enumeration value="1.X.3.1.1.2.1.6"/>
+			<xs:enumeration value="1.X.3.1.1.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.3"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.3.1"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.4"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.5"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.6"/>
+			<xs:enumeration value="1.X.3.1.1.2.2.7"/>
+			<xs:enumeration value="1.X.3.1.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.3.1"/>
+			<xs:enumeration value="1.X.3.1.1.3.2"/>
+			<xs:enumeration value="1.X.3.1.1.3.3"/>
+			<xs:enumeration value="1.X.3.1.1.3.4"/>
+			<xs:enumeration value="1.X.3.1.1.3.5"/>
+			<xs:enumeration value="1.X.3.1.1.3.6"/>
+			<xs:enumeration value="1.X.3.1.1.3.7"/>
+			<xs:enumeration value="1.X.3.1.1.3.7.1"/>
+			<xs:enumeration value="1.X.3.1.1.3.7.2"/>
+			<xs:enumeration value="1.X.3.1.1.3.7.3"/>
+			<xs:enumeration value="1.X.3.1.1.3.8"/>
+			<xs:enumeration value="1.X.3.1.1.3.8.1"/>
+			<xs:enumeration value="1.X.3.1.1.4"/>
+			<xs:enumeration value="1.X.3.1.1.4.1"/>
+			<xs:enumeration value="1.X.3.1.1.4.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.4.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.4.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.4.2"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.3"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.4"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.4.1"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.4.2"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.4.3"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.5"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.6"/>
+			<xs:enumeration value="1.X.3.1.1.4.2.7"/>
+			<xs:enumeration value="1.X.3.1.1.4.3"/>
+			<xs:enumeration value="1.X.3.1.1.4.4"/>
+			<xs:enumeration value="1.X.3.1.1.4.5"/>
+			<xs:enumeration value="1.X.3.1.1.4.6"/>
+			<xs:enumeration value="1.X.3.1.1.4.6.1"/>
+			<xs:enumeration value="1.X.3.1.1.4.6.2"/>
+			<xs:enumeration value="1.X.3.1.1.5"/>
+			<xs:enumeration value="1.X.3.1.1.5.1"/>
+			<xs:enumeration value="1.X.3.1.1.5.2"/>
+			<xs:enumeration value="1.X.3.1.1.5.3"/>
+			<xs:enumeration value="1.X.3.1.1.5.4"/>
+			<xs:enumeration value="1.X.3.1.1.5.5"/>
+			<xs:enumeration value="1.X.3.1.1.5.6"/>
+			<xs:enumeration value="1.X.3.1.1.5.7"/>
+			<xs:enumeration value="1.X.3.1.1.5.8"/>
+			<xs:enumeration value="1.X.3.1.1.5.9"/>
+			<xs:enumeration value="1.X.3.1.1.6"/>
+			<xs:enumeration value="1.X.3.1.1.6.1"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.10"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.11"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.4"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.5"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.6"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.7"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.8"/>
+			<xs:enumeration value="1.X.3.1.1.6.1.9"/>
+			<xs:enumeration value="1.X.3.1.1.6.2"/>
+			<xs:enumeration value="1.X.3.1.1.6.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.7"/>
+			<xs:enumeration value="1.X.3.1.1.7.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.4"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.5"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.6"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.7"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.8"/>
+			<xs:enumeration value="1.X.3.1.1.7.1.9"/>
+			<xs:enumeration value="1.X.3.1.1.7.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.1.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.1.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.1.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.2.2.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.4"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.4.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.4.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.3.5"/>
+			<xs:enumeration value="1.X.3.1.1.7.4"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.3.4"/>
+			<xs:enumeration value="1.X.3.1.1.7.4.4"/>
+			<xs:enumeration value="1.X.3.1.1.7.5"/>
+			<xs:enumeration value="1.X.3.1.1.7.5.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.5.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.5.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.5.4"/>
+			<xs:enumeration value="1.X.3.1.1.7.6"/>
+			<xs:enumeration value="1.X.3.1.1.7.6.1"/>
+			<xs:enumeration value="1.X.3.1.1.7.6.2"/>
+			<xs:enumeration value="1.X.3.1.1.7.6.3"/>
+			<xs:enumeration value="1.X.3.1.1.7.6.4"/>
+			<xs:enumeration value="1.X.3.1.1.8"/>
+			<xs:enumeration value="1.X.3.1.1.8.1"/>
+			<xs:enumeration value="1.X.3.1.1.8.2"/>
+			<xs:enumeration value="1.X.3.1.1.8.2.1"/>
+			<xs:enumeration value="1.X.3.1.1.8.2.2"/>
+			<xs:enumeration value="1.X.3.1.1.8.2.3"/>
+			<xs:enumeration value="1.X.3.1.1.8.2.4"/>
+			<xs:enumeration value="1.X.3.1.1.8.3"/>
+			<xs:enumeration value="1.X.3.1.1.8.4"/>
+			<xs:enumeration value="1.X.3.1.1.8.5"/>
+			<xs:enumeration value="1.X.3.1.1.8.6"/>
+			<xs:enumeration value="1.X.3.1.1.8.7"/>
+			<xs:enumeration value="1.X.3.1.1.8.8"/>
+			<xs:enumeration value="1.X.3.1.1.8.8.1"/>
+			<xs:enumeration value="1.X.3.1.1.8.8.2"/>
+			<xs:enumeration value="1.X.3.1.1.8.8.3"/>
+			<xs:enumeration value="1.X.3.1.1.8.9"/>
+			<xs:enumeration value="1.X.3.1.1.9"/>
+			<xs:enumeration value="1.X.3.1.1.9.1"/>
+			<xs:enumeration value="1.X.3.1.1.9.2"/>
+			<xs:enumeration value="1.X.3.1.2"/>
+			<xs:enumeration value="1.X.3.1.2.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.1.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.1.2"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.2"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.2.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.2.2"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.3"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.3.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.1.3.2"/>
+			<xs:enumeration value="1.X.3.1.2.1.2"/>
+			<xs:enumeration value="1.X.3.1.2.1.3"/>
+			<xs:enumeration value="1.X.3.1.2.1.3.1"/>
+			<xs:enumeration value="1.X.3.1.2.1.4"/>
+			<xs:enumeration value="1.X.3.1.2.2"/>
+			<xs:enumeration value="1.X.3.1.2.2.1"/>
+			<xs:enumeration value="1.X.3.1.2.2.2"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.1"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.2"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.3"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.4"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.5"/>
+			<xs:enumeration value="1.X.3.1.2.2.2.1.6"/>
+			<xs:enumeration value="1.X.3.1.2.2.3"/>
+			<xs:enumeration value="1.X.3.1.2.2.4"/>
+			<xs:enumeration value="1.X.3.1.2.2.4.1"/>
+			<xs:enumeration value="1.X.3.1.2.2.4.2"/>
+			<xs:enumeration value="1.X.3.1.2.2.4.2.1"/>
+			<xs:enumeration value="1.X.3.1.2.2.4.3"/>
+			<xs:enumeration value="1.X.3.1.2.2.4.4"/>
+			<xs:enumeration value="1.X.3.1.2.2.5"/>
+			<xs:enumeration value="1.X.3.1.2.2.6"/>
+			<xs:enumeration value="1.X.3.1.2.2.7"/>
+			<xs:enumeration value="1.X.3.1.2.2.8"/>
+			<xs:enumeration value="1.X.3.1.2.3"/>
+			<xs:enumeration value="1.X.3.1.2.3.1"/>
+			<xs:enumeration value="1.X.3.1.2.3.2"/>
+			<xs:enumeration value="1.X.3.1.2.3.3"/>
+			<xs:enumeration value="1.X.3.1.2.3.4"/>
+			<xs:enumeration value="1.X.3.1.2.3.5"/>
+			<xs:enumeration value="1.X.3.1.2.4"/>
+			<xs:enumeration value="1.X.3.1.2.4.1"/>
+			<xs:enumeration value="1.X.3.1.2.4.2"/>
+			<xs:enumeration value="1.X.3.1.2.4.2.1"/>
+			<xs:enumeration value="1.X.3.1.2.4.3"/>
+			<xs:enumeration value="1.X.3.1.2.4.4"/>
+			<xs:enumeration value="1.X.3.1.2.4.5"/>
+			<xs:enumeration value="1.X.3.1.2.4.5.1"/>
+			<xs:enumeration value="1.X.3.1.2.4.5.2"/>
+			<xs:enumeration value="1.X.3.1.2.4.5.3"/>
+			<xs:enumeration value="1.X.3.1.2.4.6"/>
+			<xs:enumeration value="1.X.3.1.2.4.6.1"/>
+			<xs:enumeration value="1.X.3.1.2.4.6.2"/>
+			<xs:enumeration value="1.X.3.1.2.4.6.3"/>
+			<xs:enumeration value="1.X.3.1.2.4.7"/>
+			<xs:enumeration value="1.X.3.1.2.4.8"/>
+			<xs:enumeration value="1.X.3.1.2.4.9"/>
+			<xs:enumeration value="1.X.3.1.2.5"/>
+			<xs:enumeration value="1.X.3.1.2.6"/>
+			<xs:enumeration value="1.X.3.1.2.7"/>
+			<xs:enumeration value="1.X.3.1.3"/>
+			<xs:enumeration value="1.X.3.1.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.10"/>
+			<xs:enumeration value="1.X.3.1.3.1.10.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.10.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.11"/>
+			<xs:enumeration value="1.X.3.1.3.1.11.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.11.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.12"/>
+			<xs:enumeration value="1.X.3.1.3.1.12.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.12.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.13"/>
+			<xs:enumeration value="1.X.3.1.3.1.13.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.13.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.3"/>
+			<xs:enumeration value="1.X.3.1.3.1.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.4"/>
+			<xs:enumeration value="1.X.3.1.3.1.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.5"/>
+			<xs:enumeration value="1.X.3.1.3.1.5.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.5.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.6"/>
+			<xs:enumeration value="1.X.3.1.3.1.6.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.6.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.7"/>
+			<xs:enumeration value="1.X.3.1.3.1.7.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.7.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.8"/>
+			<xs:enumeration value="1.X.3.1.3.1.8.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.8.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.9"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.3"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.4"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.1.9.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.2.1"/>
+			<xs:enumeration value="1.X.3.1.3.2.2"/>
+			<xs:enumeration value="1.X.3.1.3.2.3"/>
+			<xs:enumeration value="1.X.3.1.3.2.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.2.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.2.4"/>
+			<xs:enumeration value="1.X.3.1.3.2.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.2.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.2.5"/>
+			<xs:enumeration value="1.X.3.1.3.2.5.1"/>
+			<xs:enumeration value="1.X.3.1.3.2.5.2"/>
+			<xs:enumeration value="1.X.3.1.3.2.6"/>
+			<xs:enumeration value="1.X.3.1.3.2.6.1"/>
+			<xs:enumeration value="1.X.3.1.3.2.6.2"/>
+			<xs:enumeration value="1.X.3.1.3.3"/>
+			<xs:enumeration value="1.X.3.1.3.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.10"/>
+			<xs:enumeration value="1.X.3.1.3.3.10.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.10.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.11"/>
+			<xs:enumeration value="1.X.3.1.3.3.11.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.11.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.12"/>
+			<xs:enumeration value="1.X.3.1.3.3.12.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.12.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.13"/>
+			<xs:enumeration value="1.X.3.1.3.3.13.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.13.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.14"/>
+			<xs:enumeration value="1.X.3.1.3.3.14.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.14.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.14.3"/>
+			<xs:enumeration value="1.X.3.1.3.3.14.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.14.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.3"/>
+			<xs:enumeration value="1.X.3.1.3.3.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.4"/>
+			<xs:enumeration value="1.X.3.1.3.3.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.5"/>
+			<xs:enumeration value="1.X.3.1.3.3.5.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.5.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.5.3"/>
+			<xs:enumeration value="1.X.3.1.3.3.5.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.5.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.6"/>
+			<xs:enumeration value="1.X.3.1.3.3.6.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.6.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.7"/>
+			<xs:enumeration value="1.X.3.1.3.3.7.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.7.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.8"/>
+			<xs:enumeration value="1.X.3.1.3.3.8.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.8.2"/>
+			<xs:enumeration value="1.X.3.1.3.3.9"/>
+			<xs:enumeration value="1.X.3.1.3.3.9.1"/>
+			<xs:enumeration value="1.X.3.1.3.3.9.2"/>
+			<xs:enumeration value="1.X.3.1.3.4"/>
+			<xs:enumeration value="1.X.3.1.3.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.4.3"/>
+			<xs:enumeration value="1.X.3.1.3.4.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.4.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.4.4"/>
+			<xs:enumeration value="1.X.3.1.3.4.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.4.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.4.5"/>
+			<xs:enumeration value="1.X.3.1.3.4.5.1"/>
+			<xs:enumeration value="1.X.3.1.3.4.5.2"/>
+			<xs:enumeration value="1.X.3.1.3.4.6"/>
+			<xs:enumeration value="1.X.3.1.3.4.6.1"/>
+			<xs:enumeration value="1.X.3.1.3.4.6.2"/>
+			<xs:enumeration value="1.X.3.1.3.4.7"/>
+			<xs:enumeration value="1.X.3.1.3.4.7.1"/>
+			<xs:enumeration value="1.X.3.1.3.4.7.2"/>
+			<xs:enumeration value="1.X.3.1.3.5"/>
+			<xs:enumeration value="1.X.3.1.3.5.1"/>
+			<xs:enumeration value="1.X.3.1.3.5.2"/>
+			<xs:enumeration value="1.X.3.1.3.5.3"/>
+			<xs:enumeration value="1.X.3.1.3.5.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.5.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.5.4"/>
+			<xs:enumeration value="1.X.3.1.3.5.4.1"/>
+			<xs:enumeration value="1.X.3.1.3.5.4.2"/>
+			<xs:enumeration value="1.X.3.1.3.5.5"/>
+			<xs:enumeration value="1.X.3.1.3.5.5.1"/>
+			<xs:enumeration value="1.X.3.1.3.5.5.2"/>
+			<xs:enumeration value="1.X.3.1.3.5.5.3"/>
+			<xs:enumeration value="1.X.3.1.3.5.5.3.1"/>
+			<xs:enumeration value="1.X.3.1.3.5.5.3.2"/>
+			<xs:enumeration value="1.X.3.1.3.5.6"/>
+			<xs:enumeration value="1.X.3.1.3.5.6.1"/>
+			<xs:enumeration value="1.X.3.1.3.5.6.2"/>
+			<xs:enumeration value="1.X.3.1.3.7"/>
+			<xs:enumeration value="1.X.3.1.4"/>
+			<xs:enumeration value="1.X.3.2"/>
+			<xs:enumeration value="1.X.3.2.1"/>
+			<xs:enumeration value="1.X.3.2.1.1"/>
+			<xs:enumeration value="1.X.3.2.1.1.1"/>
+			<xs:enumeration value="1.X.3.2.1.1.1.1"/>
+			<xs:enumeration value="1.X.3.2.1.1.1.2"/>
+			<xs:enumeration value="1.X.3.2.1.1.1.3"/>
+			<xs:enumeration value="1.X.3.2.1.1.1.4"/>
+			<xs:enumeration value="1.X.3.2.1.1.2"/>
+			<xs:enumeration value="1.X.3.2.1.1.2.1"/>
+			<xs:enumeration value="1.X.3.2.1.1.2.2"/>
+			<xs:enumeration value="1.X.3.2.1.1.2.3"/>
+			<xs:enumeration value="1.X.3.2.1.1.3"/>
+			<xs:enumeration value="1.X.3.2.1.1.3.1"/>
+			<xs:enumeration value="1.X.3.2.1.1.3.2"/>
+			<xs:enumeration value="1.X.3.2.1.1.3.3"/>
+			<xs:enumeration value="1.X.3.2.1.10"/>
+			<xs:enumeration value="1.X.3.2.1.10.1"/>
+			<xs:enumeration value="1.X.3.2.1.10.1.1"/>
+			<xs:enumeration value="1.X.3.2.1.10.2"/>
+			<xs:enumeration value="1.X.3.2.1.10.2.1"/>
+			<xs:enumeration value="1.X.3.2.1.10.3"/>
+			<xs:enumeration value="1.X.3.2.1.10.3.1"/>
+			<xs:enumeration value="1.X.3.2.1.11"/>
+			<xs:enumeration value="1.X.3.2.1.11.1"/>
+			<xs:enumeration value="1.X.3.2.1.11.2"/>
+			<xs:enumeration value="1.X.3.2.1.11.3"/>
+			<xs:enumeration value="1.X.3.2.1.2"/>
+			<xs:enumeration value="1.X.3.2.1.2.1"/>
+			<xs:enumeration value="1.X.3.2.1.2.2"/>
+			<xs:enumeration value="1.X.3.2.1.2.3"/>
+			<xs:enumeration value="1.X.3.2.1.3"/>
+			<xs:enumeration value="1.X.3.2.1.3.1"/>
+			<xs:enumeration value="1.X.3.2.1.3.2"/>
+			<xs:enumeration value="1.X.3.2.1.3.3"/>
+			<xs:enumeration value="1.X.3.2.1.4"/>
+			<xs:enumeration value="1.X.3.2.1.4.1"/>
+			<xs:enumeration value="1.X.3.2.1.4.2"/>
+			<xs:enumeration value="1.X.3.2.1.4.3"/>
+			<xs:enumeration value="1.X.3.2.1.5"/>
+			<xs:enumeration value="1.X.3.2.1.5.1"/>
+			<xs:enumeration value="1.X.3.2.1.5.2"/>
+			<xs:enumeration value="1.X.3.2.1.5.3"/>
+			<xs:enumeration value="1.X.3.2.1.6"/>
+			<xs:enumeration value="1.X.3.2.1.6.1"/>
+			<xs:enumeration value="1.X.3.2.1.6.2"/>
+			<xs:enumeration value="1.X.3.2.1.6.3"/>
+			<xs:enumeration value="1.X.3.2.1.7"/>
+			<xs:enumeration value="1.X.3.2.1.7.1"/>
+			<xs:enumeration value="1.X.3.2.1.7.2"/>
+			<xs:enumeration value="1.X.3.2.1.7.3"/>
+			<xs:enumeration value="1.X.3.2.1.8"/>
+			<xs:enumeration value="1.X.3.2.1.8.1"/>
+			<xs:enumeration value="1.X.3.2.1.8.1.1"/>
+			<xs:enumeration value="1.X.3.2.1.8.2"/>
+			<xs:enumeration value="1.X.3.2.1.8.2.1"/>
+			<xs:enumeration value="1.X.3.2.1.8.3"/>
+			<xs:enumeration value="1.X.3.2.1.8.3.1"/>
+			<xs:enumeration value="1.X.3.2.1.9"/>
+			<xs:enumeration value="1.X.3.2.1.9.1"/>
+			<xs:enumeration value="1.X.3.2.1.9.2"/>
+			<xs:enumeration value="1.X.3.2.1.9.3"/>
+			<xs:enumeration value="1.X.3.2.1.9.4"/>
+			<xs:enumeration value="1.X.3.2.2"/>
+			<xs:enumeration value="1.X.3.2.2.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.1.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.1.1.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.1.2"/>
+			<xs:enumeration value="1.X.3.2.2.1.1.2.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.1.3"/>
+			<xs:enumeration value="1.X.3.2.2.1.1.3.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.2"/>
+			<xs:enumeration value="1.X.3.2.2.1.2.1"/>
+			<xs:enumeration value="1.X.3.2.2.1.3"/>
+			<xs:enumeration value="1.X.3.2.2.1.4"/>
+			<xs:enumeration value="1.X.3.2.2.1.5"/>
+			<xs:enumeration value="1.X.3.2.2.1.6"/>
+			<xs:enumeration value="1.X.3.2.2.2"/>
+			<xs:enumeration value="1.X.3.2.2.2.1"/>
+			<xs:enumeration value="1.X.3.2.2.2.2"/>
+			<xs:enumeration value="1.X.3.2.2.2.3"/>
+			<xs:enumeration value="1.X.3.2.2.2.4"/>
+			<xs:enumeration value="1.X.3.2.2.2.5"/>
+			<xs:enumeration value="1.X.3.2.2.3"/>
+			<xs:enumeration value="1.X.3.2.2.3.1"/>
+			<xs:enumeration value="1.X.3.2.2.3.2"/>
+			<xs:enumeration value="1.X.3.2.2.3.3"/>
+			<xs:enumeration value="1.X.3.2.2.3.4"/>
+			<xs:enumeration value="1.X.3.2.2.3.4.1"/>
+			<xs:enumeration value="1.X.3.2.2.3.4.2"/>
+			<xs:enumeration value="1.X.3.2.2.3.4.3"/>
+			<xs:enumeration value="1.X.3.2.2.3.4.4"/>
+			<xs:enumeration value="1.X.3.2.2.3.5"/>
+			<xs:enumeration value="1.X.3.2.2.4"/>
+			<xs:enumeration value="1.X.3.2.2.5"/>
+			<xs:enumeration value="1.X.3.2.3"/>
+			<xs:enumeration value="1.X.3.2.3.1"/>
+			<xs:enumeration value="1.X.3.2.3.2"/>
+			<xs:enumeration value="1.X.3.2.4"/>
+			<xs:enumeration value="1.X.3.2.4.1"/>
+			<xs:enumeration value="1.X.3.2.4.2"/>
+			<xs:enumeration value="1.X.3.2.4.3"/>
+			<xs:enumeration value="1.X.3.2.4.4"/>
+			<xs:enumeration value="1.X.3.2.4.4.1"/>
+			<xs:enumeration value="1.X.3.2.4.4.2"/>
+			<xs:enumeration value="1.X.3.3"/>
+			<xs:enumeration value="1.X.3.3.1"/>
+			<xs:enumeration value="1.X.3.3.1.1"/>
+			<xs:enumeration value="1.X.3.3.1.2"/>
+			<xs:enumeration value="1.X.3.3.1.3"/>
+			<xs:enumeration value="1.X.3.3.1.3.1"/>
+			<xs:enumeration value="1.X.3.3.1.3.2"/>
+			<xs:enumeration value="1.X.3.3.1.3.3"/>
+			<xs:enumeration value="1.X.3.3.2"/>
+			<xs:enumeration value="1.X.3.3.2.1"/>
+			<xs:enumeration value="1.X.3.3.3"/>
+			<xs:enumeration value="1.X.3.3.4"/>
+			<xs:enumeration value="1.X.3.3.4.1"/>
+			<xs:enumeration value="1.X.3.3.4.2"/>
+			<xs:enumeration value="1.X.3.3.4.3"/>
+			<xs:enumeration value="1.X.3.3.4.4"/>
+			<xs:enumeration value="1.X.3.3.5"/>
+			<xs:enumeration value="1.X.3.3.5.1"/>
+			<xs:enumeration value="1.X.3.3.5.2"/>
+			<xs:enumeration value="1.X.3.3.5.3"/>
+			<xs:enumeration value="1.X.3.3.5.4"/>
+			<xs:enumeration value="1.X.3.3.5.5"/>
+			<xs:enumeration value="1.X.3.3.5.6"/>
+			<xs:enumeration value="1.X.3.3.5.6.1"/>
+			<xs:enumeration value="1.X.3.3.5.7"/>
+			<xs:enumeration value="1.X.3.3.5.8"/>
+			<xs:enumeration value="1.X.3.3.5.9"/>
+			<xs:enumeration value="1.X.3.3.6"/>
+			<xs:enumeration value="1.X.3.3.7"/>
+			<xs:enumeration value="1.X.3.3.7.1"/>
+			<xs:enumeration value="1.X.3.3.7.2"/>
+			<xs:enumeration value="1.X.3.3.8"/>
+			<xs:enumeration value="1.X.3.3.9"/>
+			<xs:enumeration value="1.X.3.3.9.1"/>
+			<xs:enumeration value="1.X.4"/>
+			<xs:enumeration value="1.X.4.1"/>
+			<xs:enumeration value="1.X.4.1.1"/>
+			<xs:enumeration value="1.X.4.1.1.1"/>
+			<xs:enumeration value="1.X.4.1.1.2"/>
+			<xs:enumeration value="1.X.4.1.1.3"/>
+			<xs:enumeration value="1.X.4.1.1.4"/>
+			<xs:enumeration value="1.X.4.1.1.5"/>
+			<xs:enumeration value="1.X.4.1.2"/>
+			<xs:enumeration value="1.X.4.1.2.1"/>
+			<xs:enumeration value="1.X.4.1.2.2"/>
+			<xs:enumeration value="1.X.4.1.2.3"/>
+			<xs:enumeration value="1.X.4.1.3"/>
+			<xs:enumeration value="1.X.4.1.3.1"/>
+			<xs:enumeration value="1.X.4.1.3.2"/>
+			<xs:enumeration value="1.X.4.1.3.3"/>
+			<xs:enumeration value="1.X.4.1.3.4"/>
+			<xs:enumeration value="1.X.4.1.3.5"/>
+			<xs:enumeration value="1.X.4.1.4"/>
+			<xs:enumeration value="1.X.4.1.4.1"/>
+			<xs:enumeration value="1.X.4.1.4.2"/>
+			<xs:enumeration value="1.X.4.1.5"/>
+			<xs:enumeration value="1.X.4.1.6"/>
+			<xs:enumeration value="1.X.4.1.6.1"/>
+			<xs:enumeration value="1.X.4.1.6.2"/>
+			<xs:enumeration value="1.X.4.1.7"/>
+			<xs:enumeration value="1.X.4.1.7.1"/>
+			<xs:enumeration value="1.X.4.1.7.2"/>
+			<xs:enumeration value="1.X.4.1.7.3"/>
+			<xs:enumeration value="1.X.4.1.7.4"/>
+			<xs:enumeration value="1.X.4.2"/>
+			<xs:enumeration value="1.X.4.2.1"/>
+			<xs:enumeration value="1.X.4.2.2"/>
+			<xs:enumeration value="1.X.4.2.3"/>
+			<xs:enumeration value="1.X.4.2.4"/>
+			<xs:enumeration value="1.X.4.2.5"/>
+			<xs:enumeration value="1.X.4.2.6"/>
+			<xs:enumeration value="1.X.4.2.7"/>
+			<xs:enumeration value="1.X.4.2.7.1"/>
+			<xs:enumeration value="1.X.4.3"/>
+			<xs:enumeration value="1.X.4.3.1"/>
+			<xs:enumeration value="1.X.4.3.1.1"/>
+			<xs:enumeration value="1.X.4.3.1.2"/>
+			<xs:enumeration value="1.X.4.3.1.3"/>
+			<xs:enumeration value="1.X.4.3.1.4"/>
+			<xs:enumeration value="1.X.4.3.1.5"/>
+			<xs:enumeration value="1.X.4.3.1.6"/>
+			<xs:enumeration value="1.X.4.3.1.7"/>
+			<xs:enumeration value="1.X.4.3.1.8"/>
+			<xs:enumeration value="1.X.4.3.2"/>
+			<xs:enumeration value="1.X.4.3.2.1"/>
+			<xs:enumeration value="1.X.4.3.2.2"/>
+			<xs:enumeration value="1.X.4.3.2.3"/>
+			<xs:enumeration value="1.X.4.3.3"/>
+			<xs:enumeration value="1.X.4.3.4"/>
+			<xs:enumeration value="1.X.4.3.5"/>
+			<xs:enumeration value="1.X.4.4"/>
+			<xs:enumeration value="1.X.4.5"/>
+			<xs:enumeration value="1.X.4.5.1"/>
+			<xs:enumeration value="1.X.4.5.2"/>
+			<xs:enumeration value="1.X.4.5.3"/>
+			<xs:enumeration value="1.X.4.6"/>
+			<xs:enumeration value="1.X.4.6.1"/>
+			<xs:enumeration value="1.X.4.6.2"/>
+			<xs:enumeration value="1.X.4.6.3"/>
+			<xs:enumeration value="1.X.5"/>
+			<xs:enumeration value="1.X.5.1"/>
+			<xs:enumeration value="1.X.5.1.1"/>
+			<xs:enumeration value="1.X.5.1.2"/>
+			<xs:enumeration value="1.X.5.1.3"/>
+			<xs:enumeration value="1.X.5.1.4"/>
+			<xs:enumeration value="1.X.5.1.4.1"/>
+			<xs:enumeration value="1.X.5.2"/>
+			<xs:enumeration value="1.X.5.2.1"/>
+			<xs:enumeration value="1.X.5.2.2"/>
+			<xs:enumeration value="1.X.5.2.2.1"/>
+			<xs:enumeration value="1.X.5.2.2.2"/>
+			<xs:enumeration value="1.X.5.2.2.2.1"/>
+			<xs:enumeration value="1.X.5.2.2.3"/>
+			<xs:enumeration value="1.X.5.2.2.3.1"/>
+			<xs:enumeration value="1.X.5.2.2.4"/>
+			<xs:enumeration value="1.X.5.2.2.4.1"/>
+			<xs:enumeration value="1.X.5.2.2.5"/>
+			<xs:enumeration value="1.X.5.2.2.5.1"/>
+			<xs:enumeration value="1.X.5.3"/>
+			<xs:enumeration value="1.X.5.3.1"/>
+			<xs:enumeration value="1.X.5.4"/>
+			<xs:enumeration value="1.X.5.4.1"/>
+			<xs:enumeration value="1.X.5.4.2"/>
+			<xs:enumeration value="1.X.5.4.2.1"/>
+			<xs:enumeration value="1.X.5.4.2.2"/>
+			<xs:enumeration value="1.X.5.4.2.3"/>
+			<xs:enumeration value="1.X.5.4.3"/>
+			<xs:enumeration value="1.X.5.4.4"/>
+			<xs:enumeration value="1.X.6"/>
+			<xs:enumeration value="1.X.6.1"/>
+			<xs:enumeration value="1.X.6.1.1"/>
+			<xs:enumeration value="1.X.6.1.1.1"/>
+			<xs:enumeration value="1.X.6.1.1.2"/>
+			<xs:enumeration value="1.X.6.1.1.3"/>
+			<xs:enumeration value="1.X.6.1.1.3.1"/>
+			<xs:enumeration value="1.X.6.1.1.3.2"/>
+			<xs:enumeration value="1.X.6.1.1.3.3"/>
+			<xs:enumeration value="1.X.6.1.2"/>
+			<xs:enumeration value="1.X.6.1.3"/>
+			<xs:enumeration value="1.X.6.1.3.1"/>
+			<xs:enumeration value="1.X.6.1.3.2"/>
+			<xs:enumeration value="1.X.6.1.3.3"/>
+			<xs:enumeration value="1.X.6.1.3.3.1"/>
+			<xs:enumeration value="1.X.6.1.3.3.2"/>
+			<xs:enumeration value="1.X.6.1.3.3.3"/>
+			<xs:enumeration value="1.X.6.2"/>
+			<xs:enumeration value="1.X.6.2.1"/>
+			<xs:enumeration value="1.X.6.2.2"/>
+			<xs:enumeration value="1.X.6.2.3"/>
+			<xs:enumeration value="1.X.6.2.4"/>
+			<xs:enumeration value="1.X.6.3"/>
+			<xs:enumeration value="1.X.6.3.1"/>
+			<xs:enumeration value="1.X.6.3.2"/>
+			<xs:enumeration value="1.X.6.3.3"/>
+			<xs:enumeration value="1.X.6.3.3.1"/>
+			<xs:enumeration value="1.X.6.3.4"/>
+			<xs:enumeration value="1.X.6.3.5"/>
+			<xs:enumeration value="1.X.6.4"/>
+			<xs:enumeration value="2.X"/>
+			<xs:enumeration value="2.X.1"/>
+			<xs:enumeration value="2.X.1.1"/>
+			<xs:enumeration value="2.X.1.1.1"/>
+			<xs:enumeration value="2.X.1.1.10"/>
+			<xs:enumeration value="2.X.1.1.11"/>
+			<xs:enumeration value="2.X.1.1.11.1"/>
+			<xs:enumeration value="2.X.1.1.11.2"/>
+			<xs:enumeration value="2.X.1.1.11.3"/>
+			<xs:enumeration value="2.X.1.1.12"/>
+			<xs:enumeration value="2.X.1.1.12.1"/>
+			<xs:enumeration value="2.X.1.1.13"/>
+			<xs:enumeration value="2.X.1.1.14"/>
+			<xs:enumeration value="2.X.1.1.15"/>
+			<xs:enumeration value="2.X.1.1.16"/>
+			<xs:enumeration value="2.X.1.1.17"/>
+			<xs:enumeration value="2.X.1.1.18"/>
+			<xs:enumeration value="2.X.1.1.19"/>
+			<xs:enumeration value="2.X.1.1.2"/>
+			<xs:enumeration value="2.X.1.1.20"/>
+			<xs:enumeration value="2.X.1.1.21"/>
+			<xs:enumeration value="2.X.1.1.21.1"/>
+			<xs:enumeration value="2.X.1.1.21.2"/>
+			<xs:enumeration value="2.X.1.1.21.3"/>
+			<xs:enumeration value="2.X.1.1.22"/>
+			<xs:enumeration value="2.X.1.1.23"/>
+			<xs:enumeration value="2.X.1.1.23.1"/>
+			<xs:enumeration value="2.X.1.1.3"/>
+			<xs:enumeration value="2.X.1.1.4"/>
+			<xs:enumeration value="2.X.1.1.5"/>
+			<xs:enumeration value="2.X.1.1.6"/>
+			<xs:enumeration value="2.X.1.1.7"/>
+			<xs:enumeration value="2.X.1.1.7.1"/>
+			<xs:enumeration value="2.X.1.1.8"/>
+			<xs:enumeration value="2.X.1.1.8.1"/>
+			<xs:enumeration value="2.X.1.1.9"/>
+			<xs:enumeration value="2.X.2"/>
+			<xs:enumeration value="2.X.2.1"/>
+			<xs:enumeration value="2.X.2.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.2"/>
+			<xs:enumeration value="2.X.2.1.1.2.1"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.1.2"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.1.3"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.1.4"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.2"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.3"/>
+			<xs:enumeration value="2.X.2.1.1.2.1.4"/>
+			<xs:enumeration value="2.X.2.1.1.2.2"/>
+			<xs:enumeration value="2.X.2.1.1.2.3"/>
+			<xs:enumeration value="2.X.2.1.1.2.4"/>
+			<xs:enumeration value="2.X.2.1.1.2.5"/>
+			<xs:enumeration value="2.X.2.1.1.2.5.1"/>
+			<xs:enumeration value="2.X.2.1.1.2.5.2"/>
+			<xs:enumeration value="2.X.2.1.1.2.5.3"/>
+			<xs:enumeration value="2.X.2.1.1.2.5.4"/>
+			<xs:enumeration value="2.X.2.1.1.3"/>
+			<xs:enumeration value="2.X.2.1.1.3.1"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.1.1"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.1.2"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.1.3"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.1.4"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.2"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.2.1"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.2.2"/>
+			<xs:enumeration value="2.X.2.1.1.3.1.2.3"/>
+			<xs:enumeration value="2.X.2.1.1.3.2"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.1"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.2"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.3"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.4"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.5"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.6"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.7"/>
+			<xs:enumeration value="2.X.2.1.1.3.2.8"/>
+			<xs:enumeration value="2.X.2.1.2"/>
+			<xs:enumeration value="2.X.2.1.2.1"/>
+			<xs:enumeration value="2.X.2.1.2.1.1"/>
+			<xs:enumeration value="2.X.2.1.2.1.2"/>
+			<xs:enumeration value="2.X.2.1.2.1.3"/>
+			<xs:enumeration value="2.X.2.1.2.1.4"/>
+			<xs:enumeration value="2.X.2.1.2.2"/>
+			<xs:enumeration value="2.X.2.1.2.2.1"/>
+			<xs:enumeration value="2.X.2.1.2.2.2"/>
+			<xs:enumeration value="2.X.2.1.2.2.3"/>
+			<xs:enumeration value="2.X.2.1.2.2.4"/>
+			<xs:enumeration value="2.X.2.1.2.2.5"/>
+			<xs:enumeration value="2.X.2.1.2.3"/>
+			<xs:enumeration value="2.X.2.1.2.3.1"/>
+			<xs:enumeration value="2.X.2.1.2.3.2"/>
+			<xs:enumeration value="2.X.2.1.2.3.3"/>
+			<xs:enumeration value="2.X.2.1.2.3.4"/>
+			<xs:enumeration value="2.X.2.1.2.3.4.1"/>
+			<xs:enumeration value="2.X.2.1.2.3.4.2"/>
+			<xs:enumeration value="2.X.2.1.2.3.5"/>
+			<xs:enumeration value="2.X.2.1.3"/>
+			<xs:enumeration value="2.X.2.1.3.1"/>
+			<xs:enumeration value="2.X.2.1.3.2"/>
+			<xs:enumeration value="2.X.2.1.3.3"/>
+			<xs:enumeration value="2.X.2.1.3.4"/>
+			<xs:enumeration value="2.X.2.1.3.5"/>
+			<xs:enumeration value="2.X.2.1.3.6"/>
+			<xs:enumeration value="2.X.2.1.4"/>
+			<xs:enumeration value="2.X.2.1.4.1"/>
+			<xs:enumeration value="2.X.2.1.4.1.1"/>
+			<xs:enumeration value="2.X.2.1.4.1.2"/>
+			<xs:enumeration value="2.X.2.1.4.1.2.1"/>
+			<xs:enumeration value="2.X.2.1.4.1.2.2"/>
+			<xs:enumeration value="2.X.2.1.4.1.2.3"/>
+			<xs:enumeration value="2.X.2.1.4.1.3"/>
+			<xs:enumeration value="2.X.2.1.4.1.3.1"/>
+			<xs:enumeration value="2.X.2.1.4.1.3.2"/>
+			<xs:enumeration value="2.X.2.1.4.1.4"/>
+			<xs:enumeration value="2.X.2.1.4.1.4.1"/>
+			<xs:enumeration value="2.X.2.1.4.1.4.2"/>
+			<xs:enumeration value="2.X.2.1.4.1.4.3"/>
+			<xs:enumeration value="2.X.2.1.4.1.4.4"/>
+			<xs:enumeration value="2.X.2.1.4.1.4.5"/>
+			<xs:enumeration value="2.X.2.1.4.2"/>
+			<xs:enumeration value="2.X.2.1.4.2.1"/>
+			<xs:enumeration value="2.X.2.1.4.2.1.1"/>
+			<xs:enumeration value="2.X.2.1.4.2.1.2"/>
+			<xs:enumeration value="2.X.2.1.4.2.2"/>
+			<xs:enumeration value="2.X.2.1.4.3"/>
+			<xs:enumeration value="2.X.2.1.4.3.1"/>
+			<xs:enumeration value="2.X.2.1.5"/>
+			<xs:enumeration value="2.X.2.1.5.1"/>
+			<xs:enumeration value="2.X.2.1.5.1.1"/>
+			<xs:enumeration value="2.X.2.1.5.2"/>
+			<xs:enumeration value="2.X.2.1.5.2.1"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.1"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.2"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.3"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.4"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.5"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.6"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.7"/>
+			<xs:enumeration value="2.X.2.1.5.2.1.8"/>
+			<xs:enumeration value="2.X.2.1.5.2.2"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.1"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.2"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.3"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.4"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.5"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.6"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.7"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.8"/>
+			<xs:enumeration value="2.X.2.1.5.2.2.9"/>
+			<xs:enumeration value="2.X.2.1.5.2.3"/>
+			<xs:enumeration value="2.X.2.1.5.2.4"/>
+			<xs:enumeration value="2.X.2.1.5.2.5"/>
+			<xs:enumeration value="2.X.2.1.5.2.6"/>
+			<xs:enumeration value="2.X.2.1.5.2.7"/>
+			<xs:enumeration value="2.X.2.1.5.2.8"/>
+			<xs:enumeration value="2.X.2.1.5.3"/>
+			<xs:enumeration value="2.X.2.1.5.3.1"/>
+			<xs:enumeration value="2.X.2.1.5.3.2"/>
+			<xs:enumeration value="2.X.2.1.5.3.2.1"/>
+			<xs:enumeration value="2.X.2.1.5.3.2.2"/>
+			<xs:enumeration value="2.X.2.1.5.3.2.3"/>
+			<xs:enumeration value="2.X.2.1.5.3.3"/>
+			<xs:enumeration value="2.X.2.1.5.3.4"/>
+			<xs:enumeration value="2.X.2.1.5.3.5"/>
+			<xs:enumeration value="2.X.2.1.5.3.6"/>
+			<xs:enumeration value="2.X.2.1.6"/>
+			<xs:enumeration value="2.X.2.1.6.1"/>
+			<xs:enumeration value="2.X.2.1.6.1.1"/>
+			<xs:enumeration value="2.X.2.1.6.1.1.1"/>
+			<xs:enumeration value="2.X.2.1.6.1.1.2"/>
+			<xs:enumeration value="2.X.2.1.6.1.2"/>
+			<xs:enumeration value="2.X.2.1.6.2"/>
+			<xs:enumeration value="2.X.2.1.6.2.1"/>
+			<xs:enumeration value="2.X.2.1.6.2.2"/>
+			<xs:enumeration value="2.X.2.1.6.2.3"/>
+			<xs:enumeration value="2.X.2.1.6.2.4"/>
+			<xs:enumeration value="2.X.2.1.6.3"/>
+			<xs:enumeration value="2.X.2.1.6.3.1"/>
+			<xs:enumeration value="2.X.2.1.6.3.2"/>
+			<xs:enumeration value="2.X.2.1.6.3.3"/>
+			<xs:enumeration value="2.X.2.2"/>
+			<xs:enumeration value="2.X.2.2.1"/>
+			<xs:enumeration value="2.X.2.2.1.1"/>
+			<xs:enumeration value="2.X.2.2.1.1.1"/>
+			<xs:enumeration value="2.X.2.2.1.1.2"/>
+			<xs:enumeration value="2.X.2.2.1.1.3"/>
+			<xs:enumeration value="2.X.2.2.1.10"/>
+			<xs:enumeration value="2.X.2.2.1.11"/>
+			<xs:enumeration value="2.X.2.2.1.11.1"/>
+			<xs:enumeration value="2.X.2.2.1.11.2"/>
+			<xs:enumeration value="2.X.2.2.1.11.3"/>
+			<xs:enumeration value="2.X.2.2.1.11.4"/>
+			<xs:enumeration value="2.X.2.2.1.12"/>
+			<xs:enumeration value="2.X.2.2.1.13"/>
+			<xs:enumeration value="2.X.2.2.1.13.1"/>
+			<xs:enumeration value="2.X.2.2.1.13.2"/>
+			<xs:enumeration value="2.X.2.2.1.13.3"/>
+			<xs:enumeration value="2.X.2.2.1.13.4"/>
+			<xs:enumeration value="2.X.2.2.1.13.5"/>
+			<xs:enumeration value="2.X.2.2.1.13.6"/>
+			<xs:enumeration value="2.X.2.2.1.13.7"/>
+			<xs:enumeration value="2.X.2.2.1.13.8"/>
+			<xs:enumeration value="2.X.2.2.1.13.9"/>
+			<xs:enumeration value="2.X.2.2.1.2"/>
+			<xs:enumeration value="2.X.2.2.1.3"/>
+			<xs:enumeration value="2.X.2.2.1.3.1"/>
+			<xs:enumeration value="2.X.2.2.1.3.2"/>
+			<xs:enumeration value="2.X.2.2.1.3.3"/>
+			<xs:enumeration value="2.x.2.2.1.3.3.1"/>
+			<xs:enumeration value="2.x.2.2.1.3.3.2"/>
+			<xs:enumeration value="2.x.2.2.1.3.3.3"/>
+			<xs:enumeration value="2.X.2.2.1.3.4"/>
+			<xs:enumeration value="2.X.2.2.1.4"/>
+			<xs:enumeration value="2.X.2.2.1.5"/>
+			<xs:enumeration value="2.X.2.2.1.5.1"/>
+			<xs:enumeration value="2.X.2.2.1.5.2"/>
+			<xs:enumeration value="2.X.2.2.1.5.3"/>
+			<xs:enumeration value="2.X.2.2.1.5.4"/>
+			<xs:enumeration value="2.X.2.2.1.5.5"/>
+			<xs:enumeration value="2.X.2.2.1.5.6"/>
+			<xs:enumeration value="2.X.2.2.1.5.7"/>
+			<xs:enumeration value="2.X.2.2.1.6"/>
+			<xs:enumeration value="2.X.2.2.1.6.1"/>
+			<xs:enumeration value="2.X.2.2.1.6.2"/>
+			<xs:enumeration value="2.X.2.2.1.6.3"/>
+			<xs:enumeration value="2.X.2.2.1.6.4"/>
+			<xs:enumeration value="2.X.2.2.1.6.5"/>
+			<xs:enumeration value="2.X.2.2.1.6.6"/>
+			<xs:enumeration value="2.X.2.2.1.6.7"/>
+			<xs:enumeration value="2.X.2.2.1.6.8"/>
+			<xs:enumeration value="2.X.2.2.1.6.9"/>
+			<xs:enumeration value="2.X.2.2.1.7"/>
+			<xs:enumeration value="2.X.2.2.1.8"/>
+			<xs:enumeration value="2.X.2.2.1.8.1"/>
+			<xs:enumeration value="2.X.2.2.1.8.2"/>
+			<xs:enumeration value="2.X.2.2.1.8.3"/>
+			<xs:enumeration value="2.X.2.2.1.8.4"/>
+			<xs:enumeration value="2.X.2.2.1.9"/>
+			<xs:enumeration value="2.X.2.2.1.9.1"/>
+			<xs:enumeration value="2.X.2.2.2"/>
+			<xs:enumeration value="2.X.2.2.2.1"/>
+			<xs:enumeration value="2.X.2.2.2.1.1"/>
+			<xs:enumeration value="2.X.2.2.2.1.2"/>
+			<xs:enumeration value="2.X.2.2.2.1.3"/>
+			<xs:enumeration value="2.X.2.2.2.2"/>
+			<xs:enumeration value="2.X.2.2.2.2.1"/>
+			<xs:enumeration value="2.X.2.2.2.2.2"/>
+			<xs:enumeration value="2.X.2.2.2.2.3"/>
+			<xs:enumeration value="2.X.2.2.2.2.4"/>
+			<xs:enumeration value="2.X.2.2.2.2.5"/>
+			<xs:enumeration value="2.X.2.2.2.2.6"/>
+			<xs:enumeration value="2.X.2.2.2.2.7"/>
+			<xs:enumeration value="2.X.2.2.2.2.8"/>
+			<xs:enumeration value="2.X.2.2.3"/>
+			<xs:enumeration value="2.X.2.2.3.1"/>
+			<xs:enumeration value="2.X.2.2.3.2"/>
+			<xs:enumeration value="2.X.2.2.3.3"/>
+			<xs:enumeration value="2.X.2.2.3.4"/>
+			<xs:enumeration value="2.X.2.2.3.5"/>
+			<xs:enumeration value="2.X.2.2.3.6"/>
+			<xs:enumeration value="2.X.2.2.3.7"/>
+			<xs:enumeration value="2.X.2.2.4"/>
+			<xs:enumeration value="2.X.2.2.4.1"/>
+			<xs:enumeration value="2.X.2.2.4.10"/>
+			<xs:enumeration value="2.X.2.2.4.11"/>
+			<xs:enumeration value="2.X.2.2.4.11.1"/>
+			<xs:enumeration value="2.X.2.2.4.11.2"/>
+			<xs:enumeration value="2.X.2.2.4.11.3"/>
+			<xs:enumeration value="2.X.2.2.4.11.4"/>
+			<xs:enumeration value="2.X.2.2.4.11.5"/>
+			<xs:enumeration value="2.X.2.2.4.11.6"/>
+			<xs:enumeration value="2.X.2.2.4.11.7"/>
+			<xs:enumeration value="2.X.2.2.4.12"/>
+			<xs:enumeration value="2.X.2.2.4.2"/>
+			<xs:enumeration value="2.X.2.2.4.3"/>
+			<xs:enumeration value="2.X.2.2.4.4"/>
+			<xs:enumeration value="2.X.2.2.4.5"/>
+			<xs:enumeration value="2.X.2.2.4.6"/>
+			<xs:enumeration value="2.X.2.2.4.7"/>
+			<xs:enumeration value="2.X.2.2.4.8"/>
+			<xs:enumeration value="2.X.2.2.4.9"/>
+			<xs:enumeration value="2.X.2.3"/>
+			<xs:enumeration value="2.X.2.3.1"/>
+			<xs:enumeration value="2.X.2.3.1.1"/>
+			<xs:enumeration value="2.X.2.3.1.1.1"/>
+			<xs:enumeration value="2.X.2.3.1.1.2"/>
+			<xs:enumeration value="2.X.2.3.1.2"/>
+			<xs:enumeration value="2.X.2.3.2"/>
+			<xs:enumeration value="2.X.2.3.2.1"/>
+			<xs:enumeration value="2.X.2.3.2.2"/>
+			<xs:enumeration value="2.X.2.3.2.3"/>
+			<xs:enumeration value="2.X.2.3.2.3.1"/>
+			<xs:enumeration value="2.X.2.3.2.4"/>
+			<xs:enumeration value="2.X.2.3.2.4.1"/>
+			<xs:enumeration value="2.X.2.3.2.4.2"/>
+			<xs:enumeration value="2.X.2.3.2.4.3"/>
+			<xs:enumeration value="2.X.2.3.2.5"/>
+			<xs:enumeration value="2.X.2.3.2.6"/>
+			<xs:enumeration value="2.X.2.3.3"/>
+			<xs:enumeration value="2.X.2.3.3.1"/>
+			<xs:enumeration value="2.X.2.3.3.10"/>
+			<xs:enumeration value="2.X.2.3.3.11"/>
+			<xs:enumeration value="2.X.2.3.3.2"/>
+			<xs:enumeration value="2.X.2.3.3.3"/>
+			<xs:enumeration value="2.X.2.3.3.4"/>
+			<xs:enumeration value="2.X.2.3.3.4.1"/>
+			<xs:enumeration value="2.X.2.3.3.4.2"/>
+			<xs:enumeration value="2.X.2.3.3.5"/>
+			<xs:enumeration value="2.X.2.3.3.6"/>
+			<xs:enumeration value="2.X.2.3.3.7"/>
+			<xs:enumeration value="2.X.2.3.3.7.1"/>
+			<xs:enumeration value="2.X.2.3.3.7.2"/>
+			<xs:enumeration value="2.X.2.3.3.8"/>
+			<xs:enumeration value="2.X.2.3.3.9"/>
+			<xs:enumeration value="2.X.2.4"/>
+			<xs:enumeration value="2.X.2.4.1"/>
+			<xs:enumeration value="2.X.2.4.1.1"/>
+			<xs:enumeration value="2.X.2.4.1.10"/>
+			<xs:enumeration value="2.X.2.4.1.11"/>
+			<xs:enumeration value="2.X.2.4.1.12"/>
+			<xs:enumeration value="2.X.2.4.1.13"/>
+			<xs:enumeration value="2.X.2.4.1.14"/>
+			<xs:enumeration value="2.X.2.4.1.14.1"/>
+			<xs:enumeration value="2.X.2.4.1.14.10"/>
+			<xs:enumeration value="2.X.2.4.1.14.11"/>
+			<xs:enumeration value="2.X.2.4.1.14.2"/>
+			<xs:enumeration value="2.X.2.4.1.14.3"/>
+			<xs:enumeration value="2.X.2.4.1.14.4"/>
+			<xs:enumeration value="2.X.2.4.1.14.5"/>
+			<xs:enumeration value="2.X.2.4.1.14.6"/>
+			<xs:enumeration value="2.X.2.4.1.14.7"/>
+			<xs:enumeration value="2.X.2.4.1.14.8"/>
+			<xs:enumeration value="2.X.2.4.1.14.9"/>
+			<xs:enumeration value="2.X.2.4.1.15"/>
+			<xs:enumeration value="2.X.2.4.1.15.1"/>
+			<xs:enumeration value="2.X.2.4.1.15.2"/>
+			<xs:enumeration value="2.X.2.4.1.2"/>
+			<xs:enumeration value="2.X.2.4.1.3"/>
+			<xs:enumeration value="2.X.2.4.1.4"/>
+			<xs:enumeration value="2.X.2.4.1.5"/>
+			<xs:enumeration value="2.X.2.4.1.6"/>
+			<xs:enumeration value="2.X.2.4.1.7"/>
+			<xs:enumeration value="2.X.2.4.1.8"/>
+			<xs:enumeration value="2.X.2.4.1.9"/>
+			<xs:enumeration value="2.X.2.4.2"/>
+			<xs:enumeration value="2.X.2.4.2.1"/>
+			<xs:enumeration value="2.X.2.4.2.1.1"/>
+			<xs:enumeration value="2.X.2.4.2.1.2"/>
+			<xs:enumeration value="2.X.2.4.2.2"/>
+			<xs:enumeration value="2.X.2.4.2.2.1"/>
+			<xs:enumeration value="2.X.2.4.2.2.2"/>
+			<xs:enumeration value="2.X.2.4.2.2.3"/>
+			<xs:enumeration value="2.X.2.4.2.2.4"/>
+			<xs:enumeration value="2.X.2.4.2.2.5"/>
+			<xs:enumeration value="2.X.2.4.3"/>
+			<xs:enumeration value="2.X.2.4.3.1"/>
+			<xs:enumeration value="2.X.2.4.3.2"/>
+			<xs:enumeration value="2.X.2.4.3.3"/>
+			<xs:enumeration value="2.X.2.4.3.4"/>
+			<xs:enumeration value="2.X.2.4.3.5"/>
+			<xs:enumeration value="2.X.2.4.3.5.1"/>
+			<xs:enumeration value="2.X.2.4.3.5.2"/>
+			<xs:enumeration value="2.X.2.4.3.5.3"/>
+			<xs:enumeration value="2.X.2.5"/>
+			<xs:enumeration value="2.X.2.5.1"/>
+			<xs:enumeration value="2.X.2.5.1.10"/>
+			<xs:enumeration value="2.X.2.5.1.10.1"/>
+			<xs:enumeration value="2.X.2.5.1.10.2"/>
+			<xs:enumeration value="2.X.2.5.1.10.3"/>
+			<xs:enumeration value="2.X.2.5.1.11"/>
+			<xs:enumeration value="2.X.2.5.1.11.1"/>
+			<xs:enumeration value="2.X.2.5.1.11.10"/>
+			<xs:enumeration value="2.X.2.5.1.11.11"/>
+			<xs:enumeration value="2.X.2.5.1.11.12"/>
+			<xs:enumeration value="2.X.2.5.1.11.2"/>
+			<xs:enumeration value="2.X.2.5.1.11.3"/>
+			<xs:enumeration value="2.X.2.5.1.11.4"/>
+			<xs:enumeration value="2.X.2.5.1.11.5"/>
+			<xs:enumeration value="2.X.2.5.1.11.6"/>
+			<xs:enumeration value="2.X.2.5.1.11.7"/>
+			<xs:enumeration value="2.X.2.5.1.11.8"/>
+			<xs:enumeration value="2.X.2.5.1.11.9"/>
+			<xs:enumeration value="2.X.2.5.1.2"/>
+			<xs:enumeration value="2.X.2.5.1.2.1"/>
+			<xs:enumeration value="2.X.2.5.1.2.2"/>
+			<xs:enumeration value="2.X.2.5.1.3"/>
+			<xs:enumeration value="2.X.2.5.1.3.1"/>
+			<xs:enumeration value="2.X.2.5.1.3.2"/>
+			<xs:enumeration value="2.X.2.5.1.3.3"/>
+			<xs:enumeration value="2.X.2.5.1.3.4"/>
+			<xs:enumeration value="2.X.2.5.1.4"/>
+			<xs:enumeration value="2.X.2.5.1.4.1"/>
+			<xs:enumeration value="2.X.2.5.1.4.2"/>
+			<xs:enumeration value="2.X.2.5.1.4.3"/>
+			<xs:enumeration value="2.X.2.5.1.4.4"/>
+			<xs:enumeration value="2.X.2.5.1.4.5"/>
+			<xs:enumeration value="2.X.2.5.1.4.6"/>
+			<xs:enumeration value="2.X.2.5.1.4.7"/>
+			<xs:enumeration value="2.X.2.5.1.5"/>
+			<xs:enumeration value="2.X.2.5.1.5.1"/>
+			<xs:enumeration value="2.X.2.5.1.5.10"/>
+			<xs:enumeration value="2.X.2.5.1.5.11"/>
+			<xs:enumeration value="2.X.2.5.1.5.2"/>
+			<xs:enumeration value="2.X.2.5.1.5.3"/>
+			<xs:enumeration value="2.X.2.5.1.5.4"/>
+			<xs:enumeration value="2.X.2.5.1.5.5"/>
+			<xs:enumeration value="2.X.2.5.1.5.6"/>
+			<xs:enumeration value="2.X.2.5.1.5.7"/>
+			<xs:enumeration value="2.X.2.5.1.5.8"/>
+			<xs:enumeration value="2.X.2.5.1.5.9"/>
+			<xs:enumeration value="2.X.2.5.1.6"/>
+			<xs:enumeration value="2.X.2.5.1.7"/>
+			<xs:enumeration value="2.X.2.5.1.7.1"/>
+			<xs:enumeration value="2.X.2.5.1.7.2"/>
+			<xs:enumeration value="2.X.2.5.1.7.3"/>
+			<xs:enumeration value="2.X.2.5.1.7.4"/>
+			<xs:enumeration value="2.X.2.5.1.8"/>
+			<xs:enumeration value="2.X.2.5.1.8.1"/>
+			<xs:enumeration value="2.X.2.5.1.8.2"/>
+			<xs:enumeration value="2.X.2.5.1.8.3"/>
+			<xs:enumeration value="2.X.2.5.1.8.4"/>
+			<xs:enumeration value="2.X.2.5.1.8.5"/>
+			<xs:enumeration value="2.X.2.5.1.9"/>
+			<xs:enumeration value="2.X.2.5.1.9.1"/>
+			<xs:enumeration value="2.X.2.5.2"/>
+			<xs:enumeration value="2.X.2.5.2.1"/>
+			<xs:enumeration value="2.X.2.5.2.10"/>
+			<xs:enumeration value="2.X.2.5.2.2"/>
+			<xs:enumeration value="2.X.2.5.2.3"/>
+			<xs:enumeration value="2.X.2.5.2.4"/>
+			<xs:enumeration value="2.X.2.5.2.5"/>
+			<xs:enumeration value="2.X.2.5.2.6"/>
+			<xs:enumeration value="2.X.2.5.2.7"/>
+			<xs:enumeration value="2.X.2.5.2.8"/>
+			<xs:enumeration value="2.X.2.5.2.9"/>
+			<xs:enumeration value="2.X.2.5.3"/>
+			<xs:enumeration value="2.X.2.5.3.1"/>
+			<xs:enumeration value="2.X.2.5.3.2"/>
+			<xs:enumeration value="2.X.2.5.4"/>
+			<xs:enumeration value="2.X.2.5.4.1"/>
+			<xs:enumeration value="2.X.3"/>
+			<xs:enumeration value="2.X.3.1"/>
+			<xs:enumeration value="2.X.3.1.1"/>
+			<xs:enumeration value="2.X.3.1.10"/>
+			<xs:enumeration value="2.X.3.1.11"/>
+			<xs:enumeration value="2.X.3.1.12"/>
+			<xs:enumeration value="2.X.3.1.13"/>
+			<xs:enumeration value="2.X.3.1.14"/>
+			<xs:enumeration value="2.X.3.1.15"/>
+			<xs:enumeration value="2.X.3.1.16"/>
+			<xs:enumeration value="2.X.3.1.17"/>
+			<xs:enumeration value="2.X.3.1.18"/>
+			<xs:enumeration value="2.X.3.1.19"/>
+			<xs:enumeration value="2.X.3.1.2"/>
+			<xs:enumeration value="2.X.3.1.3"/>
+			<xs:enumeration value="2.X.3.1.4"/>
+			<xs:enumeration value="2.X.3.1.5"/>
+			<xs:enumeration value="2.X.3.1.6"/>
+			<xs:enumeration value="2.X.3.1.7"/>
+			<xs:enumeration value="2.X.3.1.8"/>
+			<xs:enumeration value="2.X.3.1.9"/>
+			<xs:enumeration value="2.X.3.2"/>
+			<xs:enumeration value="2.X.3.2.1"/>
+			<xs:enumeration value="2.X.3.2.2"/>
+			<xs:enumeration value="2.X.3.2.3"/>
+			<xs:enumeration value="2.X.3.3"/>
+			<xs:enumeration value="2.X.3.3.1"/>
+			<xs:enumeration value="2.X.3.3.1.1"/>
+			<xs:enumeration value="2.X.3.3.10"/>
+			<xs:enumeration value="2.X.3.3.11"/>
+			<xs:enumeration value="2.X.3.3.12"/>
+			<xs:enumeration value="2.X.3.3.13"/>
+			<xs:enumeration value="2.X.3.3.13.1"/>
+			<xs:enumeration value="2.X.3.3.13.2"/>
+			<xs:enumeration value="2.X.3.3.13.3"/>
+			<xs:enumeration value="2.X.3.3.14"/>
+			<xs:enumeration value="2.X.3.3.15"/>
+			<xs:enumeration value="2.X.3.3.16"/>
+			<xs:enumeration value="2.X.3.3.2"/>
+			<xs:enumeration value="2.X.3.3.3"/>
+			<xs:enumeration value="2.X.3.3.3.1"/>
+			<xs:enumeration value="2.X.3.3.4"/>
+			<xs:enumeration value="2.X.3.3.5"/>
+			<xs:enumeration value="2.X.3.3.6"/>
+			<xs:enumeration value="2.X.3.3.6.1"/>
+			<xs:enumeration value="2.X.3.3.6.2"/>
+			<xs:enumeration value="2.X.3.3.6.3"/>
+			<xs:enumeration value="2.X.3.3.6.4"/>
+			<xs:enumeration value="2.X.3.3.7"/>
+			<xs:enumeration value="2.X.3.3.8"/>
+			<xs:enumeration value="2.X.3.3.9"/>
+			<xs:enumeration value="2.X.3.4"/>
+			<xs:enumeration value="2.X.3.4.1"/>
+			<xs:enumeration value="2.X.3.4.1.1"/>
+			<xs:enumeration value="2.X.3.4.1.2"/>
+			<xs:enumeration value="2.X.3.4.1.3"/>
+			<xs:enumeration value="2.X.3.4.2"/>
+			<xs:enumeration value="2.X.3.4.3"/>
+			<xs:enumeration value="2.X.3.4.4"/>
+			<xs:enumeration value="2.X.3.4.5"/>
+			<xs:enumeration value="2.X.3.4.6"/>
+			<xs:enumeration value="2.X.3.4.7"/>
+			<xs:enumeration value="3.X"/>
+			<xs:enumeration value="3.X.1"/>
+			<xs:enumeration value="3.X.1.1"/>
+			<xs:enumeration value="3.X.1.2"/>
+			<xs:enumeration value="3.X.1.3"/>
+			<xs:enumeration value="3.X.1.3.1"/>
+			<xs:enumeration value="3.X.1.3.1.1"/>
+			<xs:enumeration value="3.X.1.3.2"/>
+			<xs:enumeration value="3.X.1.3.2.1"/>
+			<xs:enumeration value="3.X.1.3.3"/>
+			<xs:enumeration value="3.X.1.3.4"/>
+			<xs:enumeration value="3.X.1.4"/>
+			<xs:enumeration value="3.X.1.4.1"/>
+			<xs:enumeration value="3.X.1.4.2"/>
+			<xs:enumeration value="3.X.1.4.3"/>
+			<xs:enumeration value="3.X.2"/>
+			<xs:enumeration value="3.X.2.1"/>
+			<xs:enumeration value="3.X.2.2"/>
+			<xs:enumeration value="3.X.2.3"/>
+			<xs:enumeration value="3.X.2.4"/>
+			<xs:enumeration value="3.X.3"/>
+			<xs:enumeration value="3.X.3.1"/>
+			<xs:enumeration value="3.X.3.1.1"/>
+			<xs:enumeration value="3.X.3.1.2"/>
+			<xs:enumeration value="3.X.3.1.3"/>
+			<xs:enumeration value="3.X.3.2"/>
+			<xs:enumeration value="3.X.3.2.1"/>
+			<xs:enumeration value="3.X.3.2.2"/>
+			<xs:enumeration value="3.X.3.2.3"/>
+			<xs:enumeration value="3.X.3.3"/>
+			<xs:enumeration value="3.X.3.3.1"/>
+			<xs:enumeration value="3.X.3.3.2"/>
+			<xs:enumeration value="3.X.3.3.3"/>
+			<xs:enumeration value="3.X.4"/>
+			<xs:enumeration value="3.X.4.1"/>
+			<xs:enumeration value="3.X.5"/>
+			<xs:enumeration value="3.X.5.1"/>
+			<xs:enumeration value="3.X.5.2"/>
+			<xs:enumeration value="3.X.6"/>
+			<xs:enumeration value="3.X.6.1"/>
+			<xs:enumeration value="3.X.6.2"/>
+			<xs:enumeration value="3.X.6.3"/>
+			<xs:enumeration value="3.X.6.4"/>
+			<xs:enumeration value="3.X.6.5"/>
+			<xs:enumeration value="3.X.6.6"/>
+			<xs:enumeration value="3.X.7"/>
+			<xs:enumeration value="3.X.7.1"/>
+			<xs:enumeration value="3.X.7.1.1"/>
+			<xs:enumeration value="3.X.7.1.2"/>
+			<xs:enumeration value="3.X.7.1.3"/>
+			<xs:enumeration value="3.X.7.1.3.1"/>
+			<xs:enumeration value="3.X.7.2"/>
+			<xs:enumeration value="3.X.7.2.1"/>
+			<xs:enumeration value="3.X.7.2.2"/>
+			<xs:enumeration value="3.X.7.3"/>
+			<xs:enumeration value="3.X.7.4"/>
+			<xs:enumeration value="3.X.7.5"/>
+			<xs:enumeration value="3.X.8"/>
+			<xs:enumeration value="3.X.8.1"/>
+			<xs:enumeration value="3.X.8.1.1"/>
+			<xs:enumeration value="3.X.8.1.2"/>
+			<xs:enumeration value="3.X.8.1.3"/>
+			<xs:enumeration value="3.X.8.2"/>
+			<xs:enumeration value="3.X.8.2.1"/>
+			<xs:enumeration value="3.X.8.2.2"/>
+			<xs:enumeration value="3.X.9"/>
+			<xs:enumeration value="3.X.9.1"/>
+			<xs:enumeration value="3.X.9.2"/>
+			<xs:enumeration value="3.X.9.2.1"/>
+			<xs:enumeration value="3.X.9.3"/>
+			<xs:enumeration value="3.X.9.4"/>
+			<xs:enumeration value="3.X.9.5"/>
+			<xs:enumeration value="3.X.9.6"/>
+			<xs:enumeration value="3.X.9.7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="E_MissionGraphicalSymbol">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Id_Point">
+				<xs:annotation>
+					<xs:documentation source="Point"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdControler_Point">
+				<xs:annotation>
+					<xs:documentation source="Contrôler un point"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdCouvrir_Point">
+				<xs:annotation>
+					<xs:documentation source="Couvrir un point"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdSurveiller_Point">
+				<xs:annotation>
+					<xs:documentation source="Surveiller un point"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdInterdire_Point">
+				<xs:annotation>
+					<xs:documentation source="Interdire un point"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Id_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Poly-ligne"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdFleche_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Flèche"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdAppuyer_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Appuyer"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdAttaquer_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Attaquer"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdContreAttaquer_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Contre-attaquer"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdPPContact_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Prendre préciser le contact, réduire"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdBarrer_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Donner un coup d’arrêt, barrer"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdDefUsure_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Mener une défense d’usure"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdEclairer_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Eclairer"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdRaid_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Raid"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdFixer_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Fixer"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdFreiner_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Freiner"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdJalonner_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Jalonner"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdReconnaitre_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Reconnaitre"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdRelever_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Relever"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdRenseigner_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Renseigner"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdSoutenir_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Soutenir"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdDefendre_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Défendre"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Id_Polygone">
+				<xs:annotation>
+					<xs:documentation source="Zone"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdControler_Polygone">
+				<xs:annotation>
+					<xs:documentation source="Contrôler une zone"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdSurveiller_Polygone">
+				<xs:annotation>
+					<xs:documentation source="Surveiller une zone"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdDetruire_Polygone">
+				<xs:annotation>
+					<xs:documentation source="Detruire une zone"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdDefendre_Polygone">
+				<xs:annotation>
+					<xs:documentation source="Défendre une zone"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Id_Cercle">
+				<xs:annotation>
+					<xs:documentation source="Cercle"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Id_Ellipse">
+				<xs:annotation>
+					<xs:documentation source="Ellipse"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="E_MissionLocGenAlgo">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IdExec_Point">
+				<xs:annotation>
+					<xs:documentation source="Point unité exécutante - Aucun paramètres"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdExec_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Point unité exécutante  vers point qui est le barycentre de la ou des cibles (unité, connaissance, AT, objet graphique ...)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IdLimiteGD_Poly-ligne">
+				<xs:annotation>
+					<xs:documentation source="Point unité exécutante vers fin du fuseau (2 limites passées en paramètre)"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:documentation>Enumérés SIC</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="T_SIC_CategorieMoyenEvacuation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EVACLEG">
+				<xs:annotation>
+					<xs:documentation source="Engin évacuation léger (moins de 20t)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EVACMOY">
+				<xs:annotation>
+					<xs:documentation source="Engin évacuation moyen (moins de 40t)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EVACLOU">
+				<xs:annotation>
+					<xs:documentation source="Engin évacuation lourd (plus de 40t)"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SIC_NCiCategorieEquipement">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ASA">
+				<xs:annotation>
+					<xs:documentation source="Artillerie sol-air"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BLIND">
+				<xs:annotation>
+					<xs:documentation source="Blindé"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MECA">
+				<xs:annotation>
+					<xs:documentation source="Infanterie mécanisée"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ANT">
+				<xs:annotation>
+					<xs:documentation source="Antenne"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VTT">
+				<xs:annotation>
+					<xs:documentation source="Véhicule blindé transport de troupes"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MISAS">
+				<xs:annotation>
+					<xs:documentation source="Missile air-sol"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CANAC">
+				<xs:annotation>
+					<xs:documentation source="Canon antichar"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MISGAC">
+				<xs:annotation>
+					<xs:documentation source="Missile guidé antichar"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HARM">
+				<xs:annotation>
+					<xs:documentation source="Hélicoptère antichar/d'assaut/arme"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EQCHIM">
+				<xs:annotation>
+					<xs:documentation source="Equipement chimique"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VATM">
+				<xs:annotation>
+					<xs:documentation source="Véhicule avec ATM"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VCD">
+				<xs:annotation>
+					<xs:documentation source="Véhicule de commandement"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EQFCHT">
+				<xs:annotation>
+					<xs:documentation source="Equipement de franchissement"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CAN">
+				<xs:annotation>
+					<xs:documentation source="Canon"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HLT">
+				<xs:annotation>
+					<xs:documentation source="Hélicoptère lourd de transport"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HLO">
+				<xs:annotation>
+					<xs:documentation source="Hélicoptère léger d'observation"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VUT">
+				<xs:annotation>
+					<xs:documentation source="Véhicules utilitaires"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHABAT">
+				<xs:annotation>
+					<xs:documentation source="Char de bataille"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VCIMEC">
+				<xs:annotation>
+					<xs:documentation source="Véhicule de combat d'infanterie mécanisée"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HMT">
+				<xs:annotation>
+					<xs:documentation source="Hélicoptère moyen de transport"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MORT">
+				<xs:annotation>
+					<xs:documentation source="Mortier"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RSM">
+				<xs:annotation>
+					<xs:documentation source="Roquettes à sous-munitions"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ALT">
+				<xs:annotation>
+					<xs:documentation source="Aérodyne léger télépiloté"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MISSA">
+				<xs:annotation>
+					<xs:documentation source="Missile sol-air"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MISSS">
+				<xs:annotation>
+					<xs:documentation source="Missile sol-sol"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ACQOBJ">
+				<xs:annotation>
+					<xs:documentation source="Acquisition d'objectif"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHALEG">
+				<xs:annotation>
+					<xs:documentation source="Char léger"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HT">
+				<xs:annotation>
+					<xs:documentation source="Hélicoptère de transport"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VNBLIN">
+				<xs:annotation>
+					<xs:documentation source="Véhicules non blindés"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HTTU">
+				<xs:annotation>
+					<xs:documentation source="Hélicoptère de transport tactique/utilitaire"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AVVF">
+				<xs:annotation>
+					<xs:documentation source="Aviation à voilure fixe"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARMPOR">
+				<xs:annotation>
+					<xs:documentation source="Arme Portative"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SIC_SpecialiteReparation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AEB">
+				<xs:annotation>
+					<xs:documentation source="Auto engin blindé"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AGC">
+				<xs:annotation>
+					<xs:documentation source="Armement gros calibre"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ALAT">
+				<xs:annotation>
+					<xs:documentation source="Aviation légère de l'armée de terre"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ARME">
+				<xs:annotation>
+					<xs:documentation source="Armement"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ATILA">
+				<xs:annotation>
+					<xs:documentation source="ATILA"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BITUBE">
+				<xs:annotation>
+					<xs:documentation source="Bitube"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DEM">
+				<xs:annotation>
+					<xs:documentation source="Détection électromagnétique"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ELECTRO">
+				<xs:annotation>
+					<xs:documentation source="Electronique"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ENGIN">
+				<xs:annotation>
+					<xs:documentation source="Engin du génie"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LRM">
+				<xs:annotation>
+					<xs:documentation source="Lance-roquettes multiple"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MEPHIS">
+				<xs:annotation>
+					<xs:documentation source="Méphisto-cotac"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RITA">
+				<xs:annotation>
+					<xs:documentation source="RITA"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ROLAND">
+				<xs:annotation>
+					<xs:documentation source="ROLAND"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SATCP">
+				<xs:annotation>
+					<xs:documentation source="Sol-air très courte portée"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TRANS">
+				<xs:annotation>
+					<xs:documentation source="Transmission"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SIC_Package">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="support">
+				<xs:annotation>
+					<xs:documentation source="package appui"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="attack">
+				<xs:annotation>
+					<xs:documentation source="package attaque"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="control">
+				<xs:annotation>
+					<xs:documentation source="package controle"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="defence">
+				<xs:annotation>
+					<xs:documentation source="package defense"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="move">
+				<xs:annotation>
+					<xs:documentation source="package mouvement"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="intelligence">
+				<xs:annotation>
+					<xs:documentation source="package rens"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="none">
+				<xs:annotation>
+					<xs:documentation source="package sans"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SIC_TypePC">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PC SIC">
+				<xs:annotation>
+					<xs:documentation source="PC simulé habituellement joué par un SIC (exemple: PC de régiment ou de division)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PC SCIPIO">
+				<xs:annotation>
+					<xs:documentation source="PC simulé habituellement faisant de la messagerie dans SCIPIO (exemple: Compagnies habituelles)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AutreCorresp SCIPIO">
+				<xs:annotation>
+					<xs:documentation source="Unité non PC simulé habituellement faisant de la messagerie dans SCIPIO (exemple: EO)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AutreCorresp SIC">
+				<xs:annotation>
+					<xs:documentation source="Unité non PC simulé habituellement faisant de la messagerie dans un SIC (exmple: DL)"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PasCorresp">
+				<xs:annotation>
+					<xs:documentation source="PC non dialoguant en messagerie (exemple: PC eni)"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SIC_TypeSIOC">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ATLAS"/>
+			<xs:enumeration value="GRANITE"/>
+			<xs:enumeration value="MAESTRO"/>
+			<xs:enumeration value="MARTHA"/>
+			<xs:enumeration value="SICF"/>
+			<xs:enumeration value="SIR"/>
+			<xs:enumeration value="SIT"/>
+			<xs:enumeration value="SITEL"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_SIC_ActionSurCR">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation source="CR déclenchant un composition automatique d'un ME_SituationObstacleOuvrage_ATLAS, comme paramètre, nom de l'attribut donnant l'objet détecté"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation source="CR déclenchant un composition automatique d'un ME_SituationDesObstacles, comme paramètre, nom de l'attribut donnant l'objet détecté"/>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CT_Info_ATLAS">
+		<xs:sequence>
+			<xs:element name="Lanceur_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+					<xs:attribute name="EtatMunition" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Assemble"/>
+								<xs:enumeration value="EnVrac"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Munition_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LotDePoudre_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ForceDeCharge_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Trajectoire_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ModeleDeFusee_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PreReglageFusee_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TypeDeChargement_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="Id_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="Nom_ATLAS" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Liste des combinaisons lanceur, munition, lot de poudre, trajectoire et force de charge enviseagables</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="IdLanceur_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="IdMunition_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="IdLotDePoudre_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="IdTrajectoire_ATLAS" type="xs:int" use="required"/>
+					<xs:attribute name="IdForceDeCharge_ATLAS" type="xs:int" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="T_MunitionEffectType">
+		<xs:annotation>
+			<xs:documentation>type d'efffet d'un munition de la ressources</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aced"/>
+			<xs:enumeration value="fumigene"/>
+			<xs:enumeration value="eclairant"/>
+			<xs:enumeration value="effect"/>
+			<xs:enumeration value="explosif"/>
+			<xs:enumeration value="grenade"/>
+			<xs:enumeration value="mine"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

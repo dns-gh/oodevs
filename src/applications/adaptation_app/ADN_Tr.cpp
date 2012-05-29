@@ -257,7 +257,6 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "Path",                  QT_TRANSLATE_NOOP("ADN_Tr", "Path" ),                  eMissionParameterTypePath ),
     T_ConverterMissionParameterType( "Point",                 QT_TRANSLATE_NOOP("ADN_Tr", "Point" ),                 eMissionParameterTypePoint ),
     T_ConverterMissionParameterType( "Polygon",               QT_TRANSLATE_NOOP("ADN_Tr", "Polygon" ),               eMissionParameterTypePolygon ),
-    T_ConverterMissionParameterType( "Location",              QT_TRANSLATE_NOOP("ADN_Tr", "Location" ),              eMissionParameterTypeLocation ),
     T_ConverterMissionParameterType( "EquipmentType",         QT_TRANSLATE_NOOP("ADN_Tr", "EquipmentType" ),         eMissionParameterTypeEquipmentType ),
     T_ConverterMissionParameterType( "ResourceType",          QT_TRANSLATE_NOOP("ADN_Tr", "ResourceType" ),          eMissionParameterTypeDotationType ),
     T_ConverterMissionParameterType( "MaintenancePriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MaintenancePriorities" ), eMissionParameterTypeMaintenancePriorities ),

@@ -93,7 +93,7 @@
 			<xs:documentation>Rang possible pour le personnel.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="MilitaireDuRang">
+			<xs:enumeration value="Crew">
 				<xs:annotation>
 					<xs:documentation>militaire du rang.</xs:documentation>
 				</xs:annotation>
@@ -343,7 +343,6 @@
 			<xs:enumeration value="DateTime"/>
 			<xs:enumeration value="Point"/>
 			<xs:enumeration value="Polygon"/>
-			<xs:enumeration value="Location"/>
 			<xs:enumeration value="Path"/>
 			<xs:enumeration value="Limit"/>
 			<xs:enumeration value="PhaseLine"/>
@@ -437,6 +436,20 @@
 			<xs:enumeration value="Mitraille"/>
 			<xs:enumeration value="Obus"/>
 			<xs:enumeration value="ALR"/>
+		</xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="T_IndirectFireType">
+		<xs:annotation>
+			<xs:documentation> </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aced"/>
+			<xs:enumeration value="eclairant"/>
+			<xs:enumeration value="explosif"/>
+			<xs:enumeration value="fumigene"/>
+			<xs:enumeration value="grenade"/>
+			<xs:enumeration value="effect"/>
+			<xs:enumeration value="mine"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_StockCategory">

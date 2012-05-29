@@ -5107,9 +5107,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_Path.inl">
       <Filter>Source Files\Decision\Path\Agent</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_KnowledgeObject.inl">
-      <Filter>Source Files\Decision\Path\Agent</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass.inl">
       <Filter>Source Files\Decision\Path\Agent\Type</Filter>
     </None>
