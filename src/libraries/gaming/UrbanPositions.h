@@ -52,6 +52,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual float ComputeArea() const;
     virtual void SetSelection( bool selected );
+    virtual bool IsSelected() const;
     virtual void SetInfrastructurePresent();
     //@}
 

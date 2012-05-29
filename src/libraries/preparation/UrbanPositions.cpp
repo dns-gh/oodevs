@@ -186,6 +186,15 @@ void UrbanPositions::SetSelection( bool selected )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanPositions::IsSelected
+// Created: JSR 2012-05-29
+// -----------------------------------------------------------------------------
+bool UrbanPositions::IsSelected() const
+{
+    return selected_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanPositions::SetInfrastructurePresent
 // Created: JSR 2011-09-19
 // -----------------------------------------------------------------------------

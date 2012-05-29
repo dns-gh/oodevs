@@ -96,7 +96,6 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void UrbanLayer::Reset2d()
 {
-    selectedObjects_.clear();
     EntityLayer< kernel::UrbanObject_ABC >::Reset2d();
 }
 
@@ -108,6 +107,7 @@ void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
 {
     DeselectAll();
     DoSelect( object );
+    actualSelection_.push_back( object );
     EntityLayer< kernel::UrbanObject_ABC >::NotifySelected( object );
 }
 
@@ -120,6 +120,7 @@ void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanO
     DeselectAll();
     for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
         DoSelect( *it );
+    actualSelection_ = elements;
     EntityLayer< kernel::UrbanObject_ABC >::NotifySelectionChanged( elements );
 }
 
@@ -130,9 +131,9 @@ void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanO
 void UrbanLayer::DeselectAll()
 {
     static const bool bFalse = false;
-    for( std::set< const kernel::Entity_ABC* >::const_iterator it = selectedObjects_.begin(); it != selectedObjects_.end(); ++it )
+    for( CIT_Entities it = entities_.begin(); it != entities_.end(); ++it )
         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
-    selectedObjects_.clear();
+    actualSelection_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +150,6 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
     // TODO hack for gaming before UrbanHierarchies are implemented
     if( !hierarchies )
     {
-        selectedObjects_.insert( urbanObject );
         urbanObject->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
         return;
     }
@@ -157,15 +157,10 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
 
     tools::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
     if( it.HasMoreElements() )
-    {
         while( it.HasMoreElements() )
             DoSelect( &it.NextElement() );
-    }
     else
-    {
-        selectedObjects_.insert( urbanObject );
         urbanObject->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,9 +169,6 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 {
-    std::set< const kernel::Entity_ABC* >::const_iterator it = selectedObjects_.find( &object );
-    if( it != selectedObjects_.end() )
-        selectedObjects_.erase( it );
     EntityLayer< kernel::UrbanObject_ABC >::NotifyDeleted( object );
 }
 
@@ -246,4 +238,83 @@ void UrbanLayer::ActivateEntity( const kernel::Entity_ABC& entity )
 {
     if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
         view_.CenterOn( positions->Barycenter() );
+}
+
+namespace
+{
+    void Append( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
+    {
+        kernel::ActionController::CIT_Selectables it = std::find( vector.begin(), vector.end(), element );
+        if( it == vector.end() )
+            vector.push_back( element );
+    }
+
+    void Remove( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
+    {
+        kernel::ActionController::IT_Selectables it = std::find( vector.begin(), vector.end(), element );
+        if( it != vector.end() )
+            vector.erase( it );
+    }
+
+    void AppendDistrict( kernel::ActionController::T_Selectables& vector, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
+    {
+        Remove( vector, district );
+        tools::Iterator< const kernel::Entity_ABC& > districtIt = district->Get< kernel::Hierarchies >().CreateSubordinateIterator();
+        while( districtIt.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& block = districtIt.NextElement();
+            if( &block == entity )
+                Remove( vector, entity );
+            else
+                Append( vector, &block );
+        }
+    }
+
+    void AppendCity( kernel::ActionController::T_Selectables& vector, const kernel::Entity_ABC* city, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
+    {
+        Remove( vector, city );
+        const kernel::Hierarchies& cityHierarchies = city->Get< kernel::Hierarchies >();
+        tools::Iterator< const kernel::Entity_ABC& > cityIt = cityHierarchies.CreateSubordinateIterator();
+        while( cityIt.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& subElement = cityIt.NextElement();
+            if( &subElement == district )
+                AppendDistrict( vector, district, entity );
+            else
+                Append( vector, &subElement );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::Select
+// Created: JSR 2012-05-29
+// -----------------------------------------------------------------------------
+void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool shift )
+{
+    const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >();
+    const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::Hierarchies >();
+    if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( this ) || ( positions && !positions->IsSelected() ) )
+        EntityLayerBase::Select( entity, control, shift );
+    else
+    {
+        const kernel::Entity_ABC* district = hierarchies->GetSuperior();
+        const kernel::Entity_ABC* city = district ? district->Get< kernel::Hierarchies >().GetSuperior() : 0;
+        bool citySelected = ( city && std::find( actualSelection_.begin(), actualSelection_.end(), city ) != actualSelection_.end() );
+        bool districtSelected = citySelected ? false : ( district && std::find( actualSelection_.begin(), actualSelection_.end(), district ) != actualSelection_.end() );
+        if( citySelected || districtSelected )
+        {
+            kernel::ActionController::T_SelectedMap newSelectionMap;
+            kernel::ActionController::T_Selectables& newSelection = newSelectionMap[ this ];
+            for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = actualSelection_.begin(); it != actualSelection_.end(); ++it )
+                newSelection.push_back( *it );
+            if( citySelected )
+                AppendCity( newSelection, city, district, &entity );
+            else
+                AppendDistrict( newSelection, district, &entity );
+            controllers_.actions_.SetMultipleSelection( newSelectionMap );
+        }
+        else
+            EntityLayerBase::Select( entity, control, shift );
+    }
 }

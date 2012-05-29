@@ -105,19 +105,15 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
 {
     if( !append || IsSingleSelection( layer ) ) // single selection
     {
-        CIT_SelectedMap it = selectedMap_.find( layer );
-        if( it == selectedMap_.end() || std::find( it->second.begin(), it->second.end(), &selectable ) == it->second.end() )
-        {
-            // Déselection des éléments multiples
-            ClearMultipleSelection();
-            // Sélection d'un élément
-            selectedMap_[ layer ].push_back( &selectable );
-            selectable.Select( *this );
+        // Déselection des éléments multiples
+        ClearMultipleSelection();
+        // Sélection d'un élément
+        selectedMap_[ layer ].push_back( &selectable );
+        selectable.Select( *this );
 
-            ActionController::T_Selectables list;
-            list.push_back( &selectable );
-            selectable.MultipleSelect( *this, list );
-        }
+        ActionController::T_Selectables list;
+        list.push_back( &selectable );
+        selectable.MultipleSelect( *this, list );
     }
     else
     {
@@ -127,7 +123,7 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
         IT_SelectedMap it = selectedMap_.find( layer );
         if( it != selectedMap_.end() )
         {
-            CIT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
+            IT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
             if( itSelectable != it->second.end() )
             {
                 if( it->second.size() == 1 )
@@ -144,6 +140,8 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
         else
             selectedMap_[ layer ].push_back( &selectable );
         selectedMap_[ layer ].front()->MultipleSelect( *this, selectedMap_[ layer ] );
+        if( selectedMap_[ layer ].size() == 1 )
+            selectedMap_[ layer ].front()->Select( *this );
     }
 }
 

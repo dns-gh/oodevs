@@ -33,6 +33,7 @@ public:
     //! @name Operations
     //@{
     virtual void SetSelection( bool selected ) = 0;
+    virtual bool IsSelected() const = 0;
     //@}
 };
 
