@@ -39,19 +39,83 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Remove( const FileSystem_ABC& system ) const = 0;
 };
 
-std::string GetVersion( const FileSystem_ABC& system, const Path& root, const boost::optional< std::string >& version )
-{
-    if( version != boost::none )
-        return *version;
-    const std::string& data = system.ReadFile( root / "version.tag" );
-    if( data.empty() )
-        return "Unversioned";
-    const boost::optional< std::string > next = FromJson( data ).get_optional< std::string >( "version" );
-    return next == boost::none ? "Unversioned" : *next;
-}
-
 namespace
 {
+std::string Get( const Tree& tree, const std::string& key, const std::string& def = std::string() )
+{
+    const boost::optional< std::string > data = tree.get_optional< std::string >( key );
+    return data == boost::none ? def : *data;
+}
+
+struct Metadata
+{
+    Metadata( const std::string& package, const std::string& version )
+        : package_( package )
+        , version_( version )
+    {
+        // NOTHING
+    }
+
+    std::string GetVersion() const
+    {
+        return version_;
+    }
+
+    Tree GetProperties() const
+    {
+        Tree rpy;
+        SaveTo( rpy );
+        return rpy;
+    }
+
+    void SaveTo( Tree& tree ) const
+    {
+        tree.put( "package", package_ );
+        tree.put( "version", version_ );
+    }
+
+    static std::string GetFilename()
+    {
+        return "metadata.tag";
+    }
+
+    static std::string GetVersion( const Tree& tree, const std::string& key )
+    {
+        return Get( tree, "version", "Unversioned" );
+    }
+
+    static Metadata Reload( const FileSystem_ABC& system, const Path& root )
+    {
+        Tree tree;
+        try
+        {
+            const std::string data = system.ReadFile( root / GetFilename() );
+            if( !data.empty() )
+                tree = FromJson( data );
+        }
+        catch( const std::exception& /*err*/ )
+        {
+        }
+        return Metadata( tree );
+    }
+
+    void Save( const FileSystem_ABC& system, const Path& root ) const
+    {
+        system.WriteFile( root / GetFilename(), ToJson( GetProperties(), true ) );
+    }
+
+private:
+    Metadata( const Tree& tree )
+        : package_( Get( tree, "package", "" ) )
+        , version_( GetVersion( tree, "version" ) )
+    {
+        // NOTHING
+    }
+
+    const std::string package_;
+    const std::string version_;
+};
+
 template< typename T, typename U >
 bool ItemCompare( const T& lhs, const U& rhs )
 {
@@ -72,16 +136,17 @@ bool HasItem( const T& list, const U& item )
 
 struct Item : Package_ABC::Item_ABC
 {
-    Item( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const boost::optional< std::string >& version )
+    Item( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const Metadata* meta )
         : root_ ( root )
         , id_   ( id )
         , name_ ( name )
+        , meta_ ( meta ? *meta : Metadata::Reload( system, root_ ) )
         , async_( pool )
     {
         tree_.put( "id", id_ );
+        meta_.SaveTo( tree_ );
         if( !root_.empty() )
             async_.Go( boost::bind( &Item::MakeChecksum, this, boost::cref( system ) ) );
-        tree_.put( "version", GetVersion( system, root_, version ) );
     }
 
     virtual ~Item()
@@ -138,7 +203,7 @@ struct Item : Package_ABC::Item_ABC
 
     void MakeChecksum( const FileSystem_ABC& system )
     {
-        checksum_ = system.Checksum( root_, "version.tag" );
+        checksum_ = system.Checksum( root_, Metadata::GetFilename() );
     }
 
     void Join()
@@ -156,9 +221,7 @@ struct Item : Package_ABC::Item_ABC
         system.Remove( next );
         system.MakeDirectory( next );
         system.CopyDirectory( root_, next );
-        Tree data;
-        data.put( "version", tree_.get< std::string >( "version" ) );
-        system.WriteFile( next / "version.tag", ToJson( data ) );
+        meta_.Save( system, next );
     }
 
     void Remove( const FileSystem_ABC& system ) const
@@ -170,6 +233,7 @@ protected:
     const Path root_;
     const size_t id_;
     const std::string name_;
+    const Metadata meta_;
     Tree tree_;
     std::string checksum_;
     Async async_;
@@ -203,21 +267,6 @@ std::string GetFilename( Path path, const std::string& root )
     return Utf8Convert( reply );
 }
 
-void MaybePut( Tree& dst, const std::string& key, const std::string& value )
-{
-    if( !value.empty() )
-        dst.put( key, value );
-}
-
-template< typename T >
-void MaybeGet( T& dst, const Tree& tree, const std::string& key )
-{
-    const boost::optional< T > value = tree.get_optional< T >( key );
-    if( value == boost::none )
-        return;
-    dst = *value;
-}
-
 template< typename T >
 void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::string& srcKey, const std::string& default = std::string() )
 {
@@ -230,9 +279,9 @@ void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::stri
 
 struct Model : public Item
 {
-    Model( Pool_ABC& pool, const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version )
+    Model( Pool_ABC& pool, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta )
         : Item( pool, system, Path( file ).remove_filename().remove_filename(), id,
-                Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), version )
+                Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), meta )
     {
         tree_.put( "type", GetType() );
         tree_.put( "name", name_ );
@@ -250,17 +299,17 @@ struct Model : public Item
     }
 
     template< typename T >
-    static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const boost::optional< std::string >& version )
+    static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
     {
         BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
-            items.push_back( boost::make_shared< Model >( pool, system, path, ++idx, version ) );
+            items.push_back( boost::make_shared< Model >( pool, system, path, ++idx, meta ) );
     }
 };
 
 struct Terrain : public Item
 {
-    Terrain( Pool_ABC& pool, const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version )
-        : Item ( pool, system, Path( file ).remove_filename(), id, GetFilename( file, "terrains" ), version )
+    Terrain( Pool_ABC& pool, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta )
+        : Item ( pool, system, Path( file ).remove_filename(), id, GetFilename( file, "terrains" ), meta )
     {
         tree_.put( "type", GetType() );
         tree_.put( "name", name_ );
@@ -278,17 +327,17 @@ struct Terrain : public Item
     }
 
     template< typename T >
-    static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const boost::optional< std::string >& version )
+    static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
     {
         BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
-            items.push_back( boost::make_shared< Terrain >( pool, system, path, ++idx, version ) );
+            items.push_back( boost::make_shared< Terrain >( pool, system, path, ++idx, meta ) );
     }
 };
 
 struct Dependency : public Item
 {
     Dependency( Pool_ABC& pool, const FileSystem_ABC& system, const std::string& type, const std::string& name )
-        : Item ( pool, system, "", 0, name, boost::none )
+        : Item ( pool, system, "", 0, name, 0 )
         , type_( type )
     {
         // NOTHING
@@ -309,8 +358,8 @@ struct Dependency : public Item
 
 struct Exercise : public Item
 {
-    Exercise( Pool_ABC& pool, const FileSystem_ABC& system, const Path& file, size_t id, const boost::optional< std::string >& version, const Tree& more )
-        : Item    ( pool, system, Path( file ).remove_filename(), id, GetFilename( file, "exercises" ), version )
+    Exercise( Pool_ABC& pool, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta, const Tree& more )
+        : Item    ( pool, system, Path( file ).remove_filename(), id, GetFilename( file, "exercises" ), meta )
         , pool_   ( pool )
         , system_ ( system )
         , model_  ( GetDependency( more, "exercise.model.<xmlattr>.dataset" ) )
@@ -352,12 +401,12 @@ struct Exercise : public Item
     }
 
     template< typename T >
-    static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const boost::optional< std::string >& version )
+    static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
     {
         BOOST_FOREACH( const Path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
         {
             const Tree more = FromXml( system.ReadFile( path ) );
-            items.push_back( boost::make_shared< Exercise >( pool, system, path, ++idx, version, more ) );
+            items.push_back( boost::make_shared< Exercise >( pool, system, path, ++idx, meta, more ) );
         }
     }
 
@@ -419,7 +468,8 @@ Tree Package::GetProperties() const
 // -----------------------------------------------------------------------------
 bool Package::Parse()
 {
-    boost::optional< std::string > version;
+    std::auto_ptr< Metadata > meta;
+
     if( !reference_ )
     {
         const Path index = path_ / "content.xml";
@@ -436,23 +486,22 @@ bool Package::Parse()
             return false;
         }
 
-        std::string name, description;
-        MaybeGet( name, tree, "content.name" );
-        MaybeGet( description, tree, "content.description" );
+        const std::string name = Get( tree, "content.name" );
+        const std::string description = Get( tree, "content.description" );
         if( name.empty() || description.empty() )
             return false;
 
         name_ = name;
         description_ = description;
-        version = tree.get_optional< std::string >( "content.version" );
-        version_ = version == boost::none ? "Unversioned" : *version;
+        version_ = Metadata::GetVersion( tree, "content.version" );
+        meta.reset( new Metadata( name_, version_ ) );
     }
 
     items_.clear();
     size_t idx = 0;
-    Model::Parse( pool_, system_, path_, items_, idx, version );
-    Terrain::Parse( pool_, system_, path_, items_, idx, version );
-    Exercise::Parse( pool_, system_, path_, items_, idx, version );
+    Model::Parse( pool_, system_, path_, items_, idx, meta.get() );
+    Terrain::Parse( pool_, system_, path_, items_, idx, meta.get() );
+    Exercise::Parse( pool_, system_, path_, items_, idx, meta.get() );
     BOOST_FOREACH( const T_Items::value_type& value, items_ )
         value->Join();
 
