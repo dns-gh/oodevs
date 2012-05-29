@@ -100,7 +100,6 @@ class PackageView extends Backbone.View
                 if !list.length
                     print_error "Please select at least one package to install"
                     return
-                $("html, body").animate scrollTop: 0, "fast"
                 ajax "/api/install_from_cache", id: uuid, items: list.join ',',
                     (item) =>
                         @switch true

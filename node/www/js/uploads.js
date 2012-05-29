@@ -166,9 +166,6 @@
             print_error("Please select at least one package to install");
             return;
           }
-          $("html, body").animate({
-            scrollTop: 0
-          }, "fast");
           return ajax("/api/install_from_cache", {
             id: uuid,
             items: list.join(',')
