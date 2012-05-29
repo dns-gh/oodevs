@@ -186,15 +186,16 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( system.Unpack ).once().with( path, boost::ref( stream ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
-    MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( this->cache );
-    MOCK_EXPECT( this->cache->Parse ).once().returns( true );
-    MOCK_EXPECT( this->cache->Identify ).once().with( mock::same( *installed ) );
+    MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
+    MOCK_EXPECT( cache->Parse ).once().returns( true );
+    MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
     Tree tree;
     tree.put( "some", "data" );
     const std::string expected = ToJson( tree );
-    MOCK_EXPECT( this->cache->GetProperties ).returns( tree );
+    MOCK_EXPECT( cache->GetProperties ).returns( tree );
     node->UploadCache( stream );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
+    MOCK_EXPECT( cache->RemoveAll ).once();
     BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 }
