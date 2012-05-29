@@ -315,7 +315,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\UrbanTypes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\WeatherModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory_ABC.h" />

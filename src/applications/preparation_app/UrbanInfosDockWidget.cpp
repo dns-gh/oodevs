@@ -16,13 +16,13 @@
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UrbanTypes.h"
 #include "clients_kernel/Usages.h"
 #include "clients_kernel/Usages_ABC.h"
 
 #include "preparation/StaticModel.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
-#include "preparation/UrbanTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanInfosDockWidget constructor
