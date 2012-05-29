@@ -6350,10 +6350,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation>Equipo - Tipo de falla &apos;%1&apos; inválido</translation>
     </message>
     <message>
-        <source>Equipment - Invalid breakdown data : sum != 100</source>
-        <translation>Equipo - La suma de probabilidades de falla debe ser igual a 100%</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid radar type &apos;%1&apos;</source>
         <translation>Equipo - Tipo de rada inválido &apos;%1&apos;</translation>
     </message>
@@ -6395,6 +6391,10 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Do you want to save anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

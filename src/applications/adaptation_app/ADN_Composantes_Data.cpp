@@ -775,13 +775,13 @@ void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& inpu
 // Name: BreakdownGroupInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante ) const
 {
     double rSum = 0.0;
     for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
     if( rSum != 100.0 )
-        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).ascii(), tools::translate( "Composante_Data",  "Equipment - Invalid breakdown data : sum != 100" ).ascii() );
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).ascii(), tools::translate( "Composante_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).ascii() );
 
     for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         (*it)->WriteArchive( strName_, output );
@@ -2227,8 +2227,8 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     if( ! attritionBreakdowns_.vBreakdowns_.empty() && !randomBreakdowns_.vBreakdowns_.empty() )
     {
         output << xml::start( "breakdowns" );
-        randomBreakdowns_.WriteArchive( output );
-        attritionBreakdowns_.WriteArchive( output );
+        randomBreakdowns_.WriteArchive( output, strName_.GetData() );
+        attritionBreakdowns_.WriteArchive( output, strName_.GetData() );
         output << xml::end;
     }
     else if( !IsValidDatabase() )
