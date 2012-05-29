@@ -27,7 +27,7 @@ Async::Async( Pool_ABC& pool )
 // -----------------------------------------------------------------------------
 Async::~Async()
 {
-    // NOTHING
+    Join();
 }
 
 namespace
@@ -63,9 +63,10 @@ void Async::Go( const Pool_ABC::Task& task )
 // Name: Async::Join
 // Created: BAX 2012-05-29
 // -----------------------------------------------------------------------------
-void Async::Join() const
+void Async::Join()
 {
     boost::wait_for_all( futures_.begin(), futures_.end() );
+    futures_.clear();
 }
 
 // -----------------------------------------------------------------------------

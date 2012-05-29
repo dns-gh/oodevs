@@ -32,7 +32,7 @@ struct Async : public boost::noncopyable
     //@{
     void Post( const Pool_ABC::Task& task );
     void Go( const Pool_ABC::Task& task );
-    void Join() const;
+    void Join();
     Pool_ABC& GetPool() const;
     //@}
 
