@@ -66,6 +66,12 @@ signals:
     void OpenModeToggled();
     void ChangeTab( E_WorkspaceElements );
 
+public slots:
+    //! @name Slots
+    //@{
+    void ChangeSaveState( bool bNoCommand );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -81,8 +87,6 @@ private slots:
     bool SelectOpenMode();
 
     void About();
-
-    void ChangeSaveState( bool bNoCommand );
 
     void ShowCoheranceTable( int nId );
     //@}

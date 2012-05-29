@@ -20,6 +20,7 @@
 #include "ADN_Tools.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Wizard_ABC.h"
+#include "ADN_MainWindow.h"
 #include "ADN_ListViewToolTip.h"
 #include <boost/bind.hpp>
 #include "excel/ExcelFormat.h"
@@ -296,6 +297,7 @@ void ADN_ListView::ContextMenuNew()
     // We've used the object creator, we'll need to be given another one for next time.
     pObjectCreator_->Polish();
     pObjectCreator_ = 0;
+    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -319,6 +321,7 @@ void ADN_ListView::ContextMenuDelete()
         return;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
+    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
     //$$$$ delete it?
 }
 
