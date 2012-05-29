@@ -15,6 +15,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
+#include "ADN_MainWindow.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Tr.h"
@@ -121,6 +122,7 @@ void ADN_ListView_Categories_Armor::ContextMenuDelete()
     else if( !ADN_GuiTools::DeletionWarning() )
         return;
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pInfos );
+    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
 }
 
 // -----------------------------------------------------------------------------
