@@ -10,6 +10,17 @@ ajax = (url, data, success, error) ->
         success:  success,
         url:      get_url url
 
+Handlebars.registerHelper "is_header", (items, type, options) ->
+    if items[0]?.type == type
+        return options.fn this
+    return options.inverse this
+
+Handlebars.registerHelper "has_item_type", (items, type, options) ->
+    for it in items
+        if it.type == type
+            return options.fn this
+    return options.inverse this
+
 Handlebars.registerHelper "forall", (items, type, options) ->
     buffer = ''
     for it in items

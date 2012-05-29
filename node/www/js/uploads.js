@@ -24,6 +24,33 @@
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper("is_header", function(items, type, options) {
+    var _ref;
+    if (((_ref = items[0]) != null ? _ref.type : void 0) === type) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
+  Handlebars.registerHelper("has_item_type", function(items, type, options) {
+    var it, _i, _len;
+    for (_i = 0, _len = items.length; _i < _len; _i++) {
+      it = items[_i];
+      if (it.type === type) return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
+  Handlebars.registerHelper("forall", function(items, type, options) {
+    var buffer, it, _i, _len;
+    buffer = '';
+    for (_i = 0, _len = items.length; _i < _len; _i++) {
+      it = items[_i];
+      if (it.type === type) buffer += options.fn(it);
+    }
+    return buffer;
+  });
+
   package_template = Handlebars.compile($("#package_template").html());
 
   upload_error_template = Handlebars.compile($("#upload_error_template").html());

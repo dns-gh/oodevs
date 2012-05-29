@@ -9,18 +9,30 @@
             </script>
             <script type="text/template" id="package_template">
                 <table class="table table-striped">
+
+                    [#macro header more type item]
+                    <tr class="package_row${more}">
+                        <${item} class="type">${type}s</${item}>
+                        <${item}>Package</${item}>
+                        <${item}>Version</${item}>
+                        <${item}>Date</${item}>
+                        <${item}>Checksum</${item}>
+                        <${item}></${item}>
+                    </tr>
+                    [/#macro]
+
                     [#macro row type]
-                    <thead[#if type != "model"] class="sub_header"[/#if]>
-                        <tr class="package_row">
-                            <th class="type">${type}s</th>
-                            <th>Package</th>
-                            <th>Version</th>
-                            <th>Last Update</th>
-                            <th>Checksum</th>
-                            <th></th>
-                        </tr>
+                    {{#is_header items "${type}"}}
+                    <thead>
+                        [@header '' type 'th' /]
                     </thead>
                     <tbody>
+                        {{else}}
+                        {{#has_item_type items "${type}"}}
+                        [@header ' sub_header' type 'td' /]
+                        {{/has_item_type}}
+                        {{/is_header}}
+
                         {{#forall items "${type}"}}
                         <tr rel="briefing_{{id}}" class="package_row">
                             <td class="name">{{name}}</td>
@@ -43,16 +55,14 @@
                                 <div class="briefing_content">{{{briefing}}}</div>
                             </td>
                         </tr>
-                        <tr class="hide">
-                            <td colspan="100%"></td>
-                        </tr>
+                        <tr class="hide"></tr>
                         [/#if]
                         {{/forall}}
+                        [/#macro]
+                        [@row type="model" /]
+                        [@row type="terrain" /]
+                        [@row type="exercise" /]
                     </tbody>
-                    [/#macro]
-                    [@row type="model" /]
-                    [@row type="terrain" /]
-                    [@row type="exercise" /]
                 </table>
             </script>
         </div>
