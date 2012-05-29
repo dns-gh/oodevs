@@ -11,11 +11,12 @@
 #define __kernel_Usages_h_
 
 #include "clients_kernel/Usages_ABC.h"
-#include "clients_kernel/HumanDefs.h"
 
 namespace kernel
 {
     class AccommodationTypes;
+    class Controller;
+    class Entity_ABC;
     class PropertiesDictionary;
 
 // =============================================================================
@@ -29,20 +30,30 @@ class Usages : public Usages_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( PropertiesDictionary& dictionary, const AccommodationTypes& accommodationTypes, float livingSpace );
+             Usages( PropertiesDictionary& dictionary, const AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~Usages();
     //@}
 
     //! @name Operations
     //@{
     virtual void Add( const std::string& usage, unsigned int proportion );
+    virtual void Remove( const std::string& usage );
     virtual unsigned int Find( const std::string& usage ) const;
+    virtual const T_Usages& GetUsages() const { return usages_; }
     virtual const T_Occupations& GetOccupations() const { return occupations_; }
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void UpdateDefault();
     //@}
 
 protected:
     //! @name Member Data
     //@{
+    Controller&               controller_;
+    Entity_ABC&               owner_;
     PropertiesDictionary&     dictionary_;
     const AccommodationTypes& accommodationTypes_;
     float                     livingSpace_;

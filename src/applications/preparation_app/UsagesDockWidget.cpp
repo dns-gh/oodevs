@@ -12,7 +12,14 @@
 #include "moc_UsagesDockWidget.cpp"
 
 #include "clients_gui/RichSpinBox.h"
+#include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Usages.h"
+#include "clients_kernel/Usages_ABC.h"
+#include "preparation/StaticModel.h"
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
@@ -62,57 +69,56 @@ UsagesDockWidget::~UsagesDockWidget()
     controllers_.Unregister( *this );
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: UsagesDockWidget::SelectionChanged
-//// Created: JSR 2012-03-14
-//// -----------------------------------------------------------------------------
-//void UsagesDockWidget::SelectionChanged()
-//{
-//    Clean();
-//    const T_TerrainObjects& selected = controller_.GetSelected();
-//    if( selected.size() == 1 && selected.front() )
-//    {
-//        setEnabled( true );
-//        Load();
-//        pMotivations_->show();
-//        pButton_->show();
-//        pTable_->show();
-//    }
-//    else
-//        setEnabled( false );
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: UsagesDockWidget::NotifyUpdated
-//// Created: LGY 2011-09-26
-//// -----------------------------------------------------------------------------
-//void UsagesDockWidget::NotifyUpdated( const urban::TerrainObject_ABC& element )
-//{
-//    if( isEditing_ )
-//        return;
-//    const T_TerrainObjects& selected = controller_.GetSelected();
-//    if( selected.size() == 1 && selected.front() == &element )
-//    {
-//        pMotivations_->hide();
-//        pButton_->hide();
-//        for( int i = pTable_->rowCount() - 1; i >= 0; --i )
-//            pTable_->removeRow( i );
-//        pTable_->hide();
-//        Load();
-//        pMotivations_->show();
-//        pButton_->show();
-//        pTable_->show();
-//    }
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: UsagesDockWidget::NotifyDeleted
-//// Created: LGY 2011-01-13
-//// -----------------------------------------------------------------------------
-//void UsagesDockWidget::NotifyDeleted( const urban::TerrainObject_ABC& /*element*/ )
-//{
-//    Clean();
-//}
+// -----------------------------------------------------------------------------
+// Name: UsagesDockWidget::NotifySelectionChanged
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UsagesDockWidget::NotifySelectionChanged( const T_Elements& elements )
+{
+    Clean();
+    selectedElements_ = elements;
+    if( selectedElements_.size() == 1 && selectedElements_.front() )
+    {
+        setEnabled( true );
+        Load();
+        pMotivations_->show();
+        pButton_->show();
+        pTable_->show();
+    }
+    else
+        setEnabled( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UsagesDockWidget::NotifyUpdated
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UsagesDockWidget::NotifyUpdated( const kernel::UrbanObject_ABC& element )
+{
+    if( isEditing_ )
+        return;
+    if( selectedElements_.size() == 1 && selectedElements_.front() == &element )
+    {
+        pMotivations_->hide();
+        pButton_->hide();
+        for( int i = pTable_->rowCount() - 1; i >= 0; --i )
+            pTable_->removeRow( i );
+        pTable_->hide();
+        Load();
+        pMotivations_->show();
+        pButton_->show();
+        pTable_->show();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UsagesDockWidget::NotifyDeleted
+// Created: ABR 2012-05-25
+// -----------------------------------------------------------------------------
+void UsagesDockWidget::NotifyDeleted( const kernel::UrbanObject_ABC& )
+{
+    Clean();
+}
 
 // -----------------------------------------------------------------------------
 // Name: UsagesDockWidget::AddItem
@@ -156,60 +162,58 @@ void UsagesDockWidget::Validate()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UsagesDockWidget::UpdateProperties
+// Created: ABR 2012-05-29
+// -----------------------------------------------------------------------------
+void UsagesDockWidget::UpdateProperties()
+{
+    //if( selectedElements_.size() != 1 )
+    //    return;
+    //kernel::UrbanObject_ABC* urbanObject = const_cast< kernel::UrbanObject_ABC* >( selectedElements_.front() );
+    //if( !urbanObject )
+    //    return;
+    //const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
+    //if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
+    //    usagesExtension->UpdateProperties( controllers_.controller_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UsagesDockWidget::AddMotivation
 // Created: LGY 2011-01-14
 // -----------------------------------------------------------------------------
-void UsagesDockWidget::AddMotivation( const std::string& /*motivation*/, int /*value*/ )
+void UsagesDockWidget::AddMotivation( const std::string& role, int value )
 {
-    //const T_TerrainObjects& selected = controller_.GetSelected();
-    //if( selected.size() != 1 )
-    //    return;
-    //TerrainObject_ABC* object = const_cast< TerrainObject_ABC* >( selected.front() );
-    //PhysicalAttribute* pPhysical = object->Retrieve< PhysicalAttribute >();
-    //if( !pPhysical )
-    //{
-    //    pPhysical = new PhysicalAttribute( *object );
-    //    pPhysical->CreateMotivations();
-    //    object->Attach( *pPhysical );
-    //}
-    //if( !pPhysical->GetMotivations() )
-    //    pPhysical->CreateMotivations();
-    //pPhysical->GetMotivations()->Add( motivation, ( value / 100.f ) );
-    //controller_.Update( *object );
+    if( selectedElements_.size() != 1 )
+        return;
+    kernel::UrbanObject_ABC* urbanObject = const_cast< kernel::UrbanObject_ABC* >( selectedElements_.front() );
+    if( !urbanObject )
+        return;
+    const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
+    if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
+    {
+        usagesExtension->Add( role, value );
+        controllers_.controller_.Update( *urbanObject );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UsagesDockWidget::RemoveMotivation
 // Created: LGY 2011-01-14
 // -----------------------------------------------------------------------------
-void UsagesDockWidget::RemoveMotivation( const std::string& /*name*/ )
+void UsagesDockWidget::RemoveMotivation( const std::string& role )
 {
-    //const T_TerrainObjects& selected = controller_.GetSelected();
-    //if( selected.size() != 1 )
-    //    return;
-    //TerrainObject_ABC* object = const_cast< TerrainObject_ABC* >( selected.front() );
-    //PhysicalAttribute* pPhysical = object->Retrieve< PhysicalAttribute >();
-    //if( pPhysical && pPhysical->GetMotivations() )
-    //    pPhysical->GetMotivations()->Remove( name );
+    if( selectedElements_.size() != 1 )
+        return;
+    kernel::UrbanObject_ABC* urbanObject = const_cast< kernel::UrbanObject_ABC* >( selectedElements_.front() );
+    if( !urbanObject )
+        return;
+    const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
+    if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
+    {
+        usagesExtension->Remove( role );
+        controllers_.controller_.Update( *urbanObject );
+    }
 }
-
-//namespace
-//{
-//    class MotivationsVisitor : public MotivationsVisitor_ABC
-//    {
-//    public:
-//        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
-//            : motivations_( motivations )
-//        {
-//            // NOTHING
-//        }
-//        virtual void Visit( const std::string& motivation, float proportion )
-//        {
-//            motivations_[ motivation ] = proportion;
-//        }
-//        std::map< std::string, float >& motivations_;
-//    };
-//}
 
 // -----------------------------------------------------------------------------
 // Name: UsagesDockWidget::Load
@@ -217,15 +221,19 @@ void UsagesDockWidget::RemoveMotivation( const std::string& /*name*/ )
 // -----------------------------------------------------------------------------
 void UsagesDockWidget::Load()
 {
-    //const T_TerrainObjects& selected = controller_.GetSelected();
-    //if( selected.size() != 1 )
-    //    return;
-    //TerrainObject_ABC* object = const_cast< TerrainObject_ABC* >( selected.front() );
-    //T_Motivations motivations;
-    //MotivationsVisitor visitor( motivations );
-    //object->Accept( visitor );
-    //BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations )
-    //    AddItem( motivation.first, static_cast< int >( motivation.second * 100 + 0.01 ) );
+    if( selectedElements_.size() != 1 )
+        return;
+    kernel::UrbanObject_ABC* urbanObject = const_cast< kernel::UrbanObject_ABC* >( selectedElements_.front() );
+    if( !urbanObject )
+        return;
+    const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
+    if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
+    {
+        const kernel::T_Usages& usages = usagesExtension->GetUsages();
+        BOOST_FOREACH( const kernel::T_Usages::value_type& usage, usages )
+            if( usage.first != kernel::Usages::defaultStr_ )
+                AddItem( usage.first, usage.second );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -247,14 +255,14 @@ void UsagesDockWidget::Clean()
 // -----------------------------------------------------------------------------
 void UsagesDockWidget::Initialize()
 {
-    //pMotivations_->clear();
-    //tools::Iterator< const MotivationType& > it = model_.CreateIterator< MotivationType >();
-    //while( it.HasMoreElements() )
-    //{
-    //    const std::string& usage = it.NextElement().GetName();
-    //    if( usage != "default" )
-    //        pMotivations_->addItem( usage.c_str() );
-    //}
+    pMotivations_->clear();
+    tools::Iterator< const kernel::AccommodationType& > it = staticModel_.accommodationTypes_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const std::string& usage = it.NextElement().GetRole();
+        if( usage != kernel::Usages::defaultStr_ )
+            pMotivations_->addItem( usage.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -263,15 +271,15 @@ void UsagesDockWidget::Initialize()
 // -----------------------------------------------------------------------------
 void UsagesDockWidget::Add()
 {
-    //if( controller_.GetSelected().size() != 1 )
-    //    return;
-    //const std::string motivation = pMotivations_->currentText().toStdString();
-    //QList< QTableWidgetItem* > pList = pTable_->findItems( motivation.c_str(), Qt::MatchExactly );
-    //if( pList.empty() )
-    //{
-    //    AddItem( motivation, 0 );
-    //    AddMotivation( motivation, 0 );
-    //}
+    if( selectedElements_.size() != 1 )
+        return;
+    const std::string motivation = pMotivations_->currentText().toStdString();
+    QList< QTableWidgetItem* > pList = pTable_->findItems( motivation.c_str(), Qt::MatchExactly );
+    if( pList.empty() )
+    {
+        AddItem( motivation, 0 );
+        AddMotivation( motivation, 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -296,17 +304,17 @@ void UsagesDockWidget::OnItemValueChanged()
 // Name: UsagesDockWidget::contextMenuEvent
 // Created: LGY 2011-01-14
 // -----------------------------------------------------------------------------
-void UsagesDockWidget::contextMenuEvent( QContextMenuEvent* /*pEvent*/ )
+void UsagesDockWidget::contextMenuEvent( QContextMenuEvent* pEvent )
 {
-    //QList< QTableWidgetItem* > pList = pTable_->selectedItems();
-    //if( controller_.GetSelected().size() == 1 && !pList.isEmpty() )
-    //{
-    //    QAction* pRemoveAction = new QAction( tr( "Delete" ), this );
-    //    connect( pRemoveAction, SIGNAL( triggered() ), this, SLOT( Delete() ) );
-    //    QMenu* pContextMenu = new QMenu( this );
-    //    pContextMenu->addAction( pRemoveAction );
-    //    pContextMenu->exec( pEvent->globalPos() );
-    //}
+    QList< QTableWidgetItem* > pList = pTable_->selectedItems();
+    if( selectedElements_.size() == 1 && !pList.isEmpty() )
+    {
+        QAction* pRemoveAction = new QAction( tr( "Delete" ), this );
+        connect( pRemoveAction, SIGNAL( triggered() ), this, SLOT( Delete() ) );
+        QMenu* pContextMenu = new QMenu( this );
+        pContextMenu->addAction( pRemoveAction );
+        pContextMenu->exec( pEvent->globalPos() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -323,6 +331,6 @@ void UsagesDockWidget::Delete()
             RemoveMotivation( pItem->text().toStdString() );
             deleteRow.push_back( pItem->row() );
         }
-        BOOST_FOREACH( int row, deleteRow )
-            pTable_->removeRow( row );
+    BOOST_FOREACH( int row, deleteRow )
+        pTable_->removeRow( row );
 }

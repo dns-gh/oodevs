@@ -150,15 +150,15 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Urban informations
     {
-        gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, staticModel, model.urban_ );
+        gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, model.urban_ );
         pInformations->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pInformations );
     }
     // Usages
     {
-        gui::RichDockWidget* pUsages = new UsagesDockWidget( parent, controllers, staticModel );
-        pUsages->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain );
-        parent->addDockWidget( Qt::LeftDockWidgetArea, pUsages );
+        pUsagesPanel_ = new UsagesDockWidget( parent, controllers, staticModel );
+        pUsagesPanel_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Exercise, ePreparationMode_Terrain );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, pUsagesPanel_ );
     }
     // ResourceNetwork panel
     {
@@ -212,6 +212,7 @@ void DockContainer::BlockCreationOnListViews( bool enable )
 void DockContainer::Load()
 {
     pCreationPanel_->Load();
+    pUsagesPanel_->Initialize();
 }
 
 // -----------------------------------------------------------------------------

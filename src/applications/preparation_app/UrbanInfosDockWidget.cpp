@@ -28,10 +28,9 @@
 // Name: UrbanInfosDockWidget constructor
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
-UrbanInfosDockWidget::UrbanInfosDockWidget( QWidget* parent, kernel::Controllers& controllers, StaticModel& staticModel, UrbanModel& model )
+UrbanInfosDockWidget::UrbanInfosDockWidget( QWidget* parent, kernel::Controllers& controllers, UrbanModel& model )
     : RichDockWidget( controllers, parent, "urbanInfosDockWidget", tr( "Urban informations" ), false )
     , controllers_( controllers )
-    , staticModel_( staticModel )
     , model_      ( model )
 {
     infoEditText_ = new QTextEdit( this );
@@ -67,7 +66,7 @@ UrbanInfosDockWidget::~UrbanInfosDockWidget()
 // Name: UrbanInfosDockWidget::NotifySelectionChanged
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-void UrbanInfosDockWidget::NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements )
+void UrbanInfosDockWidget::NotifySelectionChanged( const T_Elements& elements )
 {
     selectedElements_ = elements;
     Update();
@@ -166,7 +165,6 @@ void UrbanInfosDockWidget::Update()
     std::map< std::string, unsigned int > motivationsCapacities;
     std::map< std::string, unsigned int > resourcesProd;
     std::map< std::string, unsigned int > resourceConso;
-
     if( selectedElements_.empty() )
     {
         tools::Iterator< const kernel::UrbanObject_ABC& > it = model_.CreateIterator();
@@ -177,12 +175,11 @@ void UrbanInfosDockWidget::Update()
             if( hierarchy.GetLevel() != eUrbanLevelBlock ) // only urban block here
                 continue;
             ComputeInformations( urbanObject, nonMedicalInfrastructures, medicalInfrastructures, totalCapacity, motivationsCapacities, resourcesProd, resourceConso );
-            nbUrbanBlocks++;
         }
-        //nbUrbanBlocks = model_.Count();
+        nbUrbanBlocks = model_.Count();
     }
     else
-        for( CIT_UrbanObjects it = selectedElements_.begin(); it != selectedElements_.end(); ++it )
+        for( CIT_Elements it = selectedElements_.begin(); it != selectedElements_.end(); ++it )
             ComputeInformations( **it, nonMedicalInfrastructures, medicalInfrastructures, totalCapacity, motivationsCapacities, resourcesProd, resourceConso );
 
     infos_.clear();

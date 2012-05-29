@@ -11,10 +11,13 @@
 #define __UsagesDockWidget_h_
 
 #include "clients_gui/RichDockWidget.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
+    class UrbanObject_ABC;
 }
 
 class StaticModel;
@@ -26,8 +29,8 @@ class StaticModel;
 // Created: ABR 2012-05-16
 // =============================================================================
 class UsagesDockWidget : public gui::RichDockWidget
-                       //, public MultipleSelectionObserver_ABC
-                       //, public tools::ElementObserver_ABC< urban::TerrainObject_ABC >
+                       , public kernel::MultipleSelectionObserver< kernel::UrbanObject_ABC >
+                       , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
     Q_OBJECT
 
@@ -40,9 +43,9 @@ public:
 
     //! @name Observers implementation
     //@{
-    //virtual void SelectionChanged();
-    //virtual void NotifyUpdated( const urban::TerrainObject_ABC& element );
-    //virtual void NotifyDeleted( const urban::TerrainObject_ABC& element );
+    virtual void NotifySelectionChanged( const T_Elements& elements );
+    virtual void NotifyUpdated( const kernel::UrbanObject_ABC& element );
+    virtual void NotifyDeleted( const kernel::UrbanObject_ABC& element );
     //@}
 
     //! @name Operations
@@ -62,21 +65,17 @@ private slots:
     void Add();
     void Delete();
     void OnItemValueChanged();
-    void Load(); // $$$$ ABR 2012-05-16: Never used ?
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void AddItem( const std::string& name, int value );
-    void AddMotivation( const std::string& name, int value );
-    void RemoveMotivation( const std::string& name );
+    void AddItem( const std::string& role, int value );
+    void AddMotivation( const std::string& role, int value );
+    void RemoveMotivation( const std::string& role );
     void Validate();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, float > T_Motivations;
+    void Load();
+    void UpdateProperties();
     //@}
 
 private:
@@ -88,6 +87,7 @@ private:
     QPushButton*         pButton_;
     QTableWidget*        pTable_;
     bool                 isEditing_;
+    T_Elements           selectedElements_;
     //@}
 };
 
