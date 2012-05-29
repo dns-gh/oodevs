@@ -349,6 +349,7 @@ Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 Tree Node::DeleteCache()
 {
     boost::shared_ptr< Package_ABC > next = Steal( *access_, cache_ );
+    next->Remove();
     return next ? next->GetProperties() : Tree();
 }
 
