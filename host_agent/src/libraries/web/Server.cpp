@@ -191,8 +191,8 @@ void SetError( HttpServer::connection_ptr link, T error, const std::string& mess
 
 struct HandlerContext : public boost::noncopyable
 {
-    HandlerContext( Pool_ABC& pool, Observer_ABC& observer )
-        : async_   ( pool )
+    HandlerContext( host::Async& async, Observer_ABC& observer )
+        : async_   ( async )
         , observer_( observer )
     {
         // NOTHING
@@ -232,13 +232,13 @@ private:
     }
 
 private:
-    host::Async async_;
+    host::Async& async_;
     Observer_ABC& observer_;
 };
 
 struct Handler
 {
-    Handler( HandlerContext* context ) : context_( context )
+    explicit Handler( HandlerContext* context ) : context_( context )
     {
         // NOTHING
     }
@@ -261,9 +261,10 @@ private:
 struct Server::Private : public boost::noncopyable
 {
     Private( Pool_ABC& pool, Observer_ABC& observer, int port )
-        : context_( pool, observer )
+        : threads_( 8 )
+        , async_  ( pool )
+        , context_( async_, observer )
         , handler_( &context_ )
-        , threads_( 8 )
         , server_ ( "0.0.0.0", boost::lexical_cast< std::string >( port ), handler_, threads_ )
     {
         // NOTHING
@@ -271,10 +272,12 @@ struct Server::Private : public boost::noncopyable
 
     ~Private()
     {
-        // NOTHING
+        server_.stop();
+        async_.Join();
     }
 
     boost::network::utils::thread_pool threads_;
+    host::Async async_;
     HandlerContext context_;
     Handler handler_;
     HttpServer server_;
@@ -296,32 +299,15 @@ Server::Server( cpplog::BaseLogger& /*log*/, Pool_ABC& pool, Observer_ABC& obser
 // -----------------------------------------------------------------------------
 Server::~Server()
 {
-    Stop();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Server::Run
+// Name: Server::Listen
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
 void Server::Listen()
 {
     private_->server_.listen();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Server::Run
-// Created: BAX 2012-04-11
-// -----------------------------------------------------------------------------
-void Server::Run()
-{
-    private_->server_.run_only();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Server::Stop
-// Created: BAX 2012-04-11
-// -----------------------------------------------------------------------------
-void Server::Stop()
-{
-    private_->server_.stop();
+    private_->async_.Go( boost::bind( &HttpServer::run_only, &private_->server_ ) );
 }

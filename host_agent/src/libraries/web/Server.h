@@ -44,8 +44,6 @@ public:
     //! @name Public Functions
     //@{
     void Listen();
-    void Run();
-    void Stop();
     //@}
 
 private:

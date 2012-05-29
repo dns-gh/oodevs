@@ -9,7 +9,6 @@
 
 #include <runtime/Factory.h>
 #include <host/Agent.h>
-#include <host/Async.h>
 #include <host/FileSystem.h>
 #include <host/Node.h>
 #include <host/NodeController.h>
@@ -208,10 +207,7 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
     proxy.Register( "api", "localhost", host->Get() );
-    Async async( pool );
-    async.Go( boost::bind( &web::Server::Run, &server ) );
     getc( stdin );
-    server.Stop();
 }
 
 template< typename T >
