@@ -229,6 +229,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
+        bool Contains( ADN_Breakdowns_Data::BreakdownInfo& breakdown ) const;
+
         void CopyFrom( BreakdownGroupInfos& src );
 
         void ReadArchive( xml::xistream& input );
@@ -717,6 +719,7 @@ public:
     QStringList GetComposantesThatUse( ADN_Radars_Data::RadarInfos& sensor );
     QStringList GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor );
     QStringList GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
+    QStringList GetComposantesThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown );
 
 private:
     void ReadElement( xml::xistream& input );
