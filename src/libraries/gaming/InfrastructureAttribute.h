@@ -68,12 +68,12 @@ private:
     //@{
     kernel::Controllers&                                       controllers_;
     const tools::StringResolver< kernel::InfrastructureType >& resolver_;
-    kernel::Entity_ABC&               object_;
-    const geometry::Point2f           position_;
-    bool                              enabled_;
-    unsigned int                      threshold_;
-    std::string                       role_;
-    const kernel::InfrastructureType* type_;
+    kernel::Entity_ABC&                                        object_;
+    const geometry::Point2f                                    position_;
+    bool                                                       enabled_;
+    unsigned int                                               threshold_;
+    kernel::OptionalValue< std::string >                       role_;
+    const kernel::InfrastructureType*                          type_;
     //@}
 };
 
