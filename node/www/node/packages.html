@@ -1,138 +1,60 @@
 [#ftl]
 <div class="row">
     <div class="span9">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Model</th>
-                    <th>Package</th>
-                    <th>Version</th>
-                    <th>Last Update</th>
-                    <th>Checksum</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Worldwide</td>
-                    <td>Default</td>
-                    <td>5.1</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Analysis</td>
-                    <td>Musoria Pack</td>
-                    <td>5.2</td>
-                    <td>2012-07-01</td>
-                    <td>0x5458E9DC</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-            </tbody>
-            <thead class="sub_header">
-                <tr>
-                    <th>Terrain</th>
-                    <th>Package</th>
-                    <th>Version</th>
-                    <th>Last Update</th>
-                    <th>Checksum</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Test Terrain</td>
-                    <td>Default</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Paris</td>
-                    <td>Default</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>North Egypt</td>
-                    <td>Musoria Pack</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Normandie</td>
-                    <td>Musoria Pack</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-            </tbody>
-            <thead class="sub_header">
-                <tr>
-                    <th>Exercise</th>
-                    <th>Package</th>
-                    <th>Version</th>
-                    <th>Last Update</th>
-                    <th>Checksum</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody class="exercises">
-                <tr id="ABCDEF01" rel="popover">
-                    <td>
-                        Egypt
-                        <div id="ABCDEF01_briefing" class="hide">
-                            <div class="exercise_briefing">
-                                <div class="deps">
-                                    <div><b>Model</b> Worldwide</div>
-                                    <div><b>Terrain</b> Egypt</div>
-                                </div>
-                                <h1>Egypt</h1>
-                                <p>This scenario takes place in North Egypt, with an opposition between a blue force, a local red asymetric force and a neutral population.</p>
-                                <p>Some scores are calculated and allow the player to follow the mean operational state of the red units, the blue units and the combattant blue units.</p>
-                                <h2>Profiles</h2>
-                                <ul>
-                                    <li><b>Supervisor:</b> scripted actions allow you to demonstrate the scenario and the use of scores</li>
-                                    <li><b>Blue:</b> to actually play the scenario</li>
-                                </ul>
-                                <h2>Objectives</h2>
-                                <ul>
-                                    <li>Destroy the red forces</li>
-                                    <li>Protect the population</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </td>
-                    <td>Default</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Cabourg</td>
-                    <td>Musoria Pack</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td>Test Scenario</td>
-                    <td>Musoria Pack</td>
-                    <td>5.0</td>
-                    <td>2012-05-01</td>
-                    <td>0xABCDEF01</td>
-                    <td><a href="#" class="delete"><i class="icon-trash"></i></a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="upload_error"></div>
+        <div id="packages">
+            [#-- auto-generated templates --]
+            <script type="text/template" id="package_error_template">
+                <div class="alert alert-error"><b>Error</b> {{content}}</div>
+            </script>
+            <script type="text/template" id="package_template">
+                <table class="table table-striped">
+                    [#macro row type]
+                    <thead[#if type != "model"] class="sub_header"[/#if]>
+                        <tr class="package_row">
+                            <th class="type">${type}s</th>
+                            <th>Package</th>
+                            <th>Version</th>
+                            <th>Last Update</th>
+                            <th>Checksum</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#forall items "${type}"}}
+                        <tr rel="briefing_{{id}}" class="package_row">
+                            <td class="name">{{name}}</td>
+                            <td class="name">{{package}}</td>
+                            <td>{{version}}</td>
+                            <td>{{date}}</td>
+                            <td>0x{{checksum}}</td>
+                            <td class="action">
+                                [#if type == "exercise"]
+                                <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                                [/#if]
+                                <a class="btn delete"><i class="icon-trash"></i> </a>
+                            </td>
+                        </tr>
+                        [#if type == "exercise"]
+                        <tr id="briefing_{{id}}" class="hide">
+                            <td colspan="100%" class="item_briefing">
+                                {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
+                                {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
+                                <div class="briefing_content">{{{briefing}}}</div>
+                            </td>
+                        </tr>
+                        <tr class="hide">
+                            <td colspan="100%"></td>
+                        </tr>
+                        [/#if]
+                        {{/forall}}
+                    </tbody>
+                    [/#macro]
+                    [@row type="model" /]
+                    [@row type="terrain" /]
+                    [@row type="exercise" /]
+                </table>
+            </script>
+        </div>
     </div>
 </div>
