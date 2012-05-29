@@ -37,9 +37,9 @@ namespace web
 
 namespace host
 {
+    struct Async;
     class FileSystem_ABC;
     class Pool_ABC;
-    class SecurePool;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
 
@@ -87,7 +87,7 @@ private:
     const Path java_;
     const Path jar_;
     const int port_;
-    const std::auto_ptr< SecurePool > pool_;
+    const std::auto_ptr< Async > async_;
     const std::auto_ptr< boost::mutex > access_;
     web::Client_ABC& client_;
     boost::shared_ptr< runtime::Process_ABC > process_;

@@ -26,11 +26,11 @@ namespace runtime
 
 namespace host
 {
+    struct Async;
     class FileSystem_ABC;
     struct NodeFactory_ABC;
     class Pool_ABC;
     class Proxy_ABC;
-    class SecurePool;
     template< typename T > class Container;
     typedef boost::filesystem::path Path;
 
@@ -109,8 +109,8 @@ private:
     const Path jar_;
     const Path web_;
     const std::string type_;
-    const std::auto_ptr< SecurePool > pool_;
     const std::auto_ptr< Container< Node_ABC > > nodes_;
+    const std::auto_ptr< Async > async_;
     //@}
 };
 

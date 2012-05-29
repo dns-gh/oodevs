@@ -9,6 +9,7 @@
 
 #include "NodeController.h"
 
+#include "Async.h"
 #include "Container.h"
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
@@ -20,7 +21,6 @@
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
-#include "SecurePool.h"
 #include "UuidFactory_ABC.h"
 
 #include <boost/assign/list_of.hpp>
@@ -78,8 +78,8 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , jar_     ( jar )
     , web_     ( web )
     , type_    ( type )
-    , pool_    ( new SecurePool( log, type, pool ) )
     , nodes_   ( new Container< Node_ABC >() )
+    , async_   ( new Async( pool ) )
 {
     system.MakeDirectory( root_ );
     if( !system_.Exists( java_ ) )
@@ -197,7 +197,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
 void NodeController::Save( const Node_ABC& node ) const
 {
     const Path path = GetPath( root_, node ) / ( type_ + ".id" );
-    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
     proxy_.Unregister( GetPrefix( type_, *node ) );
     Stop( *node, true );
-    pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( root_, *node ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( root_, *node ) ) );
     return node;
 }
 

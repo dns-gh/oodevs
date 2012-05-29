@@ -7,43 +7,43 @@
 //
 // *****************************************************************************
 
-#ifndef POOL_ABC_H
-#define POOL_ABC_H
+#ifndef ASYNC_H
+#define ASYNC_H
 
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/thread/future.hpp>
+#include "Pool_ABC.h"
 
 namespace host
 {
 // =============================================================================
-/** @class  Pool_ABC
-    @brief  Pool_ABC interface
+/** @class  Async
+    @brief  Async class definition
 */
-// Created: BAX 2012-04-16
+// Created: BAX 2012-05-29
 // =============================================================================
-class Pool_ABC : public boost::noncopyable
+struct Async : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
-             Pool_ABC() {}
-    virtual ~Pool_ABC() {}
+    explicit Async( Pool_ABC& pool );
+            ~Async();
     //@}
 
-    //! @name Typedef helper
+    //! @name Public Methods
     //@{
-    typedef boost::function< void() > Task;
-    typedef boost::shared_future< void > Future;
+    void Post( const Pool_ABC::Task& task );
+    void Go( const Pool_ABC::Task& task );
+    void Join() const;
+    Pool_ABC& GetPool() const;
     //@}
 
-    //! @name Methods
+private:
+    //! @name Private members
     //@{
-    virtual Future Post( const Task& task ) = 0;
-    virtual Future Go( const Task& task ) const = 0;
-    virtual void Stop() = 0;
+    Pool_ABC& pool_;
+    boost::mutex access_;
+    std::vector< Pool_ABC::Future > futures_;
     //@}
 };
 }
 
-#endif // POOL_ABC_H
+#endif // ASYNC_H

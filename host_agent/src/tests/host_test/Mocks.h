@@ -208,6 +208,7 @@ namespace mocks
         MockPool()
         {
             MOCK_EXPECT( Post ).calls( &MockPool::Call );
+            MOCK_EXPECT( Go ).calls( &MockPool::Call );
         }
         static Future Call( Task task )
         {
@@ -217,6 +218,7 @@ namespace mocks
             return promise.get_future();
         }
         MOCK_METHOD( Post, 1 );
+        MOCK_METHOD( Go, 1 );
         MOCK_METHOD( Stop, 0 );
     };
 

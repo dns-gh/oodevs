@@ -27,10 +27,10 @@ namespace runtime
 
 namespace host
 {
+    struct Async;
     class FileSystem_ABC;
     class Pool_ABC;
     class PortFactory_ABC;
-    class SecurePool;
     struct SessionFactory_ABC;
     class UuidFactory_ABC;
     template< typename T > class Container;
@@ -94,8 +94,8 @@ private:
     const Path data_;
     const Path apps_;
     const std::vector< std::string > exercises_;
-    const std::auto_ptr< SecurePool > pool_;
     const std::auto_ptr< Container< Session_ABC > > sessions_;
+    const std::auto_ptr< Async > async_;
     //@}
 };
 

@@ -31,7 +31,7 @@ class Package : public Package_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Package( const FileSystem_ABC& system, const Path& path, bool reference );
+             Package( Pool_ABC& pool, const FileSystem_ABC& system, const Path& path, bool reference );
     virtual ~Package();
     //@}
 
@@ -56,6 +56,7 @@ private:
 
     //! @name Private members
     //@{
+    Pool_ABC& pool_;
     const FileSystem_ABC& system_;
     const Path path_;
     const bool reference_;

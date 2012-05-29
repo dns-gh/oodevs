@@ -9,13 +9,13 @@
 
 #include "Node.h"
 
+#include "Async.h"
 #include "FileSystem_ABC.h"
 #include "Package_ABC.h"
 #include "PortFactory_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
-#include "SecurePool.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -76,9 +76,8 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port,
-            std::auto_ptr< SecurePool > pool )
+Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system, Pool_ABC& pool,
+            const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
     : packages_ ( packages )
     , system_   ( system )
     , id_       ( id )
@@ -87,7 +86,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , port_     ( port )
     , access_   ( new boost::shared_mutex() )
     , package_  ( new boost::mutex() )
-    , pool_     ( pool )
+    , async_    ( new Async( pool ) )
 {
     install_ = packages_.Make( GetInstallPath(), true );
 }
@@ -96,9 +95,8 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports,
-            std::auto_ptr< SecurePool > pool )
+Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system, Pool_ABC& pool,
+            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : packages_ ( packages )
     , system_   ( system )
     , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
@@ -108,9 +106,9 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , access_   ( new boost::shared_mutex() )
     , package_  ( new boost::mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
-    , pool_     ( pool )
+    , async_    ( new Async( pool ) )
 {
-    pool_->Post( boost::bind( &Node::ParsePackages, this ) );
+    async_->Post( boost::bind( &Node::ParsePackages, this ) );
 }
 
 // -----------------------------------------------------------------------------

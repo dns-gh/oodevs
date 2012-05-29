@@ -9,6 +9,7 @@
 
 #include <runtime/Factory.h>
 #include <host/Agent.h>
+#include <host/Async.h>
 #include <host/FileSystem.h>
 #include <host/Node.h>
 #include <host/NodeController.h>
@@ -17,7 +18,6 @@
 #include <host/PortFactory.h>
 #include <host/PropertyTree.h>
 #include <host/Proxy.h>
-#include <host/SecurePool.h>
 #include <host/Session.h>
 #include <host/SessionController.h>
 #include <host/UuidFactory.h>
@@ -112,15 +112,13 @@ struct Configuration
 
 struct NodeFactory : public NodeFactory_ABC
 {
-    NodeFactory( cpplog::BaseLogger& log,
-                 const PackageFactory_ABC& packages,
+    NodeFactory( const PackageFactory_ABC& packages,
                  const FileSystem_ABC& system,
                  const runtime::Runtime_ABC& runtime,
                  const UuidFactory_ABC& uuids,
                  PortFactory_ABC& ports,
                  Pool_ABC& pool )
-        : log     ( log )
-        , packages( packages )
+        : packages( packages )
         , system  ( system )
         , runtime ( runtime )
         , uuids   ( uuids )
@@ -132,17 +130,14 @@ struct NodeFactory : public NodeFactory_ABC
 
     Ptr Make( const Path& root, const std::string& name ) const
     {
-        std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
-        return boost::make_shared< Node >( packages, system, root, uuids.Create(), name, ports.Create(), secure );
+        return boost::make_shared< Node >( packages, system, pool, root, uuids.Create(), name, ports.Create() );
     }
 
     Ptr Make( const Tree& tree ) const
     {
-        std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
-        return boost::make_shared< Node >( packages, system, tree, runtime, ports, secure );
+        return boost::make_shared< Node >( packages, system, pool, tree, runtime, ports );
     }
 
-    mutable cpplog::BaseLogger& log;
     const PackageFactory_ABC& packages;
     const FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
@@ -153,17 +148,19 @@ struct NodeFactory : public NodeFactory_ABC
 
 struct PackageFactory : public PackageFactory_ABC
 {
-    PackageFactory( const FileSystem_ABC& system )
-        : system( system )
+    PackageFactory( Pool_ABC& pool, const FileSystem_ABC& system )
+        : pool  ( pool )
+        , system( system )
     {
         // NOTHING
     }
 
     boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const
     {
-        return boost::make_shared< Package >( system, path, reference );
+        return boost::make_shared< Package >( pool, system, path, reference );
     }
 
+    Pool_ABC& pool;
     const FileSystem_ABC& system;
 };
 
@@ -199,8 +196,8 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     web::Client client;
     Proxy proxy( log, runtime, system, cfg.root + L"/log", cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-    PackageFactory packages( system );
-    NodeFactory fnodes( log, packages, system, runtime, uuids, ports, pool );
+    PackageFactory packages( pool, system );
+    NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
     NodeController nodes( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool );
     NodeController cluster( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool );
     SessionFactory fsessions( runtime, uuids, ports );
@@ -211,8 +208,8 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
     proxy.Register( "api", "localhost", host->Get() );
-    SecurePool run( log, "server", pool );
-    run.Post( boost::bind( &web::Server::Run, &server ) );
+    Async async( pool );
+    async.Go( boost::bind( &web::Server::Run, &server ) );
     getc( stdin );
     server.Stop();
 }

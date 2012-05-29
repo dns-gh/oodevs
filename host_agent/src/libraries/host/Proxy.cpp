@@ -8,13 +8,13 @@
 // *****************************************************************************
 #include "Proxy.h"
 
+#include "Async.h"
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
 #include "PropertyTree.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
-#include "SecurePool.h"
 #include "web/Client_ABC.h"
 
 #include <boost/assign/list_of.hpp>
@@ -50,7 +50,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , java_   ( java )
     , jar_    ( jar )
     , port_   ( port )
-    , pool_   ( new SecurePool( log, "proxy", pool ) )
+    , async_  ( new Async( pool ) )
     , client_ ( client )
     , access_ ( new boost::mutex() )
 {
@@ -83,7 +83,7 @@ Proxy::~Proxy()
 {
     if( process_ )
         process_->Kill( 0 );
-    pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
+    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void Proxy::Stop()
 void Proxy::Save() const
 {
     const Path path = GetPath();
-    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToJson( GetProperties() ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void Proxy::Save() const
 // -----------------------------------------------------------------------------
 void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
 {
-    pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
+    async_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/register_proxy", boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", host )
@@ -210,7 +210,7 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // -----------------------------------------------------------------------------
 void Proxy::Unregister( const std::string& prefix ) const
 {
-    pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
+    async_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
     LOG_INFO( log_ ) << "[proxy] Removed link to /" << prefix;
 }

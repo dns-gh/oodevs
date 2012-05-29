@@ -11,7 +11,6 @@
 #include "Mocks.h"
 #include <host/Node.h>
 #include <host/PropertyTree.h>
-#include <host/SecurePool.h>
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -63,8 +62,7 @@ namespace
         NodePtr MakeNode()
         {
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
-            std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
-            return boost::make_shared< Node >( packages, system, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ), secure );
+            return boost::make_shared< Node >( packages, system, pool, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -77,8 +75,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            std::auto_ptr< SecurePool > secure( new SecurePool( log, "node", pool ) );
-            return boost::make_shared< Node >( packages, system, tree, runtime, ports, secure );
+            return boost::make_shared< Node >( packages, system, pool, tree, runtime, ports );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )

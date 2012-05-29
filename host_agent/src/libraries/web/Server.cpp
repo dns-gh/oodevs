@@ -11,8 +11,8 @@
 
 #include "AsyncStream.h"
 #include "cpplog/cpplog.hpp"
+#include "host/Async.h"
 #include "host/Pool_ABC.h"
-#include "host/SecurePool.h"
 #include "MimeReader.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
@@ -141,10 +141,9 @@ void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async 
 class MimeWebRequest : public WebRequest
 {
 public:
-    MimeWebRequest( cpplog::BaseLogger& log, Pool_ABC& pool, const HttpServer::request& request, HttpServer::connection_ptr link )
+    MimeWebRequest( Pool_ABC& pool, const HttpServer::request& request, HttpServer::connection_ptr link )
         : WebRequest( request )
-        , log_      ( log )
-        , pool_     ( log_, "mime", pool )
+        , pool_     ( pool )
         , link_     ( link )
         , reader_   ( boost::make_shared< MimeReader >() )
         , size_     ( 0 )
@@ -172,15 +171,14 @@ public:
     virtual void ParseMime()
     {
         ReadBody( link_, size_, stream_ );
-        stream_.Read( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_.Get() ), _1 ) );
+        stream_.Read( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
     }
 
 private:
-    cpplog::BaseLogger& log_;
+    Pool_ABC& pool_;
     AsyncStream stream_;
     HttpServer::connection_ptr link_;
     boost::shared_ptr< MimeReader > reader_;
-    host::SecurePool pool_;
     size_t size_;
 };
 
@@ -193,9 +191,8 @@ void SetError( HttpServer::connection_ptr link, T error, const std::string& mess
 
 struct HandlerContext : public boost::noncopyable
 {
-    HandlerContext( cpplog::BaseLogger& log, host::SecurePool& pool, Observer_ABC& observer )
-        : log_     ( log )
-        , pool_    ( pool )
+    HandlerContext( Pool_ABC& pool, Observer_ABC& observer )
+        : async_   ( pool )
         , observer_( observer )
     {
         // NOTHING
@@ -208,7 +205,7 @@ struct HandlerContext : public boost::noncopyable
 
     void AsyncServe( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        pool_.Post( boost::bind( &HandlerContext::Serve, this, boost::cref( request ), link ) );
+        async_.Post( boost::bind( &HandlerContext::Serve, this, boost::cref( request ), link ) );
     }
 
 private:
@@ -230,13 +227,12 @@ private:
 
     std::string Post( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        MimeWebRequest next( log_, pool_.Get(), request, link );
+        MimeWebRequest next( async_.GetPool(), request, link );
         return observer_.DoPost( next );
     }
 
 private:
-    cpplog::BaseLogger& log_;
-    host::SecurePool& pool_;
+    host::Async async_;
     Observer_ABC& observer_;
 };
 
@@ -264,13 +260,11 @@ private:
 
 struct Server::Private : public boost::noncopyable
 {
-    Private( cpplog::BaseLogger& log, Pool_ABC& pool, Observer_ABC& observer, int port )
-        : log_    ( log )
-        , context_( log, pool_, observer )
+    Private( Pool_ABC& pool, Observer_ABC& observer, int port )
+        : context_( pool, observer )
         , handler_( &context_ )
         , threads_( 8 )
         , server_ ( "0.0.0.0", boost::lexical_cast< std::string >( port ), handler_, threads_ )
-        , pool_   ( log_, "web", pool )
     {
         // NOTHING
     }
@@ -280,20 +274,18 @@ struct Server::Private : public boost::noncopyable
         // NOTHING
     }
 
-    cpplog::BaseLogger& log_;
     boost::network::utils::thread_pool threads_;
     HandlerContext context_;
     Handler handler_;
     HttpServer server_;
-    host::SecurePool pool_;
 };
 
 // -----------------------------------------------------------------------------
 // Name: Server::Server
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-Server::Server( cpplog::BaseLogger& log, Pool_ABC& pool, Observer_ABC& observer, int port )
-    : private_( new Private( log, pool, observer, port ) )
+Server::Server( cpplog::BaseLogger& /*log*/, Pool_ABC& pool, Observer_ABC& observer, int port )
+    : private_( new Private( pool, observer, port ) )
 {
     // NOTHING
 }

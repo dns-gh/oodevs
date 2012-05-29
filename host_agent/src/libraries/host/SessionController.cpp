@@ -9,6 +9,7 @@
 
 #include "SessionController.h"
 
+#include "Async.h"
 #include "Container.h"
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
@@ -18,7 +19,6 @@
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
-#include "SecurePool.h"
 #include "Session_ABC.h"
 #include "UuidFactory_ABC.h"
 
@@ -75,8 +75,8 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , data_     ( data )
     , apps_     ( apps )
     , exercises_( ::GetExercises( system_, data_ / L"exercises" ) )
-    , pool_     ( new SecurePool( log, "session", pool ) )
     , sessions_ ( new Container< Session_ABC >() )
+    , async_    ( new Async( pool ) )
 {
     system_.MakeDirectory( logs_ );
     if( !system_.IsDirectory( data_ ) )
@@ -207,7 +207,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
 void SessionController::Save( const Session_ABC& session ) const
 {
     const Path path = GetPath( session ) / "session.id";
-    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     Stop( *session, true );
-    pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( *session ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( *session ) ) );
     return session;
 }
 

@@ -30,13 +30,13 @@ namespace runtime
 
 namespace host
 {
+    struct Async;
     class FileSystem_ABC;
     struct Package_ABC;
     struct PackageFactory_ABC;
     class Pool_ABC;
     class Port_ABC;
     class PortFactory_ABC;
-    class SecurePool;
 
 // =============================================================================
 /** @class  Node_ABC
@@ -49,12 +49,10 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port,
-                   std::auto_ptr< SecurePool > pool );
-             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports,
-                   std::auto_ptr< SecurePool > pool );
+             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system, Pool_ABC& pool,
+                   const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
+             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system, Pool_ABC& pool,
+                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
@@ -111,7 +109,7 @@ private:
     boost::shared_ptr< Package_ABC > install_;
     boost::shared_ptr< Package_ABC > cache_;
     T_Process process_;
-    const std::auto_ptr< SecurePool > pool_;
+    const std::auto_ptr< Async > async_;
     //@}
 };
 }
