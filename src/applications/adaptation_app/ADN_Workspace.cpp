@@ -101,7 +101,7 @@ ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 //-----------------------------------------------------------------------------
 ADN_Workspace& ADN_Workspace::GetWorkspace()
 {
-    if ( !pWorkspace_ )
+    if( !pWorkspace_ )
     {
         pWorkspace_ = new ADN_Workspace();
         pWorkspace_->Initialize();

@@ -224,7 +224,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( gToolBar->GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), terrainProfiler, SLOT( setVisible( bool ) ) );
     connect( terrainProfiler, SIGNAL( visibilityChanged( bool ) ), gToolBar->GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
 
-
     // A few layers
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer );

@@ -123,7 +123,6 @@ void ADN_ListView_Categories_Armor::ContextMenuDelete()
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pInfos );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor::IsReferenced
 // Created: LGY 2012-05-14

@@ -15,7 +15,6 @@
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
 
-
 // -----------------------------------------------------------------------------
 // ADN_EditLine_ToolTiped
 // -----------------------------------------------------------------------------
@@ -92,7 +91,6 @@ bool ADN_EditLine_ToolTiped::event( QEvent* event )
     }
     return QLineEdit::event( event );
 }
-
 
 // -----------------------------------------------------------------------------
 // ADN_EditLine_ABC

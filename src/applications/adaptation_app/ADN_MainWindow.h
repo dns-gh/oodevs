@@ -92,7 +92,6 @@ private:
     bool OfferToSave();
     void DoSaveProject();
 
-
 private:
     typedef std::pair< QString, ADN_Callback_ABC<ADN_Table*>* > T_TableRegistrationItem;
     typedef std::map< int, T_TableRegistrationItem >            T_TableRegistrationMap;
