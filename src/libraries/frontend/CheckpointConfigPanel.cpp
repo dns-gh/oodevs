@@ -50,6 +50,7 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
             Q3HBox* keepBox = new Q3HBox( checkpointsGroup_ );
             keepLabel_ = new QLabel( keepBox );
             keep_ = new QSpinBox( 1, 100, 1, keepBox );
+            keep_->setValue( 1 );
         }
     }
     {
