@@ -34,7 +34,7 @@
                         {{/is_header}}
 
                         {{#forall items "${type}"}}
-                        <tr rel="briefing_{{id}}" class="package_row">
+                        <tr data-rel="briefing_{{id}}" class="package_row">
                             <td class="name">{{name}}</td>
                             <td class="name">{{package}}</td>
                             <td>{{version}}</td>
@@ -49,13 +49,13 @@
                         </tr>
                         [#if type == "exercise"]
                         <tr id="briefing_{{id}}" class="hide">
-                            <td colspan="100%" class="item_briefing">
+                            <td colspan="6" class="item_briefing">
                                 {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
                                 {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
                                 <div class="briefing_content">{{{briefing}}}</div>
                             </td>
                         </tr>
-                        <tr class="hide"></tr>
+                        <tr class="hide"><td colspan="6"></td></tr>
                         [/#if]
                         {{/forall}}
                         [/#macro]
