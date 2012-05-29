@@ -5102,6 +5102,11 @@
         <label language="fr" text="Nationalité"/>
       </labels>
     </attribute>
+    <attribute extends="unit;automat;formation" name="CacherPourExportDQP" type="boolean">
+      <labels>
+        <label language="fr" text="Cacher pour l'export DQP"/>
+      </labels>
+    </attribute>
     <attribute extends="unit;population;crowd" name="Ethnie" type="string">
       <labels>
         <label language="fr" text="Ethnie"/>
@@ -5134,4 +5139,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="1097014776" -->
+<!-- signature="1297556526" -->
