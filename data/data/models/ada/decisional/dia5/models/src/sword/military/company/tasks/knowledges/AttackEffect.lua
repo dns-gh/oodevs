@@ -25,8 +25,8 @@ return
     getNbrFront = function( self )
       local nbrEchelon = myself.taskParams.echelonNumber or 0
       if nbrEchelon == 0 then
-        nbrEchelon = 2 -- default value
+        nbrEchelon = 1 -- default value
       end
-        return integration.query.getNbrFront( nbrEchelon )
+      return integration.query.getNbrFront( nbrEchelon )
     end
 }
