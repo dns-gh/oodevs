@@ -174,7 +174,7 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
 // -----------------------------------------------------------------------------
 void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 {
-    std::set< const kernel::Entity_ABC* >::const_iterator it = selectedObjects_.find( &object );
+    std::set< const kernel::Entity_ABC* >::iterator it = selectedObjects_.find( &object );
     if( it != selectedObjects_.end() )
         selectedObjects_.erase( it );
     EntityLayer< kernel::UrbanObject_ABC >::NotifyDeleted( object );
