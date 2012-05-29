@@ -242,7 +242,8 @@ namespace mocks
         MOCK_METHOD( Install, 2 );
         MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( size_t ), FindId );
         MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC& ), FindItem );
-        MOCK_METHOD( Remove, 1 );
+        MOCK_METHOD_EXT( Remove, 0, void(), RemoveAll );
+        MOCK_METHOD_EXT( Remove, 1, void( const std::vector< size_t >& ), RemoveItems );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

@@ -44,6 +44,7 @@ public:
     virtual T_Item Find( const Item_ABC& item ) const;
     virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids );
     virtual void Remove( const std::vector< size_t >& ids );
+    virtual void Remove();
     //@}
 
 public:

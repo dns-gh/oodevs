@@ -531,3 +531,12 @@ void Package::Remove( const std::vector< size_t >& ids )
     async.Join();
     items_.erase( next, items_.end() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Package::Remove
+// Created: BAX 2012-05-29
+// -----------------------------------------------------------------------------
+void Package::Remove()
+{
+    system_.Remove( path_ );
+}
