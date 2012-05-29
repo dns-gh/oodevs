@@ -10,13 +10,17 @@
 #ifndef __Usages_ABC_h_
 #define __Usages_ABC_h_
 
-#include "Extension_ABC.h"
 #include "Displayable_ABC.h"
+#include "Extension_ABC.h"
+#include "HumanDefs.h"
 #include "Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
 {
+    class Controller;
+    class Entity_ABC;
+
 // =============================================================================
 /** @class  Usages_ABC
     @brief  Usages declaration
@@ -45,8 +49,10 @@ public:
     //! @name Operations
     //@{
     virtual void Add( const std::string& usage, unsigned int proportion ) = 0;
+    virtual void Remove( const std::string& usage ) = 0;
     virtual unsigned int Find( const std::string& usage ) const = 0;
     virtual const T_Occupations& GetOccupations() const = 0;
+    virtual const T_Usages& GetUsages() const = 0;
     //@}
 };
 

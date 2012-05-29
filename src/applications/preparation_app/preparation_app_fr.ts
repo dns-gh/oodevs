@@ -2511,6 +2511,10 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Proportion(%)</source>
         <translation>Proportion(%)</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileControls</name>

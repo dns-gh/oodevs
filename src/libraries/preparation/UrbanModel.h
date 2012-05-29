@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "clients_kernel/UrbanDisplayOptions.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -36,6 +37,7 @@ class UrbanFactory_ABC;
 // Created: SLG 2009-02-10
 // =============================================================================
 class UrbanModel : public tools::Resolver< kernel::UrbanObject_ABC >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -63,12 +65,6 @@ private:
     void UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object );
     void SerializeExercise( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    UrbanModel( const UrbanModel& );            //!< Copy constructor
-    UrbanModel& operator=( const UrbanModel& ); //!< Assignment operator
     //@}
 
 private:

@@ -232,9 +232,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Terrain profile
     gui::TerrainProfiler* terrainProfiler = new gui::TerrainProfiler( this, controllers, staticModel.detection_, *profilerLayer );
     addDockWidget( Qt::RightDockWidgetArea, terrainProfiler );
+    terrainProfiler->hide();
     connect( gToolBar->GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), terrainProfiler, SLOT( setVisible( bool ) ) );
     connect( terrainProfiler, SIGNAL( visibilityChanged( bool ) ), gToolBar->GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
-
 
     // A few layers
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );

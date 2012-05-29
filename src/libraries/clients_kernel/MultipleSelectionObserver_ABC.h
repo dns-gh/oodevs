@@ -75,17 +75,24 @@ public:
     virtual ~MultipleSelectionObserver() {}
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< const T* >       T_Elements;
+    typedef typename T_Elements::iterator         IT_Elements;
+    typedef typename T_Elements::const_iterator  CIT_Elements;
+    //@}
+
     //! @name Operations
     //@{
     virtual void BeforeSelection() { elements_.clear(); }
     virtual void AfterSelection() { NotifySelectionChanged( elements_ ); }
-    virtual void MultipleSelect( const std::vector< const T* >& elements ) { elements_ = elements; }
+    virtual void MultipleSelect( const T_Elements& elements ) { elements_ = elements; }
 
-    virtual void NotifySelectionChanged( const std::vector< const T* >& elements ) = 0;
+    virtual void NotifySelectionChanged( const T_Elements& elements ) = 0;
     //@}
 
 private:
-    std::vector< const T* > elements_;
+    T_Elements elements_;
 };
 
 }

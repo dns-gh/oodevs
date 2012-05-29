@@ -18,8 +18,8 @@
 // Name: Usages constructor
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace )
-    : kernel::Usages( dictionary, accommodationTypes, livingSpace )
+Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller )
+    : kernel::Usages( dictionary, accommodationTypes, livingSpace, owner, controller )
 {
     // NOTHING
 }
@@ -28,9 +28,8 @@ Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::Accommod
 // Name: Usages constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Usages::Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,
-                const kernel::AccommodationTypes& accommodationTypes, float livingSpace )
-    : kernel::Usages( dictionary, accommodationTypes, livingSpace )
+Usages::Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller  )
+    : kernel::Usages( dictionary, accommodationTypes, livingSpace, owner, controller )
 {
     xis >> xml::start( "usages" )
             >> xml::list( "usage", *this, &Usages::ReadUsages )

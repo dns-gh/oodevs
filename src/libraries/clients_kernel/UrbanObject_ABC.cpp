@@ -307,5 +307,5 @@ double UrbanObject_ABC::GetNominalCapacity( const std::string& motivation ) cons
 // -----------------------------------------------------------------------------
 const kernel::AccommodationTypes& UrbanObject_ABC::GetAccommodations() const
 {
-    return accommodations_;
+    return accommodations_; // $$$$ ABR 2012-05-25: WTF !!! C'est deja dans staticModel...
 }

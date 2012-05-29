@@ -2509,6 +2509,10 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <source>Proportion(%)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Borrar</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileControls</name>

@@ -15,6 +15,8 @@
 namespace kernel
 {
     class AccommodationTypes;
+    class Controller;
+    class Entity_ABC;
     class PropertiesDictionary;
 }
 
@@ -34,9 +36,8 @@ class Usages : public kernel::Usages
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
-             Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,
-                     const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
+             Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
+             Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~Usages();
     //@}
 

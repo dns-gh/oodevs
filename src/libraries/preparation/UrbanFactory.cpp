@@ -75,7 +75,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Urban
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, hierarchies->GetLevel(), *pTerrainObject, converter_ ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis ) );
-    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, accommodations_, *pTerrainObject ) );
+    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, accommodations_, *pTerrainObject, controllers_.controller_ ) );
     if( hierarchies->GetLevel() == eUrbanLevelBlock )
     {
         pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, 100, dictionary ) );

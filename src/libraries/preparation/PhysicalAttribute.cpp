@@ -17,8 +17,8 @@
 // Name: PhysicalAttribute constructor
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary,
-                                      const kernel::AccommodationTypes& accommodationTypes, const UrbanObject& urbanObject )
+PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+                                      UrbanObject& urbanObject, kernel::Controller& controller )
 {
     if( xis.has_child( "physical" ) )
     {
@@ -28,9 +28,9 @@ PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDict
         else
             architecture_.reset( new Architecture( dictionary ) );
         if( xis.has_child( "usages" ) )
-            usages_.reset( new Usages( xis, dictionary, accommodationTypes, ( architecture_.get() ) ? urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ) : urbanObject.GetLivingSpace( 0, 0 ) ) );
+            usages_.reset( new Usages( xis, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject, controller ) );
         else
-            usages_.reset( new Usages( dictionary, accommodationTypes, ( architecture_.get() ) ? urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ) : urbanObject.GetLivingSpace( 0, 0 ) ) );
+            usages_.reset( new Usages( dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject, controller ) );
         xis >> xml::end;
     }
     else
