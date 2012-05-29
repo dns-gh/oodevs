@@ -42,6 +42,7 @@ public:
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const;
     virtual void SetInfrastructurePresent();
     virtual void SetSelection( bool selected );
+    virtual bool IsSelected() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

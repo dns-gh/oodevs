@@ -58,6 +58,7 @@ protected:
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
+    virtual void Select( const kernel::Entity_ABC&, bool control, bool shift );
     //@}
 
 private:
@@ -71,7 +72,7 @@ private:
     //! @name Member data
     //@{
     View_ABC& view_;
-    std::set< const kernel::Entity_ABC* > selectedObjects_;
+    std::vector< const kernel::UrbanObject_ABC* > actualSelection_;
     //@}
 
 protected:

@@ -63,12 +63,41 @@ UrbanInfosDockWidget::~UrbanInfosDockWidget()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanInfosDockWidget::SelectBlocks
+// Created: JSR 2012-05-29
+// -----------------------------------------------------------------------------
+void UrbanInfosDockWidget::SelectBlocks( const kernel::UrbanObject_ABC& urbanObject )
+{
+    const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() );
+    if( urbanHierarchies )
+    {
+        if( urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+        {
+            if( std::find( selectedElements_.begin(), selectedElements_.end(), &urbanObject ) == selectedElements_.end() )
+                selectedElements_.push_back( &urbanObject );
+        }
+        else
+        {
+            tools::Iterator< const kernel::Entity_ABC& > it = urbanHierarchies->CreateIterator();
+            while( it.HasMoreElements() )
+                SelectBlocks( static_cast< const kernel::UrbanObject_ABC& >( it.NextElement() ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanInfosDockWidget::NotifySelectionChanged
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
 void UrbanInfosDockWidget::NotifySelectionChanged( const T_Elements& elements )
 {
-    selectedElements_ = elements;
+    selectedElements_.clear();
+    for( CIT_Elements it = elements.begin(); it != elements.end(); ++it )
+    {
+        const kernel::UrbanObject_ABC* urbanObject = *it;
+        if( urbanObject )
+            SelectBlocks( *urbanObject );
+    }
     Update();
 }
 
@@ -174,9 +203,9 @@ void UrbanInfosDockWidget::Update()
             const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() );
             if( hierarchy.GetLevel() != eUrbanLevelBlock ) // only urban block here
                 continue;
+            ++nbUrbanBlocks;
             ComputeInformations( urbanObject, nonMedicalInfrastructures, medicalInfrastructures, totalCapacity, motivationsCapacities, resourcesProd, resourceConso );
         }
-        nbUrbanBlocks = model_.Count();
     }
     else
         for( CIT_Elements it = selectedElements_.begin(); it != selectedElements_.end(); ++it )

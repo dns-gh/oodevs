@@ -54,6 +54,7 @@ private:
     //@{
     void InsertLine( const QString& line = "", const QString& value = "" );
     void Update();
+    void SelectBlocks( const kernel::UrbanObject_ABC& urbanObject );
     //@}
 
 private:

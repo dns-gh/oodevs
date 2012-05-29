@@ -105,19 +105,15 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
 {
     if( !append || IsSingleSelection( layer ) ) // single selection
     {
-        CIT_SelectedMap it = selectedMap_.find( layer );
-        if( it == selectedMap_.end() || std::find( it->second.begin(), it->second.end(), &selectable ) == it->second.end() )
-        {
-            // Déselection des éléments multiples
-            ClearMultipleSelection();
-            // Sélection d'un élément
-            selectedMap_[ layer ].push_back( &selectable );
-            selectable.Select( *this );
+        // Déselection des éléments multiples
+        ClearMultipleSelection();
+        // Sélection d'un élément
+        selectedMap_[ layer ].push_back( &selectable );
+        selectable.Select( *this );
 
-            ActionController::T_Selectables list;
-            list.push_back( &selectable );
-            selectable.MultipleSelect( *this, list );
-        }
+        ActionController::T_Selectables list;
+        list.push_back( &selectable );
+        selectable.MultipleSelect( *this, list );
     }
     else
     {
@@ -144,6 +140,8 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
         else
             selectedMap_[ layer ].push_back( &selectable );
         selectedMap_[ layer ].front()->MultipleSelect( *this, selectedMap_[ layer ] );
+        if( selectedMap_[ layer ].size() == 1 )
+            selectedMap_[ layer ].front()->Select( *this );
     }
 }
 
@@ -174,7 +172,11 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
     Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
     CleanSelectedMap(); // utile?
     for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+    {
         it->second.front()->MultipleSelect( *this, it->second );
+        if( it->second.size() == 1 )
+            it->second.front()->Select( *this );
+    }
     Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
     selectInRectangle_ = false;
 }
@@ -192,7 +194,11 @@ void ActionController::SetMultipleSelection( const T_SelectedMap& selectables )
     CleanSelectedMap(); // utile?
     if( !selectedMap_.empty() )
         for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+        {
             it->second.front()->MultipleSelect( *this, it->second );
+            if( it->second.size() == 1 )
+                it->second.front()->Select( *this );
+        }
     Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
 }
 
