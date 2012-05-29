@@ -113,7 +113,7 @@ return
       if nbrEchelon == 0 then
         nbrEchelon = 2 -- default value
       end
-        return integration.query.getNbrFront( nbrEchelon )
+      return integration.query.getNbrFront( nbrEchelon )
     end,
     
     getTotalRecce = function( self )

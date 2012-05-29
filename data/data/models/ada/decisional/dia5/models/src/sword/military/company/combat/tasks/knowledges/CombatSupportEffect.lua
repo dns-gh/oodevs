@@ -21,6 +21,6 @@ return
       if nbrEchelon == 0 then
         nbrEchelon = 1 -- default value
       end
-        return integration.query.getNbrFront( nbrEchelon )
+      return integration.query.getNbrFront( nbrEchelon )
     end
 }
