@@ -45,6 +45,8 @@ public:
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetValue( bool value );
+    virtual void Show() { if( group_ ) group_->show(); }
+    virtual void Hide() { if( group_ ) group_->hide(); }
     //@}
 
 private slots:

@@ -236,7 +236,8 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
             altitudeModifier_->CommitTo( *param );
         if( type->HasTimeLimitedCapacity() )
             timeLimit_->CommitTo( *param );
-        mining_->CommitTo( *param );
+        if( type->CanBeValorized() )
+            mining_->CommitTo( *param );
         location_->CommitTo( *param );
         action.AddParameter( *param.release() );
     }
@@ -267,6 +268,8 @@ void ParamObstacle::OnTypeChanged()
     altitudeModifier_->Hide();
     timeLimit_->RemoveFromController();
     timeLimit_->Hide();
+    mining_->RemoveFromController();
+    mining_->Hide();
 
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
@@ -288,8 +291,12 @@ void ParamObstacle::OnTypeChanged()
         timeLimit_->RegisterIn( controller_ );
         timeLimit_->Show();
     }
-    mining_->RemoveFromController();
-    mining_->RegisterIn( controller_ );
+
+    if( type->CanBeValorized() )
+    {
+        mining_->RegisterIn( controller_ );
+        mining_->Show();
+    }
     location_->RemoveFromController();
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     location_->RegisterIn( controller_ );
