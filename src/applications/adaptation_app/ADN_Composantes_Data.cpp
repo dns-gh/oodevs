@@ -734,6 +734,18 @@ std::string ADN_Composantes_Data::BreakdownGroupInfos::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::Contains
+// Created: LGY 2012-05-29
+// -----------------------------------------------------------------------------
+bool ADN_Composantes_Data::BreakdownGroupInfos::Contains( ADN_Breakdowns_Data::BreakdownInfo& breakdown ) const
+{
+    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+        if( (*it)->ptrBreakdown_.GetData()->strName_.GetData() == breakdown.strName_.GetData() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: BreakdownGroupInfos::CopyFrom
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
@@ -2400,6 +2412,22 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Weapons_Data::Weapo
                 result << pComp->strName_.GetData().c_str();
                 break;
             }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: LGY 2012-05-29
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        if( pComp->attritionBreakdowns_.Contains( breakdown ) || pComp->randomBreakdowns_.Contains( breakdown ) )
+            result << pComp->strName_.GetData().c_str();
     }
     return result;
 }

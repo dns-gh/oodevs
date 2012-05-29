@@ -20,6 +20,7 @@
 #include "ADN_Breakdowns_ListView.h"
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Breakdowns_GUI.h"
+#include "ADN_Composantes_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Breakdown_Wizard.h"
 
@@ -79,5 +80,11 @@ void ADN_Breakdowns_ListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Breakdown_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        BreakdownInfo* pCastData = static_cast< BreakdownInfo* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+    }
     popupMenu.exec( pt );
 }
