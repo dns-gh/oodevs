@@ -6468,10 +6468,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Equipement - Type de panne invalide &apos;%1&apos; </translation>
     </message>
     <message>
-        <source>Equipment - Invalid breakdown data : sum != 100</source>
-        <translation>Equipement - La somme des probabilités de panne doit être égale à 100%</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid radar type &apos;%1&apos;</source>
         <translation>Equipement - Type de radar invalide &apos;%1&apos;</translation>
     </message>
@@ -6506,6 +6502,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Do you want to save anyway ?</source>
         <translation>Voulez-vous sauver quand même?</translation>
+    </message>
+    <message>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation>Equipement &apos;%1&apos; - La somme des probabilités de panne doit être égale à 100%</translation>
     </message>
 </context>
 <context>

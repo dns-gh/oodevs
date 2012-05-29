@@ -233,7 +233,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadBreakdown( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output, const std::string& composante ) const;
 
     public:
         std::string strName_;
