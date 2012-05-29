@@ -391,12 +391,15 @@ Package::~Package()
 Tree Package::GetProperties() const
 {
     Tree tree;
-    if( name_.empty() )
-        return tree;
-    tree.put( "name", name_ );
-    tree.put( "description", description_ );
-    if( !version_.empty() )
-        tree.put( "version", version_ );
+    if( !reference_ )
+    {
+        if( name_.empty() )
+            return tree;
+        tree.put( "name", name_ );
+        tree.put( "description", description_ );
+        if( !version_.empty() )
+            tree.put( "version", version_ );
+    }
     tree.put_child( "items", Tree() );
     Tree& items = tree.get_child( "items" );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
