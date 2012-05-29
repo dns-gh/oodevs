@@ -172,7 +172,11 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
     Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
     CleanSelectedMap(); // utile?
     for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+    {
         it->second.front()->MultipleSelect( *this, it->second );
+        if( it->second.size() == 1 )
+            it->second.front()->Select( *this );
+    }
     Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
     selectInRectangle_ = false;
 }
@@ -190,7 +194,11 @@ void ActionController::SetMultipleSelection( const T_SelectedMap& selectables )
     CleanSelectedMap(); // utile?
     if( !selectedMap_.empty() )
         for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+        {
             it->second.front()->MultipleSelect( *this, it->second );
+            if( it->second.size() == 1 )
+                it->second.front()->Select( *this );
+        }
     Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
 }
 
