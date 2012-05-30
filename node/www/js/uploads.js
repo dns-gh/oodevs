@@ -251,7 +251,7 @@
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           it = _ref1[_j];
           $(it).tooltip({
-            placement: "right"
+            placement: "top"
           });
         }
         $(".form-actions .discard").click(function() {
