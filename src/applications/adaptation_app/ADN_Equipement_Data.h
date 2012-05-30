@@ -225,6 +225,8 @@ public:
     int                     GetNextCatId();
     void                    Initialize();
 
+    QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
+
 private:
     void ReadArchive( xml::xistream& );
     void ReadResource( xml::xistream& );

@@ -15,6 +15,9 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Objects_Wizard.h"
 #include "ADN_ComboBox.h"
+#include "ADN_Composantes_Data.h"
+#include "ADN_Sensors_Data.h"
+#include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Tr.h"
 
 //-----------------------------------------------------------------------------
@@ -300,6 +303,14 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
         Q3PopupMenu popupMenu( this );
         ADN_Objects_Wizard wizard;
         FillContextMenuWithDefault( popupMenu, wizard );
+        if( pCurData_ != 0 )
+        {
+            ADN_Objects_Data_ObjectInfos* pCastData = static_cast< ADN_Objects_Data_ObjectInfos* >( pCurData_ );
+            assert( pCastData != 0 );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Sensors" ) , ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Resources" ) , ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), eEquipement, eDotationFamily_Munition );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Equipments" ) , ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        }
         popupMenu.exec( pt );
     }
 }

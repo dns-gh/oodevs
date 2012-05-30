@@ -85,11 +85,11 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
         ModelInfos* pCastData = static_cast< ModelInfos* >( pCurData_ );
         assert( pCastData != 0 );
         if( eEntityType_ == ModelInfos::ePawn )
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Models", "Units" ), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
         else if( eEntityType_ == ModelInfos::eAutomat )
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Models", "Automata" ), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
         else if( eEntityType_ == ModelInfos::ePopulation )
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ), ePopulation );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Models", "Populations" ), ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ), ePopulation );
     }
     popupMenu.exec( pt );
 }

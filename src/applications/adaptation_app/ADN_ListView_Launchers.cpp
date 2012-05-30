@@ -101,7 +101,7 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
     {
         LauncherInfos* pCastData = static_cast< LauncherInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Weapon systems" ), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
     }
     popupMenu.exec( pt );
 }

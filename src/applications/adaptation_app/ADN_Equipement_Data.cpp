@@ -849,3 +849,21 @@ ADN_Equipement_Data::ResourceInfos& ADN_Equipement_Data::GetDotation( E_Dotation
 {
     return * resources_[ nType ];
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::GetEquipmentsThatUse
+// Created: LGY 2012-05-29
+// -----------------------------------------------------------------------------
+QStringList ADN_Equipement_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        ResourceInfos* pComp = *it;
+        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+            if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
+                if( ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                    result << (*itCategory)->strName_.GetData().c_str();
+    }
+    return result;
+}

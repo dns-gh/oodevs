@@ -178,7 +178,7 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
     {
         ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate(  "ADN_ListView_Composantes", "Units" ), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
     }
     popupMenu.exec( pt );
 }
