@@ -75,6 +75,7 @@ public:
     virtual void CopyFile( const Path& dst, const Path& src ) const = 0;
     virtual void MakeDirectory( const Path& path ) const = 0;
     virtual void Remove( const Path& path ) const = 0;
+    virtual void Rename( const Path& src, const Path& dst ) const = 0;
     virtual void WriteFile( const Path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const Path& path ) const = 0;
     virtual std::vector< Path > Glob( const Path& path, const std::wstring& name ) const = 0;

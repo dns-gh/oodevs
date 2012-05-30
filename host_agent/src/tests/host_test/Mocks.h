@@ -185,6 +185,7 @@ namespace mocks
         MOCK_METHOD( CopyFile, 2 );
         MOCK_METHOD( MakeDirectory, 1 );
         MOCK_METHOD( Remove, 1 );
+        MOCK_METHOD( Rename, 2 );
         MOCK_METHOD( WriteFile, 2 );
         MOCK_METHOD( ReadFile, 1 );
         MOCK_METHOD( Glob, 2 );

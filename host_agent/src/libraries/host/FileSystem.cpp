@@ -149,6 +149,15 @@ void FileSystem::Remove( const Path& path ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FileSystem::Rename
+// Created: BAX 2012-05-30
+// -----------------------------------------------------------------------------
+void FileSystem::Rename( const Path& src, const Path& dst ) const
+{
+    boost::filesystem::rename( src, dst );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FileSystem::WriteFile
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
