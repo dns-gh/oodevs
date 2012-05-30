@@ -43,8 +43,8 @@ public:
     virtual T_Item Find( size_t id ) const;
     virtual T_Item Find( const Item_ABC& item ) const;
     virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids );
-    virtual void Remove( const std::vector< size_t >& ids );
-    virtual void Remove();
+    virtual void Move( const Path& dst, const std::vector< size_t >& ids );
+    virtual void Move( const Path& dst );
     //@}
 
 public:
@@ -59,7 +59,7 @@ private:
     //@{
     Pool_ABC& pool_;
     const FileSystem_ABC& system_;
-    const Path path_;
+    Path path_;
     const bool reference_;
     std::string name_;
     std::string description_;

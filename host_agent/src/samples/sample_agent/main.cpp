@@ -129,12 +129,12 @@ struct NodeFactory : public NodeFactory_ABC
 
     Ptr Make( const Path& root, const std::string& name ) const
     {
-        return boost::make_shared< Node >( packages, system, pool, root, uuids.Create(), name, ports.Create() );
+        return boost::make_shared< Node >( packages, system, uuids, pool, root, name, ports );
     }
 
     Ptr Make( const Tree& tree ) const
     {
-        return boost::make_shared< Node >( packages, system, pool, tree, runtime, ports );
+        return boost::make_shared< Node >( packages, system, uuids, pool, tree, runtime, ports );
     }
 
     const PackageFactory_ABC& packages;

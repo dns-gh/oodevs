@@ -27,6 +27,7 @@ using mocks::MockPortFactory;
 using mocks::MockProcess;
 using mocks::MockRuntime;
 using mocks::MockUnpack;
+using mocks::MockUuidFactory;
 
 namespace
 {
@@ -45,6 +46,7 @@ namespace
         MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
+        MockUuidFactory uuids;
         MockLog log;
         MockPool pool;
         MockPackageFactory packages;
@@ -62,7 +64,9 @@ namespace
         NodePtr MakeNode()
         {
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
-            return boost::make_shared< Node >( packages, system, pool, defaultRoot, defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
+            MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
+            MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
+            return boost::make_shared< Node >( packages, system, uuids, pool, defaultRoot, defaultName, ports );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -70,12 +74,13 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
             MOCK_EXPECT( installed->Parse ).once().returns( true );
+            MOCK_EXPECT( installed->Identify ).once().with( mock::same( *installed ) );
             MOCK_EXPECT( cache->Parse ).once().returns( true );
             MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( packages, system, pool, tree, runtime, ports );
+            return boost::make_shared< Node >( packages, system, uuids, pool, tree, runtime, ports );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
@@ -177,25 +182,27 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 
     mock::reset( system );
-    const host::Path path = host::Path( "root" ) / defaultIdString / "cache";
-    MOCK_EXPECT( system.Remove ).once().with( path );
-    MOCK_EXPECT( system.MakeDirectory ).once().with( path );
 
     std::stringstream stream;
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
-    MOCK_EXPECT( system.Unpack ).once().with( path, boost::ref( stream ) ).returns( unpack );
+    MOCK_EXPECT( system.Unpack ).once().with( mock::any, boost::ref( stream ) ).returns( unpack );
     MOCK_EXPECT( unpack->Unpack ).once();
 
     MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
     MOCK_EXPECT( cache->Parse ).once().returns( true );
+    MOCK_EXPECT( cache->MoveAll ).once();
     MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
     Tree tree;
     tree.put( "some", "data" );
     const std::string expected = ToJson( tree );
     MOCK_EXPECT( cache->GetProperties ).returns( tree );
+    MOCK_EXPECT( uuids.Create ).returns( boost::uuids::random_generator()() );
+    MOCK_EXPECT( system.MakeDirectory );
+    MOCK_EXPECT( system.Rename );
+    MOCK_EXPECT( system.Remove );
     node->UploadCache( stream );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
-    MOCK_EXPECT( cache->RemoveAll ).once();
+    MOCK_EXPECT( cache->MoveAll ).once();
     BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 }

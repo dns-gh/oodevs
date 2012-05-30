@@ -36,7 +36,8 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
     virtual void        Join() = 0;
     virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
-    virtual void        Remove( const FileSystem_ABC& system ) const = 0;
+    virtual void        Move( const FileSystem_ABC& system, const Path& dst ) const = 0;
+    virtual void        Displace( const Path& path ) = 0;
 };
 
 namespace
@@ -187,6 +188,8 @@ struct Item : Package_ABC::Item_ABC
 
     virtual void Identify( const Package_ABC& ref, const Package_ABC& root )
     {
+        tree_.erase( "action" );
+        tree_.erase( "error" );
         BOOST_FOREACH( const boost::shared_ptr< Item >& dep, GetDependencies() )
             if( !ref.Find( *dep ) && !root.Find( *dep ) )
             {
@@ -224,16 +227,21 @@ struct Item : Package_ABC::Item_ABC
         meta_.Save( system, next );
     }
 
-    void Remove( const FileSystem_ABC& system ) const
+    void Move( const FileSystem_ABC& system, const Path& dst ) const
     {
-        system.Remove( root_ );
+        system.Rename( root_, dst );
+    }
+
+    void Displace( const Path& path )
+    {
+        root_ = path / GetSuffix();
     }
 
 protected:
-    const Path root_;
     const size_t id_;
     const std::string name_;
     const Metadata meta_;
+    Path root_;
     Tree tree_;
     std::string checksum_;
     Async async_;
@@ -568,24 +576,27 @@ bool IsItemIn( const std::vector< size_t >& list, const boost::shared_ptr< Packa
 }
 
 // -----------------------------------------------------------------------------
-// Name: Package::Remove
+// Name: Package::Move
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-void Package::Remove( const std::vector< size_t >& ids )
+void Package::Move( const Path& dst, const std::vector< size_t >& ids )
 {
     Async async( pool_ );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( IsItemIn( ids, item ) )
-            async.Go( boost::bind( &Item_ABC::Remove, item, boost::cref( system_ ) ) );
+            async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ), dst ) );
     async.Join();
     items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Package::Remove
+// Name: Package::Move
 // Created: BAX 2012-05-29
 // -----------------------------------------------------------------------------
-void Package::Remove()
+void Package::Move( const Path& path )
 {
-    system_.Remove( path_ );
+    system_.Rename( path_, path );
+    path_ = path;
+    BOOST_FOREACH( const T_Items::value_type& it, items_ )
+        it->Displace( path );
 }

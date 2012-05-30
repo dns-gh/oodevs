@@ -12,7 +12,6 @@
 
 #include "Node_ABC.h"
 
-#include <boost/function.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -37,6 +36,7 @@ namespace host
     class Pool_ABC;
     class Port_ABC;
     class PortFactory_ABC;
+    class UuidFactory_ABC;
 
 // =============================================================================
 /** @class  Node_ABC
@@ -49,10 +49,12 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system, Pool_ABC& pool,
-                   const Path& root, const Uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
-             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system, Pool_ABC& pool,
-                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
+                   const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
+                   const std::string& name, PortFactory_ABC& ports );
+             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
+                   const UuidFactory_ABC& uuids, Pool_ABC& pool, const Tree& tree,
+                   const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
@@ -91,7 +93,9 @@ public:
 private:
     //! @name Private methods
     //@{
+    Path GetTemporaryPath() const;
     void ParsePackages();
+    void IdentifyPackages();
     Tree GetCommonProperties() const;
     //@}
 
@@ -99,12 +103,12 @@ private:
     //! @name Private members
     //@{
     const FileSystem_ABC& system_;
+    const UuidFactory_ABC& uuids_;
     const PackageFactory_ABC& packages_;
     const Uuid id_;
     const std::string name_;
     const Path root_;
     const std::auto_ptr< boost::shared_mutex > access_;
-    const std::auto_ptr< boost::mutex > package_;
     const std::auto_ptr< Port_ABC > port_;
     boost::shared_ptr< Package_ABC > install_;
     boost::shared_ptr< Package_ABC > cache_;
