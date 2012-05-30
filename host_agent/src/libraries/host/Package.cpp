@@ -573,12 +573,12 @@ bool IsItemIn( const std::vector< size_t >& list, const boost::shared_ptr< Packa
 // -----------------------------------------------------------------------------
 void Package::Remove( const std::vector< size_t >& ids )
 {
-    T_Items::iterator next = std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) );
     Async async( pool_ );
-    for( T_Items::iterator it = next; it != items_.end(); ++it )
-        async.Go( boost::bind( &Item_ABC::Remove, *it, boost::cref( system_ ) ) );
+    BOOST_FOREACH( const T_Items::value_type& item, items_ )
+        if( IsItemIn( ids, item ) )
+            async.Go( boost::bind( &Item_ABC::Remove, item, boost::cref( system_ ) ) );
     async.Join();
-    items_.erase( next, items_.end() );
+    items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
 }
 
 // -----------------------------------------------------------------------------
