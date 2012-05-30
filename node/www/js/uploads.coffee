@@ -45,7 +45,7 @@ class PackageView extends Backbone.View
 
             for it in $(@el).find ".action .more"
                 $(it).click ->
-                    $("#briefing_" + $(@).parent().parent().attr "data-rel").toggle "fast"
+                    $("#briefing_" + $(@).parent().attr "data-rel").toggle "fast"
 
             for it in $(@el).find ".name .error"
                 $(it).tooltip placement: "right"

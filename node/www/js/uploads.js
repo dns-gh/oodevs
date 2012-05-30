@@ -244,7 +244,7 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           it = _ref[_i];
           $(it).click(function() {
-            return $("#briefing_" + $(this).parent().parent().attr("data-rel")).toggle("fast");
+            return $("#briefing_" + $(this).parent().attr("data-rel")).toggle("fast");
           });
         }
         _ref1 = $(this.el).find(".name .error");
