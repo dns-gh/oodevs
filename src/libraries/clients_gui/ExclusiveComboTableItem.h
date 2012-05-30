@@ -15,6 +15,7 @@
 #pragma warning( pop )
 
 #include "ComboTableItem.h"
+#include <QtGui/qcombobox.h>
 
 namespace gui
 {
@@ -48,12 +49,20 @@ public:
             if( r != row() && !text.isEmpty() )
                 list.remove( text );
         }
-
+        
         QString current = text();
         const_cast< ExclusiveComboTableItem* >( this )->SetTexts( list );
         if( list.contains( current ) )
             const_cast< ExclusiveComboTableItem* >( this )->SetCurrentText( current );
-        return ComboTableItem::createEditor();
+
+        QWidget* createdWidget = ComboTableItem::createEditor();
+        if( createdWidget )
+        {
+            QComboBox* createdCombo = dynamic_cast< QComboBox* >( createdWidget );
+            if( createdCombo )
+                createdCombo->setCurrentText( current );
+        }
+        return createdWidget;
     }
     //@}
 

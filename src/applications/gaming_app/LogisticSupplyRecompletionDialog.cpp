@@ -380,11 +380,11 @@ void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::Para
         int index = 1;
         for( int nRow = 0; nRow < equipmentsTable_->numRows() - 1; ++nRow )
         {
-            Q3ComboTableItem* pEquipementItem  = static_cast< Q3ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
+            ComboTableItem* pEquipementItem = static_cast< ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
             SpinTableItem< int >* pNbrItem = static_cast< SpinTableItem< int >* >( equipmentsTable_->item( nRow, 1 ) );
 
             ParameterList& personalList = list.AddList( CreateName( "Equipment", index ) );
-            personalList.AddIdentifier( "Equipment", equipments_[ pEquipementItem->currentText() ]->type_.GetId() );
+            personalList.AddIdentifier( "Equipment", equipments_[ pEquipementItem->CurrentText() ]->type_.GetId() );
             personalList.AddQuantity( "Number", pNbrItem->text().toInt() );
         }
     }
@@ -606,15 +606,15 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
     if( nCol != 0 && nCol != 1 )
         return;
 
-    Q3ComboTableItem* pComboTableItem = static_cast< Q3ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
+    ComboTableItem* pComboTableItem = dynamic_cast< ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );    
     assert( pComboTableItem );
 
     // update quantity colum to bound it to max value
     SpinTableItem< int >* pTableItem = static_cast< SpinTableItem< int >* >( equipmentsTable_->item( nRow, 1 ) );
     assert( pTableItem );
     int nMax = 0;
-    if( pComboTableItem->currentItem() > 0 )
-        nMax = equipmentsMax_[ pComboTableItem->currentItem() - 1 ];
+    if( pComboTableItem->CurrentItem() > 0 )
+        nMax = equipmentsMax_[ pComboTableItem->CurrentItem() - 1 ];
     if( pTableItem->text().toInt() > nMax )
     {
         QString strMax;
@@ -622,7 +622,7 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
         equipmentsTable_->setText( nRow, 1, strMax );
     }
 
-    if( pComboTableItem->currentItem() == 0 )
+    if( pComboTableItem->CurrentItem() == 0 )
     {
         // if not last row, delete empty row
         if( nRow != equipmentsTable_->numRows() - 1 )
@@ -638,18 +638,18 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
         if( nRow == equipmentsTable_->numRows() - 1 )
         {
             // need to save combo box selected element before to insert a line
-            int nCurrentItem = pComboTableItem->currentItem();
+            int nCurrentItem = pComboTableItem->CurrentItem();
             uint nPos = nRow + 1;
             equipmentsTable_->insertRows( nPos, 1 );
             equipmentsTable_->setItem( nPos, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
             equipmentsTable_->setItem( nPos, 1, new SpinTableItem< int >( equipmentsTable_, 0, std::numeric_limits< int >::max() ) );
             // need to set again the combo box selected element
-            pComboTableItem->setCurrentItem( nCurrentItem );
+            pComboTableItem->SetCurrentItem( nCurrentItem );
         }
         // select quantity field
         equipmentsTable_->setCurrentCell( nRow, 1 );
-        equipmentsTable_->setText( nRow, 2, locale().toString( equipmentsMax_[ pComboTableItem->currentItem() - 1 ] ) );
-        pTableItem->SetMinMaxValue( 0, equipmentsMax_[ pComboTableItem->currentItem() - 1 ] );
+        equipmentsTable_->setText( nRow, 2, locale().toString( equipmentsMax_[ pComboTableItem->CurrentItem() - 1 ] ) );
+        pTableItem->SetMinMaxValue( 0, equipmentsMax_[ pComboTableItem->CurrentItem() - 1 ] );
     }
 
 }
