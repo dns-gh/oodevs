@@ -40,6 +40,11 @@
                         <tr class="package_row">
                             <td class="name">
                                 {{name}}
+                                {{#equal action "error"}}
+                                <span>
+                                    <a class="label label-important error" rel="tooltip" title="{{error}}">Error</a>
+                                </span>
+                                {{/equal}}                                
                             </td>
                             <td class="name">
                                 <span>{{package}}</span>

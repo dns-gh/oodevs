@@ -232,7 +232,7 @@
     };
 
     PackageView.prototype.render = function() {
-      var it, _i, _j, _len, _len1, _ref, _ref1,
+      var it, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
         _this = this;
       if (!this.enabled) {
         return;
@@ -249,9 +249,16 @@
           return $("#briefing_" + $(this).parent().attr("data-rel")).toggle("fast");
         });
       }
-      _ref1 = $(this.el).find(".action .delete");
+      _ref1 = $(this.el).find(".name .error");
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         it = _ref1[_j];
+        $(it).tooltip({
+          placement: "top"
+        });
+      }
+      _ref2 = $(this.el).find(".action .delete");
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        it = _ref2[_k];
         $(it).click(it, function(e) {
           var id;
           _this["switch"](false);
