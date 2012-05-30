@@ -155,7 +155,7 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
     {
         AmmoCategoryInfo* pCastData = static_cast< AmmoCategoryInfo* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_Equipement_AmmoListView", "Weapon systems" ), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
     }
     popupMenu.exec( pt );
 }

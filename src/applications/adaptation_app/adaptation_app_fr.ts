@@ -526,6 +526,10 @@ Arrêt moteur allumé</translation>
         <source>Breakdowns</source>
         <translation>Pannes</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_PartsTable</name>
@@ -1403,6 +1407,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Ammunition</source>
         <translation>Munition</translation>
     </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation>Systèmes d&apos;armes</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_AttritionGraph</name>
@@ -2242,10 +2250,6 @@ du tireur</translation>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <source>Search for elements that use</source>
-        <translation>Rechercher les éléments utilisant</translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
@@ -2256,6 +2260,10 @@ du tireur</translation>
     <message>
         <source>&lt; Using: %1 &gt;</source>
         <translation>&lt; Utilisent: %1 &gt;</translation>
+    </message>
+    <message>
+        <source>Search for &apos;%1&apos; that use</source>
+        <translation>Rechercher les &apos;%1&apos; utilisant</translation>
     </message>
 </context>
 <context>
@@ -2320,6 +2328,10 @@ du tireur</translation>
         <source>Equipments</source>
         <translation>Equipements</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Composantes_Objects</name>
@@ -2349,12 +2361,20 @@ du tireur</translation>
         <source>Launchers</source>
         <translation>Lanceurs</translation>
     </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation>Systèmes d&apos;armes</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_MissionTypes</name>
     <message>
         <source>Missions</source>
         <translation>Missions</translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation>Modèles de doctrine</translation>
     </message>
 </context>
 <context>
@@ -2386,12 +2406,36 @@ du tireur</translation>
         <source>Models</source>
         <translation>Modèles</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation>Automates</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
     <message>
         <source>Objects</source>
         <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation>Capteurs</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation>Ressources</translation>
     </message>
 </context>
 <context>
@@ -2429,6 +2473,10 @@ du tireur</translation>
         <source>Sensors</source>
         <translation>Capteurs</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Templates</name>
@@ -2446,6 +2494,10 @@ du tireur</translation>
     <message>
         <source>Units</source>
         <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation>Automates</translation>
     </message>
 </context>
 <context>
@@ -5985,6 +6037,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Weapon system</source>
         <translation>Système d&apos;arme</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
     </message>
 </context>
 <context>

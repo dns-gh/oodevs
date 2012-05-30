@@ -527,6 +527,10 @@ estacionado con motor encendido</translation>
         <source>Breakdowns</source>
         <translation>Fallas</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Breakdowns_PartsTable</name>
@@ -1403,6 +1407,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <source>Ammunition</source>
         <translation>Munición</translation>
     </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_AttritionGraph</name>
@@ -2242,10 +2250,6 @@ tirador</translation>
         <translation>Borrar</translation>
     </message>
     <message>
-        <source>Search for elements that use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2255,6 +2259,10 @@ tirador</translation>
     </message>
     <message>
         <source>&lt; Using: %1 &gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search for &apos;%1&apos; that use</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2320,6 +2328,10 @@ tirador</translation>
         <source>Equipments</source>
         <translation>Equipos</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Composantes_Objects</name>
@@ -2349,12 +2361,20 @@ tirador</translation>
         <source>Launchers</source>
         <translation>Lanzadores</translation>
     </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_MissionTypes</name>
     <message>
         <source>Missions</source>
         <translation>Misiones</translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2386,12 +2406,36 @@ tirador</translation>
         <source>Models</source>
         <translation>Modelos</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished">Autómata</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
     <message>
         <source>Objects</source>
         <translation>Objetos</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2429,6 +2473,10 @@ tirador</translation>
         <source>Sensors</source>
         <translation>Sensores</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Templates</name>
@@ -2446,6 +2494,10 @@ tirador</translation>
     <message>
         <source>Units</source>
         <translation>Unidades</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished">Autómata</translation>
     </message>
 </context>
 <context>
@@ -5976,6 +6028,10 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Weapon system</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

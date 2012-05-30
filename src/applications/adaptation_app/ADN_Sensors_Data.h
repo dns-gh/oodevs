@@ -453,6 +453,8 @@ public:
     ALATInfos&  GetAlatInfos ();
     CobraInfos& GetCobraInfos();
 
+    QStringList GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& object );
+
 private:
     void ReadSensor( xml::xistream& input );
     void ReadArchive( xml::xistream& input );

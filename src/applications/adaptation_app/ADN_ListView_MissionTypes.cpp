@@ -82,7 +82,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
     {
         Mission* pCastData = static_cast< Mission* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ), eModels, static_cast< int >( eEntityType_ ) );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_MissionTypes", "Doctrine models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ), eModels, static_cast< int >( eEntityType_ ) );
     }
     popupMenu.exec( pt );
 }

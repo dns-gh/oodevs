@@ -394,6 +394,7 @@ void ADN_Objects_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( data_.GetObjectInfos(), vInfosConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
 
     // Tab widget

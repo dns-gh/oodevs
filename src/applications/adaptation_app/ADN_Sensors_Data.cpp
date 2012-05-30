@@ -1340,3 +1340,20 @@ void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
 
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::GetSensorsThatUse
+// Created: LGY 2012-05-29
+// -----------------------------------------------------------------------------
+QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
+    {
+        SensorInfos* pComp = *it;
+        for( T_TargetsInfos_Vector::iterator itTarget = pComp->vTargets_.begin(); itTarget != pComp->vTargets_.end(); ++itTarget )
+            if( (*itTarget)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}

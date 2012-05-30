@@ -226,7 +226,7 @@ void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_Objec
 // Name: ADN_ListView::FillContextMenuWithUsersList
 // Created: ABR 2012-01-25
 // -----------------------------------------------------------------------------
-void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab /* = -1*/ )
+void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QString userName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab /*= -1*/ )
 {
     if( pCurData_ != 0 && !userList.isEmpty() )
     {
@@ -235,7 +235,7 @@ void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString
         usedByInfo_.usersList_ = userList;
         usedByInfo_.targetTab_ = targetTab;
         usedByInfo_.subTargetTab_ = subTargetTab;
-        popupMenu.insertItem( tr( "Search for elements that use" ), this, SLOT( ContextMenuSearchElements() ) );
+        popupMenu.insertItem( tr( "Search for '%1' that use" ).arg( userName ), this, SLOT( ContextMenuSearchElements() ) );
     }
 }
 

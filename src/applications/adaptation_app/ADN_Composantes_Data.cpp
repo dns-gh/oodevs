@@ -2431,3 +2431,20 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Breakdowns_Data::Br
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: LGY 2012-05-29
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Objects_Data_ObjectInfos& object )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        for( IT_ObjectInfos_Vector itObject = pComp->vObjects_.begin(); itObject != pComp->vObjects_.end(); ++itObject )
+            if( (*itObject)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}

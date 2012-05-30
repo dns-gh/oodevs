@@ -109,7 +109,7 @@ void ADN_ListView_Units::OnContextMenu( const QPoint& pt )
     {
         UnitInfos* pCastData = static_cast< UnitInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Units", "Automata" ), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
     }
     popupMenu.exec( pt );
 }

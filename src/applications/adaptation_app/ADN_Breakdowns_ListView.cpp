@@ -84,7 +84,7 @@ void ADN_Breakdowns_ListView::OnContextMenu( const QPoint& pt )
     {
         BreakdownInfo* pCastData = static_cast< BreakdownInfo* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_Breakdowns_ListView", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
 }
