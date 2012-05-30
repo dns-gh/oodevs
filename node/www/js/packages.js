@@ -36,6 +36,21 @@
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper("is_odd_row", function(items, type, options) {
+    var idx, it, types, _i, _len;
+    types = {};
+    idx = 0;
+    for (_i = 0, _len = items.length; _i < _len; _i++) {
+      it = items[_i];
+      if (it.type === type) break;
+      if (types[it.type] == null) ++idx;
+      types[it.type] = true;
+      ++idx;
+    }
+    if (idx & 1) return options.fn(this);
+    return options.inverse(this);
+  });
+
   Handlebars.registerHelper("forall", function(items, type, options) {
     var buffer, it, _i, _len;
     buffer = '';

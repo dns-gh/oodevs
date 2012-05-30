@@ -10,11 +10,11 @@
             <script type="text/template" id="package_template">
                 <table class="table table-striped">
 
+                    [#assign num_cols = 5]
                     [#macro header more type item]
                     <tr class="package_row${more}">
                         <${item} class="type">${type}s</${item}>
                         <${item}>Package</${item}>
-                        <${item}>Version</${item}>
                         <${item}>Date</${item}>
                         <${item}>Checksum</${item}>
                         <${item}></${item}>
@@ -29,15 +29,23 @@
                     <tbody>
                         {{else}}
                         {{#has_item_type items "${type}"}}
+                        {{#is_odd_row items "${type}"}}
+                        <tr class="hide"><td colspan="${num_cols}"></td></tr>
+                        {{/is_odd_row}}
                         [@header ' sub_header' type 'td' /]
                         {{/has_item_type}}
                         {{/is_header}}
 
                         {{#forall items "${type}"}}
                         <tr data-rel="briefing_{{id}}" class="package_row">
-                            <td class="name">{{name}}</td>
-                            <td class="name">{{package}}</td>
-                            <td>{{version}}</td>
+                            <td class="name">
+                                {{name}}
+                            </td>
+                            <td class="name">
+                                <span>{{package}}</span>
+                                <br/>
+                                <span class="label label-info">{{version}}</span>
+                            </td>
                             <td>{{date}}</td>
                             <td>0x{{checksum}}</td>
                             <td class="action">
@@ -49,13 +57,13 @@
                         </tr>
                         [#if type == "exercise"]
                         <tr id="briefing_{{id}}" class="hide">
-                            <td colspan="6" class="item_briefing">
+                            <td colspan="${num_cols}" class="item_briefing">
                                 {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
                                 {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
                                 <div class="briefing_content">{{{briefing}}}</div>
                             </td>
                         </tr>
-                        <tr class="hide"><td colspan="6"></td></tr>
+                        <tr class="hide"><td colspan="${num_cols}"></td></tr>
                         [/#if]
                         {{/forall}}
                         [/#macro]

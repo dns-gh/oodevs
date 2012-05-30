@@ -21,6 +21,18 @@ Handlebars.registerHelper "has_item_type", (items, type, options) ->
             return options.fn this
     return options.inverse this
 
+Handlebars.registerHelper "is_odd_row", (items, type, options) ->
+    types = {}
+    idx = 0
+    for it in items
+        break if it.type == type
+        ++idx unless types[it.type]?
+        types[it.type] = true
+        ++idx
+    if idx&1
+        return options.fn this
+    return options.inverse this
+
 Handlebars.registerHelper "forall", (items, type, options) ->
     buffer = ''
     for it in items
