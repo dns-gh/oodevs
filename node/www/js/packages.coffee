@@ -69,7 +69,7 @@ class PackageView extends Backbone.View
 
         for it in $(@el).find ".action .more"
             $(it).click ->
-                $("#" + $(@).parent().parent().attr "data-rel").toggle "fast"
+                $("#briefing_" + $(@).parent().parent().attr "data-rel").toggle "fast"
         return
 
     delta: =>
