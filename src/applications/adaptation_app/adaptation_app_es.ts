@@ -6543,7 +6543,7 @@ Click &quot;Ok&quot; to delete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to save anyway ?</source>
+        <source>Database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

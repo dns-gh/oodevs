@@ -6552,8 +6552,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Equipement - Type de capteur invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Do you want to save anyway ?</source>
-        <translation>Voulez-vous sauver quand même?</translation>
+        <source>Database cannot be saved.</source>
+        <translation>La base ne peut pas être sauvée.</translation>
     </message>
     <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
