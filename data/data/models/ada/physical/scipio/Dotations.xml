@@ -2598,7 +2598,7 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="00010072" codeLFRIL="" codeNNO="1111110020072" id="140" id-nature="5" name="eau courante" nature="Liquide" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="00010073" codeLFRIL="" codeNNO="1111110020073" id="141" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="00010074" codeLFRIL="" codeNNO="1111110020074" id="142" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="143" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
-  <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="144" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
+  <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="143" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
+  <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="144" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="0841791369" -->
+<!-- signature="2224306097" -->

@@ -11095,7 +11095,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="100" logistic-threshold="10" name="Conteneur de transport post mortem" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Conteneur mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12344,7 +12344,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12390,7 +12390,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12440,7 +12440,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12491,7 +12491,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12540,7 +12540,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12585,7 +12585,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12634,7 +12634,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12683,7 +12683,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12732,7 +12732,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12780,7 +12780,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12826,7 +12826,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12876,7 +12876,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12928,7 +12928,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12978,7 +12978,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13031,7 +13031,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13080,7 +13080,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13124,7 +13124,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13173,7 +13173,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13222,7 +13222,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13275,7 +13275,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13320,7 +13320,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13373,7 +13373,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13424,7 +13424,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13474,7 +13474,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13522,7 +13522,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -17516,7 +17516,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -19412,4 +19412,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0990586206" -->
+<!-- signature="1871823326" -->

@@ -4384,7 +4384,7 @@
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
       </category>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Conteneur de transport post mortem" normalized-consumption="1"/>
+        <resource capacity="50" logistic-threshold="10" name="Conteneur mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -17186,7 +17186,7 @@
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
       </category>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="1"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -17508,7 +17508,7 @@
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
       </category>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="1"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -19514,7 +19514,7 @@
         <resource capacity="18" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="6"/>
       </category>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="1"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -25237,7 +25237,7 @@
         <resource capacity="126" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="42"/>
       </category>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="1"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -35516,7 +35516,7 @@
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
       </category>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="1"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -35868,4 +35868,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2275274733" -->
+<!-- signature="4132542263" -->
