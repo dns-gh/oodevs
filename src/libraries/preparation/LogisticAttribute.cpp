@@ -85,6 +85,15 @@ void LogisticAttribute::SetLogisticBase( const kernel::Entity_ABC& logisticBase 
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticAttribute::SetLogisticBase
+// Created: MMC 2012-05-30
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogisticAttribute::GetLogisticBase() const
+{
+    return static_cast< const kernel::Entity_ABC* >( logisticBase_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticAttribute::NotifyDeleted
 // Created: SBO 2010-05-20
 // -----------------------------------------------------------------------------

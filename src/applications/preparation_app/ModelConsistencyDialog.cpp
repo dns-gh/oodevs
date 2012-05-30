@@ -120,6 +120,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eLogisticInitialization ]          = tr( "No logistic link initialized." );
     errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
     errorDescriptions_[ eNoLogisticFormation ]             = tr( "Logistic sector not included in a logistic base." );
+    errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tr( "Logistic base's party differs from object's party." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );

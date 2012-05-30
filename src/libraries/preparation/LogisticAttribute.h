@@ -68,6 +68,7 @@ public:
     //! @name Operations
     //@{
     void SetLogisticBase( const kernel::Entity_ABC& logisticBase );
+    const kernel::Entity_ABC* GetLogisticBase() const;
     bool HasValidLogisticBase() const;
     //@}
 
