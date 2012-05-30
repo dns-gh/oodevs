@@ -2473,7 +2473,7 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
     <name>UrbanInfosDockWidget</name>
     <message>
         <source>Urban informations</source>
-        <translation>Informations urbaine</translation>
+        <translation>Informations urbaines</translation>
     </message>
     <message>
         <source>Total urban blocks number: </source>
