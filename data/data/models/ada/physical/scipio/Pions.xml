@@ -9595,7 +9595,6 @@
       <equipment count="2" crew="5" loadable="true" major="true" type="MATEM"/>
       <equipment count="2" crew="6" type="GBC 8 KT 7.62"/>
       <equipment count="4" crew="5" major="true" type="UMTE"/>
-      <equipment count="1" crew="3" type="MFR"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -19413,4 +19412,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0485249594" -->
+<!-- signature="0990586206" -->

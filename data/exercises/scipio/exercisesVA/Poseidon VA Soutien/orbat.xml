@@ -10,7 +10,7 @@
             <unit color="0x647dff" command-post="false" id="278" name="INF . Section CBT VAB CDS OFF" position="29TNF2692358494" type="INF . Section CBT VAB CDS OFF"/>
             <unit color="0x647dff" command-post="false" id="279" name="INF . Section CBT VAB CDS OFF" position="29TNF2658158832" type="INF . Section CBT VAB CDS OFF"/>
             <unit color="0x647dff" command-post="false" id="280" name="INF . Section CBT VAB CDS SOFF" position="29TNF2715158505" type="INF . Section CBT VAB CDS SOFF"/>
-			<unit color="0x647dff" command-post="false" id="281" name="INF . Fantassin oeil" position="29TNF2715158515" type="INF . Fantassin oeil"/>
+            <unit color="0x647dff" command-post="false" id="281" name="INF . Fantassin oeil" position="29TNF2715158515" type="INF . Fantassin oeil"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="316" knowledge-group="6" name="GEN . Compagnie Appui generique [316]" type="GEN . Compagnie Appui generique">
             <unit color="0x647dff" command-post="true" id="317" name="GEN . PC Cie APP" position="29TNF3007261278" type="GEN . PC Cie APP"/>
@@ -28,7 +28,7 @@
             <unit color="0x647dff" command-post="false" id="320" name="GEN . Demi Groupe MFRD CDT" position="29TNF2956560901" type="GEN . Demi Groupe MFRD CDT">
               <humans>
                 <human contaminated="false" number="1" psyop="false" rank="SousOfficier" state="u2"/>
-                <human contaminated="false" number="1" psyop="true" rank="MilitaireDuRang" state="healthy"/>
+                <human contaminated="false" number="1" psyop="true" rank="Crew" state="healthy"/>
               </humans>
               <resources>
                 <resource logistic-threshold="10" name="CART 5.56 BAL ORD F1" quantity="960"/>
@@ -273,7 +273,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
           </attributes>
         </object>
@@ -297,7 +300,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
           </attributes>
         </object>
@@ -305,10 +311,10 @@
       <tactical>
         <formation color="0xff3232" id="25" level="ii" name="GTIA [25]">
           <automat color="0xff3232" engaged="false" id="192" knowledge-group="31" name="MILICE [192]" type="MILICE">
+            <unit color="0xff3232" command-post="false" id="23" name="INF . Fantassin oeil" position="29TNF3319355360" type="INF . Fantassin oeil"/>
             <unit color="0xff3232" command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
             <unit color="0xff3232" command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
             <unit color="0xff3232" command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3319355351" type="MILICE . PICK UP 14,5"/>
-			<unit color="0xff3232" command-post="false" id="23" name="INF . Fantassin oeil" position="29TNF3319355360" type="INF . Fantassin oeil"/>
             <lima name="Lima 337">
               <point>29TNF3265656108</point>
               <point>29TNF3308956090</point>
@@ -349,7 +355,7 @@
       <objects/>
       <tactical>
         <formation color="0x4bbedc" id="129" level="ii" name="Formation [129]">
-          <automat color="0x4bbedc" engaged="false" id="459" knowledge-group="132" name="CIV . DPRE [459]" symbol="symbols/sfgpu" type="CIV . DPRE">
+          <automat color="0x4bbedc" engaged="false" id="459" knowledge-group="132" name="CIV . DPRE [459]" type="CIV . DPRE">
             <unit color="0x4bbedc" command-post="true" id="460" name="Refugies" position="29TNF2707357248" type="Refugies"/>
             <unit color="0x4bbedc" command-post="false" id="542" name="Refugies" position="29TNF2743857395" type="Refugies"/>
             <unit color="0x4bbedc" command-post="false" id="543" name="Refugies" position="29TNF2738557634" type="Refugies"/>
@@ -516,4 +522,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3808882240" -->
+<!-- signature="3402764878" -->

@@ -2886,7 +2886,7 @@
     <reloading duration="5s" munition="1"/>
     <indirect-fire average-speed="400" max-range="4000" min-range="480"/>
   </weapon-system>
-  <weapon-system launcher="MAG_58" munition="CART N 7,62 BD HOM">
+  <weapon-system launcher="MAG_58" munition="CART 7,62 N BD HOM">
     <burst duration="1s" munition="1"/>
     <reloading duration="1s" munition="1"/>
     <direct-fire>
@@ -3182,4 +3182,4 @@
     </direct-fire>
   </weapon-system>
 </weapons>
-<!-- signature="3080258654" -->
+<!-- signature="0399542112" -->

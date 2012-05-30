@@ -138,7 +138,7 @@
                     <resource name="Charg 7,62" quantity="1080"/>
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
-                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="CART 7,62 N BD HOM" quantity="53376"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
                     <resource name="mine classique" quantity="249136"/>
                     <resource name="PETD 500 G T ID M 1" quantity="437360"/>
@@ -188,7 +188,7 @@
                     <resource name="Charg 7,62" quantity="1080"/>
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
-                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="CART 7,62 N BD HOM" quantity="53376"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
                     <resource name="mine classique" quantity="249136"/>
                     <resource name="PETD 500 G T ID M 1" quantity="437360"/>
@@ -286,7 +286,7 @@
                     <resource name="Charg 7,62" quantity="1080"/>
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
-                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="CART 7,62 N BD HOM" quantity="53376"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
                     <resource name="mine classique" quantity="249136"/>
                     <resource name="PETD 500 G T ID M 1" quantity="437360"/>
@@ -336,7 +336,7 @@
                     <resource name="Charg 7,62" quantity="1080"/>
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
-                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="CART 7,62 N BD HOM" quantity="53376"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
                     <resource name="mine classique" quantity="249136"/>
                     <resource name="PETD 500 G T ID M 1" quantity="437360"/>
@@ -947,7 +947,7 @@
                     <resource name="CART 7.62" quantity="3600"/>
                     <resource name="Missile AT4" quantity="12"/>
                     <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
-                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="CART 7,62 N BD HOM" quantity="53376"/>
                     <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
                     <resource name="F-63 1" quantity="1567829"/>
                     <resource name="F-57 1" quantity="2053"/>
@@ -1661,7 +1661,7 @@
                       <resource name="MIS 150 F3 HOT" quantity="22"/>
                       <resource name="CART 20 OEI OEIT SBP" quantity="7332"/>
                       <resource name="CART 20 OPT" quantity="2214"/>
-                      <resource name="CART 7,62 BD HOM" quantity="6672"/>
+                      <resource name="CART 7,62 N BD HOM" quantity="6672"/>
                       <resource name="OE JUPU 155 F2 Kit RTC" quantity="144"/>
                       <resource name="mine classique" quantity="31202"/>
                       <resource name="PETD 500 G T ID M 1" quantity="54620"/>
@@ -1706,7 +1706,7 @@
                       <resource name="MIS 150 F3 HOT" quantity="22"/>
                       <resource name="CART 20 OEI OEIT SBP" quantity="7332"/>
                       <resource name="CART 20 OPT" quantity="2214"/>
-                      <resource name="CART 7,62 BD HOM" quantity="6672"/>
+                      <resource name="CART 7,62 N BD HOM" quantity="6672"/>
                       <resource name="OE JUPU 155 F2 Kit RTC" quantity="144"/>
                       <resource name="mine classique" quantity="31202"/>
                       <resource name="PETD 500 G T ID M 1" quantity="54620"/>
@@ -2456,4 +2456,4 @@
     <party id="12521"/>
   </diplomacy>
 </orbat>
-<!-- signature="3438577429" -->
+<!-- signature="1066966237" -->

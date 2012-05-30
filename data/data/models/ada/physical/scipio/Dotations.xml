@@ -492,7 +492,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1320 329 0005" codeLFRIL="" codeNNO="1320 14 524 6658" d-type="true" id="23" id-nature="3" name="O 155 F1 AC EF DR" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010282" codeLFRIL="" codeNNO="1111110020282" d-type="true" id="23" id-nature="3" name="O 155 F1 AC EF DR" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -529,7 +529,7 @@
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 325 0010" codeLFRIL="" codeNNO="1320 14 449 8616" d-type="true" id="25" id-nature="3" name="CPLT FUM PH 155" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <indirect-fire intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="26" id-nature="3" name="Roquette M77" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010001" codeLFRIL="" codeNNO="1111110020001" id="26" id-nature="3" name="Roquette M77" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -560,7 +560,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1340 011 1010" codeLFRIL="" codeNNO="1340 01 122 3506" d-type="true" id="27" id-nature="3" name="ROQ EXPL 298 M26" nature="Solide" package-mass="2.27" package-size="6" package-volume="3.116" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010283" codeLFRIL="" codeNNO="1111110020283" d-type="true" id="27" id-nature="3" name="ROQ EXPL 298 M26" nature="Solide" package-mass="2.27" package-size="6" package-volume="3.116" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -758,7 +758,7 @@
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="36" id-nature="3" name="Roquette BM21" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010002" codeLFRIL="" codeNNO="1111110020002" d-type="true" id="36" id-nature="3" name="Roquette BM21" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -789,7 +789,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" id-nature="3" name="Missile AT5" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010003" codeLFRIL="" codeNNO="1111110020003" id="37" id-nature="3" name="Missile AT5" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
       <attrition destruction="0.4" protection="Composite" repairable-with-evacuation="0.2" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.9" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -811,7 +811,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="38" id-nature="3" name="Obus 73 OE" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.067" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010004" codeLFRIL="" codeNNO="1111110020004" id="38" id-nature="3" name="Obus 73 OE" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -833,7 +833,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="39" id-nature="3" name="Obus 152 ACED" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010005" codeLFRIL="" codeNNO="1111110020005" d-type="true" id="39" id-nature="3" name="Obus 152 ACED" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -864,7 +864,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="40" id-nature="3" name="Obus 152 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010006" codeLFRIL="" codeNNO="1111110020006" d-type="true" id="40" id-nature="3" name="Obus 152 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -895,7 +895,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="41" id-nature="3" name="Obus 152 OE MPA" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010077" codeLFRIL="" codeNNO="1111110020077" d-type="true" id="41" id-nature="3" name="Obus 152 OE MPA" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -926,7 +926,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="42" id-nature="3" name="Obus 125 OCC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010008" codeLFRIL="" codeNNO="1111110020008" id="42" id-nature="3" name="Obus 125 OCC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.25" protection="Composite" repairable-with-evacuation="0.25" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -948,7 +948,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" id-nature="3" name="Obus 125 OFL" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010009" codeLFRIL="" codeNNO="1111110020009" id="43" id-nature="3" name="Obus 125 OFL" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.5" protection="Composite" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -970,7 +970,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="44" id-nature="3" name="Missile AT7" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010010" codeLFRIL="" codeNNO="1111110020010" id="44" id-nature="3" name="Missile AT7" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -992,7 +992,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="45" id-nature="3" name="Grenade AGS 17" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010011" codeLFRIL="" codeNNO="1111110020011" id="45" id-nature="3" name="Grenade AGS 17" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="CombattantProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
@@ -1054,7 +1054,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="47" id-nature="3" name="Obus 23 mm" nature="Solide" package-mass="0.032" package-size="60" package-volume="0.041" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010012" codeLFRIL="" codeNNO="1111110020012" id="47" id-nature="3" name="Obus 23 mm" nature="Solide" package-mass="0.032" package-size="60" package-volume="0.041" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1076,7 +1076,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="48" id-nature="3" name="Obus 122 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010013" codeLFRIL="" codeNNO="1111110020013" d-type="true" id="48" id-nature="3" name="Obus 122 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.3" protection="CombattantProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
@@ -1107,7 +1107,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="49" id-nature="3" name="Obus 122 OE MPA" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010007" codeLFRIL="" codeNNO="1111110020007" d-type="true" id="49" id-nature="3" name="Obus 122 OE MPA" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.3" protection="CombattantProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
@@ -1138,7 +1138,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="50" id-nature="3" name="Obus 122 ACED" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010014" codeLFRIL="" codeNNO="1111110020014" d-type="true" id="50" id-nature="3" name="Obus 122 ACED" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1169,7 +1169,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="3" name="Obus 76 OE" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.067" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010015" codeLFRIL="" codeNNO="1111110020015" id="51" id-nature="3" name="Obus 76 OE" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1453,7 +1453,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" name="Munition CAS" nature="Solide" package-mass="0.25" package-size="1" package-volume="0.2" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010016" codeLFRIL="" codeNNO="1111110020016" id="67" id-nature="3" name="Munition CAS" nature="Solide" package-mass="0.25" package-size="1" package-volume="0.2" type="Obus">
     <attritions>
       <attrition destruction="0.4" protection="Composite" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.6" protection="CombattantProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
@@ -1475,7 +1475,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="68" id-nature="3" ied="true" name="IED" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010017" codeLFRIL="" codeNNO="1111110020017" d-type="true" id="68" id-nature="3" ied="true" name="IED" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.2" protection="CombattantProtege" repairable-with-evacuation="0.15" repairable-without-evacuation="0.25"/>
@@ -1506,7 +1506,7 @@
       <ph target-posture="PostePrepareGenie" value="1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010018" codeLFRIL="" codeNNO="1111110020018" id="69" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="CombattantProtege" repairable-with-evacuation="0.25" repairable-without-evacuation="0.2"/>
@@ -1528,7 +1528,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="3" name="Obus 115 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010019" codeLFRIL="" codeNNO="1111110020019" id="70" id-nature="3" name="Obus 115 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.3" protection="CombattantProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
@@ -1550,7 +1550,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" name="Obus 115 OCC" nature="Solide" package-mass="0.041" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010020" codeLFRIL="" codeNNO="1111110020020" id="71" id-nature="3" name="Obus 115 OCC" nature="Solide" package-mass="0.041" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.1" protection="Composite" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1572,7 +1572,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="72" id-nature="3" name="Obus 115 OFL" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010021" codeLFRIL="" codeNNO="1111110020021" id="72" id-nature="3" name="Obus 115 OFL" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.2" protection="Composite" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1638,7 +1638,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="75" id-nature="3" name="Missile AT11" nature="Solide" package-mass="0.024" package-size="1" package-volume="0.27" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010022" codeLFRIL="" codeNNO="1111110020022" id="75" id-nature="3" name="Missile AT11" nature="Solide" package-mass="0.024" package-size="1" package-volume="0.27" type="MissileSol">
     <attritions>
       <attrition destruction="0.4" protection="Composite" repairable-with-evacuation="0.2" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.9" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1660,7 +1660,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="76" id-nature="3" name="Obus 120 OFL" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010023" codeLFRIL="" codeNNO="1111110020023" id="76" id-nature="3" name="Obus 120 OFL" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0.3" protection="Composite" repairable-with-evacuation="0.3" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1682,7 +1682,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="77" id-nature="3" name="Missile SA 14" nature="Solide" package-mass="0.02" package-size="2" package-volume="0.03" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010024" codeLFRIL="" codeNNO="1111110020024" id="77" id-nature="3" name="Missile SA 14" nature="Solide" package-mass="0.02" package-size="2" package-volume="0.03" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1704,7 +1704,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" id-nature="3" name="Missile SA 7" nature="Solide" package-mass="0.02" package-size="2" package-volume="0.001" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010025" codeLFRIL="" codeNNO="1111110020025" id="78" id-nature="3" name="Missile SA 7" nature="Solide" package-mass="0.02" package-size="2" package-volume="0.001" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1726,7 +1726,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="3" name="Missile AT4" nature="Solide" package-mass="0.012" package-size="1" package-volume="0.27" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010026" codeLFRIL="" codeNNO="1111110020026" id="79" id-nature="3" name="Missile AT4" nature="Solide" package-mass="0.012" package-size="1" package-volume="0.27" type="MissileSol">
     <attritions>
       <attrition destruction="0.4" protection="Composite" repairable-with-evacuation="0.3" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1779,7 +1779,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="3" name="Obus 23 OE" nature="Solide" package-mass="0.001" package-size="50" package-volume="0.001" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010027" codeLFRIL="" codeNNO="1111110020027" id="81" id-nature="3" name="Obus 23 OE" nature="Solide" package-mass="0.001" package-size="50" package-volume="0.001" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1801,7 +1801,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="82" id-nature="3" name="Missile SA 9" nature="Solide" package-mass="0.01" package-size="1" package-volume="0.01" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010028" codeLFRIL="" codeNNO="1111110020028" id="82" id-nature="3" name="Missile SA 9" nature="Solide" package-mass="0.01" package-size="1" package-volume="0.01" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1823,7 +1823,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="3" name="Missile SA 13" nature="Solide" package-mass="0.039" package-size="1" package-volume="0.54" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010029" codeLFRIL="" codeNNO="1111110020029" id="83" id-nature="3" name="Missile SA 13" nature="Solide" package-mass="0.039" package-size="1" package-volume="0.54" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1845,7 +1845,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="3" name="Missile SA 16" nature="Solide" package-mass="0.016" package-size="1" package-volume="0.04" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010030" codeLFRIL="" codeNNO="1111110020030" id="84" id-nature="3" name="Missile SA 16" nature="Solide" package-mass="0.016" package-size="1" package-volume="0.04" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1867,7 +1867,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="85" id-nature="3" name="Roquette BM22" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010031" codeLFRIL="" codeNNO="1111110020031" d-type="true" id="85" id-nature="3" name="Roquette BM22" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1898,7 +1898,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="86" id-nature="3" name="Roquette BM30" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010032" codeLFRIL="" codeNNO="1111110020032" d-type="true" id="86" id-nature="3" name="Roquette BM30" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1929,7 +1929,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="3" name="Obus 125 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010033" codeLFRIL="" codeNNO="1111110020033" id="87" id-nature="3" name="Obus 125 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.3" protection="CombattantProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
@@ -1951,7 +1951,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="3" name="Missile SA 6" nature="Solide" package-mass="1.9" package-size="3" package-volume="0.54" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010034" codeLFRIL="" codeNNO="1111110020034" id="88" id-nature="3" name="Missile SA 6" nature="Solide" package-mass="1.9" package-size="3" package-volume="0.54" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1973,7 +1973,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="3" name="Missile SA 11" nature="Solide" package-mass="2.6" package-size="4" package-volume="0.54" type="MissileAir">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010035" codeLFRIL="" codeNNO="1111110020035" id="89" id-nature="3" name="Missile SA 11" nature="Solide" package-mass="2.6" package-size="4" package-volume="0.54" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1995,7 +1995,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="90" id-nature="3" name="RO 80 EXPL AC" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010036" codeLFRIL="" codeNNO="1111110020036" id="90" id-nature="3" name="RO 80 EXPL AC" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0.2" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2070,10 +2070,10 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="93" id-nature="3" name="Obus 130  Fum" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010037" codeLFRIL="" codeNNO="1111110020037" d-type="true" id="93" id-nature="3" name="Obus 130  Fum" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="94" id-nature="3" name="Obus 130 OE" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010038" codeLFRIL="" codeNNO="1111110020038" d-type="true" id="94" id-nature="3" name="Obus 130 OE" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2104,16 +2104,16 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="95" id-nature="3" name="Obus 130 Ecl" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010039" codeLFRIL="" codeNNO="1111110020039" id="95" id-nature="3" name="Obus 130 Ecl" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="96" id-nature="3" name="Obus 122 OFUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010040" codeLFRIL="" codeNNO="1111110020040" d-type="true" id="96" id-nature="3" name="Obus 122 OFUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="6" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="97" id-nature="3" name="Obus 152 FUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010041" codeLFRIL="" codeNNO="1111110020041" d-type="true" id="97" id-nature="3" name="Obus 152 FUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="98" id-nature="3" name="Obus 203" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010042" codeLFRIL="" codeNNO="1111110020042" d-type="true" id="98" id-nature="3" name="Obus 203" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2144,7 +2144,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="99" id-nature="3" name="Obus 203 OE MPA" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010043" codeLFRIL="" codeNNO="1111110020043" d-type="true" id="99" id-nature="3" name="Obus 203 OE MPA" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2175,7 +2175,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="100" id-nature="3" name="Roquette 57" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010044" codeLFRIL="" codeNNO="1111110020044" id="100" id-nature="3" name="Roquette 57" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0.2" protection="Composite" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.6" protection="CombattantProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
@@ -2206,7 +2206,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1420-026" codeLFRIL="" codeNNO="" id="101" id-nature="3" name="Roquette RPG7" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010045" codeLFRIL="" codeNNO="1111110020045" id="101" id-nature="3" name="Roquette RPG7" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0.2" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2228,7 +2228,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="102" id-nature="3" name="Obus 100 OE" nature="Solide" package-mass="0.041" package-size="2" package-volume="0.067" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010047" codeLFRIL="" codeNNO="1111110020047" id="102" id-nature="3" name="Obus 100 OE" nature="Solide" package-mass="0.041" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.3" protection="CombattantProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.1"/>
@@ -2250,7 +2250,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="103" id-nature="3" name="CPLT EXPL 82" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010048" codeLFRIL="" codeNNO="1111110020048" id="103" id-nature="3" name="CPLT EXPL 82" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2281,7 +2281,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="104" id-nature="3" name="CPLT EXPL 60" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010049" codeLFRIL="" codeNNO="1111110020049" id="104" id-nature="3" name="CPLT EXPL 60" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2312,7 +2312,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1305780000007" id="105" id-nature="3" name="CART N 7,62 BD HOM" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1305780000007" id="105" id-nature="3" name="CART 7,62 N BD HOM" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="CombattantProtege" repairable-with-evacuation="0.25" repairable-without-evacuation="0.2"/>
@@ -2457,7 +2457,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="112" id-nature="3" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010052" codeLFRIL="" codeNNO="1111110020052" id="112" id-nature="3" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1305145533452" id="113" id-nature="3" name="Obus 25mm HEI EXPLO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
@@ -2504,7 +2504,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1320 326 0010" codeLFRIL="" codeNNO="1320 14 419 1501" id="115" id-nature="3" name="OE JUPU 155 F2 Kit RTC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010055" codeLFRIL="" codeNNO="1111110020055" id="115" id-nature="3" name="OE JUPU 155 F2 Kit RTC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2526,7 +2526,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="116" id-nature="3" name="Roquette BM 8" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010056" codeLFRIL="" codeNNO="1111110020056" id="116" id-nature="3" name="Roquette BM 8" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0.01" repairable-without-evacuation="0"/>
@@ -2580,25 +2580,25 @@
   <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="5680 14 210 7134" id="122" id-nature="3" name="barbele classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8970 14 481 4053" id="123" id-nature="3" name="RATION DE COMBAT 1" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8960 14 489 7152" id="124" id-nature="3" name="EAU MINERALE 1L T 1" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="125" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="126" id-nature="3" name="Rechange  NTI1 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="127" id-nature="3" name="Rechange  NTI2 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="128" id-nature="3" name="Rechange  NTI3" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="129" id-nature="3" name="Rechange  NTI1 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="130" id-nature="3" name="Rechange  NTI2 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="131" id-nature="3" name="Rechange  NTI2 TRS" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="132" id-nature="3" name="Rechange  NTI2 COTAC" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="133" id-nature="3" name="Rechange  NTI2 DEM" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="134" id-nature="3" name="Rechange  ALAT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="135" id-nature="3" name="Rechange  NTI1 EA" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="136" id-nature="3" name="Rechange NTI 1 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="137" id-nature="3" name="Rechange NTI 2 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="138" id-nature="3" name="Rechange NTI 3 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="139" id-nature="6" name="electricite" nature="Electricite" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="140" id-nature="5" name="eau courante" nature="Liquide" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="141" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
-  <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="00010057" codeLFRIL="" codeNNO="1111110020057" id="125" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010058" codeLFRIL="" codeNNO="1111110020058" id="126" id-nature="3" name="Rechange  NTI1 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010059" codeLFRIL="" codeNNO="1111110020059" id="127" id-nature="3" name="Rechange  NTI2 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010060" codeLFRIL="" codeNNO="1111110020060" id="128" id-nature="3" name="Rechange  NTI3" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010061" codeLFRIL="" codeNNO="1111110020061" id="129" id-nature="3" name="Rechange  NTI1 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010062" codeLFRIL="" codeNNO="1111110020062" id="130" id-nature="3" name="Rechange  NTI2 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010063" codeLFRIL="" codeNNO="1111110020063" id="131" id-nature="3" name="Rechange  NTI2 TRS" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010064" codeLFRIL="" codeNNO="1111110020064" id="132" id-nature="3" name="Rechange  NTI2 COTAC" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010065" codeLFRIL="" codeNNO="1111110020065" id="133" id-nature="3" name="Rechange  NTI2 DEM" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010066" codeLFRIL="" codeNNO="1111110020066" id="134" id-nature="3" name="Rechange  ALAT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010067" codeLFRIL="" codeNNO="1111110020067" id="135" id-nature="3" name="Rechange  NTI1 EA" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010068" codeLFRIL="" codeNNO="1111110020068" id="136" id-nature="3" name="Rechange NTI 1 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010069" codeLFRIL="" codeNNO="1111110020069" id="137" id-nature="3" name="Rechange NTI 2 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="00010070" codeLFRIL="" codeNNO="1111110020070" id="138" id-nature="3" name="Rechange NTI 3 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="00010071" codeLFRIL="" codeNNO="1111110020071" id="139" id-nature="6" name="electricite" nature="Electricite" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="00010072" codeLFRIL="" codeNNO="1111110020072" id="140" id-nature="5" name="eau courante" nature="Liquide" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="00010073" codeLFRIL="" codeNNO="1111110020073" id="141" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="00010074" codeLFRIL="" codeNNO="1111110020074" id="142" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="143" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
+  <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="144" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="1520245466" -->
+<!-- signature="0841791369" -->

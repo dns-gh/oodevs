@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Superviseur" password="" supervision="true">
+  <profile name="Superviseur" password="" role="supervisor" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -10,7 +10,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Camp Bleu" password="" supervision="false">
+  <profile name="Camp Bleu" password="" role="anibas" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -18,7 +18,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Camp Rouge" password="" supervision="false">
+  <profile name="Camp Rouge" password="" role="eniex" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -27,4 +27,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="3600054070" -->
+<!-- signature="0787594431" -->
