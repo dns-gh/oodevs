@@ -168,7 +168,7 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           it = _ref[_i];
           $(it).click(function() {
-            return $("#" + $(this).parent().parent().attr("data-rel")).toggle("fast");
+            return $("#briefing_" + $(this).parent().parent().attr("data-rel")).toggle("fast");
           });
         }
         _ref2 = $(this.el).find(".name .error");
@@ -189,7 +189,7 @@
           });
         });
         $(".form-actions .save").click(function() {
-          var it, list, rel, spin, _k, _len3, _ref3;
+          var id, it, list, spin, _k, _len3, _ref3;
           list = [];
           _ref3 = $(_this.el).find(".action .add, .action .update");
           for (_k = 0, _len3 = _ref3.length; _k < _len3; _k++) {
@@ -200,9 +200,8 @@
             setSpinner(spin);
             spin.appendTo($(it).parent());
             $(it).hide();
-            rel = $(it).parent().parent().attr("rel");
-            rel = rel.replace(/^briefing_/, '');
-            if (rel != null) list.push(rel);
+            id = $(it).parent().parent().attr("data-rel");
+            if (id != null) list.push(id);
           }
           if (!list.length) {
             print_error("Please select at least one package to install");

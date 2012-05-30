@@ -104,7 +104,7 @@ class PackageView extends Backbone.View
 
             for it in $(@el).find ".action .more"
                 $(it).click ->
-                    $("#" + $(@).parent().parent().attr "data-rel").toggle "fast"
+                    $("#briefing_" + $(@).parent().parent().attr "data-rel").toggle "fast"
 
             for it in $(@el).find ".name .error"
                 $(it).tooltip placement: "right"
@@ -124,9 +124,8 @@ class PackageView extends Backbone.View
                     setSpinner spin
                     spin.appendTo $(it).parent()
                     $(it).hide()
-                    rel = $(it).parent().parent().attr "rel"
-                    rel = rel.replace /^briefing_/, ''
-                    list.push rel if rel?
+                    id = $(it).parent().parent().attr "data-rel"
+                    list.push id if id?
                 if !list.length
                     print_error "Please select at least one package to install"
                     return
