@@ -238,14 +238,21 @@ void TeamsModel::ReadLogistic( xml::xistream& xis, Model& model )
 // -----------------------------------------------------------------------------
 void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Entity_ABC& superior )
 {
-    int id = xis.attribute< int >( "id" );
-    Entity_ABC* entity = model.formations_.Find( id );
-    if( !entity )
-        entity = model.agents_.FindAutomat( id );
-    if( entity )
+    try
     {
-        LogisticHierarchiesBase* hierarchies = entity->Retrieve< LogisticHierarchiesBase >();
-        if( hierarchies )
-            hierarchies->Load( xis, &superior );
+        int id = xis.attribute< int >( "id" );
+        Entity_ABC* entity = model.formations_.Find( id );
+        if( !entity )
+            entity = model.agents_.FindAutomat( id );
+        if( entity )
+        {
+            LogisticHierarchiesBase* hierarchies = entity->Retrieve< LogisticHierarchiesBase >();
+            if( hierarchies )
+                hierarchies->Load( xis, &superior );
+        }
+    }
+    catch( std::exception& e )
+    {
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
     }
 }
