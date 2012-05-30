@@ -1,44 +1,11 @@
-get_url = (url) ->
-    return window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
-
-ajax = (url, data, success, error) ->
-    $.ajax
-        cache:    false
-        data:     data,
-        dataType: "json"
-        error:    error,
-        success:  success,
-        url:      get_url url
-
-Handlebars.registerHelper "is_header", (items, type, options) ->
-    if items[0]?.type == type
-        return options.fn this
-    return options.inverse this
-
-Handlebars.registerHelper "has_item_type", (items, type, options) ->
-    for it in items
-        if it.type == type
-            return options.fn this
-    return options.inverse this
-
-Handlebars.registerHelper "is_odd_row", (items, type, options) ->
-    types = {}
-    idx = 0
-    for it in items
-        break if it.type == type
-        ++idx unless types[it.type]?
-        types[it.type] = true
-        ++idx
-    if idx&1
-        return options.fn this
-    return options.inverse this
-
-Handlebars.registerHelper "forall", (items, type, options) ->
-    buffer = ''
-    for it in items
-        if it.type == type
-            buffer += options.fn it
-    return buffer
+# *****************************************************************************
+#
+# This file is part of a MASA library or program.
+# Refer to the included end-user license agreement for restrictions.
+#
+# Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+#
+# *****************************************************************************
 
 package_template = Handlebars.compile $("#package_template").html()
 package_error_template = Handlebars.compile $("#package_error_template").html()

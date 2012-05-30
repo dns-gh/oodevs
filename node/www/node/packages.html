@@ -22,21 +22,21 @@
                     [/#macro]
 
                     [#macro row type]
-                    {{#is_header items "${type}"}}
+                    {{#is_first_item items "${type}"}}
                     <thead>
                         [@header '' type 'th' /]
                     </thead>
                     <tbody>
                         {{else}}
                         {{#has_item_type items "${type}"}}
-                        {{#is_odd_row items "${type}"}}
+                        {{#is_odd_item_row items "${type}"}}
                         <tr class="hide"><td colspan="${num_cols}"></td></tr>
-                        {{/is_odd_row}}
+                        {{/is_odd_item_row}}
                         [@header ' sub_header' type 'td' /]
                         {{/has_item_type}}
-                        {{/is_header}}
+                        {{/is_first_item}}
 
-                        {{#forall items "${type}"}}
+                        {{#for_all_items items "${type}"}}
                         <tr data-rel="{{id}}" class="package_row">
                             <td class="name">
                                 {{name}}
@@ -65,7 +65,7 @@
                         </tr>
                         <tr class="hide"><td colspan="${num_cols}"></td></tr>
                         [/#if]
-                        {{/forall}}
+                        {{/for_all_items}}
                         [/#macro]
                         [@row type="model" /]
                         [@row type="terrain" /]

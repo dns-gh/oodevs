@@ -1,27 +1,18 @@
-ajax = (url, data, success, error) ->
-    url = window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
-    $.ajax
-        cache:    false
-        data:     data,
-        dataType: "json"
-        error:    error,
-        success:  success,
-        url:      url
-
-Handlebars.registerHelper "is_option", (value, options) ->
-    if value of options.hash
-        return options.fn this
-    return options.inverse this
+# *****************************************************************************
+#
+# This file is part of a MASA library or program.
+# Refer to the included end-user license agreement for restrictions.
+#
+# Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+#
+# *****************************************************************************
 
 node_settings = Handlebars.compile $("#node_settings_template").html()
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
 
 print_error = (text) ->
-    ctl = $("#node_error")
-    ctl.html node_error_template content: text
-    ctl.show()
-    setTimeout (->ctl.hide()), 3000
+    display_error "node_error", node_error_template, text
 
 class NodeItem extends Backbone.Model
     view: NodeItemView
@@ -56,13 +47,7 @@ class NodeList extends Backbone.Collection
         return @name_compare lhs, rhs
 
     name_compare: (lhs, rhs) =>
-        a = lhs.get("name").toLowerCase()
-        b = rhs.get("name").toLowerCase()
-        if a > b
-            return +1
-        if a < b
-            return -1
-        return 0
+        return text_compare lhs.get "name", rhs.get "name"
 
 class NodeItemView extends Backbone.View
     tagName:   "div"
@@ -118,17 +103,6 @@ class NodeItemView extends Backbone.View
     toggle_load: =>
         for it in $(@el).find(".session_top_right .btn")
             $(it).toggle()
-
-diff_models = (prev, next) ->
-    not_found = []
-    found = []
-    prev_ids = _(prev).map (item) -> item.id
-    for item in next
-        if prev_ids.indexOf(item.id) == -1
-            not_found.push item
-        else
-            found.push item
-    return [not_found, found]
 
 class NodeListView extends Backbone.View
     el: $( "#nodes" )

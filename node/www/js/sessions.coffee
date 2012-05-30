@@ -1,26 +1,17 @@
-ajax = (url, data, success, error) ->
-    url = window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
-    $.ajax
-        cache:    false
-        data:     data,
-        dataType: "json"
-        error:    error,
-        success:  success,
-        url:      url
-
-Handlebars.registerHelper "is_option", (value, options) ->
-    if value of options.hash
-        return options.fn this
-    return options.inverse this
+# *****************************************************************************
+#
+# This file is part of a MASA library or program.
+# Refer to the included end-user license agreement for restrictions.
+#
+# Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+#
+# *****************************************************************************
 
 session_template = Handlebars.compile $("#session_template").html()
 session_error_template = Handlebars.compile $("#session_error_template").html()
 
 print_error = (text) ->
-    ctl = $("#session_error")
-    ctl.html session_error_template content: text
-    ctl.show()
-    setTimeout (-> ctl.hide()), 3000
+    display_error "session_error", session_error_template, text
 
 class SessionItem extends Backbone.Model
     view: SessionItemView
@@ -62,13 +53,7 @@ class SessionList extends Backbone.Collection
         return @name_compare lhs, rhs
 
     name_compare: (lhs, rhs) =>
-        a = lhs.get("name").toLowerCase()
-        b = rhs.get("name").toLowerCase()
-        if a > b
-            return +1
-        if a < b
-            return -1
-        return 0
+        return text_compare lhs.get "name", rhs.get "name"
 
     status_compare: (lhs, rhs) =>
         a = lhs.get "status"
@@ -81,32 +66,16 @@ class SessionList extends Backbone.Collection
         @order = order
         @sort()
 
-spin_opts =
-  lines:     12
-  length:    4
-  width:     2
-  radius:    4
-  rotate:    0
-  color:     '#000'
-  speed:     1
-  trail:     60
-  shadow:    false
-  hwaccel:   true
-  className: 'spinner'
-  zIndex:    2e9
-
 class SessionItemView extends Backbone.View
     tagName:   "div"
     className: "row"
     filters:   []
-    spinner:   null
     search:    null
 
     initialize: (obj) ->
         @model.bind 'change', @render
         @filters = obj.filters
         @search  = obj.search
-        @spinner = new Spinner(spin_opts).spin()
         @render()
 
     events:
@@ -129,7 +98,7 @@ class SessionItemView extends Backbone.View
         if @search and !@is_search()
             return
         $(@el).html session_template @model.attributes
-        $(@el).find(".session_top_right .spin_btn").html @spinner.el
+        set_spinner $(@el).find(".session_top_right .spin_btn")
 
     delete: =>
         @toggle_load()
@@ -166,17 +135,6 @@ class SessionItemView extends Backbone.View
     set_search: (item) =>
         @search = item
         @render()
-
-diff_models = (prev, next) ->
-    not_found = []
-    found = []
-    prev_ids = _(prev).map (item) -> item.id
-    for item in next
-        if prev_ids.indexOf(item.id) == -1
-            not_found.push item
-        else
-            found.push item
-    return [not_found, found]
 
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"
