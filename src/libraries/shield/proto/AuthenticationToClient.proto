@@ -78,21 +78,21 @@ message RoleType { required uint32 id = 1; }
 message MsgProfile {
     required string                  login                   = 1;
     optional string                  password                = 2;
-    optional Common.FormationIdList  read_only_formations    = 3;
-    optional Common.FormationIdList  read_write_formations   = 4;
-    optional Common.AutomatIdList    read_only_automates     = 5;
-    optional Common.AutomatIdList    read_write_automates    = 6;
-    optional Common.PartyIdList      read_only_camps         = 7;
-    optional Common.PartyIdList      read_write_camps        = 8;
-    optional Common.CrowdIdList      read_only_crowds        = 9;
-    optional Common.CrowdIdList      read_write_crowds       = 10;
-    optional Common.PopulationIdList write_population        = 11;
+    optional Common.FormationIdList  read_only_formations    = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.FormationIdList  read_write_formations   = 4; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.AutomatIdList    read_only_automates     = 5; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.AutomatIdList    read_write_automates    = 6; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.PartyIdList      read_only_camps         = 7; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.PartyIdList      read_write_camps        = 8; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.CrowdIdList      read_only_crowds        = 9; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.CrowdIdList      read_write_crowds       = 10; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.PopulationIdList write_population        = 11; // Valeur 0 non possible [06/12/2011 FT45246]
     required bool                    supervisor              = 12;
     optional RoleType                role                    = 13;
 }
 
 message MsgProfileDescriptionList {
-    repeated MsgProfileDescription elem = 1;
+    repeated MsgProfileDescription elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgProfileDescription {

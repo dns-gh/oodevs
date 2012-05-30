@@ -11,30 +11,30 @@ package Common;
 
 // Entity Id types
 message AutomatId                          { required uint32              id = 1; }
-message AutomatIdList                      { repeated AutomatId         elem = 1; }
+message AutomatIdList                      { repeated AutomatId         elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message FormationId                        { required uint32              id = 1; }
-message FormationIdList                    { repeated FormationId       elem = 1; }
+message FormationIdList                    { repeated FormationId       elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message KnowledgeGroupId                   { required uint32              id = 1; }
 message ObjectId                           { required uint32              id = 1; }
 message ObjectKnowledgeId                  { required uint32              id = 1; }
-message ObjectKnowledgeIdList              { repeated ObjectKnowledgeId elem = 1; }
+message ObjectKnowledgeIdList              { repeated ObjectKnowledgeId elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message PartyId                            { required uint32              id = 1; }
-message PartyIdList                        { repeated PartyId           elem = 1; }
+message PartyIdList                        { repeated PartyId           elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message CrowdId                            { required uint32              id = 1; }
-message CrowdIdList                        { repeated CrowdId           elem = 1; }
+message CrowdIdList                        { repeated CrowdId           elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message CrowdKnowledgeId                   { required uint32              id = 1; }
 message CrowdConcentrationId               { required uint32              id = 1; }
 message CrowdConcentrationKnowledgeId      { required uint32              id = 1; }
 message CrowdFlowId                        { required uint32              id = 1; }
 message CrowdFlowKnowledgeId               { required uint32              id = 1; }
 message UnitId                             { required uint32              id = 1; }
-message UnitIdList                         { repeated UnitId            elem = 1; }
+message UnitIdList                         { repeated UnitId            elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message UnitKnowledgeId                    { required uint32              id = 1; }
-message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1; }
+message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message UrbanObjectKnowledgeId             { required uint32              id = 1; }
 message ClientObjectId                     { required uint32              id = 1; }
 message PopulationId                       { required uint32              id = 1; }
-message PopulationIdList                   { repeated uint32              id = 1; }
+message PopulationIdList                   { repeated uint32              id = 1; } // Mise à jour complète [29/11/2011 FT45246]
 
 message Tasker {
     optional AutomatId    automat    = 1;
@@ -141,21 +141,21 @@ enum UnitFireType {
 }
 
 message MsgDotationStock {
-   required ResourceType ressource_id        = 1;
+   required ResourceType ressource_id        = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32        quantite_disponible = 2;
 }
 
 message SeqOfDotationStock {
-   repeated MsgDotationStock elem = 1;
+   repeated MsgDotationStock elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgDotationQuota {
-   required ResourceType ressource_id        = 1;
+   required ResourceType ressource_id        = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32        quota_disponible    = 2;
 }
 
 message SeqOfDotationQuota {
-   repeated MsgDotationQuota            elem                = 1;
+   repeated MsgDotationQuota            elem                = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 enum EnumLightingType {
@@ -174,29 +174,29 @@ enum EnumLightingType {
 }
 
 message MsgAutomatChangeKnowledgeGroup {
-   required AutomatId        automat         = 1;
-   required PartyId          party           = 2;
-   required KnowledgeGroupId knowledge_group = 3;
+   required AutomatId        automat         = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required PartyId          party           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   required KnowledgeGroupId knowledge_group = 3; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgChangeLogisticLinks {
-   required ParentEntity requester     = 1;
-   repeated ParentEntity superior      = 2;
+   required ParentEntity requester     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   repeated ParentEntity superior      = 2; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgAutomatChangeSuperior_oid_superior {
-   optional FormationId  formation = 1;
-   optional AutomatId    automat   = 2;
+   optional FormationId  formation = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional AutomatId    automat   = 2; // Pas utilisé dans SCIPIO à supprimer de l'ICD
 }
 
 message MsgAutomatChangeSuperior {
-   required AutomatId                               automat  = 1;
+   required AutomatId                               automat  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required MsgAutomatChangeSuperior_oid_superior   superior = 2;
 }
 
 message MsgUnitChangeSuperior {
-   required UnitId    unit   = 1;
-   required AutomatId parent = 2;
+   required UnitId    unit   = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required AutomatId parent = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 ///////////// end <only used by SimToClient> /////////////
@@ -412,7 +412,7 @@ message MsgCoordLatLong {
 }
 
 message MsgCoordLatLongList {
-    repeated MsgCoordLatLong elem = 2;
+    repeated MsgCoordLatLong elem = 2; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLocation {
@@ -431,17 +431,17 @@ message MsgLocation {
 }
 
 message MsgLine         { required MsgLocation location = 1; }
-message MsgLocationList { repeated MsgLocation     elem = 1; }
+message MsgLocationList { repeated MsgLocation     elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message MsgPath         { required MsgLocation location = 1; }
-message MsgPathList     { repeated MsgPath      elem = 1; }
+message MsgPathList     { repeated MsgPath      elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message MsgPoint        { required MsgLocation location = 1; }
-message MsgPointList    { repeated MsgPoint     elem = 1; }
+message MsgPointList    { repeated MsgPoint     elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 message MsgPolygon      { required MsgLocation location = 1; }
-message MsgPolygonList  { repeated MsgPolygon   elem = 1; }
+message MsgPolygonList  { repeated MsgPolygon   elem = 1; } // Mise à jour complète [29/11/2011 FT45246]
 
 // Order parameters
 message MsgLogMedicalPriorities {
-   repeated EnumHumanWound elem = 1;
+   repeated EnumHumanWound elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message ObstacleType
@@ -453,55 +453,55 @@ message ObstacleType
 }
 
 message MsgPlannedWork {
-   required string                            type                  = 1;
+   required string                            type                  = 1; // Valeur "" non possible [06/12/2011 FT45246] objectType aurait été mieux
    required MsgLocation                       position              = 2;
    optional ObstacleType.DemolitionTargetType type_obstacle         = 3;
    optional float                             densite               = 4;
-   optional AutomatId                         tc2                   = 5;
+   optional AutomatId                         tc2                   = 5; // Valeur 0 possible [06/12/2011 FT45246]
    optional int32                             activity_time         = 6;    //in seconds
    optional int32                             activation_time       = 7;    //in seconds
-   required string                            name                  = 8;
+   required string                            name                  = 8;
 }
 
-message MsgPlannedWorkList {
-   repeated MsgPlannedWork   elem = 1;
+message MsgPlannedWorkList { // Pas utilisé dans SCIPIO à supprimer [29/11/2011]
+   repeated MsgPlannedWork   elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLogMaintenancePriorities {
-   repeated EquipmentType elem = 1;
+   repeated EquipmentType elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message SupplyFlowResource
 {
-    required ResourceType resourceType = 1;
+    required ResourceType resourceType = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required uint32       quantity     = 2;
 }
 
 message SupplyFlowTransporter
 {
-    required EquipmentType equipmentType = 1;
+    required EquipmentType equipmentType = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required uint32        quantity      = 2;
 }
 
 message SupplyFlowRecipient
 {
-    required AutomatId          receiver  = 1;
-    repeated SupplyFlowResource resources = 2;
+    required AutomatId          receiver  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    repeated SupplyFlowResource resources = 2; // Mise à jour complète [29/11/2011 FT45246]
     optional MsgPointList       path      = 3;
 }
 
 message PushFlowParameters
 {
-    repeated SupplyFlowRecipient   recipients   = 1;
-    repeated SupplyFlowTransporter transporters = 2;
+    repeated SupplyFlowRecipient   recipients   = 1; // Mise à jour complète [29/11/2011 FT45246]
+    repeated SupplyFlowTransporter transporters = 2; // Mise à jour complète [29/11/2011 FT45246]
     optional MsgPointList          wayBackPath  = 3;
 }
 
 message PullFlowParameters
 {
-    required ParentEntity          supplier     = 1;
-    repeated SupplyFlowResource    resources    = 2;
-    repeated SupplyFlowTransporter transporters = 3;
+    required ParentEntity          supplier     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    repeated SupplyFlowResource    resources    = 2; // Mise à jour complète [29/11/2011 FT45246]
+    repeated SupplyFlowTransporter transporters = 3; // Mise à jour complète [29/11/2011 FT45246]
     optional MsgPointList          wayOutPath   = 4;
     optional MsgPointList          wayBackPath  = 5;
 }
@@ -512,7 +512,7 @@ message MsgMissionObjective {
 }
 
 message MsgMissionObjectiveList {
-   repeated MsgMissionObjective elem = 1;
+   repeated MsgMissionObjective elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLimaOrder {
@@ -530,16 +530,16 @@ message MsgLimaOrder {
     }
     required MsgLine     lima      = 1;
     required MsgDateTime horaire   = 2;
-    repeated Function    fonctions = 3;
+    repeated Function    fonctions = 3; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLimasOrder {
-   repeated MsgLimaOrder elem = 1;
+   repeated MsgLimaOrder elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgChangeDiplomacy {
-   required PartyId       party1     = 1;
-   required PartyId       party2     = 2;
+   required PartyId       party1     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required PartyId       party2     = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    required EnumDiplomacy diplomatie = 3;
 }
 
@@ -562,16 +562,16 @@ message MsgAtlasNature {
 
 message Extension {
     message Entry {
-        required string name  = 1;
+        required string name  = 1; // Valeur "" non possible [06/12/2011 FT45246]
         required string value = 2;
     }
-    repeated Entry entries = 1;
+    repeated Entry entries = 1; // Mise à jour partielle indexée par name [29/11/2011 FT45246]
 }
 
 message ResourceNetworkElement
 {
-    required ObjectId            object   = 1;
-    required ResourceNetworkType resource = 2;
+    required ObjectId            object   = 1; // Valeur "" non possible [06/12/2011 FT45246]
+    required ResourceNetworkType resource = 2; // Valeur "" non possible [06/12/2011 FT45246]
 }
 
 message MsgMissionParameter {
@@ -587,15 +587,15 @@ message MsgMissionParameter {
         optional MsgPath                     path                        = 8;
         optional MsgLine                     limit                       = 9;
         optional MsgLimasOrder               phaseLine                   = 10;
-        optional AutomatId                   automat                     = 11;
-        optional UnitId                      agent                       = 12;
-        optional UnitKnowledgeId             agentKnowledge              = 13;
-        optional CrowdKnowledgeId            crowdKnowledge              = 14;
-        optional ObjectKnowledgeId           objectKnowledge             = 15;
-        optional UrbanObjectKnowledgeId      urbanKnowledge              = 16;
+        optional AutomatId                   automat                     = 11; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional UnitId                      agent                       = 12; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional UnitKnowledgeId             agentKnowledge              = 13; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional CrowdKnowledgeId            crowdKnowledge              = 14; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional ObjectKnowledgeId           objectKnowledge             = 15; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional UrbanObjectKnowledgeId      urbanKnowledge              = 16; // Valeur 0 non possible [06/12/2011 FT45246]
         optional MsgPlannedWork              plannedWork                 = 17;
         optional MsgAtlasNature              atlasNature                 = 18;
-        optional ResourceType                resourceType                = 19;
+        optional ResourceType                resourceType                = 19; // Valeur 0 non possible [06/12/2011 FT45246]
         optional MsgLogMaintenancePriorities logMaintenancePriorities    = 20;
         optional MsgLogMedicalPriorities     logMedicalPriorities        = 21;
         optional ResourceNetworkElement      resourceNetwork             = 22;
@@ -607,39 +607,39 @@ message MsgMissionParameter {
         optional MsgPolygonList              polygonList                 = 26;
         optional MsgLocation                 location                    = 27;
         optional MsgLocationList             locationList                = 28;
-        optional UnitIdList                  unitList                    = 29;
-        optional AutomatIdList               automatList                 = 30;
-        optional UnitKnowledgeIdList         unitKnowledgeList           = 31;
-        optional ObjectKnowledgeIdList       objectKnowledgeList         = 32;
-        optional EquipmentType               equipmentType               = 33;
-        optional FireId                      tirIndirect                 = 34;
+        optional UnitIdList                  unitList                    = 29; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional AutomatIdList               automatList                 = 30; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional UnitKnowledgeIdList         unitKnowledgeList           = 31; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional ObjectKnowledgeIdList       objectKnowledgeList         = 32; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional EquipmentType               equipmentType               = 33; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional FireId                      tirIndirect                 = 34; // Valeur 0 non possible [06/12/2011 FT45246]
         optional string                      aCharStr                    = 35;
         optional MsgMissionObjective         missionObjective            = 36;
         optional MsgMissionObjectiveList     missionObjectiveList        = 37;
-        optional ObjectId                    object                      = 38;
-        optional PartyId                     party                       = 39;
-        optional FormationId                 formation                   = 40;
+        optional ObjectId                    object                      = 38; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional PartyId                     party                       = 39; // Valeur 0 non possible [06/12/2011 FT45246]
+        optional FormationId                 formation                   = 40; // Valeur 0 non possible [06/12/2011 FT45246]
         optional uint32                      identifier                  = 41;
         optional int32                       quantity                    = 42;
-        optional KnowledgeGroupId            knowledgeGroup              = 43;
+        optional KnowledgeGroupId            knowledgeGroup              = 43; // Valeur 0 non possible [06/12/2011 FT45246]
         optional Extension                   extensionList               = 44;
         optional PushFlowParameters          push_flow_parameters        = 45;
         optional PullFlowParameters          pull_flow_parameters        = 46;
-        repeated Value                       list                        = 47;
+        repeated Value                       list                        = 47; // Mise à jour complète [29/11/2011 FT45246]
         //
         optional int32                       external_identifier         = 48;
     }
     optional bool  null_value           = 1;
-    repeated Value value                = 2;
+    repeated Value value                = 2; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgMissionParameters {
-   repeated MsgMissionParameter elem = 1;
+   repeated MsgMissionParameter elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgUnitOrder {
-    required UnitId               tasker          = 1;
-    required MissionType          type            = 2;
+    required UnitId               tasker          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required MissionType          type            = 2; // Valeur 0 possible [06/12/2011 FT45246] càd pas ou plus de mission
     optional MsgMissionParameters parameters      = 3;
     optional string               label           = 4;
     optional MsgLocation          symbolLocation  = 5;
@@ -647,8 +647,8 @@ message MsgUnitOrder {
 }
 
 message MsgAutomatOrder {
-    required AutomatId            tasker          = 1;
-    required MissionType          type            = 2;
+    required AutomatId            tasker          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required MissionType          type            = 2; // Valeur 0 possible [06/12/2011 FT45246] càd pas ou plus de mission
     optional MsgMissionParameters parameters      = 3;
     optional string               label           = 4;
     optional MsgLocation          symbolLocation  = 5;
@@ -656,8 +656,8 @@ message MsgAutomatOrder {
 }
 
 message MsgCrowdOrder {
-    required CrowdId              tasker          = 1;
-    required MissionType          type            = 2;
+    required CrowdId              tasker          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required MissionType          type            = 2; // Valeur 0 possible [06/12/2011 FT45246] càd pas ou plus de mission
     optional MsgMissionParameters parameters      = 3;
     optional string               label           = 4;
     optional MsgLocation          symbolLocation  = 5;
@@ -674,15 +674,15 @@ message ClientObjectProperty {
         optional float float_value              = 4;
         optional bool bool_value                = 5;
     }
-    required string name = 1;
+    required string name = 1; // Valeur "" non possible [06/12/2011 FT45246]
     required Value value = 2;
 }
 
 message Diffusion {
-   optional AutomatId        automat         = 1;
-   optional FormationId      formation       = 2;
-   repeated PartyId          party           = 3;
-   optional KnowledgeGroupId knowledge_group = 4;
+   optional AutomatId        automat         = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional FormationId      formation       = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   repeated PartyId          party           = 3; // Mise à jour complète [29/11/2011 FT45246] - // Valeur 0 non possible [06/12/2011 FT45246]
+   optional KnowledgeGroupId knowledge_group = 4; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgShape {
@@ -695,11 +695,11 @@ message MsgShape {
    optional uint32              font_size            = 7;
 }
 
-message MsgChatTarget {
+message MsgChatTarget { // Pas utilisé dans SCIPIO
    required string                      profile             = 1;
 }
 
-message MsgTextMessage {
+message MsgTextMessage { // Pas utilisé dans SCIPIO
     required MsgChatTarget source  = 1;
     required MsgChatTarget target  = 2;
     required string        message = 3;
@@ -708,7 +708,7 @@ message MsgTextMessage {
 // Urban attributes
 
 message UrbanUsage {
-    required string role  = 1;
+    required string role  = 1; // Valeur "" non possible [06/12/2011 FT45246]
     required uint32 percentage = 2;
 }
     
@@ -718,12 +718,12 @@ message ResourceNetwork
 {
     message Link
     {
-        required ObjectId object  = 1;
+        required ObjectId object  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
         required int32  capacity  = 2;
         required uint32 flow      = 3;
     }
     required ResourceNetworkType resource        = 1;
-    repeated Link                link            = 2;
+    repeated Link                link            = 2; // Mise à jour complète [29/11/2011 FT45246]
     required bool                enabled         = 3;
     optional uint32              max_stock       = 4;
     optional uint32              stock           = 5;
@@ -737,25 +737,25 @@ message ResourceNetwork
 }
 
 message ObjectAttributeResourceNetwork {
-   repeated ResourceNetwork network = 1;
+   repeated ResourceNetwork network = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message ObjectAttributeConstruction {
-   optional ResourceType resource       = 1;
+   optional ResourceType resource       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32        dotation_nbr   = 2;
    optional float        density        = 3;
    optional int32        percentage     = 4;
 }
 
 message ObjectAttributeValorisation {
-   optional ResourceType resource       = 1;
+   optional ResourceType resource       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32        dotation_nbr   = 2;
    optional float        density        = 3;
    optional int32        percentage     = 4;
 }
 
 message ObjectAttributeLogistic {
-   required ParentEntity logistic_superior = 1;
+   required ParentEntity logistic_superior = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message ObjectAttributeLodging {
@@ -774,8 +774,8 @@ message ObjectAttributeObstacle {
 message ObjectAttributeActivityTime {
    optional int32                       activity_time       = 1;        // 600 s (message sent at 12:00)
    optional int32                       activation_time     = 2;        // 3600s
-   optional MsgDateTime                 start_activity      = 3;
-   optional MsgDateTime                 end_activity        = 4;
+   optional MsgDateTime                 start_activity      = 3;        // 13:00
+   optional MsgDateTime                 end_activity        = 4;        // 13:10
 }
 
 message ObjectAttributeBypass {
@@ -788,17 +788,17 @@ message ObjectAttributeEffectDelay {
 
 message ObjectAttributeNBC {
    required int32                danger_level        = 1;
-   repeated NBCAgentType         nbc_agents          = 2;
+   repeated NBCAgentType         nbc_agents          = 2; // Mise à jour complète [29/11/2011 FT45246] - // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message StockResource {
-   required ResourceType         resource = 1;
+   required ResourceType         resource = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32                current  = 2;
    optional int32                maximum  = 3;
 }
 
-message ObjectAttributeStock {
-   repeated StockResource               resources           = 1;
+message ObjectAttributeStock { // Pas utilisé dans SCIPIO, à supprimer de l'ICD
+   repeated StockResource               resources           = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message ObjectAttributeCrossingSite {
@@ -821,25 +821,25 @@ message MsgLocatedQuantity{
    required float                       quantity            = 2;
 }
 
-message MsgLocatedQuantityList {
+message MsgLocatedQuantityList { // Pas utilisé dans SCIPIO, à supprimer de l'ICD
    repeated MsgLocatedQuantity          elem                = 1;
 }
 
-message ObjectAttributeToxicCloud {
+message ObjectAttributeToxicCloud { // Pas utilisé dans SCIPIO, à supprimer de l'ICD
    required MsgLocatedQuantityList      quantities          = 1;
 }
 
 message ObjectAttributeFire {
-   required string class_name = 1;
+   required string class_name = 1; // Valeur "" non possible [06/12/2011 FT45246]
    required int32 max_combustion_energy = 2;
 }
 
-message ObjectAttributeBurn {
+message ObjectAttributeBurn { // Pas utilisé dans SCIPIO, à supprimer de l'ICD
    required int32 current_heat = 1;
    required int32 combustion_energy = 2;
 }
 
-message ObjectAttributeBurnSurface {
+message ObjectAttributeBurnSurface { // Pas utilisé dans SCIPIO, à supprimer de l'ICD
 	message BurningCell {
 		message PreIgnition {
 			required int32 ignition_energy = 1;
@@ -869,19 +869,19 @@ message ObjectAttributeTrafficability {
 }
 
 message ObjectAttributeUnderground {
-    required string network_name = 1;
+    required string network_name = 1; // Valeur "" non possible [06/12/2011 FT45246]
     required bool   available    = 2;
 }
 
 message MedicalTreatmentBedCapacity {
-    required int32 type_id = 1;  // Cf. Data/MedicalTreatment.xml
+    required int32 type_id = 1;  // Cf. Data/MedicalTreatment.xml // Valeur 0 non possible [06/12/2011 FT45246]
     optional uint32 baseline_count = 2;
     optional uint32 available_count = 3;
     optional uint32 emergency_count = 4;
 }
 
 message ObjectAttributeNBCType {
-   required NBCAgentType agent = 1;
+   required NBCAgentType agent = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32        concentration = 2;
    required int32        source_life_duration = 3;
 }
@@ -931,12 +931,12 @@ message MsgWeatherAttributes {
 
 //adhesions
 message PartyAdhesion {
-    required PartyId party = 1;
+    required PartyId party = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required float value = 2;
 }
 
 message PartyAdhesions {
-    repeated PartyAdhesion adhesion = 1;
+    repeated PartyAdhesion adhesion = 1; // Mise à jour partielle indexée par party [29/11/2011 FT45246]
 }
 
 // Human repartition

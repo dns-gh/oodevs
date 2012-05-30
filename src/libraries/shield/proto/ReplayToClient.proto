@@ -41,7 +41,7 @@ message MsgTimeTable {
         required Common.MsgDateTime simulation_time = 2;
         required Common.MsgDateTime real_time       = 3;
     }
-    repeated TimeMapping time_table_item = 1;
+    repeated TimeMapping time_table_item = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgNewDataChunkNotification {

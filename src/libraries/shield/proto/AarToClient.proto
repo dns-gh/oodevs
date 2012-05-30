@@ -15,7 +15,7 @@ message MsgAarInformation {
 
 message MsgPlotResult {
     required uint32 identifier = 1;
-    repeated float  values     = 2;
+    repeated float  values     = 2; // Mise à jour complète [29/11/2011 FT45246]
     required string error      = 3;
     optional uint32 begin_tick = 4;
 }

@@ -13,17 +13,17 @@ import "Common.proto";
 
 // Drawing/shapes
 message MsgShapeCreation {
-   required Common.DrawingId id    = 1;
+   required Common.DrawingId id    = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required Common.MsgShape shape = 2;
 }
 
 message MsgShapeUpdate {
-   required Common.DrawingId id    = 1;
+   required Common.DrawingId id    = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required Common.MsgShape  shape = 2;
 }
 
 message MsgShapeDestruction {
-   required Common.DrawingId id = 1;
+   required Common.DrawingId id = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message ShapeRequestAck {
@@ -48,13 +48,13 @@ message MsgShapeDestructionRequestAck {
 // markers (used during exercise and in AAR)
 
 message MsgMarkerCreation {
-    required Common.MarkerId            marker      = 1;
+    required Common.MarkerId            marker      = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 	required Common.MsgMarker           definition  = 2;
 	required Common.MsgDateTime		    date	    = 3;
 }
 
 message MsgMarkerUpdate {
-    required Common.MarkerId            marker               = 1;
+    required Common.MarkerId            marker               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.MsgDateTime         date                 = 2;
     optional string                     name                 = 3; 
     optional string                     description          = 4;
@@ -63,7 +63,7 @@ message MsgMarkerUpdate {
 }
 
 message MsgMarkerDestruction {
-	required Common.MarkerId            marker      = 1;
+	required Common.MarkerId            marker      = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MarkerRequestAck {
@@ -97,15 +97,15 @@ message ClientObjectAck {
 }
 
 message MsgClientObjectCreation {
-    required Common.ClientObjectId object           = 1;
-    required string name                            = 2;
-    repeated Common.ClientObjectProperty properties = 3;
+    required Common.ClientObjectId object           = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required string name                            = 2; // Valeur "" non possible [06/12/2011 FT45246]
+    repeated Common.ClientObjectProperty properties = 3; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgClientObjectUpdate {
-    required Common.ClientObjectId       object     = 1;
-    optional string                      name       = 2;
-    repeated Common.ClientObjectProperty properties = 3;
+    required Common.ClientObjectId       object     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional string                      name       = 2; // Valeur "" non possible [06/12/2011 FT45246]
+    repeated Common.ClientObjectProperty properties = 3; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgClientObjectDestruction {
@@ -113,17 +113,17 @@ message MsgClientObjectDestruction {
 }
 
 message MsgClientObjectCreationRequestAck {
-    required string    name                             = 1;
+    required string    name                             = 1; // Valeur "" non possible [06/12/2011 FT45246]
     required ClientObjectAck.ErrorCode error_code       = 2;
 }
 
 message MsgClientObjectUpdateRequestAck {
-    required Common.ClientObjectId object               = 1;
+    required Common.ClientObjectId object               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required ClientObjectAck.ErrorCode error_code       = 2;
 }
 
 message MsgClientObjectDestructionRequestAck {
-    required Common.ClientObjectId object               = 1;
+    required Common.ClientObjectId object               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required ClientObjectAck.ErrorCode error_code       = 2;
 }
 

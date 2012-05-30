@@ -280,7 +280,7 @@ message MsgControlResumeAck {
 }
 
 message MsgPartyCreation {
-   required Common.PartyId       party          = 1;
+   required Common.PartyId       party          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required string               name           = 2;
    required Common.EnumDiplomacy type           = 3;
    optional Common.Extension     extension      = 4;
@@ -288,9 +288,9 @@ message MsgPartyCreation {
 }
 
 message MsgFormationCreation {
-    required Common.FormationId       formation             = 1;
-    required Common.PartyId           party                 = 2;
-    optional Common.FormationId       parent                = 3;
+    required Common.FormationId       formation             = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.PartyId           party                 = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.FormationId       parent                = 3; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.EnumNatureLevel   level                 = 4;
     required string                   name                  = 5;
     required string                   app6symbol            = 6;
@@ -299,21 +299,21 @@ message MsgFormationCreation {
 }
 
 message MsgFormationUpdate {
-    required Common.FormationId       formation = 1;
+    required Common.FormationId       formation = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     optional Common.Extension         extension = 2;
 }
 
 message MsgFormationDestruction {
-   required Common.FormationId formation = 1;
+   required Common.FormationId formation = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgAutomatCreation {
-    required Common.AutomatId              automat         = 1;
-    required Common.AutomatType            type            = 2;
+    required Common.AutomatId              automat         = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.AutomatType            type            = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     required string                        nom             = 3;
-    required Common.ParentEntity           parent          = 4;
-    required Common.PartyId                party           = 5;
-    optional Common.KnowledgeGroupId       knowledge_group = 6;
+    required Common.ParentEntity           parent          = 4; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.PartyId                party           = 5; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.KnowledgeGroupId       knowledge_group = 6; // Valeur 0 non possible [06/12/2011 FT45246]
     required string                        app6symbol      = 7;
     required Common.EnumLogisticLevel      logistic_level  = 8;
     optional Common.RgbColor               color           = 9;
@@ -338,7 +338,7 @@ message ForceRatio {
 }
 
 message MsgAutomatAttributes {
-   required Common.AutomatId                   automat               = 1;
+   required Common.AutomatId                   automat               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional Common.EnumAutomatMode             etat_automate         = 2;
    optional ForceRatio.Value                   rapport_de_force      = 3;
    optional Common.EnumMeetingEngagementStatus combat_de_rencontre   = 4;
@@ -353,16 +353,16 @@ message MsgAutomatDestruction {
 
 
 message MsgUnitCreation {
-    required Common.UnitId           unit        = 1;
-    required Common.UnitType         type        = 2;
+    required Common.UnitId           unit        = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.UnitType         type        = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     required string                  nom         = 3;
-    required Common.AutomatId        automat     = 4;
+    required Common.AutomatId        automat     = 4; // Valeur 0 non possible [06/12/2011 FT45246]
     required bool                    pc          = 5;
     optional Common.RgbColor         color       = 6;
     optional Common.HumanRepartition repartition = 7;
 }
 
-message EquipmentUpdate {
+message EquipmentUpdate {  // A supprimer de l'ICD car pas dans SCIPIO [29/11/2011]
     message Equipment {
         required Common.EquipmentType type           = 1;
         optional int32                number_added   = 2;
@@ -373,40 +373,40 @@ message EquipmentUpdate {
 
 message BorrowedEquipments {
     message BorrowedEquipment {
-        required Common.UnitId        owner  = 1;
-        required Common.EquipmentType type   = 2;
+        required Common.UnitId        owner  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+        required Common.EquipmentType type   = 2; // Valeur 0 non possible [06/12/2011 FT45246]
         required int32                nombre = 3;
     }
-    repeated BorrowedEquipment elem = 1;
+    repeated BorrowedEquipment elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message LentEquipments {
     message LentEquipment {
-        required Common.UnitId        borrower = 1;
-        required Common.EquipmentType type     = 2;
+        required Common.UnitId        borrower = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+        required Common.EquipmentType type     = 2; // Valeur 0 non possible [06/12/2011 FT45246]
         required int32                nombre    = 3;
     }
-    repeated LentEquipment elem = 1;
+    repeated LentEquipment elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message ResourceDotations {
     message ResourceDotation {
-        required Common.ResourceType type               = 1;
+        required Common.ResourceType type               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
         required int32              quantite_disponible = 2;
     }
-    repeated ResourceDotation elem = 1;
+    repeated ResourceDotation elem = 1; // Mise à jour partielle indexée par type [29/11/2011 FT45246]
 }
 
 message EquipmentDotations {
     message EquipmentDotation {
-        required Common.EquipmentType type                       = 1;
+        required Common.EquipmentType type                       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
         required int32                nb_disponibles             = 2;
         required int32                nb_indisponibles           = 3;
         required int32                nb_reparables              = 4;
         required int32                nb_dans_chaine_maintenance = 5;
         required int32                nb_prisonniers             = 6;
     }
-    repeated EquipmentDotation elem = 1;
+    repeated EquipmentDotation elem = 1; // Mise à jour partielle indexée par type [29/11/2011 FT45246]
 }
 
 message HumanDotations {
@@ -423,7 +423,7 @@ message HumanDotations {
         required int32                nb_blesses_non_evacues         = 10;
         required int32                nb_morts_dans_chaine_mortuaire = 11;
     }
-    repeated HumanDotation elem = 1;
+    repeated HumanDotation elem = 1;  // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message ContaminationState {
@@ -432,7 +432,7 @@ message ContaminationState {
 }
 
 message NBCAgents {
-    repeated Common.NBCAgentType elem = 1;
+    repeated Common.NBCAgentType elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message Communication {
@@ -468,7 +468,7 @@ message MsgUnitAttributes {
         optional float                  lodging               = 2;
         optional float                  access_to_health_care = 3;
     }
-    required Common.UnitId                      unit                          = 1;
+    required Common.UnitId                      unit                          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     optional HumanDotations                     dotation_eff_personnel        = 2;
     optional EquipmentDotations                 dotation_eff_materiel         = 3;
     optional ResourceDotations                  dotation_eff_ressource        = 4;
@@ -480,8 +480,8 @@ message MsgUnitAttributes {
     optional int32                              altitude                      = 10;
     optional int32                              vitesse                       = 11;
     optional int32                              etat_operationnel_brut        = 12;
-    optional Common.UnitIdList                  reinforcements                = 13;
-    optional Common.UnitId                      reinforced_unit               = 14;
+    optional Common.UnitIdList                  reinforcements                = 13; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.UnitId                      reinforced_unit               = 14; // Valeur 0 possible [06/12/2011 FT45246]
     optional bool                               mort                          = 15;
     optional bool                               neutralise                    = 16;
     optional bool                               mode_furtif_actif             = 17;
@@ -493,14 +493,14 @@ message MsgUnitAttributes {
     optional int32                              posture_pourcentage           = 23;
     optional int32                              etat_installation             = 24;
     optional bool                               en_tenue_de_protection_nbc    = 25;
-    optional NBCAgents                          contamine_par_agents_nbc      = 26;
+    optional NBCAgents                          contamine_par_agents_nbc      = 26; // Valeur 0 non possible [06/12/2011 FT45246]
     optional ContaminationState                 etat_contamination            = 27;
     optional Communication                      communications                = 28;
     optional bool                               radio_emitter_disabled        = 29;
     optional bool                               radio_receiver_disabled       = 30;
     optional bool                               radar_actif                   = 31;
-    optional Common.UnitIdList                  transported_units             = 32;
-    optional Common.UnitId                      transporting_unit             = 33;
+    optional Common.UnitIdList                  transported_units             = 32; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.UnitId                      transporting_unit             = 33; // Valeur 0 possible [06/12/2011 FT45246]
     optional ForceRatio.Value                   rapport_de_force              = 34;
     optional Common.EnumMeetingEngagementStatus combat_de_rencontre           = 35;
     optional Common.EnumOperationalStatus       etat_operationnel             = 36;
@@ -511,27 +511,27 @@ message MsgUnitAttributes {
     optional Common.EnumUnitMorale              moral                         = 41;
     optional Common.EnumUnitExperience          experience                    = 42;
     optional Common.EnumUnitStress              stress                        = 43;
-    optional Common.PartyId                     surrendered_to_party          = 44;
+    optional Common.PartyId                     surrendered_to_party          = 44; // Valeur 0 possible [06/12/2011 FT45246]
     optional bool                               prisonnier                    = 45;
     optional bool                               refugie_pris_en_compte        = 46;
     optional Satisfaction                       satisfaction                  = 47;
     optional string                             critical_intelligence         = 48;
-    optional Common.PartyAdhesions              adhesions                     = 49;
-    optional EquipmentUpdate                    equipment_update              = 50;
+    optional Common.PartyAdhesions              adhesions                     = 49; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional EquipmentUpdate                    equipment_update              = 50; // A supprimer de SCIPIO
     optional Common.Extension                   extension                     = 51;
 }
 
 message MsgUnitPathFind {
-   required Common.UnitId  unit       = 1;
-   required Common.MsgPath itineraire = 2;
+   required Common.UnitId  unit       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.MsgPath itineraire = 2; // Liste de coordonnée vide possible [06/12/2011 FT45246]
 }
 
 message MsgUnitDestruction  {
-    required Common.UnitId unit = 1;
+    required Common.UnitId unit = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgUnitEnvironmentType {
-    required Common.UnitId unit   = 1;
+    required Common.UnitId unit   = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required int32         area   = 2;
     required int32         left   = 3;
     required int32         right  = 4;
@@ -539,10 +539,10 @@ message MsgUnitEnvironmentType {
 }
 
 message MsgUnitKnowledgeCreation {
-    required Common.UnitKnowledgeId  knowledge       = 1;
-    required Common.KnowledgeGroupId knowledge_group = 2;
-    required Common.UnitId           unit            = 3;
-    required Common.UnitType         type            = 4;
+    required Common.UnitKnowledgeId  knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId knowledge_group = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.UnitId           unit            = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.UnitType         type            = 4; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 enum EnumUnitIdentificationLevel {
@@ -553,16 +553,16 @@ enum EnumUnitIdentificationLevel {
 }
 
 message AutomatPerception {
-    required Common.AutomatId            automat              = 1;
+    required Common.AutomatId            automat              = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required EnumUnitIdentificationLevel identification_level = 2;
 }
 
 message SeqOfAutomatPerception {
-    repeated AutomatPerception elem = 1;
+    repeated AutomatPerception elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 message MsgUnitKnowledgeUpdate {
-    required Common.UnitKnowledgeId      knowledge                  = 1;
-    required Common.KnowledgeGroupId     knowledge_group            = 2;
+    required Common.UnitKnowledgeId      knowledge                  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId     knowledge_group            = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     optional int32                       pertinence                 = 3;
     optional EnumUnitIdentificationLevel identification_level       = 4;
     optional EnumUnitIdentificationLevel max_identification_level   = 5;
@@ -571,31 +571,31 @@ message MsgUnitKnowledgeUpdate {
     optional Common.MsgCoordLatLong      position                   = 8;
     optional Common.MsgHeading           direction                  = 9;
     optional int32                       speed                      = 10;
-    optional Common.PartyId              party                      = 11;
+    optional Common.PartyId              party                      = 11; // Valeur 0 non possible [06/12/2011 FT45246]
     optional bool                        nature_pc                  = 12;
     optional SeqOfAutomatPerception      perception_par_compagnie   = 13;
-    optional Common.UnitId               surrendered_unit           = 14;
+    optional Common.UnitId               surrendered_unit           = 14; // Valeur 0 possible [06/12/2011 FT45246]
     optional bool                        prisonnier                 = 15;
     optional bool                        refugie_pris_en_compte     = 16;
     optional string                      critical_intelligence      = 17;
 }
 
 message MsgUnitKnowledgeDestruction {
-   required Common.UnitKnowledgeId  knowledge       = 1;
-   required Common.KnowledgeGroupId knowledge_group = 2;
+   required Common.UnitKnowledgeId  knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.KnowledgeGroupId knowledge_group = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message UnitFireTarget {
-    optional Common.UnitId          unit       = 1;
-    optional Common.CrowdId    crowd = 2;
+    optional Common.UnitId          unit       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.CrowdId    crowd = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     optional Common.MsgCoordLatLong position   = 3;
 }
 message MsgStartUnitFire {
-    required Common.FireId                fire        = 1;
-    required Common.UnitId                firing_unit = 2;
+    required Common.FireId                fire        = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.UnitId                firing_unit = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     required UnitFireTarget               target      = 3;
     required Common.UnitFireType          type        = 4;
-    optional Common.ResourceType          ammunition  = 5;
+    optional Common.ResourceType          ammunition  = 5; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message UnitHumanFireDamage {
@@ -609,7 +609,7 @@ message UnitHumanFireDamage {
 }
 
 message SeqOfUnitHumanFireDamage {
-   repeated UnitHumanFireDamage elem = 1;
+   repeated UnitHumanFireDamage elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgUnitEquipmentFireDamage {
@@ -620,58 +620,58 @@ message MsgUnitEquipmentFireDamage {
 }
 
 message SeqOfUnitEquipmentFireDamage {
-   repeated MsgUnitEquipmentFireDamage elem = 1;
+   repeated MsgUnitEquipmentFireDamage elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgUnitFireDamages {
-    required Common.UnitId                target     = 1;
+    required Common.UnitId                target     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required SeqOfUnitHumanFireDamage     humans     = 2;
     required SeqOfUnitEquipmentFireDamage equipments = 3;
 }
 
 message MsgUnitsFireDamages {
-   repeated MsgUnitFireDamages elem = 1;
+   repeated MsgUnitFireDamages elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgCrowdFireDamages {
-   required Common.CrowdId  target   = 1;
+   required Common.CrowdId  target   = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32           dead_nbr = 2;
 }
 
 message MsgCrowdsFireDamages {
-   repeated MsgCrowdFireDamages elem = 1;
+   repeated MsgCrowdFireDamages elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgStopUnitFire {
-   required Common.FireId        fire           = 1;
+   required Common.FireId        fire           = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional MsgUnitsFireDamages  units_damages  = 2;
    optional MsgCrowdsFireDamages crowds_damages = 3;
 }
 
 message MsgStartCrowdFire {
-   required Common.FireId  fire         = 1;
-   required Common.CrowdId firing_crowd = 2;
+   required Common.FireId  fire         = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId firing_crowd = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgStopCrowdFire {
-   required Common.FireId       fire          = 1;
+   required Common.FireId       fire          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required MsgUnitsFireDamages units_damages = 2;
 }
 
 message MsgExplosion {
-   required Common.ObjectId      object             = 1;
+   required Common.ObjectId      object             = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional MsgUnitsFireDamages  units_damages      = 2;
    optional MsgCrowdsFireDamages crowds_damages     = 3;
 }
 
 message MsgStartFireEffect {
-    required Common.FireEffectId       fire_effect  = 1;
+    required Common.FireEffectId       fire_effect  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.MsgLocation        location     = 2;
     required Common.EnumFireEffectType type         = 3;
 }
 
 message MsgStopFireEffect  {
-    required Common.FireEffectId fire_effect = 1;
+    required Common.FireEffectId fire_effect = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 enum EnumReportType {
@@ -682,32 +682,32 @@ enum EnumReportType {
 }
 
 message MsgReport {
-    required Common.ReportId             report     = 1;
-    required Common.Tasker               source     = 2;
-    required Common.ReportType           type       = 3;
-    required Common.ReportCategory       category   = 4;
+    required Common.ReportId             report     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.Tasker               source     = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.ReportType           type       = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.ReportCategory       category   = 4; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.MsgDateTime          time       = 5;
     optional Common.MsgMissionParameters parameters = 6;
 }
 
-message MsgInvalidateReport {
+message MsgInvalidateReport { // Pas utilisé dans SCIPIO a supprimer de l'ICD
     required Common.ReportId report = 1;
     required Common.Tasker   source = 2;
 }
 
-message MsgDecisionalState {
+message MsgDecisionalState { // Pas utilisé dans SCIPIO a supprimer de l'ICD
    required Common.Tasker source = 1;
    required string        key    = 2;
    required string        value  = 3;
 }
 
-message MsgDebugPoints {
+message MsgDebugPoints { // Pas utilisé dans SCIPIO a supprimer de l'ICD
    required Common.Tasker              source      = 1;
    required Common.MsgCoordLatLongList coordinates = 2;
 }
 
 message SeqOfHeading {
-   repeated Common.MsgHeading elem = 1;
+   repeated Common.MsgHeading elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgVisionCone {
@@ -718,80 +718,80 @@ message MsgVisionCone {
 }
 
 message SeqOfVisionCone {
-   repeated MsgVisionCone elem = 1;
+   repeated MsgVisionCone elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgUnitVisionCones {
-   required Common.UnitId   unit       = 1;
+   required Common.UnitId   unit       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required SeqOfVisionCone cones      = 2;
    required float           elongation = 3;
 }
 
 message MsgObjectCreation {
-   required Common.ObjectId            object              = 1;
-   required Common.ObjectType          type                = 2;
+   required Common.ObjectId            object              = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.ObjectType          type                = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    required string                     name                = 3;
-   required Common.PartyId             party               = 4;
+   required Common.PartyId             party               = 4; // Valeur 0 non possible [06/12/2011 FT45246]
    required Common.MsgLocation         location            = 5;
    required Common.ObjectAttributes    attributes          = 6;
    optional int32                      external_identifier = 7;
 }
 
 message MsgObjectDestruction  {
-    required Common.ObjectId object = 1;
+    required Common.ObjectId object = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgObjectUpdate {
-   required Common.ObjectId            object     = 1;
+   required Common.ObjectId            object     = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional Common.MsgLocation         location   = 2;
    required Common.ObjectAttributes    attributes = 3;
 }
 
 message MsgObjectKnowledgeCreation {
-   required Common.ObjectKnowledgeId   knowledge       = 1;
-   required Common.PartyId             party           = 2;
-   required Common.ObjectId            object          = 3;
-   required Common.ObjectType          type            = 4;
-   required Common.ObjectAttributes    attributes      = 5;
-   optional Common.KnowledgeGroupId    knowledge_group = 6;
+   required Common.ObjectKnowledgeId   knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.PartyId             party           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.ObjectId            object          = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.ObjectType          type            = 4; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.ObjectAttributes    attributes      = 5; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.KnowledgeGroupId    knowledge_group = 6; // Valeur 0 non possible [06/12/2011 FT45246] Cas particulier du brouillage. Les connaissances avec une valeur ne sont pas affichées dans SCIPIO
 }
 
 message MsgObjectKnowledgeUpdate {
-   required Common.ObjectKnowledgeId   knowledge           = 1;
-   required Common.PartyId             party               = 2;
-   optional Common.ObjectId            object              = 3;
+   required Common.ObjectKnowledgeId   knowledge           = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.PartyId             party               = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.ObjectId            object              = 3; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32                      relevance           = 4;
    optional Common.MsgLocation         location            = 5;
    optional Common.ObjectAttributes    attributes          = 6;
    optional bool                       perceived           = 7;
-   optional Common.AutomatIdList       perceiving_automats = 8;
-   optional Common.KnowledgeGroupId    knowledge_group     = 9;
+   optional Common.AutomatIdList       perceiving_automats = 8; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.KnowledgeGroupId    knowledge_group     = 9; // Valeur 0 non possible [06/12/2011 FT45246] Cas particulier du brouillage. Les connaissances avec une valeur ne sont pas affichées dans SCIPIO
 }
 
 message MsgObjectKnowledgeDestruction {
-   required Common.ObjectKnowledgeId knowledge = 1;
-   required Common.PartyId           party     = 2;
+   required Common.ObjectKnowledgeId knowledge = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.PartyId           party     = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgUrbanKnowledgeCreation {
-    required Common.UrbanObjectKnowledgeId knowledge   = 1;
-    required Common.PartyId                party       = 2;
-    required Common.ObjectId               object      = 3;
+    required Common.UrbanObjectKnowledgeId knowledge   = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.PartyId                party       = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.ObjectId               object      = 3; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgUrbanKnowledgeUpdate {
-    required Common.UrbanObjectKnowledgeId knowledge            = 1;
-    required Common.PartyId                party                = 2;
-    required Common.ObjectId               object               = 3; 
+    required Common.UrbanObjectKnowledgeId knowledge            = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.PartyId                party                = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.ObjectId               object               = 3; // Valeur 0 non possible [06/12/2011 FT45246]
     optional int32                         progress             = 4;
     optional int32                         maxProgress          = 5;
     optional bool                          perceived            = 6;
-    optional Common.AutomatIdList          automat_perceptions  = 7;
+    optional Common.AutomatIdList          automat_perceptions  = 7; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgLogMedicalHandlingCreation {
-   required Common.MedicalRequestId request          = 1;
-   required Common.UnitId           unit             = 2;
+   required Common.MedicalRequestId request          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId           unit             = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32                   tick_creation    = 3;
    required Common.EnumHumanRank    rang             = 4;
    required Common.EnumHumanWound   blessure         = 5;
@@ -800,9 +800,9 @@ message MsgLogMedicalHandlingCreation {
 }
 
 message MsgLogMedicalHandlingUpdate {
-    required Common.MedicalRequestId             request                = 1;
-    required Common.UnitId                       unit                   = 2;
-    optional Common.UnitId                       provider               = 3;
+    required Common.MedicalRequestId             request                = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.UnitId                       unit                   = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.UnitId                       provider               = 3; // Valeur 0 possible [06/12/2011 FT45246]
     optional Common.EnumHumanWound               blessure               = 4;
     optional bool                                blesse_mental          = 5;
     optional bool                                contamine_nbc          = 6;
@@ -812,12 +812,12 @@ message MsgLogMedicalHandlingUpdate {
 }
 
 message MsgLogMedicalHandlingDestruction {
-   required Common.MedicalRequestId request = 1;
-   required Common.UnitId           unit    = 2;
+   required Common.MedicalRequestId request = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId           unit    = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgLogMedicalEquipmentAvailability{
-   required Common.EquipmentType equipment_type = 1;
+   required Common.EquipmentType equipment_type = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32                nbr_total       = 2;
    required int32                nbr_disponibles = 3;
    required int32                nbr_au_travail  = 4;
@@ -826,43 +826,43 @@ message MsgLogMedicalEquipmentAvailability{
 }
 
 message SeqOfLogMedicalEquipmentAvailability {
-   repeated MsgLogMedicalEquipmentAvailability elem = 1;
+   repeated MsgLogMedicalEquipmentAvailability elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLogMedicalState {
-    required Common.UnitId                        unit                                = 1;
+    required Common.UnitId                        unit                                = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     optional bool                                 chaine_activee                      = 2;
     optional Common.MsgLogMedicalPriorities       priorites                           = 3;
-    optional Common.AutomatIdList                 tactical_priorities                 = 4;
+    optional Common.AutomatIdList                 tactical_priorities                 = 4; // Valeur 0 non possible [06/12/2011 FT45246]
     optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5;
     optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6;
     optional SeqOfLogMedicalEquipmentAvailability disponibilites_medecins             = 7;
 }
 
 message MsgLogMaintenanceHandlingCreation {
-   required Common.MaintenanceRequestId request       = 1;
-   required Common.UnitId               unit          = 2;
+   required Common.MaintenanceRequestId request       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId               unit          = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32                       tick_creation = 3;
-   required Common.EquipmentType        equipement    = 4;
-   required Common.BreakdownType        breakdown     = 5;
+   required Common.EquipmentType        equipement    = 4; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.BreakdownType        breakdown     = 5; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgLogMaintenanceHandlingUpdate {
-   required Common.MaintenanceRequestId             request                 = 1;
-   required Common.UnitId                           unit                    = 2;
-   required Common.UnitId                           provider                = 3;
+   required Common.MaintenanceRequestId             request                 = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId                           unit                    = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId                           provider                = 3; // Valeur 0 possible [06/12/2011 FT45246]
    optional Common.EnumLogMaintenanceHandlingStatus etat                    = 4;
    optional int32                                   current_state_end_tick  = 5; // A implémenter ultérieurement - < When set, the tick when the current state will be finished
    optional bool                                    diagnostique_effectue   = 6;
 }
 
 message MsgLogMaintenanceHandlingDestruction {
-   required Common.MaintenanceRequestId request = 1;
-   required Common.UnitId               unit    = 2;
+   required Common.MaintenanceRequestId request = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId               unit    = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgLogMaintenanceEquipmentAvailability {
-   required Common.EquipmentType equipment_type = 1;
+   required Common.EquipmentType equipment_type = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32 nbr_total       = 2;
    required int32 nbr_disponibles = 3; 
    required int32 nbr_au_travail  = 4;
@@ -871,28 +871,28 @@ message MsgLogMaintenanceEquipmentAvailability {
 }
 
 message SeqOfLogMaintenanceEquipmentAvailability {
-   repeated MsgLogMaintenanceEquipmentAvailability elem = 1;
+   repeated MsgLogMaintenanceEquipmentAvailability elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLogMaintenanceState {
-   required Common.UnitId                            unit                       = 1;
+   required Common.UnitId                            unit                       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional bool                                     chaine_activee             = 2;
    optional Common.EnumLogMaintenanceRegimeTravail   regime_travail             = 3;
    optional Common.MsgLogMaintenancePriorities       priorites                  = 4;
-   optional Common.AutomatIdList                     priorites_tactiques        = 5;
+   optional Common.AutomatIdList                     priorites_tactiques        = 5; // Valeur 0 non possible [06/12/2011 FT45246]
    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_remorqueurs = 6;
    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
 }
 
 message MsgLogSupplyHandlingCreation {
-    required Common.SupplyRequestId request               = 1; //!< The request identifier
-    required Common.ParentEntity    supplier              = 2; //!< The supplier
+    required Common.SupplyRequestId request               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.ParentEntity    supplier              = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     required int32                  tick_creation         = 3; //!< The creation tick number
-    required Common.ParentEntity    transporters_provider = 4; //!< The logistic base which provides the transporters for the convoy
+    required Common.ParentEntity    transporters_provider = 4; // Valeur 0 possible [06/12/2011 FT45246]
 }
 
 message SupplyResourceRequest {
-    required Common.ResourceType resource  = 1; //!< The type of the resource @see ResourceType
+    required Common.ResourceType resource  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required int32        requested        = 2; //!< The amount requested
     required int32        granted          = 3; //!< The amount granted
     required int32        convoyed         = 4; //!< The amount being convoyed
@@ -900,29 +900,29 @@ message SupplyResourceRequest {
 
 message SupplyRecipientResourcesRequest
 {
-    required Common.AutomatId      recipient = 1; //!< The recipient of the supply flow
-    repeated SupplyResourceRequest resources = 2; //!< The resources requested/granted/convoyed
+    required Common.AutomatId      recipient = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    repeated SupplyResourceRequest resources = 2; //!< The resources  // Mise à jour complète [29/11/2011 FT45246] requested/granted/convoyed
 }
 
 message SupplyRecipientResourceRequests
 {
-    repeated SupplyRecipientResourcesRequest requests = 1;
+    repeated SupplyRecipientResourcesRequest requests = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLogSupplyHandlingUpdate {
-   optional Common.SupplyRequestId          request                = 1;
-   optional Common.UnitId                   convoying_unit         = 2;
+   optional Common.SupplyRequestId          request                = 1; // Valeur 0 non possible [06/12/2011 FT45246] devrait d'ailleur être required
+   optional Common.UnitId                   convoying_unit         = 2; // Valeur 0 possible [06/12/2011 FT45246]
    optional EnumLogSupplyHandlingStatus     etat                   = 3;
    optional int32                           current_state_end_tick = 4; // A implémenter ultérieurement - < When set, the tick when the current state will be finished
    optional SupplyRecipientResourceRequests requests               = 5;
 }
 
 message MsgLogSupplyHandlingDestruction {
-   required Common.SupplyRequestId request  = 1;
+   required Common.SupplyRequestId request  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgLogSupplyEquimentAvailability {
-   optional Common.EquipmentType equipment       = 1;
+   optional Common.EquipmentType equipment       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32                nbr_total       = 2;
    optional int32                nbr_disponibles = 3;
    optional int32                nbr_au_travail  = 4;
@@ -931,19 +931,19 @@ message MsgLogSupplyEquimentAvailability {
 }
 
 message SeqOfLogSupplyEquimentAvailability {
-   repeated MsgLogSupplyEquimentAvailability elem = 1;
+   repeated MsgLogSupplyEquimentAvailability elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgLogSupplyState {
-    optional Common.UnitId                       unit                                 = 1;
+    optional Common.UnitId                       unit                                 = 1; // Valeur 0 non possible [06/12/2011 FT45246] devrait d'ailleur être required
     optional bool                                chaine_activee                       = 2;
     optional Common.SeqOfDotationStock           stocks                               = 3;
     optional SeqOfLogSupplyEquimentAvailability  disponibilites_transporteurs_convois = 4;
 }
 
 message MsgLogSupplyQuotas {
-    required Common.ParentEntity       supplied = 1;
-    required Common.ParentEntity       supplier = 2;
+    required Common.ParentEntity       supplied = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.ParentEntity       supplier = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.SeqOfDotationQuota quotas   = 3;
 }
 
@@ -958,36 +958,36 @@ enum EnumLogFuneralHandlingStatus {
 }
 
 message MsgLogFuneralHandlingCreation {
-   required Common.FuneralRequestId  request            = 1;
-   required Common.UnitId            requesting_unit    = 2;
+   required Common.FuneralRequestId  request            = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId            requesting_unit    = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    required int32                    tick_creation      = 3;
    required Common.EnumHumanRank     rank               = 4;
 }
 
 message MsgLogFuneralHandlingUpdate {
-    required Common.FuneralRequestId        request               = 1;
-    required Common.UnitId                  requesting_unit       = 2;
-    optional Common.ParentEntity            handling_unit         = 3;
-    optional Common.UnitId                  convoying_unit        = 4;
+    required Common.FuneralRequestId        request               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.UnitId                  requesting_unit       = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.ParentEntity            handling_unit         = 3; // Valeur 0 possible [06/12/2011 FT45246]
+    optional Common.UnitId                  convoying_unit        = 4; // Valeur 0 possible [06/12/2011 FT45246]
     optional EnumLogFuneralHandlingStatus   status                = 5;
-    optional Common.ResourceType            conditioning_resource = 6;
+    optional Common.ResourceType            conditioning_resource = 6; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgLogFuneralHandlingDestruction {
-   required Common.FuneralRequestId     request            = 1;
-   required Common.UnitId               requesting_unit    = 2;
+   required Common.FuneralRequestId     request            = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.UnitId               requesting_unit    = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdCreation {
-   required Common.CrowdId          crowd       = 1;
-   required Common.CrowdType        type        = 2;
+   required Common.CrowdId          crowd       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdType        type        = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    optional string                  nom         = 3;
-   required Common.PartyId          party       = 4;
+   required Common.PartyId          party       = 4; // Valeur 0 non possible [06/12/2011 FT45246]
    required Common.HumanRepartition repartition = 5;
 }
 
 message MsgCrowdUpdate {
-   required Common.CrowdId        crowd                 = 1;
+   required Common.CrowdId        crowd                 = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32                 domination            = 2;
    optional Common.PartyAdhesions adhesions             = 3;
    optional string                critical_intelligence = 4;
@@ -1000,23 +1000,23 @@ message MsgCrowdUpdate {
 }
 
 message MsgCrowdDestruction {
-   required Common.CrowdId crowd = 1;
+   required Common.CrowdId crowd = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdConcentrationCreation {
-   required Common.CrowdConcentrationId concentration = 1;
-   required Common.CrowdId              crowd         = 2;
+   required Common.CrowdConcentrationId concentration = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId              crowd         = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    required Common.MsgCoordLatLong      position      = 3;
 }
 
 message MsgCrowdConcentrationDestruction {
-   required Common.CrowdConcentrationId concentration = 1;
-   required Common.CrowdId              crowd         = 2;
+   required Common.CrowdConcentrationId concentration = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId              crowd         = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdConcentrationUpdate {
-   required Common.CrowdConcentrationId concentration = 1;
-   required Common.CrowdId              crowd         = 2;
+   required Common.CrowdConcentrationId concentration = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId              crowd         = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32                       healthy       = 3;
    optional int32                       wounded       = 4;
    optional int32                       contaminated  = 5;
@@ -1025,18 +1025,18 @@ message MsgCrowdConcentrationUpdate {
 }
 
 message MsgCrowdFlowCreation {
-   required Common.CrowdFlowId  flow  = 1;
-   required Common.CrowdId      crowd = 2;
+   required Common.CrowdFlowId  flow  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId      crowd = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdFlowDestruction {
-   required Common.CrowdFlowId  flow  = 1;
-   required Common.CrowdId      crowd = 2;
+   required Common.CrowdFlowId  flow  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId      crowd = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdFlowUpdate {
-   required Common.CrowdFlowId        flow               = 1;
-   required Common.CrowdId            crowd              = 2;
+   required Common.CrowdFlowId        flow               = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.CrowdId            crowd              = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    optional Common.MsgPath            parts              = 3;
    optional Common.MsgHeading         direction          = 4;
    optional int32                     speed              = 5;
@@ -1048,37 +1048,37 @@ message MsgCrowdFlowUpdate {
 }
 
 message MsgCrowdKnowledgeCreation {
-   required Common.CrowdKnowledgeId  knowledge       = 1;
-   required Common.KnowledgeGroupId  knowledge_group = 2;
-   optional Common.CrowdId           crowd           = 3;
-   optional Common.PartyId           party           = 4;
+   required Common.CrowdKnowledgeId  knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.KnowledgeGroupId  knowledge_group = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.CrowdId           crowd           = 3; // Valeur 0 non possible [06/12/2011 FT45246] devrait d'ailleur être required
+   optional Common.PartyId           party           = 4; // Valeur 0 non possible [06/12/2011 FT45246] devrait d'ailleur être required
 }
 
 message MsgCrowdKnowledgeUpdate {
-   required Common.CrowdKnowledgeId  knowledge             = 1;
-   required Common.KnowledgeGroupId  knowledge_group       = 2;
+   required Common.CrowdKnowledgeId  knowledge             = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.KnowledgeGroupId  knowledge_group       = 2; // Valeur 0 non possible [06/12/2011 FT45246]
    optional int32                    etat_domination       = 3;
    optional string                   critical_intelligence = 4;
 }
 
 message MsgCrowdKnowledgeDestruction {
-   required Common.CrowdKnowledgeId  knowledge       = 1;
-   required Common.KnowledgeGroupId  knowledge_group = 2;
+   required Common.CrowdKnowledgeId  knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.KnowledgeGroupId  knowledge_group = 2; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdConcentrationKnowledgeCreation {
-    required Common.CrowdConcentrationKnowledgeId  knowledge       = 1;
-    required Common.CrowdKnowledgeId               crowd           = 2;
-    required Common.KnowledgeGroupId               knowledge_group = 3;
-    required Common.CrowdConcentrationId           concentration   = 4;
+    required Common.CrowdConcentrationKnowledgeId  knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdKnowledgeId               crowd           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId               knowledge_group = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdConcentrationId           concentration   = 4; // Valeur 0 non possible [06/12/2011 FT45246]
     optional Common.MsgCoordLatLong                position        = 5;
 }
 
 message MsgCrowdConcentrationKnowledgeUpdate {
-    required Common.CrowdConcentrationKnowledgeId  knowledge          = 1;
-    required Common.CrowdKnowledgeId               crowd              = 2;
-    required Common.KnowledgeGroupId               knowledge_group    = 3;
-    optional Common.CrowdConcentrationId           concentration      = 4;
+    required Common.CrowdConcentrationKnowledgeId  knowledge          = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdKnowledgeId               crowd              = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId               knowledge_group    = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.CrowdConcentrationId           concentration      = 4; // Valeur 0 non possible [06/12/2011 FT45246]
     optional int32                                 nb_humains_vivants = 5;
     optional int32                                 nb_humains_morts   = 6;
     optional Common.EnumCrowdAttitude              attitude           = 7;
@@ -1087,16 +1087,16 @@ message MsgCrowdConcentrationKnowledgeUpdate {
 }
 
 message MsgCrowdConcentrationKnowledgeDestruction {
-    required Common.CrowdConcentrationKnowledgeId  knowledge       = 1;
-    required Common.CrowdKnowledgeId               crowd           = 2;
-    required Common.KnowledgeGroupId               knowledge_group = 3;
+    required Common.CrowdConcentrationKnowledgeId  knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdKnowledgeId               crowd           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId               knowledge_group = 3; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgCrowdFlowKnowledgeCreation {
-    required Common.CrowdFlowKnowledgeId   knowledge  = 1;
-    required Common.CrowdKnowledgeId       crowd      = 2;
-    required Common.KnowledgeGroupId       knowledge_group = 3;
-    required Common.CrowdFlowId            flow            = 4;
+    required Common.CrowdFlowKnowledgeId   knowledge  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdKnowledgeId       crowd      = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId       knowledge_group = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdFlowId            flow            = 4; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgFlowPart {
@@ -1105,14 +1105,14 @@ message MsgFlowPart {
 }
 
 message SeqOfFlowPart {
-   repeated MsgFlowPart elem = 1;
+   repeated MsgFlowPart elem = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgCrowdFlowKnowledgeUpdate {
-    required Common.CrowdFlowKnowledgeId   knowledge           = 1;
-    required Common.CrowdKnowledgeId       crowd               = 2;
-    required Common.KnowledgeGroupId       knowledge_group     = 3;
-    optional Common.CrowdFlowId            flow                = 4;
+    required Common.CrowdFlowKnowledgeId   knowledge           = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdKnowledgeId       crowd               = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId       knowledge_group     = 3; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.CrowdFlowId            flow                = 4; // Valeur 0 non possible [06/12/2011 FT45246]
     optional SeqOfFlowPart                 portions_flux       = 5;
     optional Common.MsgHeading             direction           = 6;
     optional int32                         vitesse             = 7;
@@ -1123,9 +1123,9 @@ message MsgCrowdFlowKnowledgeUpdate {
 }
 
 message MsgCrowdFlowKnowledgeDestruction {
-    required Common.CrowdFlowKnowledgeId   knowledge       = 1;
-    required Common.CrowdKnowledgeId       crowd           = 2;
-    required Common.KnowledgeGroupId       knowledge_group = 3;
+    required Common.CrowdFlowKnowledgeId   knowledge       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.CrowdKnowledgeId       crowd           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.KnowledgeGroupId       knowledge_group = 3; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 // Checkpoints
@@ -1139,7 +1139,7 @@ message MsgControlCheckPointSaveEnd {
 
 message MsgControlCheckPointListAck      {}
 message MsgControlCheckPointList {
-    repeated string checkpoint = 1;
+    repeated string checkpoint = 1; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgControlCheckPointDeleteAck    {}
@@ -1174,11 +1174,11 @@ message UrbanAttributes {
     }
     message Infrastructures {
         message Infrastructure {
-          required string type      = 1;
+          required string type      = 1; // Valeur "" non possible [06/12/2011 FT45246]
           required bool   active    = 2;
           required float  threshold = 3;
         }
-        repeated Common.ResourceNetwork resource_network = 1;
+        repeated Common.ResourceNetwork resource_network = 1; // Mise à jour complète pour les messages UrbanCreation et UrbanUpdate [29/11/2011 FT45246]
         optional Infrastructure infrastructure = 2;
     }
 
@@ -1186,39 +1186,39 @@ message UrbanAttributes {
     optional Structure             structure       = 2;    
     optional Common.RgbaColor      color           = 3;
     optional Infrastructures       infrastructures = 4;
-    repeated Common.UrbanUsage     usages          = 5;
+    repeated Common.UrbanUsage     usages          = 5; // Mise à jour complète [29/11/2011 FT45246]
 }
 
 message MsgUrbanCreation {
-   required Common.ObjectId    object       = 1;
+   required Common.ObjectId    object       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    required string             name         = 2;
    required Common.MsgLocation location     = 3;
    optional UrbanAttributes    attributes   = 4;
-   optional Common.ObjectId    parent       = 5;
+   optional Common.ObjectId    parent       = 5; // Non utilisé dans SCIPIO
 }
 
 message MsgUrbanUpdate {
-   required Common.ObjectId      object       = 1;
+   required Common.ObjectId      object       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional Common.MsgLocation   location     = 2;
    optional UrbanAttributes      attributes   = 3;
 }
 
 // Knowledge groups
 message MsgKnowledgeGroupCreation {
-   required Common.KnowledgeGroupId knowledge_group = 1;
-   required Common.PartyId          party           = 2;
-   optional Common.KnowledgeGroupId parent          = 3;
-   required string                  type            = 4;
+   required Common.KnowledgeGroupId knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   required Common.PartyId          party           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.KnowledgeGroupId parent          = 3; // Valeur 0 non possible [06/12/2011 FT45246] cas du brouillage. De tel "sous-"groupe ne sont pas affichés dans SCIPIO
+   required string                  type            = 4; // Valeur "" non possible [06/12/2011 FT45246]
    optional bool                    jam             = 5;
    required string                  name            = 6 [default = ""];                    
 }
 
 message MsgKnowledgeGroupUpdate {
-   required Common.KnowledgeGroupId knowledge_group = 1;
-   optional Common.PartyId          party           = 2;
-   optional Common.KnowledgeGroupId parent          = 3;
+   required Common.KnowledgeGroupId knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.PartyId          party           = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+   optional Common.KnowledgeGroupId parent          = 3; // Valeur 0 possible [06/12/2011 FT45246] cas du brouillage. De tel "sous-"groupe ne sont pas affichés dans SCIPIO
    optional bool                    enabled         = 4;
-   optional string                  type            = 5;
+   optional string                  type            = 5; // Valeur "" non possible [06/12/2011 FT45246]
 }
 
 message KnowledgeGroupAck {
@@ -1233,17 +1233,17 @@ message KnowledgeGroupAck {
 }
 
 message MsgKnowledgeGroupMagicActionAck {
-    required Common.KnowledgeGroupId     knowledge_group = 1;
+    required Common.KnowledgeGroupId     knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
 
 message MsgKnowledgeGroupCreationAck {
-    required Common.KnowledgeGroupId     knowledge_group = 1;
+    required Common.KnowledgeGroupId     knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
 
 message MsgKnowledgeGroupDestruction {
-    required Common.KnowledgeGroupId knowledge_group = 1;
+    required Common.KnowledgeGroupId knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.PartyId          party           = 2;
 }
 
@@ -1252,12 +1252,12 @@ message MsgControlGlobalWeatherAck {}
 message MsgControlLocalWeatherAck {}
 
 message MsgControlGlobalWeather {
-    required Common.WeatherId            weather    = 1;
+    required Common.WeatherId            weather    = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.MsgWeatherAttributes attributes = 2;
 }
 
 message MsgControlLocalWeatherCreation {
-   required Common.WeatherId            weather                 = 1;
+   required Common.WeatherId            weather                 = 1; // Valeur 0 non possible [06/12/2011 FT45246]
    optional Common.MsgCoordLatLong      top_left_coordinate     = 2;
    optional Common.MsgCoordLatLong      bottom_right_coordinate = 3;
    optional Common.MsgWeatherAttributes attributes              = 4;
@@ -1265,16 +1265,16 @@ message MsgControlLocalWeatherCreation {
 }
 
 message MsgControlLocalWeatherDestruction {
-   required Common.WeatherId   weather  = 1;
+   required Common.WeatherId   weather  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 // Populations
 message MsgPopulationCreation {
-    required Common.PopulationId   id        = 1;
-    required Common.PartyId        party     = 2;
-    required Common.PopulationType type      = 3;
+    required Common.PopulationId   id        = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.PartyId        party     = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    required Common.PopulationType type      = 3; // Valeur 0 non possible [06/12/2011 FT45246]
     required string                name      = 4;
-    repeated Common.ObjectId       objects   = 5;
+    repeated Common.ObjectId       objects   = 5; // Mise à jour complète [29/11/2011 FT45246] - // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
 message MsgPopulationUpdate {
@@ -1283,12 +1283,12 @@ message MsgPopulationUpdate {
         required float  percentage  = 2;
     }
     message ResourceSatisfaction {
-        required Common.ResourceType resource = 1;
+        required Common.ResourceType resource = 1; // Valeur 0 non possible [06/12/2011 FT45246]
         required float               value    = 2;
     }
     message Satisfaction {
-        repeated ResourceSatisfaction   resources   = 1;
-        repeated MotivationSatisfaction motivations = 2;
+        repeated ResourceSatisfaction   resources   = 1; // Mise à jour complète [29/11/2011 FT45246]
+        repeated MotivationSatisfaction motivations = 2; // Mise à jour complète [29/11/2011 FT45246]
         optional float                  lodging     = 3;
         optional float                  health      = 4;
         optional float                  safety      = 5;
@@ -1298,18 +1298,18 @@ message MsgPopulationUpdate {
              required string usage  = 1;
          required int32           number = 2;
      }
-         required Common.ObjectId object  = 1;
-         repeated UsageOccupation persons = 2;
+         required Common.ObjectId object  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+         repeated UsageOccupation persons = 2; // Mise à jour complète [29/11/2011 FT45246]
      }
 
-    required Common.PopulationId    id           = 1;
+    required Common.PopulationId    id           = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     optional int32                  healthy      = 2;
     optional int32                  wounded      = 3;
     optional int32                  dead         = 4;
     optional Common.PartyAdhesions  adhesions    = 5;
     optional Satisfaction           satisfaction = 6;
     optional string                 motivation   = 7; 
-    repeated BlockOccupation        occupations  = 8;
+    repeated BlockOccupation        occupations  = 8; // Mise à jour partielle indexée par object [29/11/2011 FT45246]
     optional Common.Extension       extension    = 9;
 }
 
