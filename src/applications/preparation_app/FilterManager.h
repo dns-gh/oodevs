@@ -51,6 +51,7 @@ public:
     void AddFilter( Filter_ABC& filter, Q3ListBox& list, Q3WidgetStack& stack );
     Filter_ABC& GetFilter( unsigned int index );
     const Filter_ABC& GetFilter( unsigned int index ) const;
+    void Update();
     //@}
 
 private:

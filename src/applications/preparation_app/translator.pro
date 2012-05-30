@@ -20,6 +20,7 @@ FilterDialog.cpp \
 FilterDialogs.cpp \
 FilterInputArgument.cpp \
 FilterManager.cpp \
+FilterPartiesListView.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
 FormationHierarchyEditor.cpp \

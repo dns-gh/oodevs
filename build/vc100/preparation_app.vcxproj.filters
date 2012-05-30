@@ -505,6 +505,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UsagesDockWidget.cpp">
       <Filter>Source Files\Panels\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterPartiesListView.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -936,6 +939,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UsagesDockWidget.h">
       <Filter>Source Files\Panels\Urban</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterPartiesListView.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

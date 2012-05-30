@@ -24,11 +24,12 @@
           <description name="Export de l'Ordre de Bataille" lang="fr"><![CDATA[Exporter l'orbat.<br>Le résultat est un fichier XML importable par la fonction "importer ordre de bataille"]]></description>
         </descriptions>
       </filter>
-      <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin">
+      <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin" non-blocking="true">
         <arguments>
           <argument name="0"/>
           <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
+          <argument name="-id-camps" value="$input_team_list$" display-name="Camps"/>
         </arguments>
         <descriptions>
           <description name="Test DQP export" lang="en">HTML Description</description>
@@ -40,6 +41,7 @@
           <argument name="1"/>
           <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
+          <argument name="-id-camps" value="$input_team_list$" display-name="Camps"/>
         </arguments>
         <descriptions>
           <description name="Export DQP" lang="en">HTML Description</description>
@@ -77,4 +79,4 @@
     </filters>
   </section>
 </sections>
-<!-- signature="0735893014" -->
+<!-- signature="0216598261" -->

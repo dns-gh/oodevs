@@ -112,6 +112,12 @@
 				<xs:documentation xml:lang="fr">Définit si c'est neccessaire de recharger l'exercice apres l'execution du filtre.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="non-blocking" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines if the filter blocks the main window. False by default, so blocking.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit si le filtre est bloquant pour la fenêtre principale. Faux par défaut, donc bloquant.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="minimal-display" type="xs:boolean">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Defines if all information will be displayed.</xs:documentation>
@@ -142,6 +148,12 @@
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Defines the argument name.</xs:documentation>
 				<xs:documentation xml:lang="fr">Définit le nom de l'argument.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="display-name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the argument display name.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le nom d'affichage de l'argument.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="value" type="xs:string">

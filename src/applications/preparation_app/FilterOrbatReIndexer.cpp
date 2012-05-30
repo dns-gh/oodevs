@@ -11,7 +11,7 @@
 #include "FilterOrbatReIndexer.h"
 #include "moc_FilterOrbatReIndexer.cpp"
 
-#include "clients_gui/resources.h"
+#include "FilterPartiesListView.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/IdManager.h"
 #include "preparation/Model.h"
@@ -53,8 +53,6 @@ FilterOrbatReIndexer::FilterOrbatReIndexer( QWidget* mainwindow, const tools::Ex
     , logisticLinksCheckBox_( 0 )
     , stocksCheckBox_       ( 0 )
     , diplomacyCheckBox_    ( 0 )
-    , checkedPixmap_        ( MAKE_PIXMAP( check ) )
-    , uncheckedPixmap_      ( MAKE_PIXMAP( cross ) )
 {
     connect( this, SIGNAL( DoConsistencyCheck() ), mainwindow, SIGNAL( CheckConsistency() ) );
 }
@@ -106,48 +104,7 @@ void FilterOrbatReIndexer::OnBrowse()
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     filename_->setText( filename );
-    LoadPreview();
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterOrbatReIndexer::LoadPreview
-// Created: ABR 2011-06-22
-// -----------------------------------------------------------------------------
-void FilterOrbatReIndexer::LoadPreview()
-{
-    partiesListView_->clear();
-    bool status = IsValid();
-    if( status )
-        try
-        {
-            xml::xifstream xis( filename_->text().ascii() );
-            xis >> xml::start( "orbat" )
-                    >> xml::start( "parties" )
-                        >> xml::list( "party", *this, &FilterOrbatReIndexer::ReadTeam );
-        }
-        catch( ... )
-        {
-            QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Error loading file" ), tools::translate( "FilterOrbatReIndexer", "File does not appear to be a valid orbat file.<br>Please select an other orbat file to import." ) );
-            status = false;
-        }
-    partiesListView_->setEnabled( true );
-    emit( statusChanged( status ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterOrbatReIndexer::ReadTeam
-// Created: ABR 2011-06-22
-// -----------------------------------------------------------------------------
-void FilterOrbatReIndexer::ReadTeam( xml::xistream& xis )
-{
-    const std::string name = xis.attribute< std::string >( "name", "" );
-    unsigned long id = xis.attribute< unsigned long >( "id", 0 );
-    assert( !name.empty() && id != 0 );
-    Q3ListViewItem* item = new Q3ListViewItem( partiesListView_ );
-    item->setText( ePartyName, name.c_str() );
-    item->setText( eHiddenPartyID, QString::number( id ) );
-    item->setText( eHiddenCheckbox, QString::number( 1 ) );
-    item->setPixmap( eCheckbox, checkedPixmap_ );
+    emit( statusChanged( IsValid() && partiesListView_->ParseOrbatFile( filename_->text().ascii() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +121,7 @@ void FilterOrbatReIndexer::ReadField( const std::string& name, xml::xistream& xi
     if( name == "party" )
     {
         unsigned long partyID = xis.attribute< unsigned long >( "id", 0 );
-        if( partyID != 0 && !IsPartyChecked( partyID ) )
+        if( partyID != 0 && !partiesListView_->IsPartyChecked( partyID ) )
             return;
     }
 
@@ -208,7 +165,7 @@ void FilterOrbatReIndexer::ReadAttribute( const std::string& name, xml::xistream
 void FilterOrbatReIndexer::ReadDiplomacy( xml::xistream& xis, xml::xostream& xos )
 {
     unsigned long partyID = xis.attribute< unsigned long >( "id", 0 );
-    if( partyID != 0 && IsPartyChecked( partyID ) )
+    if( partyID != 0 && partiesListView_->IsPartyChecked( partyID ) )
     {
         xos << xml::start( "party" );
         xis >> xml::attributes( *this, &FilterOrbatReIndexer::ReadAttribute, xos )
@@ -224,7 +181,7 @@ void FilterOrbatReIndexer::ReadDiplomacy( xml::xistream& xis, xml::xostream& xos
 void FilterOrbatReIndexer::ReadDiplomacyLink( xml::xistream& xis, xml::xostream& xos )
 {
     unsigned long partyID = xis.attribute< unsigned long >( "party", 0 );
-    if( partyID != 0 && IsPartyChecked( partyID ) )
+    if( partyID != 0 && partiesListView_->IsPartyChecked( partyID ) )
     {
         xos << xml::start( "relationship" );
         xis >> xml::attributes( *this, &FilterOrbatReIndexer::ReadAttribute, xos );
@@ -261,22 +218,8 @@ QWidget* FilterOrbatReIndexer::CreateParametersWidget( QWidget* parent )
         diplomacyCheckBox_     = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Diplomacy" )     , "FilterOrbatReIndexer_DiplomacyCheckBox");
 
         Q3GroupBox* sideBox = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterOrbatReIndexer", "Parties:" ), hbox, "FilterOrbatReIndexer_PartiesGroupBox" );
-        partiesListView_ = new Q3ListView( sideBox, "FilterOrbatReIndexer_PartiesListView" );
-
-        partiesListView_->addColumn( "Checkbox" );
-        partiesListView_->addColumn( "Hidden checkbox", 0 );
-        partiesListView_->addColumn( "Hidden party id", 0 );
-        partiesListView_->addColumn( "Party" );
-        partiesListView_->header()->setResizeEnabled( false );
-        partiesListView_->header()->setMovingEnabled( false );
-        partiesListView_->hideColumn( eHiddenPartyID );
-        partiesListView_->hideColumn( eHiddenCheckbox );
-        partiesListView_->header()->hide();
-
-        partiesListView_->setResizeMode( Q3ListView::LastColumn );
+        partiesListView_ = new FilterPartiesListView( sideBox );
         partiesListView_->setEnabled( false );
-
-        connect( partiesListView_, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
     }
     return parametersWidget;
 }
@@ -300,32 +243,4 @@ void FilterOrbatReIndexer::Execute()
     // Reload teams model
     model_.teams_.Load( newXis, model_ );
     emit( DoConsistencyCheck() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterOrbatReIndexer::OnItemClicked
-// Created: ABR 2011-09-20
-// -----------------------------------------------------------------------------
-void FilterOrbatReIndexer::OnItemClicked( Q3ListViewItem* item, const QPoint& /*point*/, int column )
-{
-    if( column != eCheckbox || !item )
-        return;
-
-    bool checked = item->text( eHiddenCheckbox ).toInt() > 0;
-    checked = !checked;
-    item->setText( eHiddenCheckbox, QString::number( ( checked ) ? 1 : 0 ) );
-    item->setPixmap( eCheckbox, ( checked ) ? checkedPixmap_ : uncheckedPixmap_  );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterOrbatReIndexer::IsPartyChecked
-// Created: ABR 2011-09-20
-// -----------------------------------------------------------------------------
-bool FilterOrbatReIndexer::IsPartyChecked( unsigned long partyID ) const
-{
-    for( Q3ListViewItemIterator it( partiesListView_ ); it.current(); ++it )
-        if( ( *it )->text( eHiddenPartyID ).toUInt() == partyID )
-            return ( *it )->text( eHiddenCheckbox ).toInt() > 0;
-    assert( false );
-    return false;
 }

@@ -472,6 +472,10 @@
         <source>Argument &apos;%1&apos;:</source>
         <translation>Argument &apos;%1&apos;:</translation>
     </message>
+    <message>
+        <source>Is blocking:</source>
+        <translation>Bloquant:</translation>
+    </message>
 </context>
 <context>
     <name>FilterCsv</name>
@@ -563,10 +567,6 @@
         <translation>Charger le fichier ODB</translation>
     </message>
     <message>
-        <source>Error loading file</source>
-        <translation>Erreur de chargement</translation>
-    </message>
-    <message>
         <source>Select order of battle:</source>
         <translation>Sélectionnez un ordre de bataille:</translation>
     </message>
@@ -585,10 +585,6 @@
     <message>
         <source>Objects</source>
         <translation>Objets</translation>
-    </message>
-    <message>
-        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
-        <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.&lt;br&gt;Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Import parameters</source>
@@ -629,6 +625,17 @@
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
+    </message>
+</context>
+<context>
+    <name>FilterPartiesListView</name>
+    <message>
+        <source>Error loading file</source>
+        <translation>Erreur de chargement</translation>
+    </message>
+    <message>
+        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
+        <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.&lt;br&gt;Merci de sélectionner un autre fichier à importer.</translation>
     </message>
 </context>
 <context>

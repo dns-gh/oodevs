@@ -22,6 +22,7 @@ namespace xml
     class xostream;
 }
 
+class FilterPartiesListView;
 class Model;
 
 // =============================================================================
@@ -47,38 +48,29 @@ public:
     virtual const std::string GetName() const;
     virtual const std::string GetDescription() const;
     virtual QWidget* CreateParametersWidget( QWidget* parent );
-    virtual bool IsValid() const;
    //@}
 
 signals:
-    //! @name Types
+    //! @name Signals
     //@{
     void DoConsistencyCheck();
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_Column { eCheckbox = 0, eHiddenCheckbox = 1, eHiddenPartyID = 2, ePartyName  = 3 };
-    //@}
-
     //! @name Helpers
     //@{
-    void LoadPreview();
-    void ReadTeam( xml::xistream& xis );
+    virtual bool IsValid() const;
     void ReadField( const std::string& name, xml::xistream& xis, xml::xostream& xos );
     void ReadAttribute( const std::string& name, xml::xistream& xis, xml::xostream& xos );
 
     void ReadDiplomacy( xml::xistream& xis, xml::xostream& xos );
     void ReadDiplomacyLink( xml::xistream& xis, xml::xostream& xos );
-    bool IsPartyChecked( unsigned long partyID ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnBrowse();
-    void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
     //@}
 
 private:
@@ -97,11 +89,9 @@ private:
     QCheckBox*         stocksCheckBox_;
     QCheckBox*         diplomacyCheckBox_;
 
-    Q3ListView*        partiesListView_;
-    QPixmap            checkedPixmap_;
-    QPixmap            uncheckedPixmap_;
+    FilterPartiesListView* partiesListView_;
 
-    unsigned long      shift_;
+    unsigned long          shift_;
     //@}
 };
 

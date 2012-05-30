@@ -119,3 +119,13 @@ const Filter_ABC& FilterManager::GetFilter( unsigned int index ) const
     assert( index >= 0 && index < filters_.size() );
     return filters_.at( index );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FilterManager::Update
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void FilterManager::Update()
+{
+    for( IT_Filters it = filters_.begin(); it != filters_.end(); ++it )
+        it->Update();
+}
