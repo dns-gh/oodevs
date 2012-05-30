@@ -152,6 +152,16 @@ void FilterDialog::closeEvent( QCloseEvent * e )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterDialog::showEvent
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void FilterDialog::showEvent( QShowEvent * e )
+{
+    filterManager_->Update();
+    QWidget::showEvent( e );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterDialog::AddFilter
 // Created: ABR 2011-06-22
 // -----------------------------------------------------------------------------

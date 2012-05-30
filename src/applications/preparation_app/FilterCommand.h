@@ -41,6 +41,7 @@ public:
     virtual QWidget* CreateParametersWidget( QWidget* parent );
     virtual bool IsValid() const;
     virtual bool NeedToReloadExercise() const;
+    virtual void Update();
     //@}
 
     //! @name ProcessObserver_ABC implementation
@@ -57,6 +58,7 @@ private:
     void ComputeArgument();
     void ComputePath();
     std::string ConvertArgumentVariable( const std::string& value ) const;
+    bool IsInputArgument( int index ) const;
     //@}
 
 private slots:
@@ -74,7 +76,15 @@ signals:
 private:
     //! @name Type
     //@{
-    typedef std::vector< std::pair< std::string, std::string > > T_Arguments;
+    struct FilterArgument
+    {
+        std::string name_;
+        std::string displayName_;
+        std::string value_;
+    };
+
+    //typedef std::vector< std::pair< std::string, std::string > > T_Arguments;
+    typedef std::vector< FilterArgument >                        T_Arguments;
     typedef T_Arguments::iterator                               IT_Arguments;
     typedef T_Arguments::const_iterator                        CIT_Arguments;
 
@@ -94,6 +104,7 @@ private:
     std::string                  path_;
     bool                         reloadExercise_;
     bool                         minimalDisplay_;
+    bool                         nonBlocking_;
     QLabel*                      commandLabel_;
     //@}
 };

@@ -35,7 +35,7 @@ namespace
 
     bool IsInputArgument( const std::string& argument )
     {
-        return argument == "$input_file$" || argument == "$input_dir$" || argument == "$input$";
+        return argument == "$input_file$" || argument == "$input_dir$" || argument == "$input$" || argument == "$input_team_list$";
     }
 }
 
@@ -50,6 +50,7 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
     , minimalDisplay_( xis.attribute< bool >( "minimal-display", false ) )
+    , nonBlocking_    ( xis.attribute< bool >( "non-blocking", false) )
     , path_          ( xis.attribute< std::string >( "directory", "." ) )
     , commandLabel_  ( 0 )
 {
@@ -113,7 +114,7 @@ std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) c
         result = config_.GetOrbatFile();
     else if( value == "$language$" )
         result = description_.GetCurrentLanguage();
-    else if( value == "$input$" || value == "$input_file$" || value == "$input_dir$" || value.empty() ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
+    else if( value == "$input$" || value == "$input_file$" || value == "$input_dir$" || value == "$input_team_list$" || value.empty() ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
         return value;
     return "\"" + result + "\"";
 }
@@ -136,16 +137,32 @@ void FilterCommand::ReadArguments( xml::xistream& xis )
 void FilterCommand::ReadArgument( xml::xistream& xis )
 {
     assert( xis.has_attribute( "name" ) );
-    const std::string name = xis.attribute< std::string >( "name" );
-    const std::string value = xis.attribute< std::string >( "value", "" );
-    arguments_.push_back( std::pair< std::string, std::string >( name, ConvertArgumentVariable( value ) ) );
-    if( IsInputArgument( value ) )
+    FilterArgument argument;
+    argument.name_ = xis.attribute< std::string >( "name" );
+    argument.displayName_ = xis.attribute< std::string >( "display-name", "" );
+    argument.value_ = xis.attribute< std::string >( "value", "" );
+    argument.value_ = ConvertArgumentVariable( argument.value_ );
+    if( ::IsInputArgument( argument.value_ ) )
     {
         kernel::XmlDescription description( xis, ReadLang() );
-        FilterInputArgument* inputArgument = new FilterInputArgument( value, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
-        inputArguments_[ arguments_.size() - 1 ] = inputArgument;
+        FilterInputArgument* inputArgument = new FilterInputArgument( config_, argument.value_, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
+        inputArguments_[ arguments_.size() ] = inputArgument;
         connect( inputArgument, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );
+        argument.value_ = "";
     }
+    arguments_.push_back( argument );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::IsInputArgument
+// Created: ABR 2012-05-29
+// -----------------------------------------------------------------------------
+bool FilterCommand::IsInputArgument( int index ) const
+{
+    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+        if( it->first == index )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,12 +172,15 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
 void FilterCommand::ComputeArgument()
 {
     argumentsLine_.clear();
-    for( IT_Arguments it = arguments_.begin(); it != arguments_.end(); ++it )
+    for( int i = 0; i < arguments_.size(); ++i )
     {
-        if( IsInputArgument(  it->second ) )
-            argumentsLine_ += " " + it->first + "=\"\"";
-        else
-            argumentsLine_ += ( it->second.empty() ) ? " " + it->first : " " + it->first + "=" + it->second;
+        if( IsInputArgument( i ) )
+        {
+            if( !arguments_[ i ].value_.empty() )
+                argumentsLine_ += " " + arguments_[ i ].name_ + "=\"" + arguments_[ i ].value_ + "\"";
+        }
+        else 
+            argumentsLine_ += ( arguments_[ i ].value_.empty() ) ? " " + arguments_[ i ].name_ : " " + arguments_[ i ].name_+ "=" + arguments_[ i ].value_;
     }
     if( commandLabel_ )
         commandLabel_->setText( ( command_ + argumentsLine_ ).c_str() );
@@ -254,15 +274,28 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
         grid->addWidget( pathLabel, row++, 1 );
     }
     // Reload-Exercise
-    grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Reload exercise:" ), widget, "FilterCommand_ReloadTitle" ), row, 0 );
-    QCheckBox* checkBox = new QCheckBox( widget, "FilterCommand_ReloadCheckBox" );
-    checkBox->setChecked( reloadExercise_ );
-    checkBox->setEnabled( false );
-    grid->addWidget( checkBox, row++, 1 );
+    {
+        grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Reload exercise:" ), widget, "FilterCommand_ReloadTitle" ), row, 0 );
+        QCheckBox* checkBox = new QCheckBox( widget, "FilterCommand_ReloadCheckBox" );
+        checkBox->setChecked( reloadExercise_ );
+        checkBox->setEnabled( false );
+        grid->addWidget( checkBox, row++, 1 );
+    }
+    // Non blocking
+    {
+        grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Is blocking:" ), widget, "FilterCommand_ReloadTitle" ), row, 0 );
+        QCheckBox* checkBox = new QCheckBox( widget, "FilterCommand_ReloadCheckBox" );
+        checkBox->setChecked( !nonBlocking_ );
+        checkBox->setEnabled( false );
+        grid->addWidget( checkBox, row++, 1 );
+    }
     // Input arguments
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it, ++row )
     {
-        grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Argument '%1':" ).arg( arguments_[ it->first ].first.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
+        if( arguments_[ it->first ].displayName_.empty() )
+            grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Argument '%1':" ).arg( arguments_[ it->first ].name_.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
+        else
+            grid->addWidget( new QLabel( QString( "%1:" ).arg( arguments_[ it->first ].displayName_.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
         grid->addWidget( it->second->CreateWidget( widget ), row, 1 );
     }
     return parametersWidget;
@@ -287,7 +320,10 @@ void FilterCommand::Execute()
     command->SetWorkingDirectory( path_.c_str() );
     boost::shared_ptr< frontend::ProcessWrapper > process(
         new frontend::ProcessWrapper( *this, command ) );
-    process->StartAndBlockMainThread();
+    if( nonBlocking_ )
+        process->Start();
+    else
+        process->StartAndBlockMainThread();
 }
 
 // -----------------------------------------------------------------------------
@@ -316,6 +352,16 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 void FilterCommand::OnValueChanged()
 {
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        arguments_[ it->first ].second = inputArguments_[ it->first ]->GetText().ascii();
+        arguments_[ it->first ].value_ = it->second->GetText().ascii();
     ComputeArgument();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::Update
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void FilterCommand::Update()
+{
+    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+        it->second->Update();
 }

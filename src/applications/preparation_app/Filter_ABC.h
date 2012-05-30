@@ -38,6 +38,7 @@ public:
     virtual QWidget* CreateParametersWidget( QWidget* parent ) = 0;
     virtual bool IsValid() const = 0;
     virtual bool NeedToReloadExercise() const = 0;
+    virtual void Update() {}
     //@}
 
 signals:

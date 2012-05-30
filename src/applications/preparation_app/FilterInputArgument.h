@@ -12,10 +12,17 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class XmlDescription;
 }
+
+class FilterPartiesListView;
 
 // =============================================================================
 /** @class  FilterInputArgument
@@ -31,7 +38,7 @@ class FilterInputArgument : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FilterInputArgument( const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir = "" );
+    explicit FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir = "" );
     virtual ~FilterInputArgument();
     //@}
 
@@ -39,12 +46,13 @@ public:
     //@{
     QWidget* CreateWidget( QWidget* parent );
     QString GetText() const;
+    void Update();
     //@}
 
 private:
     //! @name Types
     //@{
-    enum E_ArgumentType { eInput = 0, eFile = 1, eDirectory = 2 };
+    enum E_ArgumentType { eInput = 0, eFile = 1, eDirectory = 2, eTeamList = 3 };
     //@}
 
 signals:
@@ -57,16 +65,18 @@ private slots:
     //! @name Slots
     //@{
     void OnBrowse();
-    void OnTextChanged( const QString& text );
+    void OnTextChanged( const QString& text = "" );
     //@}
 
 private:
     //! @name Member data
     //@{
-    E_ArgumentType    type_;
-    QLineEdit*        line_;
-    const std::string exerciseDir_;
-    const std::string description_;
+    const tools::ExerciseConfig& config_;
+    E_ArgumentType               type_;
+    QLineEdit*                   line_;
+    FilterPartiesListView*       listView_;
+    const std::string            exerciseDir_;
+    const std::string            description_;
     //@}
 };
 

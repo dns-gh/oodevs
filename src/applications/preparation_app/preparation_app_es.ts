@@ -452,6 +452,10 @@
         <source>Argument &apos;%1&apos;:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Is blocking:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilterCsv</name>
@@ -543,10 +547,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error loading file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select order of battle:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -565,10 +565,6 @@
     <message>
         <source>Objects</source>
         <translation type="unfinished">Objetos</translation>
-    </message>
-    <message>
-        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import parameters</source>
@@ -609,6 +605,17 @@
     <message>
         <source>Populations</source>
         <translation type="unfinished">Poblaciones</translation>
+    </message>
+</context>
+<context>
+    <name>FilterPartiesListView</name>
+    <message>
+        <source>Error loading file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
