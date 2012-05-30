@@ -93,7 +93,7 @@
 			<xs:documentation>Rang possible pour le personnel.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="Crew">
+			<xs:enumeration value="MilitaireDuRang">
 				<xs:annotation>
 					<xs:documentation>militaire du rang.</xs:documentation>
 				</xs:annotation>
