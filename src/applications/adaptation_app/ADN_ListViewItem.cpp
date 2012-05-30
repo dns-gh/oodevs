@@ -39,6 +39,8 @@ public:
             case ADN_ListViewItem::eString:
             {
                 lvi_.setText(nPos_,((std::string*)data)->c_str());
+                if( ADN_ListView* list = static_cast< ADN_ListView*>( lvi_.listView() ) )
+                    list->sort();
                 break;
             }
             case ADN_ListViewItem::eInt:
