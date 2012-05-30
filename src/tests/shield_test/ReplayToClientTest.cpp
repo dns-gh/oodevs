@@ -61,3 +61,17 @@ BOOST_FIXTURE_TEST_CASE( control_change_time_factor_ack_to_client_is_converted, 
     MOCK_EXPECT( client, SendReplayToClient ).once().with( constraint( msg, "context: 42 message { control_change_time_factor_ack { time_factor: 7 error_code: error_not_started } }" ) );
     converter.ReceiveReplayToClient( msg );
 }
+
+BOOST_FIXTURE_TEST_CASE( control_send_current_state_begin_is_converted, ContextFixture< sword::ReplayToClient > )
+{
+    content.mutable_control_send_current_state_begin();
+    MOCK_EXPECT( client, SendReplayToClient ).once().with( constraint( msg, "context: 42 message { control_send_current_state_begin { } }" ) );
+    converter.ReceiveReplayToClient( msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( control_send_current_state_end_is_converted, ContextFixture< sword::ReplayToClient > )
+{
+    content.mutable_control_send_current_state_end();
+    MOCK_EXPECT( client, SendReplayToClient ).once().with( constraint( msg, "context: 42 message { control_send_current_state_end { } }" ) );
+    converter.ReceiveReplayToClient( msg );
+}

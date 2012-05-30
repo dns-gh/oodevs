@@ -71,3 +71,21 @@ void ReplayToClient::Convert( const sword::NewDataChunkNotification& from, MsgsR
 {
     CONVERT( last_tick );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ReplayToClient::Convert
+// Created: LDC 2012-05-30
+// -----------------------------------------------------------------------------
+void ReplayToClient::Convert( const sword::ReplaySendCurrentStateBegin& /*from*/, MsgsReplayToClient::MsgControlSendCurrentStateBegin* /*to*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayToClient::Convert
+// Created: LDC 2012-05-30
+// -----------------------------------------------------------------------------
+void ReplayToClient::Convert( const sword::ReplaySendCurrentStateEnd& /*from*/, MsgsReplayToClient::MsgControlSendCurrentStateEnd* /*to*/ )
+{
+    // NOTHING
+}

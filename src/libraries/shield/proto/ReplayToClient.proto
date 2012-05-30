@@ -48,6 +48,10 @@ message MsgNewDataChunkNotification {
     required int32 last_tick = 1;
 }
 
+// Current State / Initialization
+message MsgControlSendCurrentStateBegin {}
+message MsgControlSendCurrentStateEnd   {}
+
 message MsgReplayToClient {
     message Content {
         optional MsgControlReplayInformation                   control_replay_information      = 1;
@@ -59,6 +63,8 @@ message MsgReplayToClient {
         optional MsgTimeTableRequestAck                        time_table_request_ack          = 7;
         optional MsgTimeTable                                  time_table                      = 8;
         optional MsgNewDataChunkNotification                   new_data_chunk_notification     = 9;
+        optional MsgControlSendCurrentStateBegin               control_send_current_state_begin = 10;
+        optional MsgControlSendCurrentStateEnd                 control_send_current_state_end  = 11;
     }
     optional int32   context = 1;
     required Content message = 2;

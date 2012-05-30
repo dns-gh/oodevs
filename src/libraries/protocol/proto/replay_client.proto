@@ -81,6 +81,13 @@ message NewDataChunkNotification {
     required int32 last_tick = 1; //!< The last tick for this chunk
 }
 
+message ReplaySendCurrentStateBegin {
+}
+
+message ReplaySendCurrentStateEnd {
+}
+
+
 /** @struct ReplayToClient
     @brief Wraps available messages going from replay to client
 
@@ -92,16 +99,18 @@ message ReplayToClient {
         @warning Each Content message must contain exactly one of the possible messages.
     */
     message Content {
-        optional ControlReplayInformation   control_replay_information      = 1; //!< @copybrief ControlReplayInformation
-        optional ControlSkipToTickAck       control_skip_to_tick_ack        = 2; //!< @copybrief ControlSkipToTickAck
-        optional ControlStopAck             control_stop_ack                = 3; //!< @copybrief ControlStopAck
-        optional ControlPauseAck            control_pause_ack               = 4; //!< @copybrief ControlPauseAck
-        optional ControlResumeAck           control_resume_ack              = 5; //!< @copybrief ControlResumeAck
-        optional ControlChangeTimeFactorAck control_change_time_factor_ack  = 6; //!< @copybrief ControlChangeTimeFactorAck
-        optional TimeTableRequestAck        time_table_request_ack          = 7; //!< @copybrief TimeTableRequestAck
-        optional TimeTable                  time_table                      = 8; //!< @copybrief TimeTable
-        optional NewDataChunkNotification   new_data_chunk_notification     = 9; //!< @copybrief NewDataChunkNotification
-    }
+        optional ControlReplayInformation    control_replay_information      = 1; //!< @copybrief ControlReplayInformation
+        optional ControlSkipToTickAck        control_skip_to_tick_ack        = 2; //!< @copybrief ControlSkipToTickAck
+        optional ControlStopAck              control_stop_ack                = 3; //!< @copybrief ControlStopAck
+        optional ControlPauseAck             control_pause_ack               = 4; //!< @copybrief ControlPauseAck
+        optional ControlResumeAck            control_resume_ack              = 5; //!< @copybrief ControlResumeAck
+        optional ControlChangeTimeFactorAck  control_change_time_factor_ack  = 6; //!< @copybrief ControlChangeTimeFactorAck
+        optional TimeTableRequestAck         time_table_request_ack          = 7; //!< @copybrief TimeTableRequestAck
+        optional TimeTable                   time_table                      = 8; //!< @copybrief TimeTable
+        optional NewDataChunkNotification    new_data_chunk_notification     = 9; //!< @copybrief NewDataChunkNotification
+        optional ReplaySendCurrentStateBegin control_send_current_state_begin = 10;
+        optional ReplaySendCurrentStateEnd   control_send_current_state_end = 11;
+}
     /** @property context
         @brief Identifies the request matching the response.
 

@@ -33,6 +33,8 @@ namespace replay
     GENERATE_MESSAGE( sword::ReplayToClient, sword, TimeTableRequestAck       , time_table_request_ack         )
     GENERATE_MESSAGE( sword::ReplayToClient, sword, TimeTable                 , time_table                     )
     GENERATE_MESSAGE( sword::ReplayToClient, sword, NewDataChunkNotification  , new_data_chunk_notification    )
+    GENERATE_MESSAGE( sword::ReplayToClient, sword, ReplaySendCurrentStateBegin, control_send_current_state_begin )
+    GENERATE_MESSAGE( sword::ReplayToClient, sword, ReplaySendCurrentStateEnd , control_send_current_state_end )
 }
 
 #endif // __ReplayMessages_h_

@@ -2047,12 +2047,14 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_new_data_chunk_notification() )
         {}
-    else if( wrapper.message().has_new_data_chunk_notification() )
-        {}
     else if( wrapper.message().has_time_table_request_ack() )
         OnReceiveTimeTableRequestAck( wrapper.message().time_table_request_ack() );
     else if( wrapper.message().has_time_table() )
         OnReceiveTimeTable( wrapper.message().time_table() );
+    else if( wrapper.message().has_control_send_current_state_begin() )
+        {}
+    else if( wrapper.message().has_control_send_current_state_end() )
+        {}
     else
         UnhandledMessage( &wrapper.message() );
 }

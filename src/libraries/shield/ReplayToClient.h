@@ -33,6 +33,8 @@ public:
     static void Convert( const sword::TimeTableRequestAck& from, MsgsReplayToClient::MsgTimeTableRequestAck* to );
     static void Convert( const sword::TimeTable& from, MsgsReplayToClient::MsgTimeTable* to );
     static void Convert( const sword::NewDataChunkNotification& from, MsgsReplayToClient::MsgNewDataChunkNotification* to );
+    static void Convert( const sword::ReplaySendCurrentStateBegin& from, MsgsReplayToClient::MsgControlSendCurrentStateBegin* to );
+    static void Convert( const sword::ReplaySendCurrentStateEnd& from, MsgsReplayToClient::MsgControlSendCurrentStateEnd* to );
     //@}
 };
 

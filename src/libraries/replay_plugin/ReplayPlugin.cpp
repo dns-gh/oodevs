@@ -192,8 +192,12 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
     else
         asn().set_error_code( sword::ControlAck::error_invalid_time_factor );
     asn.Send( clients_ );
+    ::replay::ReplaySendCurrentStateBegin beginMessage;
+    beginMessage.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
         loader_.SkipToFrame( frame );
+    ::replay::ReplaySendCurrentStateEnd endMessage;
+    endMessage.Send( clients_ );
 }
 
 // -----------------------------------------------------------------------------
