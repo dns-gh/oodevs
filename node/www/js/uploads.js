@@ -198,7 +198,7 @@
             _this["switch"](false);
             spin = $("<a class='btn disabled spin_btn'></a>");
             setSpinner(spin);
-            spin.appendTo($(it).parent());
+            spin.prependTo($(it).parent());
             $(it).hide();
             id = $(it).parent().parent().attr("data-rel");
             if (id != null) list.push(id);

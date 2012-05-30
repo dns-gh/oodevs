@@ -122,7 +122,7 @@ class PackageView extends Backbone.View
                     @switch false
                     spin = $ "<a class='btn disabled spin_btn'></a>"
                     setSpinner spin
-                    spin.appendTo $(it).parent()
+                    spin.prependTo $(it).parent()
                     $(it).hide()
                     id = $(it).parent().parent().attr "data-rel"
                     list.push id if id?
