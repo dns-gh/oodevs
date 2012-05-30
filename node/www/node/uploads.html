@@ -63,7 +63,7 @@
                             {{/is_first_item}}
 
                             {{#for_all_items items "${type}"}}
-                            <tr data-rel="{{id}}" class="package_row">
+                            <tr class="package_row">
                                 <td class="name">
                                     {{name}}
                                     {{#equal action "error"}}
@@ -74,7 +74,7 @@
                                 </td>
                                 <td class="date">{{date}}</td>
                                 <td class="checksum">{{#if checksum.length}}0x{{checksum}}{{/if}}</td>
-                                <td class="action">
+                                <td class="action" data-rel="{{id}}">
                                     {{#equal action "add"}}
                                     <a class="btn add" data-toggle="button"><i class="icon-plus"></i> Add </a>
                                     {{/equal}}

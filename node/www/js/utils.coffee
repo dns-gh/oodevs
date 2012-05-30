@@ -102,3 +102,15 @@ text_compare = (lhs, rhs) ->
     if lhs < rhs
         return -1
     return 0
+
+transform_to_spinner = (btn, append) ->
+    id = $(btn).parent().attr "data-rel"
+    spin = $ "<a class='btn disabled spin_btn'></a>"
+    set_spinner spin
+    ctl = $(btn).parent()
+    if append?
+        spin.appendTo ctl
+    else
+        spin.prependTo ctl
+    $(btn).hide()
+    return id

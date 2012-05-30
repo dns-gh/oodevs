@@ -37,7 +37,7 @@
                         {{/is_first_item}}
 
                         {{#for_all_items items "${type}"}}
-                        <tr data-rel="{{id}}" class="package_row">
+                        <tr class="package_row">
                             <td class="name">
                                 {{name}}
                             </td>
@@ -48,7 +48,7 @@
                             </td>
                             <td>{{date}}</td>
                             <td>0x{{checksum}}</td>
-                            <td class="action">
+                            <td class="action" data-rel="{{id}}">
                                 [#if type == "exercise"]
                                 <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
                                 [/#if]

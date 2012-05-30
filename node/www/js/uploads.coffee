@@ -61,11 +61,7 @@ class PackageView extends Backbone.View
                 for it in $(@el).find ".action .add, .action .update"
                     continue unless $(it).hasClass "active"
                     @switch false
-                    spin = $ "<a class='btn disabled spin_btn'></a>"
-                    set_spinner spin
-                    spin.prependTo $(it).parent()
-                    $(it).hide()
-                    id = $(it).parent().parent().attr "data-rel"
+                    id = transform_to_spinner it
                     list.push id if id?
                 if !list.length
                     print_error "Please select at least one package to install"
