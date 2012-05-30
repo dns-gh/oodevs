@@ -222,7 +222,7 @@
       return list.fetch({
         success: function() {
           if (list.attributes.items != null) {
-            _this.update(list.attributes);
+            _this.model.set(list.attributes);
           } else {
             _this.model.clear();
           }
