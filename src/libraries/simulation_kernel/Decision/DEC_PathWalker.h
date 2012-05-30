@@ -21,6 +21,7 @@ namespace sword
     class UnitEnvironmentType;
 }
 
+class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class PHY_MovingEntity_ABC;
 
@@ -64,7 +65,7 @@ public:
 
     //! @name Tools
     //@{
-    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool applyScale ) const;
+    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool applyScale ) const;
     MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
     bool IsMovingOn( const DEC_Path_ABC& path ) const;
     //@}

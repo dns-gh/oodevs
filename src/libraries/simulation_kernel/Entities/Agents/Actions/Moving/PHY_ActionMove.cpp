@@ -113,7 +113,7 @@ bool PHY_ActionMove::AvoidObstacles()
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
     double rDistanceCollision = 0.;
-    if( !role_.ComputeFutureObjectCollision( objectsToAvoid_, rDistanceCollision, pObjectColliding, true ) )
+    if( !role_.ComputeFutureObjectCollision( objectsToAvoid_, rDistanceCollision, pObjectColliding, pion_, true ) )
         return false;
 
     assert( pObjectColliding && pObjectColliding->IsValid() );

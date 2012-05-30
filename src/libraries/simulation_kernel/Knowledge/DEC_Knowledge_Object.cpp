@@ -835,6 +835,7 @@ bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const
 {
+    static const double epsilon = 1e-8;
     if( pObjectKnown_ )
         if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )
         {
@@ -846,7 +847,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
             const std::vector< geometry::Polygon2f* >& lowAreas = flood->GetLowAreas();
             std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
             for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
-                if( localisation.IsInside( *it ) )
+                if( localisation.IsInside( *it, epsilon ) )
                 {
                     geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
                     for( polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )
@@ -860,7 +861,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
             return false;
         }
     for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
-        if( localisation_.IsInside( *it ) && ( !pObjectKnown_ || pObjectKnown_->GetLocalisation().IsInside( *it ) ) )
+        if( localisation_.IsInside( *it, epsilon ) && ( !pObjectKnown_ || pObjectKnown_->GetLocalisation().IsInside( *it, epsilon ) ) )
             return true;
     return false;
 }

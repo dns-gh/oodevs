@@ -141,7 +141,7 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool applyScale ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool applyScale ) const
 {
     static const double epsilon = 1e-8;
     rDistance = std::numeric_limits< double >::max();
@@ -183,6 +183,13 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
         if( applyScale )
         {
             pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() );
+            if( !resultList_.empty() )
+            {
+                T_PointVector firstPointVector;
+                firstPointVector.push_back( (*resultList_.begin())->GetPos() );
+                if( pKnowledge->IsObjectInsidePathPoint( firstPointVector, agent ) )
+                    continue;
+            }
             const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
             pScaledObjectLocation.reset( pObjectLocation );
         }
