@@ -26,7 +26,7 @@
 using namespace runtime;
 
 #define LOG_AND_THROW( message ) {\
-    LOG_ERROR( log_ ) << "[win32] " << ( message ) << ", " << GetLastError();\
+    LOG_ERROR( log_ ) << "[win32] " << GetLastError();\
     throw std::runtime_error( message );\
 }
 
@@ -82,7 +82,8 @@ std::string Api::GetLastError() const
 bool Api::EnumProcesses( unsigned long* ids, int cb, unsigned long* pBytesReturned ) const
 {
     bool reply = !!::EnumProcesses( ids, cb, pBytesReturned );
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to list processes, " << GetLastError();
+    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] " << GetLastError();
+    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to list processes";
     return reply;
 }
 
@@ -129,7 +130,8 @@ int Api::WaitForSingleObjectEx( HANDLE hHandle, int dwMilliseconds, bool bAlerta
 bool Api::TerminateProcess( HANDLE hProcess, unsigned uExitCode ) const
 {
     bool reply = !!::TerminateProcess( hProcess, uExitCode );
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to terminate process, " << GetLastError();
+    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] " << GetLastError();
+    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to terminate process";
     return reply;
 }
 
@@ -150,7 +152,8 @@ HANDLE Api::CreateRemoteThreadExt( void* hProcess, size_t dwStackSize, void* lpS
 {
     HANDLE reply = ::CreateRemoteThreadEx( hProcess, 0, dwStackSize, reinterpret_cast< LPTHREAD_START_ROUTINE >( lpStartAddress ),
                                            lpParameter, dwCreationFlags, 0, lpThreadId );
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to create remote thread, " << GetLastError();
+    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] " << GetLastError();
+    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to create remote thread";
     return reply;
 }
 
@@ -291,6 +294,9 @@ ProcessDescriptor Api::MakeProcess( const wchar_t* app, wchar_t* args, const wch
     ProcessDescriptor proc;
     proc.handle = ::MakeProcess( app, args, run, log, proc.pid );
     if( !proc.handle )
-        LOG_ERROR( log_ ) << "[win32] Unable to create process, " << GetLastError();
+    {
+        LOG_ERROR( log_ ) << "[win32] " << GetLastError();
+        LOG_ERROR( log_ ) << "[win32] Unable to create process";
+    }
     return proc;
 }

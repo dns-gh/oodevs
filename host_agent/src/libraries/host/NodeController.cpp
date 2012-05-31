@@ -120,7 +120,8 @@ void NodeController::Reload()
         }
         catch( const std::exception& err )
         {
-            LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path ) << " - " << err.what();
+            LOG_WARN( log_ ) << "[" << type_ << "] " << err.what();
+            LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path );
             continue; // skip invalid entry
         }
 }
@@ -328,7 +329,8 @@ Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
     }
     catch( const std::exception& err )
     {
-        LOG_ERROR( log_ ) << "[" << type_ << "] " << " Unable to unpack - " << err.what();
+        LOG_ERROR( log_ ) << "[" << type_ << "] " << err.what();
+        LOG_ERROR( log_ ) << "[" << type_ << "] " << " Unable to unpack cache";
     }
     return node->GetCache();
 }

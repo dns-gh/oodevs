@@ -125,7 +125,8 @@ void SessionController::Reload( T_Predicate predicate )
         }
         catch( const std::exception& err )
         {
-            LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8Convert( path ) << " - " << err.what();
+            LOG_WARN( log_ ) << "[session] " << err.what();
+            LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8Convert( path );
             continue; // skip invalid entry
         }
 }
