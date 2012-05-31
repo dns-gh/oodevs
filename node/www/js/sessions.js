@@ -596,10 +596,13 @@
   };
 
   on_session_load = function() {
-    var done, error, select;
+    var select;
     select = $("#session_exercise");
     select.children().remove().end();
-    done = function(data) {
+    return ajax("/api/list_exercises", {
+      id: uuid,
+      limit: 40
+    }, function(data) {
       var item, _i, _len, _results;
       _results = [];
       for (_i = 0, _len = data.length; _i < _len; _i++) {
@@ -607,16 +610,12 @@
         _results.push(select.append("<option>" + item + "</option>"));
       }
       return _results;
-    };
-    error = function(obj, text, data) {
+    }, function() {
       var box;
       box = $("#session_create .modal-footer .alert");
       box.html("Unable to fetch exercises");
       return box.show();
-    };
-    return ajax("/api/list_exercises", {
-      limit: 40
-    }, done, error);
+    });
   };
 
   $("#session_create .modal-footer .btn_click").click(on_session_click);
