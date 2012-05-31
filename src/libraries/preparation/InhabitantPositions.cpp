@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "InhabitantPositions.h"
+#include "UrbanHierarchies.h"
 #include "UrbanModel.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AccommodationType.h"
@@ -309,9 +310,13 @@ void InhabitantPositions::Remove( const kernel::Location_ABC& location )
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Add( const kernel::UrbanObject_ABC& object, const geometry::Polygon2f& polygon )
 {
-    if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-        if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
-            livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+    const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( object.Retrieve< kernel::Hierarchies >() );
+    if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+    {
+        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+            if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
+                livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+    }
 }
 
 namespace
