@@ -284,7 +284,7 @@ void Node::UploadCache( std::istream& src )
     const Path other = GetTemporaryPath();
 
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    try { system_.Rename( path, other ); } catch( ... ) {}
+    system_.Rename( path, other );
     cache_ = next;
     cache_->Move( path );
     cache_->Identify( *install_ );

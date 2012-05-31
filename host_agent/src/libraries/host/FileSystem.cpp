@@ -105,9 +105,19 @@ void FileSystem::CopyDirectory( const Path& src, const Path& dst ) const
 // Name: FileSystem::CopyFile
 // Created: BAX 2012-03-29
 // -----------------------------------------------------------------------------
-void FileSystem::CopyFile( const Path& src, const Path& dst ) const
+bool FileSystem::CopyFile( const Path& src, const Path& dst ) const
 {
-    boost::filesystem::copy_file( src, dst / src.filename() );
+    try
+    {
+        boost::filesystem::copy_file( src, dst / src.filename() );
+        return true;
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[file] " << err.what();
+        LOG_ERROR( log_ ) << "[file] Unable to copy " << src.string() << " to " << dst.string();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -121,49 +131,72 @@ void FileSystem::MakeDirectory( const Path& path ) const
 
 namespace
 {
-    std::string TryRemove( const Path& path )
+bool TryRemove( const Path& path, cpplog::BaseLogger* log )
+{
+    try
     {
-        try
+        boost::filesystem::remove_all( path );
+        return true;
+    }
+    catch( const std::exception& err )
+    {
+        if( log )
         {
-            boost::filesystem::remove_all( path );
-            return std::string();
-        }
-        catch( std::exception& err )
-        {
-            return err.what();
+            LOG_ERROR( *log ) << "[file] " << err.what();
+            LOG_ERROR( *log ) << "[file] Unable to remove path " << path.string();
         }
     }
+    return false;
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::Remove
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::Remove( const Path& path ) const
+bool FileSystem::Remove( const Path& path ) const
 {
-    std::string reply = TryRemove( path );
-    if( !reply.empty() )
-        reply = TryRemove( path );
-    if( !reply.empty() )
-        LOG_ERROR( log_ ) << "[file] Unable to remove path " + path.string() + ", " + reply;
+    bool done = TryRemove( path, 0 );
+    if( !done )
+        done = TryRemove( path, &log_ );
+    return done;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::Rename
 // Created: BAX 2012-05-30
 // -----------------------------------------------------------------------------
-void FileSystem::Rename( const Path& src, const Path& dst ) const
+bool FileSystem::Rename( const Path& src, const Path& dst ) const
 {
-    boost::filesystem::rename( src, dst );
+    try
+    {
+        boost::filesystem::rename( src, dst );
+        return true;
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[file] " << err.what();
+        LOG_ERROR( log_ ) << "[file] Unable to rename " << src.string() << " to " << dst.string();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::WriteFile
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-void FileSystem::WriteFile( const Path& path, const std::string& content ) const
+bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
 {
-    boost::filesystem::ofstream( path ) << content;
+    try
+    {
+        boost::filesystem::ofstream( path ) << content;
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[file] " << err.what();
+        LOG_ERROR( log_ ) << "[file] Unable to write file " << path.string();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,8 +205,18 @@ void FileSystem::WriteFile( const Path& path, const std::string& content ) const
 // -----------------------------------------------------------------------------
 std::string FileSystem::ReadFile( const Path& path ) const
 {
-    boost::filesystem::ifstream ifs( path );
-    return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
+    try
+    {
+        boost::filesystem::ifstream ifs( path );
+        if( !ifs.fail() )
+            return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[file] " << err.what();
+        LOG_ERROR( log_ ) << "[file] Unable to read file " << path.string();
+    }
+    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +267,7 @@ void AbortArchive( cpplog::BaseLogger& log, Archive* arc )
 {
     const std::string err = archive_error_string( arc );
     LOG_ERROR( log ) << "[archive] " << err;
-    throw std::runtime_error( "[archive] Operation aborted, " + err );
+    throw std::runtime_error( "[archive] Operation aborted" );
 }
 
 void CheckArchiveCode( cpplog::BaseLogger& log, Archive* arc, int err )

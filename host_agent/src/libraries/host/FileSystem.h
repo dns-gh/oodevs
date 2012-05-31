@@ -41,11 +41,11 @@ public:
     virtual bool IsDirectory( const Path& path ) const;
     virtual bool Exists( const Path& path ) const;
     virtual void CopyDirectory( const Path& dst, const Path& src ) const;
-    virtual void CopyFile( const Path& dst, const Path& src ) const;
+    virtual bool CopyFile( const Path& dst, const Path& src ) const;
     virtual void MakeDirectory( const Path& path ) const;
-    virtual void Remove( const Path& path ) const;
-    virtual void Rename( const Path& src, const Path& dst ) const;
-    virtual void WriteFile( const Path& path, const std::string& content ) const;
+    virtual bool Remove( const Path& path ) const;
+    virtual bool Rename( const Path& src, const Path& dst ) const;
+    virtual bool WriteFile( const Path& path, const std::string& content ) const;
     virtual std::string ReadFile( const Path& path ) const;
     virtual std::vector< Path > Glob( const Path& path, const std::wstring& name ) const;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const;

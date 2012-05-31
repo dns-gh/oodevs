@@ -57,12 +57,12 @@ namespace
         {
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
             MOCK_EXPECT( system.MakeDirectory );
-            MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) );
+            MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
             MOCK_EXPECT( runtime.Start ).once().with( java, boost::assign::list_of
                 ( " " "-jar \"" + jar + "\"" )
                 ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
                 "", mock::any ).returns( process );
-            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" );
+            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
 
@@ -71,7 +71,7 @@ namespace
             MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
-            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" );
+            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
     };

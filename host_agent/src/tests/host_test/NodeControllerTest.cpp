@@ -110,7 +110,7 @@ namespace
                 MOCK_EXPECT( sub.system.ReadFile ).once().with( path ).returns( data );
                 MOCK_EXPECT( sub.nodes.Make1 ).once().returns( node );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "node" / idText / "node.id", data );
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "node" / idText / "node.id", data ).returns( true );
             MOCK_EXPECT( sub.proxy.Register ).once().with( idText, "localhost", node->GetPort() );
             return node;
         }
@@ -153,7 +153,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
 {
     Reload();
 
-    MOCK_EXPECT( sub.system.Remove ).once();
+    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idActiveText );
     MOCK_EXPECT( active->Stop ).once().returns( true );
     NodeController::T_Node node = control.Delete( idActive );
@@ -161,7 +161,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
     BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
-    MOCK_EXPECT( sub.system.Remove ).once();
+    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idIdleText );
     MOCK_EXPECT( idle->Stop ).once().returns( true );
     node = control.Delete( idIdle );
@@ -173,7 +173,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_starts, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once();
+    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     NodeController::T_Node node = control.Start( idIdle );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
 }
@@ -182,7 +182,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_stops, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once();
+    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     NodeController::T_Node node = control.Stop( idActive );
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
 }

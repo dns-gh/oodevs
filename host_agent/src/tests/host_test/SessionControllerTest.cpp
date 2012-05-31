@@ -121,14 +121,14 @@ namespace
                 MOCK_EXPECT( sub.system.MakeDirectory ).once().with( root );
                 MOCK_EXPECT( sub.factory.Make3 ).once().with( node, session->GetName(), session->GetExercise() ).returns( session );
                 MOCK_EXPECT( session->Start ).once().returns( true );
-                MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.xml", session->GetConfiguration() );
+                MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.xml", session->GetConfiguration() ).returns( true );
             }
             else
             {
                 MOCK_EXPECT( sub.system.ReadFile ).once().with( path ).returns( text );
                 MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.id", text );
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.id", text ).returns( true );
             return session;
         }
 
@@ -169,14 +169,14 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
 {
     Reload();
 
-    MOCK_EXPECT( sub.system.Remove ).once();
+    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( active->Stop ).once().returns( true );
     SessionController::T_Session session = control.Delete( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
-    MOCK_EXPECT( sub.system.Remove ).once();
+    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( idle->Stop ).once().returns( true );
     session = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
@@ -187,7 +187,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once();
+    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     SessionController::T_Session session = control.Start( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }
@@ -196,7 +196,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once();
+    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     SessionController::T_Session session = control.Stop( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }
