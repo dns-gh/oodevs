@@ -35,7 +35,6 @@ namespace gui
 // Created: SBO 2006-08-22
 // =============================================================================
 class StatusBar : public gui::StatusBar
-                , public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< Simulation >
                 , public tools::ElementObserver_ABC< Simulation::sStartTick >
                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
