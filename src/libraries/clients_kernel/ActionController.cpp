@@ -81,7 +81,7 @@ void ActionController::AllowLayerMultipleSelection( int mode, const MapLayer_ABC
 bool ActionController::HasMultipleLayers() const
 {
     CIT_MultipleLayers it = multipleLayers_.find( currentMode_ );
-    return it->second.size() > 0;
+    return it != multipleLayers_.end() && it->second.size() > 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -248,14 +248,8 @@ void ActionController::ClearSingleSelection()
 // -----------------------------------------------------------------------------
 void ActionController::ClearMultipleSelection()
 {
-//            Apply( & tools::MultipleSelectionObserver_ABC::BeforeSelection );
-//            Apply( & tools::MultipleSelectionObserver_ABC::AfterSelection );
-//            ou
-    for( CIT_SelectedMap it = selectedMap_.begin(); it != selectedMap_.end(); ++it )
-    {
-        assert( !it->second.empty() );
-        it->second.front()->MultipleSelect( *this, emptyList_ );
-    }
+    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+    Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
     selectedMap_.clear();
 }
 
