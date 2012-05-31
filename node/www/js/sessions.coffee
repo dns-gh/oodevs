@@ -53,7 +53,7 @@ class SessionList extends Backbone.Collection
         return @name_compare lhs, rhs
 
     name_compare: (lhs, rhs) =>
-        return text_compare lhs.get "name", rhs.get "name"
+        return text_compare lhs.get("name"), rhs.get("name")
 
     status_compare: (lhs, rhs) =>
         a = lhs.get "status"

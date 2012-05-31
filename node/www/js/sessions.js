@@ -257,7 +257,7 @@
     };
 
     SessionList.prototype.name_compare = function(lhs, rhs) {
-      return text_compare(lhs.get("name", rhs.get("name")));
+      return text_compare(lhs.get("name"), rhs.get("name"));
     };
 
     SessionList.prototype.status_compare = function(lhs, rhs) {
