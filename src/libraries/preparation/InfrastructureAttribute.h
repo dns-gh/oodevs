@@ -73,21 +73,26 @@ public:
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
+    //! @name ModesObserver_ABC
+    //@{
+    virtual void NotifyModeChanged( int newMode );
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
 public:
     //! @name Member data
     //@{
-    kernel::Controllers&              controllers_;
-    const kernel::InfrastructureType* type_;
-    bool                              enabled_;
-    unsigned int                      threshold_;
-    std::string                       role_;
-    const geometry::Point2f           position_;
+    kernel::Controllers&          controllers_;
+    kernel::PropertiesDictionary& dico_;
+    kernel::InfrastructureType*   type_;
+    bool                          enabled_;
+    unsigned int                  threshold_;
+    std::string                   role_;
+    const geometry::Point2f       position_;
     //@}
 };
 

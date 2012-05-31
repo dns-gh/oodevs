@@ -55,7 +55,7 @@ void UrbanBlockDetectionMap::NotifyCreated( const kernel::UrbanObject_ABC& objec
             for( unsigned int j = jmin; j < jmax; ++j )
                 for( unsigned int i = imin; i < imax; ++i )
                     if( positions->IsInside( geometry::Point2f( i * cellsize + halfcellsize, j * cellsize + halfcellsize ) ) )
-                        urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial();
+                        urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial().GetName();
         }
 }
 

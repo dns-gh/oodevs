@@ -57,8 +57,6 @@ public:
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( kernel::Viewport_ABC& viewport );
     virtual void Paint( const geometry::Rectangle2f& viewport );
-
-    virtual bool IsReadOnly() const;
     //@}
 
 private:

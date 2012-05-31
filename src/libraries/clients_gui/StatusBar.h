@@ -10,7 +10,8 @@
 #ifndef __Gui_StatusBar_h_
 #define __Gui_StatusBar_h_
 
-#include "tools/ElementObserver_ABC.h"
+#include "tools/Observer_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
 
 namespace kernel
 {
@@ -30,14 +31,24 @@ namespace gui
 // Created: SBO 2006-04-14
 // =============================================================================
 class StatusBar : public QObject
+                , public tools::Observer_ABC
+                , public kernel::DisplayableModesObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter );
+             StatusBar( kernel::Controllers& controllers, QStatusBar* bar, TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter );
     virtual ~StatusBar();
+    //@}
+
+    //! @name DisplayableModesObserver_ABC
+    //@{
+    virtual void SetVisible( bool visible );
+    virtual void ForceEnabled( bool enabled );
+    virtual void EnsureIsEnabled();
+    virtual bool IsVisible() const;
     //@}
 
 public slots:
@@ -72,6 +83,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
     const kernel::CoordinateConverter_ABC& converter_;
     TerrainPicker& terrainPicker_;
@@ -82,6 +94,7 @@ private:
     QLabel* pTerrainType_;
     QLabel* pObjectInfos_;
     QMenu* pMenu_;
+    QStatusBar* parent_;
     //@}
 };
 

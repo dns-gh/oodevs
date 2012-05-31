@@ -12,7 +12,10 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/Moveable_ABC.h"
+#include "clients_kernel/RoofShapeType.h"
 #include "clients_gui/Tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/DotationsItem.h"
@@ -114,4 +117,31 @@ void PropertiesTableDisplayer::Call( const kernel::Moveable_ABC& value )
 void PropertiesTableDisplayer::Call( const PopulationRepartition& /*value*/ )
 {
     AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit repartition...>" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::InfrastructureType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::MaterialCompositionType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::RoofShapeType& value )
+{
+    AddToDisplay( value.GetName() );
 }

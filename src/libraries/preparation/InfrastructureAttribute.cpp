@@ -26,12 +26,25 @@
 
 #define DEFAULT_THRESHOLD 30
 
+
+namespace
+{
+    struct ThresholdSetter
+    {
+        void operator()( unsigned int* pValue, unsigned int value )
+        {
+            *pValue = std::min( 100u, std::max( 0u, value ) );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico, const kernel::ObjectTypes& objectTypes )
     : controllers_( controllers )
+    , dico_       ( dico )
     , type_       ( 0 )
     , enabled_    ( true )
     , threshold_  ( DEFAULT_THRESHOLD )
@@ -48,10 +61,6 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     if( type_ )
     {
         role_ = type_->GetName();
-        CreateDictionary( dico );
-        // $$$$ ABR 2012-05-25: TODO repair this shit, and pay attention to serialization : serialize on object but not on urbanobject.
-        //if( type_->FindCapacity( "medical" ) )
-        //    object.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes, dico ) );
         object.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent();
     }
     assert( controllers_.modes_ );
@@ -138,28 +147,6 @@ bool InfrastructureAttribute::IsOverriden() const
     return enabled_ != true || threshold_ != DEFAULT_THRESHOLD;
 }
 
-namespace
-{
-    struct ThresholdSetter
-    {
-        void operator()( unsigned int* pValue, unsigned int value )
-        {
-            *pValue = std::min( 100u, std::max( 0u, value ) );
-        }
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureAttribute::CreateDictionary
-// Created: SLG 2011-01-11
-// -----------------------------------------------------------------------------
-void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
-{
-    dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_->GetName() );
-    dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
-    dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
-}
-
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
@@ -204,4 +191,32 @@ unsigned int InfrastructureAttribute::GetThreshold() const
 const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::NotifyModeChanged
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void InfrastructureAttribute::NotifyModeChanged( int newMode )
+{
+    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
+    if( newMode == ePreparationMode_Exercise )
+    {
+        if( type_ )
+        {
+            dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), static_cast< const InfrastructureAttribute& >( *this ).type_ );
+            dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
+            dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
+        }
+        else
+        {
+            dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
+        }
+    }
+    else if( newMode == ePreparationMode_Terrain )
+    {
+        dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) );
+        dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) );
+        dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_ );
+    }
 }

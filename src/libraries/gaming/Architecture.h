@@ -19,6 +19,7 @@ namespace sword
 
 namespace kernel
 {
+    class ObjectTypes;
     class PropertiesDictionary;
 }
 
@@ -33,7 +34,7 @@ class Architecture : public kernel::Architecture
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary );
+             Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}
 };

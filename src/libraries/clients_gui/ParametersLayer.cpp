@@ -279,12 +279,3 @@ void ParametersLayer::SelectRaster( ShapeHandler_ABC& handler )
     location->AddPoint( world_.TopRight() );
     handler.Handle( *location );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ParametersLayer::IsReadOnly
-// Created: LDC 2012-05-30
-// -----------------------------------------------------------------------------
-bool ParametersLayer::IsReadOnly() const
-{
-    return false;
-}

@@ -15,7 +15,10 @@
 
 namespace kernel
 {
+    class InfrastructureType;
+    class MaterialCompositionType;
     class Moveable_ABC;
+    class RoofShapeType;
 }
 
 class DotationsItem;
@@ -35,6 +38,9 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< geometry::Point2f >
                                , public tools::Caller< kernel::Moveable_ABC >
                                , public tools::Caller< PopulationRepartition >
+                               , public tools::Caller< kernel::InfrastructureType >
+                               , public tools::Caller< kernel::MaterialCompositionType >
+                               , public tools::Caller< kernel::RoofShapeType >
 {
 public:
     //! @name Constructors/Destructor
@@ -52,6 +58,9 @@ public:
     virtual void Call( const geometry::Point2f& value );
     virtual void Call( const kernel::Moveable_ABC& value );
     virtual void Call( const PopulationRepartition& value );
+    virtual void Call( const kernel::InfrastructureType& value );
+    virtual void Call( const kernel::MaterialCompositionType& value );
+    virtual void Call( const kernel::RoofShapeType& value );
     //@}
 
 private:

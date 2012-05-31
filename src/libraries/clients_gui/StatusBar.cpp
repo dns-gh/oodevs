@@ -28,10 +28,12 @@ using namespace gui;
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( QStatusBar* parent, TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter )
-    : detection_( detection )
-    , converter_( converter )
+StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter )
+    : controllers_  ( controllers )
+    , detection_    ( detection )
+    , converter_    ( converter )
     , terrainPicker_( picker )
+    , parent_       ( parent )
 {
     QToolButton* toolButton = new QToolButton( parent );
     toolButton->setPopupDelay( 0 );
@@ -53,6 +55,7 @@ StatusBar::StatusBar( QStatusBar* parent, TerrainPicker& picker, const Detection
     connect( pMenu_, SIGNAL( activated( int ) ), this, SLOT( ParameterSelected( int ) ) );
     connect( &terrainPicker_, SIGNAL( TerrainPicked( const QString& ) ), SLOT( TerrainPicked( const QString& ) ) );
     connect( &terrainPicker_, SIGNAL( ObjectPicked( const QStringList& ) ), SLOT( ObjectPicked( const QStringList& ) ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +64,7 @@ StatusBar::StatusBar( QStatusBar* parent, TerrainPicker& picker, const Detection
 // -----------------------------------------------------------------------------
 StatusBar::~StatusBar()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,4 +174,42 @@ void StatusBar::TerrainPicked( const QString& type )
 void StatusBar::ObjectPicked( const QStringList& infos )
 {
     pObjectInfos_->setText( infos.join( " " ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::SetVisible
+// Created: ABR 2012-05-29
+// -----------------------------------------------------------------------------
+void StatusBar::SetVisible( bool visible )
+{
+    parent_->setVisible( visible );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::ForceEnabled
+// Created: ABR 2012-05-29
+// -----------------------------------------------------------------------------
+void StatusBar::ForceEnabled( bool enabled )
+{
+    parent_->setEnabled( enabled );
+    parent_->setVisible( enabled );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::EnsureIsEnabled
+// Created: ABR 2012-05-29
+// -----------------------------------------------------------------------------
+void StatusBar::EnsureIsEnabled()
+{
+    parent_->setEnabled( true );
+    parent_->setVisible( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::IsVisible
+// Created: ABR 2012-05-29
+// -----------------------------------------------------------------------------
+bool StatusBar::IsVisible() const
+{
+    return parent_->isVisible();
 }

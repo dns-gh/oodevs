@@ -11,9 +11,12 @@
 #define __Architecture_h_
 
 #include "clients_kernel/Architecture.h"
+#include "clients_kernel/ModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
 
 namespace kernel
 {
+    class Controllers;
     class PropertiesDictionary;
 }
 
@@ -29,18 +32,31 @@ namespace xml
 // Created: LGY 2011-04-14
 // =============================================================================
 class Architecture : public kernel::Architecture
+                   , public tools::Observer_ABC
+                   , public kernel::ModesObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Architecture( kernel::PropertiesDictionary& dictionary );
-             Architecture( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit Architecture( kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+             Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}
 
     //! @name Serializable_ABC
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+    //! @name ModesObserver_ABC
+    //@{
+    virtual void NotifyModeChanged( int newMode );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
     //@}
 };
 

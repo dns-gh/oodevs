@@ -11,6 +11,7 @@
 #include "UrbanFactory.h"
 #include "Architecture.h"
 #include "InfrastructureAttribute.h"
+#include "MedicalTreatmentAttribute.h"
 #include "PhysicalAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "StructuralStateAttribute.h"
@@ -75,11 +76,12 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Urban
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, hierarchies->GetLevel(), *pTerrainObject, converter_ ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis ) );
-    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, accommodations_, *pTerrainObject, controllers_.controller_ ) );
+    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, accommodations_, *pTerrainObject, controllers_, objectTypes_ ) );
     if( hierarchies->GetLevel() == eUrbanLevelBlock )
     {
-        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, 100, dictionary ) );
+        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, dictionary ) );
         pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, controllers_, *pTerrainObject, dictionary, objectTypes_ ) );
+        pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes_, dictionary, &controllers_, pTerrainObject ) );
         pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, objectTypes_, false ) );
     }
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );

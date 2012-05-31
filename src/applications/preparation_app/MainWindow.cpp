@@ -204,7 +204,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     setMenuBar( menu_.get() );
 
     // Status bar
-    gui::StatusBar* pStatus = new gui::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
+    gui::StatusBar* pStatus = new gui::StatusBar( controllers_, statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
+    pStatus->SetModes( ePreparationMode_Default );
     connect( selector_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
 

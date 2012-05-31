@@ -98,6 +98,54 @@
         <source>Occupations/</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/floorNumber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/parkingFloors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/roofShape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/material</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/occupation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/trafficability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Motivations/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Percentage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Nominal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Maximal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoordinateSystems</name>

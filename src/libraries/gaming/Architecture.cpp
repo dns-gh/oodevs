@@ -15,12 +15,13 @@
 // Name: Architecture constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-Architecture::Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary )
+Architecture::Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
     : kernel::Architecture( dictionary )
 {
     const sword::UrbanAttributes::Architecture& architecture = message.architecture();
-    Initialize( architecture.height(), architecture.floor_number(), architecture.parking_floors(), architecture.roof_shape(),
-                architecture.material(), architecture.occupation(), architecture.trafficability() );
+    Initialize( objectTypes, architecture.height(), architecture.floor_number(), architecture.parking_floors(), architecture.occupation(),
+                architecture.trafficability(), architecture.material(), architecture.roof_shape() );
+    CreateDictionnary( true );
 }
 
 // -----------------------------------------------------------------------------

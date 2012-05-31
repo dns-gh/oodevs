@@ -265,7 +265,7 @@ bool Layer_ABC::IsVisible() const
 // -----------------------------------------------------------------------------
 bool Layer_ABC::IsReadOnly() const
 {
-    return ( readOnlyModes_ & GetCurrentMode() ) != 0;
+    return GetCurrentMode() != -1 && ( readOnlyModes_ & GetCurrentMode() ) != 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -312,6 +312,10 @@
         <source>NBC agent(s) editor</source>
         <translation>Editeur d&apos;agent(s) NBC</translation>
     </message>
+    <message>
+        <source>&lt;Select a type&gt;</source>
+        <translation>&lt;Selectionnez un type&gt;</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseCreationDialog</name>
