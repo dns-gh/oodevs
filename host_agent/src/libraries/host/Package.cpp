@@ -82,7 +82,7 @@ struct Metadata
 
     static std::string GetVersion( const Tree& tree, const std::string& key )
     {
-        return Get( tree, "version", "Unversioned" );
+        return Get( tree, key, "Unversioned" );
     }
 
     static Metadata Reload( const FileSystem_ABC& system, const Path& root )
