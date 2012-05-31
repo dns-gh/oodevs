@@ -50,17 +50,22 @@ class PackageView extends Backbone.View
             for it in $(@el).find ".name .error"
                 $(it).tooltip placement: "top"
 
-            $(".form-actions .discard").click =>
+            discard = $(".form-actions .discard")
+            save = $(".form-actions .save")
+
+            discard.click =>
                 @switch false, true
                 ajax "/api/delete_cache", id: uuid,
                     => @switch true
                     => @switch true
 
-            $(".form-actions .save").click =>
+            save.click =>
                 list = []
                 for it in $(@el).find ".action .add, .action .update"
                     continue unless $(it).hasClass "active"
                     @switch false
+                    discard.toggleClass "disabled"
+                    save.toggleClass "disabled"
                     id = transform_to_spinner it
                     list.push id if id?
                 if !list.length
@@ -69,9 +74,13 @@ class PackageView extends Backbone.View
                 ajax "/api/install_from_cache", id: uuid, items: list.join ',',
                     (item) =>
                         @switch true
+                        discard.toggleClass "disabled"
+                        save.toggleClass "disabled"
                         @update item, true
                     () =>
                         @switch true
+                        discard.toggleClass "disabled"
+                        save.toggleClass "disabled"
                         print_error "Unable to save package(s)"
         return
 

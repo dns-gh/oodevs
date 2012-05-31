@@ -232,7 +232,7 @@
     };
 
     PackageView.prototype.render = function() {
-      var it, _i, _j, _len, _len1, _ref, _ref1,
+      var discard, it, save, _i, _j, _len, _len1, _ref, _ref1,
         _this = this;
       if (!this.enabled) {
         return;
@@ -254,7 +254,9 @@
             placement: "top"
           });
         }
-        $(".form-actions .discard").click(function() {
+        discard = $(".form-actions .discard");
+        save = $(".form-actions .save");
+        discard.click(function() {
           _this["switch"](false, true);
           return ajax("/api/delete_cache", {
             id: uuid
@@ -264,7 +266,7 @@
             return _this["switch"](true);
           });
         });
-        $(".form-actions .save").click(function() {
+        save.click(function() {
           var id, list, _k, _len2, _ref2;
           list = [];
           _ref2 = $(_this.el).find(".action .add, .action .update");
@@ -274,6 +276,8 @@
               continue;
             }
             _this["switch"](false);
+            discard.toggleClass("disabled");
+            save.toggleClass("disabled");
             id = transform_to_spinner(it);
             if (id != null) {
               list.push(id);
@@ -288,9 +292,13 @@
             items: list.join(',')
           }, function(item) {
             _this["switch"](true);
+            discard.toggleClass("disabled");
+            save.toggleClass("disabled");
             return _this.update(item, true);
           }, function() {
             _this["switch"](true);
+            discard.toggleClass("disabled");
+            save.toggleClass("disabled");
             return print_error("Unable to save package(s)");
           });
         });
