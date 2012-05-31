@@ -114,8 +114,9 @@ void UrbanInfosDockWidget::NotifyCreated( const kernel::UrbanObject_ABC& )
 // Name: UrbanInfosDockWidget::NotifyDeleted
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-void UrbanInfosDockWidget::NotifyDeleted( const kernel::UrbanObject_ABC& )
+void UrbanInfosDockWidget::NotifyDeleted( const kernel::UrbanObject_ABC& element )
 {
+    selectedElements_.erase( std::remove( selectedElements_.begin(), selectedElements_.end(), &element ), selectedElements_.end() );
     Update();
 }
 
