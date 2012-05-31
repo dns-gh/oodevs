@@ -402,6 +402,11 @@ std::string FileSystem::Checksum( const Path& root, const Path& exclude ) const
 #else
         std::ifstream in( Utf8Convert( *it ), std::ifstream::binary );
 #endif
+        if( in.bad() )
+        {
+            LOG_ERROR( log_ ) << "[file] Unable to checksum " << it->path().string();
+            return std::string();
+        }
         while( in.good() )
         {
             in.read( &buffer[0], buffer.size() );
