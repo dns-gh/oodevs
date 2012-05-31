@@ -30,14 +30,14 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const LayerFilter_ABC& filter )
     : controllers_( controllers )
+    , profile_    ( profile )
     , tools_      ( tools )
+    , filter_     ( filter )
     , strategy_   ( strategy )
     , view_       ( view )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() )
     , tooltip_    ( 0 )
     , selected_   ( 0 )
-    , profile_    ( profile )
-    , filter_     ( filter )
 {
     // NOTHING
 }
@@ -121,10 +121,10 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( selected_ >= entities_.size()
      || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ( ++selected_ ) >= entities_.size() ) )
+     || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
         selected_ = 0;
 
-    for( int i = 0; i < entities_.size(); ++i, selected_ = ( selected_ + 1 ) % entities_.size() )
+    for( ; selected_ < entities_.size(); ++selected_ )
     {
         assert( selected_ >= 0 && selected_ < entities_.size() );
         const Entity_ABC& entity = *entities_[ selected_ ];
@@ -138,7 +138,6 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
             return true;
         }
     }
-    //selected_ = oldSelected;
     return false;
 }
 
