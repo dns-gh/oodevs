@@ -570,7 +570,7 @@ void Package::Move( const Path& dst, const std::vector< size_t >& ids )
     Async async( pool_ );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( IsItemIn( ids, item ) )
-            async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ), dst ) );
+            async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ), dst / "_" ) );
     async.Join();
     items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
 }
