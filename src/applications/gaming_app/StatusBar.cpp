@@ -84,7 +84,7 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
     connect( &picker_, SIGNAL( WeatherPicked( const QString&, const QString&, const QString&, const QString& ) ),
                        SLOT( WeatherPicked( const QString&, const QString&, const QString&, const QString& ) ) );
 
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
