@@ -45,7 +45,7 @@ public:
     virtual void NotifyUpdated( const UrbanDisplayOptions& );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     Controllers& controllers_;

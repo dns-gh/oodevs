@@ -37,6 +37,7 @@ UrbanObject_ABC::UrbanObject_ABC( Controller& controller, const std::string& nam
                                 , const AccommodationTypes& accommodations )
     : EntityImplementation< Object_ABC >( controller, id, name.c_str() )
     , Creatable< UrbanObject_ABC >( controller, this )
+    , dictionary_     ( *new PropertiesDictionary( controller ) )
     , density_        ( 0 )
     , type_           ( type )
     , accommodations_ ( accommodations )
@@ -44,7 +45,7 @@ UrbanObject_ABC::UrbanObject_ABC( Controller& controller, const std::string& nam
     , nominalCapacity_( 0 )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    EntityImplementation< Object_ABC >::Attach( dictionary_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +56,7 @@ UrbanObject_ABC::UrbanObject_ABC( xml::xistream& xis, kernel::Controller& contro
                                 , const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations )
     : EntityImplementation< Object_ABC >( controller, xis.attribute< unsigned int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , Creatable< UrbanObject_ABC >( controller, this )
+    , dictionary_     ( *new PropertiesDictionary( controller ) )
     , density_        ( 0 )
     , type_           ( type )
     , accommodations_ ( accommodations )
@@ -62,7 +64,7 @@ UrbanObject_ABC::UrbanObject_ABC( xml::xistream& xis, kernel::Controller& contro
     , nominalCapacity_( 0 )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
+    EntityImplementation< Object_ABC >::Attach( dictionary_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,12 +145,13 @@ void UrbanObject_ABC::Activate( ActionController& controller ) const
 // Name: UrbanObject_ABC::CreateDictionary
 // Created: SLG 2009-12-08
 // -----------------------------------------------------------------------------
-void UrbanObject_ABC::CreateDictionary( Controller& controller )
+void UrbanObject_ABC::CreateDictionary( bool readOnly )
 {
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    EntityImplementation< Object_ABC >::Attach( dictionary );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), static_cast< const unsigned long& >( id_ ) );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), static_cast< const QString& >( name_ ) );
+    if( readOnly )
+        dictionary_.Register( *this, tools::translate( "Block", "Info/Name" ), static_cast< const UrbanObject_ABC& >( *this ).name_ );
+    else
+        dictionary_.Register( *this, tools::translate( "Block", "Info/Name" ), name_ );
+    dictionary_.Register( *this, tools::translate( "Block", "Info/Identifier" ), static_cast< const UrbanObject_ABC& >( *this ).id_ );
 }
 
 // -----------------------------------------------------------------------------
