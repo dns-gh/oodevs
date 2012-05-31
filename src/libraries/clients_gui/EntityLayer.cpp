@@ -30,14 +30,15 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const LayerFilter_ABC& filter )
     : controllers_( controllers )
+    , profile_    ( profile )
     , tools_      ( tools )
+    , filter_     ( filter )
     , strategy_   ( strategy )
     , view_       ( view )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() )
     , tooltip_    ( 0 )
     , selected_   ( 0 )
-    , profile_    ( profile )
-    , filter_     ( filter )
+    , activeSelectionLayer_( false )
 {
     // NOTHING
 }
@@ -117,15 +118,18 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( button != Qt::LeftButton && button != Qt::RightButton )
         return false;
 
-    //std::size_t oldSelected = selected_;
+    std::size_t oldSelected = selected_;
     if( selected_ >= entities_.size()
      || ! IsInSelection( *entities_[ selected_ ], point )
      || ! ShouldDisplay( *entities_[ selected_ ] )
      || ( button == Qt::LeftButton && ( ++selected_ ) >= entities_.size() ) )
         selected_ = 0;
 
+    //for( ; selected_ < entities_.size(); ++selected_ )
     for( int i = 0; i < entities_.size(); ++i, selected_ = ( selected_ + 1 ) % entities_.size() )
     {
+        if( activeSelectionLayer_ && selected_ == oldSelected )
+            continue;
         assert( selected_ >= 0 && selected_ < entities_.size() );
         const Entity_ABC& entity = *entities_[ selected_ ];
         tooltiped_ = selected_;
@@ -135,10 +139,12 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
                 Select( entity, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
             else if( button == Qt::RightButton && !IsReadOnly() )
                 ContextMenu( entity, point, event->globalPos() );
+            activeSelectionLayer_ = true;
             return true;
         }
     }
-    //selected_ = oldSelected;
+    selected_ = oldSelected;
+    activeSelectionLayer_ = false;
     return false;
 }
 

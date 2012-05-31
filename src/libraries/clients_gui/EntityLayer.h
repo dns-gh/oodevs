@@ -120,6 +120,7 @@ private:
     std::size_t                             tooltiped_;
     std::auto_ptr< kernel::GlTooltip_ABC >  tooltip_;
     std::size_t                             selected_;
+    bool                                    activeSelectionLayer_;
     //@}
 };
 
