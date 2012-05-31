@@ -43,7 +43,6 @@ StockAttribute::StockAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 StockAttribute::StockAttribute( const sword::MissionParameter_Value& attributes )
 {
-    std::string debugString = attributes.DebugString();
     const sword::MissionParameter_Value& parameterDotations = attributes.list( 1 );
     for( int i=0; i<parameterDotations.list_size(); ++i )
     {

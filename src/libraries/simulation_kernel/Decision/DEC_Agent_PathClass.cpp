@@ -304,7 +304,6 @@ void DEC_Agent_PathClass::ReadEnemiesCost( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadPopulationsCost( xml::xistream& xis )
 {
-    std::string strAttitude;
     xis >> xml::optional >> xml::attribute( "security-range", rPopulationSecurityRange_ )
         >> xml::optional >> xml::attribute( "maximum", rPopulationMaximumCost_ )
         >> xml::optional >> xml::attribute( "outside-of-population", rCostOutsideOfPopulation_ )
