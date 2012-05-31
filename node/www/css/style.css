@@ -39,3 +39,5 @@ body{padding-top:60px;padding-bottom:40px;}
 .item_label{float:left;font-weight:bold;width:64px;}
 .package_row .error{position:relative;top:-1px;}
 .action{white-space:nowrap;text-align:right !important;}
+.package_description{position:relative;}
+.toggle{float:right;margin-top:-3px;margin-right:-6px;}

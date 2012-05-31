@@ -33,7 +33,12 @@
                         <br/>
                         <span class="label label-info">{{version}}</span>
                     </div>
-                    <div class="package_description"> {{description}} </div>
+                    <div class="package_description">
+                        {{description}}
+                        <span class="toggle">
+                            <a class="btn" data-toggle="button"><i class="icon-arrow-down"></i> Toggle All </a>
+                        </span>
+                    </div>
                     {{#if items.length}}
                     <table class="table table-striped">
 
@@ -105,7 +110,7 @@
                     </table>
                     <div class="form-actions">
                         <a class="btn save"><i class="icon-ok"></i> Install</a>
-                        <a class="btn btn-primary discard"><i class="icon-remove"></i> Discard</a>
+                        <a class="btn discard"><i class="icon-remove"></i> Discard</a>
                     </div>
                     {{/if}}
                 </form>
