@@ -32,10 +32,8 @@ class PackageView extends Backbone.View
         @model.fetch()
         setTimeout @delta, 5000
 
-    switch: (next, reset) =>
-        @enabled = next
-        if reset? and !next
-            $(@el).empty()
+    reset: =>
+        $(@el).empty()
 
     render: =>
         return unless @enabled
@@ -55,19 +53,20 @@ class PackageView extends Backbone.View
 
             discard.click =>
                 return if discard.hasClass "disabled"
-                @switch false, true
+                @enabled = false
+                @reset()
                 ajax "/api/delete_cache", id: uuid,
-                    => @switch true
-                    => @switch true
+                    => @enabled = true
+                    => @enabled = true
 
             save.click =>
                 return if save.hasClass "disabled"
                 list = []
                 for it in $(@el).find ".action .add, .action .update"
                     continue unless $(it).hasClass "active"
-                    @switch false
-                    discard.toggleClass "disabled"
-                    save.toggleClass "disabled"
+                    @enabled = false
+                    discard.addClass "disabled"
+                    save.addClass "disabled"
                     id = transform_to_spinner it
                     list.push id if id?
                 if !list.length
@@ -75,14 +74,12 @@ class PackageView extends Backbone.View
                     return
                 ajax "/api/install_from_cache", id: uuid, items: list.join ',',
                     (item) =>
-                        @switch true
-                        discard.toggleClass "disabled"
-                        save.toggleClass "disabled"
-                        @update item, true
+                        @reset()
+                        @enabled = true
+                        @model.set item
                     () =>
-                        @switch true
-                        discard.toggleClass "disabled"
-                        save.toggleClass "disabled"
+                        @enabled = true
+                        @render()
                         print_error "Unable to save package(s)"
 
             $(".toggle a").click ->
@@ -90,22 +87,12 @@ class PackageView extends Backbone.View
                     $(it).button "toggle"
         return
 
-    update: (data, buttons) =>
-        if buttons?
-            for it in $(@el).find ".btn"
-                if $(it).hasClass "spin_btn"
-                    $(it).remove()
-                else
-                    $(it).show()
-                    $(it).removeClass "active"
-        @model.set data
-
     delta: =>
         item = new Package
         item.fetch
             success: =>
                 if item.attributes.name?
-                    @update item.attributes
+                    @model.set item.attributes
                 else
                     @model.clear()
                 setTimeout @delta, 5000
@@ -133,10 +120,11 @@ toggle_load = ->
 $("#upload_form .upload").click ->
     return if $(@).hasClass "disabled"
     toggle_load()
-    package_view.switch false, true
+    package_view.enabled = false
+    package_view.reset()
     $("#upload_form").submit()
 
 $("#upload_target").load ->
     toggle_load()
-    package_view.switch true
-    package_view.update jQuery.parseJSON $(@).contents().text()
+    package_view.enabled = true
+    package_view.model.set jQuery.parseJSON $(@).contents().text()

@@ -205,11 +205,9 @@
     function PackageView() {
       this.delta = __bind(this.delta, this);
 
-      this.update = __bind(this.update, this);
-
       this.render = __bind(this.render, this);
 
-      this["switch"] = __bind(this["switch"], this);
+      this.reset = __bind(this.reset, this);
       return PackageView.__super__.constructor.apply(this, arguments);
     }
 
@@ -224,11 +222,8 @@
       return setTimeout(this.delta, 5000);
     };
 
-    PackageView.prototype["switch"] = function(next, reset) {
-      this.enabled = next;
-      if ((reset != null) && !next) {
-        return $(this.el).empty();
-      }
+    PackageView.prototype.reset = function() {
+      return $(this.el).empty();
     };
 
     PackageView.prototype.render = function() {
@@ -260,13 +255,14 @@
           if (discard.hasClass("disabled")) {
             return;
           }
-          _this["switch"](false, true);
+          _this.enabled = false;
+          _this.reset();
           return ajax("/api/delete_cache", {
             id: uuid
           }, function() {
-            return _this["switch"](true);
+            return _this.enabled = true;
           }, function() {
-            return _this["switch"](true);
+            return _this.enabled = true;
           });
         });
         save.click(function() {
@@ -281,9 +277,9 @@
             if (!$(it).hasClass("active")) {
               continue;
             }
-            _this["switch"](false);
-            discard.toggleClass("disabled");
-            save.toggleClass("disabled");
+            _this.enabled = false;
+            discard.addClass("disabled");
+            save.addClass("disabled");
             id = transform_to_spinner(it);
             if (id != null) {
               list.push(id);
@@ -297,14 +293,12 @@
             id: uuid,
             items: list.join(',')
           }, function(item) {
-            _this["switch"](true);
-            discard.toggleClass("disabled");
-            save.toggleClass("disabled");
-            return _this.update(item, true);
+            _this.reset();
+            _this.enabled = true;
+            return _this.model.set(item);
           }, function() {
-            _this["switch"](true);
-            discard.toggleClass("disabled");
-            save.toggleClass("disabled");
+            _this.enabled = true;
+            _this.render();
             return print_error("Unable to save package(s)");
           });
         });
@@ -321,23 +315,6 @@
       }
     };
 
-    PackageView.prototype.update = function(data, buttons) {
-      var it, _i, _len, _ref;
-      if (buttons != null) {
-        _ref = $(this.el).find(".btn");
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          it = _ref[_i];
-          if ($(it).hasClass("spin_btn")) {
-            $(it).remove();
-          } else {
-            $(it).show();
-            $(it).removeClass("active");
-          }
-        }
-      }
-      return this.model.set(data);
-    };
-
     PackageView.prototype.delta = function() {
       var item,
         _this = this;
@@ -345,7 +322,7 @@
       return item.fetch({
         success: function() {
           if (item.attributes.name != null) {
-            _this.update(item.attributes);
+            _this.model.set(item.attributes);
           } else {
             _this.model.clear();
           }
@@ -387,14 +364,15 @@
       return;
     }
     toggle_load();
-    package_view["switch"](false, true);
+    package_view.enabled = false;
+    package_view.reset();
     return $("#upload_form").submit();
   });
 
   $("#upload_target").load(function() {
     toggle_load();
-    package_view["switch"](true);
-    return package_view.update(jQuery.parseJSON($(this).contents().text()));
+    package_view.enabled = true;
+    return package_view.model.set(jQuery.parseJSON($(this).contents().text()));
   });
 
 }).call(this);
