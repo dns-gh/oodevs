@@ -81,7 +81,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , nodes_   ( new Container< Node_ABC >() )
     , async_   ( new Async( pool ) )
 {
-    system.MakeDirectory( root_ );
+    system.MakePaths( root_ );
     if( !system_.Exists( java_ ) )
         throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
     if( !system_.IsFile( java_ ) )
@@ -171,7 +171,7 @@ void NodeController::Create( Node_ABC& node, bool isReload )
     const int port = node.GetPort();
     LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetName() << " :" << port;
     if( !isReload )
-        system_.MakeDirectory( GetPath( root_, node ) );
+        system_.MakePaths( GetPath( root_, node ) );
     proxy_.Register( GetPrefix( type_, node ), "localhost", port );
     if( isReload )
         Save( node );
@@ -326,6 +326,7 @@ Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
     try
     {
         node->UploadCache( src );
+        Save( *node );
     }
     catch( const std::exception& err )
     {
@@ -342,7 +343,11 @@ Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
 Tree NodeController::DeleteCache( const Uuid& id )
 {
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
-    return node ? node->DeleteCache() : Tree();
+    if( !node )
+        return Tree();
+    const Tree tree = node->DeleteCache();
+    Save( *node );
+    return tree;
 }
 
 // -----------------------------------------------------------------------------

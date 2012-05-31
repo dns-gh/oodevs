@@ -72,11 +72,8 @@ namespace
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
         {
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
-            MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
             MOCK_EXPECT( installed->Parse ).once().returns( true );
             MOCK_EXPECT( installed->Identify ).once().with( mock::same( *installed ) );
-            MOCK_EXPECT( cache->Parse ).once().returns( true );
-            MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
@@ -190,20 +187,21 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
 
     MOCK_EXPECT( packages.Make ).once().with( mock::any, false ).returns( cache );
     MOCK_EXPECT( cache->Parse ).once().returns( true );
-    MOCK_EXPECT( cache->MoveAll ).once();
     MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
     Tree tree;
     tree.put( "some", "data" );
     const std::string expected = ToJson( tree );
     MOCK_EXPECT( cache->GetProperties ).returns( tree );
     MOCK_EXPECT( uuids.Create ).returns( boost::uuids::random_generator()() );
-    MOCK_EXPECT( system.MakeDirectory );
+    MOCK_EXPECT( system.MakePaths );
+    MOCK_EXPECT( system.MakePath ).returns( true );
+    MOCK_EXPECT( system.Exists ).returns( false );
     MOCK_EXPECT( system.IsDirectory ).returns( true );
     MOCK_EXPECT( system.Rename ).returns( true );
     MOCK_EXPECT( system.Remove ).returns( true );
     node->UploadCache( stream );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
-    MOCK_EXPECT( cache->MoveAll ).once();
+    MOCK_EXPECT( cache->GetPath ).once().returns( "" );
     BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 }

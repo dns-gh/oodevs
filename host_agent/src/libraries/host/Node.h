@@ -76,14 +76,12 @@ public:
 
     //! @name Node_ABC methods
     //@{
-    virtual Path GetInstallPath() const;
     virtual Tree GetInstall() const;
     virtual Tree DeleteInstall( const std::vector< size_t >& list );
     //@}
 
     //! @name Node_ABC methods
     //@{
-    virtual Path GetCachePath() const;
     virtual void UploadCache( std::istream& src );
     virtual Tree GetCache() const;
     virtual Tree DeleteCache();
@@ -93,8 +91,7 @@ public:
 private:
     //! @name Private methods
     //@{
-    Path GetTemporaryPath() const;
-    void ParsePackages();
+    void ParsePackages( const Path& cache );
     void IdentifyPackages();
     Tree GetCommonProperties() const;
     //@}

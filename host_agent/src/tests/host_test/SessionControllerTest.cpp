@@ -43,7 +43,7 @@ namespace
     {
         SubFixture( const Path& logs, const Path& data, const Path& apps )
         {
-            MOCK_EXPECT( system.MakeDirectory ).with( logs / "sessions" );
+            MOCK_EXPECT( system.MakePaths ).with( logs / "sessions" );
             MOCK_EXPECT( system.IsDirectory ).with( data ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
             MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
@@ -118,7 +118,7 @@ namespace
             const Path root = data / "exercises" / session->GetExercise() / "sessions" / idText;
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.system.MakeDirectory ).once().with( root );
+                MOCK_EXPECT( sub.system.MakePaths ).once().with( root );
                 MOCK_EXPECT( sub.factory.Make3 ).once().with( node, session->GetName(), session->GetExercise() ).returns( session );
                 MOCK_EXPECT( session->Start ).once().returns( true );
                 MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.xml", session->GetConfiguration() ).returns( true );

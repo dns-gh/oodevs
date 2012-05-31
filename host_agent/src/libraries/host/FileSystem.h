@@ -42,7 +42,8 @@ public:
     virtual bool Exists( const Path& path ) const;
     virtual void CopyDirectory( const Path& dst, const Path& src ) const;
     virtual bool CopyFile( const Path& dst, const Path& src ) const;
-    virtual void MakeDirectory( const Path& path ) const;
+    virtual void MakePaths( const Path& path ) const;
+    virtual bool MakePath( const Path& path ) const;
     virtual bool Remove( const Path& path ) const;
     virtual bool Rename( const Path& src, const Path& dst ) const;
     virtual bool WriteFile( const Path& path, const std::string& content ) const;

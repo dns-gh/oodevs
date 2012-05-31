@@ -56,7 +56,7 @@ namespace
         boost::shared_ptr< Proxy > MakeProxy()
         {
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
-            MOCK_EXPECT( system.MakeDirectory );
+            MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
             MOCK_EXPECT( runtime.Start ).once().with( java, boost::assign::list_of
                 ( " " "-jar \"" + jar + "\"" )

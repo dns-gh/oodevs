@@ -121,12 +121,21 @@ bool FileSystem::CopyFile( const Path& src, const Path& dst ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileSystem::MakeDirectory
+// Name: FileSystem::MakePaths
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::MakeDirectory( const Path& path ) const
+void FileSystem::MakePaths( const Path& path ) const
 {
     boost::filesystem::create_directories( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::MakePath
+// Created: BAX 2012-03-19
+// -----------------------------------------------------------------------------
+bool FileSystem::MakePath( const Path& path ) const
+{
+    return boost::filesystem::create_directory( path );
 }
 
 namespace

@@ -34,7 +34,7 @@ namespace
     {
         SubFixture( const Path& root, const Path& java, const Path& jar, const Path& web )
         {
-            MOCK_EXPECT( system.MakeDirectory ).with( root / "node" );
+            MOCK_EXPECT( system.MakePaths ).with( root / "node" );
             MOCK_EXPECT( system.Exists ).with( java ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
@@ -101,7 +101,7 @@ namespace
             const std::string idText = tree.get< std::string >( "id" );
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.system.MakeDirectory ).once().with( root / "node" / idText );
+                MOCK_EXPECT( sub.system.MakePaths ).once().with( root / "node" / idText );
                 MOCK_EXPECT( sub.nodes.Make2 ).once().with( mock::any, tree.get< std::string >( "name" ) ).returns( node );
                 MOCK_EXPECT( node->Start ).once().returns( true );
             }
@@ -193,6 +193,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_upload_cache, Fixture<> )
     std::istringstream stream;
     MOCK_EXPECT( idle->UploadCache ).once().with( boost::ref( stream ) );
     MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
+    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     Tree tree = control.UploadCache( idIdle, stream );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
@@ -209,6 +210,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_delete_cache, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( idle->DeleteCache ).once().returns( Tree() );
+    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     Tree tree = control.DeleteCache( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }

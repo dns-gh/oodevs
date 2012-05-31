@@ -37,7 +37,6 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Join() = 0;
     virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
     virtual void        Move( const FileSystem_ABC& system, const Path& dst ) const = 0;
-    virtual void        Displace( const Path& path ) = 0;
 };
 
 namespace
@@ -214,7 +213,7 @@ struct Item : Package_ABC::Item_ABC
                 return;
         const Path& next = output / GetSuffix();
         system.Remove( next );
-        system.MakeDirectory( next );
+        system.MakePaths( next );
         system.CopyDirectory( root_, next );
         meta_.Save( system, next );
     }
@@ -224,16 +223,11 @@ struct Item : Package_ABC::Item_ABC
         system.Rename( root_, dst );
     }
 
-    void Displace( const Path& path )
-    {
-        root_ = path / GetSuffix();
-    }
-
 protected:
     const size_t id_;
     const std::string name_;
     const Metadata meta_;
-    Path root_;
+    const Path root_;
     Tree tree_;
     std::string checksum_;
     Async async_;
@@ -463,6 +457,15 @@ Tree Package::GetProperties() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Package::GetPath
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+Path Package::GetPath() const
+{
+    return path_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Package::Parse
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
@@ -570,16 +573,4 @@ void Package::Move( const Path& dst, const std::vector< size_t >& ids )
             async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ), dst ) );
     async.Join();
     items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Package::Move
-// Created: BAX 2012-05-29
-// -----------------------------------------------------------------------------
-void Package::Move( const Path& path )
-{
-    system_.Rename( path_, path );
-    path_ = path;
-    BOOST_FOREACH( const T_Items::value_type& it, items_ )
-        it->Displace( path );
 }

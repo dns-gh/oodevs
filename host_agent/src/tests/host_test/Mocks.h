@@ -78,10 +78,8 @@ namespace mocks
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 0 );
-        MOCK_METHOD( GetInstallPath, 0 );
         MOCK_METHOD( GetInstall, 0 );
         MOCK_METHOD( DeleteInstall, 1 );
-        MOCK_METHOD( GetCachePath, 0 );
         MOCK_METHOD( UploadCache, 1 );
         MOCK_METHOD( GetCache, 0 );
         MOCK_METHOD( DeleteCache, 0 );
@@ -183,7 +181,8 @@ namespace mocks
         MOCK_METHOD( Exists, 1 );
         MOCK_METHOD( CopyDirectory, 2 );
         MOCK_METHOD( CopyFile, 2 );
-        MOCK_METHOD( MakeDirectory, 1 );
+        MOCK_METHOD( MakePaths, 1 );
+        MOCK_METHOD( MakePath, 1 );
         MOCK_METHOD( Remove, 1 );
         MOCK_METHOD( Rename, 2 );
         MOCK_METHOD( WriteFile, 2 );
@@ -238,6 +237,7 @@ namespace mocks
     MOCK_BASE_CLASS( MockPackage, host::Package_ABC )
     {
         MOCK_METHOD( GetProperties, 0 );
+        MOCK_METHOD( GetPath, 0 );
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
         MOCK_METHOD( Install, 2 );

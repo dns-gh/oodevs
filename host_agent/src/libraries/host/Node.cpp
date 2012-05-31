@@ -71,6 +71,16 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
         return ptr;
     return Node::T_Process();
 }
+
+Path MakeTemporaryPath( const FileSystem_ABC& system, const Path& root )
+{
+    for( uint16_t idx = 0; ; ++idx )
+    {
+        const Path next = root / boost::lexical_cast< std::string >( idx );
+        if( system.MakePath( next ) )
+            return next;
+    }
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -85,12 +95,12 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , uuids_    ( uuids )
     , id_       ( uuids.Create() )
     , name_     ( name )
-    , root_     ( root )
+    , root_     ( root / boost::lexical_cast< std::string >( id_ ) )
     , port_     ( ports.Create() )
     , access_   ( new boost::shared_mutex() )
     , async_    ( new Async( pool ) )
 {
-    install_ = packages_.Make( GetInstallPath(), true );
+    install_ = packages_.Make( root_ / "install", true );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +115,15 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , uuids_    ( uuids )
     , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
     , name_     ( tree.get< std::string >( "name" ) )
-    , root_     ( Utf8Convert( tree.get< std::string >( "root" ) ) )
+    , root_     ( Path( Utf8Convert( tree.get< std::string >( "root" ) ) ) / boost::lexical_cast< std::string >( id_ ) )
     , port_     ( AcquirePort( tree.get< int >( "port" ), ports ) )
     , access_   ( new boost::shared_mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
     , async_    ( new Async( pool ) )
 {
-    async_->Post( boost::bind( &Node::ParsePackages, this ) );
+    const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
+    const Path next = cache == boost::none ? Path() : Utf8Convert( *cache );
+    async_->Post( boost::bind( &Node::ParsePackages, this, next ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,33 +187,17 @@ Tree Node::GetProperties() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::GetCachePath
-// Created: BAX 2012-05-23
-// -----------------------------------------------------------------------------
-Path Node::GetCachePath() const
-{
-    return root_ / boost::lexical_cast< std::string >( id_ ) / "cache";
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::GetInstallPath
-// Created: BAX 2012-05-23
-// -----------------------------------------------------------------------------
-Path Node::GetInstallPath() const
-{
-    return root_ / boost::lexical_cast< std::string >( id_ ) / "install";
-}
-
-// -----------------------------------------------------------------------------
 // Name: Node::Save
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Tree Node::Save() const
 {
     Tree tree = GetCommonProperties();
-    tree.put( "root", Utf8Convert( root_ ) );
+    tree.put( "root", Utf8Convert( Path( root_ ).remove_filename() ) );
 
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    if( cache_ )
+        tree.put( "cache", Utf8Convert( cache_->GetPath().filename().wstring() ) );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );
@@ -256,23 +252,12 @@ void ParseInline( const T& packages, U& dst, const Path& path, U reference = U()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::GetTemporaryPath
-// Created: BAX 2012-05-30
-// -----------------------------------------------------------------------------
-Path Node::GetTemporaryPath() const
-{
-    return root_ / boost::lexical_cast< std::string >( id_ )
-                 / boost::lexical_cast< std::string >( uuids_.Create() ).substr( 0, 8 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Node::UploadCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
 void Node::UploadCache( std::istream& src )
 {
-    const Path output = GetTemporaryPath();
-    system_.MakeDirectory( output );
+    const Path output = MakeTemporaryPath( system_, root_ );
     FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( output, src );
     unpacker->Unpack();
 
@@ -280,29 +265,23 @@ void Node::UploadCache( std::istream& src )
     if( !next->Parse() )
         return;
 
-    const Path& path = GetCachePath();
-    const Path other = GetTemporaryPath();
-
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    bool hasCache = system_.IsDirectory( path );
-    if( hasCache )
-        system_.Rename( path, other );
-    cache_ = next;
-    cache_->Move( path );
-    cache_->Identify( *install_ );
-    if( hasCache )
-        async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
+    next->Identify( *install_ );
+    next.swap( cache_ );
+    if( next )
+        async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::ParsePackages
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Node::ParsePackages()
+void Node::ParsePackages( const Path& cache )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    ParseInline( packages_, install_, GetInstallPath() );
-    ParseInline( packages_, cache_, GetCachePath(), install_ );
+    ParseInline( packages_, install_, root_ / "install" );
+    if( !cache.empty() )
+        ParseInline( packages_, cache_,   root_ / cache, install_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +321,7 @@ Tree Node::GetCache() const
 // -----------------------------------------------------------------------------
 Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 {
-    const Path other = GetTemporaryPath();
+    const Path other = MakeTemporaryPath( system_, root_ );
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     install_->Move( other, ids );
     install_->Identify( *install_ );
@@ -358,14 +337,12 @@ Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 // -----------------------------------------------------------------------------
 Tree Node::DeleteCache()
 {
-    const Path other = GetTemporaryPath();
     boost::shared_ptr< Package_ABC > next;
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( !cache_ )
         return Tree();
     next.swap( cache_ );
-    next->Move( other );
-    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
+    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
     return next->GetProperties();
 }
 
@@ -379,7 +356,7 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
     if( !cache_ )
         return Tree();
     install_->Install( *cache_, list );
-    ParseInline( packages_, install_, GetInstallPath() );
+    ParseInline( packages_, install_, root_ / "install" );
     cache_->Identify( *install_ );
     return cache_->GetProperties();
 }

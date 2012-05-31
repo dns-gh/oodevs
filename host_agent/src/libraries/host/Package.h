@@ -38,13 +38,13 @@ public:
     //! @name Package_ABC methods
     //@{
     virtual Tree GetProperties() const;
-    virtual bool Parse();
-    virtual void Identify( const Package_ABC& reference );
+    virtual Path GetPath() const;
     virtual T_Item Find( size_t id ) const;
     virtual T_Item Find( const Item_ABC& item ) const;
+    virtual bool Parse();
+    virtual void Identify( const Package_ABC& reference );
     virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids );
     virtual void Move( const Path& dst, const std::vector< size_t >& ids );
-    virtual void Move( const Path& dst );
     //@}
 
 public:
@@ -59,7 +59,7 @@ private:
     //@{
     Pool_ABC& pool_;
     const FileSystem_ABC& system_;
-    Path path_;
+    const Path path_;
     const bool reference_;
     std::string name_;
     std::string description_;

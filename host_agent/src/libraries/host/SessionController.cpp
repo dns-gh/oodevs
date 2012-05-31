@@ -78,7 +78,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , sessions_ ( new Container< Session_ABC >() )
     , async_    ( new Async( pool ) )
 {
-    system_.MakeDirectory( logs_ );
+    system_.MakePaths( logs_ );
     if( !system_.IsDirectory( data_ ) )
         throw std::runtime_error( runtime::Utf8Convert( data_ ) + " is not a directory" );
     if( !system_.IsDirectory( apps_ ) )
@@ -180,7 +180,7 @@ void SessionController::Create( Session_ABC& session, bool isReload )
     if( !isReload )
     {
         const Path path = GetPath( session );
-        system_.MakeDirectory( path );
+        system_.MakePaths( path );
         system_.WriteFile( path / "session.xml", session.GetConfiguration() );
     }
     if( isReload )
