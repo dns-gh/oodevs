@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "UrbanObject.h"
 #include "UrbanHierarchies.h"
+#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject constructor
@@ -18,7 +19,7 @@
 UrbanObject::UrbanObject( kernel::Controllers& controllers, const std::string& name, unsigned int id, const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options)
     : kernel::UrbanObject( controllers, name, id, type, accommodations, options )
 {
-    // NOTHING
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ UrbanObject::UrbanObject( kernel::Controllers& controllers, const std::string& n
 UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
     : kernel::UrbanObject( xis, controllers, type, accommodations, options )
 {
-    // NOTHING
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, 
 // -----------------------------------------------------------------------------
 UrbanObject::~UrbanObject()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,4 +49,17 @@ void UrbanObject::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", GetId() )
         << xml::attribute( "name", GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::NotifyModeChanged
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void UrbanObject::NotifyModeChanged( int newMode )
+{
+    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
+    if( newMode == ePreparationMode_Exercise )
+        CreateDictionary( true );
+    else if( newMode == ePreparationMode_Terrain )
+        CreateDictionary( false );
 }

@@ -10,6 +10,7 @@
 #ifndef __UrbanObject_h_
 #define __UrbanObject_h_
 
+#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/UrbanObject.h"
 
@@ -33,6 +34,7 @@ namespace xml
 // =============================================================================
 class UrbanObject : public kernel::UrbanObject
                   , public kernel::Serializable_ABC
+                  , public kernel::ModesObserver_ABC
 {
 
 public:
@@ -49,6 +51,11 @@ public:
     //! @name Serializable_ABC
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+    //! @name ModesObserver_ABC
+    //@{
+    virtual void NotifyModeChanged( int newMode );
     //@}
 };
 

@@ -168,7 +168,7 @@ bool MedicalTreatmentAttribute::IsSet() const
         if( const kernel::UrbanObject_ABC* urbanObject = dynamic_cast< const kernel::UrbanObject_ABC* >( owner_ ) )
             if( const kernel::Infrastructure_ABC* infra = owner_->Retrieve< kernel::Infrastructure_ABC >() )
                 if( const kernel::InfrastructureType* type = infra->GetType() )
-                    return( type->FindCapacity( "medical" ) );
+                    return ( type->FindCapacity( "medical" ) != 0 );
     return false;
 }
 

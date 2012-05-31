@@ -91,12 +91,12 @@ protected:
     //! @name Helpers
     //@{
     virtual void UpdateColor() = 0;
+    void CreateDictionary( bool readOnly );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Controller& controller );
     void UpdateDensity();
     unsigned int GetHumans() const;
     //@}
@@ -109,6 +109,7 @@ private:
 private:
     //! @name Member data
     //@{
+    PropertiesDictionary& dictionary_;
     float density_;
     T_Humans humans_;
     T_BlockOccupation motivations_;

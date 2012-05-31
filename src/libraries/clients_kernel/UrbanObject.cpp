@@ -29,6 +29,7 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
 {
     UpdateColor();
     controllers_.Register( *this );
+    CreateDictionary( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +44,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
 {
     UpdateColor();
     controllers_.Register( *this );
+    CreateDictionary( true );
 }
 
 // -----------------------------------------------------------------------------
