@@ -11,6 +11,7 @@
 #include "UrbanBlockDetectionMap.h"
 #include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"

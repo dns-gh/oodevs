@@ -66,7 +66,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
     const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), message.attributes(), static_.coordinateConverter_, pTerrainObject->GetName().toStdString(), color ) );
-    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( message.attributes(), dictionary, static_.accommodationTypes_, *pTerrainObject, controllers_.controller_ ) );
+    pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( message.attributes(), dictionary, static_.accommodationTypes_, *pTerrainObject, static_.objectTypes_, controllers_.controller_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );
