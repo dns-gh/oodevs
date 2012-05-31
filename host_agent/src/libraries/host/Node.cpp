@@ -284,11 +284,14 @@ void Node::UploadCache( std::istream& src )
     const Path other = GetTemporaryPath();
 
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    system_.Rename( path, other );
+    bool hasCache = system_.IsDirectory( path );
+    if( hasCache )
+        system_.Rename( path, other );
     cache_ = next;
     cache_->Move( path );
     cache_->Identify( *install_ );
-    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
+    if( hasCache )
+        async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -198,6 +198,7 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( cache->GetProperties ).returns( tree );
     MOCK_EXPECT( uuids.Create ).returns( boost::uuids::random_generator()() );
     MOCK_EXPECT( system.MakeDirectory );
+    MOCK_EXPECT( system.IsDirectory ).returns( true );
     MOCK_EXPECT( system.Rename ).returns( true );
     MOCK_EXPECT( system.Remove ).returns( true );
     node->UploadCache( stream );
