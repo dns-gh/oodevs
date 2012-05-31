@@ -17,6 +17,10 @@
 
 namespace kernel
 {
+    class MaterialCompositionType;
+    class ObjectTypes;
+    class RoofShapeType;
+
 // =============================================================================
 /** @class  Architecture_ABC
     @brief  Architecture declaration
@@ -37,9 +41,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-                             const std::string& material, float occupation, float trafficability ) = 0;
-    virtual const std::string& GetMaterial() const = 0;
+    virtual void Initialize( const ObjectTypes& objectTypes, float height, unsigned int floorNumber, unsigned int parkingFloors, float occupation, 
+                             float trafficability, const std::string& material = "", const std::string& roofShape = "" ) = 0;
+    virtual const MaterialCompositionType& GetMaterial() const = 0;
+    virtual const RoofShapeType& GetRoofShape() const = 0;
     virtual unsigned int GetFloorNumber() const = 0;
     virtual unsigned int GetOccupation() const = 0;
     virtual unsigned int GetHeight() const = 0;

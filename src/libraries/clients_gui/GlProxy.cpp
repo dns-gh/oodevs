@@ -464,5 +464,5 @@ bool GlProxy::ShouldEdit( const kernel::Selectable_ABC& selectable ) const
     for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
         if( (*it)->IsIn( selectable ) )
             return !(*it)->IsReadOnly();
-    return false;
+    return true;
 }

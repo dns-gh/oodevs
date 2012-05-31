@@ -4,7 +4,6 @@ SOURCES = AboutDialog.cpp \
 ActivityTimePrototype_ABC.cpp \
 AggregateToolbar.cpp \
 AltitudeModifierPrototype_ABC.cpp \
-Architecture.cpp \
 AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
@@ -89,7 +88,6 @@ UnitStateDialog.cpp \
 UnitStateTableCrew.cpp \
 UnitStateTableEquipment.cpp \
 UnitStateTableResource.cpp \
-Usages.cpp \
 VisualisationScalesPanel.cpp \
 WeatherListView.cpp \
 WeatherPanel.cpp \

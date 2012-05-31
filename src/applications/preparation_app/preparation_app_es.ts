@@ -315,6 +315,10 @@
         <source>NBC agent(s) editor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;Select a type&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseCreationDialog</name>

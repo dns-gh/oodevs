@@ -42,7 +42,7 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( kernel::Controllers& controllers, unsigned int value, kernel::PropertiesDictionary& dico );
+             StructuralStateAttribute( kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
     virtual ~StructuralStateAttribute();
     //@}
 
@@ -57,17 +57,23 @@ public:
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
+    //! @name ModesObserver_ABC
+    //@{
+    virtual void NotifyModeChanged( int newMode );
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    unsigned int         structuralState_;
+    kernel::Controllers&          controllers_;
+    unsigned int                  structuralState_;
+    kernel::PropertiesDictionary& dico_;
     //@}
 };
 

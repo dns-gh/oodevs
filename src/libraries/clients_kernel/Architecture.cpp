@@ -11,6 +11,9 @@
 #include "Architecture.h"
 #include "PropertiesDictionary.h"
 #include "Tools.h"
+#include "ObjectTypes.h"
+#include "MaterialCompositionType.h"
+#include "RoofShapeType.h"
 
 using namespace kernel;
 
@@ -25,6 +28,8 @@ Architecture::Architecture( PropertiesDictionary& dictionary )
     , parkingFloors_ ( 0 )
     , occupation_    ( 0 )
     , trafficability_( 0 )
+    , material_      ( 0 )
+    , roofShape_     ( 0 )
 {
     // NOTHING
 }
@@ -40,35 +45,83 @@ Architecture::~Architecture()
 
 // -----------------------------------------------------------------------------
 // Name: Architecture::Initialize
-// Created: LGY 2011-04-15
+// Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-    const std::string& material, float occupation, float trafficability )
+void Architecture::Initialize( const ObjectTypes& objectTypes, float height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
+                               float trafficability, const std::string& material /* = "" */, const std::string& roofShape /* = "" */ )
 {
-    roofShape_ = roofShape;
-    material_ = material;
     height_ = height;
     floorNumber_ = floorNumber;
     parkingFloors_ = parkingFloors;
     occupation_ = static_cast< unsigned int >( occupation * 100u );
     trafficability_ = trafficability;
-    const Architecture& architecture = *this;
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture.height_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture.floorNumber_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), architecture.parkingFloors_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture.roofShape_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture.material_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture.occupation_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture.trafficability_ );
+
+    if( material.empty() || material == "default" )
+    {
+        tools::Iterator< const MaterialCompositionType& > it = objectTypes.StringResolver< MaterialCompositionType >::CreateIterator();
+        assert( it.HasMoreElements() );
+        material_ = const_cast< MaterialCompositionType* >( &it.NextElement() );
+    }
+    else
+        material_ = &objectTypes.StringResolver< MaterialCompositionType >::Get( material );
+
+    if( roofShape.empty() || roofShape == "default" ) 
+    {
+        tools::Iterator< const RoofShapeType& > it = objectTypes.StringResolver< RoofShapeType >::CreateIterator();
+        assert( it.HasMoreElements() );
+        roofShape_ = const_cast< RoofShapeType* >( &it.NextElement() );
+    }
+    else
+        roofShape_ = &objectTypes.StringResolver< RoofShapeType >::Get( roofShape );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::CreateDictionnary
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void Architecture::CreateDictionnary( bool readOnly )
+{
+    if( readOnly )
+    {
+        const Architecture& architecture = *this;
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture.height_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture.floorNumber_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), architecture.parkingFloors_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture.roofShape_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture.material_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture.occupation_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture.trafficability_ );
+    }
+    else
+    {
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
+        dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Architecture::GetMaterial
-// Created: LGY 2011-04-15
+// Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-const std::string& Architecture::GetMaterial() const
+const MaterialCompositionType& Architecture::GetMaterial() const
 {
-    return material_;
+    assert( material_ != 0 );
+    return *material_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetRoofShape
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+const RoofShapeType& Architecture::GetRoofShape() const
+{
+    assert( roofShape_ != 0 );
+    return *roofShape_;
 }
 
 // -----------------------------------------------------------------------------

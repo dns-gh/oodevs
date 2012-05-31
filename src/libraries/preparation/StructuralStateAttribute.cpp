@@ -19,11 +19,11 @@
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& controllers, unsigned int value, kernel::PropertiesDictionary& dico )
-    : structuralState_( value )
+StructuralStateAttribute::StructuralStateAttribute( kernel::Controllers& controllers, kernel::PropertiesDictionary& dico )
+    : structuralState_( 100 )
     , controllers_    ( controllers )
+    , dico_           ( dico )
 {
-    CreateDictionary( dico );
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
 }
@@ -47,15 +47,6 @@ namespace
             *pValue = std::min( 100u, std::max( 0u, value ) );
         }
     };
-}
-
-// -----------------------------------------------------------------------------
-// Name: StructuralStateAttribute::CreateDictionary
-// Created: JSR 2010-09-07
-// -----------------------------------------------------------------------------
-void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
-{
-    dico.Register( *this, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,4 +77,17 @@ bool StructuralStateAttribute::IsOverriden() const
 void StructuralStateAttribute::Update( xml::xistream& xis )
 {
     xis >> xml::attribute( "value", structuralState_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::NotifyModeChanged
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void StructuralStateAttribute::NotifyModeChanged( int newMode )
+{
+    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
+    if( newMode == ePreparationMode_Exercise )
+        dico_.Register( *this, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
+    else if( newMode == ePreparationMode_Terrain )
+        dico_.Remove( tools::translate( "StructuralStateAttribute", "Info/StructuralState" ) );
 }

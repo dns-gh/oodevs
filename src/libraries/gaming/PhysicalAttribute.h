@@ -16,6 +16,7 @@ namespace kernel
 {
     class AccommodationTypes;
     class Controller;
+    class ObjectTypes;
     class PropertiesDictionary;
     class UrbanObject;
 }
@@ -38,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PhysicalAttribute( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
-                                kernel::UrbanObject& urbanObject, kernel::Controller& controller );
+                                kernel::UrbanObject& urbanObject, const kernel::ObjectTypes& objectTypes, kernel::Controller& controller );
     virtual ~PhysicalAttribute();
     //@}
 };

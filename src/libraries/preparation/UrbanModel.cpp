@@ -141,7 +141,10 @@ namespace
     template< typename ConcretType, typename AbstractType >
     void SerializeIFN( const kernel::Entity_ABC& entity, xml::xostream& xos )
     {
-        const ConcretType& extension = static_cast< const ConcretType& >( entity.Get< AbstractType >() );
+        const AbstractType* abstractExtension = entity.Retrieve< AbstractType >();
+        if( !abstractExtension )
+            return;
+        const ConcretType& extension = static_cast< const ConcretType& >( *abstractExtension );
         if( extension.IsOverriden() )
             extension.SerializeAttributes( xos );
     }
@@ -168,6 +171,7 @@ void UrbanModel::SerializeExercise( const std::string& filename, const tools::Sc
         SerializeIFN< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( *it->second, xos );
         SerializeIFN< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( *it->second, xos );
         SerializeIFN< InfrastructureAttribute, kernel::Infrastructure_ABC >( *it->second, xos );
+        SerializeIFN< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( *it->second, xos );
 
         xos << xml::end;
     }

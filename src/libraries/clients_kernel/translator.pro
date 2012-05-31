@@ -1,6 +1,7 @@
 HEADERS = 
 
 SOURCES = AtlasNatures.cpp \
+Architecture.cpp \
 Circle.cpp \
 CoordinateSystems.cpp \
 EntityHierarchies.inl \
@@ -18,6 +19,7 @@ Tools.cpp \
 TristateOption.cpp \
 Units.cpp \
 UrbanObject_ABC.cpp \
+Usages.cpp \
 XmlDescription.cpp \
 
 TRANSLATIONS = clients_kernel_fr.ts clients_kernel_es.ts

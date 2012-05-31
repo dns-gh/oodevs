@@ -21,6 +21,7 @@
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/NBCAgent.h"
@@ -30,6 +31,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CoordinateSystems.h"
+#include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Tools.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
@@ -87,9 +90,11 @@ namespace
                                , public kernel::ValueEditor< EditorType >
     {
     public:
-        SimpleResolverEditor( QWidget* parent, const Resolver& resolver )
+        SimpleResolverEditor( QWidget* parent, const Resolver& resolver, bool selectionField = false, const QString& selectionText = " - " )
             : gui::ValuedComboBox< const Entity* >( parent )
         {
+            if( selectionField )
+                AddItem( selectionText, 0 );
             tools::Iterator< const Entity& > it = resolver.CreateIterator();
             while( it.HasMoreElements() )
             {
@@ -300,4 +305,41 @@ void EditorFactory::Call( PopulationRepartition** const& value )
         populationRepartitionEditor->SetValue( *value );
         result_ = 0;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::InfrastructureType** const& value )
+{
+    typedef tools::Resolver_ABC< kernel::InfrastructureType, std::string > T_Resolver;
+    SimpleResolverEditor< kernel::InfrastructureType, T_Resolver >* editor =
+        new SimpleResolverEditor< kernel::InfrastructureType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ), true, tools::translate( "EditorFactory", "<Select a type>" ) );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::MaterialCompositionType** const& value )
+{
+    typedef tools::Resolver_ABC< kernel::MaterialCompositionType, std::string > T_Resolver;
+    SimpleResolverEditor< kernel::MaterialCompositionType, T_Resolver >* editor = new SimpleResolverEditor< kernel::MaterialCompositionType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ) );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::RoofShapeType** const& value )
+{
+    typedef tools::Resolver_ABC< kernel::RoofShapeType, std::string > T_Resolver;
+    SimpleResolverEditor< kernel::RoofShapeType, T_Resolver >* editor = new SimpleResolverEditor< kernel::RoofShapeType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ) );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
 }

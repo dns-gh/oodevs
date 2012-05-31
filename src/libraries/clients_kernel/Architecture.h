@@ -14,7 +14,10 @@
 
 namespace kernel
 {
+    class MaterialCompositionType;
     class PropertiesDictionary;
+    class RoofShapeType;
+    class ObjectTypes;
 
 // =============================================================================
 /** @class  Architecture
@@ -33,25 +36,32 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-                             const std::string& material, float occupation, float trafficability );
-    virtual const std::string& GetMaterial() const;
+    virtual void Initialize( const ObjectTypes& objectTypes, float height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
+                             float trafficability, const std::string& material = "", const std::string& roofShape = "" );
+    virtual const MaterialCompositionType& GetMaterial() const;
+    virtual const RoofShapeType& GetRoofShape() const;
     virtual unsigned int GetFloorNumber() const;
     virtual unsigned int GetOccupation() const;
     virtual unsigned int GetHeight() const;
     //@}
 
 protected:
+    //! @name Helpers
+    //@{
+    virtual void CreateDictionnary( bool readOnly );
+    //@}
+
+protected:
     //! @name Member Data
     //@{
-    PropertiesDictionary& dictionary_;
-    std::string           roofShape_;
-    std::string           material_;
-    float                 height_;
-    unsigned int          floorNumber_;
-    unsigned int          parkingFloors_;
-    unsigned int          occupation_;
-    float                 trafficability_;
+    PropertiesDictionary&    dictionary_;
+    MaterialCompositionType* material_;
+    RoofShapeType*           roofShape_;
+    float                    height_;
+    unsigned int             floorNumber_;
+    unsigned int             parkingFloors_;
+    unsigned int             occupation_;
+    float                    trafficability_;
     //@}
 };
 

@@ -15,7 +15,8 @@
 namespace kernel
 {
     class AccommodationTypes;
-    class Controller;
+    class Controllers;
+    class ObjectTypes;
     class PropertiesDictionary;
 }
 
@@ -39,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
-                                UrbanObject& urbanObject, kernel::Controller& controller );
+                                UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes );
     virtual ~PhysicalAttribute();
     //@}
 };

@@ -63,12 +63,10 @@ void Usages::UpdateDefault()
         AccommodationType* accommodation = accommodationTypes_.Find( defaultStr_ );
         occupations_[ defaultStr_ ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
         occupations_[ defaultStr_ ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
-        if( dictionary_.HasKey( defaultString + tools::translate( "Block", "/Percentage" ) ) )
-        {
-            dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ defaultStr_ ] ) );
-            dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].first ) );
-            dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].second ) );
-        }
+
+        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ defaultStr_ ] ) );
+        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].first ) );
+        dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].second ) );
     }
     else
     {

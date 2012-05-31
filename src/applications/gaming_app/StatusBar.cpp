@@ -38,7 +38,7 @@ namespace
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
 StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QDockWidget* profilingDock )
-    : gui::StatusBar( parent, picker, detection, converter )
+    : gui::StatusBar( controllers, parent, picker, detection, converter )
     , picker_( picker )
     , lastSimulationStatus_( false )
     , controllers_( controllers )

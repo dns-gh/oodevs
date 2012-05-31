@@ -10,23 +10,32 @@
 #include "preparation_pch.h"
 #include "Architecture.h"
 #include <xeumeuleu/xml.hpp>
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/RoofShapeType.h"
+#include "clients_kernel/MaterialCompositionType.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-Architecture::Architecture( kernel::PropertiesDictionary& dictionary )
+Architecture::Architecture( kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
     : kernel::Architecture( dictionary )
+    , controllers_( controllers )
 {
-    Initialize( 20.f, 6, 0, "default", "default", 0.5f, 0.5f ); // $$$$ ABR 2012-05-24: TODO Use RoofShapeType && MaterialCompositionType
+    Initialize( objectTypes, 20.f, 6, 0, 0.5f, 0.5f );
+    if( controllers_.modes_ )
+        controllers_.modes_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Architecture::Architecture( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
     : kernel::Architecture( dictionary )
+    , controllers_( controllers )
 {
     unsigned int height = 0;
     unsigned int floorNumber = 0;
@@ -45,7 +54,9 @@ Architecture::Architecture( xml::xistream& xis, kernel::PropertiesDictionary& di
             >> xml::optional >> xml::attribute( "trafficability", trafficability )
             >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
         >> xml::end;
-    Initialize( static_cast< float >( height ), floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
+    Initialize( objectTypes, static_cast< float >( height ), floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
+    if( controllers_.modes_ )
+        controllers_.modes_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +65,8 @@ Architecture::Architecture( xml::xistream& xis, kernel::PropertiesDictionary& di
 // -----------------------------------------------------------------------------
 Architecture::~Architecture()
 {
-    // NOTHING
+    if( controllers_.modes_ )
+        controllers_.modes_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,14 +75,28 @@ Architecture::~Architecture()
 // -----------------------------------------------------------------------------
 void Architecture::SerializeAttributes( xml::xostream& xos ) const
 {
+    assert( roofShape_ && material_ );
     xos << xml::start( "architecture" )
             << xml::attribute( "height", height_ )
             << xml::attribute( "floor-number", floorNumber_ )
-            << xml::attribute( "roof-shape", roofShape_ )
-            << xml::attribute( "material", material_ )
+            << xml::attribute( "roof-shape", roofShape_->GetName() )
+            << xml::attribute( "material", material_->GetName() )
             << xml::attribute( "occupation", occupation_ / 100.f )
             << xml::attribute( "trafficability", trafficability_ );
     if( parkingFloors_ > 0 )
         xos << xml::attribute( "parking-floors", parkingFloors_ );
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::NotifyModeChanged
+// Created: ABR 2012-05-30
+// -----------------------------------------------------------------------------
+void Architecture::NotifyModeChanged( int newMode )
+{
+    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
+    if( newMode == ePreparationMode_Exercise )
+        CreateDictionnary( true );
+    else if( newMode == ePreparationMode_Terrain )
+        CreateDictionnary( false );
 }

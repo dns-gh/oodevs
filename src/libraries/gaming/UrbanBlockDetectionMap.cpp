@@ -11,6 +11,7 @@
 #include "UrbanBlockDetectionMap.h"
 #include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -55,7 +56,7 @@ void UrbanBlockDetectionMap::NotifyCreated( const kernel::UrbanObject_ABC& objec
             for( unsigned int j = jmin; j < jmax; ++j )
                 for( unsigned int i = imin; i < imax; ++i )
                     if( positions->IsInside( geometry::Point2f( i * cellsize + halfcellsize, j * cellsize + halfcellsize ) ) )
-                        urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial();
+                        urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial().GetName();
         }
 }
 

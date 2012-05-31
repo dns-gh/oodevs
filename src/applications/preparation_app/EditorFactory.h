@@ -22,10 +22,13 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class InfrastructureType;
     class KnowledgeGroupType;
+    class MaterialCompositionType;
     class Moveable_ABC;
     class NBCAgent;
     class LogisticLevel;
+    class RoofShapeType;
 }
 
 class Model;
@@ -55,6 +58,9 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
                     , public tools::Caller< PopulationRepartition** >
+                    , public tools::Caller< kernel::InfrastructureType** >
+                    , public tools::Caller< kernel::MaterialCompositionType** >
+                    , public tools::Caller< kernel::RoofShapeType** >
 {
 public:
     //! @name Constructors/Destructor
@@ -78,6 +84,9 @@ public:
     virtual void Call( kernel::EntityLogisticLevel* const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( PopulationRepartition** const& value );
+    virtual void Call( kernel::InfrastructureType** const& value );
+    virtual void Call( kernel::MaterialCompositionType** const& value );
+    virtual void Call( kernel::RoofShapeType** const& value );
     //@}
 
 private:
