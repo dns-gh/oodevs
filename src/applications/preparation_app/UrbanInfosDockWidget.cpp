@@ -155,17 +155,17 @@ namespace
         }
 
         // Usages
-        const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject.Get< kernel::PhysicalAttribute_ABC >();
-        if( kernel::Usages_ABC* usages = pPhysical.GetUsages() )
-        {
-            const kernel::Usages_ABC::T_Occupations& occupations = usages->GetOccupations();
-            for( kernel::Usages_ABC::CIT_Occupations it = occupations.begin(); it != occupations.end(); ++it )
-                if(it->first != kernel::Usages::defaultStr_ )
-                {
-                    totalCapacity += it->second.first;
-                    motivationsCapacities[ it->first ] += it->second.first;
-                }
-        }
+        if( const kernel::PhysicalAttribute_ABC* pPhysical = urbanObject.Retrieve< kernel::PhysicalAttribute_ABC >() )
+            if( kernel::Usages_ABC* usages = pPhysical->GetUsages() )
+            {
+                const kernel::Usages_ABC::T_Occupations& occupations = usages->GetOccupations();
+                for( kernel::Usages_ABC::CIT_Occupations it = occupations.begin(); it != occupations.end(); ++it )
+                    if(it->first != kernel::Usages::defaultStr_ )
+                    {
+                        totalCapacity += it->second.first;
+                        motivationsCapacities[ it->first ] += it->second.first;
+                    }
+            }
         // Resource Network
         const kernel::ResourceNetwork_ABC* resourceAttribute = urbanObject.Retrieve< kernel::ResourceNetwork_ABC >();
         if( resourceAttribute )
