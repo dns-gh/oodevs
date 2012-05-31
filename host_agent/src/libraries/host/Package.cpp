@@ -87,17 +87,7 @@ struct Metadata
 
     static Metadata Reload( const FileSystem_ABC& system, const Path& root )
     {
-        Tree tree;
-        try
-        {
-            const std::string data = system.ReadFile( root / GetFilename() );
-            if( !data.empty() )
-                tree = FromJson( data );
-        }
-        catch( const std::exception& /*err*/ )
-        {
-        }
-        return Metadata( tree );
+        return Metadata( FromJson( system.ReadFile( root / GetFilename() ) ) );
     }
 
     void Save( const FileSystem_ABC& system, const Path& root ) const
@@ -486,16 +476,7 @@ bool Package::Parse()
         if( !system_.IsFile( index ) )
             return false;
 
-        Tree tree;
-        try
-        {
-            tree = FromXml( system_.ReadFile( index ) );
-        }
-        catch( const std::exception& /*err*/ )
-        {
-            return false;
-        }
-
+        const Tree tree = FromXml( system_.ReadFile( index ) );
         const std::string name = Get( tree, "content.name" );
         const std::string description = Get( tree, "content.description" );
         if( name.empty() || description.empty() )
