@@ -79,9 +79,13 @@ namespace
 template< typename T >
 Tree Read( const std::string& data, const T& functor )
 {
-    std::istringstream input( data );
     Tree tree;
-    functor( input, tree );
+    if( !data.empty() )
+        try
+        {
+            std::istringstream input( data );
+            functor( input, tree );
+        } catch( ... ) {}
     return tree;
 }
 
@@ -89,7 +93,10 @@ template< typename T >
 std::string Write( const Tree& tree, const T& functor )
 {
     std::ostringstream out;
-    functor( out, tree );
+    try
+    {
+        functor( out, tree );
+    } catch( ... ) {}
     return out.str();
 }
 }
@@ -101,7 +108,7 @@ std::string Write( const Tree& tree, const T& functor )
 std::string host::ToJson( const Tree& tree, bool isPretty )
 {
     const std::string reply = Write( tree, boost::bind( &boost::property_tree::write_json< Tree >, _1, _2, isPretty ) );
-    return reply.substr( 0, reply.size() - 1 );
+    return reply.empty() ? reply : reply.substr( 0, reply.size() - 1 );
 }
 
 // -----------------------------------------------------------------------------
