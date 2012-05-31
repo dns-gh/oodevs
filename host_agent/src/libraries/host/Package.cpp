@@ -130,10 +130,10 @@ bool HasItem( const T& list, const U& item )
 struct Item : Package_ABC::Item_ABC
 {
     Item( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const Metadata* meta )
-        : root_ ( root )
-        , id_   ( id )
+        : id_   ( id )
         , name_ ( name )
-        , meta_ ( meta ? *meta : Metadata::Reload( system, root_ ) )
+        , meta_ ( meta ? *meta : Metadata::Reload( system, root ) )
+        , root_ ( root )
         , async_( pool )
     {
         tree_.put( "id", id_ );
