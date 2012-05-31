@@ -74,8 +74,8 @@ namespace
         MOCK_METHOD( StartSession, 1 );
         MOCK_METHOD( StopSession, 1 );
         // exercises
-        MOCK_METHOD( ListExercises, 2 );
-        MOCK_METHOD( CountExercises, 0 );
+        MOCK_METHOD( ListExercises, 3 );
+        MOCK_METHOD( CountExercises, 1 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
@@ -290,19 +290,20 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
 BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
 {
     SetRequest( "GET", "/list_exercises", boost::assign::map_list_of
+        ( "id", defaultIdString )
         ( "offset", "5" )
         ( "limit",  "3" )
     );
     const std::string expected = "a json list";
-    MOCK_EXPECT( agent.ListExercises ).once().with( 5, 3 ).returns( expected );
+    MOCK_EXPECT( agent.ListExercises ).once().with( defaultId, 5, 3 ).returns( expected );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
 {
-    SetRequest( "GET", "/count_exercises" );
+    SetRequest( "GET", "/count_exercises", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "a json number";
-    MOCK_EXPECT( agent.CountExercises ).once().returns( expected );
+    MOCK_EXPECT( agent.CountExercises ).once().with( defaultId ).returns( expected );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
@@ -322,7 +323,7 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture )
 {
-    SetRequest( "GET", "/list_exercises", boost::assign::map_list_of( "offset", "abc" ) );
+    SetRequest( "GET", "/list_exercises", boost::assign::map_list_of( "id", defaultIdString )( "offset", "abc" ) );
     CheckReply( 400, "invalid parameter \"offset\"=\"abc\"", controller.DoGet( request ) );
 }
 

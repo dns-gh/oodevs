@@ -46,6 +46,7 @@ struct Package_ABC : public boost::noncopyable
     //@{
     struct Item_ABC;
     typedef boost::shared_ptr< Item_ABC > T_Item;
+    typedef std::vector< std::string > T_Exercises;
     //@}
 
     //! @name Methods
@@ -54,6 +55,8 @@ struct Package_ABC : public boost::noncopyable
     virtual Path GetPath() const = 0;
     virtual T_Item Find( size_t id ) const = 0;
     virtual T_Item Find( const Item_ABC& item ) const = 0;
+    virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
+    virtual size_t CountExercises() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
     virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids ) = 0;

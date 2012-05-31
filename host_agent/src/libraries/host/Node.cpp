@@ -360,3 +360,23 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
     cache_->Identify( *install_ );
     return cache_->GetProperties();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetExercises
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+Node::T_Exercises Node::GetExercises( int offset, int limit ) const
+{
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    return install_->GetExercises( offset, limit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::CountExercises
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+size_t Node::CountExercises() const
+{
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    return install_->CountExercises();
+}

@@ -42,6 +42,7 @@ public:
     typedef Node_ABC T_Base;
     typedef boost::shared_ptr< T_Base > T_Node;
     typedef std::vector< T_Node > T_Nodes;
+    typedef std::vector< std::string > T_Exercises;
     //@}
 
     //! @name Methods
@@ -69,6 +70,12 @@ public:
     virtual Tree    GetCache( const Uuid& id ) const = 0;
     virtual Tree    DeleteCache( const Uuid& id ) = 0;
     virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;
+    //@}
+
+    //! @name Exercise Methods
+    //@{
+    virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const = 0;
+    virtual size_t      CountExercises( const Uuid& id ) const = 0;
     //@}
 };
 

@@ -86,6 +86,12 @@ public:
     virtual Tree    InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
+    //! @name Exercise Methods
+    //@{
+    virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const;
+    virtual size_t      CountExercises( const Uuid& id ) const;
+    //@}
+
 private:
     //! @name Private methods
     //@{

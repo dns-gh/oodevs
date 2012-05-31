@@ -88,8 +88,8 @@ public:
 
     //! @name Other Methods
     //@{
-    virtual Reply ListExercises ( int offset, int limit ) const;
-    virtual Reply CountExercises() const;
+    virtual Reply ListExercises ( const Uuid& id, int offset, int limit ) const;
+    virtual Reply CountExercises( const Uuid& id ) const;
     //@}
 
 private:

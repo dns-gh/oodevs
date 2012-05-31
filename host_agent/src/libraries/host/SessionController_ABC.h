@@ -56,7 +56,6 @@ public:
     virtual T_Session   Delete( const Uuid& id ) = 0;
     virtual T_Session   Start( const Uuid& id ) const = 0;
     virtual T_Session   Stop( const Uuid& id ) const = 0;
-    virtual T_Exercises GetExercises() const = 0;
     //@}
 };
 

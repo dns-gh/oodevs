@@ -359,3 +359,23 @@ Tree NodeController::InstallFromCache( const Uuid& id, const std::vector< size_t
     boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
     return node ? node->InstallFromCache( list ) : Tree();
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::GetExercises
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+NodeController::T_Exercises NodeController::GetExercises( const Uuid& id, int offset, int limit ) const
+{
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    return node ? node->GetExercises( offset, limit ) : T_Exercises();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::CountExercises
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+size_t NodeController::CountExercises( const Uuid& id ) const
+{
+    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    return node ? node->CountExercises() : 0;
+}

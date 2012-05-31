@@ -235,14 +235,14 @@ on_session_hide = ->
 on_session_load = ->
     select = $("#session_exercise")
     select.children().remove().end()
-    done = (data) ->
-        for item in data
-            select.append "<option>" + item + "</option>"
-    error = (obj, text, data) ->
-        box = $("#session_create .modal-footer .alert")
-        box.html "Unable to fetch exercises"
-        box.show()
-    ajax "/api/list_exercises", limit: 40, done, error
+    ajax "/api/list_exercises", id: uuid, limit: 40,
+        (data) ->
+            for item in data
+                select.append "<option>" + item + "</option>"
+        ->
+            box = $("#session_create .modal-footer .alert")
+            box.html "Unable to fetch exercises"
+            box.show()
 
 $("#session_create .modal-footer .btn_click").click on_session_click
 $("#session_create").on "hidden", on_session_hide

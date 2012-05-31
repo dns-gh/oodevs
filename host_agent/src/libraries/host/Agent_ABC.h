@@ -100,8 +100,8 @@ public:
 
     //! @name Other Methods
     //@{
-    virtual Reply ListExercises ( int offset, int limit ) const = 0;
-    virtual Reply CountExercises() const = 0;
+    virtual Reply ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
+    virtual Reply CountExercises( const Uuid& id ) const = 0;
     //@}
 };
 

@@ -33,6 +33,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual std::string GetChecksum() const = 0;
     virtual bool        Compare( size_t id ) const = 0;
     virtual bool        Compare( const Item_ABC& item ) const = 0;
+    virtual bool        IsExercise() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
     virtual void        Join() = 0;
     virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
@@ -223,6 +224,11 @@ struct Item : Package_ABC::Item_ABC
         system.Rename( root_, dst );
     }
 
+    bool IsExercise() const
+    {
+        return false;
+    }
+
 protected:
     const size_t id_;
     const std::string name_;
@@ -394,6 +400,11 @@ struct Exercise : public Item
         return deps;
     }
 
+    bool IsExercise() const
+    {
+        return true;
+    }
+
     template< typename T >
     static void Parse( Pool_ABC& pool, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
     {
@@ -449,8 +460,7 @@ Tree Package::GetProperties() const
         if( !version_.empty() )
             tree.put( "version", version_ );
     }
-    tree.put_child( "items", Tree() );
-    Tree& items = tree.get_child( "items" );
+    Tree& items = tree.put_child( "items", Tree() );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         items.push_back( std::make_pair( "", item->GetProperties() ) );
     return tree;
@@ -573,4 +583,36 @@ void Package::Move( const Path& dst, const std::vector< size_t >& ids )
             async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ), dst / "_" ) );
     async.Join();
     items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::GetExercises
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+Package::T_Exercises Package::GetExercises( int offset, int limit ) const
+{
+    T_Exercises reply;
+    BOOST_FOREACH( const T_Items::value_type& item, items_ )
+    {
+        if( !item->IsExercise() )
+            continue;
+        if( offset-- > 0 )
+            continue;
+        reply.push_back( item->GetName() );
+        if( --limit <  0 )
+            break;
+    }
+    return reply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::CountExercises
+// Created: BAX 2012-05-31
+// -----------------------------------------------------------------------------
+size_t Package::CountExercises() const
+{
+    size_t reply = 0;
+    BOOST_FOREACH( const T_Items::value_type& item, items_ )
+        reply += item->IsExercise();
+    return reply;
 }

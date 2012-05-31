@@ -16,7 +16,6 @@
 #include "Session_ABC.h"
 #include "SessionController_ABC.h"
 
-#include <boost/algorithm/string/join.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -367,24 +366,22 @@ Reply Agent::StopSession( const Uuid& id ) const
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-Reply Agent::ListExercises( int offset, int limit ) const
+Reply Agent::ListExercises( const Uuid& node, int offset, int limit ) const
 {
-    SessionController_ABC::T_Exercises exercises = sessions_.GetExercises();
-    if( exercises.empty() )
-        return Reply( "[]" );
-    offset = Clip< int >( offset, 0, static_cast< int >( exercises.size() ) );
-    if( offset > 0 )
-        exercises.erase( exercises.begin(), exercises.begin() + offset );
-    limit  = Clip< int >( limit,  0, static_cast< int >( exercises.size() ) );
-    exercises.resize( limit );
-    return Reply( "[\"" + boost::algorithm::join( exercises, "\", \"" ) + "\"]" );
+    std::string json;
+    BOOST_FOREACH( NodeController_ABC::T_Exercises::value_type item, nodes_.GetExercises( node, offset, limit ) )
+    {
+        std::replace( item.begin(), item.end(), '\\', '/' );
+        json += "\"" + item + "\",";
+    }
+    return Reply( "[" + json.substr( 0, json.size()-1 ) + "]" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::CountExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-Reply Agent::CountExercises() const
+Reply Agent::CountExercises( const Uuid& node ) const
 {
-    return Count( sessions_.GetExercises().size() );
+    return Count( nodes_.CountExercises( node ) );
 }

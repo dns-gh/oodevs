@@ -60,6 +60,8 @@ namespace mocks
         MOCK_METHOD( UploadCache, 2 );
         MOCK_METHOD( DeleteCache, 1 );
         MOCK_METHOD( InstallFromCache, 2 );
+        MOCK_METHOD( GetExercises, 3 );
+        MOCK_METHOD( CountExercises, 1 );
     };
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )
@@ -84,6 +86,8 @@ namespace mocks
         MOCK_METHOD( GetCache, 0 );
         MOCK_METHOD( DeleteCache, 0 );
         MOCK_METHOD( InstallFromCache, 1 );
+        MOCK_METHOD( GetExercises, 2 );
+        MOCK_METHOD( CountExercises, 0 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )
@@ -101,7 +105,6 @@ namespace mocks
         MOCK_METHOD( Delete, 1 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 1 );
-        MOCK_METHOD( GetExercises, 0 );
     };
 
     MOCK_BASE_CLASS( MockSession, host::Session_ABC )
@@ -245,6 +248,8 @@ namespace mocks
         MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC& ), FindItem );
         MOCK_METHOD_EXT( Move, 1, void( const host::Path& ), MoveAll );
         MOCK_METHOD_EXT( Move, 2, void( const host::Path&, const std::vector< size_t >& ), MoveItems );
+        MOCK_METHOD( GetExercises, 2 );
+        MOCK_METHOD( CountExercises, 0 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

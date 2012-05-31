@@ -41,6 +41,8 @@ public:
     virtual Path GetPath() const;
     virtual T_Item Find( size_t id ) const;
     virtual T_Item Find( const Item_ABC& item ) const;
+    virtual T_Exercises GetExercises( int offset, int limit ) const;
+    virtual size_t CountExercises() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
     virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids );

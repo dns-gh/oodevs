@@ -69,7 +69,6 @@ public:
     virtual T_Session   Delete( const Uuid& id );
     virtual T_Session   Start( const Uuid& id ) const;
     virtual T_Session   Stop( const Uuid& id ) const;
-    virtual T_Exercises GetExercises() const;
     //@}
 
 private:
@@ -93,7 +92,6 @@ private:
     const Path logs_;
     const Path data_;
     const Path apps_;
-    const std::vector< std::string > exercises_;
     const std::auto_ptr< Container< Session_ABC > > sessions_;
     const std::auto_ptr< Async > async_;
     //@}

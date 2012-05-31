@@ -88,6 +88,12 @@ public:
     virtual Tree InstallFromCache( const std::vector< size_t >& list );
     //@}
 
+    //! @name Exercise methods
+    //@{
+    virtual T_Exercises GetExercises( int offset, int limit ) const;
+    virtual size_t      CountExercises() const;
+    //@}
+
 private:
     //! @name Private methods
     //@{

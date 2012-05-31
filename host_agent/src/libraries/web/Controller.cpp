@@ -512,18 +512,20 @@ std::string Controller::StopSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListExercises( const Request_ABC& request )
 {
+    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 10 );
-    return WriteHttpReply( agent_.ListExercises( offset, limit ) );
+    return WriteHttpReply( agent_.ListExercises( id, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::CountExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-std::string Controller::CountExercises( const Request_ABC& /*request*/ )
+std::string Controller::CountExercises( const Request_ABC& request )
 {
-    return WriteHttpReply( agent_.CountExercises() );
+    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
+    return WriteHttpReply( agent_.CountExercises( id ) );
 }
 
 namespace

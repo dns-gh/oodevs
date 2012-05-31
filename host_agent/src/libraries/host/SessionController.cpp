@@ -39,20 +39,6 @@ std::string MakeOption( const std::string& option, const T& value )
 {
     return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
 }
-
-SessionController_ABC::T_Exercises GetExercises( const FileSystem_ABC& system, const Path& root )
-{
-    SessionController_ABC::T_Exercises reply;
-    const size_t offset = root.string().size() + 1;
-    BOOST_FOREACH( Path path, system.Glob( root, L"exercise.xml" ) )
-    {
-        std::wstring leaf = path.remove_filename().wstring();
-        leaf = leaf.substr( offset, leaf.size() - offset );
-        std::replace( leaf.begin(), leaf.end(), L'\\', L'/' );
-        reply.push_back( Utf8Convert( leaf ) );
-    }
-    return reply;
-}
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +60,6 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , logs_     ( logs / "sessions" )
     , data_     ( data )
     , apps_     ( apps )
-    , exercises_( ::GetExercises( system_, data_ / L"exercises" ) )
     , sessions_ ( new Container< Session_ABC >() )
     , async_    ( new Async( pool ) )
 {
@@ -289,13 +274,4 @@ void SessionController::Stop( Session_ABC& session, bool skipSave ) const
     bool valid = session.Stop();
     if( valid && !skipSave )
         Save( session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SessionController::GetExercises
-// Created: BAX 2012-04-20
-// -----------------------------------------------------------------------------
-SessionController_ABC::T_Exercises SessionController::GetExercises() const
-{
-    return exercises_;
 }

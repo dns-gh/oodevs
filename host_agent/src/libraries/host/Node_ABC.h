@@ -53,6 +53,7 @@ struct Node_ABC : public boost::noncopyable
     //@{
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     typedef boost::function< T_Process( const Node_ABC& ) > T_Starter;
+    typedef std::vector< std::string > T_Exercises;
     //@}
 
     //! @name Accessors
@@ -82,6 +83,12 @@ struct Node_ABC : public boost::noncopyable
     virtual Tree GetCache() const = 0;
     virtual Tree DeleteCache() = 0;
     virtual Tree InstallFromCache( const std::vector< size_t >& list ) = 0;
+    //@}
+
+    //! @name Exercise methods
+    //@{
+    virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
+    virtual size_t      CountExercises() const = 0;
     //@}
 };
 
