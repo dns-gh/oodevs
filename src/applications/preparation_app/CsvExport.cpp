@@ -135,7 +135,7 @@ namespace
     std::string GetName( const kernel::Entity_ABC& entity )
     {
         std::string longName = gui::LongNameHelper::GetEntityLongName( entity );
-        return longName.empty() ? entity.GetName().toStdString() : longName.c_str();
+        return longName.empty() ? entity.GetName().toStdString() : longName;
     }
     std::string GetSide( const kernel::Entity_ABC& entity )
     {

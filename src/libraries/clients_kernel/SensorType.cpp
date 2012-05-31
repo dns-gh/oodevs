@@ -96,7 +96,6 @@ void SensorType::ReadUrbanBlockMaterialFactor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SensorType::InitializeAngle( xml::xistream& xis )
 {
-    std::string unit;
     xis >> xml::attribute( "angle", rAngle_ )
         >> xml::attribute( "scanning", bScanningAllowed_ );
     rAngle_ *= ( std::acos( -1.f ) / 180.f );

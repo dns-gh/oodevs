@@ -81,7 +81,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ExerciseMenu::ReadResource( xml::xistream& xis, const tools::ExerciseConfig& config )
 {
-    std::string file, name, description;
+    std::string file, name;
     xis >> xml::attribute( "file", file )
         >> xml::attribute( "name", name );
     if( file.empty() )

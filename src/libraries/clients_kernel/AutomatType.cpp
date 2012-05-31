@@ -24,7 +24,7 @@ AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentTy
                                             , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver )
     : pcType_( 0 )
 {
-    std::string modelName, name;
+    std::string modelName;
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "type", type_ )
         >> xml::attribute( "id", id_ )
@@ -32,7 +32,7 @@ AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentTy
         >> xml::list( "unit", *this, &AutomatType::ReadAgent, agentResolver );
     model_ = & modelResolver.Get( modelName );
     if( ! pcType_ )
-        throw std::runtime_error( "Automat '" + name + "' has no command-post" );
+        throw std::runtime_error( "Automat '" + name_ + "' has no command-post" );
     UpdateSymbol();
 }
 

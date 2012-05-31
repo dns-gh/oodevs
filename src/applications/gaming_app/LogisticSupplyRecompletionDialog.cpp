@@ -292,7 +292,6 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
     stocks_.clear();
     stockTable_->setNumRows( 0 );
     const SupplyStates* supplies = selected_->Retrieve< SupplyStates >();
-    bool show = false;
     if( supplies )
     {
         stockTable_->setNumRows( 0 );
@@ -310,7 +309,6 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
             item->setText( locale().toString( stock.quantity_ ) );
             stockTable_->setItem( nPos, 2, item );
             stocks_[ stock.type_->GetName().c_str() ] = &stock;
-            show = true;
         }
     }
 }

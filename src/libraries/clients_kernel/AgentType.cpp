@@ -100,7 +100,6 @@ void AgentType::ReadCrewRank( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentType::ReadResourcesCategory( xml::xistream& xis )
 {
-    std::string resourceCategory = xis.attribute< std::string >( "name" );
     xis >> xml::list( "resource", *this, &AgentType::ReadResources );
 }
 
