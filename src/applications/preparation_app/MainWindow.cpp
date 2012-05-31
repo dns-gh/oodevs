@@ -165,7 +165,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
 
     // ToolBars
-    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer ) );
+    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer/*, *eventStrategy_*/ ) );
 
     // Strategy
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
@@ -604,9 +604,9 @@ void MainWindow::SaveAs()
     config_.LoadExercise( exerciseFile.native_file_string() );
     model_.exercise_.SetName( name );
     dialogContainer_->Purge();
-    dialogContainer_->Load();
     needsSaving_ = true;
     Save();
+    dialogContainer_->Load();
 }
 
 // -----------------------------------------------------------------------------
