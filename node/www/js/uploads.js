@@ -257,6 +257,9 @@
         discard = $(".form-actions .discard");
         save = $(".form-actions .save");
         discard.click(function() {
+          if (discard.hasClass("disabled")) {
+            return;
+          }
           _this["switch"](false, true);
           return ajax("/api/delete_cache", {
             id: uuid
@@ -268,6 +271,9 @@
         });
         save.click(function() {
           var id, list, _k, _len2, _ref2;
+          if (save.hasClass("disabled")) {
+            return;
+          }
           list = [];
           _ref2 = $(_this.el).find(".action .add, .action .update");
           for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {

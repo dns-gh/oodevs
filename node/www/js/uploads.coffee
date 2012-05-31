@@ -54,12 +54,14 @@ class PackageView extends Backbone.View
             save = $(".form-actions .save")
 
             discard.click =>
+                return if discard.hasClass "disabled"
                 @switch false, true
                 ajax "/api/delete_cache", id: uuid,
                     => @switch true
                     => @switch true
 
             save.click =>
+                return if save.hasClass "disabled"
                 list = []
                 for it in $(@el).find ".action .add, .action .update"
                     continue unless $(it).hasClass "active"
