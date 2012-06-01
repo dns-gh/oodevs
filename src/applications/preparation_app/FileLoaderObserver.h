@@ -23,7 +23,7 @@ class FileLoaderObserver : public tools::RealFileLoaderObserver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FileLoaderObserver();
+    		 FileLoaderObserver();
     virtual ~FileLoaderObserver();
     //@}
 
@@ -35,13 +35,19 @@ public:
     virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion );
 
     void DisplayErrors() const;
+    virtual void GetErrors( std::vector< std::string >& errors ) const;
     //@}
 
 private:
-    std::string invalidSignatureFiles_;
-    std::string missingSignatureFiles_;
-    std::string malformedFiles_;
-    std::string missingSchemaFiles_;
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > ::const_iterator CIT_Error;
+    //@}
+
+    std::vector< std::string > invalidSignatureFiles_;
+    std::vector< std::string > missingSignatureFiles_;
+    std::vector< std::string > malformedFiles_;
+    std::vector< std::string > missingSchemaFiles_;
 };
 
 #endif // Preparation_FileLoaderObserver_h

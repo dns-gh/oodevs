@@ -50,8 +50,10 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
+#include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <boost/foreach.hpp>
 #include <xeuseuleu/xsl.hpp>
@@ -63,10 +65,11 @@ using namespace tools;
 // Name: ModelConsistencyChecker constructor
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers )
+ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : model_      ( model )
     , staticModel_( staticModel )
     , controllers_( controllers )
+    , fileLoaderObserver_( fileLoaderObserver )
 {
     // NOTHING
 }
@@ -159,6 +162,8 @@ bool ModelConsistencyChecker::CheckConsistency( bool( *IsError )( E_ConsistencyC
     CheckLoadingErrors();
     CheckScores();
     CheckSuccessFactors();
+
+    CheckFiles();
 
     bool isValid = true;
     for( IT_ConsistencyErrors it = errors_.begin(); it != errors_.end(); ++it )
@@ -714,6 +719,18 @@ void ModelConsistencyChecker::CheckLogisticFormation()
         }
         AddError( eNoLogisticFormation, &automat );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckFiles
+// Created: MMC 2012-06-01
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckFiles()
+{
+    std::vector< std::string > filesErrors;
+    fileLoaderObserver_.GetErrors( filesErrors );
+    for( int i = 0; i < filesErrors.size(); ++i )
+        AddError( eOthers, 0, filesErrors[ i ] );
 }
 
 // -----------------------------------------------------------------------------

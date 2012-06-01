@@ -21,6 +21,11 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace tools
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 class FilterProxyModel;
 
 // =============================================================================
@@ -37,7 +42,7 @@ class ModelConsistencyDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers );
+             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver );
     virtual ~ModelConsistencyDialog();
     //@}
 

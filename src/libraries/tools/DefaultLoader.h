@@ -43,6 +43,8 @@ public:
 
     virtual std::string                    LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
     virtual std::string                    LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
+
+    virtual const RealFileLoaderObserver_ABC& GetObserver() const;
     //@}
 
 protected:
