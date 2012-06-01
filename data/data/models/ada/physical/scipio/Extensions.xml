@@ -5077,17 +5077,17 @@
         <label language="fr" text="Type PC"/>
       </labels>
     </attribute>
-    <attribute extends="unit;automat;formation" max-length="3" min-length="3" name="IndRadio" type="numeric">
+    <attribute extends="unit;automat;formation" name="IndRadio" type="string">
       <labels>
         <label language="fr" text="Indicatif radio"/>
       </labels>
     </attribute>
-    <attribute dictionary="T_SIC_IdCDB" dictionary-kind="short" extends="unit;formation" max-length="3" min-length="3" name="IdCDB" type="loosy-dictionary">
+    <attribute dictionary="T_SIC_IdCDB" dictionary-kind="short" extends="unit;formation" name="IdCDB" type="loosy-dictionary">
       <labels>
         <label language="fr" text="Identifiant Champ de Bataille"/>
       </labels>
     </attribute>
-    <attribute extends="unit;formation" max-length="4" min-length="4" name="IndOpe" type="alphanumeric">
+    <attribute extends="unit;formation" name="IndOpe" type="string">
       <labels>
         <label language="fr" text="Indicatif opérationnel"/>
       </labels>
@@ -5139,4 +5139,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="3345170535" -->
+<!-- signature="1174143976" -->
