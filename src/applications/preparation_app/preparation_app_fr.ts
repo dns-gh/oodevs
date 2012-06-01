@@ -1405,6 +1405,10 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Logistic base&apos;s party differs from object&apos;s party.</source>
         <translation>Le camp de la base logistique diffère de celui de l&apos;objet.</translation>
     </message>
+    <message>
+        <source>Invalid stock resource &apos;%1&apos; in orbat.xml. This resource will not be saved.</source>
+        <translation>Dotation de stock &apos;%1&apos; invalide dans orbal.xml. Cette dotation ne sera pas sauvegardée.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

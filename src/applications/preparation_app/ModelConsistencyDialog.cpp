@@ -122,6 +122,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
     errorDescriptions_[ eNoLogisticFormation ]             = tr( "Logistic sector not included in a logistic base." );
     errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tr( "Logistic base's party differs from object's party." );
+    errorDescriptions_[ eStockInvalidDotation ]            = tr( "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );

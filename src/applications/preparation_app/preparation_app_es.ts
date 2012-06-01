@@ -1403,6 +1403,10 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <source>Logistic base&apos;s party differs from object&apos;s party.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid stock resource &apos;%1&apos; in orbat.xml. This resource will not be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

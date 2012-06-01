@@ -307,6 +307,9 @@ void ModelConsistencyChecker::CheckStockInitialization()
         const Stocks* stocks = agent.Retrieve< Stocks >();
         if( agent.GetType().HasStocks() && ( !stocks || ( stocks && !stocks->HasDotations() ) ) )
             AddError( eStockInitialization, &agent );
+        else if( stocks && !stocks->GetInvalidDotations().empty() )
+            for( std::vector< std::string >::const_iterator itDotation = stocks->GetInvalidDotations().begin(); itDotation != stocks->GetInvalidDotations().end(); ++itDotation )
+                AddError( eStockInvalidDotation, &agent, itDotation->c_str() );
     }
 }
 
