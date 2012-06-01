@@ -1399,6 +1399,10 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <source>Some resources used by logistic subordinate(s) are not initialized: %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic base&apos;s party differs from object&apos;s party.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

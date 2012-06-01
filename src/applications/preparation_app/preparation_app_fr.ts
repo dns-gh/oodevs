@@ -1401,6 +1401,10 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Some resources used by logistic subordinate(s) are not initialized: %1.</source>
         <translation>Des ressources utilisées par des subordonnés logistiques ne sont pas initialisées: %1.</translation>
     </message>
+    <message>
+        <source>Logistic base&apos;s party differs from object&apos;s party.</source>
+        <translation>Le camp de la base logistique diffère de celui de l&apos;objet.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

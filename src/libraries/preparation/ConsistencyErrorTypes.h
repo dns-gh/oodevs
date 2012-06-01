@@ -26,6 +26,7 @@ enum E_ConsistencyCheck
     eLogisticInitialization          = 0x0004 << 4,
     eNoLogisticBase                  = 0x0005 << 4,
     eNoLogisticFormation             = 0x0006 << 4,
+    eLogisticBaseNotSameTeam         = 0x0007 << 4,
 
     eProfileMask                     = 0x000f << 8,
     eProfileUniqueness               = 0x0001 << 8,

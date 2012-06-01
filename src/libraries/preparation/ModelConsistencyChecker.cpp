@@ -649,8 +649,22 @@ void ModelConsistencyChecker::CheckLogisticBase()
     {
         const Object_ABC& obj = it.NextElement();
         const LogisticAttribute* attribute = obj.Retrieve< LogisticAttribute >();
-        if( attribute && !attribute->HasValidLogisticBase() )
-            AddError( eNoLogisticBase, &obj );
+        if( attribute )
+        {
+            if( !attribute->HasValidLogisticBase() )
+                AddError( eNoLogisticBase, &obj );
+            else
+            {
+                const Entity_ABC* logisticBase = attribute->GetLogisticBase();
+                if( logisticBase )
+                {
+                    const TacticalHierarchies* logHierarchy = static_cast< const TacticalHierarchies* >( logisticBase->Retrieve< TacticalHierarchies >() );
+                    const TacticalHierarchies* objHierarchy = static_cast< const TacticalHierarchies* >( obj.Retrieve< TacticalHierarchies >() );
+                    if( logHierarchy && objHierarchy && &logHierarchy->GetTop() != &objHierarchy->GetTop() )
+                        AddError( eLogisticBaseNotSameTeam, &obj );
+                }
+            }
+        }
     }
 }
 
