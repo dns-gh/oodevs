@@ -159,6 +159,8 @@ void Drawing::Update( const sword::ShapeUpdateRequest& asn )
         for( int i = 0; i < asn.points().elem_size(); ++i )
             points_.push_back( asn.points().elem(i) );
     }
+    if( asn.has_geometry() )
+        geometry_ = asn.geometry();
 }
 
 // -----------------------------------------------------------------------------
@@ -208,6 +210,8 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->mutable_color()->set_green( color.green() );
     message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( pattern_ );
+    if( geometry_ )
+        message().mutable_shape()->set_geometry( *geometry_ );
     for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
         *message().mutable_shape()->mutable_points()->add_elem() = *iter;
     message.Send( publisher );

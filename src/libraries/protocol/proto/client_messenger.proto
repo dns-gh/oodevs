@@ -105,6 +105,7 @@ message ShapeUpdateRequest {
     optional RgbColor         color    = 3; //!< The new color of the shape
     optional string           pattern  = 4; //!< The new template of the shape
     optional CoordLatLongList points   = 5; //!< The new points of the shape @see CoordLatLongList
+    optional Location.Geometry geometry = 6; //!< The geometry
 }
 
 /** @struct ShapeDestructionRequest

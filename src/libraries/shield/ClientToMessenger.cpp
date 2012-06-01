@@ -31,6 +31,14 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeUpdateRequ
     CONVERT_CB( color, ConvertColor );
     for( int i = 0; i < from.location().coordinates().elem().size(); ++i )
         ConvertCoordLatLong( from.location().coordinates().elem( i ), to->mutable_points()->add_elem() );
+    to->set_geometry( ConvertEnum( from.location().type(), boost::assign::map_list_of( sword::Location::circle, Common::MsgLocation::circle )
+                    ( sword::Location::ellipse, Common::MsgLocation::ellipse )
+                    ( sword::Location::line, Common::MsgLocation::line )
+                    ( sword::Location::rectangle, Common::MsgLocation::rectangle )
+                    ( sword::Location::polygon, Common::MsgLocation::polygon )
+                    ( sword::Location::point, Common::MsgLocation::point )
+                    ( sword::Location::sector, Common::MsgLocation::sector )
+                    ( sword::Location::none, Common::MsgLocation::none ) ) );
 }
 
 // -----------------------------------------------------------------------------
