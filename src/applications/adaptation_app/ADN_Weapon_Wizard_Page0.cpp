@@ -47,11 +47,13 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char*
     ADN_Launchers_Data::T_LauncherInfos_Vector& vLaunchers = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos();
     for( ADN_Launchers_Data::IT_LauncherInfos_Vector itLauncher = vLaunchers.begin(); itLauncher != vLaunchers.end(); ++itLauncher )
         pComboLauncher_->insertItem( (*itLauncher)->strName_.GetData().c_str() );
+    pComboLauncher_->model()->sort( 0 );
 
     ADN_Equipement_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
     ADN_Equipement_Data::T_CategoryInfos_Vector& vAmmo = ammoDotation.GetCategories();
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
         pComboAmmo_->insertItem( (*itAmmo)->strName_.GetData().c_str() );
+    pComboAmmo_->model()->sort( 0 );
 
     Q3VBox* pBox = new Q3VBox( pRightSide_ );
     pBox->setSpacing( 5 );
