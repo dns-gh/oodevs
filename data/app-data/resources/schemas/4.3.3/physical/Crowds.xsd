@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.0">
 	<xs:include schemaLocation="tools.xsd"/>
 	<xs:element name="populations">
 		<xs:complexType>
@@ -14,6 +14,7 @@
 				<xs:element name="time-between-nbc-applications" minOccurs="0">
 					<xs:complexType>
 						<xs:attribute name="delay" type="T_Time" use="required"/>
+						<xs:attribute name="decontaminationDelay" type="T_Time" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="population" minOccurs="0" maxOccurs="unbounded">

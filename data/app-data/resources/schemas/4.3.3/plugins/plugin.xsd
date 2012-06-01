@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.8.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.9.0">
 	<xs:element name="plugin">
 		<xs:complexType>
 			<xs:all>
@@ -54,7 +54,6 @@
 						</xs:simpleType>
 					</xs:attribute>
 					<xs:attribute name="default" type="xs:string"/>
-					<xs:attribute name="display" type="xs:boolean"/>
 					<xs:attribute name="min" type="xs:integer"/>
 					<xs:attribute name="max" type="xs:integer"/>
 				</xs:complexType>

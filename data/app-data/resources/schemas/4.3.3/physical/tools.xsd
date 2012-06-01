@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.0">
 	<xs:include schemaLocation="../exercise/common.xsd"/>
 	<xs:annotation>
 		<xs:documentation>Types de base</xs:documentation>
@@ -343,7 +343,6 @@
 			<xs:enumeration value="DateTime"/>
 			<xs:enumeration value="Point"/>
 			<xs:enumeration value="Polygon"/>
-			<xs:enumeration value="Location"/>
 			<xs:enumeration value="Path"/>
 			<xs:enumeration value="Limit"/>
 			<xs:enumeration value="PhaseLine"/>
@@ -410,12 +409,6 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:simpleType name="T_LogisticSupplyClass">
-		<xs:annotation>
-			<xs:documentation>Classe logistique d'une ressource. </xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
 	<xs:simpleType name="T_ResourceCategory">
 		<xs:annotation>
 			<xs:documentation>catégorie de la ressources</xs:documentation>
@@ -443,6 +436,32 @@
 			<xs:enumeration value="Mitraille"/>
 			<xs:enumeration value="Obus"/>
 			<xs:enumeration value="ALR"/>
+		</xs:restriction>
+        </xs:simpleType>
+        <xs:simpleType name="T_IndirectFireType">
+		<xs:annotation>
+			<xs:documentation> </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aced"/>
+			<xs:enumeration value="eclairant"/>
+			<xs:enumeration value="explosif"/>
+			<xs:enumeration value="fumigene"/>
+			<xs:enumeration value="grenade"/>
+			<xs:enumeration value="effect"/>
+			<xs:enumeration value="mine"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_StockCategory">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Unite essence"/>
+			<xs:enumeration value="Unite tranche D"/>
+			<xs:enumeration value="Unite non tranche D"/>
+			<xs:enumeration value="Unite vivre"/>
+			<xs:enumeration value="Pieces"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_NRBCeffectType">

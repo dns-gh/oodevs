@@ -422,7 +422,7 @@
               <xs:annotation>
                 <xs:documentation xml:lang="en">Log file size unit: "lines", "bytes", "kbytes" or "mbytes". Default: "lines".</xs:documentation>
               </xs:annotation>
-            </xs:attribute>              
+            </xs:attribute>            
           </xs:complexType>
         </xs:element>
         <xs:element name="decisional">

@@ -2614,7 +2614,7 @@
       </entry>
     </dictionary>
     <dictionary alias="Role" name="T_User_Role">
-      <entry alias="SupEx" id="0" name="supervisor" option="supervisor">
+      <entry alias="SupEx" id="0" name="supervisor" option="readOnly;magicActions">
         <labels>
           <label kind="short" language="fr-FR" text="SUPEX"/>
           <label kind="long" language="fr-FR" text="Superviseur d'exercice"/>
@@ -2638,7 +2638,7 @@
           <label kind="long" language="en-GB" text="Animator (ENIEX)"/>
         </labels>
       </entry>
-      <entry alias="DirEx" id="3" name="direx" option="supervisor">
+      <entry alias="DirEx" id="3" name="direx" option="readOnly">
         <labels>
           <label kind="short" language="fr-FR" text="DIREX"/>
           <label kind="long" language="fr-FR" text="Directeur d'exercice"/>
@@ -2646,7 +2646,7 @@
           <label kind="long" language="en-GB" text="Exercise director (DIREX)"/>
         </labels>
       </entry>
-      <entry alias="Env" id="4" name="environment">
+      <entry alias="Env" id="4" name="environment" option="readAll;magicActions">
         <labels>
           <label kind="short" language="fr-FR" text="ENV"/>
           <label kind="long" language="fr-FR" text="Environnement"/>
@@ -2654,7 +2654,7 @@
           <label kind="long" language="en-GB" text="Environment"/>
         </labels>
       </entry>
-      <entry alias="Anal" id="5" name="analysis" option="supervisor">
+      <entry alias="Anal" id="5" name="analysis" option="readAll;noEditable">
         <labels>
           <label kind="short" language="fr-FR" text="ANAL"/>
           <label kind="long" language="fr-FR" text="Analyste"/>
@@ -2662,7 +2662,7 @@
           <label kind="long" language="en-GB" text="Analyst"/>
         </labels>
       </entry>
-      <entry alias="GESTIM" id="6" name="service-gestim" option="supervisor">
+      <entry alias="GESTIM" id="6" name="service-gestim" option="writeAll;noEditable;magicActions">
         <labels>
           <label kind="short" language="fr-FR" text="GESTIM"/>
           <label kind="long" language="fr-FR" text="Service GESTIM"/>
@@ -5077,22 +5077,22 @@
         <label language="fr" text="Type PC"/>
       </labels>
     </attribute>
-    <attribute extends="unit;automat;formation" max-length="3" min-length="3" name="IndRadio" type="numeric">
+    <attribute extends="unit;automat;formation" name="IndRadio" type="string">
       <labels>
         <label language="fr" text="Indicatif radio"/>
       </labels>
     </attribute>
-    <attribute dictionary="T_SIC_IdCDB" dictionary-kind="short" extends="unit;formation" max-length="3" min-length="3" name="IdCDB" type="loosy-dictionary">
+    <attribute dictionary="T_SIC_IdCDB" dictionary-kind="short" extends="unit;formation" name="IdCDB" type="loosy-dictionary">
       <labels>
         <label language="fr" text="Identifiant Champ de Bataille"/>
       </labels>
     </attribute>
-    <attribute extends="unit;formation" max-length="4" min-length="4" name="IndOpe" type="alphanumeric">
+    <attribute extends="unit;formation" name="IndOpe" type="string">
       <labels>
         <label language="fr" text="Indicatif opérationnel"/>
       </labels>
     </attribute>
-    <attribute extends="unit;automat;formation" max-length="17" name="NomLong" type="alphanumeric">
+    <attribute extends="unit;automat;formation" name="NomLong" type="alphanumeric">
       <labels>
         <label language="fr" text="Nom long unité"/>
       </labels>
@@ -5139,4 +5139,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="1297556526" -->
+<!-- signature="0622177059" -->
