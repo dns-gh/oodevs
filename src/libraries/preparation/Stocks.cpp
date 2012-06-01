@@ -36,6 +36,7 @@ Stocks::Stocks( Controller& controller, Entity_ABC& entity, PropertiesDictionary
 Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
 {
+    invalidDotations_.clear();
     CreateDictionary( entity, dico );
     xis >> xml::optional >> xml::start( "stocks" )
             >> xml::list( "resource", *this, &Stocks::ReadDotation, resolver )
@@ -67,10 +68,17 @@ void Stocks::Clear()
 // -----------------------------------------------------------------------------
 void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< DotationType, std::string >& resolver )
 {
-    Dotation* dotation = new Dotation( xis, resolver );
-    item_->AddDotation( *dotation );
-    Register( dotation->type_.GetId(), *dotation );
-    controller_.Update( *this );
+    const std::string dotationName = xis.attribute< std::string >( "name" );
+    const kernel::DotationType* pDotationType = resolver.Find( dotationName );
+    if( pDotationType )
+    {
+        Dotation* dotation = new Dotation( xis, resolver );
+        item_->AddDotation( *dotation );
+        Register( dotation->type_.GetId(), *dotation );
+        controller_.Update( *this );
+    }
+    else
+        invalidDotations_.push_back( dotationName );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +120,7 @@ void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantit
 // -----------------------------------------------------------------------------
 void Stocks::SerializeAttributes( xml::xostream& xos ) const
 {
+    const_cast< Stocks* >( this )->clearInvalidDotations();
     if( !IsToSerialize() )
         return;
     xos << xml::start( "stocks" );
@@ -196,4 +205,22 @@ bool Stocks::IsToSerialize() const
         if( it->second->quantity_ > 0 )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Stocks::GetInvalidDotations
+// Created: MMC 2012-05-31
+// -----------------------------------------------------------------------------
+const std::vector< std::string >& Stocks::GetInvalidDotations() const
+{
+    return invalidDotations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Stocks::clearInvalidDotations
+// Created: MMC 2012-05-31
+// -----------------------------------------------------------------------------
+void Stocks::clearInvalidDotations()
+{
+    invalidDotations_.clear();
 }

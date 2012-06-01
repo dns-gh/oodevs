@@ -33,6 +33,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
@@ -40,18 +41,19 @@
 #include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
+#include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
@@ -64,10 +66,11 @@ using namespace tools;
 // Name: ModelConsistencyChecker constructor
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers )
+ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : model_      ( model )
     , staticModel_( staticModel )
     , controllers_( controllers )
+    , fileLoaderObserver_( fileLoaderObserver )
 {
     // NOTHING
 }
@@ -162,6 +165,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckScores();
     CheckSuccessFactors();
     CheckOrbat();
+    CheckFiles();
 
     return !errors_.empty();
 }
@@ -301,9 +305,11 @@ void ModelConsistencyChecker::CheckStockInitialization()
         const Stocks* stocks = agent.Retrieve< Stocks >();
         if( agent.GetType().HasStocks() && ( !stocks || ( stocks && !stocks->HasDotations() ) ) )
             AddError( eStockInitialization, &agent );
+        else if( stocks && !stocks->GetInvalidDotations().empty() )
+            for( std::vector< std::string >::const_iterator itDotation = stocks->GetInvalidDotations().begin(); itDotation != stocks->GetInvalidDotations().end(); ++itDotation )
+                AddError( eStockInvalidDotation, &agent, itDotation->c_str() );
     }
 }
-
 
 namespace
 {
@@ -758,6 +764,18 @@ void ModelConsistencyChecker::CheckOrbat()
     Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
     if( !it.HasMoreElements() )
         AddError( eNoOrbat, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckFiles
+// Created: MMC 2012-06-01
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckFiles()
+{
+    std::vector< std::string > filesErrors;
+    fileLoaderObserver_.GetErrors( filesErrors );
+    for( int i = 0; i < filesErrors.size(); ++i )
+        AddError( eOthers, 0, filesErrors[ i ] );
 }
 
 // -----------------------------------------------------------------------------

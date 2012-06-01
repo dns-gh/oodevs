@@ -15,6 +15,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "tools/Loader_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
 
@@ -31,10 +32,10 @@ namespace
 // Name: ModelConsistencyDialog constructor
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
-ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers )
+ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : QDialog ( parent, "ModelConsistencyDialog" )
     , actionController_( controllers.actions_ )
-    , checker_         ( model, staticModel, controllers )
+    , checker_         ( model, staticModel, controllers, fileLoaderObserver )
     , pMapper_         ( new QSignalMapper( this ) )
 {
     // Initialize dialog
@@ -121,6 +122,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
     errorDescriptions_[ eNoLogisticFormation ]             = tr( "Logistic sector not included in a logistic base." );
     errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tr( "Logistic base's party differs from object's party." );
+    errorDescriptions_[ eStockInvalidDotation ]            = tr( "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );

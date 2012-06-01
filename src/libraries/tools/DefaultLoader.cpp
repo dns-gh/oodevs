@@ -103,3 +103,13 @@ void DefaultLoader::CheckOptionalFile( const std::string& fileName ) const
     if( bfs::exists( fileName ) && !bfs::is_directory( fileName ) )
         fileLoader_->LoadFile( fileName, observer_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DefaultLoader::GetObserver
+// Created: MMC 2012-06-01
+// -----------------------------------------------------------------------------
+const RealFileLoaderObserver_ABC& DefaultLoader::GetObserver() const
+{
+    return observer_;
+}
+

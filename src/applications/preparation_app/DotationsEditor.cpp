@@ -249,8 +249,8 @@ namespace
 // -----------------------------------------------------------------------------
 void DotationsEditor::AddInfoItem( int row, E_InfosColumns currentCol, double currentValue, E_InfosColumns maxCol, double maxValue )
 {
-    RightAlignTableItem* currentItem = new RightAlignTableItem( infosTable_, Q3TableItem::Never, locale().toString( currentValue ) );
-    RightAlignTableItem* maxItem = new RightAlignTableItem( infosTable_, Q3TableItem::Never, locale().toString( maxValue ) );
+    RightAlignTableItem* currentItem = new RightAlignTableItem( infosTable_, Q3TableItem::Never, locale().toString( currentValue, 'f', 2 ) );
+    RightAlignTableItem* maxItem = new RightAlignTableItem( infosTable_, Q3TableItem::Never, locale().toString( maxValue, 'f', 2 ) );
     if( currentValue > maxValue )
         currentItem->SetColor( warningColor_ );
     infosTable_->setItem( row, currentCol, currentItem );

@@ -20,6 +20,11 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace tools
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 class Model;
 class StaticModel;
 
@@ -34,7 +39,7 @@ class ModelConsistencyChecker : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelConsistencyChecker( const Model& model, const StaticModel& staticModel, kernel::Controllers& controllers );
+             ModelConsistencyChecker( const Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver );
     virtual ~ModelConsistencyChecker();
     //@}
 
@@ -95,6 +100,7 @@ private:
     void CheckLogisticBase();
     void CheckLogisticFormation();
     void CheckOrbat();
+    void CheckFiles();
     //@}
 
 private:
@@ -105,6 +111,7 @@ private:
     kernel::Controllers& controllers_;
     T_ConsistencyErrors  errors_;
     T_Entities           entities_;
+    const tools::RealFileLoaderObserver_ABC& fileLoaderObserver_;
     //@}
 };
 

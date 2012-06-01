@@ -14,6 +14,7 @@
 #include "ChangeDiplomacyDialog.h"
 #include "ColorEditor.h"
 #include "ExerciseDialog.h"
+#include "FileLoaderObserver.h"
 #include "FilterDialog.h"
 #include "FilterDialogs.h"
 #include "FormationHierarchyEditor.h"
@@ -35,6 +36,8 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
+#include "tools/DefaultLoader.h"
+#include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: DialogContainer constructor
@@ -65,7 +68,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     scoreDialog_ = new ScoreDialog( parent, controllers, factory, model.scores_, paramLayer, staticModel, config, tools );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, model.successFactors_, factory, staticModel.successFactorActionTypes_, model.scores_ );
     exerciseDialog_ = new ExerciseDialog( parent, controllers, model.exercise_, config );
-    consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers );
+    consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() );
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );
     filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
 }

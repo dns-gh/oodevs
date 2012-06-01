@@ -51,6 +51,8 @@ public:
     void Clear();
     void ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume );
     bool HasDotationType( const kernel::DotationType& dotationType ) const;
+    const std::vector< std::string >& GetInvalidDotations() const;
+    void clearInvalidDotations();
     //@}
 
 private:
@@ -73,6 +75,7 @@ private:
     //@{
     kernel::Controller& controller_;
     DotationsItem* item_;
+    std::vector< std::string > invalidDotations_;
     //@}
 };
 
