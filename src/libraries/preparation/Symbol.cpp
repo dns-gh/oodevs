@@ -37,6 +37,8 @@ Symbol::Symbol( xml::xistream& xis )
             bool overridden = xis.attribute< bool >( "overridden-symbol" );
             SetOverriden( overridden );
         }
+        else
+            SetOverriden( false );
     }
 }
 
@@ -55,12 +57,10 @@ Symbol::~Symbol()
 // -----------------------------------------------------------------------------
 void Symbol::SerializeAttributes( xml::xostream& xos ) const
 {
+    std::string nature = GetValue();
+    if ( nature.find( "symbols/" ) == 0 )
+        nature = nature.substr( 8, nature.length() - 8 );
+    xos << xml::attribute( "nature", nature );
     if( IsOverriden() )
-    {
-        std::string nature = GetValue();
-        if ( nature.find( "symbols/" ) == 0 )
-            nature = nature.substr( 8, nature.length() - 8 );
-        xos << xml::attribute( "nature", nature )
-            << xml::attribute( "overridden-symbol", true );
-    }
+        xos << xml::attribute( "overridden-symbol", true );
 }

@@ -98,7 +98,7 @@ void SymbolHierarchy::Reset()
 // -----------------------------------------------------------------------------
 void SymbolHierarchy::SetOverriden( bool value )
 {
-    overriden_ = true;
+    overriden_ = value;
 }
 
 // -----------------------------------------------------------------------------
