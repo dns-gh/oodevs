@@ -43,10 +43,10 @@ BOOST_FIXTURE_TEST_CASE( shape_update_request_from_client_is_converted, ContextF
     content.mutable_shape_update_request()->mutable_color()->set_red( 4 );
     content.mutable_shape_update_request()->mutable_color()->set_green( 5 );
     content.mutable_shape_update_request()->mutable_color()->set_blue( 6 );
-    content.mutable_shape_update_request()->mutable_location()->set_type( Common::MsgLocation::polygon );
+    content.mutable_shape_update_request()->mutable_location()->set_type( Common::MsgLocation::line );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_location()->mutable_coordinates()->add_elem() );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_location()->mutable_coordinates()->add_elem() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } color { red: 4 green: 5 blue: 6 } points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } color { red: 4 green: 5 blue: 6 } points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } geometry: line } }" ) );
     converter.ReceiveClientToMessenger( msg );
 }
 
