@@ -253,7 +253,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {
                         TerrainData data;
-                        if( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject ) == 0. )
+                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
+                        if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
                             continue;
                     }
                 }
