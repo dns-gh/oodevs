@@ -103,7 +103,7 @@ private:
         // NOTHING
     }
 
-    Metadata& operator=( const Metadata& ) {}
+    Metadata& operator=( const Metadata& );
 
     const std::string package_;
     const std::string version_;
