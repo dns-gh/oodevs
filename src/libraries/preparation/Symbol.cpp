@@ -27,7 +27,16 @@ Symbol::Symbol( const std::string& symbol )
 Symbol::Symbol( xml::xistream& xis )
 {
     if( xis.has_attribute( "symbol" ) )
+    {
         OverrideValue( xis.attribute< std::string >( "symbol" ) );
+        if( xis.has_attribute( "overridden-symbol" ) )
+        {
+            bool overridden = xis.attribute< bool >( "overridden-symbol" );
+            SetOverriden( overridden );
+        }
+        else
+            SetOverriden( false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +54,7 @@ Symbol::~Symbol()
 // -----------------------------------------------------------------------------
 void Symbol::SerializeAttributes( xml::xostream& xos ) const
 {
+    xos << xml::attribute( "symbol", GetValue() );;
     if( IsOverriden() )
-        xos << xml::attribute( "symbol", GetValue() );
+        xos << xml::attribute( "overridden-symbol", true );
 }
