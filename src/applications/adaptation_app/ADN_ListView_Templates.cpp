@@ -23,7 +23,6 @@ ADN_ListView_Templates::ADN_ListView_Templates( QWidget* pParent, Qt::WFlags f )
     :  ADN_ListView( pParent, "Template", f )
 {
     addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Template" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanTemplateInfos >( *this );
     SetDeletionEnabled( true );

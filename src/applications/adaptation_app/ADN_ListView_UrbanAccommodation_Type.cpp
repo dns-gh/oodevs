@@ -54,7 +54,6 @@ ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWid
 {
     // Add a column && disable sorting
     addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ADN_Urban_Data::AccommodationInfos>( *this );

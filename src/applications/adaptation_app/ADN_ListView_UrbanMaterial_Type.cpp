@@ -57,7 +57,6 @@ ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type(QWidget * paren
 {
     // Add a column && disable sorting
     addColumn( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
