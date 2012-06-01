@@ -89,7 +89,8 @@ InitialStateCrew::InitialStateCrew( xml::xistream& xis )
         >> xml::attribute( "contaminated", contaminated_ )
         >> xml::attribute( "number", number_ );
     rank_ = ENT_Tr::ConvertToHumanRank( rank );
-    //rank_ = tools::HumanRankFromString( rank );
+    if( rank_ < 0 || rank_ >= eNbrHumanRank )
+        throw std::runtime_error( std::string( "Invalid crew rank : " ) + rank );
 
     LoadInjury( state, state_, currentSeriousness_ ); // $$$$ ABR 2011-07-20: Temporaire en attente de l'histoire 660
     //state_ = tools::HumanStateFromString( state );
