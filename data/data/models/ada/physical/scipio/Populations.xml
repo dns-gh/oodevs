@@ -838,7 +838,7 @@
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
   </population>
-  <population armed-individuals="0" concentration-density="0.5" decisional-model="Masalife.Foule" id="4" moving-base-density="0.5" moving-speed="3" name="Manifestants armes">
+  <population armed-individuals="0.5" concentration-density="0.5" decisional-model="Masalife.Foule" id="4" moving-base-density="0.5" moving-speed="3" name="Manifestants armes">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="5" population-density="0.5" unit-size="Gros"/>
@@ -1884,4 +1884,4 @@
     <repartition children="0.1" female="0.45" male="0.45"/>
   </population>
 </populations>
-<!-- signature="2648261182" -->
+<!-- signature="1019930476" -->
