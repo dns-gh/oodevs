@@ -33,7 +33,6 @@ ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent, const char
     // connector creation
     pConnector_ = new ADN_Connector_ListView<NbcAgentInfos>(*this);
 
-    this->setSorting( -1 );
     this->SetDeletionEnabled( true );
 }
 
