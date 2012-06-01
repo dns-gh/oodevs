@@ -168,17 +168,9 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
             const QStringList terrainList = frontend::commands::ListTerrains( config_ );
             int index = terrainList.findIndex( terrain.c_str() );
             terrainList_->setCurrentItem( index + 1 );
-            const QStringList decisionalModels = frontend::commands::ListModels( config_ );
-            for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
-            {
-                if( (*it).ascii() == data )
-                {
-                    const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-                    int index = physicalModels.findIndex( QString( physical.c_str() ) );
-                    if( index != -1 )
-                        modelList_->setCurrentItem( index + 1 );
-                }
-            }
+            int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( data.c_str() ).arg( physical.c_str() ) );
+            if( modelIndex != -1 )
+                modelList_->setCurrentItem( modelIndex );
         }
     }
     catch( ... )
