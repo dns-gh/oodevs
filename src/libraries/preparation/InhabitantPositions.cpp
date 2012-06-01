@@ -394,15 +394,19 @@ void InhabitantPositions::Update( const geometry::Point2f& point )
     while( it.HasMoreElements() )
     {
         const kernel::UrbanObject_ABC& object = it.NextElement();
-        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-            if( positions->IsInside( point ) )
-            {
-                if( Exists( object.GetId() ) )
-                    livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
-                                              boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
-                else
-                    livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
-                return;
-            }
+        const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( object.Retrieve< kernel::Hierarchies >() );
+        if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+        {
+            if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+                if( positions->IsInside( point ) )
+                {
+                    if( Exists( object.GetId() ) )
+                        livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
+                        boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
+                    else
+                        livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+                    return;
+                }
+        }
     }
 }
