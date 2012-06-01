@@ -36,10 +36,10 @@
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
-        <object-cost type="nbc cloud" value="10000"/>
+        <object-cost type="nbc cloud" value="9000"/>
         <object-cost type="jamming area" value="10"/>
-        <object-cost type="rota area" value="10000"/>
-        <object-cost type="nbc zone" value="10000"/>
+        <object-cost type="rota area" value="9000"/>
+        <object-cost type="nbc zone" value="9000"/>
         <object-cost type="landing area" value="10"/>
         <object-cost type="platform" value="10"/>
         <object-cost type="landing area (helicopter)" value="10"/>
@@ -194,10 +194,10 @@
         <object-cost type="discontinuous pontoon bridge" value="0"/>
         <object-cost type="firing post" value="0"/>
         <object-cost type="safe zone" value="0"/>
-        <object-cost type="nbc cloud" value="10000"/>
+        <object-cost type="nbc cloud" value="9000"/>
         <object-cost type="jamming area" value="10000"/>
-        <object-cost type="rota area" value="10000"/>
-        <object-cost type="nbc zone" value="10000"/>
+        <object-cost type="rota area" value="9000"/>
+        <object-cost type="nbc zone" value="9000"/>
         <object-cost type="landing area" value="10"/>
         <object-cost type="platform" value="10"/>
         <object-cost type="landing area (helicopter)" value="10"/>
@@ -377,4 +377,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2887675172" -->
+<!-- signature="2362445324" -->

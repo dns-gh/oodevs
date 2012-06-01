@@ -135,7 +135,7 @@ namespace
         const double rHeight = roleLocation.GetHeight();
         T_KnowledgeObjectVector knowledges;
         callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
-        if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( knowledges, rDistanceCollision, pObjectColliding, callerAgent ) )
+        if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( knowledges, rDistanceCollision, pObjectColliding, callerAgent, false, false ) )
         {
             result.first = false;
             return result;

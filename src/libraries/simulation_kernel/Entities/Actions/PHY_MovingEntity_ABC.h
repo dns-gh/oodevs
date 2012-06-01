@@ -80,7 +80,7 @@ public:
     //! @name Tools
     //@{
     bool IsMovingOn                  ( const DEC_Path_ABC& path ) const;
-    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool applyScale = false ) const;
+    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     //@}
 
     //! @name Serialization

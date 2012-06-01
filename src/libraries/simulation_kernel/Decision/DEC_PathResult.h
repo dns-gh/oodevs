@@ -59,7 +59,7 @@ public:
     bool IsOnPath( const MT_Vector2D& vPos ) const;
     CIT_PathPointList GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
-    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool applyScale ) const;
+    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
     virtual void InsertDecPoints() = 0;
     virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;

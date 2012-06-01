@@ -246,8 +246,18 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) && !knowledge.IsObjectInsidePathPoint( firstPointVector, queryMaker_ ) ) //$$$ BOF
+            if( knowledge.CanCollideWith( queryMaker_ ) )
             {
+                if( knowledge.IsObjectInsidePathPoint( firstPointVector, queryMaker_ ) )
+                {
+                    if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
+                    {
+                        TerrainData data;
+                        if( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject ) == 0. )
+                            continue;
+                    }
+                }
+
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
 

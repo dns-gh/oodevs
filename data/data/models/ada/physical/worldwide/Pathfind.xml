@@ -41,12 +41,12 @@
         <object-cost type="cobra deployment area" value="10"/>
         <object-cost type="mrls deployment area" value="10"/>
         <object-cost type="crossing site" value="10"/>
-        <object-cost type="nbc cloud" value="10000"/>
+        <object-cost type="nbc cloud" value="9000"/>
         <object-cost type="decontamination site" value="10"/>
         <object-cost type="logistic support area" value="10"/>
         <object-cost type="jamming area" value="10000"/>
-        <object-cost type="rota area" value="10000"/>
-        <object-cost type="nbc zone" value="10000"/>
+        <object-cost type="rota area" value="9000"/>
+        <object-cost type="nbc zone" value="9000"/>
         <object-cost type="landing area" value="10"/>
         <object-cost type="trail" value="-5"/>
         <object-cost type="platform" value="10"/>
@@ -209,12 +209,12 @@
         <object-cost type="cobra deployment area" value="10"/>
         <object-cost type="mrls deployment area" value="10"/>
         <object-cost type="crossing site" value="10"/>
-        <object-cost type="nbc cloud" value="10000"/>
+        <object-cost type="nbc cloud" value="9000"/>
         <object-cost type="decontamination site" value="10"/>
         <object-cost type="logistic support area" value="10"/>
         <object-cost type="jamming area" value="10000"/>
-        <object-cost type="rota area" value="10000"/>
-        <object-cost type="nbc zone" value="10000"/>
+        <object-cost type="rota area" value="9000"/>
+        <object-cost type="nbc zone" value="9000"/>
         <object-cost type="landing area" value="10"/>
         <object-cost type="trail" value="-5"/>
         <object-cost type="platform" value="10"/>
@@ -405,4 +405,4 @@
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2192955198" -->
+<!-- signature="3600150636" -->

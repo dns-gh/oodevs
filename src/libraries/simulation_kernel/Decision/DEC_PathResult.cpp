@@ -141,7 +141,7 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool applyScale ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
     static const double epsilon = 1e-8;
     rDistance = std::numeric_limits< double >::max();
@@ -183,7 +183,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
         if( applyScale )
         {
             pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() );
-            if( !resultList_.empty() )
+            if( !resultList_.empty() && blockedByObject )
             {
                 T_PointVector firstPointVector;
                 firstPointVector.push_back( (*resultList_.begin())->GetPos() );
