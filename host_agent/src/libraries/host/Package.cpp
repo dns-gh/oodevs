@@ -368,7 +368,6 @@ struct Exercise : public Item
         tree_.put( "type", GetType() );
         tree_.put( "name", name_ );
         tree_.put( "date", GetDate( file ) );
-        MaybeCopy( tree_, "name", more, "exercise.meta.name" );
         MaybeCopy( tree_, "briefing", more, "exercise.meta.briefing.text" );
         MaybeCopy( tree_, "model",   more, "exercise.model.<xmlattr>.dataset" );
         MaybeCopy( tree_, "terrain", more, "exercise.terrain.<xmlattr>.name" );
