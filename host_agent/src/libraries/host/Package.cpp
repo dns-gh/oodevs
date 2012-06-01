@@ -282,16 +282,6 @@ std::string GetFilename( Path path, const std::string& root )
     return Utf8Convert( reply );
 }
 
-template< typename T >
-void MaybeCopy( T& dst, const std::string& dstKey, const T& src, const std::string& srcKey, const std::string& default = std::string() )
-{
-    const boost::optional< std::string > value = src.get_optional< std::string >( srcKey );
-    if( value != boost::none )
-        dst.put( dstKey, *value );
-    else if( !default.empty() )
-        dst.put( dstKey, default );
-}
-
 struct Model : public Item
 {
     Model( Async& async, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta )
