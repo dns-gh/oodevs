@@ -50,9 +50,10 @@ public:
     //@}
 
 private:
-    const kernel::Agent_ABC& agent_;         // Borrower / lender
+    int idAgent_;         // Borrower / lender
     unsigned int equipmentType_; // XML reference - no resolved by dispatcher
     unsigned int quantity_;
+    int nCounter_;
 };
 
 }
