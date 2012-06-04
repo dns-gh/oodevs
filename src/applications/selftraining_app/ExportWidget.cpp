@@ -11,7 +11,10 @@
 #include "ExportWidget.h"
 #include "moc_ExportWidget.cpp"
 #include "ScenarioEditPage.h"
+#include "ExerciseListView.h"
 #include "clients_gui/tools.h"
+#include "clients_gui/ValuedListItem.h"
+#include "clients_kernel/Controllers.h"
 #include "frontend/commands.h"
 #include "frontend/ListViewHelper.h"
 #include "tools/GeneralConfig.h"
@@ -39,11 +42,12 @@ namespace
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
+ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
     : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
-    , config_    ( config )
-    , fileLoader_( fileLoader )
-    , page_      ( page )
+    , config_     ( config )
+    , fileLoader_ ( fileLoader )
+    , controllers_( controllers )
+    , page_       ( page )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     tabs_ = new QTabWidget( this );
@@ -59,8 +63,8 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         }
         {
             exerciseLabel_ = new QLabel( box );
-            exerciseList_ = new Q3ListBox( box );
-            connect( exerciseList_, SIGNAL( clicked( Q3ListBoxItem* ) ), SLOT( OnSelectionChanged( Q3ListBoxItem* ) ) );
+            exerciseList_ = new ExerciseListView( box, config, fileLoader );
+            connect( exerciseList_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
         }
         {
             packageContentLabel_ = new QLabel( box );
@@ -107,6 +111,7 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     progress_ = new Q3ProgressBar( this );
     progress_->hide();
     package_.first = config_.GetRootDir();
+    controllers_.Register( *this );
     Update();
 }
 
@@ -116,7 +121,7 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
 // -----------------------------------------------------------------------------
 ExportWidget::~ExportWidget()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +140,7 @@ void ExportWidget::OnLanguageChanged()
     terrainDescriptionLabel_->setText(  tools::translate( "ExportWidget", "Package description:" ) );
     terrainLabel_->setText(             tools::translate( "ExportWidget", "Terrain:" ) );
     modelsDescriptionLabel_->setText(   tools::translate( "ExportWidget", "Package description:" ) );
-    decisionalCheckBox_->setText(		tools::translate( "ExportWidget", "Include decisional model" ) );
+    decisionalCheckBox_->setText(       tools::translate( "ExportWidget", "Include decisional model" ) );
     modelsPhysicalLabel_->setText(      tools::translate( "ExportWidget", "Physical model:" ) );
 }
 
@@ -143,24 +148,27 @@ void ExportWidget::OnLanguageChanged()
 // Name: ExportWidget::GetCurrentSelection
 // Created: ABR 2011-11-03
 // -----------------------------------------------------------------------------
-Q3ListBoxItem* ExportWidget::GetCurrentSelection() const
+QString ExportWidget::GetCurrentSelection() const
 {
-    Q3ListBoxItem* item = 0;
+    QString result;
     switch( tabs_->currentIndex() )
     {
     case eTabs_Exercise:
-        item = exerciseList_->selectedItem();
+        if( Q3ListViewItem* item = exerciseList_->selectedItem() )
+            result = item->text( 0 ).ascii();
         break;
     case eTabs_Terrain:
-        item = terrainList_->selectedItem();
+        if( Q3ListBoxItem* item = terrainList_->selectedItem() )
+            result = item->text().ascii();
         break;
     case eTabs_Models:
-        item = physicalList_->selectedItem();
+        if( Q3ListBoxItem* item = physicalList_->selectedItem() )
+            result = item->text().ascii();
         break;
     default:
         break;
     }
-    return item;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -190,33 +198,38 @@ QTextEdit* ExportWidget::GetCurrentDescription() const
 // -----------------------------------------------------------------------------
 bool ExportWidget::EnableEditButton()
 {
-    Q3ListBoxItem* item = GetCurrentSelection();
-    if( item )
-        package_.second = std::string( item->text().ascii() ) + ".otpak";
-    return item != 0;
+    QString text = GetCurrentSelection();
+    if( !text.isEmpty() )
+        package_.second = std::string( text ) + ".otpak";
+    return !text.isEmpty();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExportWidget::OnSelectionChanged
-// Created: JSR 2010-07-15
+// Created: LGY 2012-05-30
+// -----------------------------------------------------------------------------
+void ExportWidget::OnSelectionChanged( Q3ListViewItem* item )
+{
+    UpdateExerciseData( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::OnSelectionChanged
+// Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
 void ExportWidget::OnSelectionChanged( Q3ListBoxItem* item )
 {
     Update( item );
-    page_.UpdateEditButton();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExportWidget::Update
-// Created: JSR 2010-07-15
+// Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
 void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
 {
     if( !item ) // No item, refresh lists
     {
-        // Exercise
-        exerciseList_->clear();
-        exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
         // Terrain
         terrainList_->clear();
         terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
@@ -232,27 +245,28 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
                 physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
         }
         physicalList_->insertStringList( physicalBase );
+    }
+    else if( tabs_->currentIndex() == eTabs_Models )
+        decisionalCheckBox_->setEnabled( true );
+    page_.UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::UpdateExerciseData
+// Created: LGY 2012-05-30
+// -----------------------------------------------------------------------------
+void ExportWidget::UpdateExerciseData( Q3ListViewItem* item /*= 0*/ )
+{
+    if( !item || item->childCount() != 0  )
         exerciseContent_->clear();
-    }
-    else // Item, update content
+    else
     {
-        switch( tabs_->currentIndex() )
-        {
-        case eTabs_Exercise:
-            {
-                std::string exercise( item->text().ascii() );
-                exerciseContent_->clear();
-                exerciseContent_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, exerciseContent_ ) );
-                exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
-            }
-            break;
-        case eTabs_Models:
-            decisionalCheckBox_->setEnabled( true );
-            break;
-        default:
-            break;
-        }
+        std::string exercise( exerciseList_->GetItemName( item ) );
+        exerciseContent_->clear();
+        exerciseContent_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, exerciseContent_ ) );
+        exerciseContent_->insertItem( frontend::BuildExerciseData( exercise, config_, exerciseContent_, fileLoader_ ) );
     }
+    page_.UpdateEditButton();
 }
 
 namespace
@@ -406,21 +420,22 @@ bool ExportWidget::BrowseClicked()
 void ExportWidget::WriteContent( zip::ozipfile& archive ) const
 {
     xml::xostringstream xos;
-    Q3ListBoxItem* item = GetCurrentSelection();
-    assert( item );
-    std::string name = item->text().ascii();
-    std::string description = GetCurrentDescription()->text().ascii();
-
-    if( description.empty() )
-        description = "Packaged scenario of " + name + ".";
-    xos << xml::start( "content" )
-        << xml::content( "name", name )
-        << xml::content( "description", description )
-        << xml::end();
+    QString text = GetCurrentSelection();
+    if( !text.isEmpty() )
     {
-        std::istringstream input( xos.str() );
-        zip::ozipstream output( archive, "content.xml" );
-        Copy( input, output );
+        std::string description = GetCurrentDescription()->text().ascii();
+
+        if( description.empty() )
+            description = "Packaged scenario of " + text.toStdString() + ".";
+        xos << xml::start( "content" )
+            << xml::content( "name", text.toStdString() )
+            << xml::content( "description", description )
+            << xml::end();
+        {
+            std::istringstream input( xos.str() );
+            zip::ozipstream output( archive, "content.xml" );
+            Copy( input, output );
+        }
     }
 }
 
@@ -477,4 +492,22 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     }
     setCursor( Qt::arrowCursor );
     progress_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::NotifyCreated
+// Created: LGY 2012-05-30
+// -----------------------------------------------------------------------------
+void ExportWidget::NotifyCreated( const frontend::Exercise_ABC& exercise )
+{
+    exerciseList_->AddExerciseEntry( exercise );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::NotifyDeleted
+// Created: LGY 2012-05-30
+// -----------------------------------------------------------------------------
+void ExportWidget::NotifyDeleted( const frontend::Exercise_ABC& exercise )
+{
+    exerciseList_->DeleteExerciseEntry( exercise );
 }

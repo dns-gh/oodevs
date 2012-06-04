@@ -154,6 +154,9 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\DataPage.cpp">
       <Filter>Source Files\Pages\Implementations</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseListView.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\selftraining_app\Config.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\selftraining_app\SessionTray.h">
       <Filter>Source Files\Systray</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\selftraining_app\ExerciseListView.h">
+      <Filter>Source Files\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

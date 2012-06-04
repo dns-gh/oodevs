@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "clients_gui/LanguageChangeObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 class ScenarioEditPage;
 
@@ -26,6 +27,18 @@ namespace zip
     class ozipfile;
 }
 
+namespace frontend
+{
+    class Exercise_ABC;
+}
+
+namespace kernel
+{
+    class Controllers;
+}
+
+class ExerciseListView;
+
 // =============================================================================
 /** @class  ExportWidget
     @brief  ExportWidget
@@ -33,6 +46,8 @@ namespace zip
 // Created: JSR 2010-07-15
 // =============================================================================
 class ExportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
+                   , public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
                    , private boost::noncopyable
 {
     Q_OBJECT
@@ -40,13 +55,14 @@ class ExportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
 public:
     //! @name Constructors/Destructor
     //@{
-             ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
+             ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers );
     virtual ~ExportWidget();
     //@}
 
     //! @name Operations
     //@{
     void Update( Q3ListBoxItem* item = 0 );
+    void UpdateExerciseData( Q3ListViewItem* item = 0 );
     void ExportPackage();
     bool EnableEditButton();
     //@}
@@ -54,14 +70,18 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void OnSelectionChanged( Q3ListViewItem* item );
     void OnSelectionChanged( Q3ListBoxItem* item );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const frontend::Exercise_ABC& exercise );
+    virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );
+
     virtual void OnLanguageChanged();
-    Q3ListBoxItem* GetCurrentSelection() const;
+    QString GetCurrentSelection() const;
     QTextEdit* GetCurrentDescription() const;
     bool BrowseClicked();
     void InternalExportPackage( zip::ozipfile& archive );
@@ -80,13 +100,14 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC&    fileLoader_;
+    kernel::Controllers&        controllers_;
     ScenarioEditPage&           page_;
     QTabWidget*                 tabs_;
     // Common
     Q3ProgressBar*              progress_;
     T_Package                   package_;
     // Exercises
-    Q3ListBox*                  exerciseList_;
+    ExerciseListView*           exerciseList_;
     QTextEdit*                  exerciseDescription_;
     Q3ListView*                 exerciseContent_;
     // Terrains

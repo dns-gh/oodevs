@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\DataPage.cpp" />
+    <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseListView.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Launcher.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\LinkInterpreter.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\main.cpp" />
@@ -204,6 +205,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\selftraining_app\ExerciseListView.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\Launcher.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\LinkInterpreter.h" />
     <CustomBuild Include="..\..\src\applications\selftraining_app\MainWindow.h">
