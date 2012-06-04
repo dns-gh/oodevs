@@ -24,6 +24,7 @@ using namespace host;
 using runtime::Utf8Convert;
 using mocks::MockFileSystem;
 using mocks::MockLog;
+using mocks::MockNodeController;
 using mocks::MockPool;
 using mocks::MockRuntime;
 using mocks::MockSession;
@@ -42,6 +43,7 @@ namespace
     struct SubFixture
     {
         SubFixture( const Path& logs, const Path& data, const Path& apps )
+            : nodes( false )
         {
             MOCK_EXPECT( system.MakePaths ).with( logs / "sessions" );
             MOCK_EXPECT( system.IsDirectory ).with( data ).returns( true );
@@ -58,6 +60,7 @@ namespace
         MockFileSystem system;
         MockPool pool;
         MockSessionFactory factory;
+        MockNodeController nodes;
     };
 
     const std::string idNodeText = "56789abc-1234-1234-1234-123412345678";
@@ -98,7 +101,7 @@ namespace
             , data   ( "e:/data" )
             , apps   ( "e:/apps" )
             , sub    ( logs, data, apps )
-            , control( sub.log, sub.runtime, sub.system, sub.factory, logs, data, apps, sub.pool )
+            , control( sub.log, sub.runtime, sub.system, sub.factory, sub.nodes, logs, data, apps, sub.pool )
         {
             // NOTHING
         }
@@ -118,10 +121,8 @@ namespace
             const Path root = data / "exercises" / session->GetExercise() / "sessions" / idText;
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.system.MakePaths ).once().with( root );
                 MOCK_EXPECT( sub.factory.Make3 ).once().with( node, session->GetName(), session->GetExercise() ).returns( session );
                 MOCK_EXPECT( session->Start ).once().returns( true );
-                MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.xml", session->GetConfiguration() ).returns( true );
             }
             else
             {

@@ -200,7 +200,7 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     NodeController nodes( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool );
     NodeController cluster( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool );
     SessionFactory fsessions( runtime, uuids, ports );
-    SessionController sessions( log, runtime, system, fsessions, cfg.root + L"/log", cfg.session.data, cfg.session.applications, pool );
+    SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root + L"/log", cfg.session.data, cfg.session.applications, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
     const std::auto_ptr< Port_ABC > host = ports.Create();

@@ -13,6 +13,7 @@
 #include "Container.h"
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
+#include "NodeController_ABC.h"
 #include "Pool_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
@@ -49,19 +50,21 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const runtime::Runtime_ABC& runtime,
                                       const FileSystem_ABC& system,
                                       const SessionFactory_ABC& sessions,
+                                      const NodeController_ABC& nodes,
                                       const Path& logs,
                                       const Path& data,
                                       const Path& apps,
                                       Pool_ABC& pool )
-    : log_      ( log )
-    , runtime_  ( runtime )
-    , system_   ( system )
-    , factory_  ( sessions )
-    , logs_     ( logs / "sessions" )
-    , data_     ( data )
-    , apps_     ( apps )
-    , sessions_ ( new Container< Session_ABC >() )
-    , async_    ( new Async( pool ) )
+    : log_     ( log )
+    , runtime_ ( runtime )
+    , system_  ( system )
+    , factory_ ( sessions )
+    , nodes_   ( nodes )
+    , logs_    ( logs / "sessions" )
+    , data_    ( data )
+    , apps_    ( apps )
+    , sessions_( new Container< Session_ABC >() )
+    , async_   ( new Async( pool ) )
 {
     system_.MakePaths( logs_ );
     if( !system_.IsDirectory( data_ ) )
@@ -162,16 +165,9 @@ void SessionController::Create( Session_ABC& session, bool isReload )
                      << session.GetId() << " "
                      << session.GetName() << " "
                      << session.GetExercise() << " :" << session.GetPort();
-    if( !isReload )
-    {
-        const Path path = GetPath( session );
-        system_.MakePaths( path );
-        system_.WriteFile( path / "session.xml", session.GetConfiguration() );
-    }
     if( isReload )
-        Save( session );
-    else
-        Start( session, true );
+        return Save( session );
+    Start( session, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,18 +207,33 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
     return session;
 }
 
+namespace
+{
+void WriteSettings( const FileSystem_ABC& system, const Session_ABC& session, const Path& cfg )
+{
+    const Path file = cfg / "session.xml";
+    if( system.IsFile( file ) )
+        return;
+    system.MakePaths( cfg );
+    system.WriteFile( file, session.GetConfiguration() );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: SessionController::StartWith
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
 boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Session_ABC& session ) const
 {
+    const std::string name = session.GetExercise();
+    Path model, terrain, exercise;
+    nodes_.SetExercisePaths( session.GetNode(), name, model, terrain, exercise );
+    WriteSettings( system_, session, exercise / "exercises" / name / "sessions" / boost::lexical_cast< std::string >( session.GetId() ) );
     return runtime_.Start( Utf8Convert( apps_ / "simulation_app.exe" ), boost::assign::list_of
-        ( MakeOption( "root-dir", Utf8Convert( data_ ) ) )
-        ( MakeOption( "exercises-dir", Utf8Convert( data_ / "exercises" ) ) )
-        ( MakeOption( "terrains-dir", Utf8Convert( data_ / "data/terrains" ) ) )
-        ( MakeOption( "models-dir", Utf8Convert( data_ / "data/models" ) ) )
-        ( MakeOption( "exercise", session.GetExercise() ) )
+        ( MakeOption( "exercises-dir", Utf8Convert( exercise / "exercises" ) ) )
+        ( MakeOption( "terrains-dir", Utf8Convert( terrain / "data" / "terrains" ) ) )
+        ( MakeOption( "models-dir", Utf8Convert( model / "data" / "models" ) ) )
+        ( MakeOption( "exercise", name ) )
         ( MakeOption( "session",  session.GetId() ) ),
         Utf8Convert( apps_ ),
         Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( session.GetId() ) + ".log" ) ) );

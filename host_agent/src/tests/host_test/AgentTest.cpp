@@ -79,6 +79,7 @@ namespace
     struct Cluster
     {
         Cluster( bool hasCluster )
+            : controller( true )
         {
             ptr = CreateMockNode( CreatePrefixedUuid( 42 ), "cluster" );
             MOCK_EXPECT( controller.Count ).once().returns( size_t( 1 ) );
@@ -96,6 +97,7 @@ namespace
     {
         Fixture()
             : cluster     ( hasCluster )
+            , nodes       ( true )
             , agent       ( log, hasCluster ? &cluster.controller : 0, nodes, sessions )
             , node        ( AddNode( defaultNodeString, "nodeName" ) )
             , mockSessions( boost::assign::list_of
@@ -154,7 +156,7 @@ namespace
 BOOST_AUTO_TEST_CASE( agent_reloads )
 {
     MockLog log;
-    MockNodeController nodes;
+    MockNodeController nodes( true );
     MockSessionController sessions;
     mock::reset( sessions );
     MOCK_EXPECT( sessions.Reload ).once().with( boost::bind( &CheckSessionReloadPredicate, boost::ref( nodes ), _1 ) );

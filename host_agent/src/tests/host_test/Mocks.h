@@ -41,9 +41,10 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockNodeController, host::NodeController_ABC )
     {
-        MockNodeController()
+        MockNodeController( bool mustReload )
         {
-            MOCK_EXPECT( Reload ).once();
+            if( mustReload )
+                MOCK_EXPECT( Reload ).once();
         }
         MOCK_METHOD( Reload, 0 );
         MOCK_METHOD( List, 2 );

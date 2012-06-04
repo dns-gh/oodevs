@@ -29,6 +29,7 @@ namespace host
 {
     struct Async;
     struct FileSystem_ABC;
+    struct NodeController_ABC;
     struct Pool_ABC;
     struct PortFactory_ABC;
     struct SessionFactory_ABC;
@@ -51,6 +52,7 @@ public:
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
                                 const SessionFactory_ABC& sessions,
+                                const NodeController_ABC& nodes,
                                 const Path& logs,
                                 const Path& data,
                                 const Path& apps,
@@ -89,6 +91,7 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const SessionFactory_ABC& factory_;
+    const NodeController_ABC& nodes_;
     const Path logs_;
     const Path data_;
     const Path apps_;
