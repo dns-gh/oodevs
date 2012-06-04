@@ -90,6 +90,7 @@ struct Node_ABC : public boost::noncopyable
     //@{
     virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
     virtual size_t      CountExercises() const = 0;
+    virtual void        SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const = 0;
     //@}
 };
 

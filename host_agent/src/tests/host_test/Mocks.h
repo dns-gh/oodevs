@@ -90,6 +90,7 @@ namespace mocks
         MOCK_METHOD( InstallFromCache, 1 );
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
+        MOCK_METHOD( SetExercisePaths, 4 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )
