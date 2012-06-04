@@ -189,6 +189,7 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
         perceiverUrbanBlockHeight = sensorHeight;
     assert( perceiverUrbanBlockHeight );
 
+    int numberOfBlocksInBetween = 0;
     for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
         double worstFactor = 1.;
@@ -207,6 +208,12 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                         structuralState = objectUrbanBlock.GetStructuralState();
                         occupation = architecture->GetOccupation();
                     }
+                if( occupation > 0 )
+                {
+                    ++numberOfBlocksInBetween;
+                    if( numberOfBlocksInBetween > 2 )
+                        return false;
+                }
                 assert( objectHeight );
                 double heightFactor         = perceiverUrbanBlockHeight / objectHeight;
                 double materialVisibility   = std::min( 1., ( *itSensor )->GetUrbanBlockFactor( object ) );
