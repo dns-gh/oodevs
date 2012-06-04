@@ -10,8 +10,9 @@
 #include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
 #include "CoordinateSystems.h"
-#include <geocoord/Geoid.h>
+#include "tools/ExerciseConfig.h"
 #include <boost/format.hpp>
+#include <geocoord/Geoid.h>
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;
@@ -32,21 +33,10 @@ CoordinateConverter::CoordinateConverter()
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems )
-    : planar_( parameters_ )
+    : planar_           ( parameters_ )
     , coordinateSystems_( coordSystems )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: CoordinateConverter constructor
-// Created: AGE 2008-04-01
-// -----------------------------------------------------------------------------
-CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
-    : planar_( parameters_ )
-    , coordinateSystems_( *new CoordinateSystems() )
-{
-    Load( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,11 +45,10 @@ CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void CoordinateConverter::Load( const tools::ExerciseConfig& config )
 {
-    world_.Load( config );
-    extent_ = geometry::Rectangle2f( 0, 0, world_.width_, world_.height_ );
-    translation_ = geometry::Vector2f( world_.width_ * 0.5f, world_.height_ * 0.5f );
+    extent_ = geometry::Rectangle2f( 0, 0, config.GetTerrainWidth(), config.GetTerrainHeight() );
+    translation_ = geometry::Vector2f( config.GetTerrainWidth() * 0.5f, config.GetTerrainHeight() * 0.5f );
     const double rPiOver180 = std::acos( -1. ) / 180.;
-    parameters_.SetOrigin( world_.latitude_ * rPiOver180, world_.longitude_ * rPiOver180 );
+    parameters_.SetOrigin( config.GetTerrainLatitude() * rPiOver180, config.GetTerrainLongitude() * rPiOver180 );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ModelLoaded.h"
+#include "tools/ExerciseConfig.h"
 #include <graphics/ShaderProgram.h>
 #include <graphics/FragmentShader.h>
 #include <graphics/extensions.h>
@@ -58,8 +59,8 @@ Elevation3dLayer::~Elevation3dLayer()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    Purge();
-    Load( modelLoaded.config_ );
+    graphicsDirectory_.clear();
+    graphicsDirectory_ = modelLoaded.config_.GetGraphicsDirectory();
     reset_ = true;
 }
 
