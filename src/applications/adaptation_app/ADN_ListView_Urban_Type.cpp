@@ -58,7 +58,6 @@ ADN_ListView_Urban_Type::ADN_ListView_Urban_Type(QWidget * parent, Qt::WFlags f)
 {
     // Add a column && disable sorting
     addColumn( tools::translate( "ADN_ListView_Urban_Type", "Facade" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
