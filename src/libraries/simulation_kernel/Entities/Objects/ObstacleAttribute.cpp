@@ -196,7 +196,7 @@ int ObstacleAttribute::GetEndActivity() const
 // -----------------------------------------------------------------------------
 bool ObstacleAttribute::IsActivable() const
 {
-    return obstacle_ == sword::ObstacleType_DemolitionTargetType_preliminary;
+    return obstacle_ == sword::ObstacleType_DemolitionTargetType_reserved;
 }
 
 // -----------------------------------------------------------------------------
