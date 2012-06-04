@@ -130,6 +130,8 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
     try
     {
         std::vector< wchar_t > wcmd;
+        // force empty arg[0] which, for some reason, is not filled by win32...
+        wcmd.push_back( L' ' );
         const std::wstring join = Utf8Convert( boost::algorithm::join( args, " " ) );
         std::copy( join.begin(), join.end(), std::back_inserter( wcmd ) );
         wcmd.push_back( 0 );

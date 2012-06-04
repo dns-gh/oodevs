@@ -158,7 +158,7 @@ void Proxy::Start()
     const Path path = GetPath();
     Path jar_path = jar_;
     process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
-            ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
+            ( "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_ ) + "\"" ),
             Utf8Convert( jar_path.remove_filename() ),
             Utf8Convert( logs_ / "proxy.log" ) );

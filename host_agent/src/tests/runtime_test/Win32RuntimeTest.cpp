@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     const std::string logs = "e:/log.log";
     MOCK_EXPECT( api.MakeProcess ).once().with(
         boost::bind( &StringCompare, _1, app ),
-        boost::bind( &StringCompare, _1, boost::algorithm::join( args, " " ) ),
+        boost::bind( &StringCompare, _1, " " + boost::algorithm::join( args, " " ) ),
         boost::bind( &StringCompare, _1, dir ),
         boost::bind( &StringCompare, _1, logs )
         ).returns( ProcessDescriptor( dummy, 1337 ) );
