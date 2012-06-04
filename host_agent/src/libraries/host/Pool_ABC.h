@@ -22,9 +22,8 @@ namespace host
 */
 // Created: BAX 2012-04-16
 // =============================================================================
-class Pool_ABC : public boost::noncopyable
+struct Pool_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              Pool_ABC() {}

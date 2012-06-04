@@ -39,9 +39,8 @@ struct ProcessDescriptor
 */
 // Created: BAX 2012-03-08
 // =============================================================================
-class Api_ABC : public boost::noncopyable
+struct Api_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructor/Destructor
     //@{
              Api_ABC() {}

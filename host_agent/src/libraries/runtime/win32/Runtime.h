@@ -17,8 +17,7 @@ namespace cpplog
 
 namespace runtime
 {
-
-class Api_ABC;
+    struct Api_ABC;
 
 // =============================================================================
 /** @class  Runtime

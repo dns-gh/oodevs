@@ -22,9 +22,8 @@ namespace host
 */
 // Created: BAX 2012-04-11
 // =============================================================================
-class Proxy_ABC : public boost::noncopyable
+struct Proxy_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              Proxy_ABC() {}

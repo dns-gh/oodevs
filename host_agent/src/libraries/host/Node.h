@@ -23,20 +23,20 @@ namespace boost
 
 namespace runtime
 {
-    class Runtime_ABC;
-    class Process_ABC;
+    struct Runtime_ABC;
+    struct Process_ABC;
 }
 
 namespace host
 {
     struct Async;
-    class FileSystem_ABC;
+    struct FileSystem_ABC;
     struct Package_ABC;
     struct PackageFactory_ABC;
-    class Pool_ABC;
-    class Port_ABC;
-    class PortFactory_ABC;
-    class UuidFactory_ABC;
+    struct Pool_ABC;
+    struct Port_ABC;
+    struct PortFactory_ABC;
+    struct UuidFactory_ABC;
 
 // =============================================================================
 /** @class  Node_ABC

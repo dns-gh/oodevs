@@ -46,9 +46,8 @@ struct Reply
 */
 // Created: BAX 2012-03-07
 // =============================================================================
-class Agent_ABC : public boost::noncopyable
+struct Agent_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              Agent_ABC() {}

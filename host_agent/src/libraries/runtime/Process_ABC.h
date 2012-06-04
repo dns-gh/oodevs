@@ -21,9 +21,8 @@ namespace runtime
 */
 // Created: BAX 2012-03-07
 // =============================================================================
-class Process_ABC : public boost::noncopyable
+struct Process_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructor/Destructor
     //@{
              Process_ABC() {}

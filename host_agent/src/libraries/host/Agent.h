@@ -25,8 +25,8 @@ namespace cpplog
 
 namespace host
 {
-    class NodeController_ABC;
-    class SessionController_ABC;
+    struct NodeController_ABC;
+    struct SessionController_ABC;
 
 // =============================================================================
 /** @class  Agent

@@ -24,9 +24,8 @@ namespace web
 */
 // Created: BAX 2012-02-28
 // =============================================================================
-class Request_ABC : public boost::noncopyable
+struct Request_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructor/Destructor
              Request_ABC() {}
     virtual ~Request_ABC() {}

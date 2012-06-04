@@ -16,7 +16,7 @@
 
 namespace web
 {
-    class Request_ABC;
+    struct Request_ABC;
 
 // =============================================================================
 /** @class  Observer_ABC
@@ -24,9 +24,8 @@ namespace web
 */
 // Created: BAX 2012-02-28
 // =============================================================================
-class Observer_ABC : public boost::noncopyable
+struct Observer_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructor/Destructor
              Observer_ABC() {}
     virtual ~Observer_ABC() {}

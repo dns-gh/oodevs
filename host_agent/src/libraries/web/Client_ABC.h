@@ -21,9 +21,8 @@ namespace web
 */
 // Created: BAX 2012-04-11
 // =============================================================================
-class Client_ABC : public boost::noncopyable
+struct Client_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              Client_ABC() {}

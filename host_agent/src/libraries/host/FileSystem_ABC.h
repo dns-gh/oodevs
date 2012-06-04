@@ -52,9 +52,8 @@ struct Unpacker_ABC : public boost::noncopyable
 */
 // Created: BAX 2012-03-19
 // =============================================================================
-class FileSystem_ABC : public boost::noncopyable
+struct FileSystem_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              FileSystem_ABC() {}

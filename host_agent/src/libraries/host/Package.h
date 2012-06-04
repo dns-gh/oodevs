@@ -16,8 +16,8 @@
 
 namespace host
 {
-    class FileSystem_ABC;
-    class Pool_ABC;
+    struct FileSystem_ABC;
+    struct Pool_ABC;
     typedef boost::filesystem3::path Path;
 
 // =============================================================================

@@ -16,7 +16,7 @@
 
 namespace host
 {
-    class Pool_ABC;
+    struct Pool_ABC;
 }
 
 namespace web

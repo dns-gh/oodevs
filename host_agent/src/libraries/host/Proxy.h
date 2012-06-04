@@ -26,20 +26,20 @@ namespace cpplog
 
 namespace runtime
 {
-    class Runtime_ABC;
-    class Process_ABC;
+    struct Runtime_ABC;
+    struct Process_ABC;
 }
 
 namespace web
 {
-    class Client_ABC;
+    struct Client_ABC;
 }
 
 namespace host
 {
     struct Async;
-    class FileSystem_ABC;
-    class Pool_ABC;
+    struct FileSystem_ABC;
+    struct Pool_ABC;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
 

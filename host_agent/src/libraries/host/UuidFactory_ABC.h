@@ -23,9 +23,8 @@ namespace host
 */
 // Created: BAX 2012-03-19
 // =============================================================================
-class UuidFactory_ABC : public boost::noncopyable
+struct UuidFactory_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              UuidFactory_ABC() {}

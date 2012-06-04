@@ -28,9 +28,8 @@ namespace host
 */
 // Created: BAX 2012-04-03
 // =============================================================================
-class NodeController_ABC : public boost::noncopyable
+struct NodeController_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              NodeController_ABC() {}

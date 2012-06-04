@@ -23,8 +23,7 @@ namespace filesystem3
 
 namespace runtime
 {
-
-class Process_ABC;
+    struct Process_ABC;
 
 // =============================================================================
 /** @class  Runtime_ABC
@@ -32,9 +31,8 @@ class Process_ABC;
 */
 // Created: BAX 2012-03-07
 // =============================================================================
-class Runtime_ABC : public boost::noncopyable
+struct Runtime_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructor/Destructor
     //@{
              Runtime_ABC() {}

@@ -27,9 +27,8 @@ namespace host
 */
 // Created: BAX 2012-03-19
 // =============================================================================
-class SessionController_ABC : public boost::noncopyable
+struct SessionController_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              SessionController_ABC() {}

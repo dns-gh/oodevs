@@ -13,7 +13,7 @@
 
 namespace runtime
 {
-    class Api_ABC;
+    struct Api_ABC;
 
     typedef boost::shared_ptr< void > Handle;
     Handle MakeHandle( const Api_ABC& api, void* value );

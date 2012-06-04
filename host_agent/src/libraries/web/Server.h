@@ -20,12 +20,12 @@ namespace cpplog
 
 namespace host
 {
-    class Pool_ABC;
+    struct Pool_ABC;
 }
 
 namespace web
 {
-    class Observer_ABC;
+    struct Observer_ABC;
 
 // =============================================================================
 /** @class  Server

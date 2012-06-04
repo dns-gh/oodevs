@@ -24,7 +24,7 @@ namespace filesystem3
 
 namespace host
 {
-    class FileSystem_ABC;
+    struct FileSystem_ABC;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
 

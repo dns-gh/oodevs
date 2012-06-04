@@ -18,7 +18,7 @@
 
 namespace runtime
 {
-    class Process_ABC;
+    struct Process_ABC;
 }
 
 namespace host

@@ -20,17 +20,17 @@ namespace cpplog
 
 namespace runtime
 {
-    class Runtime_ABC;
-    class Process_ABC;
+    struct Runtime_ABC;
+    struct Process_ABC;
 };
 
 namespace host
 {
     struct Async;
-    class FileSystem_ABC;
+    struct FileSystem_ABC;
     struct NodeFactory_ABC;
-    class Pool_ABC;
-    class Proxy_ABC;
+    struct Pool_ABC;
+    struct Proxy_ABC;
     template< typename T > class Container;
     typedef boost::filesystem::path Path;
 

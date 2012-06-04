@@ -19,13 +19,13 @@ namespace boost
 
 namespace runtime
 {
-    class Runtime_ABC;
+    struct Runtime_ABC;
 }
 
 namespace host
 {
-    class Port_ABC;
-    class PortFactory_ABC;
+    struct Port_ABC;
+    struct PortFactory_ABC;
 
 // =============================================================================
 /** @class  Session

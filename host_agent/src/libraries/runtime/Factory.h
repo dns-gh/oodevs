@@ -19,7 +19,7 @@ namespace cpplog
 
 namespace runtime
 {
-    class Runtime_ABC;
+    struct Runtime_ABC;
 
 // =============================================================================
 /** @class  Factory

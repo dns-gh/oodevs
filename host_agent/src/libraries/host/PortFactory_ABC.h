@@ -21,9 +21,8 @@ namespace host
 */
 // Created: BAX 2012-03-20
 // =============================================================================
-class Port_ABC : public boost::noncopyable
+struct Port_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              Port_ABC() {}
@@ -42,9 +41,8 @@ public:
 */
 // Created: BAX 2012-03-20
 // =============================================================================
-class PortFactory_ABC : public boost::noncopyable
+struct PortFactory_ABC : public boost::noncopyable
 {
-public:
     //! @name Constructors/Destructor
     //@{
              PortFactory_ABC() {}
