@@ -436,7 +436,9 @@ Path FileSystem::MakeAnyPath( const Path& root ) const
     for( uint16_t idx = 0; ; ++idx )
     {
         const Path next = root / boost::lexical_cast< std::string >( idx );
-        if( MakePath( next ) )
+        if( boost::filesystem::exists( next ) )
+            continue;
+        else if( MakePath( next ) )
             return next;
     }
 }
