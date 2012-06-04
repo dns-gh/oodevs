@@ -183,6 +183,8 @@ void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, co
     T_PointSet collisions( collisionCmp );
     if( objectLocation.Intersect2D( orientedLine, collisions, epsilon ) && !collisions.empty() )
     {
+        if( !objectCollisions_.empty() && objectCollisions_.back().first == &object )
+            return;
         MT_Vector2D collisionPosition( *collisions.begin() );
         objectCollisions_.push_back( std::make_pair( &object, collisionPosition ) );
     }

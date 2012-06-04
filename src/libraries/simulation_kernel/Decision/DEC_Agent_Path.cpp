@@ -268,7 +268,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectFlood( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) ) );
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
                     pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
-                else if( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 )
+                else if( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
                     pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) ) );
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
