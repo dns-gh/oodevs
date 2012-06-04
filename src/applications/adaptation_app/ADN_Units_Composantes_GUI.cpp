@@ -91,10 +91,12 @@ public:
         assert( pObj != 0 );
         ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
         ADN_TableItem_Int*       pItemNbr = new ADN_TableItem_Int( &tab_, pObj );
+        pItemNbr->SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
         ADN_TableItem_CheckItem* pItemMajor = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemLoadable = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemConveyor = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_Int*       pItemNbrHuman = new ADN_TableItem_Int( &tab_, pObj );
+        pItemNbrHuman->SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
 
 
         // add a new row & set new values
