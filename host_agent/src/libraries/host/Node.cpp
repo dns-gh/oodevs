@@ -71,16 +71,6 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
         return ptr;
     return Node::T_Process();
 }
-
-Path MakeTemporaryPath( const FileSystem_ABC& system, const Path& root )
-{
-    for( uint16_t idx = 0; ; ++idx )
-    {
-        const Path next = root / boost::lexical_cast< std::string >( idx );
-        if( system.MakePath( next ) )
-            return next;
-    }
-}
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +247,7 @@ void ParseInline( const T& packages, U& dst, const Path& path, U reference = U()
 // -----------------------------------------------------------------------------
 void Node::UploadCache( std::istream& src )
 {
-    const Path output = MakeTemporaryPath( system_, root_ );
+    const Path output = system_.MakeAnyPath( root_ );
     FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( output, src );
     unpacker->Unpack();
 
@@ -321,7 +311,7 @@ Tree Node::GetCache() const
 // -----------------------------------------------------------------------------
 Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 {
-    const Path other = MakeTemporaryPath( system_, root_ );
+    const Path other = system_.MakeAnyPath( root_ );
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     install_->Move( other, ids );
     install_->Identify( *install_ );

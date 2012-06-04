@@ -14,6 +14,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 
 #define  LIBARCHIVE_STATIC
@@ -424,4 +425,18 @@ std::string FileSystem::Checksum( const Path& root, const Path& exclude ) const
     }
     const size_t size = sprintf( &buffer[0], "%08X", sum.checksum() );
     return std::string( &buffer[0], size );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::MakeAnyPath
+// Created: BAX 2012-05-23
+// -----------------------------------------------------------------------------
+Path FileSystem::MakeAnyPath( const Path& root ) const
+{
+    for( uint16_t idx = 0; ; ++idx )
+    {
+        const Path next = root / boost::lexical_cast< std::string >( idx );
+        if( MakePath( next ) )
+            return next;
+    }
 }

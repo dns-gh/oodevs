@@ -82,6 +82,7 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
     virtual std::string Checksum( const Path& root, const Path& exclude ) const = 0;
+    virtual Path MakeAnyPath( const Path& root ) const = 0;
     //@}
 };
 
