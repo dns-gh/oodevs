@@ -179,6 +179,7 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
 
     mock::reset( system );
+    MOCK_EXPECT( system.MakeAnyPath ).returns( "" );
 
     std::stringstream stream;
     boost::shared_ptr< MockUnpack > unpack = boost::make_shared< MockUnpack >();
