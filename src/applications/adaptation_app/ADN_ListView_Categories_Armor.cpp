@@ -102,6 +102,12 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
     Q3PopupMenu popupMenu( this );
     ADN_ArmorCategory_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        ArmorInfos* pCastData = static_cast< ArmorInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Categories_Armor", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+    }
     popupMenu.exec( pt );
 }
 

@@ -2232,6 +2232,10 @@ du tireur</translation>
         <source>Armor-Plating</source>
         <translation>Catégorie de blindage</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
