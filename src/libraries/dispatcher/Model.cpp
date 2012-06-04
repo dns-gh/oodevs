@@ -595,7 +595,6 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     urbanBlocks_           .Apply( boost::bind( &dispatcher::Object_ABC::Accept, _1, boost::ref( visitor ) ) );
     sides_                 .Apply( boost::bind( &dispatcher::Team_ABC::Accept, _1, boost::ref( visitor ) ) );
-    knowledgeGroups_       .Apply( boost::bind( &dispatcher::KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
     agentKnowledges_       .Apply( boost::bind( &dispatcher::AgentKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     objectKnowledges_      .Apply( boost::bind( &dispatcher::ObjectKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     populationKnowledges_  .Apply( boost::bind( &PopulationKnowledge::Accept, _1, boost::ref( visitor ) ) );
