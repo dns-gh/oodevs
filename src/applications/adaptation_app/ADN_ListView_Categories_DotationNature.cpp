@@ -48,7 +48,6 @@ ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( 
     : ADN_ListView( parent, name, f )
 {
     addColumn( tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_CLV_Categories_DotationNature( *this );
     SetDeletionEnabled( true );

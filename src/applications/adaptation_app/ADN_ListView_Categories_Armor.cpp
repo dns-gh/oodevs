@@ -30,9 +30,8 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, c
     : ADN_ListView(parent,name,f)
 {
 
-    // add one column && disable sort
+    // add one column
     addColumn( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
     // connector creation
