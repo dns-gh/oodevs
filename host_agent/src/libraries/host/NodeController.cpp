@@ -107,7 +107,7 @@ void NodeController::Reload()
     BOOST_FOREACH( const Path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
         try
         {
-            boost::shared_ptr< Node_ABC > node = factory_.Make( path );
+            T_Node node = factory_.Make( path );
             if( !node )
                 continue;
             nodes_->Attach( node );
@@ -181,7 +181,7 @@ void NodeController::Create( Node_ABC& node, bool isReload )
 NodeController::T_Node NodeController::Create( const std::string& name )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    boost::shared_ptr< Node_ABC > node = factory_.Make( output, name );
+    T_Node node = factory_.Make( output, name );
     nodes_->Attach( node );
     Create( *node, false );
     return node;
@@ -203,7 +203,7 @@ void NodeController::Save( const Node_ABC& node ) const
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Delete( const Uuid& id )
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Detach( id );
+    T_Node node = nodes_->Detach( id );
     if( !node )
         return node;
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
@@ -238,7 +238,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node_
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Start( const Uuid& id ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     if( !node )
         return T_Node();
     Start( *node, false );
@@ -251,7 +251,7 @@ NodeController::T_Node NodeController::Start( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     if( !node )
         return T_Node();
     Stop( *node, false );
@@ -286,7 +286,7 @@ void NodeController::Stop( Node_ABC& node, bool skipSave ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::GetInstall( const Uuid& id ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     return node ? node->GetInstall() : Tree();
 }
 
@@ -296,7 +296,7 @@ Tree NodeController::GetInstall( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     return node ? node->DeleteInstall( list ) : Tree();
 }
 
@@ -306,7 +306,7 @@ Tree NodeController::DeleteInstall( const Uuid& id, const std::vector< size_t >&
 // -----------------------------------------------------------------------------
 Tree NodeController::GetCache( const Uuid& id ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     return node ? node->GetCache() : Tree();
 }
 
@@ -316,7 +316,7 @@ Tree NodeController::GetCache( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     if( !node )
         return Tree();
     try
@@ -338,7 +338,7 @@ Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
 // -----------------------------------------------------------------------------
 Tree NodeController::DeleteCache( const Uuid& id )
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     if( !node )
         return Tree();
     const Tree tree = node->DeleteCache();
@@ -352,7 +352,7 @@ Tree NodeController::DeleteCache( const Uuid& id )
 // -----------------------------------------------------------------------------
 Tree NodeController::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     return node ? node->InstallFromCache( list ) : Tree();
 }
 
@@ -362,7 +362,7 @@ Tree NodeController::InstallFromCache( const Uuid& id, const std::vector< size_t
 // -----------------------------------------------------------------------------
 NodeController::T_Exercises NodeController::GetExercises( const Uuid& id, int offset, int limit ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     return node ? node->GetExercises( offset, limit ) : T_Exercises();
 }
 
@@ -372,6 +372,6 @@ NodeController::T_Exercises NodeController::GetExercises( const Uuid& id, int of
 // -----------------------------------------------------------------------------
 size_t NodeController::CountExercises( const Uuid& id ) const
 {
-    boost::shared_ptr< Node_ABC > node = nodes_->Get( id );
+    T_Node node = nodes_->Get( id );
     return node ? node->CountExercises() : 0;
 }
