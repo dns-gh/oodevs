@@ -148,7 +148,7 @@ private:
         if( valuedItem->IsA< kernel::Entity_ABC >() )
             if( kernel::Entity_ABC* entity = valuedItem->GetValueNoCheck< kernel::Entity_ABC >() )
             {
-                text += " " + locale().toString( static_cast< unsigned int >( entity->GetId() ) );
+                text += " " + QString::number( static_cast< unsigned int >( entity->GetId() ) );
             }
         return text.contains( searchedText_, Qt::CaseInsensitive ) != 0;
     }
