@@ -535,7 +535,7 @@ Package_ABC::T_Item Package::Find( const Item_ABC& item ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Package::Find
+// Name: Package::Install
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
 void Package::Install( const Package_ABC& src, const std::vector< size_t >& ids )
