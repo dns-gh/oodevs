@@ -18,6 +18,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 
@@ -35,7 +36,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        Compare( const Item_ABC& item ) const = 0;
     virtual bool        IsExercise() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
-    virtual void        Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
+    virtual void        Install( const FileSystem_ABC& system, const Path& trash, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
     virtual void        Move( const FileSystem_ABC& system, const Path& dst ) const = 0;
 };
 
@@ -133,15 +134,14 @@ bool HasItem( const T& list, const U& item )
 
 struct Item : Package_ABC::Item_ABC
 {
-    Item( Async& async, const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
+    Item( const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
         : root_ ( root )
         , id_   ( id )
         , name_ ( name )
         , date_ ( date )
         , meta_ ( meta ? *meta : Metadata::Reload( system, root ) )
     {
-        if( !root_.empty() )
-            async.Go( boost::bind( &Item::MakeChecksum, this, boost::cref( system ) ) );
+        // NOTHING
     }
 
     Item( const std::string& name )
@@ -218,19 +218,21 @@ struct Item : Package_ABC::Item_ABC
 
     void MakeChecksum( const FileSystem_ABC& system )
     {
-        checksum_ = system.Checksum( root_, Metadata::GetFilename() );
+        checksum_ = system.Checksum( root_ / GetSuffix() );
     }
 
-    void Install( const FileSystem_ABC& system, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const
+    void Install( const FileSystem_ABC& system, const Path& trash, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const
     {
         BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
             if( !dst.Find( *dep ) && !HasItem( targets, *dep ) )
                 return;
-        const Path& next = output / GetSuffix();
-        system.Remove( next );
+        Package_ABC::T_Item old = dst.Find( *this );
+        const Path next = output / GetSuffix();
         system.MakePaths( next );
-        system.CopyDirectory( root_, next );
-        meta_.Save( system, next );
+        system.CopyDirectory( root_ / GetSuffix(), next );
+        meta_.Save( system, output );
+        if( old )
+            old->Move( system, trash );
     }
 
     void Move( const FileSystem_ABC& system, const Path& dst ) const
@@ -282,12 +284,17 @@ std::string GetFilename( Path path, const std::string& root )
     return Utf8Convert( reply );
 }
 
+template< typename T, typename U >
+void AttachItem( Async& async, const FileSystem_ABC& system, T& items, const U& item )
+{
+    items.push_back( item );
+    async.Go( boost::bind( &Item::MakeChecksum, item, boost::cref( system ) ) );
+}
+
 struct Model : public Item
 {
-    Model( Async& async, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta )
-        : Item( async, system, Path( file ).remove_filename().remove_filename(), id,
-                Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ),
-                GetDate( file ), meta )
+    Model( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
+        : Item( system, root, id, Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), GetDate( file ), meta )
     {
         // NOTHING
     }
@@ -303,17 +310,17 @@ struct Model : public Item
     }
 
     template< typename T >
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
     {
         BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
-            items.push_back( boost::make_shared< Model >( async, system, path, ++idx, meta ) );
+            AttachItem( async, system, items, boost::make_shared< Model >( system, root, path, items.size(), meta ) );
     }
 };
 
 struct Terrain : public Item
 {
-    Terrain( Async& async, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta )
-        : Item ( async, system, Path( file ).remove_filename(), id, GetFilename( file, "terrains" ), GetDate( file ), meta )
+    Terrain( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
+        : Item( system, root, id, GetFilename( file, "terrains" ), GetDate( file ), meta )
     {
         // NOTHING
     }
@@ -329,10 +336,11 @@ struct Terrain : public Item
     }
 
     template< typename T >
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
     {
         BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
-            items.push_back( boost::make_shared< Terrain >( async, system, path, ++idx, meta ) );
+            AttachItem( async, system, items,
+                        boost::make_shared< Terrain >( system, root, path, items.size(), meta ) );
     }
 };
 
@@ -360,8 +368,8 @@ struct Dependency : public Item
 
 struct Exercise : public Item
 {
-    Exercise( Async& async, const FileSystem_ABC& system, const Path& file, size_t id, const Metadata* meta, const Tree& more )
-        : Item     ( async, system, Path( file ).remove_filename(), id, GetFilename( file, "exercises" ), GetDate( file ), meta )
+    Exercise( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
+        : Item     ( system, root, id, GetFilename( file, "exercises" ), GetDate( file ), meta )
         , briefing_( Get( more, "exercise.meta.briefing.text" ) )
         , model_   ( Get( more, "exercise.model.<xmlattr>.dataset" ) )
         , terrain_ ( Get( more, "exercise.terrain.<xmlattr>.name" ) )
@@ -404,10 +412,11 @@ struct Exercise : public Item
     }
 
     template< typename T >
-    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, size_t& idx, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
     {
         BOOST_FOREACH( const Path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
-            items.push_back( boost::make_shared< Exercise >( async, system, path, ++idx, meta, FromXml( system.ReadFile( path ) ) ) );
+            AttachItem( async, system, items,
+                        boost::make_shared< Exercise >( system, root, path, items.size(), meta, FromXml( system.ReadFile( path ) ) ) );
     }
 
     const std::string briefing_;
@@ -469,6 +478,35 @@ Path Package::GetPath() const
     return path_;
 }
 
+namespace
+{
+template< typename T >
+void FillItems( Async& async, const FileSystem_ABC& system, const Path& path, T& items, Metadata* meta )
+{
+    Model::Parse   ( async, system, path, items, meta );
+    Terrain::Parse ( async, system, path, items, meta );
+    Exercise::Parse( async, system, path, items, meta );
+}
+
+int GetTypeOrder( const std::string& type )
+{
+    if( type == "model" ) return 0;
+    if( type == "terrain" ) return 1;
+    if( type == "exercise" ) return 2;
+    return 3;
+}
+
+bool ItemOrder( const Package_ABC::T_Item& a, const Package_ABC::T_Item& b )
+{
+    const std::string ta = a->GetType();
+    const std::string tb = b->GetType();
+    if( ta == tb )
+        return a->GetChecksum() < b->GetChecksum();
+    else
+        return GetTypeOrder( ta ) < GetTypeOrder( tb );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Package::Parse
 // Created: BAX 2012-05-14
@@ -496,11 +534,13 @@ bool Package::Parse()
     }
 
     items_.clear();
-    size_t idx = 0;
     Async async( pool_ );
-    Model::Parse( async, system_, path_, items_, idx, meta.get() );
-    Terrain::Parse( async, system_, path_, items_, idx, meta.get() );
-    Exercise::Parse( async, system_, path_, items_, idx, meta.get() );
+    if( reference_ )
+        BOOST_FOREACH( const Path& path, system_.Walk( path_, false ) )
+            FillItems( async, system_, path, items_, meta.get() );
+    else
+        FillItems( async, system_, path_, items_, meta.get() );
+    std::sort( items_.begin(), items_.end(), &ItemOrder );
     return true;
 }
 
@@ -538,18 +578,24 @@ Package_ABC::T_Item Package::Find( const Item_ABC& item ) const
 // Name: Package::Install
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Package::Install( const Package_ABC& src, const std::vector< size_t >& ids )
+void Package::Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids )
 {
-    T_Items targets;
+    T_Items install;
     BOOST_FOREACH( size_t id, ids )
     {
         T_Item item = src.Find( id );
         if( item )
-            targets.push_back( item );
+            install.push_back( item );
     }
+    if( install.empty() )
+        return;
+    system_.MakePaths( path_ );
     Async async( pool_ );
-    BOOST_FOREACH( const T_Items::value_type& item, targets )
-        async.Go( boost::bind( &Item_ABC::Install, item, boost::cref( system_ ), boost::cref( path_ ), boost::cref( *this ), boost::cref( targets ) ) );
+    size_t idx = 0;
+    BOOST_FOREACH( const T_Items::value_type& item, install )
+        async.Go( boost::bind( &Item_ABC::Install, item, boost::cref( system_ ),
+                  trash / boost::lexical_cast< std::string >( idx++ ),
+                  system_.MakeAnyPath( path_ ), boost::cref( *this ), boost::cref( install ) ) );
 }
 
 namespace
@@ -567,12 +613,14 @@ bool IsItemIn( const std::vector< size_t >& list, const Package_ABC::T_Item& ite
 // Name: Package::Move
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-void Package::Move( const Path& dst, const std::vector< size_t >& ids )
+void Package::Move( const Path& trash, const std::vector< size_t >& ids )
 {
     Async async( pool_ );
+    size_t idx = 0;
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( IsItemIn( ids, item ) )
-            async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ), dst / "_" ) );
+            async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ),
+                      trash / boost::lexical_cast< std::string >( idx++ ) ) );
     async.Join();
     items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
 }

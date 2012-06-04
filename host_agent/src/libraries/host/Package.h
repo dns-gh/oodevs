@@ -45,8 +45,8 @@ public:
     virtual size_t CountExercises() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
-    virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids );
-    virtual void Move( const Path& dst, const std::vector< size_t >& ids );
+    virtual void Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids );
+    virtual void Move( const Path& trash, const std::vector< size_t >& ids );
     //@}
 
 public:

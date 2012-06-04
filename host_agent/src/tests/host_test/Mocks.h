@@ -195,7 +195,7 @@ namespace mocks
         MOCK_METHOD( Glob, 2 );
         MOCK_METHOD( Walk, 2 );
         MOCK_METHOD( Unpack, 2 );
-        MOCK_METHOD( Checksum, 2 );
+        MOCK_METHOD( Checksum, 1 );
         MOCK_METHOD( MakeAnyPath, 1 );
     };
 
@@ -246,7 +246,7 @@ namespace mocks
         MOCK_METHOD( GetPath, 0 );
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
-        MOCK_METHOD( Install, 2 );
+        MOCK_METHOD( Install, 3 );
         MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( size_t ), FindId );
         MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC& ), FindItem );
         MOCK_METHOD_EXT( Move, 1, void( const host::Path& ), MoveAll );

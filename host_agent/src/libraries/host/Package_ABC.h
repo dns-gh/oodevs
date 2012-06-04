@@ -59,8 +59,8 @@ struct Package_ABC : public boost::noncopyable
     virtual size_t CountExercises() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
-    virtual void Install( const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
-    virtual void Move( const Path& path, const std::vector< size_t >& ids ) = 0;
+    virtual void Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
+    virtual void Move( const Path& trash, const std::vector< size_t >& ids ) = 0;
     //@}
 };
 

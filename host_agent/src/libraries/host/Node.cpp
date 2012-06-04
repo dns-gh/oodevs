@@ -350,12 +350,14 @@ Tree Node::DeleteCache()
 // -----------------------------------------------------------------------------
 Tree Node::InstallFromCache( const std::vector< size_t >& list )
 {
+    const Path other = system_.MakeAnyPath( root_ );
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( !cache_ )
         return Tree();
-    install_->Install( *cache_, list );
+    install_->Install( other, *cache_, list );
     ParseInline( packages_, install_, root_ / "install" );
     cache_->Identify( *install_ );
+    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
     return cache_->GetProperties();
 }
 

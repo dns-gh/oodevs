@@ -396,15 +396,13 @@ FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, std::istream&
 // Name: FileSystem::Checksum
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-std::string FileSystem::Checksum( const Path& root, const Path& exclude ) const
+std::string FileSystem::Checksum( const Path& root ) const
 {
     boost::crc_32_type sum;
     std::vector< char > buffer( UINT16_MAX );
     for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
     {
         if( !boost::filesystem::is_regular_file( it.status() ) )
-            continue;
-        if( it->path().filename() == exclude )
             continue;
 #ifdef _MSC_VER
         // msvc does not support utf-8 strings
