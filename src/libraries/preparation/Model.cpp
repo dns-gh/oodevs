@@ -350,8 +350,8 @@ void Model::SaveTerrain( const tools::ExerciseConfig& config )
         return;
     const tools::SchemaWriter schemaWriter;
     SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
-
-    config.SerializeAndSignTerrainFiles( schemaWriter );
+    tools::WorldParameters parameter( config );
+    SerializeAndSign( config.GetTerrainFile(), parameter, schemaWriter );
     // $$$$ ABR 2012-05-22: TODO Add WorldParameter save in terrain.xml
 }
 

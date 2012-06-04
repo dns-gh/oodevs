@@ -12,7 +12,7 @@
 
 #include "clients_gui/LightingProxy.h"
 #include "clients_kernel/ModelLoaded.h"
-
+#include "tools/WorldParameters.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -28,6 +28,7 @@ class Simulation;
 // Created: AGE 2007-10-15
 // =============================================================================
 class SimulationLighting : public gui::LightingProxy
+                         , private tools::WorldParameters
                          , public tools::Observer_ABC
                          , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                          , public tools::ElementObserver_ABC< Simulation >

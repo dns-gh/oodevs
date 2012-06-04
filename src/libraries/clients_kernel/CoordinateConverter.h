@@ -12,6 +12,7 @@
 
 #include "Types.h"
 #include "CoordinateConverter_ABC.h"
+#include "tools/WorldParameters.h"
 #include <geocoord/PlanarCartesian.h>
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
@@ -37,6 +38,7 @@ public:
     //@{
              CoordinateConverter();
     explicit CoordinateConverter( const CoordinateSystems& coordSystems );
+    explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
     //@}
 
@@ -80,6 +82,7 @@ private:
 private:
     //! @name Member data
     //@{
+    tools::WorldParameters world_;
     geometry::Rectangle2f extent_;
     geometry::Vector2f    translation_;
 

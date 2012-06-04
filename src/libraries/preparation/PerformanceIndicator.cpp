@@ -33,6 +33,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "tools/Loader_ABC.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/WorldParameters.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -74,21 +75,22 @@ PerformanceIndicator::~PerformanceIndicator()
 // -----------------------------------------------------------------------------
 void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
+    tools::WorldParameters worldParameters( config );
     values_.exercise_ = config.GetExerciseName();
     values_.limit_ = static_cast< unsigned int >( limit_ );
-    values_.terrainWidth_ = static_cast< unsigned int >( config.GetTerrainWidth() / 1000.f );
-    values_.terrainHeight_ = static_cast< unsigned int >( config.GetTerrainHeight() / 1000.f );
+    values_.terrainWidth_ = static_cast< unsigned int >( worldParameters.width_ / 1000.f );
+    values_.terrainHeight_ = static_cast< unsigned int >( worldParameters.height_ / 1000.f );
     float terrainMemSize = 0.f;
     try
     {
-        boost::filesystem::path detectionPath( config.GetDetectionDirectory() );
+        boost::filesystem::path detectionPath( worldParameters.detectionDirectory_ );
         if( bfs::exists( detectionPath ) && bfs::is_directory( detectionPath ) )
             for( bfs::directory_iterator it( detectionPath ); it != bfs::directory_iterator(); ++it )
                 if( !bfs::is_directory( *it ) && bfs::extension( *it ) == ".dat" )
                     terrainMemSize += static_cast< float>( bfs::file_size( *it ) );
-        terrainMemSize += static_cast< float>( bfs::exists( config.GetPathfindGraphFile() )? bfs::file_size( config.GetPathfindGraphFile() ) : 0 );
-        terrainMemSize += static_cast< float>( bfs::exists( config.GetPathfindLinksFile() )? bfs::file_size( config.GetPathfindLinksFile() ) : 0 );
-        terrainMemSize += static_cast< float>( bfs::exists( config.GetPathfindNodesFile() )? bfs::file_size( config.GetPathfindNodesFile() ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worldParameters.pathfindGraph_ )? bfs::file_size( worldParameters.pathfindGraph_ ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worldParameters.pathfindLinks_ )? bfs::file_size( worldParameters.pathfindLinks_ ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worldParameters.pathfindNodes_ )? bfs::file_size( worldParameters.pathfindNodes_ ) : 0 );
 
         if( bfs::exists( file ) )
         {

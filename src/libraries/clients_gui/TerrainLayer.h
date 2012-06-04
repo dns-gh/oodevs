@@ -14,6 +14,7 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/WorldParameters.h"
 
 class RawShapeLayer;
 class NoVBOShapeLayer;
@@ -85,9 +86,7 @@ private:
     geometry::Rectangle2f world_;
     kernel::TristateOption smallNames_;
     kernel::TristateOption bigNames_;
-    std::string graphicsDirectory_;
-    float width_;
-    float height_;
+    tools::WorldParameters parameters_;
 
     std::auto_ptr< RawShapeLayer >        layer_;
     std::auto_ptr< NoVBOShapeLayer > noVBOlayer_;

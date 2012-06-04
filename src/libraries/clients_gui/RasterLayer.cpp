@@ -11,7 +11,6 @@
 #include "RasterLayer.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controller.h"
-#include "tools/ExerciseConfig.h"
 #include <graphics/TextureSet.h>
 #include <graphics/Visitor2d.h>
 
@@ -72,7 +71,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 {
-    graphicsDirectory_ = modelLoaded.config_.GetGraphicsDirectory();
+    Load( modelLoaded.config_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +80,7 @@ void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void RasterLayer::Reset()
 {
-    graphicsDirectory_.clear();
+    Purge();
     textures_.reset();
     ignore_ = false;
 }

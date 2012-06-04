@@ -10,6 +10,7 @@
 #ifndef __Gl3dWidget_h_
 #define __Gl3dWidget_h_
 
+#include "tools/WorldParameters.h"
 #include "GlToolsBase.h"
 #include "View_ABC.h"
 #include "SetGlOptions.h"
@@ -24,10 +25,6 @@ namespace kernel
     class Controllers;
     class UrbanColor_ABC;
 }
-namespace tools
-{
-    class ExerciseConfig;
-}
 
 namespace gui
 {
@@ -39,7 +36,8 @@ namespace gui
 */
 // Created: AGE 2006-03-28
 // =============================================================================
-class Gl3dWidget : private SetGlOptions
+class Gl3dWidget : private tools::WorldParameters
+                 , private SetGlOptions
                  , public Widget3D
                  , public GlToolsBase
                  , public View_ABC
@@ -47,8 +45,7 @@ class Gl3dWidget : private SetGlOptions
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, kernel::Controllers& controllers, float width, float height,
-                         kernel::DetectionMap& elevation, EventStrategy_ABC& strategy );
+             Gl3dWidget( QWidget* pParent, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& elevation, EventStrategy_ABC& strategy );
     virtual ~Gl3dWidget();
     //@}
 
@@ -122,8 +119,6 @@ protected:
 private:
     //! @name Member data
     //@{
-    float width_;
-    float height_;
     kernel::DetectionMap& elevation_;
     EventStrategy_ABC& strategy_;
     T_Layers layers_;

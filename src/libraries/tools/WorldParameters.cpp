@@ -11,30 +11,25 @@
 #include "WorldParameters.h"
 #include "ExerciseConfig.h"
 #include "Loader_ABC.h"
-#include "SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#include <boost/filesystem/path.hpp>
+#include "SchemaWriter_ABC.h"
 
 using namespace tools;
 
-namespace bfs = boost::filesystem;
-
+//@TODO MGD : Remove urban or this worldParameters
 // -----------------------------------------------------------------------------
 // Name: WorldParameters constructor
-// Created: LGY 2012-06-04
+// Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const std::string& dataset,
-                                  const std::string& physical, const std::string& terrainFile,
-                                  const std::string& populationFile )
-    : dataset_ ( dataset )
-    , physical_( physical )
+WorldParameters::WorldParameters()
+    : latitude_ ( 0 )
+    , longitude_( 0 )
+    , width_    ( 0 )
+    , height_   ( 0 )
 {
-    fileLoader.LoadFile( terrainFile, boost::bind( &WorldParameters::ReadTerrain, this, boost::cref( terrainFile ), _1 ) );
-    if( !populationFile.empty() )
-        fileLoader.LoadFile( populationFile, boost::bind( &WorldParameters::ReadPopulation, this, boost::cref( populationFile ), _1 ) );
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +39,15 @@ WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const std::strin
 WorldParameters::~WorldParameters()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters constructor
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+WorldParameters::WorldParameters( const tools::ExerciseConfig& config )
+{
+    Load( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +97,19 @@ void WorldParameters::Serialize( const std::string& filename, const tools::Schem
 }
 
 // -----------------------------------------------------------------------------
+// Name: WorldParameters::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void WorldParameters::Load( const tools::ExerciseConfig& config )
+{
+    config.GetLoader().LoadFile( config.GetTerrainFile(), boost::bind( &WorldParameters::ReadTerrain, this, boost::ref( config ), _1 ) );
+    if( !config.GetPopulationFile().empty() )
+        config.GetLoader().LoadFile( config.GetPopulationFile(), boost::bind( &WorldParameters::ReadPopulation, this, boost::ref( config ), _1 ) );
+    dataset_ = config.GetDataSet();
+    physical_ = config.GetPhysicalBase();
+}
+
+// -----------------------------------------------------------------------------
 // Name: WorldParameters::Purge
 // Created: JSR 2011-10-12
 // -----------------------------------------------------------------------------
@@ -117,32 +134,23 @@ void WorldParameters::Purge()
     utmZones_.clear();
 }
 
-namespace
-{
-    std::string BuildChildPath( const std::string& parent, const std::string& child )
-    {
-        return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: WorldParameters::ReadPopulation
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadPopulation( const std::string& populationFile, xml::xistream& xis )
+void WorldParameters::ReadPopulation( const tools::ExerciseConfig& config, xml::xistream& xis )
 {
     xis >> xml::start( "configuration" )
                 >> xml::start( "graph" )
                     >> xml::attribute( "file", populationGraph_ );
-
-    populationGraph_ = BuildChildPath( populationFile, populationGraph_ );
+    populationGraph_ = config.BuildChildPath( config.GetPopulationFile(), populationGraph_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WorldParameters::ReadTerrain
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream& xis )
+void WorldParameters::ReadTerrain( const tools::ExerciseConfig& config, xml::xistream& xis )
 {
     std::string world, pathfind, graphics, detection;
     std::string urban( "urban/urban.xml" );
@@ -189,19 +197,19 @@ void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream
                 >> xml::content( "RawVision", detection )
                 >> xml::content( "Graphics", graphics )
             >> xml::end;
-        ReadWorld( BuildChildPath( terrainFile, world ) );
-        ReadExtent( BuildChildPath( terrainFile, "extent.xml" ) );
+        ReadWorld( config.BuildTerrainChildFile( world ) );
+        ReadExtent( config.BuildTerrainChildFile( "extent.xml" ) );
     }
 
     InitExtent();
 
-    detection_ = BuildChildPath( terrainFile, detection + "/detection.dat" );
-    graphicsDirectory_ = BuildChildPath( terrainFile, graphics );
-    detectionDirectory_ = BuildChildPath( terrainFile, detection );
-    pathfindGraph_ = BuildChildPath( terrainFile, pathfind + "/graph.bin" );
-    pathfindLinks_ = BuildChildPath( terrainFile, pathfind + "/links.bin" );
-    pathfindNodes_ = BuildChildPath( terrainFile, pathfind + "/nodes.bin" );
-    urban_ = BuildChildPath( terrainFile, urban );
+    detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
+    graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
+    detectionDirectory_ = config.BuildTerrainChildFile( detection );
+    pathfindGraph_ = config.BuildTerrainChildFile( pathfind + "/graph.bin" );
+    pathfindLinks_ = config.BuildTerrainChildFile( pathfind + "/links.bin" );
+    pathfindNodes_ = config.BuildTerrainChildFile( pathfind + "/nodes.bin" );
+    urban_ = config.BuildTerrainChildFile( urban );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,6 +225,16 @@ void WorldParameters::ReadWorld( const std::string& world )
             >> xml::content( "Width", width_ )
             >> xml::content( "Height", height_ )
     >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::Clip
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+geometry::Point2f WorldParameters::Clip( const geometry::Point2f& point ) const
+{
+    return geometry::Point2f( std::min( std::max( point.X(), 0.f ), width_ )
+                            , std::min( std::max( point.Y(), 0.f ), height_ ) );
 }
 
 // -----------------------------------------------------------------------------

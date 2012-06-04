@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "DetectionMap.h"
 #include "tools/InputBinaryStream.h"
-#include "tools/ExerciseConfig.h"
+#include "tools/WorldParameters.h"
 #include <boost/static_assert.hpp>
 
 using namespace kernel;
@@ -54,16 +54,15 @@ DetectionMap::~DetectionMap()
 // Name: DetectionMap::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void DetectionMap::Load( const tools::ExerciseConfig& config )
+void DetectionMap::Load( const tools::ExerciseConfig& config  )
 {
     delete map_;
     delete[] environment_;
 
-    const std::string& detection = config.GetDetectionFile();
+    tools::WorldParameters parameters( config );
+    map_ = new ElevationMap( parameters.detection_ );
 
-    map_ = new ElevationMap( detection );
-
-    tools::InputBinaryStream archive( detection );
+    tools::InputBinaryStream archive( parameters.detection_ );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
     cellsize_ = static_cast< float >( rcs );

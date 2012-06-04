@@ -13,6 +13,7 @@
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
+#include "tools/WorldParameters.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -118,8 +119,7 @@ private:
     kernel::Controllers&   controllers_;
     AgentFactory_ABC&      agentFactory_;
     const StaticModel&     staticModel_;
-    float width_;
-    float height_;
+    tools::WorldParameters parameters_;
     //@}
 };
 

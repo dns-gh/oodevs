@@ -17,8 +17,8 @@ namespace xml
 
 namespace tools
 {
+    class ExerciseConfig;
     class SchemaWriter_ABC;
-    class Loader_ABC;
 
 // =============================================================================
 /** @class  WorldParameters
@@ -31,23 +31,25 @@ class WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-             WorldParameters( const Loader_ABC& fileLoader, const std::string& dataset,
-                              const std::string& physical, const std::string& terrainFile,
-                              const std::string& populationFile );
+             WorldParameters();
+    explicit WorldParameters( const tools::ExerciseConfig& config );
     virtual ~WorldParameters();
     //@}
 
     //! @name Operations
     //@{
+    void Load( const tools::ExerciseConfig& config );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
+
+    geometry::Point2f Clip( const geometry::Point2f& point ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadTerrain( const std::string& terrainFile, xml::xistream& xis );
-    void ReadPopulation( const std::string& populationFile, xml::xistream& xis );
+    void ReadTerrain( const tools::ExerciseConfig& config, xml::xistream& xis );
+    void ReadPopulation( const tools::ExerciseConfig& config, xml::xistream& xis );
     void ReadWorld( const std::string& world );
     void ReadExtent( const std::string& extent );
     void InitExtent();

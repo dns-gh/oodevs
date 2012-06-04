@@ -37,14 +37,15 @@ bool GlWidget::passLess::operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rh
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, float height, IconLayout& iconLayout )
-    : SetGlOptions()
-    , MapWidget( context_, pParent, width, height )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::ExerciseConfig& config, IconLayout& iconLayout )
+    : WorldParameters( config )
+    , SetGlOptions()
+    , MapWidget( context_, pParent, width_, height_ )
     , GlToolsBase( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_      ( 0 )
-    , viewport_    ( 0, 0, width, height )
+    , viewport_    ( 0, 0, width_, height_ )
     , frame_       ( 0 )
     , iconLayout_  ( iconLayout )
     , passes_      ( passLess( "" ) )

@@ -27,7 +27,6 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -165,23 +164,13 @@ Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
     return tools::Resolver< Automat_ABC >::Find( id );
 }
 
-namespace
-{
-    geometry::Point2f Clip( const geometry::Point2f& point, float width, float height )
-    {
-        return geometry::Point2f( std::min( std::max( point.X(), 0.f ), width )
-                                , std::min( std::max( point.Y(), 0.f ), height ) );
-    }
-
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
 Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost, const QString& name )
 {
-    Agent_ABC* agent = agentFactory_.Create( parent, type, Clip( position, width_, height_ ), commandPost, name );
+    Agent_ABC* agent = agentFactory_.Create( parent, type, parameters_.Clip( position ), commandPost, name );
     tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
     return *agent;
 }
@@ -192,7 +181,7 @@ Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type,
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAgent( Ghost_ABC& ghost, const AgentType& type, const geometry::Point2f& position )
 {
-    Agent_ABC* agent = agentFactory_.Create( ghost, type, Clip( position, width_, height_ ) );
+    Agent_ABC* agent = agentFactory_.Create( ghost, type, parameters_.Clip( position ) );
     tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
 }
 
@@ -255,7 +244,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& type, int number, const geometry::Point2f& position )
 {
-    Population_ABC* popu = agentFactory_.Create( parent, type, number, Clip( position, width_, height_ ) );
+    Population_ABC* popu = agentFactory_.Create( parent, type, number, parameters_.Clip( position ) );
     tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
 
@@ -396,6 +385,5 @@ void AgentsModel::NotifyDeleted( const Inhabitant_ABC& agent )
 // -----------------------------------------------------------------------------
 void AgentsModel::NotifyUpdated( const ModelLoaded& model )
 {
-    width_ = model.config_.GetTerrainWidth();
-    height_ = model.config_.GetTerrainHeight();
+    parameters_.Load( model.config_ );
 }

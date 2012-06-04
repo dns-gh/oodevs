@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "SimulationLighting.h"
 #include "gaming/Simulation.h"
-#include "tools/ExerciseConfig.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
@@ -48,6 +47,7 @@ void SimulationLighting::NotifyUpdated( const Simulation& simu )
 // -----------------------------------------------------------------------------
 void SimulationLighting::NotifyUpdated( const kernel::ModelLoaded& model )
 {
-    SetLatitude( model.config_.GetTerrainLatitude() );
+    WorldParameters::Load( model.config_ );
+    SetLatitude( latitude_ );
 }
 

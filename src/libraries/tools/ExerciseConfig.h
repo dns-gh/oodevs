@@ -12,7 +12,6 @@
 
 #include "GeneralConfig.h"
 #include <memory>
-#include <vector>
 #include <map>
 
 namespace xml
@@ -24,8 +23,6 @@ namespace tools
 {
     class Loader_ABC;
     class RealFileLoaderObserver_ABC;
-    class WorldParameters;
-    class SchemaWriter_ABC;
 
 // =============================================================================
 /** @class  ExerciseConfig
@@ -84,22 +81,6 @@ public:
 
     std::string GetDataSet() const;
     std::string GetPhysicalBase() const;
-
-    std::string GetGraphicsDirectory() const;
-    std::string GetDetectionDirectory() const;
-    std::string GetDetectionFile() const;
-    std::string GetPathfindGraphFile() const;
-    std::string GetPathfindLinksFile() const;
-    std::string GetPathfindNodesFile() const;
-
-    float GetTerrainWidth() const;
-    float GetTerrainHeight() const;
-    float GetTerrainLongitude() const;
-    float GetTerrainLatitude() const;
-
-    const std::vector< unsigned char >& GetUtmZones() const;
-
-    void SerializeAndSignTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const;  //$$$ Rien à foutre la ...
     //@}
 
     //! @name Operations
@@ -193,7 +174,6 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
-    std::auto_ptr< tools::WorldParameters > pWorldParameters_;
 
     std::string modelVersion_;
     std::string exerciseName_;

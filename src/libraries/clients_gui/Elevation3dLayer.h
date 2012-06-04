@@ -13,6 +13,7 @@
 #include "Layer_ABC.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/WorldParameters.h"
 #include <graphics/ViewFrustum.h>
 
 class MultiTextureLayer;
@@ -41,7 +42,8 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Elevation3dLayer : public Layer3d_ABC
+class Elevation3dLayer : private tools::WorldParameters
+                       , public Layer3d_ABC
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 
 {
@@ -84,7 +86,6 @@ private:
     bool reset_;
     bool ignoreShader_;
     bool ignoreTextures_;
-    std::string graphicsDirectory_;
     //@}
 };
 
