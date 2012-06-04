@@ -1,6 +1,6 @@
 local result =  
 {
-    fillParameters = function( self, companyTask, params, entity )  
+    fillParameters = function( self, companyTask, params, entity )
       if params.pcObjective and params.pcObjective ~= NIL then
           return { objectives = { params.pcObjective } }
       else

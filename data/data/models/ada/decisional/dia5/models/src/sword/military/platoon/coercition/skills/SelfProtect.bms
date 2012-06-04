@@ -29,6 +29,7 @@ rootnode
         myself.speedModulation = myself.speedModulation or {}
         self.detected = false
         self.needToTakeCover = false
+        self.entitiesToSafeguardFrom = {}
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -40,7 +41,7 @@ rootnode
         -- No entities to safeguard from issued. Get nearby enemies by default
         if self.params.entities == NIL then
             self.agentsEngagingMe = sword.military.queries.enemies.getAgentsEngagingMe[ "execute" ]()
-            self.enemiesCloseToMe = sword.military.queries.enemies.getNearbyEnemies[ "execute" ]()
+            self.enemiesCloseToMe = sword.military.queries.enemies.getDangerousEnemies[ "execute" ]()
             self.entitiesToSafeguardFrom = fusionList( self.agentsEngagingMe, self.enemiesCloseToMe )
         else
             self.entitiesToSafeguardFrom = self.params.entities
