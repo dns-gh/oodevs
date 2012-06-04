@@ -16,9 +16,18 @@
 #include <boost/uuid/uuid.hpp>
 #include <vector>
 
+namespace boost
+{
+namespace filesystem3
+{
+    class path;
+}
+}
+
 namespace host
 {
     struct Node_ABC;
+    typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 
@@ -75,6 +84,7 @@ struct NodeController_ABC : public boost::noncopyable
     //@{
     virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const = 0;
     virtual size_t      CountExercises( const Uuid& id ) const = 0;
+    virtual void        SetExercisePaths( const Uuid& id, const std::string& name, Path& model, Path& terrain, Path& exercise ) const = 0;
     //@}
 };
 

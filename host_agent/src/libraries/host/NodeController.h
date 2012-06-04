@@ -90,6 +90,7 @@ public:
     //@{
     virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const;
     virtual size_t      CountExercises( const Uuid& id ) const;
+    virtual void        SetExercisePaths( const Uuid& id, const std::string& name, Path& model, Path& terrain, Path& exercise ) const;
     //@}
 
 private:

@@ -62,6 +62,7 @@ namespace mocks
         MOCK_METHOD( InstallFromCache, 2 );
         MOCK_METHOD( GetExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
+        MOCK_METHOD( SetExercisePaths, 5 );
     };
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )
