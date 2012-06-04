@@ -110,6 +110,7 @@ DO_UPDATE( sword::CrowdKnowledgeCreation );
 DO_UPDATE( sword::FormationCreation );
 DO_UPDATE( sword::KnowledgeGroupCreation );
 DO_UPDATE( sword::LimitCreation );
+DO_UPDATE( sword::LogFuneralHandlingCreation );
 DO_UPDATE( sword::LogMaintenanceHandlingCreation );
 DO_UPDATE( sword::LogMedicalHandlingCreation );
 DO_UPDATE( sword::LogSupplyHandlingCreation );
