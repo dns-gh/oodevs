@@ -22,19 +22,19 @@
 
 //using namespace plugins::hla;
 
-namespace 
+namespace
 {
     struct VoidRealFileLoaderObserver : tools::RealFileLoaderObserver_ABC
-    { 
+    {
         virtual bool NotifySignatureError      ( const std::string& , const tools::EXmlCrc32SignatureError& ) { return true; }
         virtual bool NotifyInvalidXml          ( const std::string& , const xml::exception&  ) { return true; }
         virtual void NotifyNoXmlSchemaSpecified( const std::string& ) {}
         virtual void NotifyFileMigrated        ( const std::string&  , const std::string& , const std::string& ) {}
     };
 
-    char* CMD_LINE[] = { "blah.exe", 
-                        "--root-dir=../../data", 
-                        "--exercise=worldwide/Egypt", 
+    char* CMD_LINE[] = { "blah.exe",
+                        "--root-dir=../../data",
+                        "--exercise=worldwide/Egypt",
                         "--session=default" };
 
     class Fixture
@@ -61,7 +61,7 @@ namespace
         {
             staticModel_.Purge();
         }
-    
+
         const std::string& PluginRoot() const { return pluginRoot_; }
         const tools::ExerciseConfig& Config() const { return config_; }
         std::string AggregateMappingFile() const { return pluginRoot_+"/"+ aggregateMapping_; }
@@ -85,11 +85,11 @@ BOOST_FIXTURE_TEST_CASE( hla_read_config, Fixture )
     BOOST_CHECK( AggregateMappingFile().size() > (PluginRoot().size()+1) );
     BOOST_CHECK( SurfaceMappingFile().size() > (PluginRoot().size()+1) );
     BOOST_CHECK( ComponentMappingFile().size() > (PluginRoot().size()+1) );
-    BOOST_CHECK( MunitionMappingFile().size() > (PluginRoot().size()+1) );   
+    BOOST_CHECK( MunitionMappingFile().size() > (PluginRoot().size()+1) );
 }
 
-namespace 
-{ 
+namespace
+{
     template <typename F>
     void parseEntry(xml::xistream& xis, const F& ftor)
     {
@@ -109,7 +109,7 @@ namespace
         xis >> xml::list("entry", boost::bind( &parseEntry<F>, _1, boost::cref(ftor) ) );
         xis >> xml::end();
     }
-    
+
     template <typename T>
     struct CheckEntry
     {

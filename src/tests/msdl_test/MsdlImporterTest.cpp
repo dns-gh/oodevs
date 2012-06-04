@@ -26,9 +26,4 @@ BOOST_AUTO_TEST_CASE( msdl_importer_transforms_from_msdl_to_orbat )
                            << "</orbat>"
                            << std::endl;
 
-
-
-
-
-
 }
