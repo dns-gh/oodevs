@@ -69,6 +69,7 @@ void ADN_Categories_GUI::Build()
     // Armors listview
     T_ConnectorVector vArmorInfosConnectors( eNbrArmorGuiElements, (ADN_Connector_ABC*)0 );
     pListArmor_ = new ADN_ListView_Categories_Armor( pArmorListViewGroup );
+    connect( pListArmor_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     static_cast<ADN_Connector_Vector_ABC*>( &pListArmor_->GetConnector() )->Connect( &data_.GetArmorsInfos() );
 
     // Armor info

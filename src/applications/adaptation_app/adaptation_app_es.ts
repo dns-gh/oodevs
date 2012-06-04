@@ -2291,6 +2291,10 @@ tirador</translation>
         <source>Armor-Plating</source>
         <translation>Blindaje</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>

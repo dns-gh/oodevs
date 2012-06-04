@@ -2448,3 +2448,19 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Objects_Data_Object
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( helpers::ArmorInfos& armor )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        if( pComp->ptrArmor_.GetData()->strName_.GetData() == armor.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}
