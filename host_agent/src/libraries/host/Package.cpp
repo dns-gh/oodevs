@@ -133,7 +133,7 @@ bool HasItem( const T& list, const U& item )
 
 struct Item : Package_ABC::Item_ABC
 {
-    Item( Async& async, const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const std::string date, const Metadata* meta )
+    Item( Async& async, const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
         : root_ ( root )
         , id_   ( id )
         , name_ ( name )
