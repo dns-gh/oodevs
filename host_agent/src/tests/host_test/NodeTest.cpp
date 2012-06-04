@@ -77,7 +77,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( packages, system, uuids, pool, tree, runtime, ports );
+            return boost::make_shared< Node >( packages, system, uuids, pool, "", tree, runtime, ports );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
@@ -120,15 +120,13 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
-        "\"root\":\"root\""
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
         "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"running\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
-        "\"root\":\"root\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
@@ -137,8 +135,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
-        "\"root\":\"root\""
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
         "}" );
 }
 

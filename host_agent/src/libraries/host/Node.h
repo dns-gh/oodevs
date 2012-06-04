@@ -53,14 +53,15 @@ public:
                    const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
                    const std::string& name, PortFactory_ABC& ports );
              Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids, Pool_ABC& pool, const Tree& tree,
-                   const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+                   const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
+                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
     //! @name Node_ABC methods
     //@{
     virtual Uuid GetId() const;
+    virtual Path GetRoot() const;
     virtual int  GetPort() const;
     virtual std::string GetName() const;
     virtual Tree GetProperties() const;

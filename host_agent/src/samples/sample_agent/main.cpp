@@ -132,9 +132,9 @@ struct NodeFactory : public NodeFactory_ABC
         return boost::make_shared< Node >( packages, system, uuids, pool, root, name, ports );
     }
 
-    Ptr Make( const Tree& tree ) const
+    Ptr Make( const Path& tag ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, pool, tree, runtime, ports );
+        return boost::make_shared< Node >( packages, system, uuids, pool, Path( tag ).remove_filename(), FromJson( system.ReadFile( tag ) ), runtime, ports );
     }
 
     const PackageFactory_ABC& packages;

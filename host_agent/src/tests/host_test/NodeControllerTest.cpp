@@ -14,6 +14,7 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -32,9 +33,10 @@ namespace
 {
     struct SubFixture
     {
-        SubFixture( const Path& root, const Path& java, const Path& jar, const Path& web )
+        SubFixture( const Path& java, const Path& jar, const Path& web )
+            : idx( 0 )
         {
-            MOCK_EXPECT( system.MakePaths ).with( root / "node" );
+            MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.Exists ).with( java ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
@@ -42,7 +44,15 @@ namespace
             MOCK_EXPECT( system.IsFile ).returns( false );
             MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
+            MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
         };
+
+        Path MakePath( const Path& root )
+        {
+            return root / boost::lexical_cast< std::string >( ++idx );
+        }
+
+        size_t idx;
         MockLog log;
         MockRuntime runtime;
         MockFileSystem system;
@@ -79,7 +89,7 @@ namespace
             , jar    ( "e:/jar/some_jar.jar" )
             , web    ( "e:/zomg/www" )
             , type   ( isCluster ? "cluster" : "node" )
-            , sub    ( root, java, jar, web )
+            , sub    ( java, jar, web )
             , control( sub.log, sub.runtime, sub.system, sub.proxy, sub.nodes, root, java, jar, web, type, sub.pool )
         {
             // NOTHING
@@ -101,16 +111,14 @@ namespace
             const std::string idText = tree.get< std::string >( "id" );
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.system.MakePaths ).once().with( root / "node" / idText );
                 MOCK_EXPECT( sub.nodes.Make2 ).once().with( mock::any, tree.get< std::string >( "name" ) ).returns( node );
                 MOCK_EXPECT( node->Start ).once().returns( true );
             }
             else
             {
-                MOCK_EXPECT( sub.system.ReadFile ).once().with( path ).returns( data );
                 MOCK_EXPECT( sub.nodes.Make1 ).once().returns( node );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "node" / idText / "node.id", data ).returns( true );
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( mock::any, data ).returns( true );
             MOCK_EXPECT( sub.proxy.Register ).once().with( idText, "localhost", node->GetPort() );
             return node;
         }

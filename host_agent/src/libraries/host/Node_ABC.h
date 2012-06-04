@@ -59,6 +59,7 @@ struct Node_ABC : public boost::noncopyable
     //! @name Accessors
     //@{
     virtual Uuid GetId() const = 0;
+    virtual Path GetRoot() const = 0;
     virtual int  GetPort() const = 0;
     virtual std::string GetName() const = 0;
     virtual Tree GetProperties() const = 0;
@@ -114,7 +115,7 @@ struct NodeFactory_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual Ptr Make( const Path& root, const std::string& name ) const = 0;
-    virtual Ptr Make( const Tree& tree ) const = 0;
+    virtual Ptr Make( const Path& tag ) const = 0;
     //@}
 };
 

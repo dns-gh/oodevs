@@ -85,7 +85,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , uuids_    ( uuids )
     , id_       ( uuids.Create() )
     , name_     ( name )
-    , root_     ( root / boost::lexical_cast< std::string >( id_ ) )
+    , root_     ( root )
     , port_     ( ports.Create() )
     , access_   ( new boost::shared_mutex() )
     , async_    ( new Async( pool ) )
@@ -98,14 +98,14 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const UuidFactory_ABC& uuids, Pool_ABC& pool, const Tree& tree,
-            const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+            const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
+            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : packages_ ( packages )
     , system_   ( system )
     , uuids_    ( uuids )
     , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
     , name_     ( tree.get< std::string >( "name" ) )
-    , root_     ( Path( Utf8Convert( tree.get< std::string >( "root" ) ) ) / boost::lexical_cast< std::string >( id_ ) )
+    , root_     ( root )
     , port_     ( AcquirePort( tree.get< int >( "port" ), ports ) )
     , access_   ( new boost::shared_mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
@@ -132,6 +132,15 @@ Node::~Node()
 Uuid Node::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetRoot
+// Created: BAX 2012-06-04
+// -----------------------------------------------------------------------------
+Path Node::GetRoot() const
+{
+    return root_;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +192,6 @@ Tree Node::GetProperties() const
 Tree Node::Save() const
 {
     Tree tree = GetCommonProperties();
-    tree.put( "root", Utf8Convert( Path( root_ ).remove_filename() ) );
 
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     if( cache_ )

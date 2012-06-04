@@ -69,11 +69,13 @@ namespace mocks
         MockNode( const host::Uuid& id, const host::Tree& tree )
         {
             MOCK_EXPECT( GetId ).returns( id );
+            MOCK_EXPECT( GetRoot ).returns( "" );
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
             MOCK_EXPECT( Save ).returns( tree );
         }
         MOCK_METHOD( GetId, 0 );
+        MOCK_METHOD( GetRoot, 0 );
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
@@ -260,7 +262,7 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )
     {
-        MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Tree& tree ), Make1 );
+        MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Path& tag ), Make1 );
         MOCK_METHOD_EXT( Make, 2, host::NodeFactory_ABC::Ptr( const host::Path& root, const std::string& name ), Make2 );
     };
 };

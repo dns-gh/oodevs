@@ -42,11 +42,6 @@ std::string MakeOption( const std::string& option, const T& value )
     return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
 }
 
-Path GetPath( const Path& root, const Node_ABC& node )
-{
-    return root / boost::lexical_cast< std::wstring >( node.GetId() );
-}
-
 std::string GetPrefix( const std::string& type, const Node_ABC& node )
 {
     return type == "cluster" ? type : boost::lexical_cast< std::string >( node.GetId() );
@@ -112,7 +107,7 @@ void NodeController::Reload()
     BOOST_FOREACH( const Path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
         try
         {
-            boost::shared_ptr< Node_ABC > node = factory_.Make( FromJson( system_.ReadFile( path ) ) );
+            boost::shared_ptr< Node_ABC > node = factory_.Make( path );
             if( !node )
                 continue;
             nodes_->Attach( node );
@@ -171,7 +166,7 @@ void NodeController::Create( Node_ABC& node, bool isReload )
     const int port = node.GetPort();
     LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetName() << " :" << port;
     if( !isReload )
-        system_.MakePaths( GetPath( root_, node ) );
+        system_.MakePaths( node.GetRoot() );
     proxy_.Register( GetPrefix( type_, node ), "localhost", port );
     if( isReload )
         Save( node );
@@ -185,7 +180,8 @@ void NodeController::Create( Node_ABC& node, bool isReload )
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Create( const std::string& name )
 {
-    boost::shared_ptr< Node_ABC > node = factory_.Make( root_, name );
+    const Path output = system_.MakeAnyPath( root_ );
+    boost::shared_ptr< Node_ABC > node = factory_.Make( output, name );
     nodes_->Attach( node );
     Create( *node, false );
     return node;
@@ -197,7 +193,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
 // -----------------------------------------------------------------------------
 void NodeController::Save( const Node_ABC& node ) const
 {
-    const Path path = GetPath( root_, node ) / ( type_ + ".id" );
+    const Path path = node.GetRoot() / ( type_ + ".id" );
     async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( node.Save() ) ) );
 }
 
@@ -213,7 +209,7 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
     proxy_.Unregister( GetPrefix( type_, *node ) );
     Stop( *node, true );
-    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( root_, *node ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, node->GetRoot() ) );
     return node;
 }
 
@@ -233,7 +229,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node_
         ( MakeOption( "name", node.GetName() ) )
         ( MakeOption( "port", node.GetPort() ) ),
         Utf8Convert( jar_path.remove_filename() ),
-        Utf8Convert( GetPath( root_, node ) / ( type_ + ".log" ) ) );
+        Utf8Convert( node.GetRoot() / ( type_ + ".log" ) ) );
 }
 
 // -----------------------------------------------------------------------------
