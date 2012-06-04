@@ -59,7 +59,7 @@ ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, co
         }
         // eTabs_Export
         {
-            exportWidget_ = new ExportWidget( *this, box, config, fileLoader_ );
+            exportWidget_ = new ExportWidget( *this, box, config, fileLoader_, controllers );
             mainTabs_->addTab( exportWidget_, "" );
         }
     }

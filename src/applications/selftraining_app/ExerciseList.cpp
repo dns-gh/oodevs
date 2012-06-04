@@ -12,39 +12,15 @@
 #include "moc_ExerciseList.cpp"
 #include "ExerciseProperties.h"
 #include "ProfileList.h"
-#include "frontend/Exercise_ABC.h"
+#include "ExerciseListView.h"
 #include "frontend/LocalExerciseFilter.h"
 #include "frontend/Profile.h"
-#include "tools/GeneralConfig.h"
-#include "tools/Loader_ABC.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
-#include <boost/filesystem.hpp>
-#include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
     static int clearEvent = 4242;
-
-    class MyListViewItem : public gui::ValuedListItem
-    {
-    public:
-        MyListViewItem( Q3ListView* parent, const std::string& fullpath )
-            : gui::ValuedListItem( parent )
-            , fullpath_( fullpath.c_str() ) {}
-        MyListViewItem( Q3ListViewItem* parent, const std::string& fullpath )
-            : gui::ValuedListItem( parent )
-            , fullpath_( fullpath.c_str() ) {}
-        virtual QString key( int column, bool /*ascending*/ ) const
-        {
-            if( column == 0 )
-                return fullpath_.startsWith( "/" ) ? fullpath_ : text( 0 );
-            return text( column );
-        }
-        const QString fullpath_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -54,8 +30,6 @@ namespace
 ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
                             bool showBrief /* = true*/, bool showProfile /* =true*/, bool showParams /* = true*/, bool enableParams /* = true*/ )
     : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
-    , config_           ( config )
-    , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
     , filter_           ( 0 )
     , defaultFilter_    ( new frontend::LocalExerciseFilter() )
@@ -67,15 +41,10 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         Q3VBox* leftBox = new Q3VBox( box );
         leftBox->setSpacing( 5 );
         exerciseLabel_ = new QLabel( leftBox );
-        exercises_ = new Q3ListView( leftBox );
-        exercises_->addColumn( "exercise" );
-        exercises_->header()->hide();
-        exercises_->setAllColumnsShowFocus( true );
-        exercises_->setSortColumn( 0 );
-        exercises_->setResizeMode( Q3ListView::LastColumn );
+        exercises_ = new ExerciseListView( leftBox, config, fileLoader );
 
         profileLabel_ = new QLabel( leftBox );
-        profiles_ = new ProfileList( leftBox, config, fileLoader_ );
+        profiles_ = new ProfileList( leftBox, config, fileLoader );
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( profiles_, 1 );
         profileLabel_->setShown( showProfile );
@@ -85,7 +54,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( exercises_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SelectExercise( Q3ListViewItem* ) ) );
     }
     {
-        properties_ = new ExerciseProperties( box, config, fileLoader_, showBrief, showParams, enableParams );
+        properties_ = new ExerciseProperties( box, config, fileLoader, showBrief, showParams, enableParams );
     }
     controllers_.Register( *this );
 }
@@ -134,7 +103,7 @@ void ExerciseList::NotifyUpdated( const frontend::Exercise_ABC& exercise )
 // -----------------------------------------------------------------------------
 void ExerciseList::NotifyDeleted( const frontend::Exercise_ABC& exercise )
 {
-    DeleteExerciseEntry( exercise );
+    exercises_->DeleteExerciseEntry( exercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +121,7 @@ void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void ExerciseList::SelectExercise( Q3ListViewItem* item )
 {
-    const QString exercise( item ? static_cast< MyListViewItem* >( item )->fullpath_ : "" );
+    const QString exercise( exercises_->GetItemName( item ) );
     profiles_->Update( exercise.ascii() );
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
@@ -164,31 +133,6 @@ void ExerciseList::SelectExercise( Q3ListViewItem* item )
         properties_->Select( 0 );
         emit ClearSelection();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::GetExerciseDisplayName
-// Created: RDS 2008-10-02
-// -----------------------------------------------------------------------------
-QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
-{
-    std::string displayName( exercise.ascii() );
-    try
-    {
-        const std::string file = config_.GetExerciseFile( exercise.ascii() );
-        if( boost::filesystem::exists( file ) )
-        {
-            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
-            *xis >> xml::start( "exercise" )
-                    >> xml::optional >> xml::start( "meta" )
-                        >> xml::optional >> xml::content( "name", displayName );
-        }
-    }
-    catch( ... )
-    {
-        // $$$$ SBO 2008-10-07: error in exercise.xml meta, just show directory name
-    }
-    return displayName.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -238,64 +182,6 @@ void ExerciseList::customEvent( QCustomEvent* e )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::AddExerciseEntry
-// Created: SBO 2010-04-14
-// -----------------------------------------------------------------------------
-void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
-{
-    static const QImage directory( "resources/images/selftraining/directory.png" );
-    static const QImage mission( "resources/images/selftraining/mission.png" );
-    QPixmap pxDir;
-    QPixmap pxMiss;
-
-    pxDir.fromImage( directory );
-    pxMiss.fromImage( mission );
-
-    qApp->setOverrideCursor( Qt::WaitCursor );
-    QStringList path( QStringList::split( '/', exercise.GetName().c_str() ) );
-    QStringList complete;
-    Q3ListViewItem* parent = 0;
-    for( QStringList::iterator it( path.begin() ); it != path.end(); ++it )
-    {
-        complete.append( *it );
-        const QString current( complete.join( "/" ) );
-        Q3ListViewItem* item = FindExerciseItem( "/" + current );
-        if( !item )
-        {
-            const std::string fullpath( complete.size() < path.size() ? "/" + current : current );
-            if( parent )
-                item = new MyListViewItem( parent, fullpath );
-            else
-                item = new MyListViewItem( exercises_, fullpath );
-            item->setText( 0, GetExerciseDisplayName( *it ) );
-            QPixmap p;
-            p.convertFromImage( directory );
-            item->setPixmap( 0, p );
-        }
-        parent = item;
-    }
-    if( parent )
-    {
-        QPixmap p;
-        p.convertFromImage( mission );
-        parent->setPixmap( 0, p );
-        static_cast< gui::ValuedListItem* >( parent )->SetValue( &exercise );
-    }
-    qApp->restoreOverrideCursor();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::FindExerciseItem
-// Created: SBO 2011-05-27
-// -----------------------------------------------------------------------------
-Q3ListViewItem* ExerciseList::FindExerciseItem( const QString& path ) const
-{
-    for( Q3ListViewItemIterator it = exercises_->firstChild(); it.current(); ++it )
-        if( static_cast< MyListViewItem* >( it.current() )->fullpath_ == path )
-            return it.current();
-    return 0;
-}
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseList::UpdateExerciseEntry
@@ -307,25 +193,10 @@ void ExerciseList::UpdateExerciseEntry( const frontend::Exercise_ABC& exercise )
     if( gui::ValuedListItem* item = gui::FindItem( &exercise, exercises_->firstChild() ) )
     {
         if( !isAllowed )
-            DeleteExerciseEntry( exercise );
+            exercises_->DeleteExerciseEntry( exercise );
     }
     else if( isAllowed )
-        AddExerciseEntry( exercise );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::DeleteExerciseEntry
-// Created: SBO 2010-11-04
-// -----------------------------------------------------------------------------
-void ExerciseList::DeleteExerciseEntry( const frontend::Exercise_ABC& exercise )
-{
-    if( gui::ValuedListItem* item = gui::FindItem( &exercise, exercises_->firstChild() ) )
-    {
-        Q3ListViewItem* parent = item->parent();
-        delete item;
-        if( parent && parent->childCount() == 0 )
-            delete parent;
-    }
+        exercises_->AddExerciseEntry( exercise );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,6 +34,7 @@ namespace tools
 
 class ExerciseProperties;
 class ProfileList;
+class ExerciseListView;
 
 // =============================================================================
 /** @class  ExerciseList
@@ -91,20 +92,14 @@ private:
     virtual void OnLanguageChanged();
     virtual void customEvent( QCustomEvent* e );
     const frontend::Exercise_ABC* GetSelectedExercise() const;
-    QString GetExerciseDisplayName( const QString& exercise ) const;
-    void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
     void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
-    void DeleteExerciseEntry( const frontend::Exercise_ABC& exercise );
-    Q3ListViewItem* FindExerciseItem( const QString& path ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
-    Q3ListView* exercises_;
+    ExerciseListView* exercises_;
     ProfileList* profiles_;
     const frontend::ExerciseFilter_ABC* filter_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > defaultFilter_;
