@@ -21,7 +21,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/algorithm/string/case_conv.hpp>
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -30,7 +29,8 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
 {
     virtual Tree        GetProperties() const = 0;
     virtual std::string GetType() const = 0;
-    virtual std::string GetName() const = 0;
+    virtual Path        GetName() const = 0;
+    virtual Path        GetRoot() const = 0;
     virtual Path        GetSuffix() const = 0;
     virtual std::string GetChecksum() const = 0;
     virtual bool        Compare( size_t id ) const = 0;
@@ -152,7 +152,7 @@ bool ItemOrder( const Package_ABC::T_Item& lhs, const Package_ABC::T_Item& rhs )
     int rpy = Compare( GetTypeOrder( lhs->GetType() ), GetTypeOrder( rhs->GetType() ) );
     if( rpy )
         return rpy < 0;
-    rpy = Compare( boost::to_lower_copy( lhs->GetName() ), boost::to_lower_copy( rhs->GetName() ) );
+    rpy = Compare( lhs->GetName(), rhs->GetName() );
     if( rpy )
         return rpy < 0;
     return lhs->GetChecksum() < rhs->GetChecksum();
@@ -188,7 +188,7 @@ struct Item : Package_ABC::Item_ABC
         meta_.SaveTo( tree );
         tree.put( "id", id_ );
         tree.put( "type", GetType() );
-        tree.put( "name", name_ );
+        tree.put( "name", Utf8Convert( name_ ) );
         tree.put( "date", date_ );
         tree.put( "checksum", checksum_ );
         if( !action_.empty() )
@@ -198,7 +198,12 @@ struct Item : Package_ABC::Item_ABC
         return tree;
     }
 
-    virtual std::string GetName() const
+    virtual Path GetRoot() const
+    {
+        return root_;
+    }
+
+    virtual Path GetName() const
     {
         return name_;
     }
@@ -232,7 +237,7 @@ struct Item : Package_ABC::Item_ABC
             if( !ref.Find( *dep ) && !root.Find( *dep ) )
             {
                 action_ = "error";
-                error_ = "Missing " + dep->GetType() + " " + dep->GetName();
+                error_ = "Missing " + dep->GetType() + " " + Utf8Convert( dep->GetName() );
                 return;
             }
         Package_ABC::T_Item next = ref.Find( *this );
@@ -274,7 +279,7 @@ struct Item : Package_ABC::Item_ABC
 protected:
     const Path root_;
     const size_t id_;
-    const std::string name_;
+    const Path name_;
     const std::string date_;
     const Metadata meta_;
     std::string checksum_;
@@ -647,7 +652,7 @@ Package::T_Exercises Package::GetExercises( int offset, int limit ) const
             continue;
         if( offset-- > 0 )
             continue;
-        reply.push_back( item->GetName() );
+        reply.push_back( Utf8Convert( item->GetName() ) );
         if( --limit <  0 )
             break;
     }
