@@ -27,6 +27,7 @@ namespace sword
     class FormationCreation;
     class KnowledgeGroupCreation;
     class LimitCreation;
+    class LogFuneralHandlingCreation;
     class LogMaintenanceHandlingCreation;
     class LogMedicalHandlingCreation;
     class LogSupplyHandlingCreation;
@@ -119,6 +120,7 @@ public:
     virtual void DoUpdate( const sword::FormationCreation& msg );
     virtual void DoUpdate( const sword::KnowledgeGroupCreation& msg );
     virtual void DoUpdate( const sword::LimitCreation& msg );
+    virtual void DoUpdate( const sword::LogFuneralHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogMaintenanceHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogMedicalHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogSupplyHandlingCreation& msg );
