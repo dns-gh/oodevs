@@ -56,7 +56,7 @@ private:
 ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type(QWidget * parent, Qt::WFlags f)
 :   ADN_ListView(parent,"Material",f)
 {
-    // Add a column && disable sorting
+    // Add a column
     addColumn( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) );
     setResizeMode( Q3ListView::AllColumns );
 

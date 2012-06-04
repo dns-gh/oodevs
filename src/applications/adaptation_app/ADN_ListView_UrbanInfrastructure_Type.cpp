@@ -52,7 +52,7 @@ private:
 ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, Qt::WFlags f)
 :   ADN_ListView(parent,"Infrastructure",f)
 {
-    // Add a column && disable sorting
+    // Add a column
     addColumn( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ) );
     setResizeMode( Q3ListView::LastColumn );
 

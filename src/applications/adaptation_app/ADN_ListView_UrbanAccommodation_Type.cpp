@@ -53,7 +53,7 @@ private:
 ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWidget* parent, Qt::WFlags f )
     : ADN_ListView( parent, "Activity", f )
 {
-    // Add a column && disable sorting
+    // Add a column
     addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation

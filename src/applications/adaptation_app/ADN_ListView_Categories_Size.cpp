@@ -57,9 +57,8 @@ private:
 ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, const char * name, Qt::WFlags f)
 :   ADN_ListView(parent,name,f)
 {
-    // Add a column && disable sorting
+    // Add a column
     addColumn( tools::translate( "ADN_ListView_Categories_Size", "Sizes" ) );
-    setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 
     // Connector creation
