@@ -2325,6 +2325,10 @@ du tireur</translation>
         <source>Delete size</source>
         <translation>Effacer ce volume</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Composantes</name>
