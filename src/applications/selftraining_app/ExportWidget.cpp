@@ -105,7 +105,6 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         {
             decisionalCheckBox_ = new QCheckBox( box );
             decisionalCheckBox_->setEnabled( false );
-            decisionalCheckBox_->setEnabled( false );
         }
     }
     progress_ = new Q3ProgressBar( this );
