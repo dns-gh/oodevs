@@ -21,6 +21,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/algorithm/string/case_conv.hpp>
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -130,6 +131,31 @@ template< typename T, typename U >
 bool HasItem( const T& list, const U& item )
 {
     return FindItem( list, item ) != list.end();
+}
+
+int GetTypeOrder( const std::string& type )
+{
+    if( type == "model" )    return 0;
+    if( type == "terrain" )  return 1;
+    if( type == "exercise" ) return 2;
+    return 3;
+}
+
+template< typename T >
+int Compare( const T& a, const T& b )
+{
+    return a == b ? 0 : a < b ? -1 : +1;
+}
+
+bool ItemOrder( const Package_ABC::T_Item& lhs, const Package_ABC::T_Item& rhs )
+{
+    int rpy = Compare( GetTypeOrder( lhs->GetType() ), GetTypeOrder( rhs->GetType() ) );
+    if( rpy )
+        return rpy < 0;
+    rpy = Compare( boost::to_lower_copy( lhs->GetName() ), boost::to_lower_copy( rhs->GetName() ) );
+    if( rpy )
+        return rpy < 0;
+    return lhs->GetChecksum() < rhs->GetChecksum();
 }
 
 struct Item : Package_ABC::Item_ABC
@@ -487,24 +513,6 @@ void FillItems( Async& async, const FileSystem_ABC& system, const Path& path, T&
     Terrain::Parse ( async, system, path, items, meta );
     Exercise::Parse( async, system, path, items, meta );
 }
-
-int GetTypeOrder( const std::string& type )
-{
-    if( type == "model" ) return 0;
-    if( type == "terrain" ) return 1;
-    if( type == "exercise" ) return 2;
-    return 3;
-}
-
-bool ItemOrder( const Package_ABC::T_Item& a, const Package_ABC::T_Item& b )
-{
-    const std::string ta = a->GetType();
-    const std::string tb = b->GetType();
-    if( ta == tb )
-        return a->GetChecksum() < b->GetChecksum();
-    else
-        return GetTypeOrder( ta ) < GetTypeOrder( tb );
-}
 }
 
 // -----------------------------------------------------------------------------
@@ -540,6 +548,7 @@ bool Package::Parse()
             FillItems( async, system_, path, items_, meta.get() );
     else
         FillItems( async, system_, path_, items_, meta.get() );
+    async.Join();
     std::sort( items_.begin(), items_.end(), &ItemOrder );
     return true;
 }
