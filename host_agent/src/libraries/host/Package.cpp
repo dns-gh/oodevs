@@ -39,6 +39,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
     virtual void        Install( const FileSystem_ABC& system, const Path& trash, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
     virtual void        Move( const FileSystem_ABC& system, const Path& dst ) const = 0;
+    virtual void        SetExercisePaths( const Package_ABC& src, Path& model, Path& terrain, Path& exercise ) const = 0;
 };
 
 namespace
@@ -276,6 +277,11 @@ struct Item : Package_ABC::Item_ABC
         return false;
     }
 
+    void SetExercisePaths( const Package_ABC&, Path&, Path&, Path& ) const
+    {
+        throw std::runtime_error( "Unexpected call to SetExercisePaths on non-exercise item" );
+    }
+
 protected:
     const Path root_;
     const size_t id_;
@@ -397,6 +403,13 @@ struct Dependency : public Item
     const std::string type_;
 };
 
+void SetPathFromDependency( Path& dst, const Package_ABC& src, const std::string& type, const std::string& name )
+{
+    Package_ABC::T_Item item = src.Find( Dependency( type, name ) );
+    if( item )
+        dst = item->GetRoot();
+}
+
 struct Exercise : public Item
 {
     Exercise( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
@@ -440,6 +453,13 @@ struct Exercise : public Item
     bool IsExercise() const
     {
         return true;
+    }
+
+    void SetExercisePaths( const Package_ABC& src, Path& model, Path& terrain, Path& exercise ) const
+    {
+        exercise = root_;
+        SetPathFromDependency( model, src, "model", model_ );
+        SetPathFromDependency( terrain, src, "terrain", terrain_ );
     }
 
     template< typename T >
@@ -669,4 +689,15 @@ size_t Package::CountExercises() const
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         reply += item->IsExercise();
     return reply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::SetExercisePaths
+// Created: BAX 2012-06-04
+// -----------------------------------------------------------------------------
+void Package::SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const
+{
+    Package_ABC::T_Item next = Find( Dependency( "exercise", name ) );
+    if( next )
+        next->SetExercisePaths( *this, model, terrain, exercise );
 }

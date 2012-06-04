@@ -253,6 +253,7 @@ namespace mocks
         MOCK_METHOD_EXT( Move, 2, void( const host::Path&, const std::vector< size_t >& ), MoveItems );
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
+        MOCK_METHOD( SetExercisePaths, 4 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

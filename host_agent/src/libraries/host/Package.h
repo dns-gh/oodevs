@@ -47,6 +47,7 @@ public:
     virtual void Identify( const Package_ABC& reference );
     virtual void Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids );
     virtual void Move( const Path& trash, const std::vector< size_t >& ids );
+    virtual void SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const;
     //@}
 
 public:

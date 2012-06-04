@@ -61,6 +61,7 @@ struct Package_ABC : public boost::noncopyable
     virtual void Identify( const Package_ABC& ref ) = 0;
     virtual void Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
     virtual void Move( const Path& trash, const std::vector< size_t >& ids ) = 0;
+    virtual void SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const = 0;
     //@}
 };
 
