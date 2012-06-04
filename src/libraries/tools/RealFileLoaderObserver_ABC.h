@@ -11,6 +11,7 @@
 #define RealFileLoaderObserver_ABC_h
 
 #include <string>
+#include <vector>
 #include <tools/XmlCrc32Signature.h>
 
 namespace xml
