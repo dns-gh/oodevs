@@ -2266,6 +2266,10 @@ tirador</translation>
         <source>Delete size</source>
         <translation>Borrar volúmen</translation>
     </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Composantes</name>

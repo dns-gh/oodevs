@@ -722,6 +722,7 @@ public:
     QStringList GetComposantesThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown );
     QStringList GetComposantesThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetComposantesThatUse( helpers::ArmorInfos& armor );
+    QStringList GetComposantesThatUse( ADN_Categories_Data::SizeInfos& size );
 
 private:
     void ReadElement( xml::xistream& input );

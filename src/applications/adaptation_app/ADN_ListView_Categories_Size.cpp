@@ -13,6 +13,7 @@
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
+#include "ADN_Composantes_Data.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
 
@@ -100,13 +101,20 @@ void ADN_ListView_Categories_Size::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
 {
-    Q3PopupMenu popuMenu( this );
+    Q3PopupMenu popupMenu( this );
 
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_Size", "New size"), 0 );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_Size", "Delete size"), 1 );
-    popuMenu.setItemEnabled( 1, pCurData_ != 0 );
+    popupMenu.insertItem( tools::translate( "ADN_ListView_Categories_Size", "New size"), 0 );
+    popupMenu.insertItem( tools::translate( "ADN_ListView_Categories_Size", "Delete size"), 1 );
+    popupMenu.setItemEnabled( 1, pCurData_ != 0 );
 
-    int nResult = popuMenu.exec( pt );
+    if( pCurData_ != 0 )
+    {
+        SizeInfos* pCastData = static_cast< SizeInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->GetData().c_str(), tools::translate( "ADN_ListView_Categories_Size", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+    }
+
+    int nResult = popupMenu.exec( pt );
     switch ( nResult )
     {
         case 0:

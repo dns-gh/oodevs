@@ -2473,3 +2473,19 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( helpers::ArmorInfos& ar
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Categories_Data::SizeInfos& size )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        if( *pComp->ptrSize_.GetData() == size.GetData() )
+            result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}
