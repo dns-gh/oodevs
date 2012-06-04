@@ -12,6 +12,7 @@
 #include "moc_ModelConsistencyDialog.cpp"
 #include "FilterProxyModel.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -40,13 +41,13 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
 {
     // Initialize dialog
     setCaption( tr( "Consistency analysis" ) );
-    setMinimumSize( 500, 500 );
+    setMinimumSize( 900, 500 );
 
     connect( this, SIGNAL( ClearLoadingErrors() ), parent, SLOT( ClearLoadingErrors() ) );
     connect( parent, SIGNAL( CheckConsistency() ), this, SLOT( CheckConsistency() ) );
 
     // Model
-    horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Description" );
+    horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Long name" ) << tr( "Description" );
     dataModel_ = new QStandardItemModel( this );
     dataModel_->setColumnCount( 4 );
     proxyModel_ = new FilterProxyModel( this, IsError );
@@ -220,6 +221,14 @@ void ModelConsistencyDialog::Display()
     show();
 }
 
+namespace
+{
+    std::string DiplayLongName( const std::string& name )
+    {
+        return name == "" ? "---" : name;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyDialog::UpdateErrorListView
 // Created: ABR 2011-09-23
@@ -231,6 +240,7 @@ void ModelConsistencyDialog::UpdateDataModel()
     tableView_->horizontalHeader()->setResizeMode( eIcon, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eID, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eName, QHeaderView::ResizeToContents );
+    tableView_->horizontalHeader()->setResizeMode( eLongName, QHeaderView::ResizeToContents );
     tableView_->horizontalHeader()->setResizeMode( eDescription, QHeaderView::Stretch );
 
     int currentRow = 0;
@@ -254,11 +264,14 @@ void ModelConsistencyDialog::UpdateDataModel()
                 AddIcon( entity, error.type_, items );
                 AddItem( static_cast< unsigned int >( entity->GetId() ), locale().toString( static_cast< unsigned int >( entity->GetId() ) ), entity, error.type_, items );
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
+                const std::string longName = DiplayLongName( gui::LongNameHelper::GetEntityLongName( *entity ) );
+                AddItem( longName.c_str(), longName.c_str(), entity, error.type_, items );
             }
             else
             {
                 AddIcon( entity, error.type_, items );
                 AddItem( 0, "---", entity, error.type_, items );
+                AddItem( "---", "---", entity, error.type_, items );
                 AddItem( "---", "---", entity, error.type_, items );
             }
 

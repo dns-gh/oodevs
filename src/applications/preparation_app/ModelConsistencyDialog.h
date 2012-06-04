@@ -76,7 +76,7 @@ public slots:
 private:
     //! @name Enums
     //@{
-    enum E_Column { eIcon = 0, eID = 1, eName = 2, eDescription = 3 };
+    enum E_Column { eIcon = 0, eID = 1, eName = 2, eLongName = 3, eDescription = 4 };
     //@}
 
     //! @name Types

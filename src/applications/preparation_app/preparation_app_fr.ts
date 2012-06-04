@@ -1393,6 +1393,10 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Invalid stock resource &apos;%1&apos; in orbat.xml. This resource will not be saved.</source>
         <translation>Dotation de stock &apos;%1&apos; invalide dans orbal.xml. Cette dotation ne sera pas sauvegardée.</translation>
     </message>
+    <message>
+        <source>Long name</source>
+        <translation>Nom long</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
