@@ -31,7 +31,7 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
         const kernel::PhysicalAttribute_ABC& parentPhysicalAttribute = parent->Get< kernel::PhysicalAttribute_ABC >();
         const kernel::Architecture_ABC& parentArchitecture = parentPhysicalAttribute.GetArchitecture();
         Initialize( objectTypes,
-                    parentArchitecture.GetHeight(),
+                    static_cast< float >( parentArchitecture.GetHeight() ),
                     parentArchitecture.GetFloorNumber(),
                     parentArchitecture.GetParkingFloors(),
                     static_cast< float >( parentArchitecture.GetOccupation() ) / 100.f,

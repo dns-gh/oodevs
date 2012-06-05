@@ -27,7 +27,6 @@ namespace xml
     class xistream;
 }
 
-
 // =============================================================================
 /** @class  UrbanColor
     @brief  UrbanColor
