@@ -120,7 +120,7 @@
         </build-lib>
     </target>
 
-    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood" description="build preparation static library">
+    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood,library.geostore" description="build preparation static library">
         <build-lib name="preparation" depends="qt4" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
@@ -340,6 +340,10 @@
         </build-lib>
     </target>
 
+    <target name="library.geostore" description="build geostore static library">
+        <build-lib name="geostore" pattern="lib${ant.project.name}_geostore-${platform}-mt@{suffix}" suffix="-gd"/>
+    </target>
+
     <target name="library.shield" depends="library.protocol" description="build shield static library">
         <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
@@ -401,8 +405,8 @@
     <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
                                             library.aar_plugin,library.rights_plugin,library.order_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,
-											library.bml_plugin,library.bml_plugin_dll,
-											library.script_plugin,library.score_plugin,
+                                            library.bml_plugin,library.bml_plugin_dll,
+                                            library.script_plugin,library.score_plugin,
                                             library.crossbow_plugin_dll,library.timeline_plugin_dll,
                                             library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
 
@@ -600,7 +604,7 @@
     <target name="application.preparation_app" depends="library.preparation,library.frontend" description="build Sword Gaming executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
                    libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,
-                         Qt3Support4,
+                         Qt3Support4,geodata,spatialite,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
@@ -1503,7 +1507,7 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry" version="1.0.1"/>
         <update name="geocoord" version="1.0"/>
-        <update name="terrain" version="5.1" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban,geostore"/>
+        <update name="terrain" version="5.1" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
         <update name="terrain" version="5.1" package="terraintools_${platform}.zip"/>
         <update name="qt" version="4.7.0"/>
         <update name="boost" version="1.42"/>
