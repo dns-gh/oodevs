@@ -45,7 +45,8 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
     AddPanel( ghostPanel_ );
     AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_, colorController ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
-    AddPanel( new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer ) );
+    weatherPanel_ = new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer );
+    AddPanel( weatherPanel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,4 +83,13 @@ InhabitantCreationPanel& CreationPanels::GetInhabitantCreationPanel() const
 void CreationPanels::Load()
 {
     ghostPanel_->Load();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::Purge
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void CreationPanels::Purge()
+{
+    weatherPanel_->Purge();
 }

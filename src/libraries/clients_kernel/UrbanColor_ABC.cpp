@@ -17,11 +17,10 @@ using namespace kernel;
 // Created: LDC 2012-05-04
 // -----------------------------------------------------------------------------
 UrbanColor_ABC::UrbanColor_ABC()
-    : initial_( 200u, 200u, 200u )
-    , current_( 200u, 200u, 200u )
-    , alpha_  ( 0.7f )
+    : initial_( 200, 200, 200, 180 )
+    , current_( 200, 200, 200, 180 )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,14 +29,14 @@ UrbanColor_ABC::UrbanColor_ABC()
 // -----------------------------------------------------------------------------
 UrbanColor_ABC::~UrbanColor_ABC()
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanColor_ABC::Red
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-unsigned short UrbanColor_ABC::Red() const
+int UrbanColor_ABC::Red() const
 {
     return current_.red_;
 }
@@ -46,7 +45,7 @@ unsigned short UrbanColor_ABC::Red() const
 // Name: UrbanColor_ABC::Green
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-unsigned short UrbanColor_ABC::Green() const
+int UrbanColor_ABC::Green() const
 {
     return current_.green_;
 }
@@ -55,7 +54,7 @@ unsigned short UrbanColor_ABC::Green() const
 // Name: UrbanColor_ABC::Blue
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-unsigned short UrbanColor_ABC::Blue() const
+int UrbanColor_ABC::Blue() const
 {
     return current_.blue_;
 }
@@ -66,7 +65,7 @@ unsigned short UrbanColor_ABC::Blue() const
 // -----------------------------------------------------------------------------
 float UrbanColor_ABC::Alpha() const
 {
-    return alpha_;
+    return current_.alpha_ / 255.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +81,7 @@ void UrbanColor_ABC::Restore()
 // Name: UrbanColor_ABC::SetColor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-void UrbanColor_ABC::SetColor( unsigned short red, unsigned short green, unsigned short blue )
+void UrbanColor_ABC::SetColor( int red, int green, int blue, int alpha )
 {
-    current_ = Color( red, green, blue );
+    current_ = UrbanBlockColor( red, green, blue, alpha );
 }

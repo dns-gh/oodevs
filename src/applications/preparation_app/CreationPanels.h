@@ -38,6 +38,7 @@ class InhabitantCreationPanel;
 class Model;
 class ObjectCreationPanel;
 class StaticModel;
+class WeatherPanel;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -59,6 +60,7 @@ public:
     //! @name Operations
     //@{
     void Load();
+    void Purge();
     ObjectCreationPanel& GetObjectCreationPanel() const;
     InhabitantCreationPanel& GetInhabitantCreationPanel() const;
     //@}
@@ -69,6 +71,7 @@ private:
     ObjectCreationPanel*     objectCreationPanel_;
     InhabitantCreationPanel* inhabitantCreationPanel_;
     GhostsPanel*             ghostPanel_;
+    WeatherPanel*            weatherPanel_;
     //@}
 };
 

@@ -20,6 +20,7 @@
 #pragma warning( pop )
 #include <boost/bind.hpp>
 #include "MT_TOOLS/MT_Logger_ABC.h"
+#include "tools/XmlCrc32Signature.h"
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
@@ -777,7 +778,6 @@ std::string ExerciseConfig::GetDetectionDirectory() const
 std::string ExerciseConfig::GetPathfindGraphFile() const
 {
     return pWorldParameters_->pathfindGraph_;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -805,6 +805,7 @@ std::string ExerciseConfig::GetPathfindNodesFile() const
 void ExerciseConfig::SerializeAndSignTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const
 {
     pWorldParameters_->Serialize( GetTerrainFile(), schemaWriter );
+    tools::WriteXmlCrc32Signature( GetTerrainFile() );
 }
 
 // -----------------------------------------------------------------------------

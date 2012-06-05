@@ -192,3 +192,13 @@ void WeatherPanel::hide()
     QWidget::hide();
     layer_.Clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::Purge
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void WeatherPanel::Purge()
+{
+    layer_.Clear();
+    EnableLocalParameters( false, false );
+}

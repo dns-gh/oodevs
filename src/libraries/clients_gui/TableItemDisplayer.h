@@ -48,8 +48,9 @@ private:
 private:
     //! @name Member data
     //@{
-    QString message_;
+    QString      message_;
     Q3TableItem* item_;
+    QColor       color_;
     //@}
 };
 

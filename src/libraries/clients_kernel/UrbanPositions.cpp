@@ -21,6 +21,19 @@ float UrbanPositions::epsilon_ = 0.0001f;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
+// Created: ABR 2012-06-05
+// -----------------------------------------------------------------------------
+UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object )
+    : level_            ( level )
+    , object_           ( object )
+    , selected_         ( false )
+    , hasInfrastructure_( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions constructor
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, std::vector< geometry::Point2f > positions )
@@ -75,6 +88,15 @@ float UrbanPositions::ComputeArea() const
 const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 {
     return polygon_.Vertices();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::Polygon
+// Created: ABR 2012-06-05
+// -----------------------------------------------------------------------------
+const geometry::Polygon2f& UrbanPositions::Polygon() const
+{
+    return polygon_;
 }
 
 // -----------------------------------------------------------------------------

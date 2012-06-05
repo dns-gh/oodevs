@@ -59,7 +59,7 @@ public:
 
     //! @name Observer operation
     //@{
-    void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+    virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
     {
 #ifdef DEBUG
         if( newMode & hiddenModes_ && newMode & defaultModes_ )

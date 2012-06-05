@@ -162,9 +162,12 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     // Layer 1
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
-
-    // ToolBars
-    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer/*, *eventStrategy_*/ ) );
+    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_ );
+    gui::AutomatsLayer& automats = *new gui::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    gui::FormationLayer& formation = *new gui::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
+    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
+    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
 
     // Strategy
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
@@ -177,23 +180,18 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     gui::RichItemFactory* factory = new gui::RichItemFactory( this );
 
-    // Layers 2
-    gui::AutomatsLayer& automats = *new gui::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
-    gui::FormationLayer& formation = *new gui::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
-    gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
-    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
-    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
-    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, toolbarContainer_->GetLocationEditorToolbar() );
-
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_ ) );
+
+    // ToolBars
+    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
     connect( toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), &dockContainer_->GetTerrainProfiler(), SLOT( setVisible( bool ) ) );
     connect( &dockContainer_->GetTerrainProfiler(), SIGNAL( visibilityChanged( bool ) ), toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
 
-    // Layers 3
+    // Layers 2
     CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *profilerLayer, PreparationProfile::GetProfile(), *picker, automats, formation );
 
     // Menu (must be created after DockWidgets and ToolBars for 'Windows' menu)

@@ -11,11 +11,13 @@
 #define __preparation_PhysicalAttribute_h_
 
 #include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
     class AccommodationTypes;
     class Controllers;
+    class Entity_ABC;
     class ObjectTypes;
     class PropertiesDictionary;
 }
@@ -23,6 +25,7 @@ namespace kernel
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 class UrbanObject;
@@ -34,14 +37,22 @@ class UrbanObject;
 // Created: ABR 2012-05-22
 // =============================================================================
 class PhysicalAttribute : public kernel::PhysicalAttribute_ABC
+                        , public kernel::Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
+             PhysicalAttribute( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+                                UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes );
              PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                 UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes );
     virtual ~PhysicalAttribute();
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 };
 

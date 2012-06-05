@@ -39,7 +39,7 @@ namespace
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection )
-    : RichToolBar( controllers, parent, "gistoolbar", tools::translate( "gui::GisToolBar", "GIS tools" ), false )
+    : RichToolBar( controllers, parent, "gistoolbar", tools::translate( "gui::GisToolBar", "GIS tools" ) )
     , controllers_      ( controllers )
     , detection_        ( detection )
 {
@@ -101,7 +101,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
     }
     OnToggleWatershedEnabled( false );
     OnToggleContourLinesEnabled( false );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

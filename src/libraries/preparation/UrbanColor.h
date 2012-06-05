@@ -12,6 +12,15 @@
 
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Entity_ABC;
+    class PropertiesDictionary;
+}
 
 namespace xml
 {
@@ -26,17 +35,38 @@ namespace xml
 // =============================================================================
 class UrbanColor : public kernel::UrbanColor_ABC
                  , public kernel::Serializable_ABC
+                 , public tools::Observer_ABC
+                 , public kernel::ModesObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanColor( xml::xistream& xis );
+             UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
+             UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
     virtual ~UrbanColor();
     //@}
 
     //! @name Serializable_ABC
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+    //! @name ModesObserver_ABC
+    //@{
+    virtual void NotifyModeChanged( int newMode );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CreateDictionnary( bool readOnly );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers&          controllers_;
+    kernel::PropertiesDictionary& dico_;
     //@}
 };
 

@@ -22,9 +22,10 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PropertyTableItem::PropertyTableItem( Q3Table* table, Property_ABC& property, TableItemDisplayer& displayer, EditorFactory_ABC& factory )
     : Q3TableItem( table, Q3TableItem::WhenCurrent, "" )
-    , factory_( factory )
+    , factory_  ( factory )
     , displayer_( displayer )
-    , property_( property )
+    , property_ ( property )
+    , color_    ( Qt::white )
 {
     displayer_.SetItem( this );
     property_.Display( displayer_ );
@@ -87,5 +88,18 @@ void PropertyTableItem::paint( QPainter* p, const QColorGroup& cg, const QRect& 
 {
     displayer_.SetItem( this );
     property_.Display( displayer_ );
-    Q3TableItem::paint( p, cg, cr, selected );
+
+    QColorGroup newCg( cg );
+    newCg.setColor( QColorGroup::Base, color_ );
+    p->setBackgroundColor( color_ );
+    Q3TableItem::paint( p, newCg, cr, selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertyTableItem::SetColor
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+void PropertyTableItem::SetColor( QColor color )
+{
+    color_ = color;
 }

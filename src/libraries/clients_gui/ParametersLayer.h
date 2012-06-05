@@ -36,7 +36,7 @@ class ParametersLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( kernel::GlTools_ABC& tools, LocationEditor_ABC& editor );
+             ParametersLayer( kernel::GlTools_ABC& tools );
     virtual ~ParametersLayer();
     //@}
 
@@ -75,7 +75,6 @@ private:
     //@{
     kernel::GlTools_ABC& tools_;
     std::auto_ptr< CursorStrategy_ABC > cursors_;
-    LocationEditor_ABC& editor_;
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;

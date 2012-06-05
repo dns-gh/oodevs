@@ -43,6 +43,11 @@ public:
     virtual ~WeatherPanel();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Purge();
+    //@}
+
 protected:
     //! @name Helpers
     //@{

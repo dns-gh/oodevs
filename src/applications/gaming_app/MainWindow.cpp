@@ -229,7 +229,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer );
     addToolBar( LocEditToolBar );
-    parameters_ = new gui::ParametersLayer( *glProxy_, *LocEditToolBar );
+    parameters_ = new gui::ParametersLayer( *glProxy_ );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, *pProfile_, *simpleFilter_ );
     ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
     ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_, *simpleFilter_ );

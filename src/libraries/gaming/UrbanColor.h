@@ -31,7 +31,6 @@ public:
     explicit UrbanColor( const sword::UrbanAttributes& message );
     virtual ~UrbanColor();
     //@}
-
 };
 
 #endif // __UrbanColor_h_

@@ -26,6 +26,8 @@ namespace xml
     class xostream;
 }
 
+class IdManager;
+
 // =============================================================================
 /** @class  UrbanObject
     @brief  UrbanObject
@@ -40,10 +42,9 @@ class UrbanObject : public kernel::UrbanObject
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanObject( kernel::Controllers& controllers, const std::string& name, unsigned int id,
-                          const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations,
-                          kernel::UrbanDisplayOptions& options );
-             UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, const kernel::ObjectType& type,
+             UrbanObject( kernel::Controllers& controllers, IdManager& idManager, const std::string& name, const kernel::ObjectType& type,
+                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options );
+             UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager, const kernel::ObjectType& type,
                           const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options );
     virtual ~UrbanObject();
     //@}

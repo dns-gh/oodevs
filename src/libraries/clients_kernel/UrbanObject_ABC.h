@@ -85,6 +85,7 @@ public:
     double GetNominalCapacity( const std::string& motivation ) const;
     const kernel::AccommodationTypes& GetAccommodations() const;
     const T_HumansStrMap& GetHumansMap() const { return humans_; }
+    void ComputeConvexHull();
     //@}
 
 protected:

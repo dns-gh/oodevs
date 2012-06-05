@@ -29,7 +29,7 @@
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
 UrbanInfosDockWidget::UrbanInfosDockWidget( QWidget* parent, kernel::Controllers& controllers, UrbanModel& model )
-    : RichDockWidget( controllers, parent, "urbanInfosDockWidget", tr( "Urban informations" ), false )
+    : RichDockWidget( controllers, parent, "urbanInfosDockWidget", tr( "Urban informations" ) )
     , controllers_( controllers )
     , model_      ( model )
 {
@@ -50,7 +50,7 @@ UrbanInfosDockWidget::UrbanInfosDockWidget( QWidget* parent, kernel::Controllers
 
     Update();
 
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,17 +156,17 @@ namespace
         }
 
         // Usages
-        if( const kernel::PhysicalAttribute_ABC* pPhysical = urbanObject.Retrieve< kernel::PhysicalAttribute_ABC >() )
-            if( kernel::Usages_ABC* usages = pPhysical->GetUsages() )
-            {
-                const kernel::Usages_ABC::T_Occupations& occupations = usages->GetOccupations();
-                for( kernel::Usages_ABC::CIT_Occupations it = occupations.begin(); it != occupations.end(); ++it )
-                    if(it->first != kernel::Usages::defaultStr_ )
-                    {
-                        totalCapacity += it->second.first;
-                        motivationsCapacities[ it->first ] += it->second.first;
-                    }
-            }
+        const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject.Get< kernel::PhysicalAttribute_ABC >();
+        const kernel::Usages_ABC& usages = pPhysical.GetUsages();
+        {
+            const kernel::Usages_ABC::T_Occupations& occupations = usages.GetOccupations();
+            for( kernel::Usages_ABC::CIT_Occupations it = occupations.begin(); it != occupations.end(); ++it )
+                if(it->first != kernel::Usages::defaultStr_ )
+                {
+                    totalCapacity += it->second.first;
+                    motivationsCapacities[ it->first ] += it->second.first;
+                }
+        }
         // Resource Network
         const kernel::ResourceNetwork_ABC* resourceAttribute = urbanObject.Retrieve< kernel::ResourceNetwork_ABC >();
         if( resourceAttribute )

@@ -788,6 +788,35 @@ Detalle: %1.</translation>
     </message>
 </context>
 <context>
+    <name>UrbanColor</name>
+    <message>
+        <source>Info/Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UrbanFactory</name>
+    <message>
+        <source>District</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>City</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban block</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UrbanPositions</name>
+    <message>
+        <source>Info/Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WeatherModel</name>
     <message>
         <source>Local weather </source>

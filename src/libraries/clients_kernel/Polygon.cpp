@@ -153,3 +153,12 @@ std::string Polygon::GetTypeName() const
 {
     return "polygon";
 }
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::GetPoints
+// Created: ABR 2012-06-01
+// -----------------------------------------------------------------------------
+const T_PointVector& Polygon::GetPoints() const
+{
+    return points_;
+}

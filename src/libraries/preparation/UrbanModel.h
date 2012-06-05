@@ -10,13 +10,22 @@
 #ifndef __preparation_UrbanModel_h_
 #define __preparation_UrbanModel_h_
 
-#include "tools/Resolver.h"
 #include "clients_kernel/UrbanDisplayOptions.h"
+#include "spatialcontainer/SpatialContainer.h"
+#include "tools/Resolver.h"
+#include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/ModelLoaded.h"
 #include <boost/noncopyable.hpp>
+
+namespace geostore
+{
+    class GeoStoreManager;
+}
 
 namespace kernel
 {
     class Controllers;
+    class Location_ABC;
     class Object_ABC;
     class ObjectTypes;
     class UrbanObject_ABC;
@@ -27,6 +36,7 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
+class IdManager;
 class StaticModel;
 class UrbanFactory_ABC;
 
@@ -37,25 +47,46 @@ class UrbanFactory_ABC;
 // Created: SLG 2009-02-10
 // =============================================================================
 class UrbanModel : public tools::Resolver< kernel::UrbanObject_ABC >
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                  , private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    struct QuadTreeTraits;
+    typedef spatialcontainer::SpatialContainer< const kernel::UrbanObject_ABC*, QuadTreeTraits, float > T_QuadTree;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects );
+             UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects, IdManager& idManager );
     virtual ~UrbanModel();
     //@}
 
     //! @name Operations
     //@{
+    void Purge();
     void LoadUrban( xml::xistream& xis );
     void LoadUrbanState( xml::xistream& xis );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void CreateUrbanBlocs( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
+    void DeleteBlocs( int minimumArea );
+    void DeleteBlocs( const kernel::UrbanObject_ABC& urbanObject );
+    //@}
+
+    //! @name Accessors
+    //@{
+    UrbanFactory_ABC& GetFactory() const;
+    const kernel::UrbanObject_ABC* FindBlock( const geometry::Point2f& center ) const;
+    void GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< const kernel::UrbanObject_ABC* >& result ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     void ReadCity( xml::xistream& xis );
     void ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* parent );
     void ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent );
@@ -65,17 +96,21 @@ private:
     void UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object );
     void SerializeExercise( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void SerializeTerrain( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void CreateQuadTree( float width, float height );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::ObjectTypes& objectTypes_;
-    const kernel::AccommodationTypes& accommodationTypes_;
-    const tools::Resolver< kernel::Object_ABC >& objects_;
-    std::auto_ptr< kernel::UrbanDisplayOptions > urbanDisplayOptions_;
-    std::auto_ptr< UrbanFactory_ABC > factory_;
+    kernel::Controllers&                            controllers_;
+    const StaticModel&                              staticModel_;
+    const tools::Resolver< kernel::Object_ABC >&    objects_;
+    std::auto_ptr< kernel::UrbanDisplayOptions >    urbanDisplayOptions_;
+    std::auto_ptr< UrbanFactory_ABC >               factory_;
+    std::auto_ptr< geostore::GeoStoreManager >      geostore_;
+    std::auto_ptr< T_QuadTree >                     quadTree_;
+    float                                           precision_;
+    float                                           maxElementSize_;
     //@}
 };
 

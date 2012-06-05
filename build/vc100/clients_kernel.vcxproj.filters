@@ -451,12 +451,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
@@ -491,6 +485,18 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1074,9 +1080,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLinePositions_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -1159,6 +1162,15 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClInclude>
   </ItemGroup>

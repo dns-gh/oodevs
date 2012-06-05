@@ -50,5 +50,5 @@ ResourceNetworkPrototype::~ResourceNetworkPrototype()
 void ResourceNetworkPrototype::Commit()
 {
     if( creation_ )
-        creation_->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, creation_->Get< Positions >().GetPosition(), urbans_, objects_, resources_ ) );
+        creation_->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, creation_->Get< Positions >().GetPosition(), urbans_, objects_, resources_, true ) );
 }

@@ -33,9 +33,6 @@
     <ClInclude Include="..\..\src\tests\clients_test\MockIndicatorGrammarHandler.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\clients_test\MockResolver.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\clients_test\XmlChecks.h">
       <Filter>Source Files</Filter>
     </ClInclude>

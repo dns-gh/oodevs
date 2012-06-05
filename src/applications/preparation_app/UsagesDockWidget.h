@@ -75,7 +75,6 @@ private:
     void RemoveMotivation( const std::string& role );
     void Validate();
     void Load();
-    void UpdateProperties();
     //@}
 
 private:

@@ -14,6 +14,7 @@
 #include "AccommodationTypes.h"
 #include "ActionController.h"
 #include "Architecture_ABC.h"
+#include "Hierarchies.h"
 #include "PhysicalAttribute_ABC.h"
 #include "PropertiesDictionary.h"
 #include "UrbanColor_ABC.h"
@@ -94,7 +95,7 @@ void UrbanObject_ABC::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 QString UrbanObject_ABC::GetName() const
 {
     if( name_.isEmpty() )
-        return QString( tools::translate( "Urban", "Urban block[%L1]" ).arg( id_ ) );
+        return QString( tools::translate( "Urban", "Urban block [%L1]" ).arg( id_ ) );
     return name_;
 }
 
@@ -269,8 +270,10 @@ float UrbanObject_ABC::GetLivingSpace( unsigned int floorNumber, unsigned int oc
 float UrbanObject_ABC::GetLivingSpace() const
 {
     if( livingSpace_ == 0 )
-        if( const Architecture_ABC* architecture = Get< PhysicalAttribute_ABC >().GetArchitecture() )
-            return GetLivingSpace( architecture->GetFloorNumber(), architecture->GetOccupation() );
+    {
+        const Architecture_ABC& architecture = Get< PhysicalAttribute_ABC >().GetArchitecture();
+        return GetLivingSpace( architecture.GetFloorNumber(), architecture.GetOccupation() );
+    }
     return livingSpace_;
 }
 
@@ -310,5 +313,19 @@ double UrbanObject_ABC::GetNominalCapacity( const std::string& motivation ) cons
 // -----------------------------------------------------------------------------
 const kernel::AccommodationTypes& UrbanObject_ABC::GetAccommodations() const
 {
-    return accommodations_; // $$$$ ABR 2012-05-25: WTF !!! C'est deja dans staticModel...
+    return accommodations_; // $$$$ ABR 2012-05-25: C'est deja dans staticModel..
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject_ABC::ComputeConvexHull
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+void UrbanObject_ABC::ComputeConvexHull()
+{
+    //T_PointVector vertices;
+    //const kernel::Hierarchies& hierarchy = Get< kernel::Hierarchies >();
+    //kernel::UrbanPositions_ABC& urbanPosition = Get< UrbanPositions_ABC >();
+    //urbanPosition.ComputeConvexHull( vertices );
+    //if( UrbanObject_ABC* parent = const_cast< UrbanObject_ABC* >( static_cast< const UrbanObject_ABC* >( hierarchy.GetSuperior() ) ) )
+    //    parent->ComputeConvexHull();
 }

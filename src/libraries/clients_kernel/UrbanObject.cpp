@@ -65,10 +65,10 @@ void UrbanObject::UpdateColor()
     PhysicalAttribute_ABC* pPhysical = Retrieve< PhysicalAttribute_ABC >();
     if( !pPhysical )
         return;
-    const Usages_ABC* pUsages = pPhysical->GetUsages();
-    UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >();
-    if( pUsages && pColor && !options_.SetColor( *pColor, GetLivingSpace(), GetHumansMap(), *pUsages ) )
-        pColor->Restore();
+    const Usages_ABC& pUsages = pPhysical->GetUsages();
+    UrbanColor_ABC& pColor = Get< UrbanColor_ABC >();
+    if( !options_.SetColor( pColor, GetLivingSpace(), GetHumansMap(), pUsages ) )
+        pColor.Restore();
 }
 
 // -----------------------------------------------------------------------------

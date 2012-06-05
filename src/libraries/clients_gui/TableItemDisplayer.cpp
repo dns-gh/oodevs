@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "TableItemDisplayer.h"
+#include "PropertyTableItem.h"
 
 using namespace gui;
 
@@ -18,6 +19,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 TableItemDisplayer::TableItemDisplayer()
     : item_( 0 )
+    , color_( Qt::white )
 {
     // NOTHING
 }
@@ -65,7 +67,26 @@ void TableItemDisplayer::StartDisplay()
 // -----------------------------------------------------------------------------
 void TableItemDisplayer::DisplayFormatted( const QString& formatted )
 {
-    message_ += formatted;
+    // $$$$ ABR 2012-06-04: TODO, read color and keep the remaining message
+    // $$$$ ABR 2012-06-04: Should be improve, without changing color every time for every item.
+    if( formatted.startsWith( "<color" ) )
+    {
+        xml::xistringstream xis( formatted.toStdString() );
+        int red = 0;
+        int green = 0;
+        int blue = 0;
+        xis >> xml::start( "color" )
+                >> xml::attribute< int >( "red", red )
+                >> xml::attribute< int >( "green", green )
+                >> xml::attribute< int >( "blue", blue )
+            >> xml::end;
+        color_ = QColor( red, green, blue );
+    }
+    else
+    {
+        color_ = Qt::white;
+        message_ += formatted;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +98,7 @@ void TableItemDisplayer::EndDisplay()
     if( !item_ )
         throw std::runtime_error( __FUNCTION__ );
 
+    static_cast< PropertyTableItem* >( item_ )->SetColor( color_ );
     item_->setText( message_ );
 
     item_ = 0;

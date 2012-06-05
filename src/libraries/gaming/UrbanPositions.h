@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UrbanPositions_h_
-#define __UrbanPositions_h_
+#ifndef __gaming_UrbanPositions_h_
+#define __gaming_UrbanPositions_h_
 
 #include "clients_kernel/UrbanPositions.h"
 
@@ -34,10 +34,9 @@ class UrbanPositions : public kernel::UrbanPositions
 public:
     //! @name Constructors/Destructor
     //@{s
-             UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter,
-                             const kernel::UrbanObject_ABC& object );
+             UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter, const kernel::UrbanObject_ABC& object );
     virtual ~UrbanPositions();
     //@}
 };
 
-#endif // __UrbanPositions_h_
+#endif // __gaming_UrbanPositions_h_

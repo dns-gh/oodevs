@@ -192,6 +192,7 @@ void DockContainer::Purge()
     for( std::vector< gui::RichListView* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it )
             ( *it )->Purge();
+    pCreationPanel_->Purge();
 }
 
 // -----------------------------------------------------------------------------

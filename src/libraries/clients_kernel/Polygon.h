@@ -45,6 +45,7 @@ public:
     virtual QString GetName() const;
     virtual bool IsValid() const;
     virtual bool IsDone() const;
+    const T_PointVector& GetPoints() const;
     //@}
 
 private:

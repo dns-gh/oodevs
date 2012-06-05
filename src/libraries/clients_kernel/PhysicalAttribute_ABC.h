@@ -12,7 +12,6 @@
 
 #include "Extension_ABC.h"
 #include "Displayable_ABC.h"
-#include "Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -28,7 +27,6 @@ namespace kernel
 // =============================================================================
 class PhysicalAttribute_ABC : public Extension_ABC
                             , public Displayable_ABC
-                            , public Serializable_ABC
                             , private boost::noncopyable
 {
 
@@ -41,8 +39,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual Architecture_ABC* GetArchitecture() const;
-    virtual Usages_ABC* GetUsages() const;
+    virtual Architecture_ABC& GetArchitecture() const;
+    virtual Usages_ABC& GetUsages() const;
     virtual unsigned int FindUsagesValue( const std::string& motivation ) const;
     //@}
 
@@ -52,11 +50,6 @@ public:
     virtual void DisplayInList   ( Displayer_ABC& ) const;
     virtual void DisplayInTooltip( Displayer_ABC& ) const;
     virtual void DisplayInSummary( Displayer_ABC& ) const;
-    //@}
-
-    //! @name Serializable_ABC
-    //@{
-    virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
 protected:

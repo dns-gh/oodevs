@@ -28,6 +28,7 @@ class UrbanPositions : public UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object );
              UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, std::vector< geometry::Point2f > positions );
     virtual ~UrbanPositions();
     //@}
@@ -38,6 +39,7 @@ public:
     virtual const geometry::Rectangle2f& BoundingBox() const;
     virtual float ComputeArea() const;
     virtual const std::vector< geometry::Point2f >& Vertices() const;
+    virtual const geometry::Polygon2f& Polygon() const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const;
     virtual void SetInfrastructurePresent();

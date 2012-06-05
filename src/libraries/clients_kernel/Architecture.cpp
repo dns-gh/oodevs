@@ -134,6 +134,15 @@ unsigned int Architecture::GetFloorNumber() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Architecture::GetParkingFloors
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetParkingFloors() const
+{
+    return parkingFloors_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Architecture::GetOccupation
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
@@ -149,4 +158,13 @@ unsigned int Architecture::GetOccupation() const
 unsigned int Architecture::GetHeight() const
 {
     return static_cast< unsigned int >( height_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetTrafficability
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+float Architecture::GetTrafficability() const
+{
+    return trafficability_;
 }

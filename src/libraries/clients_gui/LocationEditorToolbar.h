@@ -40,22 +40,19 @@ namespace gui
 // Created: SBO 2007-03-06
 // =============================================================================
 class LocationEditorToolbar : public RichToolBar
-                            , public LocationEditor_ABC
                             , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer, bool needRegister = true );
+             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer );
     virtual ~LocationEditorToolbar();
     //@}
 
     //! @name Operations
     //@{
-    virtual void StartEdit( ParametersLayer& parameters );
-    virtual void EndEdit();
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     //@}
 
@@ -63,7 +60,6 @@ private slots:
     //! @name Slots
     //@{
     void Goto();
-    void AddPoint();
     void AddParamPoint();
 
     void CreateBookmark();
@@ -72,12 +68,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LocationEditorToolbar( const LocationEditorToolbar& );            //!< Copy constructor
-    LocationEditorToolbar& operator=( const LocationEditorToolbar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     bool GetPosition( geometry::Point2f& point );
@@ -109,7 +99,6 @@ private:
     bool needRegister_;
     View_ABC& view_;
     LocationsLayer& layer_;
-    ParametersLayer* parameters_;
     QToolButton* okButton_;
     QToolButton* paramsButton_;
     QToolButton* gotoButton_;

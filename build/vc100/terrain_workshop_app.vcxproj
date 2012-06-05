@@ -54,7 +54,6 @@
     <Import Project="Property sheets\link_Gdal.props" />
     <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_geostore.props" />
     <Import Project="Property sheets\link_analysis.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
@@ -80,7 +79,6 @@
     <Import Project="Property sheets\link_Gdal.props" />
     <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_geostore.props" />
     <Import Project="Property sheets\link_analysis.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
@@ -106,7 +104,6 @@
     <Import Project="Property sheets\link_Gdal.props" />
     <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_geostore.props" />
     <Import Project="Property sheets\link_analysis.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
@@ -132,7 +129,6 @@
     <Import Project="Property sheets\link_Gdal.props" />
     <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_geostore.props" />
     <Import Project="Property sheets\link_analysis.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
@@ -670,6 +666,9 @@ lrelease -verbose %(FullPath)
     </ProjectReference>
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
+    </ProjectReference>
+    <ProjectReference Include="geostore.vcxproj">
+      <Project>{aa89d2b0-5ae3-4833-83f0-fccc013c16ff}</Project>
     </ProjectReference>
     <ProjectReference Include="license_gui.vcxproj">
       <Project>{18cfec8a-e69c-433a-8959-faafd82f9b7f}</Project>

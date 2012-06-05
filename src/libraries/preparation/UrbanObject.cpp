@@ -9,27 +9,33 @@
 
 #include "preparation_pch.h"
 #include "UrbanObject.h"
+
+#include "IdManager.h"
 #include "UrbanHierarchies.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject constructor
-// Created: ABR 2012-05-23
+// Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( kernel::Controllers& controllers, const std::string& name, unsigned int id, const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options)
-    : kernel::UrbanObject( controllers, name, id, type, accommodations, options )
+UrbanObject::UrbanObject( kernel::Controllers& controllers, IdManager& idManager, const std::string& name, const kernel::ObjectType& type,
+                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
+    : kernel::UrbanObject( controllers, name, idManager.GetNextId(), type, accommodations, options )
 {
+    name_ = QString( "%1 [%2]" ).arg( name.c_str() ).arg( id_ );
     controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject constructor
-// Created: ABR 2012-05-23
+// Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, const kernel::ObjectType& type, const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
+UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager, const kernel::ObjectType& type,
+                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
     : kernel::UrbanObject( xis, controllers, type, accommodations, options )
 {
     controllers_.Update( *this );
+    idManager.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------

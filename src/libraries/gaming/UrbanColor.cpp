@@ -20,11 +20,8 @@ UrbanColor::UrbanColor( const sword::UrbanAttributes& message )
     if( message.has_color() )
     {
         const sword::RgbaColor& color = message.color();
-        initial_ = Color( static_cast< unsigned short >( color.red() ),
-                          static_cast< unsigned short >( color.green() ),
-                          static_cast< unsigned short >( color.blue() ) );
-        alpha_ = color.alpha();
-        current_ = initial_;
+        SetColor( color.red(), color.green(), color.blue(), static_cast< int >( color.alpha() * 255 ) );
+        initial_ = current_;
     }
 }
 
@@ -36,4 +33,3 @@ UrbanColor::~UrbanColor()
 {
     // NOTHING
 }
-
