@@ -28,6 +28,7 @@
 #   pragma warning( push )
 #   pragma warning( disable : 4100 4127 4244 4345 4512 )
 #endif
+#include <boost/asio/deadline_timer.hpp>
 #include <boost/network/include/http/server.hpp>
 #include <boost/network/utils/thread_pool.hpp>
 #ifdef _MSC_VER
@@ -42,6 +43,8 @@ namespace
 struct Handler;
 typedef boost::network::http::async_server< Handler > HttpServer;
 typedef std::map< std::string, std::string > T_Parameters;
+typedef boost::asio::deadline_timer Timer;
+const int timeout_seconds = 10;
 
 T_Parameters ParseParameters( const boost::network::uri::uri& uri )
 {
@@ -111,9 +114,9 @@ private:
     const T_Parameters parameters_;
 };
 
-template< void (*Callback)( HttpServer::connection_ptr, size_t, AsyncStream& ) >
+template< void (*Callback)( HttpServer::connection_ptr, size_t, AsyncStream&, Timer& deadline ) >
 void OnReadBody( HttpServer::connection::input_range range, boost::system::error_code error, size_t size,
-                 HttpServer::connection_ptr link, size_t left, AsyncStream& async )
+                 HttpServer::connection_ptr link, size_t left, AsyncStream& async, Timer& deadline )
 {
     if( error )
         return async.CloseWrite();
@@ -121,18 +124,26 @@ void OnReadBody( HttpServer::connection::input_range range, boost::system::error
         async.Write( range.begin(), size );
     left -= size;
     if( left > 0 )
-        Callback( link, left, async );
+        Callback( link, left, async, deadline );
     else
         async.CloseWrite();
 }
 
-void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async )
+void OnTimeout( AsyncStream& async, const boost::system::error_code& e )
+{
+    if( e != boost::asio::error::operation_aborted )
+        async.CloseWrite();
+}
+
+void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async, Timer& deadline )
 {
     try
     {
-        link->read( boost::bind( &OnReadBody< ReadBody >, _1, _2, _3, link, left, async ) );
+        if( deadline.expires_from_now( boost::posix_time::seconds( timeout_seconds ) ) > 0 )
+            deadline.async_wait( boost::bind( &OnTimeout, async, _1 ) );
+        link->read( boost::bind( &OnReadBody< ReadBody >, _1, _2, _3, link, left, async, boost::ref( deadline ) ) );
     }
-    catch( const std::exception& /*err*/ )
+    catch( ... )
     {
         async.CloseWrite();
     }
@@ -141,11 +152,12 @@ void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async 
 class MimeWebRequest : public WebRequest
 {
 public:
-    MimeWebRequest( Pool_ABC& pool, const HttpServer::request& request, HttpServer::connection_ptr link )
+    MimeWebRequest( Pool_ABC& pool, HttpServer& server, const HttpServer::request& request, HttpServer::connection_ptr link )
         : WebRequest( request )
         , pool_     ( pool )
         , link_     ( link )
         , reader_   ( boost::make_shared< MimeReader >() )
+        , deadline_ ( server.get_io_service() )
         , size_     ( 0 )
     {
         BOOST_FOREACH( const boost::network::http::request_header_narrow& item, request.headers )
@@ -170,7 +182,8 @@ public:
 
     virtual void ParseMime()
     {
-        ReadBody( link_, size_, stream_ );
+        deadline_.async_wait( boost::bind( &OnTimeout, boost::ref( stream_ ), _1 ) );
+        ReadBody( link_, size_, stream_, deadline_ );
         stream_.Read( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
     }
 
@@ -179,6 +192,7 @@ private:
     AsyncStream stream_;
     HttpServer::connection_ptr link_;
     boost::shared_ptr< MimeReader > reader_;
+    Timer deadline_;
     size_t size_;
 };
 
@@ -194,6 +208,7 @@ struct Context : public boost::noncopyable
     Context( host::Async& async, Observer_ABC& observer )
         : async_   ( async )
         , observer_( observer )
+        , server_  ( 0 )
     {
         // NOTHING
     }
@@ -201,6 +216,11 @@ struct Context : public boost::noncopyable
     ~Context()
     {
         // NOTHING
+    }
+
+    void SetServer( HttpServer* server )
+    {
+        server_ = server;
     }
 
     void Serve( const HttpServer::request& request, HttpServer::connection_ptr link )
@@ -229,13 +249,14 @@ private:
 
     std::string Post( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        MimeWebRequest next( async_.GetPool(), request, link );
+        MimeWebRequest next( async_.GetPool(), *server_, request, link );
         return observer_.DoPost( next );
     }
 
 private:
     host::Async& async_;
     Observer_ABC& observer_;
+    HttpServer* server_;
 };
 
 struct Handler
@@ -269,7 +290,7 @@ struct Server::Private : public boost::noncopyable
         , handler_( &context_ )
         , server_ ( "0.0.0.0", boost::lexical_cast< std::string >( port ), handler_, threads_ )
     {
-        // NOTHING
+        context_.SetServer( &server_ );
     }
 
     ~Private()
