@@ -203,20 +203,22 @@ struct Context : public boost::noncopyable
         // NOTHING
     }
 
-    void AsyncServe( const HttpServer::request& request, HttpServer::connection_ptr link )
-    {
-        async_.Post( boost::bind( &Context::Serve, this, boost::cref( request ), link ) );
-    }
-
-private:
     void Serve( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
         if( request.method == "GET" )
-            link->write( Get( request , link ) );
+            async_.Post( boost::bind( &Context::Write< &Context::Get >, this, boost::cref( request ), link ) );
         else if( request.method == "POST" )
-            link->write( Post( request, link ) );
+            async_.Go( boost::bind( &Context::Write< &Context::Post >, this, boost::cref( request ), link ) );
         else
             SetError( link, link->bad_request, "Invalid request method" );
+    }
+
+private:
+    #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
+    template< std::string( Context::*callback )( const HttpServer::request&, HttpServer::connection_ptr ) >
+    void Write( const HttpServer::request& request, HttpServer::connection_ptr link )
+    {
+        link->write( CALL_MEMBER( *this, callback )( request, link ) );
     }
 
     std::string Get( const HttpServer::request& request, HttpServer::connection_ptr link )
@@ -250,7 +252,7 @@ struct Handler
 
     void operator()( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        context_->AsyncServe( request, link );
+        context_->Serve( request, link );
     }
 
 private:

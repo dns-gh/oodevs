@@ -30,7 +30,7 @@ struct PartReader : boost::noncopyable
 {
     PartReader( T part, host::Pool_ABC& pool )
         : async_ ( part->async_ )
-        , future_( pool.Post( boost::bind( &AsyncStream::Read, &async_, part->handler_ ) ) )
+        , future_( pool.Go( boost::bind( &AsyncStream::Read, &async_, part->handler_ ) ) )
     {
         // NOTHING
     }
