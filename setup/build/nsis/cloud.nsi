@@ -32,7 +32,6 @@ Section $(^Name)
     SectionIn RO
     SetShellVarContext all
 
-    CreateDirectory "$INSTDIR\data"
     SetOutPath "$INSTDIR\bin"
 
     ; cloud applications
