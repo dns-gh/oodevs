@@ -478,4 +478,5 @@ eRC_TerroristDropped = 462
 eRC_ImpossibleToOperateObject = 463
 eRC_Questionning = 464
 eRC_criticalIntelligenceImpossible = 465
-eNbr = 466
+eRC_InvalidTarget = 466
+eNbr = 467

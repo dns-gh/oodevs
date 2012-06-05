@@ -660,5 +660,6 @@
   <report category="operational" id="463" message="Impossible d'animer l'objet"/>
   <report category="operational" id="464" message="Subit un interrogatoire"/>
   <report category="operational" id="465" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
+  <report category="operational" id="466" message="La cible n'est plus valide"/>
 </reports>
-<!-- signature="0291190107" -->
+<!-- signature="3262117049" -->

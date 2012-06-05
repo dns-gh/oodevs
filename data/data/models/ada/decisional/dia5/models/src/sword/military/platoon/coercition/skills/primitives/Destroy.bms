@@ -56,12 +56,19 @@ node "DestroyElement"
 {
     feedbacks = { "destroyed" },
     connections = { skill.links.moveAndTakePosition, skill.nodes.Destroy,
-                    skill.links.observe };
+                    skill.links.observe, skill.nodes.CR_TargetInvalid };
 
     -- --------------------------------------------------------------------------------
     -- Move toward a destroying element and edstroy the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
+        -- Check if target is valid
+        if not self.params.entity:isValid() then
+            Activate( skill.nodes.CR_TargetInvalid, 1, { RC = eRC_InvalidTarget } )
+            Feedback( self.feedbacks.destroyed, { entity = self.params.entity } )
+            return
+        end
+        
         -- when the entity is destroyed send a feedback
         if self.params.entity:isDestroyed() then
             Feedback( self.feedbacks.destroyed, { entity = self.params.entity } )
@@ -93,5 +100,15 @@ node "Destroy"
 
     select = function( self )
         self.params.entity:destroyIt()
+    end
+}
+
+-- ****************************************************************************
+-- CR
+-- ****************************************************************************
+node "CR_TargetInvalid"
+{
+    create = function( self )
+        meKnowledge:RC( eRC_InvalidTarget )
     end
 }

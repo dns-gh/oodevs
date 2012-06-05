@@ -4,7 +4,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.moveToward, skill.nodes.Attack },
+    connections = { skill.links.moveToward, skill.nodes.Attack, skill.nodes.CR_TargetInvalid },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks
@@ -39,6 +39,10 @@ rootnode
                      suicide = self.params.suicide, dotation = self.params.dotation } )
             end
             self.arrived = false
+        else -- target is no longer valid
+            Activate( skill.nodes.CR_TargetInvalid, 1, { RC = eRC_InvalidTarget } )
+            Feedback( self.feedbacks.done )
+            return
         end
     end,
 }
@@ -54,5 +58,15 @@ node "Attack"
         if self.params.objective:attackIt( self.params.suicide, self.params.dotation ) then
             Feedback( self.feedbacks.commited )
         end
+    end
+}
+
+-- ****************************************************************************
+-- CR
+-- ****************************************************************************
+node "CR_TargetInvalid"
+{
+    create = function( self )
+        meKnowledge:RC( eRC_InvalidTarget )
     end
 }

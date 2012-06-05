@@ -660,5 +660,6 @@
   <report category="operational" id="463" message="Object cannot be operated"/>
   <report category="operational" id="464" message="Being interrogated"/>
   <report category="operational" id="465" message="Impossible to have the critical intelligence : weak force ratio"/>
+  <report category="operational" id="466" message="The target is no longer valid"/>
 </reports>
-<!-- signature="3865851861" -->
+<!-- signature="2821392819" -->
