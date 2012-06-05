@@ -223,6 +223,7 @@
     };
 
     PackageView.prototype.reset = function() {
+      this.model.clear();
       return $(this.el).empty();
     };
 
@@ -297,8 +298,8 @@
             _this.enabled = true;
             return _this.model.set(item);
           }, function() {
+            _this.reset();
             _this.enabled = true;
-            _this.render();
             return print_error("Unable to save package(s)");
           });
         });

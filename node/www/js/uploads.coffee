@@ -33,6 +33,7 @@ class PackageView extends Backbone.View
         setTimeout @delta, 5000
 
     reset: =>
+        @model.clear()
         $(@el).empty()
 
     render: =>
@@ -78,8 +79,8 @@ class PackageView extends Backbone.View
                         @enabled = true
                         @model.set item
                     () =>
+                        @reset()
                         @enabled = true
-                        @render()
                         print_error "Unable to save package(s)"
 
             $(".toggle a").click ->
