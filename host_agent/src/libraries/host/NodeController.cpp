@@ -68,7 +68,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , system_  ( system )
     , proxy_   ( proxy )
     , factory_ ( nodes )
-    , root_    ( root / type )
+    , root_    ( root / ( type == "cluster" ? type : "nodes" ) )
     , java_    ( java )
     , jar_     ( jar )
     , web_     ( web )

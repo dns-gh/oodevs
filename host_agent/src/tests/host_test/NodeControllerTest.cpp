@@ -125,7 +125,7 @@ namespace
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( root / "node", L"node.id" ).returns( boost::assign::list_of< Path >( "a/b/c/node.id" )( "node.id" ) );
+            MOCK_EXPECT( sub.system.Glob ).once().with( root / "nodes", L"node.id" ).returns( boost::assign::list_of< Path >( "a/b/c/node.id" )( "node.id" ) );
 
             active = AddNode( idActive, nodeActive, "a/b/c/node.id" );
             idle = AddNode( idIdle, nodeIdle, "node.id" );

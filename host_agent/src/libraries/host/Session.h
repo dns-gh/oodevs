@@ -12,6 +12,8 @@
 
 #include "Session_ABC.h"
 
+#include <boost/filesystem/path.hpp>
+
 namespace boost
 {
     class shared_mutex;
@@ -38,14 +40,15 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
-             Session( const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Session( const Path& root, const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
+             Session( const Path& root, const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
 
     //! @name Session_ABC methods
     //@{
     virtual Uuid GetId() const;
+    virtual Path GetRoot() const;
     virtual Uuid GetNode() const;
     virtual std::string GetExercise() const;
     virtual std::string GetName() const;
@@ -77,6 +80,7 @@ private:
     //! @name Private members
     //@{
     const Uuid id_;
+    const Path root_;
     const Uuid node_;
     const std::string name_;
     const std::string exercise_;

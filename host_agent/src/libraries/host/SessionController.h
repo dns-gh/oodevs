@@ -53,8 +53,7 @@ public:
                                 const FileSystem_ABC& system,
                                 const SessionFactory_ABC& sessions,
                                 const NodeController_ABC& nodes,
-                                const Path& logs,
-                                const Path& data,
+                                const Path& root,
                                 const Path& apps,
                                 Pool_ABC& pool );
     virtual ~SessionController();
@@ -76,12 +75,11 @@ public:
 private:
     //! @name Private methods
     //@{
-    void Create( Session_ABC& session, bool isReload );
     void Save( const Session_ABC& session ) const;
+    void Create( Session_ABC& session, bool isReload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Session_ABC& session ) const;
     void Start( Session_ABC& session, bool mustSave ) const;
     void Stop( Session_ABC& session, bool skipSave ) const;
-    Path GetPath( const Session_ABC& session ) const;
     //@}
 
 private:
@@ -92,8 +90,7 @@ private:
     const FileSystem_ABC& system_;
     const SessionFactory_ABC& factory_;
     const NodeController_ABC& nodes_;
-    const Path logs_;
-    const Path data_;
+    const Path root_;
     const Path apps_;
     const std::auto_ptr< Container< Session_ABC > > sessions_;
     const std::auto_ptr< Async > async_;

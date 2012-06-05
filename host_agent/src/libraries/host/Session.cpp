@@ -99,8 +99,9 @@ Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC&
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
+Session::Session( const Path& root, const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
     : id_      ( id )
+    , root_    ( root )
     , node_    ( node )
     , name_    ( name )
     , exercise_( exercise )
@@ -116,8 +117,9 @@ Session::Session( const Uuid& id, const Uuid& node, const std::string& name, con
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+Session::Session( const Path& root, const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : id_      ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
+    , root_    ( root )
     , node_    ( boost::uuids::string_generator()( tree.get< std::string >( "node" ) ) )
     , name_    ( tree.get< std::string >( "name" ) )
     , exercise_( tree.get< std::string >( "exercise" ) )
@@ -145,6 +147,15 @@ Session::~Session()
 Uuid Session::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::GetRoot
+// Created: BAX 2012-06-05
+// -----------------------------------------------------------------------------
+Path Session::GetRoot() const
+{
+    return root_;
 }
 
 // -----------------------------------------------------------------------------

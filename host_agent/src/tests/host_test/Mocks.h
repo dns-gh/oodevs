@@ -121,6 +121,7 @@ namespace mocks
         MockSession( const host::Uuid& id, const host::Uuid& node, const host::Tree& tree )
         {
             MOCK_EXPECT( GetId ).returns( id );
+            MOCK_EXPECT( GetRoot ).returns( "" );
             MOCK_EXPECT( GetExercise ).returns( tree.get< std::string >( "exercise" ) );
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
             MOCK_EXPECT( GetNode ).returns( node );
@@ -129,6 +130,7 @@ namespace mocks
             MOCK_EXPECT( Save ).returns( tree );
         }
         MOCK_METHOD( GetId, 0 );
+        MOCK_METHOD( GetRoot, 0 );
         MOCK_METHOD( GetNode, 0 );
         MOCK_METHOD( GetExercise, 0 );
         MOCK_METHOD( GetName, 0 );
@@ -142,8 +144,8 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
     {
-        MOCK_METHOD_EXT( Make, 1, host::SessionFactory_ABC::Ptr( const host::Tree& tree ), Make1 );
-        MOCK_METHOD_EXT( Make, 3, host::SessionFactory_ABC::Ptr( const host::Uuid& node, const std::string& name, const std::string& exercise ), Make3 );
+        MOCK_METHOD_EXT( Make, 1, host::SessionFactory_ABC::Ptr( const host::Path& tag ), Make1 );
+        MOCK_METHOD_EXT( Make, 4, host::SessionFactory_ABC::Ptr( const host::Path& root, const host::Uuid& node, const std::string& name, const std::string& exercise ), Make4 );
     };
 
     MOCK_BASE_CLASS( MockPort, host::Port_ABC )

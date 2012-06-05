@@ -15,6 +15,7 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -42,19 +43,24 @@ namespace
 
     struct SubFixture
     {
-        SubFixture( const Path& logs, const Path& data, const Path& apps )
+        SubFixture( const Path& root, const Path& apps )
             : nodes( false )
+            , idx  ( 0 )
         {
-            MOCK_EXPECT( system.MakePaths ).with( logs / "sessions" );
-            MOCK_EXPECT( system.IsDirectory ).with( data ).returns( true );
+            MOCK_EXPECT( system.MakePaths ).with( root / "sessions" );
+            MOCK_EXPECT( system.IsDirectory ).with( root ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
             MOCK_EXPECT( system.Exists ).with( GetApp( apps ) ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( GetApp( apps ) ).returns( true );
-            MOCK_EXPECT( system.Glob ).with( data / "exercises", L"exercise.xml" ).returns( boost::assign::list_of
-                ( data / "exercises/baroud/exercise.xml" )
-                ( data / "exercises/test/musoria/exercise.xml" )
-            );
+            MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
         };
+
+        Path MakePath( const Path& root )
+        {
+            return root / boost::lexical_cast< std::string >( ++idx );
+        }
+
+        size_t idx;
         MockLog log;
         MockRuntime runtime;
         MockFileSystem system;
@@ -97,16 +103,14 @@ namespace
     struct Fixture
     {
         Fixture()
-            : logs   ( "e:/logs" )
-            , data   ( "e:/data" )
+            : root   ( "e:/root" )
             , apps   ( "e:/apps" )
-            , sub    ( logs, data, apps )
-            , control( sub.log, sub.runtime, sub.system, sub.factory, sub.nodes, logs, data, apps, sub.pool )
+            , sub    ( root, apps )
+            , control( sub.log, sub.runtime, sub.system, sub.factory, sub.nodes, root, apps, sub.pool )
         {
             // NOTHING
         }
-        const Path logs;
-        const Path data;
+        const Path root;
         const Path apps;
         SubFixture sub;
         SessionController control;
@@ -117,25 +121,22 @@ namespace
         {
             const Tree tree = FromJson( text );
             boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
-            const std::string idText = tree.get< std::string >( "id" );
-            const Path root = data / "exercises" / session->GetExercise() / "sessions" / idText;
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.factory.Make3 ).once().with( node, session->GetName(), session->GetExercise() ).returns( session );
+                MOCK_EXPECT( sub.factory.Make4 ).once().with( mock::any, node, session->GetName(), session->GetExercise() ).returns( session );
                 MOCK_EXPECT( session->Start ).once().returns( true );
             }
             else
             {
-                MOCK_EXPECT( sub.system.ReadFile ).once().with( path ).returns( text );
                 MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( root / "session.id", text ).returns( true );
+            MOCK_EXPECT( sub.system.WriteFile ).once().with( mock::any, text ).returns( true );
             return session;
         }
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( data / "exercises", L"session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
+            MOCK_EXPECT( sub.system.Glob ).once().with( root / "sessions", L"session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
             active = AddSession( idActive, idNode, sessionActive, "a/b/c/session.id" );
             idle = AddSession( idIdle, idNode, sessionIdle, "session.id" );
             control.Reload( &IsKnownNode );

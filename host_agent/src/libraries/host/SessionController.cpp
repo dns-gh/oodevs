@@ -51,8 +51,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const FileSystem_ABC& system,
                                       const SessionFactory_ABC& sessions,
                                       const NodeController_ABC& nodes,
-                                      const Path& logs,
-                                      const Path& data,
+                                      const Path& root,
                                       const Path& apps,
                                       Pool_ABC& pool )
     : log_     ( log )
@@ -60,15 +59,12 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , system_  ( system )
     , factory_ ( sessions )
     , nodes_   ( nodes )
-    , logs_    ( logs / "sessions" )
-    , data_    ( data )
+    , root_    ( root / "sessions" )
     , apps_    ( apps )
     , sessions_( new Container< Session_ABC >() )
     , async_   ( new Async( pool ) )
 {
-    system_.MakePaths( logs_ );
-    if( !system_.IsDirectory( data_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( data_ ) + " is not a directory" );
+    system_.MakePaths( root_ );
     if( !system_.IsDirectory( apps_ ) )
         throw std::runtime_error( runtime::Utf8Convert( apps_ ) + " is not a directory" );
     const Path app = apps_ / L"simulation_app.exe";
@@ -88,24 +84,15 @@ SessionController::~SessionController()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionController::GetPath
-// Created: BAX 2012-03-21
-// -----------------------------------------------------------------------------
-Path SessionController::GetPath( const Session_ABC& session ) const
-{
-    return data_ / "exercises" / Utf8Convert( session.GetExercise() ) / "sessions" / boost::lexical_cast< std::string >( session.GetId() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SessionController::Reload
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
 void SessionController::Reload( T_Predicate predicate )
 {
-    BOOST_FOREACH( const Path& path, system_.Glob( data_ / "exercises", L"session.id" ) )
+    BOOST_FOREACH( const Path& path, system_.Glob( root_, L"session.id" ) )
         try
         {
-            boost::shared_ptr< Session_ABC > ptr = factory_.Make( FromJson( system_.ReadFile( path ) ) );
+            boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );
             if( !ptr || !predicate( *ptr ) )
                 continue;
             sessions_->Attach( ptr );
@@ -176,7 +163,8 @@ void SessionController::Create( Session_ABC& session, bool isReload )
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Create( const Uuid& node, const std::string& name, const std::string& exercise )
 {
-    boost::shared_ptr< Session_ABC > session = factory_.Make( node, name, exercise );
+    const Path output = system_.MakeAnyPath( root_ );
+    boost::shared_ptr< Session_ABC > session = factory_.Make( output, node, name, exercise );
     sessions_->Attach( session );
     Create( *session, false );
     return session;
@@ -188,7 +176,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
 // -----------------------------------------------------------------------------
 void SessionController::Save( const Session_ABC& session ) const
 {
-    const Path path = GetPath( session ) / "session.id";
+    const Path path = session.GetRoot() / "session.id";
     async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
 }
 
@@ -203,7 +191,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     Stop( *session, true );
-    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( *session ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
     return session;
 }
 
@@ -236,7 +224,7 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
         ( MakeOption( "exercise", name ) )
         ( MakeOption( "session",  session.GetId() ) ),
         Utf8Convert( apps_ ),
-        Utf8Convert( logs_ / ( boost::lexical_cast< std::string >( session.GetId() ) + ".log" ) ) );
+        Utf8Convert( session.GetRoot() / "session.log" ) );
 }
 
 // -----------------------------------------------------------------------------

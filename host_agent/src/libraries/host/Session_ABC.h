@@ -16,6 +16,14 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/uuid/uuid.hpp>
 
+namespace boost
+{
+namespace filesystem3
+{
+    class path;
+}
+}
+
 namespace runtime
 {
     struct Process_ABC;
@@ -23,6 +31,7 @@ namespace runtime
 
 namespace host
 {
+    typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 
@@ -49,6 +58,7 @@ struct Session_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual Uuid GetId() const = 0;
+    virtual Path GetRoot() const = 0;
     virtual Uuid GetNode() const = 0;
     virtual std::string GetExercise() const = 0;
     virtual std::string GetName() const = 0;
@@ -86,8 +96,8 @@ struct SessionFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Ptr Make( const Uuid& node, const std::string& name, const std::string& exercise ) const = 0;
-    virtual Ptr Make( const Tree& tree ) const = 0;
+    virtual Ptr Make( const Path& root, const Uuid& node, const std::string& name, const std::string& exercise ) const = 0;
+    virtual Ptr Make( const Path& tag ) const = 0;
     //@}
 };
 

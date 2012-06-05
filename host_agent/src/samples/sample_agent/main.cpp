@@ -78,8 +78,7 @@ struct Configuration
     } node;
     struct
     {
-        std::wstring data;
-        std::wstring applications;
+        std::wstring apps;
     } session;
 
     bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
@@ -97,8 +96,7 @@ struct Configuration
             found |= ReadParameter( proxy.jar, "--proxy_jar", i, argc, argv );
             found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
-            found |= ReadParameter( session.data, "--session_data", i, argc, argv );
-            found |= ReadParameter( session.applications, "--session_applications", i, argc, argv );
+            found |= ReadParameter( session.apps, "--session_apps", i, argc, argv );
             if( !found )
             {
                 LOG_ERROR( log ) << "[cfg] Unknown parameter " << argv[i];
@@ -165,24 +163,26 @@ struct PackageFactory : public PackageFactory_ABC
 
 struct SessionFactory : public SessionFactory_ABC
 {
-    SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, PortFactory_ABC& ports )
-        : runtime( runtime )
+    SessionFactory( const FileSystem_ABC& system, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, PortFactory_ABC& ports )
+        : system ( system )
+        , runtime( runtime )
         , uuids  ( uuids )
         , ports  ( ports )
     {
         // NOTHING
     }
 
-    Ptr Make( const Uuid& node, const std::string& name, const std::string& exercise ) const
+    Ptr Make( const Path& root, const Uuid& node, const std::string& name, const std::string& exercise ) const
     {
-        return boost::make_shared< Session >( uuids.Create(), node, name, exercise, ports.Create() );
+        return boost::make_shared< Session >( root, uuids.Create(), node, name, exercise, ports.Create() );
     }
 
-    Ptr Make( const Tree& tree ) const
+    Ptr Make( const Path& tag ) const
     {
-        return boost::make_shared< Session >( tree, runtime, ports );
+        return boost::make_shared< Session >( Path( tag ).remove_filename(), FromJson( system.ReadFile( tag ) ), runtime, ports );
     }
 
+    const FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
     PortFactory_ABC& ports;
@@ -199,8 +199,8 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
     NodeController nodes( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool );
     NodeController cluster( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool );
-    SessionFactory fsessions( runtime, uuids, ports );
-    SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root + L"/log", cfg.session.data, cfg.session.applications, pool );
+    SessionFactory fsessions( system, runtime, uuids, ports );
+    SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
     const std::auto_ptr< Port_ABC > host = ports.Create();
@@ -269,18 +269,17 @@ int StartServer( int argc, const char* argv[] )
 
         const Path bin = runtime.GetModuleFilename().remove_filename();
         Configuration cfg;
-        cfg.root                 = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
-        cfg.ports.period         = GetTree( tree, "ports.period", 40 );
-        cfg.ports.min            = GetTree( tree, "ports.min", 50000 );
-        cfg.ports.max            = GetTree( tree, "ports.max", 60000 );
-        cfg.ports.proxy          = GetTree( tree, "ports.proxy", 8080 );
-        cfg.cluster.enabled      = GetTree( tree, "cluster.enabled", true );
-        cfg.java                 = Utf8Convert( java );
-        cfg.proxy.jar            = Utf8Convert( GetTree( tree, "proxy.jar",            Utf8Convert( bin / "proxy.jar" ) ) );
-        cfg.node.jar             = Utf8Convert( GetTree( tree, "node.jar",             Utf8Convert( bin / "node.jar" ) ) );
-        cfg.node.root            = Utf8Convert( GetTree( tree, "node.root",            Utf8Convert( bin / "../www" ) ) );
-        cfg.session.data         = Utf8Convert( GetTree( tree, "session.data",         Utf8Convert( bin / "../data" ) ) );
-        cfg.session.applications = Utf8Convert( GetTree( tree, "session.applications", Utf8Convert( bin ) ) );
+        cfg.root            = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
+        cfg.ports.period    = GetTree( tree, "ports.period", 40 );
+        cfg.ports.min       = GetTree( tree, "ports.min", 50000 );
+        cfg.ports.max       = GetTree( tree, "ports.max", 60000 );
+        cfg.ports.proxy     = GetTree( tree, "ports.proxy", 8080 );
+        cfg.cluster.enabled = GetTree( tree, "cluster.enabled", true );
+        cfg.java            = Utf8Convert( java );
+        cfg.proxy.jar       = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
+        cfg.node.jar        = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
+        cfg.node.root       = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / "../www" ) ) );
+        cfg.session.apps    = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
 
         system.WriteFile( root / "host" / "host_agent.config", ToJson( tree, true ) );
 
