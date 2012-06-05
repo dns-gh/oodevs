@@ -364,4 +364,8 @@ void FilterCommand::Update()
 {
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         it->second->Update();
+    for( int i = 0; i < arguments_.size(); ++i )
+        if( IsInputArgument( i ) )
+            arguments_[ i ].value_.clear();
+    ComputeArgument();
 }
