@@ -32,6 +32,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
+    , timeFactor_              ( 1 )
     , useShieldUtf8Encoding_   ( true )
 {
     po::options_description desc( "Dispatcher/replayer options" );
@@ -65,6 +66,7 @@ void Config::Parse( int argc, char** argv )
                 >> xml::start( "simulation" )
                     >> xml::start( "time" )
                         >> xml::attribute( "step", timeStep_ )
+                        >> xml::attribute( "factor", timeFactor_ )
                     >> xml::end
                 >> xml::end
                 >> xml::start( "dispatcher" )
@@ -183,4 +185,13 @@ unsigned int Config::GetReplayFragmentsFrequency() const
 unsigned int Config::GetTickDuration() const
 {
     return timeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetTimeFactor
+// Created: LDC 2012-06-05
+// -----------------------------------------------------------------------------
+unsigned int Config::GetTimeFactor() const
+{
+    return timeFactor_;
 }

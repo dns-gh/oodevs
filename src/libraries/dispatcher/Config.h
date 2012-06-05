@@ -49,6 +49,7 @@ public:
     unsigned int       GetKeyFramesFrequency() const;
     unsigned int       GetReplayFragmentsFrequency() const;
     unsigned int       GetTickDuration() const;
+    unsigned int       GetTimeFactor() const;
     //@}
 
 private:
@@ -59,10 +60,11 @@ private:
     unsigned short networkClientsParameters_;
     unsigned short networkShieldParameters_;
     unsigned long  networkTimeout_;
-    bool           useShieldUtf8Encoding_;
     unsigned int   keyFramesFrequency_;
     unsigned int   replayFragmentsFrequency_;
     unsigned int   timeStep_;
+    unsigned int   timeFactor_;
+    bool           useShieldUtf8Encoding_;
     //@}
 };
 

@@ -23,7 +23,7 @@ using namespace dispatcher;
 SimulationModel::SimulationModel( const Config& config )
     : nCurrentTick_        ( 0 )
     , nTickDuration_       ( config.GetTickDuration() )
-    , nTimeFactor_         ( 0 )
+    , nTimeFactor_         ( config.GetTimeFactor() )
     , nCheckpointFrequency_( 0 )
     , nSimState_           ( sword::stopped )
     , bSendVisionCones_    ( false )
