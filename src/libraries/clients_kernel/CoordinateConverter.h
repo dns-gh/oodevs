@@ -12,7 +12,6 @@
 
 #include "Types.h"
 #include "CoordinateConverter_ABC.h"
-#include "tools/WorldParameters.h"
 #include <geocoord/PlanarCartesian.h>
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
@@ -82,7 +81,6 @@ private:
 private:
     //! @name Member data
     //@{
-    tools::WorldParameters world_;
     geometry::Rectangle2f extent_;
     geometry::Vector2f    translation_;
 

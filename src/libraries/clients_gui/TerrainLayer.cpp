@@ -16,6 +16,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
+#include "tools/ExerciseConfig.h"
 #include <graphics/RawShapeLayer.h>
 #include <graphics/NoVBOShapeLayer.h>
 #include <graphics/ShapeCollector.h>
@@ -58,7 +59,9 @@ TerrainLayer::~TerrainLayer()
 // -----------------------------------------------------------------------------
 void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    parameters_.Load( modelLoaded.config_ );
+    graphicsDirectory_ = modelLoaded.config_.GetGraphicsDirectory();
+    width_ = modelLoaded.config_.GetTerrainWidth();
+    height_ = modelLoaded.config_.GetTerrainHeight();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +83,7 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
 
-    if( !layer_.get() && !noVBOlayer_.get() && !parameters_.graphicsDirectory_.empty() )
+    if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.empty() )
         LoadGraphics();
 
     if( layer_.get() || noVBOlayer_.get() )
@@ -138,7 +141,9 @@ void TerrainLayer::OptionChanged( const std::string& name, const OptionVariant& 
 // -----------------------------------------------------------------------------
 void TerrainLayer::Reset()
 {
-    parameters_.Purge();
+    width_ = 0;
+    height_ = 0;
+    graphicsDirectory_.clear();
     layer_.reset();
     noVBOlayer_.reset();
 }
@@ -232,15 +237,15 @@ private:
 // -----------------------------------------------------------------------------
 void TerrainLayer::LoadGraphics()
 {
-    world_.Set( 0, 0, parameters_.width_, parameters_.height_ );
+    world_.Set( 0, 0, width_, height_ );
     try
     {
-        const bfs::path aggregated = bfs::path( parameters_.graphicsDirectory_, bfs::native ) / "shapes.dump";
+        const bfs::path aggregated = bfs::path( graphicsDirectory_, bfs::native ) / "shapes.dump";
         if( ! bfs::exists( aggregated ) )
         {
             DataFactory factory;
             ShapeCollector collector( factory );
-            collector.LoadGraphicDirectory( parameters_.graphicsDirectory_ );
+            collector.LoadGraphicDirectory( graphicsDirectory_ );
             collector.Finalize( aggregated.native_file_string() );
         }
         if( bfs::exists( aggregated ) )

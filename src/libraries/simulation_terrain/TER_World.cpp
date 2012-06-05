@@ -27,7 +27,7 @@
 #include "TER_AnalyzerManager.h"
 #include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
-#include "tools/WorldParameters.h"
+#include "tools/ExerciseConfig.h"
 #include <geocoord/Geoid.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -45,7 +45,7 @@ TER_World*  TER_World::pInstance_ = 0;
 // Name: TER_World::Initialize
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_World::Initialize( const tools::WorldParameters& config )
+void TER_World::Initialize( const tools::ExerciseConfig& config )
 {
     assert( ! pInstance_ );
     pInstance_ = new TER_World( config );
@@ -73,16 +73,16 @@ namespace
 // Name: TER_World constructor
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-TER_World::TER_World( const tools::WorldParameters& config )
+TER_World::TER_World( const tools::ExerciseConfig& config )
 {
     MT_Rect extent;
-    extent.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( config.width_, config.height_ ) );
+    extent.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( config.GetTerrainWidth(), config.GetTerrainHeight() ) );
 
     pAgentManager_      = new TER_AgentManager     ( extent );
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
-    pCoordinateManager_ = new TER_CoordinateManager( config.latitude_, config.longitude_, extent );
-    pGraphManager_      = new TER_GraphManager     ( config.pathfindGraph_, config.pathfindNodes_, config.pathfindLinks_, 1e-4f );
+    pCoordinateManager_ = new TER_CoordinateManager( config.GetTerrainLatitude(), config.GetTerrainLongitude(), extent );
+    pGraphManager_      = new TER_GraphManager     ( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f );
     pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
     pAnalyzerManager_   = new TER_AnalyzerManager  ( *pGraphManager_ );
 }

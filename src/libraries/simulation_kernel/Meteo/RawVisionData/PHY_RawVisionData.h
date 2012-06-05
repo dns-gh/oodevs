@@ -83,7 +83,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::Meteo& globalMeteo, tools::WorldParameters& config );
+             PHY_RawVisionData( weather::Meteo& globalMeteo, const std::string& detection );
     virtual ~PHY_RawVisionData();
     //@}
 

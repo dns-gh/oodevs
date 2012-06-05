@@ -12,7 +12,6 @@
 
 #include "Layer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "tools/WorldParameters.h"
 
 namespace kernel
 {
@@ -33,7 +32,6 @@ namespace gui
 // =============================================================================
 class RasterLayer : public Layer2d_ABC
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                  , private tools::WorldParameters
 {
 public:
     //! @name Constructors/Destructor
@@ -55,6 +53,7 @@ private:
     kernel::Controller& controller_;
     std::auto_ptr< TextureSet > textures_;
     bool ignore_;
+    std::string graphicsDirectory_;
     //@}
 };
 

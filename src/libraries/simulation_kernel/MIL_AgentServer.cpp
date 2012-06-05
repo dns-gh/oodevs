@@ -28,7 +28,6 @@
 #include "KnowledgesVisitor_ABC.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
-#include "tools/WorldParameters.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
@@ -170,8 +169,7 @@ void MIL_AgentServer::ReadUrbanModel()
     {
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          urban::WorldParameters world( directoryPath );
-         tools::WorldParameters terrainConfig( config_ );//TODO MGD  merge all WorlParameters and rename in TerrainConfig
-         MIL_Tools::CheckXmlCrc32Signature( terrainConfig.urban_ );
+         MIL_Tools::CheckXmlCrc32Signature( config_.GetUrbanTerrainFile() );
          pUrbanModel_->Load( directoryPath, world );
     }
     catch( std::exception& e )
@@ -189,7 +187,7 @@ void MIL_AgentServer::ReadTerData()
     MT_LOG_INFO_MSG( "Initializing terrain" );
     config_.AddFileToCRC( config_.GetTerrainFile() );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain: %s", config_.GetTerrainFile().c_str() ) );
-    TER_World::Initialize( tools::WorldParameters( config_ ) );
+    TER_World::Initialize( config_ );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
 }
 

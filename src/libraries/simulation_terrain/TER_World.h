@@ -48,7 +48,7 @@ namespace tools
         template< typename T > class MessageQueue_ABC;
     }
 
-    class WorldParameters;
+    class ExerciseConfig;
 }
 
 namespace xml
@@ -72,7 +72,7 @@ public:
     //! @name Operations
     //@{
     static TER_World& GetWorld();
-    static void Initialize( const tools::WorldParameters& config );
+    static void Initialize( const tools::ExerciseConfig& config );
     static void DestroyWorld();
     //@}
 
@@ -106,7 +106,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    explicit TER_World( const tools::WorldParameters& config );
+    explicit TER_World( const tools::ExerciseConfig& config );
              TER_World( const TER_World& );            //!< Copy constructor
     virtual ~TER_World();
     TER_World& operator=( const TER_World& ); //!< Assignment operator
