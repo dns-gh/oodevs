@@ -820,7 +820,7 @@ Detalle: %1.</translation>
 <context>
     <name>UrbanPositions</name>
     <message>
-        <source>Info/Surface</source>
+        <source>Info/Area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
