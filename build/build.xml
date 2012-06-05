@@ -777,12 +777,17 @@
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
 
+    <target name="generate-database-crowd" depends="generate-common-database" description="compile behavior model database for crowd">
+        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+        <bmc src="${models.dir}/crowd/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
+    </target>
+
     <target name="generate-database-security" depends="generate-common-database" description="compile behavior model database for security">
         <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
         <bmc src="${models.dir}/security/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
         <bmc src="${models.dir}/security_test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/security/src" luac="false"/>
     </target>
-
+    
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg"/>
@@ -1018,9 +1023,6 @@
 
     <target name="scripts_test" description="run all script tests">
         <test-scripts dataset="ada" physical="scipio"/>
-        <!--
-        <test-scripts dataset="ada" physical="security-fr"/>
-        -->
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
@@ -1112,7 +1114,6 @@
 
     <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
-        <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
 

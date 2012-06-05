@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.classes.Crowd" source-version="1.0.0" extends="sword.military.world.Crowd">
-  <methods/>
-  <attributes/>
-</class>

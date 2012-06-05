@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<role extends="security.unit.roles.Unit" name="security.thief.roles.Thief" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<skills>
-		<skill name="security.thief.skills.Pillage" />
-	</skills>
-	<resources/>
-</role>
