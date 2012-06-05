@@ -48,15 +48,21 @@ BOOST_FIXTURE_TEST_CASE( reader_with_header_is_valid, Fixture )
 
 namespace
 {
-void CheckStream( std::istream& src, size_t& count, const std::string& expected )
+std::string SinkStream( std::istream& src )
 {
     char buffer[64];
-    std::string actual;
+    std::string reply;
     while( !src.eof() )
     {
         src.read( &buffer[0], sizeof buffer );
-        actual.append( &buffer[0], static_cast< size_t >( src.gcount() ) );
+        reply.append( &buffer[0], static_cast< size_t >( src.gcount() ) );
     }
+    return reply;
+}
+
+void CheckStream( std::istream& src, size_t& count, const std::string& expected )
+{
+    const std::string actual = SinkStream( src );
     BOOST_CHECK_EQUAL( expected, actual );
     ++count;
 }
