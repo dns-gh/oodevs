@@ -36,6 +36,7 @@ namespace messenger
     class DrawingsModel;
     class NotesModel;
     class ClientObjectsModel;
+    class DisplayInfo;
 
 // =============================================================================
 /** @class  Model

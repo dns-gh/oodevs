@@ -18,10 +18,35 @@ namespace
     void FillTacticalLine( L* l )
     {
         l->set_name( "name" );
-        FillLocation( l->mutable_geometry() );
+        l->mutable_geometry()->set_type( sword::Location::line );
+        FillCoordLatLong( l->mutable_geometry()->mutable_coordinates()->add_elem() );
+        FillCoordLatLong( l->mutable_geometry()->mutable_coordinates()->add_elem() );
         l->mutable_diffusion()->mutable_automat()->set_id( 12 );
         l->mutable_diffusion()->mutable_formation()->set_id( 13 );
+        l->mutable_color()->set_red( 4 );
+        l->mutable_color()->set_green( 5 );
+        l->mutable_color()->set_blue( 6 );
+        l->set_level( "ii" );
     }
+}
+
+BOOST_FIXTURE_TEST_CASE( limit_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+{
+    content.mutable_limit_creation()->mutable_id()->set_id( 12 );
+    FillTacticalLine( content.mutable_limit_creation()->mutable_tactical_line() );
+    BOOST_REQUIRE_MESSAGE( msg.IsInitialized(), msg.InitializationErrorString() );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"name\" location { type: line coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
+    converter.ReceiveMessengerToClient( msg );
+    // $$$$ FIXME Level ? -- ii -- ?
+}
+
+BOOST_FIXTURE_TEST_CASE( lima_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+{
+    content.mutable_phase_line_creation()->mutable_id()->set_id( 12 );
+    FillTacticalLine( content.mutable_phase_line_creation()->mutable_tactical_line() );
+    BOOST_REQUIRE_MESSAGE( msg.IsInitialized(), msg.InitializationErrorString() );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"name\" location { type: line coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
+    converter.ReceiveMessengerToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( shape_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )

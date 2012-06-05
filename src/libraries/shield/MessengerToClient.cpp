@@ -12,6 +12,37 @@
 
 using namespace shield;
 
+template < typename T > void ConvertTacticalLine( const T& from, MsgsMessengerToClient::MsgShapeCreation* to )
+{
+    CONVERT_ID( id );
+    const sword::TacticalLine& line = from.tactical_line();
+    Common::MsgShape* shape = to->mutable_shape();
+    ConvertLocation( line.geometry(), shape->mutable_location() );
+    ConvertColor( line.color(), shape->mutable_color() );
+    ConvertDiffusion( line.diffusion(), shape->mutable_diffusion() );
+    // shape->set_category( "Lignes" ); shape->set_text( line.name()  );
+    std::string pattern = std::string( "-- " ) + line.level() + " --";
+    shape->set_external_identifier( pattern );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessengerToClient::Convert
+// Created: LDC 2012-06-05
+// -----------------------------------------------------------------------------
+void MessengerToClient::Convert( const sword::LimitCreation& from, MsgsMessengerToClient::MsgShapeCreation* to )
+{
+    ConvertTacticalLine( from, to );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessengerToClient::Convert
+// Created: LDC 2012-06-05
+// -----------------------------------------------------------------------------
+void MessengerToClient::Convert( const sword::PhaseLineCreation& from, MsgsMessengerToClient::MsgShapeCreation* to )
+{
+    ConvertTacticalLine( from, to );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08

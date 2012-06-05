@@ -29,8 +29,8 @@ Lima::Lima( unsigned int id, const sword::PhaseLineCreationRequest& message )
 // Name: Lima constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, xml::xistream& xis, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( id, xis, diffusion, converter)
+Lima::Lima( unsigned int id, xml::xistream& xis, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter, const DisplayInfo& info )
+    : TacticalLine_ABC( id, xis, diffusion, converter, info )
 {
     // NOTHING
 }

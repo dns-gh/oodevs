@@ -90,6 +90,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\DisplayInfo.cpp" />
     <ClCompile Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -113,6 +114,7 @@
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Chat.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\DisplayInfo.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\MessengerPlugin.h" />
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Entity_ABC.h" />

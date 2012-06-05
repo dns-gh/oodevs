@@ -45,9 +45,9 @@ TacticalLinesModel::~TacticalLinesModel()
 // Name: TacticalLinesModel::CreateLimit
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion)
+void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion, const DisplayInfo& info )
 {
-    std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_ ) );
+    std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_, info ) );
     limits_.Register( limit->GetID(), *limit );
     limit.release();
 }
@@ -56,9 +56,9 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const sword::Diffusion& 
 // Name: TacticalLinesModel::CreateLima
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLima( xml::xistream& xis, const sword::Diffusion& diffusion)
+void TacticalLinesModel::ReadLima( xml::xistream& xis, const sword::Diffusion& diffusion, const DisplayInfo& info )
 {
-    std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_ ) );
+    std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_, info ) );
     limas_.Register( lima->GetID(), *lima );
     lima.release();
 }

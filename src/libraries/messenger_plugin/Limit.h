@@ -33,6 +33,7 @@ namespace plugins
 {
 namespace messenger
 {
+    class DisplayInfo;
 
 // =============================================================================
 /** @class  Limit
@@ -46,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
               Limit( unsigned int id, const sword::LimitCreationRequest& message );
-              Limit( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter);
+              Limit( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter, const DisplayInfo& info );
      virtual ~Limit();
     //@}
 

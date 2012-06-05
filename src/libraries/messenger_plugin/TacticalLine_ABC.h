@@ -28,6 +28,8 @@ namespace plugins
 {
 namespace messenger
 {
+    class DisplayInfo;
+
 // =============================================================================
 /** @class  TacticalLine_ABC
     @brief  Tactical line declaration
@@ -40,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_ABC( unsigned int id, const sword::TacticalLine& asn );
-             TacticalLine_ABC( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter, const DisplayInfo& info );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -91,6 +93,8 @@ private:
     std::string strName_;
     T_PositionVector geometry_;
     sword::Diffusion diffusion_;
+    std::string color_;
+    std::string level_;
     //@}
 
 

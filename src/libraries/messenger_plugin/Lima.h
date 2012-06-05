@@ -33,6 +33,7 @@ namespace plugins
 {
 namespace messenger
 {
+    class DisplayInfo;
 
 // =============================================================================
 /** @class  Lima
@@ -46,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Lima( unsigned int id, const sword::PhaseLineCreationRequest& message );
-             Lima( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             Lima( unsigned int id, xml::xistream&, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter, const DisplayInfo& info );
     virtual ~Lima();
     //@}
 

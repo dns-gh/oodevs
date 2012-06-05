@@ -9,12 +9,13 @@
 
 #include "messenger_plugin_pch.h"
 #include "Model.h"
-#include "IdManager.h"
-#include "TacticalLinesModel.h"
-#include "DrawingsModel.h"
-#include "NotesModel.h"
 #include "ClientObjectsModel.h"
+#include "DisplayInfo.h"
+#include "DrawingsModel.h"
 #include "Entity_ABC.h"
+#include "IdManager.h"
+#include "NotesModel.h"
+#include "TacticalLinesModel.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/CompositeRegistrable.h"
@@ -188,8 +189,9 @@ void Model::ReadFormation( xml::xistream& xis )
     sword::FormationId formation;
     formation.set_id( id );
     diffusion.mutable_formation()->set_id( id ) ;
-    xis >> xml::list( "lima"        , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
-        >> xml::list( "limit"       , tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion )
+    DisplayInfo info( xis );
+    xis >> xml::list( "lima"        , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion, info )
+        >> xml::list( "limit"       , tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion, info )
         >> xml::list( "automat"     , *this, &Model::ReadAutomat )
         >> xml::list( "formation"   , *this, &Model::ReadFormation );
 }
@@ -202,8 +204,9 @@ void Model::ReadAutomat( xml::xistream& xis )
 {
     sword::Diffusion diffusion;
     diffusion.mutable_automat()->set_id( xis.attribute< unsigned int >( "id" ) );
-    xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
-        >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion );
+    DisplayInfo info( xis );
+    xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion, info )
+        >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion, info );
 }
 
 // -----------------------------------------------------------------------------

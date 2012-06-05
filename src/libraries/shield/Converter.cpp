@@ -168,6 +168,23 @@ void Converter::ReceiveMessengerToClient( const sword::MessengerToClient& msg )
     FORWARD( client_, MessengerToClient, client_object_creation_ack )
     FORWARD( client_, MessengerToClient, client_object_destruction_ack )
     FORWARD( client_, MessengerToClient, client_object_update_ack )
+    
+    if( msg.has_message() && msg.message().has_phase_line_creation() )
+    {
+        if( msg.has_context() )
+            out.set_context( msg.context() );
+        MessengerToClient::Convert( msg.message().phase_line_creation(), out.mutable_message()->mutable_shape_creation() );
+        client_.Send( out );
+        return;
+    }
+    if( msg.has_message() && msg.message().has_limit_creation() )
+    {
+        if( msg.has_context() )
+            out.set_context( msg.context() );
+        MessengerToClient::Convert( msg.message().limit_creation(), out.mutable_message()->mutable_shape_creation() );
+        client_.Send( out );
+        return;
+    }
 }
 
 // -----------------------------------------------------------------------------

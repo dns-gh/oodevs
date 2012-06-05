@@ -982,6 +982,8 @@ message TacticalLine {
     required string    name      = 1; //!< The name
     required Location  geometry  = 2; //!< The geometry
     required Diffusion diffusion = 3; //!< The diffusion
+    optional RgbColor  color     = 4; //!< The line color
+    optional string    level     = 5; //!< The line level
 }
 
 /** @struct Shape

@@ -76,6 +76,9 @@
     <ClCompile Include="..\..\src\libraries\messenger_plugin\Chat.cpp">
       <Filter>Source Files\Chat</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\messenger_plugin\DisplayInfo.cpp">
+      <Filter>Source Files\Model\Tactical lines</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.h">
@@ -131,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Chat.h">
       <Filter>Source Files\Chat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\messenger_plugin\DisplayInfo.h">
+      <Filter>Source Files\Model\Tactical lines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

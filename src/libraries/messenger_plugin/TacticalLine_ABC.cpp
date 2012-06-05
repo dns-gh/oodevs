@@ -9,6 +9,7 @@
 
 #include "messenger_plugin_pch.h"
 #include "TacticalLine_ABC.h"
+#include "DisplayInfo.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -30,9 +31,11 @@ TacticalLine_ABC::TacticalLine_ABC( unsigned int id, const sword::TacticalLine& 
 // Name: TacticalLine_ABC constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter)
-    : id_       ( id ),
-      diffusion_( diffusion )
+TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const sword::Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter, const DisplayInfo& info )
+    : id_       ( id )
+    , diffusion_( diffusion )
+    , color_    ( info.Color() )
+    , level_    ( info.Level() )
 {
     xis >> xml::attribute( "name", strName_ )
         >> xml::list( "point", *this, &TacticalLine_ABC::ReadPoint, geometry_, converter );
@@ -92,6 +95,13 @@ void TacticalLine_ABC::Send( sword::TacticalLine& asn ) const
 {
     asn.set_name ( strName_.c_str() );
     *asn.mutable_diffusion() = diffusion_;
+    unsigned int color;
+    std::stringstream colorStream( color_ );
+    colorStream >> std::hex >> color;
+    asn.mutable_color()->set_red( ( color >> 16 ) & 0xff );
+    asn.mutable_color()->set_green( ( color >> 8 ) & 0xff );
+    asn.mutable_color()->set_blue( color & 0xff );
+    asn.set_level( level_ );
     Send( *asn.mutable_geometry() );
 }
 

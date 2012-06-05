@@ -48,6 +48,7 @@ namespace messenger
     class Limit;
     class IdManager;
     class Entity_ABC;
+    class DisplayInfo;
 
 // =============================================================================
 /** @class  TacticalLinesModel
@@ -77,8 +78,8 @@ public:
 
     //! @name xml read / write
     //@{
-    void ReadLima ( xml::xistream& xis, const sword::Diffusion& diffusion );
-    void ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion );
+    void ReadLima ( xml::xistream& xis, const sword::Diffusion& diffusion, const DisplayInfo& info );
+    void ReadLimit( xml::xistream& xis, const sword::Diffusion& diffusion, const DisplayInfo& info );
     void Write( xml::xostream& xos ) const;
     //@}
 

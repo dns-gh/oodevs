@@ -28,7 +28,9 @@ class MessengerToClient
 public:
     //! @name Operations
     //@{
-
+    
+    static void Convert( const sword::LimitCreation& from, MsgsMessengerToClient::MsgShapeCreation* to );
+    static void Convert( const sword::PhaseLineCreation& from, MsgsMessengerToClient::MsgShapeCreation* to );
     static void Convert( const sword::ShapeCreation& from, MsgsMessengerToClient::MsgShapeCreation* to );
     static void Convert( const sword::ShapeUpdate& from, MsgsMessengerToClient::MsgShapeUpdate* to );
     static void Convert( const sword::ShapeDestruction& from, MsgsMessengerToClient::MsgShapeDestruction* to );
