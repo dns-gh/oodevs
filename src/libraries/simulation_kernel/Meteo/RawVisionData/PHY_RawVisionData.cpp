@@ -18,7 +18,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/InputBinaryStream.h"
-#include "tools/WorldParameters.h"
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
 const weather::Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_ = 0;
@@ -48,14 +47,14 @@ const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, tools::WorldParameters& config )
+PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const std::string& detection )
     : ppCells_( 0 )
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( config.detection_ );
-    Read( config.detection_ );
+    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( detection );
+    Read( detection );
     sCell::pGlobalMeteo_ = &globalMeteo;
 }
 

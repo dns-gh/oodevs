@@ -19,7 +19,7 @@ static void WorldInitialize( const std::string& exercise )
     params[3] = "--session=default";
     config.Parse(4, params );
 
-    TER_World::Initialize( tools::WorldParameters( config ) );
+    TER_World::Initialize( config );
 }
 
 #endif

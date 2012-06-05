@@ -27,11 +27,13 @@ using namespace gui;
 // Name: Gl3dWidget constructor
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& elevation, EventStrategy_ABC& strategy )
-    : WorldParameters( config )
-    , SetGlOptions   ()
+Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width, float height,
+                        DetectionMap& elevation, EventStrategy_ABC& strategy )
+    : SetGlOptions   ()
     , Widget3D       ( context_, pParent )
     , GlToolsBase    ( controllers )
+    , width_         ( width )
+    , height_        ( height )
     , elevation_     ( elevation )
     , strategy_      ( strategy )
     , zRatio_        ( 5 )

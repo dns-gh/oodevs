@@ -10,6 +10,7 @@
 #include "tools_pch.h"
 #include "ExerciseConfig.h"
 #include "Loader.h"
+#include "WorldParameters.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
@@ -29,7 +30,8 @@ using namespace tools;
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
-    : fileLoader_( new Loader( *this, observer ) )
+    : fileLoader_      ( new Loader( *this, observer ) )
+    , pWorldParameters_( 0 )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -89,9 +91,10 @@ void ExerciseConfig::LoadExercise( const std::string& file )
 {
     try
     {
-        GetLoader().LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
+        fileLoader_->LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );
+        pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
     catch( ... )
     {
@@ -702,4 +705,122 @@ std::string ExerciseConfig::GetDataSet() const
 std::string ExerciseConfig::GetPhysicalBase() const
 {
     return physical_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetGraphicsDirectory
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetGraphicsDirectory() const
+{
+    return pWorldParameters_->graphicsDirectory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDetectionFile
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetDetectionFile() const
+{
+    return pWorldParameters_->detection_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetTerrainWidth
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+float ExerciseConfig::GetTerrainWidth() const
+{
+    return pWorldParameters_->width_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetTerrainHeight
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+float ExerciseConfig::GetTerrainHeight() const
+{
+    return pWorldParameters_->height_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetTerrainLongitude
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+float ExerciseConfig::GetTerrainLongitude() const
+{
+    return pWorldParameters_->longitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetTerrainLatitude
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+float ExerciseConfig::GetTerrainLatitude() const
+{
+    return pWorldParameters_->latitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDetectionDirectory
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetDetectionDirectory() const
+{
+    return pWorldParameters_->detectionDirectory_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetPathfindGraphFile
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetPathfindGraphFile() const
+{
+    return pWorldParameters_->pathfindGraph_;
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetPathfindLinksFile
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetPathfindLinksFile() const
+{
+    return pWorldParameters_->pathfindLinks_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetPathfindNodesFile
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetPathfindNodesFile() const
+{
+    return pWorldParameters_->pathfindNodes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::SerializeAndSignTerrainFiles
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+void ExerciseConfig::SerializeAndSignTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const
+{
+    pWorldParameters_->Serialize( GetTerrainFile(), schemaWriter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetUtmZones
+// Created: LGY 2012-06-04
+// -----------------------------------------------------------------------------
+const std::vector< unsigned char >& ExerciseConfig::GetUtmZones() const
+{
+    return pWorldParameters_->utmZones_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetUrbanTerrainFile
+// Created: LGY 2012-06-05
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetUrbanTerrainFile() const
+{
+    return pWorldParameters_->urban_;
 }

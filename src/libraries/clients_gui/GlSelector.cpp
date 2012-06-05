@@ -20,6 +20,7 @@
 #include "CompositionPass.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#include "tools/ExerciseConfig.h"
 #include <graphics/DragMovementLayer.h>
 
 using namespace gui;
@@ -71,7 +72,7 @@ void GlSelector::Load()
 {
     if( widget2d_ )
         return;
-    widget2d_ = new GlWidget( parent_, controllers_, config_, *iconLayout_ );
+    widget2d_ = new GlWidget( parent_, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_ );
     parent_->addWidget( widget2d_ );
     InitializePasses();
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
@@ -142,7 +143,7 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( parent_, controllers_, config_, map_, strategy_ );
+                    widget3d_ = new Gl3dWidget( parent_, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_ );
                     parent_->addWidget( widget3d_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
                     proxy_.RegisterTo( widget3d_ );

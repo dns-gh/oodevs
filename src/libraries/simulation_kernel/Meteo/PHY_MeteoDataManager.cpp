@@ -15,7 +15,6 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Loader_ABC.h"
-#include "tools/WorldParameters.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -68,8 +67,7 @@ void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
     xis >> xml::start( "weather" );
     pEphemeride_ = new PHY_Ephemeride( xis );
     InitializeGlobalMeteo( xis );
-    tools::WorldParameters terrainConfig = tools::WorldParameters( config );
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, terrainConfig );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config.GetDetectionFile() );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }
@@ -186,8 +184,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> pGlobalMeteo_
          >> pEphemeride_
          >> size;
-    tools::WorldParameters terrainConfig = tools::WorldParameters( MIL_AgentServer::GetWorkspace().GetConfig() );
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, terrainConfig );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, MIL_AgentServer::GetWorkspace().GetConfig().GetDetectionFile() );
     PHY_LocalMeteo* meteo = 0;
     for( ; size > 0; --size )
     {

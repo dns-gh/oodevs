@@ -10,17 +10,11 @@
 #ifndef __GlWidget_h_
 #define __GlWidget_h_
 
-#include "tools/WorldParameters.h"
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
 #include "MapWidget_ABC.h"
 #include <graphics/MapWidget.h>
-
-namespace tools
-{
-    class ExerciseConfig;
-}
 
 namespace kernel
 {
@@ -40,8 +34,7 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private tools::WorldParameters
-               , private SetGlOptions
+class GlWidget :  private SetGlOptions
                , public MapWidget
                , public MapWidget_ABC
                , public GlToolsBase
@@ -50,7 +43,7 @@ class GlWidget : private tools::WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, kernel::Controllers& controllers, const tools::ExerciseConfig& config, IconLayout& iconLayout );
+             GlWidget( QWidget* pParent, kernel::Controllers& controllers, float width, float height, IconLayout& iconLayout );
     virtual ~GlWidget();
     //@}
 
