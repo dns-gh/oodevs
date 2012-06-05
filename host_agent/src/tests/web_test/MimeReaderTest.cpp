@@ -88,6 +88,36 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_single_part, Fixture )
     BOOST_CHECK_EQUAL( count, size_t( 1 ) );
 }
 
+BOOST_FIXTURE_TEST_CASE( reader_parse_truncated_mime, Fixture )
+{
+    const std::string limit = "0123456789abcdefedcba9876543210";
+    std::stringstream buffer;
+    buffer << "--" + limit + " \t \r\n"
+           << "Content-Disposition: form-data; filename=\"wut\"; name=\"my_name\"\r\n"
+           << "\r\n"
+           << "some data...\r\n"
+           << "--" + limit.substr( 0, limit.size() - 1 ) + "--\r\n";
+    reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
+    BOOST_CHECK_EQUAL( reader.IsValid(), true );
+    reader.Register( "my_name", &SinkStream );
+    reader.Parse( pool, buffer );
+}
+
+BOOST_FIXTURE_TEST_CASE( reader_parse_evil_delimiter, Fixture )
+{
+    const std::string limit = "0123456789abcdefedcba9876543210";
+    std::stringstream buffer;
+    buffer << "--" + limit + " \t \r\n"
+           << "Content-Disposition: form-data; filename=\"wut\"; name=\"my_name\"\r\n"
+           << "\r\n"
+           << "some data...\r\n"
+           << "--" + limit.substr( 0, limit.size()>>2 ) + "--\r\n";
+    reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
+    BOOST_CHECK_EQUAL( reader.IsValid(), true );
+    reader.Register( "my_name", &SinkStream );
+    reader.Parse( pool, buffer );
+}
+
 BOOST_FIXTURE_TEST_CASE( reader_parse_multi_part, Fixture )
 {
     const std::string limit = "0123456789abcdefedcba9876543210";

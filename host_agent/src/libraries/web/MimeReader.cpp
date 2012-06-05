@@ -193,6 +193,8 @@ size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_
 {
     const char first = needle[0];
     const char* ptr = haystack;
+    if( hsize < nsize )
+        return hsize;
     for(;;)
     {
         ptr = static_cast< const char* >( memchr( ptr, first, hsize - ( ptr - haystack ) - nsize ) );
@@ -213,7 +215,7 @@ void ParseData( StreamBuffer& buf, const std::string boundary, T part = T() )
     {
         char* ptr;
         const size_t read = buf.Peek( &ptr );
-        size_t next = FindNeedle( ptr, read, end.c_str(), end.size() );
+        const size_t next = FindNeedle( ptr, read, end.c_str(), end.size() );
         if( next != read )
         {
             // consume all until delimiter
@@ -222,10 +224,12 @@ void ParseData( StreamBuffer& buf, const std::string boundary, T part = T() )
             buf.Skip( next + 2 );
             return;
         }
+        // eat last chunk if not big enough to contain a delimiter
+        const size_t skip = read <= end.size() ? read : read - end.size();
         // consume all except potentially truncated boundary
         if( part )
-            part->async_.Write( ptr, read - end.size() );
-        buf.Skip( read - end.size() );
+            part->async_.Write( ptr, skip );
+        buf.Skip( skip );
     }
 }
 
