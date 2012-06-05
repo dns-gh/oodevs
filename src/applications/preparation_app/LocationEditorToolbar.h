@@ -11,7 +11,6 @@
 #define __LocationEditorToolbar_h_
 
 #include "clients_gui/LocationEditorToolbar.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +31,6 @@ namespace gui
 // Created: LGY 2012-01-11
 // =============================================================================
 class LocationEditorToolbar : public gui::LocationEditorToolbar
-                            , public kernel::OptionsObserver_ABC
 
 {
 public:
@@ -44,24 +42,15 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LocationEditorToolbar( const LocationEditorToolbar& );            //!< Copy constructor
-    LocationEditorToolbar& operator=( const LocationEditorToolbar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void StartEdit( gui::ParametersLayer& parameters );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    bool livingAreaEditor_;
     //@}
 };
 

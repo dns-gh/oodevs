@@ -35,15 +35,13 @@ using namespace gui;
 // Name: LocationEditorToolbar constructor
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
-LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer, bool needRegister /* = true */ )
-    : RichToolBar( controllers, parent, "locationeditor", tr( "Location editor" ), false )
+LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view, LocationsLayer& layer )
+    : RichToolBar( controllers, parent, "locationeditor", tr( "Location editor" ) )
     , controllers_( controllers )
-    , needRegister_( needRegister )
     , converter_( converter )
     , featureNameParser_( controllers )
     , view_( view )
     , layer_( layer )
-    , parameters_( 0 )
     , bookmarksMenu_( 0 )
 {
     locBox_ = new LocationEditorBox( this, controllers, converter );
@@ -56,25 +54,18 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     gotoButton_->setPopup( bookmarksMenu_ );
     ClearBookmarks();
     QToolTip::add( gotoButton_, tr( "Center on location" ) );
-    okButton_ = new QToolButton( this );
-    okButton_->setIconSet( MAKE_PIXMAP( add_point ) );
-    QToolTip::add( okButton_, tr( "Add point to current location" ) );
-    okButton_->hide();
     paramsButton_ = new QToolButton( this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
 
     addWidget( locBox_ );
     addWidget( gotoButton_ );
-    addWidget( okButton_ );
     addWidget( paramsButton_ );
 
     connect( gotoButton_, SIGNAL( clicked() ), SLOT( Goto() ) );
-    connect( okButton_, SIGNAL( clicked() ), SLOT( AddPoint() ) );
     connect( paramsButton_, SIGNAL( clicked() ), SLOT( AddParamPoint() ) );
 
-    if( needRegister_ )
-        controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,29 +74,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::~LocationEditorToolbar()
 {
-    if( needRegister_ )
-        controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::StartEdit
-// Created: SBO 2007-03-06
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::StartEdit( ParametersLayer& parameters )
-{
-    show();
-    parameters_ = &parameters;
-    okButton_->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::EndEdit
-// Created: SBO 2007-03-06
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::EndEdit()
-{
-    parameters_ = 0;
-    okButton_->hide();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,17 +86,6 @@ void LocationEditorToolbar::Goto()
     geometry::Point2f point;
     if( GetPosition( point ) )
         view_.CenterOn( point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::AddPoint
-// Created: SBO 2007-03-06
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::AddPoint()
-{
-    geometry::Point2f point;
-    if( parameters_  && GetPosition( point ) )
-        parameters_->AddPoint( point );
 }
 
 // -----------------------------------------------------------------------------

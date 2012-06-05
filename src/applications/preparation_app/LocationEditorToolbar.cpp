@@ -11,6 +11,7 @@
 #include "LocationEditorToolbar.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar constructor
@@ -18,11 +19,10 @@
 // -----------------------------------------------------------------------------
 LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
                                               gui::View_ABC& view, gui::LocationsLayer& layer )
-    : gui::LocationEditorToolbar( parent, controllers, converter, view, layer, false )
+    : gui::LocationEditorToolbar( parent, controllers, converter, view, layer )
     , controllers_( controllers )
-    , livingAreaEditor_( false )
 {
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,31 +35,11 @@ LocationEditorToolbar::~LocationEditorToolbar()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::StartEdit
-// Created: LGY 2012-01-11
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::StartEdit( gui::ParametersLayer& parameters )
-{
-    if( !livingAreaEditor_ )
-        gui::LocationEditorToolbar::StartEdit( parameters );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar::NotifyContextMenu
 // Created: LGY 2012-01-11
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( !livingAreaEditor_ )
+    if( GetCurrentMode() != ePreparationMode_LivingArea )
         gui::LocationEditorToolbar::NotifyContextMenu( point, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::OptionChanged
-// Created: LGY 2012-01-11
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "LivingAreaEditor" )
-        livingAreaEditor_ = value.To< bool >();
 }

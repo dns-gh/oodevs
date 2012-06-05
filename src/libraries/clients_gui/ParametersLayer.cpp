@@ -28,10 +28,9 @@ using namespace gui;
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer( GlTools_ABC& tools, LocationEditor_ABC& editor )
+ParametersLayer::ParametersLayer( GlTools_ABC& tools )
     : tools_( tools )
     , cursors_( new CursorStrategy( tools_ ) )
-    , editor_( editor )
     , handler_( 0 )
     , current_( 0 )
 {
@@ -232,7 +231,6 @@ void ParametersLayer::StartPath( ShapeHandler_ABC& handler, const Positions& pos
 // -----------------------------------------------------------------------------
 void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& location )
 {
-    editor_.StartEdit( *this );
     handler_ = &handler;
     current_ = &location.Clone();
 }
@@ -257,7 +255,6 @@ void ParametersLayer::NotifyDone()
 {
     if( !current_ || current_ && current_->IsValid() )
     {
-        editor_.EndEdit();
         ShapeHandler_ABC* handler = handler_;
         Location_ABC* location = current_;
         handler_ = 0;
