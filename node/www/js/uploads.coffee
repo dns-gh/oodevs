@@ -38,54 +38,56 @@ class PackageView extends Backbone.View
 
     render: =>
         return unless @enabled
+
         $(@el).empty()
-        if @model.attributes.name?
-            $(@el).html package_template @model.attributes
+        return unless @model.attributes.name?
 
-            for it in $(@el).find ".action .more"
-                $(it).click ->
-                    $("#briefing_" + $(@).parent().attr "data-rel").toggle "fast"
+        $(@el).html package_template @model.attributes
 
-            for it in $(@el).find ".name .error"
-                $(it).tooltip placement: "top"
+        for it in $(@el).find ".action .more"
+            $(it).click ->
+                $("#briefing_" + $(@).parent().attr "data-rel").toggle "fast"
 
-            discard = $(".form-actions .discard")
-            save = $(".form-actions .save")
+        for it in $(@el).find ".name .error"
+            $(it).tooltip placement: "top"
 
-            discard.click =>
-                return if discard.hasClass "disabled"
+        discard = $(".form-actions .discard")
+        save = $(".form-actions .save")
+
+        discard.click =>
+            return if discard.hasClass "disabled"
+            @enabled = false
+            @reset()
+            ajax "/api/delete_cache", id: uuid,
+                => @enabled = true
+                => @enabled = true
+
+        save.click =>
+            return if save.hasClass "disabled"
+            list = []
+            for it in $(@el).find ".action .add, .action .update"
+                continue unless $(it).hasClass "active"
                 @enabled = false
-                @reset()
-                ajax "/api/delete_cache", id: uuid,
-                    => @enabled = true
-                    => @enabled = true
+                discard.addClass "disabled"
+                save.addClass "disabled"
+                id = transform_to_spinner it
+                list.push id if id?
+            if !list.length
+                print_error "Please select at least one package to install"
+                return
+            ajax "/api/install_from_cache", id: uuid, items: list.join ',',
+                (item) =>
+                    @reset()
+                    @enabled = true
+                    @model.set item
+                () =>
+                    @reset()
+                    @enabled = true
+                    print_error "Unable to save package(s)"
 
-            save.click =>
-                return if save.hasClass "disabled"
-                list = []
-                for it in $(@el).find ".action .add, .action .update"
-                    continue unless $(it).hasClass "active"
-                    @enabled = false
-                    discard.addClass "disabled"
-                    save.addClass "disabled"
-                    id = transform_to_spinner it
-                    list.push id if id?
-                if !list.length
-                    print_error "Please select at least one package to install"
-                    return
-                ajax "/api/install_from_cache", id: uuid, items: list.join ',',
-                    (item) =>
-                        @reset()
-                        @enabled = true
-                        @model.set item
-                    () =>
-                        @reset()
-                        @enabled = true
-                        print_error "Unable to save package(s)"
-
-            $(".toggle a").click ->
-                for it in $(".action .add, .action .update")
-                    $(it).button "toggle"
+        $(".toggle a").click ->
+            for it in $(".action .add, .action .update")
+                $(it).button "toggle"
         return
 
     delta: =>

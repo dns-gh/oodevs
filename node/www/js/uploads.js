@@ -234,86 +234,87 @@
         return;
       }
       $(this.el).empty();
-      if (this.model.attributes.name != null) {
-        $(this.el).html(package_template(this.model.attributes));
-        _ref = $(this.el).find(".action .more");
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          it = _ref[_i];
-          $(it).click(function() {
-            return $("#briefing_" + $(this).parent().attr("data-rel")).toggle("fast");
-          });
-        }
-        _ref1 = $(this.el).find(".name .error");
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          it = _ref1[_j];
-          $(it).tooltip({
-            placement: "top"
-          });
-        }
-        discard = $(".form-actions .discard");
-        save = $(".form-actions .save");
-        discard.click(function() {
-          if (discard.hasClass("disabled")) {
-            return;
-          }
-          _this.enabled = false;
-          _this.reset();
-          return ajax("/api/delete_cache", {
-            id: uuid
-          }, function() {
-            return _this.enabled = true;
-          }, function() {
-            return _this.enabled = true;
-          });
-        });
-        save.click(function() {
-          var id, list, _k, _len2, _ref2;
-          if (save.hasClass("disabled")) {
-            return;
-          }
-          list = [];
-          _ref2 = $(_this.el).find(".action .add, .action .update");
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            it = _ref2[_k];
-            if (!$(it).hasClass("active")) {
-              continue;
-            }
-            _this.enabled = false;
-            discard.addClass("disabled");
-            save.addClass("disabled");
-            id = transform_to_spinner(it);
-            if (id != null) {
-              list.push(id);
-            }
-          }
-          if (!list.length) {
-            print_error("Please select at least one package to install");
-            return;
-          }
-          return ajax("/api/install_from_cache", {
-            id: uuid,
-            items: list.join(',')
-          }, function(item) {
-            _this.reset();
-            _this.enabled = true;
-            return _this.model.set(item);
-          }, function() {
-            _this.reset();
-            _this.enabled = true;
-            return print_error("Unable to save package(s)");
-          });
-        });
-        $(".toggle a").click(function() {
-          var _k, _len2, _ref2, _results;
-          _ref2 = $(".action .add, .action .update");
-          _results = [];
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            it = _ref2[_k];
-            _results.push($(it).button("toggle"));
-          }
-          return _results;
+      if (this.model.attributes.name == null) {
+        return;
+      }
+      $(this.el).html(package_template(this.model.attributes));
+      _ref = $(this.el).find(".action .more");
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        $(it).click(function() {
+          return $("#briefing_" + $(this).parent().attr("data-rel")).toggle("fast");
         });
       }
+      _ref1 = $(this.el).find(".name .error");
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        it = _ref1[_j];
+        $(it).tooltip({
+          placement: "top"
+        });
+      }
+      discard = $(".form-actions .discard");
+      save = $(".form-actions .save");
+      discard.click(function() {
+        if (discard.hasClass("disabled")) {
+          return;
+        }
+        _this.enabled = false;
+        _this.reset();
+        return ajax("/api/delete_cache", {
+          id: uuid
+        }, function() {
+          return _this.enabled = true;
+        }, function() {
+          return _this.enabled = true;
+        });
+      });
+      save.click(function() {
+        var id, list, _k, _len2, _ref2;
+        if (save.hasClass("disabled")) {
+          return;
+        }
+        list = [];
+        _ref2 = $(_this.el).find(".action .add, .action .update");
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          it = _ref2[_k];
+          if (!$(it).hasClass("active")) {
+            continue;
+          }
+          _this.enabled = false;
+          discard.addClass("disabled");
+          save.addClass("disabled");
+          id = transform_to_spinner(it);
+          if (id != null) {
+            list.push(id);
+          }
+        }
+        if (!list.length) {
+          print_error("Please select at least one package to install");
+          return;
+        }
+        return ajax("/api/install_from_cache", {
+          id: uuid,
+          items: list.join(',')
+        }, function(item) {
+          _this.reset();
+          _this.enabled = true;
+          return _this.model.set(item);
+        }, function() {
+          _this.reset();
+          _this.enabled = true;
+          return print_error("Unable to save package(s)");
+        });
+      });
+      $(".toggle a").click(function() {
+        var _k, _len2, _ref2, _results;
+        _ref2 = $(".action .add, .action .update");
+        _results = [];
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          it = _ref2[_k];
+          _results.push($(it).button("toggle"));
+        }
+        return _results;
+      });
     };
 
     PackageView.prototype.delta = function() {
