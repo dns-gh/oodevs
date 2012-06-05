@@ -433,4 +433,5 @@ eRC_NotInSameUndergroundNetwork = 418
 eRC_TerroristDropped = 419
 eRC_Questionning = 420
 eRC_criticalIntelligenceImpossible = 421
-eNbr = 422
+eRC_InvalidTarget = 422
+eNbr = 423

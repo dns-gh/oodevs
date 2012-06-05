@@ -616,5 +616,6 @@
   </report>
   <report category="operational" id="420" message="Being interrogated"/>
   <report category="operational" id="421" message="Impossible to have the critical intelligence : weak force ratio"/>
+  <report category="operational" id="422" message="The target is no longer valid"/>
 </reports>
-<!-- signature="1184152620" -->
+<!-- signature="3488685814" -->

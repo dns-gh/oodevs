@@ -574,6 +574,7 @@ public:
         eRC_TerroristDropped,
         eRC_Questionning,
         eRC_criticalIntelligenceImpossible,
+        eRC_InvalidTarget,
         eLast
     };
     //@}
