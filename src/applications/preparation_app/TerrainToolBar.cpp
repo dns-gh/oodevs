@@ -10,9 +10,14 @@
 #include "preparation_app_pch.h"
 #include "TerrainToolBar.h"
 #include "moc_TerrainToolBar.cpp"
+#include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "preparation/UrbanHierarchies.h"
+#include "preparation/UrbanModel.h"
 #include "MainWindow.h"
 
 namespace
@@ -34,15 +39,20 @@ namespace
 // Name: TerrainToolBar constructor
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controllers )
-    : gui::RichToolBar( controllers, parent, "terrainToolBar", tr( "Terrain" )/*, false*/ )
+TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel )
+    : gui::RichToolBar( controllers, parent, "terrainToolBar", tr( "Terrain" ) )
+    , eventStrategy_( eventStrategy )
+    , paramLayer_   ( paramLayer )
+    , urbanModel_   ( urbanModel )
+    , selected_     ( controllers )
+    , isAuto_       ( false )
 {
     // Terrain button
     switchModeButton_ = AddButton( this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
     // Block creation button
-    blockCreationButton_ = AddButton( this, this, SLOT( OnBlockCreationMode() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
+    blockCreationButton_ = AddButton( this, this, SLOT( OnBlockCreation() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
     // Multi blocks creation button
-    blockCreationAutoButton_ = AddButton( this, this, SLOT( OnBlockCreationAutoMode() ), tr( "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
+    blockCreationAutoButton_ = AddButton( this, this, SLOT( OnBlockCreationAuto() ), tr( "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
     // Remove blocks button
     blockRemoveButton_ = AddButton( this, this, SLOT( OnRemoveBlocks() ), tr( "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
     // Layout
@@ -54,6 +64,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     // Disable buttons
     EnableBlockCreationButtons( false );
     blockRemoveButton_->setEnabled( false );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +73,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
 // -----------------------------------------------------------------------------
 TerrainToolBar::~TerrainToolBar()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,44 +119,71 @@ void TerrainToolBar::EnableBlockCreationButtons( bool enabled )
     blockCreationAutoButton_->setEnabled( enabled );
 }
 
-// $$$$ ABR 2012-05-15: TODO As soon as multi selection and urban ODB will be implemented.
-
-// void SelectionChanged( selection )
-//{
-//    UncheckBlockCreationButtons();
-//    EnableBlockCreationButtons( selection == district )
-//}
-
 // -----------------------------------------------------------------------------
-// Name: TerrainToolBar::OnBlockCreationMode
-// Created: ABR 2012-05-15
+// Name: TerrainToolBar::NotifySelected
+// Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void TerrainToolBar::OnBlockCreationMode()
+void TerrainToolBar::NotifySelected( const kernel::UrbanObject_ABC* urbanObject )
 {
-    //eventStrategy_->TakeExclusiveFocus( *editorLayer_ );
-    //if( editorLayer_ && editorDrawer_.get() )
-    //    editorLayer_->StartPolygon( *editorDrawer_, false );
-    //UncheckBlockCreationButtons();
+    selected_ = 0;
+    if( GetCurrentMode() != ePreparationMode_Terrain )
+        return;
+    UncheckBlockCreationButtons();
+    bool enabled = false;
+    if( urbanObject )
+        if( const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject->Retrieve< kernel::Hierarchies >() ) )
+        {
+            enabled = urbanHierarchies->GetLevel() == eUrbanLevelDistrict;
+        }
+    EnableBlockCreationButtons( enabled );
+    if( enabled )
+        selected_ = urbanObject;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainToolBar::OnBlockCreationAutoMode
+// Name: TerrainToolBar::Handle
+// Created: ABR 2012-05-31
+// -----------------------------------------------------------------------------
+void TerrainToolBar::Handle( kernel::Location_ABC& location )
+{
+    if( !selected_ )
+        return;
+    urbanModel_.CreateUrbanBlocs( location, *selected_.ConstCast(), isAuto_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainToolBar::OnBlockCreation
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-void TerrainToolBar::OnBlockCreationAutoMode()
+void TerrainToolBar::OnBlockCreation()
 {
-    //try
-    //{
-    //    eventStrategy_->TakeExclusiveFocus( *editorLayer_ );
-    //    if( editorLayer_ && selectionDrawer_.get() )
-    //        editorLayer_->StartPolygon( *selectionDrawer_, true );
-    //    UncheckBlockCreationButtons();
-    //}
-    //catch( std::exception& e )
-    //{
-    //    QMessageBox::critical( 0, tr( "Error during automatic process creation of urban blocks" ), e.what() );
-    //    UncheckBlockCreationButtons();
-    //}
+    isAuto_ = false;
+    eventStrategy_.TakeExclusiveFocus( paramLayer_ );
+    paramLayer_.StartPolygon( *this );
+    eventStrategy_.ReleaseExclusiveFocus();
+    UncheckBlockCreationButtons();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainToolBar::OnBlockCreationAuto
+// Created: ABR 2012-05-15
+// -----------------------------------------------------------------------------
+void TerrainToolBar::OnBlockCreationAuto()
+{
+    try
+    {
+        isAuto_ = true;
+        eventStrategy_.TakeExclusiveFocus( paramLayer_ );
+        paramLayer_.StartPolygon( *this );
+        eventStrategy_.ReleaseExclusiveFocus();
+        UncheckBlockCreationButtons();
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, tr( "Error during automatic process creation of urban blocks" ), e.what() );
+        eventStrategy_.ReleaseExclusiveFocus();
+        UncheckBlockCreationButtons();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -154,8 +192,19 @@ void TerrainToolBar::OnBlockCreationAutoMode()
 // -----------------------------------------------------------------------------
 void TerrainToolBar::OnRemoveBlocks()
 {
-    //bool ok;
-    //int area = QInputDialog::getInt( this, tr( "Delete blocks" ), tr("Minimum size (m²): "), 100, 0, std::numeric_limits< int >::max(), 1, &ok );
-    //if( ok )
-    //    controller_.Delete( area );
+    bool ok;
+    int area = QInputDialog::getInt( this, tr( "Delete blocks" ), tr("Minimum size (m²): "), 100, 0, std::numeric_limits< int >::max(), 1, &ok );
+    if( ok )
+        urbanModel_.DeleteBlocs( area );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainToolBar::NotifyModeChanged
+// Created: ABR 2012-06-05
+// -----------------------------------------------------------------------------
+void TerrainToolBar::NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    gui::RichToolBar::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    if( newMode != ePreparationMode_Terrain )
+        switchModeButton_->setChecked( false );
 }

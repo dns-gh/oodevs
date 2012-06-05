@@ -7,23 +7,20 @@
 //
 // *****************************************************************************
 
-#ifndef __UrbanPositions_h_
-#define __UrbanPositions_h_
+#ifndef __gaming_UrbanPositions_h_
+#define __gaming_UrbanPositions_h_
 
-#include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/UrbanPositions.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class Viewport_ABC;
-    class GlTools_ABC;
-    class UrbanColor_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace sword
 {
     class Location;
-    class UrbanAttributes;
 }
 
 // =============================================================================
@@ -32,43 +29,14 @@ namespace sword
 */
 // Created: LGY 2011-04-15
 // =============================================================================
-class UrbanPositions : public kernel::UrbanPositions_ABC
+class UrbanPositions : public kernel::UrbanPositions
 {
 public:
     //! @name Constructors/Destructor
     //@{s
-             UrbanPositions( const sword::Location& location, const sword::UrbanAttributes& attributes,
-                             const kernel::CoordinateConverter_ABC& converter, const std::string& name, const kernel::UrbanColor_ABC& color );
+             UrbanPositions( const sword::Location& location, const kernel::CoordinateConverter_ABC& converter, const kernel::UrbanObject_ABC& object );
     virtual ~UrbanPositions();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual const geometry::Point2f& Barycenter() const;
-    virtual const geometry::Rectangle2f& BoundingBox() const;
-    virtual bool IsInside( const geometry::Point2f& point ) const;
-    virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const;
-    virtual const std::vector< geometry::Point2f >& Vertices() const;
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual float ComputeArea() const;
-    virtual void SetSelection( bool selected );
-    virtual bool IsSelected() const;
-    virtual void SetInfrastructurePresent();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::string name_;
-    const kernel::UrbanColor_ABC& color_;
-    bool selected_;
-    unsigned int height_;
-    bool hasInfrastructure_;
-    geometry::Polygon2f polygon_;
-    geometry::Rectangle2f boundingBox_;
-    geometry::Point2f barycenter_;
-    float area_;
     //@}
 };
 
-#endif // __UrbanPositions_h_
+#endif // __gaming_UrbanPositions_h_

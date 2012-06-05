@@ -16,6 +16,7 @@
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_gui/Tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/DotationsItem.h"
@@ -144,4 +145,13 @@ void PropertiesTableDisplayer::Call( const kernel::MaterialCompositionType& valu
 void PropertiesTableDisplayer::Call( const kernel::RoofShapeType& value )
 {
     AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::UrbanBlockColor& value )
+{
+    AddToDisplay( QString( "<color red=\"%1\" green=\"%2\" blue=\"%3\" />" ).arg( value.red_ ).arg( value.green_ ).arg( value.blue_ ) );
 }

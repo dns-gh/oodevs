@@ -22,7 +22,8 @@
 // Name: ToolbarContainer constructor
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
-ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view, gui::LocationsLayer& layer )
+ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view,
+                                    gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel )
 {
     // File
     {
@@ -38,7 +39,7 @@ ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& co
     }
     // Terrain
     {
-        gui::RichToolBar* terrainToolBar = new TerrainToolBar( parent, controllers );
+        gui::RichToolBar* terrainToolBar = new TerrainToolBar( parent, controllers, eventStrategy, paramLayer, urbanModel );
         terrainToolBar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain, true );
         parent->addToolBar( terrainToolBar );
     }

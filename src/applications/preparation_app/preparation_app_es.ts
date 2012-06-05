@@ -2416,6 +2416,18 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <source>Remove urban blocks</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error during automatic process creation of urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum size (m²): </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

@@ -26,7 +26,6 @@
 
 #define DEFAULT_THRESHOLD 30
 
-
 namespace
 {
     struct ThresholdSetter
@@ -36,6 +35,23 @@ namespace
             *pValue = std::min( 100u, std::max( 0u, value ) );
         }
     };
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute constructor
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
+    : controllers_( controllers )
+    , dico_       ( dico )
+    , type_       ( 0 )
+    , enabled_    ( true )
+    , threshold_  ( DEFAULT_THRESHOLD )
+    , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
+{
+    assert( controllers_.modes_ );
+    controllers_.modes_->Register( *this );
+    NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
 }
 
 // -----------------------------------------------------------------------------

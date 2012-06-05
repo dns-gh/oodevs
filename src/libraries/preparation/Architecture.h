@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class PropertiesDictionary;
 }
 
@@ -38,7 +39,7 @@ class Architecture : public kernel::Architecture
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Architecture( kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+             Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
              Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}

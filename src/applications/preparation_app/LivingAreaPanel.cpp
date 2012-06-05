@@ -37,7 +37,7 @@ namespace
 // -----------------------------------------------------------------------------
 LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
                                   const kernel::GlTools_ABC& tools )
-    : gui::RichDockWidget( controllers, parent, "livingArea", tools::translate( "LivingAreaPanel", "Living Area" ), false )
+    : gui::RichDockWidget( controllers, parent, "livingArea", tools::translate( "LivingAreaPanel", "Living Area" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )
     , paramLayer_   ( paramLayer )
@@ -72,7 +72,7 @@ LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& cont
     mainLayout->addWidget( instruction, 1 );
     mainLayout->addWidget( buttons );
     setWidget( main );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

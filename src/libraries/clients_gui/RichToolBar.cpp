@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "RichToolBar.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
 
 using namespace gui;
 
@@ -18,15 +17,13 @@ using namespace gui;
 // Name: RichToolBar constructor
 // Created: ABR 2012-05-11
 // -----------------------------------------------------------------------------
-RichToolBar::RichToolBar( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& label /* = "" */, bool needRegister /* = true */ )
+RichToolBar::RichToolBar( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& label /* = "" */ )
     : QToolBar( parent )
     , controllers_( controllers )
-    , needRegister_( needRegister )
 {
     setObjectName( objectName );
     setLabel( label );
-    if( controllers_.modes_ && needRegister_ )
-        controllers_.modes_->Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +32,7 @@ RichToolBar::RichToolBar( kernel::Controllers& controllers, QWidget* parent, con
 // -----------------------------------------------------------------------------
 RichToolBar::~RichToolBar()
 {
-    if( controllers_.modes_ && needRegister_ )
-        controllers_.modes_->Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -30,11 +30,11 @@ UrbanDisplayOptions::UrbanDisplayOptions( Controllers& controllers, const Accomm
     , densityColor_           ( false )
     , accommodationColor_     ( false )
     , accommodationDisplayed_ ( "" )
-    , unoccupiedDensity_      ( 0, 0, 0 )
+    , unoccupiedDensity_      ( 0, 0, 0, 180 )
     , minDensity_             ( 0.f ) // $$$$ LDC RC FIXME All these are common to all urban blocks and must therefore get out of this class.
     , maxDensity_             ( 1.f )
     , pGradient_              ( new Gradient() )
-    , unoccupiedAccommodation_( 0, 0, 0 )
+    , unoccupiedAccommodation_( 0, 0, 0, 180 )
     , minAccommodationDensity_( 0.f )
     , maxAccommodationDensity_( 1.f )
     , pAccommodationGradient_ ( new Gradient() )
@@ -95,9 +95,7 @@ namespace
 {
     void SetUrbanColor( QColor& color, UrbanColor_ABC& urbanColor )
     {
-        urbanColor.SetColor( static_cast< unsigned short >( color.red() ),
-            static_cast< unsigned short >( color.green() ),
-            static_cast< unsigned short >( color.blue() ) );
+        urbanColor.SetColor( color.red(), color.green(), color.blue(), color.alpha() );
     }
 }
 

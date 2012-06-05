@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::StringResolver< ResourceNetworkType >& resources )
-    : RichDockWidget   ( controllers, parent, "resource", tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ), false )
+    : RichDockWidget   ( controllers, parent, "resource", tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) )
     , controllers_     ( controllers )
     , selected_        ( 0 )
     , selectedItem_    ( 0 )
@@ -91,7 +91,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     QPushButton* okBtn = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
     okBtn->setDefault( true );
     connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
     pMainLayout_->hide();
 }
 

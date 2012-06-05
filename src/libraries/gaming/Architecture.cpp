@@ -18,9 +18,14 @@
 Architecture::Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
     : kernel::Architecture( dictionary )
 {
-    const sword::UrbanAttributes::Architecture& architecture = message.architecture();
-    Initialize( objectTypes, architecture.height(), architecture.floor_number(), architecture.parking_floors(), architecture.occupation(),
-                architecture.trafficability(), architecture.material(), architecture.roof_shape() );
+    if( message.has_architecture() )
+    {
+        const sword::UrbanAttributes::Architecture& architecture = message.architecture();
+        Initialize( objectTypes, architecture.height(), architecture.floor_number(), architecture.parking_floors(), architecture.occupation(),
+            architecture.trafficability(), architecture.material(), architecture.roof_shape() );
+    }
+    else
+        Initialize( objectTypes, 20.f, 6, 0, 0.5f, 0.5f );
     CreateDictionnary( true );
 }
 

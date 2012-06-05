@@ -51,7 +51,7 @@ namespace
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
 ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations )
-    : RichDockWidget( controllers, parent, "extensions", tr( "Extensions" ), false )
+    : RichDockWidget( controllers, parent, "extensions", tr( "Extensions" ) )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, formations, extensions, "DiffusionListDialog" ) )
@@ -64,7 +64,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     pMainLayout_->setSpacing( 5 );
     pExtensionLayout_ = new Q3VBox( pMainLayout_ );
     setWidget( pMainLayout_ );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

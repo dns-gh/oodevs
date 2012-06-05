@@ -37,7 +37,7 @@ class RichDockWidget : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             RichDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle = "", bool needRegister = true );
+             RichDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle = "" );
     virtual ~RichDockWidget();
     //@}
 
@@ -53,7 +53,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    bool                 needRegister_;
     //@}
 };
 

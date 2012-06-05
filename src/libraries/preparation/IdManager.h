@@ -10,13 +10,15 @@
 #ifndef __IdManager_h_
 #define __IdManager_h_
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  IdManager
     @brief  IdManager
 */
 // Created: SBO 2006-09-26
 // =============================================================================
-class IdManager
+class IdManager : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -30,13 +32,6 @@ public:
     unsigned long GetNextId();
     void Reset();
     void Lock( unsigned long id );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    IdManager( const IdManager& );            //!< Copy constructor
-    IdManager& operator=( const IdManager& ); //!< Assignment operator
     //@}
 
 private:

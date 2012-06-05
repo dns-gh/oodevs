@@ -11,6 +11,7 @@
 #define __UrbanFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "geometry/Types.h"
 
 namespace xml
 {
@@ -19,6 +20,7 @@ namespace xml
 
 namespace kernel
 {
+    class Entity_ABC;
     class UrbanObject_ABC;
 }
 
@@ -39,7 +41,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::UrbanObject_ABC* Create( xml::xistream& xis, kernel::UrbanObject_ABC* parent ) const = 0;
+    virtual kernel::UrbanObject_ABC* Create( xml::xistream& xis, kernel::Entity_ABC* parent ) const = 0;                    // Create anything from xis
+    virtual kernel::UrbanObject_ABC* Create( kernel::Entity_ABC* parent ) const = 0;                                        // Create city or district from list view context menu
+    virtual kernel::UrbanObject_ABC* Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent ) const = 0;   // Create blocs from buttons
     //@}
 };
 

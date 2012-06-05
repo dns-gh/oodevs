@@ -37,7 +37,7 @@ class RichToolBar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             RichToolBar( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& label = "", bool needRegister = true );
+             RichToolBar( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& label = "" );
     virtual ~RichToolBar();
     //@}
 
@@ -53,7 +53,6 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    bool                 needRegister_;
     //@}
 };
 

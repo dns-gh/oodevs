@@ -144,3 +144,12 @@ Location_ABC& Polygon::Clone() const
 {
     return *new Polygon( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::GetPoints
+// Created: ABR 2012-06-01
+// -----------------------------------------------------------------------------
+const T_PointVector& Polygon::GetPoints() const
+{
+    return points_;
+}

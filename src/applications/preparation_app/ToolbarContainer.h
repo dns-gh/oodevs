@@ -19,14 +19,17 @@ namespace kernel
 
 namespace gui
 {
-    class View_ABC;
-    class LocationsLayer;
+    class ExclusiveEventStrategy;
     class GisToolbar;
+    class LocationsLayer;
+    class ParametersLayer;
+    class View_ABC;
 }
 
 class FileToolbar;
 class LocationEditorToolbar;
 class StaticModel;
+class UrbanModel;
 
 // =============================================================================
 /** @class  ToolbarContainer
@@ -40,7 +43,8 @@ class ToolbarContainer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view, gui::LocationsLayer& layer );
+             ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view,
+                               gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel );
     virtual ~ToolbarContainer();
     //@}
 

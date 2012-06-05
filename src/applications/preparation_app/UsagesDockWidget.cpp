@@ -27,7 +27,7 @@
 // Created: LGY 2011-01-13
 // -----------------------------------------------------------------------------
 UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& controllers, StaticModel& staticModel )
-    : gui::RichDockWidget( controllers, parent, "usagesDockWidget", tr( "Usages" ), false )
+    : gui::RichDockWidget( controllers, parent, "usagesDockWidget", tr( "Usages" ) )
     , controllers_( controllers )
     , staticModel_( staticModel )
     , isEditing_  ( false )
@@ -57,7 +57,7 @@ UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& contro
     connect( pButton_, SIGNAL( clicked() ), this, SLOT( Add() ) );
 
     Clean();
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,22 +162,6 @@ void UsagesDockWidget::Validate()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UsagesDockWidget::UpdateProperties
-// Created: ABR 2012-05-29
-// -----------------------------------------------------------------------------
-void UsagesDockWidget::UpdateProperties()
-{
-    //if( selectedElements_.size() != 1 )
-    //    return;
-    //kernel::UrbanObject_ABC* urbanObject = const_cast< kernel::UrbanObject_ABC* >( selectedElements_.front() );
-    //if( !urbanObject )
-    //    return;
-    //const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
-    //if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
-    //    usagesExtension->UpdateProperties( controllers_.controller_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UsagesDockWidget::AddMotivation
 // Created: LGY 2011-01-14
 // -----------------------------------------------------------------------------
@@ -189,11 +173,9 @@ void UsagesDockWidget::AddMotivation( const std::string& role, int value )
     if( !urbanObject )
         return;
     const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
-    if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
-    {
-        usagesExtension->Add( role, value );
-        controllers_.controller_.Update( *urbanObject );
-    }
+    kernel::Usages_ABC& usagesExtension = pPhysical.GetUsages();
+    usagesExtension.Add( role, value );
+    controllers_.controller_.Update( *urbanObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,11 +190,9 @@ void UsagesDockWidget::RemoveMotivation( const std::string& role )
     if( !urbanObject )
         return;
     const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
-    if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
-    {
-        usagesExtension->Remove( role );
-        controllers_.controller_.Update( *urbanObject );
-    }
+    kernel::Usages_ABC& usagesExtension = pPhysical.GetUsages();
+    usagesExtension.Remove( role );
+    controllers_.controller_.Update( *urbanObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,13 +207,11 @@ void UsagesDockWidget::Load()
     if( !urbanObject )
         return;
     const kernel::PhysicalAttribute_ABC& pPhysical = urbanObject->Get< kernel::PhysicalAttribute_ABC >();
-    if( kernel::Usages_ABC* usagesExtension = pPhysical.GetUsages() )
-    {
-        const kernel::T_Usages& usages = usagesExtension->GetUsages();
-        BOOST_FOREACH( const kernel::T_Usages::value_type& usage, usages )
-            if( usage.first != kernel::Usages::defaultStr_ )
-                AddItem( usage.first, usage.second );
-    }
+    const kernel::Usages_ABC& usagesExtension = pPhysical.GetUsages();
+    const kernel::T_Usages& usages = usagesExtension.GetUsages();
+    BOOST_FOREACH( const kernel::T_Usages::value_type& usage, usages )
+        if( usage.first != kernel::Usages::defaultStr_ )
+            AddItem( usage.first, usage.second );
 }
 
 // -----------------------------------------------------------------------------

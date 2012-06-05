@@ -10,7 +10,7 @@
 #ifndef __UrbanHierarchies_h_
 #define __UrbanHierarchies_h_
 
-#include "UrbanTypes.h"
+#include "clients_kernel/UrbanTypes.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include <boost/noncopyable.hpp>

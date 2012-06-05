@@ -38,18 +38,20 @@ PhysicalAttribute_ABC::~PhysicalAttribute_ABC()
 // Name: PhysicalAttribute_ABC::GetArchitecture
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-Architecture_ABC* PhysicalAttribute_ABC::GetArchitecture() const
+Architecture_ABC& PhysicalAttribute_ABC::GetArchitecture() const
 {
-    return architecture_.get();
+    assert( architecture_.get() );
+    return *architecture_.get();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PhysicalAttribute_ABC::GetUsages
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-Usages_ABC* PhysicalAttribute_ABC::GetUsages() const
+Usages_ABC& PhysicalAttribute_ABC::GetUsages() const
 {
-    return usages_.get();
+    assert( usages_.get() );
+    return *usages_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,9 +60,8 @@ Usages_ABC* PhysicalAttribute_ABC::GetUsages() const
 // -----------------------------------------------------------------------------
 unsigned int PhysicalAttribute_ABC::FindUsagesValue( const std::string& motivation ) const
 {
-    if( usages_.get() )
-        return usages_->Find( motivation );
-    return 0u;
+    assert( usages_.get() );
+    return usages_->Find( motivation );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +70,10 @@ unsigned int PhysicalAttribute_ABC::FindUsagesValue( const std::string& motivati
 // -----------------------------------------------------------------------------
 void PhysicalAttribute_ABC::Display( Displayer_ABC& displayer ) const
 {
-    if( architecture_.get() )
-        architecture_->Display( displayer );
-    if( usages_.get() )
-        usages_->Display( displayer );
+    assert( architecture_.get() );
+    architecture_->Display( displayer );
+    assert( usages_.get() );
+    usages_->Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,10 +82,10 @@ void PhysicalAttribute_ABC::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PhysicalAttribute_ABC::DisplayInList( Displayer_ABC& displayer ) const
 {
-    if( architecture_.get() )
-        architecture_->DisplayInList( displayer );
-    if( usages_.get() )
-        usages_->DisplayInList( displayer );
+    assert( architecture_.get() );
+    architecture_->DisplayInList( displayer );
+    assert( usages_.get() );
+    usages_->DisplayInList( displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,10 +94,10 @@ void PhysicalAttribute_ABC::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PhysicalAttribute_ABC::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    if( architecture_.get() )
-        architecture_->DisplayInTooltip( displayer );
-    if( usages_.get() )
-        usages_->DisplayInTooltip( displayer );
+    assert( architecture_.get() );
+    architecture_->DisplayInTooltip( displayer );
+    assert( usages_.get() );
+    usages_->DisplayInTooltip( displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,22 +106,8 @@ void PhysicalAttribute_ABC::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PhysicalAttribute_ABC::DisplayInSummary( Displayer_ABC& displayer ) const
 {
-    if( architecture_.get() )
-        architecture_->DisplayInSummary( displayer );
-    if( usages_.get() )
-        usages_->DisplayInSummary( displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PhysicalAttribute_ABC::SerializeAttributes
-// Created: ABR 2012-05-22
-// -----------------------------------------------------------------------------
-void PhysicalAttribute_ABC::SerializeAttributes( xml::xostream& xos ) const
-{
-    xos << xml::start( "physical" );
-    if( architecture_.get() )
-        architecture_->SerializeAttributes( xos );
-    if( usages_.get() )
-        usages_->SerializeAttributes( xos );
-    xos << xml::end;
+    assert( architecture_.get() );
+    architecture_->DisplayInSummary( displayer );
+    assert( usages_.get() );
+    usages_->DisplayInSummary( displayer );
 }

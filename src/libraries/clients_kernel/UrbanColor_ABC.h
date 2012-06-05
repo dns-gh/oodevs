@@ -15,6 +15,26 @@
 
 namespace kernel
 {
+
+// $$$$ ABR 2012-06-04: TODO: Merge UrbanColor, UrbanBlockColor, Color, Color_ABC, etc. and use the property panel to change the color.
+
+//! @name Types
+//@{
+struct UrbanBlockColor
+{
+    UrbanBlockColor( int red, int green, int blue, int alpha )
+        : red_  ( red )
+        , green_( green )
+        , blue_ ( blue )
+        , alpha_( alpha )
+    {}
+    int red_;
+    int green_;
+    int blue_;
+    int alpha_;
+};
+//@}
+
 // =============================================================================
 /** @class  UrbanColor_ABC
     @brief  Urban color declaration
@@ -27,18 +47,25 @@ class UrbanColor_ABC : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanColor_ABC() {}
-    virtual ~UrbanColor_ABC() {}
+             UrbanColor_ABC();
+    virtual ~UrbanColor_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual unsigned short Red() const = 0;
-    virtual unsigned short Green() const = 0;
-    virtual unsigned short Blue() const = 0;
-    virtual float Alpha() const = 0;
-    virtual void SetColor( unsigned short red, unsigned short green, unsigned short blue ) = 0;
-    virtual void Restore() = 0;
+    virtual int Red() const;
+    virtual int Green() const;
+    virtual int Blue() const;
+    virtual float Alpha() const;
+    virtual void SetColor( int red, int green, int blue, int alpha );
+    virtual void Restore();
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    UrbanBlockColor initial_;
+    UrbanBlockColor current_;
     //@}
 };
 

@@ -44,20 +44,20 @@ UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 void UrbanBlockDetectionMap::NotifyCreated( const kernel::UrbanObject_ABC& object )
 {
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-        if( const kernel::Architecture_ABC* pArchitecture = object.Get< kernel::PhysicalAttribute_ABC >().GetArchitecture() )
-        {
-            const float cellsize = map_.GetCellSize();
-            const float halfcellsize = 0.5f * map_.GetCellSize();
-            const geometry::Rectangle2f boundingBox = positions->BoundingBox();
-            const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
-            const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom() / cellsize );
-            const unsigned int imax = static_cast< unsigned int >( boundingBox.Right() / cellsize );
-            const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top() / cellsize );
-            for( unsigned int j = jmin; j < jmax; ++j )
-                for( unsigned int i = imin; i < imax; ++i )
-                    if( positions->IsInside( geometry::Point2f( i * cellsize + halfcellsize, j * cellsize + halfcellsize ) ) )
-                        urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial().GetName();
-        }
+    {
+        const float cellsize = map_.GetCellSize();
+        const float halfcellsize = 0.5f * map_.GetCellSize();
+        const geometry::Rectangle2f boundingBox = positions->BoundingBox();
+        const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
+        const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom() / cellsize );
+        const unsigned int imax = static_cast< unsigned int >( boundingBox.Right() / cellsize );
+        const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top() / cellsize );
+        const kernel::Architecture_ABC& pArchitecture = object.Get< kernel::PhysicalAttribute_ABC >().GetArchitecture();
+        for( unsigned int j = jmin; j < jmax; ++j )
+            for( unsigned int i = imin; i < imax; ++i )
+                if( positions->IsInside( geometry::Point2f( i * cellsize + halfcellsize, j * cellsize + halfcellsize ) ) )
+                    urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture.GetMaterial().GetName();
+    }
 }
 
 // -----------------------------------------------------------------------------

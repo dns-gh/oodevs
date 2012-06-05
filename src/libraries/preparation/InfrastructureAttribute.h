@@ -47,6 +47,7 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico );
              InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico, const kernel::ObjectTypes& objectTypes );
     virtual ~InfrastructureAttribute();
     //@}
@@ -76,11 +77,6 @@ public:
     //! @name ModesObserver_ABC
     //@{
     virtual void NotifyModeChanged( int newMode );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
     //@}
 
 public:

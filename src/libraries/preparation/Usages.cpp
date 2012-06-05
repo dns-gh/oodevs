@@ -9,7 +9,9 @@
 
 #include "preparation_pch.h"
 #include "Usages.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -18,10 +20,18 @@
 // Name: Usages constructor
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-Usages::Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller )
+Usages::Usages( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller )
     : kernel::Usages( dictionary, accommodationTypes, livingSpace, owner, controller )
 {
-    // NOTHING
+    if( parent )
+    {
+        const kernel::PhysicalAttribute_ABC& parentPhysicalAttribute = parent->Get< kernel::PhysicalAttribute_ABC >();
+        const kernel::Usages_ABC& parentUsage = parentPhysicalAttribute.GetUsages();
+        const kernel::T_Usages& usages = parentUsage.GetUsages();
+        for( kernel::CIT_Usages it = usages.begin(); it != usages.end(); ++it )
+            if( it->first != kernel::Usages::defaultStr_ )
+                Add( it->first, it->second );
+    }
 }
 
 // -----------------------------------------------------------------------------

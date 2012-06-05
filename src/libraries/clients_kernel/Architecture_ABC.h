@@ -46,8 +46,10 @@ public:
     virtual const MaterialCompositionType& GetMaterial() const = 0;
     virtual const RoofShapeType& GetRoofShape() const = 0;
     virtual unsigned int GetFloorNumber() const = 0;
+    virtual unsigned int GetParkingFloors() const = 0;
     virtual unsigned int GetOccupation() const = 0;
     virtual unsigned int GetHeight() const = 0;
+    virtual float GetTrafficability() const = 0;
     //@}
 };
 

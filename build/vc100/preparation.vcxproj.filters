@@ -1017,9 +1017,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\UrbanTypes.h">
-      <Filter>Source Files\Model\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\PhysicalAttribute.h">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>

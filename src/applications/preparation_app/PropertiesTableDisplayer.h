@@ -19,6 +19,7 @@ namespace kernel
     class MaterialCompositionType;
     class Moveable_ABC;
     class RoofShapeType;
+    struct UrbanBlockColor;
 }
 
 class DotationsItem;
@@ -41,6 +42,7 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< kernel::InfrastructureType >
                                , public tools::Caller< kernel::MaterialCompositionType >
                                , public tools::Caller< kernel::RoofShapeType >
+                               , public tools::Caller< kernel::UrbanBlockColor >
 {
 public:
     //! @name Constructors/Destructor
@@ -61,6 +63,7 @@ public:
     virtual void Call( const kernel::InfrastructureType& value );
     virtual void Call( const kernel::MaterialCompositionType& value );
     virtual void Call( const kernel::RoofShapeType& value );
+    virtual void Call( const kernel::UrbanBlockColor& value );
     //@}
 
 private:

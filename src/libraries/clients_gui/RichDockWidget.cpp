@@ -18,15 +18,13 @@ using namespace gui;
 // Name: RichDockWidget constructor
 // Created: ABR 2012-05-11
 // -----------------------------------------------------------------------------
-RichDockWidget::RichDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle /* = "" */, bool needRegister /* = true */ )
+RichDockWidget::RichDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle /* = "" */ )
     : QDockWidget( parent )
     , controllers_( controllers )
-    , needRegister_( needRegister )
 {
     setObjectName( objectName );
     setWindowTitle( windowTitle );
-    if( controllers_.modes_ && needRegister_ )
-        controllers_.modes_->Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +33,7 @@ RichDockWidget::RichDockWidget( kernel::Controllers& controllers, QWidget* paren
 // -----------------------------------------------------------------------------
 RichDockWidget::~RichDockWidget()
 {
-    if( controllers_.modes_ && needRegister_ )
-        controllers_.modes_->Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

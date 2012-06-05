@@ -36,7 +36,7 @@ class Usages : public kernel::Usages
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
+             Usages( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
              Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~Usages();
     //@}

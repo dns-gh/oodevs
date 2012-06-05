@@ -29,7 +29,7 @@ using namespace gui;
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
 TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
-    : RichDockWidget( controllers, parent, "terrainProfiler", tools::translate( "gui::TerrainProfiler", "Terrain profile" ), false )
+    : RichDockWidget( controllers, parent, "terrainProfiler", tools::translate( "gui::TerrainProfiler", "Terrain profile" ) )
     , controllers_( controllers )
     , detection_  ( detection )
     , layer_      ( layer )
@@ -52,7 +52,7 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     }
     setFloating( true );
     setProperty( "notAppropriate", QVariant( true ) );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

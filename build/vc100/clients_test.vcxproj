@@ -54,6 +54,12 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -71,6 +77,12 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -88,6 +100,12 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -105,6 +123,12 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -113,21 +137,21 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl_d.lib;psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl_d.lib;psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl.lib;psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -135,7 +159,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl.lib;psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -155,7 +179,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\clients_test\clients_test_pch.h" />
     <ClInclude Include="..\..\src\tests\clients_test\MockIndicatorGrammarHandler.h" />
-    <ClInclude Include="..\..\src\tests\clients_test\MockResolver.h" />
     <ClInclude Include="..\..\src\tests\clients_test\XmlChecks.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +193,9 @@
     </ProjectReference>
     <ProjectReference Include="flood.vcxproj">
       <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
+    </ProjectReference>
+    <ProjectReference Include="geostore.vcxproj">
+      <Project>{aa89d2b0-5ae3-4833-83f0-fccc013c16ff}</Project>
     </ProjectReference>
     <ProjectReference Include="indicators.vcxproj">
       <Project>{a95887c7-751e-43ea-b541-38b573587c7b}</Project>

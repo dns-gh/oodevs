@@ -52,7 +52,7 @@ public:
              ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving );
              ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position
-                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources, bool needSaving );
     virtual ~ResourceNetworkAttribute();
     //@}
 

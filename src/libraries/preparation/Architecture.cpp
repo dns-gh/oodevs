@@ -11,22 +11,40 @@
 #include "Architecture.h"
 #include <xeumeuleu/xml.hpp>
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
-#include "clients_kernel/RoofShapeType.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/RoofShapeType.h"
 #include "ENT/ENT_Enums_Gen.h"
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-Architecture::Architecture( kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
+Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
     : kernel::Architecture( dictionary )
     , controllers_( controllers )
 {
-    Initialize( objectTypes, 20.f, 6, 0, 0.5f, 0.5f );
-    if( controllers_.modes_ )
-        controllers_.modes_->Register( *this );
+    if( parent )
+    {
+        const kernel::PhysicalAttribute_ABC& parentPhysicalAttribute = parent->Get< kernel::PhysicalAttribute_ABC >();
+        const kernel::Architecture_ABC& parentArchitecture = parentPhysicalAttribute.GetArchitecture();
+        Initialize( objectTypes,
+                    parentArchitecture.GetHeight(),
+                    parentArchitecture.GetFloorNumber(),
+                    parentArchitecture.GetParkingFloors(),
+                    static_cast< float >( parentArchitecture.GetOccupation() ) / 100.f,
+                    parentArchitecture.GetTrafficability(),
+                    parentArchitecture.GetMaterial().GetName(),
+                    parentArchitecture.GetRoofShape().GetName() );
+    }
+    else
+        Initialize( objectTypes, 20.f, 6, 0, 0.5f, 0.5f );
+
+    assert( controllers_.modes_ );
+    controllers_.modes_->Register( *this );
+    NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,8 +73,9 @@ Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis
             >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
         >> xml::end;
     Initialize( objectTypes, static_cast< float >( height ), floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
-    if( controllers_.modes_ )
-        controllers_.modes_->Register( *this );
+    assert( controllers_.modes_ );
+    controllers_.modes_->Register( *this );
+    NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,8 +84,8 @@ Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis
 // -----------------------------------------------------------------------------
 Architecture::~Architecture()
 {
-    if( controllers_.modes_ )
-        controllers_.modes_->Unregister( *this );
+    assert( controllers_.modes_ );
+    controllers_.modes_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +100,7 @@ void Architecture::SerializeAttributes( xml::xostream& xos ) const
             << xml::attribute( "floor-number", floorNumber_ )
             << xml::attribute( "roof-shape", roofShape_->GetName() )
             << xml::attribute( "material", material_->GetName() )
-            << xml::attribute( "occupation", occupation_ / 100.f )
+            << xml::attribute( "occupation", static_cast< float >( occupation_ ) / 100.f )
             << xml::attribute( "trafficability", trafficability_ );
     if( parkingFloors_ > 0 )
         xos << xml::attribute( "parking-floors", parkingFloors_ );

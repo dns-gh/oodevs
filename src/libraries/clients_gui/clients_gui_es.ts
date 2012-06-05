@@ -793,10 +793,6 @@ Please check access permissions or write protection.</source>
         <translation>Centrer la vue sur la position</translation>
     </message>
     <message>
-        <source>Add point to current location</source>
-        <translation>Ajouter le point à la localisation en cours de création</translation>
-    </message>
-    <message>
         <source>Set special point</source>
         <translation>Utiliser la position pour un point spécial</translation>
     </message>

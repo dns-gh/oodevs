@@ -16,13 +16,13 @@
 namespace kernel
 {
     class Controllers;
-    class AccommodationTypes;
-    class CoordinateConverter_ABC;
+    class Entity_ABC;
     class Object_ABC;
-    class ObjectTypes;
-    class PropertiesDictionary;
     class UrbanDisplayOptions;
 }
+
+class IdManager;
+class StaticModel;
 
 // =============================================================================
 /** @class  UrbanFactory
@@ -35,28 +35,27 @@ class UrbanFactory : public UrbanFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes,
-                           const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options,
-                           const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects,
-                           const kernel::AccommodationTypes& accommodations, const kernel::CoordinateConverter_ABC& converter );
+             UrbanFactory( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects, const StaticModel& staticModel,
+                           IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options );
     virtual ~UrbanFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::UrbanObject_ABC* Create( xml::xistream& xis, kernel::UrbanObject_ABC* parent ) const;
+    virtual kernel::UrbanObject_ABC* Create( xml::xistream& xis, kernel::Entity_ABC* parent ) const;
+    virtual kernel::UrbanObject_ABC* Create( kernel::Entity_ABC* parent ) const;
+    virtual kernel::UrbanObject_ABC* Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::ObjectTypes& objectTypes_;
-    const tools::Resolver< kernel::Object_ABC >& objects_;
-    kernel::UrbanDisplayOptions& options_;
-    const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects_;
-    const kernel::AccommodationTypes& accommodations_;
-    const kernel::CoordinateConverter_ABC& converter_;
+    kernel::Controllers&                                    controllers_;
+    const tools::Resolver_ABC< kernel::UrbanObject_ABC >&   urbanObjects_;
+    const StaticModel&                                      staticModel_;
+    IdManager&                                              idManager_;
+    const tools::Resolver< kernel::Object_ABC >&            objects_;
+    kernel::UrbanDisplayOptions&                            options_;
     //@}
 };
 

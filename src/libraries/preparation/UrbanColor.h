@@ -12,11 +12,21 @@
 
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Entity_ABC;
+    class PropertiesDictionary;
+}
 
 namespace xml
 {
     class xistream;
 }
+
 
 // =============================================================================
 /** @class  UrbanColor
@@ -26,22 +36,15 @@ namespace xml
 // =============================================================================
 class UrbanColor : public kernel::UrbanColor_ABC
                  , public kernel::Serializable_ABC
+                 , public tools::Observer_ABC
+                 , public kernel::ModesObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanColor( xml::xistream& xis );
+             UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
+             UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
     virtual ~UrbanColor();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual unsigned short Red() const;
-    virtual unsigned short Green() const;
-    virtual unsigned short Blue() const;
-    virtual float Alpha() const;
-    virtual void SetColor( unsigned short red, unsigned short green, unsigned short blue );
-    virtual void Restore();
     //@}
 
     //! @name Serializable_ABC
@@ -49,28 +52,22 @@ public:
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 
-private:
-    //! @name Types
+    //! @name ModesObserver_ABC
     //@{
-    struct Color
-    {
-        Color( unsigned short red, unsigned short green, unsigned short blue )
-            : red_  ( red )
-            , green_( green )
-            , blue_ ( blue )
-        {}
-        unsigned short red_;
-        unsigned short green_;
-        unsigned short blue_;
-    };
+    virtual void NotifyModeChanged( int newMode );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CreateDictionnary( bool readOnly );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Color initial_;
-    Color current_;
-    float alpha_;
+    kernel::Controllers&          controllers_;
+    kernel::PropertiesDictionary& dico_;
     //@}
 };
 

@@ -34,6 +34,7 @@
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
 
@@ -342,4 +343,22 @@ void EditorFactory::Call( kernel::RoofShapeType** const& value )
     SimpleResolverEditor< kernel::RoofShapeType, T_Resolver >* editor = new SimpleResolverEditor< kernel::RoofShapeType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
+{
+    QColor current( value->red_, value->green_, value->blue_ );
+    current.setAlpha( value->alpha_ );
+    QColor newColor = QColorDialog::getColor( current, 0, tools::translate( "ColorEditor", "Select color" ), QColorDialog::ShowAlphaChannel );
+    if( newColor.isValid() )
+    {
+        value->red_   = newColor.red();
+        value->green_ = newColor.green();
+        value->blue_  = newColor.blue();
+        value->alpha_ = newColor.alpha();
+    }
 }

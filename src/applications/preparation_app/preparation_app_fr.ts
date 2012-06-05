@@ -2418,6 +2418,18 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Remove urban blocks</source>
         <translation>Supprimer des blocs urbains</translation>
     </message>
+    <message>
+        <source>Error during automatic process creation of urban blocks</source>
+        <translation>Erreur lors de la génération automatique de blocks urbains</translation>
+    </message>
+    <message>
+        <source>Delete blocks</source>
+        <translation>Supprimer des blocs urbains</translation>
+    </message>
+    <message>
+        <source>Minimum size (m²): </source>
+        <translation>Taille minimum (m²) :</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

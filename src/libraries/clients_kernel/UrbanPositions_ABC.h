@@ -7,8 +7,8 @@
 //
 // *****************************************************************************_
 
-#ifndef __UrbanPositions_ABC_h_
-#define __UrbanPositions_ABC_h_
+#ifndef __kernel_UrbanPositions_ABC_h_
+#define __kernel_UrbanPositions_ABC_h_
 
 #include "Displayable_ABC.h"
 #include "Extension_ABC.h"
@@ -41,12 +41,13 @@ public:
     virtual const geometry::Rectangle2f& BoundingBox() const = 0;
     virtual float ComputeArea() const = 0;
     virtual const std::vector< geometry::Point2f >& Vertices() const = 0;
+    virtual const geometry::Polygon2f& Polygon() const = 0;
     virtual bool IsInside( const geometry::Point2f& point ) const = 0;
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const = 0;
     virtual void SetInfrastructurePresent() = 0;
     //@}
 };
 
-}
+} //! namespace kernel
 
-#endif // __UrbanPositions_ABC_h_
+#endif // __kernel_UrbanPositions_ABC_h_
