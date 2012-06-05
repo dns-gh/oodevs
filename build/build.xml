@@ -619,6 +619,7 @@
                          lib${ant.project.name}_meteo-${platform}-mt,
                          lib${ant.project.name}_flood-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
+                         lib${ant.project.name}_geostore-${platform}-mt,
                          lib${ant.project.name}_frontend-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
             <defineset define="QT3_SUPPORT"/>
