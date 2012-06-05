@@ -189,23 +189,23 @@ void SetError( HttpServer::connection_ptr link, T error, const std::string& mess
     link->write( message );
 }
 
-struct HandlerContext : public boost::noncopyable
+struct Context : public boost::noncopyable
 {
-    HandlerContext( host::Async& async, Observer_ABC& observer )
+    Context( host::Async& async, Observer_ABC& observer )
         : async_   ( async )
         , observer_( observer )
     {
         // NOTHING
     }
 
-    ~HandlerContext()
+    ~Context()
     {
         // NOTHING
     }
 
     void AsyncServe( const HttpServer::request& request, HttpServer::connection_ptr link )
     {
-        async_.Post( boost::bind( &HandlerContext::Serve, this, boost::cref( request ), link ) );
+        async_.Post( boost::bind( &Context::Serve, this, boost::cref( request ), link ) );
     }
 
 private:
@@ -238,7 +238,7 @@ private:
 
 struct Handler
 {
-    explicit Handler( HandlerContext* context ) : context_( context )
+    explicit Handler( Context* context ) : context_( context )
     {
         // NOTHING
     }
@@ -254,7 +254,7 @@ struct Handler
     }
 
 private:
-    HandlerContext* context_;
+    Context* context_;
 };
 }
 
@@ -278,7 +278,7 @@ struct Server::Private : public boost::noncopyable
 
     boost::network::utils::thread_pool threads_;
     host::Async async_;
-    HandlerContext context_;
+    Context context_;
     Handler handler_;
     HttpServer server_;
 };
