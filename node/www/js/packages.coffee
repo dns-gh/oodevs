@@ -37,12 +37,29 @@ class PackageView extends Backbone.View
         if reset? and !next
             $(@el).empty()
 
+    delete_items: (list) =>
+        ajax "/api/delete_install", id: uuid, items: list.join ',',
+            (item) =>
+                @switch true
+                @update item, true
+            () =>
+                @switch true
+                print_error "Unable to delete package(s)"
+
     render: =>
         return unless @enabled
         $(@el).empty()
         return unless @model.attributes.items?
 
         $(@el).html package_template @model.attributes
+
+        for it in $(@el).find ".package_header .remove_all a"
+            $(it).click =>
+                items = []
+                for btn in $(@el).find ".action .delete"
+                    @switch false
+                    items.push $(btn).parent().attr "data-rel"
+                @delete_items items if items.length
 
         for it in $(@el).find ".action .more"
             $(it).click ->
@@ -55,13 +72,7 @@ class PackageView extends Backbone.View
             $(it).click it, (e) =>
                 @switch false
                 id = transform_to_spinner e.data, true
-                ajax "/api/delete_install", id: uuid, items: id,
-                    (item) =>
-                        @switch true
-                        @update item, true
-                    () =>
-                        @switch true
-                        print_error "Unable to delete package(s)"
+                @delete_items [id]
         return
 
     update: (data, buttons) =>

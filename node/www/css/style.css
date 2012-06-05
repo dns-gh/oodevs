@@ -42,3 +42,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .package_description{position:relative;}
 .toggle{float:right;margin-top:-3px;margin-right:-6px;}
 .btn{-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:-moz-none;-o-user-select:none;user-select:none;}
+.package_header{margin-bottom:20px;}
+.package_header h2{display:inline;}
+.package_header .remove_all{float:right;margin-right:6px;margin-top:6px;}

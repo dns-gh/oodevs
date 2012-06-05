@@ -209,6 +209,8 @@
 
       this.render = __bind(this.render, this);
 
+      this.delete_items = __bind(this.delete_items, this);
+
       this["switch"] = __bind(this["switch"], this);
       return PackageView.__super__.constructor.apply(this, arguments);
     }
@@ -231,8 +233,22 @@
       }
     };
 
+    PackageView.prototype.delete_items = function(list) {
+      var _this = this;
+      return ajax("/api/delete_install", {
+        id: uuid,
+        items: list.join(',')
+      }, function(item) {
+        _this["switch"](true);
+        return _this.update(item, true);
+      }, function() {
+        _this["switch"](true);
+        return print_error("Unable to delete package(s)");
+      });
+    };
+
     PackageView.prototype.render = function() {
-      var it, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
+      var it, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3,
         _this = this;
       if (!this.enabled) {
         return;
@@ -242,37 +258,45 @@
         return;
       }
       $(this.el).html(package_template(this.model.attributes));
-      _ref = $(this.el).find(".action .more");
+      _ref = $(this.el).find(".package_header .remove_all a");
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         it = _ref[_i];
+        $(it).click(function() {
+          var btn, items, _j, _len1, _ref1;
+          items = [];
+          _ref1 = $(_this.el).find(".action .delete");
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            btn = _ref1[_j];
+            _this["switch"](false);
+            items.push($(btn).parent().attr("data-rel"));
+          }
+          if (items.length) {
+            return _this.delete_items(items);
+          }
+        });
+      }
+      _ref1 = $(this.el).find(".action .more");
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        it = _ref1[_j];
         $(it).click(function() {
           return $("#briefing_" + $(this).parent().attr("data-rel")).toggle("fast");
         });
       }
-      _ref1 = $(this.el).find(".name .error");
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        it = _ref1[_j];
+      _ref2 = $(this.el).find(".name .error");
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        it = _ref2[_k];
         $(it).tooltip({
           placement: "top"
         });
       }
-      _ref2 = $(this.el).find(".action .delete");
-      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-        it = _ref2[_k];
+      _ref3 = $(this.el).find(".action .delete");
+      for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+        it = _ref3[_l];
         $(it).click(it, function(e) {
           var id;
           _this["switch"](false);
           id = transform_to_spinner(e.data, true);
-          return ajax("/api/delete_install", {
-            id: uuid,
-            items: id
-          }, function(item) {
-            _this["switch"](true);
-            return _this.update(item, true);
-          }, function() {
-            _this["switch"](true);
-            return print_error("Unable to delete package(s)");
-          });
+          return _this.delete_items([id]);
         });
       }
     };

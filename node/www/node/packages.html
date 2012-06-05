@@ -8,6 +8,14 @@
                 <div class="alert alert-error"><b>Error</b> {{content}}</div>
             </script>
             <script type="text/template" id="package_template">
+                {{#if items.length}}
+                <div class="package_header">
+                    <h2>Installed Packages</h2>
+                    <span class="remove_all">
+                        <a class="btn"><i class="icon-trash"></i> Clear </a>
+                    </span>
+                </div>
+                {{/if}}
                 <table class="table table-striped">
 
                     [#assign num_cols = 5]
@@ -44,7 +52,7 @@
                                 <span>
                                     <a class="label label-important error" rel="tooltip" title="{{error}}">Error</a>
                                 </span>
-                                {{/equal}}                                
+                                {{/equal}}
                             </td>
                             <td class="name">
                                 <span>{{package}}</span>
