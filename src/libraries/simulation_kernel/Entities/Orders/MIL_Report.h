@@ -147,6 +147,7 @@ public:
         eReport_UnderIndirectFire,
         eReport_SetUponByPopulation,
         eReport_Questionning,
+        eReport_UnderIEDFire,
         eNbrReport
     };
 
@@ -569,7 +570,7 @@ public:
         eRC_DebutDevalorisation,
         eRC_FinDevalorisation,
         eRC_TrafficablePositionFindingInZone,
-        eRC_PrisSousTirMunition,
+        eRC_PrisSousTirIED,
         eRC_NotInSameUndergroundNetwork,
         eRC_TerroristDropped,
         eRC_Questionning,

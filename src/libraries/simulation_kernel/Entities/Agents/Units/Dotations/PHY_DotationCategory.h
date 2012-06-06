@@ -53,6 +53,7 @@ public:
     float GetGuidanceRange() const;
     bool IsIlluminating( float range, bool permanent ) const;
     float GetIlluminatingRange() const;
+    bool IsIED() const;
     //@}
 
     //! @name Fire
@@ -142,6 +143,8 @@ private:
     float fRange_;
     bool  bIlluminating_;
     bool  bMaintainIllumination_;
+
+    bool ied_;
     //Guidance
     bool bGuided_;
     bool bMaintainGuidance_;

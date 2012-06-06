@@ -45,7 +45,8 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
 {
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
-        >> xml::attribute( "nature", strNature );
+        >> xml::attribute( "nature", strNature )
+        >> xml::optional() >> xml::attribute( "ied", ied_ );
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
         xis.error( "Unknown dotation nature" );
@@ -421,6 +422,15 @@ double PHY_DotationCategory::GetVolume() const
 bool PHY_DotationCategory::IsGuided() const
 {
     return bGuided_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::IsIED
+// Created: LDC 2012-06-06
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::IsIED() const
+{
+    return ied_;
 }
 
 // -----------------------------------------------------------------------------

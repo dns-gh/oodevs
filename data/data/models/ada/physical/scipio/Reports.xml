@@ -607,9 +607,7 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="416" message="Pas de position trafficable dans la zone"/>
-  <report category="operational" id="417" message="Pris sous tir de: %1">
-    <parameter type="ResourceType"/>
-  </report>
+  <report category="operational" id="417" message="Pris sous tir d'IED"/>
   <report category="operational" id="418" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
   <report category="operational" id="419" message="Terroriste %1 déposé">
     <parameter type="AgentKnowledge"/>
@@ -618,4 +616,4 @@
   <report category="operational" id="421" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
   <report category="operational" id="422" message="La cible n'est plus valide"/>
 </reports>
-<!-- signature="0364725299" -->
+<!-- signature="1975947587" -->

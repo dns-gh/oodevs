@@ -137,7 +137,8 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_StartDeploy         ] = eRC_StartDeploy;
     diaEvents_[ eReport_SectionUndeployed   ] = eRC_SectionUndeployed;
     diaEvents_[ eReport_StartUndeploy       ] = eRC_StartUndeploy;
-    diaEvents_[ eReport_UnderIndirectFire   ] = eRC_PrisSousTirMunition;
+    diaEvents_[ eReport_UnderIndirectFire   ] = eRC_PrisSousTirArtillerie;
+    diaEvents_[ eReport_UnderIEDFire        ] = eRC_PrisSousTirIED;
 
     diaEvents_[ eReport_SetUponByPopulation ] = eRC_PriseAPartieParPopulation;
     diaEvents_[ eReport_Questionning ] = eRC_Questionning;
