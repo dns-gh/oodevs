@@ -66,9 +66,7 @@ void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const unsigned
          & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ )
          & pPopulation_
          & flows_
-         & concentrations_
-         & previousFlows_;
-         & previousConcentrations_;
+         & concentrations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -192,10 +190,8 @@ const MIL_Agent_ABC& DEC_Knowledge_PopulationCollision::GetAgentColliding() cons
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Prepare()
 {
-    previousFlows_.clear();
-    previousConcentrations_.clear();
-    std::swap( previousFlows_, flows_ );
-    std::swap( previousConcentrations_, concentrations_ );
+    flows_.clear();
+    concentrations_.clear();
 }
 
 // -----------------------------------------------------------------------------
