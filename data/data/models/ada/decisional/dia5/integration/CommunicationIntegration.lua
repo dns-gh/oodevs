@@ -198,3 +198,8 @@ integration.getAgentFromKnowledge = function( entity )
     local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
     return CreateKnowledge(sword.military.world.PlatoonAlly, agent)
 end
+
+integration.getAgentFromAutomatKnowledge = function( entity )
+    local agent = DEC_Connaissance_EnAgent( entity.source )
+    return CreateKnowledge(sword.military.world.PlatoonAlly, agent)
+end
