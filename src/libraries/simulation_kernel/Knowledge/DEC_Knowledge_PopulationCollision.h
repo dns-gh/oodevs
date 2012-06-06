@@ -79,8 +79,6 @@ private:
     MIL_Population* pPopulation_;
     T_PopulationFlowSet flows_;
     T_PopulationConcentrationSet concentrations_;
-    T_PopulationFlowSet previousFlows_;
-    T_PopulationConcentrationSet previousConcentrations_;
     //@}
 };
 
