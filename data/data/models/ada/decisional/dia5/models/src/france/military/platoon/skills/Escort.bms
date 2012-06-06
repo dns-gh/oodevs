@@ -24,6 +24,7 @@ rootnode
         end
         meKnowledge:sendNeedRoute( self.escortableUnit, false )
         F_Pion_SetpionEnEscorte( self.escortableUnit.source, meKnowledge.source )
+        myself.speedModulation = myself.speedModulation or {}
     end,
 
     -- -------------------------------------------------------------------------------- 
