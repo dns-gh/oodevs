@@ -157,7 +157,7 @@ public:
         , pool_     ( pool )
         , link_     ( link )
         , reader_   ( boost::make_shared< MimeReader >() )
-        , deadline_ ( server.get_io_service() )
+        , deadline_ ( server.get_service() )
         , size_     ( 0 )
     {
         BOOST_FOREACH( const boost::network::http::request_header_narrow& item, request.headers )
