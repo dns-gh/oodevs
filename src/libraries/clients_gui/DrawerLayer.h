@@ -10,14 +10,15 @@
 #ifndef __DrawerLayer_h_
 #define __DrawerLayer_h_
 
-#include "Drawing_ABC.h"
 #include "EntityLayer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 
 namespace kernel
 {
     class GlTools_ABC;
     class Controllers;
+    class Drawing_ABC;
 }
 
 namespace gui
@@ -31,8 +32,8 @@ namespace gui
 // Created: AGE 2006-08-31
 // =============================================================================
 class DrawerLayer : public QObject
-                  , public EntityLayer< Drawing_ABC >
-                  , public kernel::ContextMenuObserver_ABC< Drawing_ABC >
+                  , public EntityLayer< kernel::Drawing_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
 {
     Q_OBJECT
 
@@ -57,8 +58,8 @@ private:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
-    virtual void NotifySelectionChanged( const std::vector< const Drawing_ABC* >& elements );
-    virtual void NotifyContextMenu( const Drawing_ABC& shape, kernel::ContextMenu& menu );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements );
+    virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
     virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
@@ -68,7 +69,7 @@ private:
     ParametersLayer& parameters_;
     const kernel::GlTools_ABC& tools_;
     geometry::Rectangle2f viewport_;
-    const Drawing_ABC* selected_;
+    const kernel::Drawing_ABC* selected_;
     //@}
 };
 

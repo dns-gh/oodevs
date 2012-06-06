@@ -48,13 +48,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual gui::Drawing_ABC* CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
-    virtual gui::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
+    virtual kernel::Drawing_ABC* CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
+    virtual kernel::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
     //@}
 
     //! @name Operations
     //@{
-    gui::Drawing_ABC* CreateShape( const sword::ShapeCreation& asn ) const;
+    kernel::Drawing_ABC* CreateShape( const sword::ShapeCreation& asn ) const;
     //@}
 
 private:

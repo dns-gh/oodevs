@@ -15,7 +15,7 @@
 #include "ParametersLayer.h"
 #include "Tools.h"
 #include "ShapeHandler_ABC.h"
-#include "Drawing_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -168,11 +168,11 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
 // Name: LocationCreator::NotifyContextMenu
 // Created: AGE 2008-08-19
 // -----------------------------------------------------------------------------
-void LocationCreator::NotifyContextMenu( const Drawing_ABC& drawing, ContextMenu& menu )
+void LocationCreator::NotifyContextMenu( const kernel::Drawing_ABC& drawing, ContextMenu& menu )
 {
     if( Allows( drawing.GetLocation() ) )
     {
-        drawing_ = &drawing;
+        drawing_ = static_cast< const Drawing_ABC* >( &drawing );
         menu.InsertItem( "Creation", tr( "Add drawing as '%1'" ).arg( menu_ ), this, SLOT( AddDrawing() ) );
     }
 }

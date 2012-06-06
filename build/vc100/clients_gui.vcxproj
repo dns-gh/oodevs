@@ -271,7 +271,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitPreviewIcon.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitsPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerShape.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Drawing_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Drawing.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SvgLocationDrawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DrawerModel.cpp" />
@@ -1590,7 +1590,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawerShape.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\Drawing_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Drawing.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SvgLocationDrawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawerFactory.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawerModel.h" />

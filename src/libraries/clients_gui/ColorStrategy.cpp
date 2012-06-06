@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ColorStrategy.h"
 #include "ColorModifier_ABC.h"
-#include "Drawing_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -269,7 +269,7 @@ void ColorStrategy::SelectColor( const kernel::Team_ABC& )
 // Name: ColorStrategy::SelectColor
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const Drawing_ABC& drawing )
+void ColorStrategy::SelectColor( const kernel::Drawing_ABC& drawing )
 {
     ApplyColor( drawing.GetColor() );
 }

@@ -22,6 +22,7 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class ModelLoaded;
+    class Drawing_ABC;
 }
 
 namespace tools
@@ -31,12 +32,12 @@ namespace tools
 
 namespace gui
 {
+    class Drawing;
     class ParametersLayer;
     class DrawingTemplate;
     class DrawingCategory;
     class ColorButton;
     class DrawerModel;
-    class Drawing_ABC;
 
 // =============================================================================
 /** @class  DrawerPanel
@@ -49,7 +50,7 @@ class DrawerPanel : public InfoPanel_ABC
                   , public tools::SelectionObserver_ABC
                   , public tools::ElementObserver_ABC< DrawingCategory >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                  , public tools::SelectionObserver_Base< Drawing_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Drawing_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
@@ -88,7 +89,7 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const Drawing_ABC& element );
+    virtual void Select( const kernel::Drawing_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     //@}
@@ -109,7 +110,7 @@ private:
     QLabel* parentLabel_;
     QToolBox* toolBox_;
     const DrawingTemplate* selectedStyle_;
-    kernel::SafePointer< Drawing_ABC > selectedDrawing_;
+    kernel::SafePointer< Drawing > selectedDrawing_;
     T_CategoryItems categories_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}

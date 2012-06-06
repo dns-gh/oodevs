@@ -3,19 +3,19 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "clients_kernel_pch.h"
 #include "Drawing_ABC.h"
 #include "clients_kernel/ActionController.h"
 
-using namespace gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Drawing_ABC constructor
-// Created: SBO 2008-05-29
+// Created: JSR 2012-06-06
 // -----------------------------------------------------------------------------
 Drawing_ABC::Drawing_ABC()
 {
@@ -24,12 +24,13 @@ Drawing_ABC::Drawing_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: Drawing_ABC destructor
-// Created: SBO 2008-05-29
+// Created: JSR 2012-06-06
 // -----------------------------------------------------------------------------
 Drawing_ABC::~Drawing_ABC()
 {
     // NOTHING
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: Drawing_ABC::Select

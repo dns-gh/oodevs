@@ -24,6 +24,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class EntityResolver_ABC;
+    class Drawing_ABC;
 }
 
 namespace tools
@@ -33,7 +34,6 @@ namespace tools
 
 namespace gui
 {
-    class Drawing_ABC;
     class DrawingTemplate;
     class DrawingFactory_ABC;
 
@@ -44,8 +44,8 @@ namespace gui
 // Created: SBO 2007-03-22
 // =============================================================================
 class DrawerModel : public tools::Observer_ABC
-                  , public tools::ElementObserver_ABC< Drawing_ABC >
-                  , public tools::Resolver< Drawing_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Drawing_ABC >
+                  , public tools::Resolver< kernel::Drawing_ABC >
                   , private boost::noncopyable
 {
 public:
@@ -61,7 +61,7 @@ public:
     void Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
+    kernel::Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
     void Delete( unsigned long id );
     //@}
 
@@ -72,8 +72,8 @@ private:
     void ReadFormation( xml::xistream& xis );
     void ReadAutomat( xml::xistream& xis );
     void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity );
-    virtual void NotifyCreated( const Drawing_ABC& );
-    virtual void NotifyDeleted( const Drawing_ABC& );
+    virtual void NotifyCreated( const kernel::Drawing_ABC& );
+    virtual void NotifyDeleted( const kernel::Drawing_ABC& );
     //@}
 
 private:

@@ -108,12 +108,12 @@ void DrawerModel::ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffu
 
 namespace
 {
-    typedef std::set< const Drawing_ABC* > T_Drawings;
+    typedef std::set< const kernel::Drawing_ABC* > T_Drawings;
     typedef std::map< unsigned long, T_Drawings > T_DrawingsMap;
 
     void SerializeDrawings( xml::xostream& xos, const T_Drawings& drawings )
     {
-        std::for_each( drawings.begin(), drawings.end(), boost::bind( &Drawing_ABC::Serialize, _1, boost::ref( xos ) ) );
+        std::for_each( drawings.begin(), drawings.end(), boost::bind( &kernel::Drawing_ABC::Serialize, _1, boost::ref( xos ) ) );
     }
 
     void SerializeDrawingsMap( xml::xostream& xos, const T_DrawingsMap& map, const std::string& tag )
@@ -137,10 +137,10 @@ void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_A
     T_DrawingsMap formationMap;
     T_DrawingsMap automatMap;
     T_Drawings notDiffused;
-    tools::Iterator< const Drawing_ABC& > it = CreateIterator();
+    tools::Iterator< const kernel::Drawing_ABC& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
-        const Drawing_ABC& drawing = it.NextElement();
+        const kernel::Drawing_ABC& drawing = it.NextElement();
         const kernel::Entity_ABC* diffusionEntity = drawing.GetDiffusionEntity();
         if( diffusionEntity )
         {
@@ -177,16 +177,16 @@ void DrawerModel::Purge()
 // Name: DrawerModel::NotifyCreated
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-void DrawerModel::NotifyCreated( const Drawing_ABC& shape )
+void DrawerModel::NotifyCreated( const kernel::Drawing_ABC& shape )
 {
-    Register( shape.GetId(), const_cast< Drawing_ABC& >( shape ) ); // $$$$ SBO 2008-06-05: bof
+    Register( shape.GetId(), const_cast< kernel::Drawing_ABC& >( shape ) ); // $$$$ SBO 2008-06-05: bof
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawerModel::NotifyDeleted
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-void DrawerModel::NotifyDeleted( const Drawing_ABC& shape )
+void DrawerModel::NotifyDeleted( const kernel::Drawing_ABC& shape )
 {
     Delete( shape.GetId() );
 }
@@ -195,7 +195,7 @@ void DrawerModel::NotifyDeleted( const Drawing_ABC& shape )
 // Name: DrawerModel::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
+kernel::Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
 {
     return factory_.CreateShape( style, color, entity );
 }
@@ -206,7 +206,7 @@ Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& co
 // -----------------------------------------------------------------------------
 void DrawerModel::Delete( unsigned long id )
 {
-    if( const Drawing_ABC* drawing = Find( id ) )
+    if( const kernel::Drawing_ABC* drawing = Find( id ) )
         drawing->NotifyDestruction();
     Remove( id );
 }

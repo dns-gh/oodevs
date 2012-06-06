@@ -15,7 +15,7 @@
 #include "ParametersLayer.h"
 #include "ColorButton.h"
 #include "DrawerModel.h"
-#include "Drawing_ABC.h"
+#include "Drawing.h"
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "DrawingCategoryItem.h"
@@ -181,9 +181,9 @@ void DrawerPanel::AfterSelection()
 // Name: DrawerPanel::Select
 // Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-void DrawerPanel::Select( const Drawing_ABC& element )
+void DrawerPanel::Select( const kernel::Drawing_ABC& element )
 {
-    selectedDrawing_ = &element;
+    selectedDrawing_ = static_cast< const Drawing* >( &element );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void DrawerPanel::StartDrawing()
 {
     if( selectedStyle_ )
     {
-        Drawing_ABC* shape = model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_ );
+        Drawing* shape = static_cast< Drawing* >( model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_ ) );
         if( selectedStyle_->GetType() == "line" )
             layer_.StartLine( *shape );
         else if( selectedStyle_->GetType() == "polygon" )

@@ -15,6 +15,7 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class Drawing_ABC;
     class Formation_ABC;
     class Ghost_ABC;
     class Object_ABC;
@@ -28,7 +29,6 @@ namespace kernel
 
 namespace gui
 {
-    class Drawing_ABC;
 
 // =============================================================================
 /** @class  ColorStrategy_ABC
@@ -57,7 +57,7 @@ public:
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge ) = 0;
     virtual void SelectColor( const kernel::TacticalLine_ABC& line ) = 0;
     virtual void SelectColor( const kernel::Team_ABC& team ) = 0;
-    virtual void SelectColor( const Drawing_ABC& drawing ) = 0;
+    virtual void SelectColor( const kernel::Drawing_ABC& drawing ) = 0;
     virtual void SelectColor( const kernel::UrbanObject_ABC& object ) = 0;
     virtual void SelectColor( const kernel::Ghost_ABC& ghost ) = 0;
     virtual QColor FindColor( const kernel::Entity_ABC& entity ) = 0;

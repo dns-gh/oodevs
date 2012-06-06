@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "DrawingsModel.h"
 #include "DrawingFactory.h"
-#include "clients_gui/Drawing_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel constructor
@@ -47,7 +47,7 @@ void DrawingsModel::Create( const sword::ShapeCreation& message )
 // -----------------------------------------------------------------------------
 void DrawingsModel::Update( const sword::ShapeUpdate& message )
 {
-    gui::Drawing_ABC* drawing = Find( message.id().id() );
+    kernel::Drawing_ABC* drawing = Find( message.id().id() );
     if( drawing )
         drawing->Update( message );
 }
