@@ -35,9 +35,8 @@ BOOST_FIXTURE_TEST_CASE( limit_creation_to_client_is_converted, ContextFixture< 
     content.mutable_limit_creation()->mutable_id()->set_id( 12 );
     FillTacticalLine( content.mutable_limit_creation()->mutable_tactical_line() );
     BOOST_REQUIRE_MESSAGE( msg.IsInitialized(), msg.InitializationErrorString() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"name\" location { type: line coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"-- ii --\" location { type: line coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
     converter.ReceiveMessengerToClient( msg );
-    // $$$$ FIXME Level ? -- ii -- ?
 }
 
 BOOST_FIXTURE_TEST_CASE( lima_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
@@ -45,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE( lima_creation_to_client_is_converted, ContextFixture< s
     content.mutable_phase_line_creation()->mutable_id()->set_id( 12 );
     FillTacticalLine( content.mutable_phase_line_creation()->mutable_tactical_line() );
     BOOST_REQUIRE_MESSAGE( msg.IsInitialized(), msg.InitializationErrorString() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"name\" location { type: line coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { external_identifier: \"-- ii --\" location { type: line coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } color { red: 4 green: 5 blue: 6 } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
     converter.ReceiveMessengerToClient( msg );
 }
 
