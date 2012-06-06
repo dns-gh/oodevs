@@ -647,9 +647,7 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="456" message="Pas de position trafficable dans la zone"/>
-  <report category="operational" id="457" message="Pris sous tir de: %1">
-    <parameter type="ResourceType"/>
-  </report>
+  <report category="operational" id="457" message="Pris sous tir d'IED"/>
   <report category="operational" id="458" message="Vitesse limitée par population"/>
   <report category="operational" id="459" message="Fin de vitesse limitée par population"/>
   <report category="operational" id="460" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
@@ -662,4 +660,4 @@
   <report category="operational" id="465" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
   <report category="operational" id="466" message="La cible n'est plus valide"/>
 </reports>
-<!-- signature="3262117049" -->
+<!-- signature="2533748731" -->

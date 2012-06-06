@@ -147,6 +147,7 @@ public:
         eReport_UrbanCollisionStopped,
         eReport_SetUponByPopulation,
         eReport_Questionning,
+        eReport_UnderIEDFire,
         eNbrReport
     };
 
@@ -609,7 +610,7 @@ public:
         eRC_DebutDevalorisation,
         eRC_FinDevalorisation,
         eRC_TrafficablePositionFindingInZone,
-        eRC_PrisSousTirMunition,
+        eRC_PrisSousTirIED,
         eRC_UrbanCollisionStarted,
         eRC_UrbanCollisionStopped,
         eRC_NotInSameUndergroundNetwork,//460

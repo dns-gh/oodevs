@@ -32,11 +32,6 @@ rootnode
             meKnowledge:alertNBC()
         end
 
-        -- RC on indirectFire neutralization
-        if myself:DEC_Agent_EstNeutralise() then -- $$$ MIA TODO Virer fonction DEC, mettre isNeutraized sur le body
-            Activate( skill.nodes.RC, 1, { RC = eRC_PrisSousTirArtillerie } )
-        end
-
         -- Transport
         if DEC_Agent_EstTransporte() then -- $$$ MIA TODO Virer fonction DEC, mettre isNeutraized sur le body
             Activate( skill.nodes.RC, 1, { RC = eRC_TransportEnCours } )

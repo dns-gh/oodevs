@@ -61,6 +61,7 @@ public:
     bool IsIlluminating( float range, bool permanent ) const;
     float GetIlluminatingRange() const;
     const T_IndirectFireEffects& GetIndirectFireEffects() const;
+    bool IsIED() const;
     //@}
 
     //! @name Fire
@@ -154,6 +155,8 @@ private:
     float fRange_;
     bool  bIlluminating_;
     bool  bMaintainIllumination_;
+
+    bool ied_;
     //Guidance
     bool bGuided_;
     bool bMaintainGuidance_;
