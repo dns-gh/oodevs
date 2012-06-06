@@ -76,8 +76,7 @@ void TemplatesPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     if( dynamic_cast< const kernel::Formation_ABC* >( & entity )
-        || dynamic_cast< const kernel::Automat_ABC* >( & entity )
-        || dynamic_cast< const kernel::Agent_ABC* >( & entity ) )
+        || dynamic_cast< const kernel::Automat_ABC* >( & entity ) )
     {
         menuEntity_ = &entity;
         menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ) );
