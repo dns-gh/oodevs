@@ -11,7 +11,7 @@
 #define __ActionParameterUrbanKnowledge_h_
 
 #include "Entity.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 
 namespace sword
@@ -34,7 +34,7 @@ namespace parameters {
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class UrbanBlock : public Entity< kernel::Object_ABC >
+class UrbanBlock : public Entity< kernel::UrbanObject_ABC >
 {
 public:
     //! @name Constructors/Destructor

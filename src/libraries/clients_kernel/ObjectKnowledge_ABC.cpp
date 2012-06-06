@@ -52,6 +52,24 @@ void ObjectKnowledge_ABC::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledge_ABC::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void ObjectKnowledge_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const ObjectKnowledge_ABC* > first;
+    std::vector< const Knowledge_ABC* > second;
+    std::vector< const Entity_ABC* > third;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const ObjectKnowledge_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Knowledge_ABC* >( elements[ i ] ) );
+        third.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second, third );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge_ABC::ContextMenu
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

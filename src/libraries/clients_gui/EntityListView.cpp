@@ -57,7 +57,6 @@ EntityListView::EntityListView( QWidget* pParent, Controllers& controllers, Item
     connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( selectionChanged    ( Q3ListViewItem* ) ),                     this, SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
     connect( this, SIGNAL( selectionChanged    (                 ) ),                     this, SLOT( OnSelectionChange() ) );
 }
 
@@ -83,21 +82,11 @@ void EntityListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& po
 
 // -----------------------------------------------------------------------------
 // Name: EntityListView::OnSelectionChange
-// Created: LGY 2011-01-05
-// -----------------------------------------------------------------------------
-void EntityListView::OnSelectionChange( Q3ListViewItem* item )
-{
-    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( item ) )
-        value->Select( controllers_.actions_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityListView::OnSelectionChange
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------
 void EntityListView::OnSelectionChange()
 {
-    if( !( blockSelect_ || selectionMode() == Q3ListView::Single ) )
+    if( !blockSelect_ )
         MultipleSelectionChanged();
 }
 
@@ -107,19 +96,12 @@ void EntityListView::OnSelectionChange()
 // -----------------------------------------------------------------------------
 void EntityListView::MultipleSelectionChanged()
 {
-    ActionController::T_SelectedMap list;
-    ActionController::T_Layers layers = controllers_.actions_.GetMultipleLayers();
+    ActionController::T_Selectables list;
     Q3ListViewItemIterator it( this );
     while( ValuedListItem* item = dynamic_cast< ValuedListItem* >( *it ) )
     {
         if( item->isSelected() && item->IsA< const Entity_ABC >() )
-        {
-            const kernel::Selectable_ABC* selectable = item->GetValueNoCheck< const Entity_ABC >();
-            if( selectable )
-                for( ActionController::CIT_Layers layer = layers.begin(); layer != layers.end(); ++ layer )
-                    if( static_cast< const Layer_ABC* >( *layer )->IsIn( *selectable ) )
-                        list[ *layer ].push_back( selectable );
-        }
+            list.push_back( item->GetValueNoCheck< const Entity_ABC >() );
         ++it;
     }
     controllers_.actions_.SetMultipleSelection( list );
@@ -136,34 +118,6 @@ void EntityListView::OnRequestCenter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityListView::NotifySelected
-// Created: LGY 2011-01-05
-// -----------------------------------------------------------------------------
-void EntityListView::NotifySelected( const Entity_ABC* entity )
-{
-    ValuedListItem* item = 0;
-    if( entity && !IsTypeRejected( *entity ) )
-        item = FindItem( entity, firstChild() );
-    if( item )
-    {
-        if( item != selectedItem() )
-        {
-            blockSelect_ = true;
-            selectAll( false );
-            setSelected( item, true );
-            blockSelect_ = false;
-        }
-        ensureItemVisible( item );
-    }
-    else
-    {
-        ValuedListItem* selection = static_cast< ValuedListItem* >( selectedItem() );
-        if( selection && selection->IsA< Entity_ABC >() )
-            clearSelection();
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityListView::NotifySelectionChanged
 // Created: JSR 2012-05-25
 // -----------------------------------------------------------------------------
@@ -171,16 +125,15 @@ void EntityListView::NotifySelectionChanged( const std::vector< const kernel::En
 {
     blockSelect_ = true;
     selectAll( false );
-    if( selectionMode() != Q3ListView::Single )
-        for( std::vector< const kernel::Entity_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
-        {
-            if( *it && !IsTypeRejected( **it ) )
-                if( ValuedListItem* item = FindItem( *it, firstChild() ) )
-                {
-                    setSelected( item, true );
-                    ensureItemVisible( item );
-                }
-        }
+    for( std::vector< const kernel::Entity_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    {
+        if( *it && !IsTypeRejected( **it ) )
+            if( ValuedListItem* item = FindItem( *it, firstChild() ) )
+            {
+                setSelected( item, true );
+                ensureItemVisible( item );
+            }
+    }
     blockSelect_ = false;
 }
 

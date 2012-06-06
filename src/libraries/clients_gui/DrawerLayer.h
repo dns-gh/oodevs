@@ -57,7 +57,7 @@ private:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
-    virtual void NotifySelected( const Drawing_ABC* selected );
+    virtual void NotifySelectionChanged( const std::vector< const Drawing_ABC* >& elements );
     virtual void NotifyContextMenu( const Drawing_ABC& shape, kernel::ContextMenu& menu );
     virtual bool HandleKeyPress( QKeyEvent* key );
     //@}

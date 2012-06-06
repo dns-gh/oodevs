@@ -100,18 +100,6 @@ void UrbanLayer::Reset2d()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::NotifySelected
-// Created: SLG 2009-03-23
-// -----------------------------------------------------------------------------
-void UrbanLayer::NotifySelected( const kernel::UrbanObject_ABC* object )
-{
-    DeselectAll();
-    DoSelect( object );
-    actualSelection_.push_back( object );
-    EntityLayer< kernel::UrbanObject_ABC >::NotifySelected( object );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanLayer::NotifySelectionChanged
 // Created: JSR 2012-05-22
 // -----------------------------------------------------------------------------
@@ -178,7 +166,7 @@ void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 // -----------------------------------------------------------------------------
 void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
 {
-    controllers_.actions_.ContextMenu( static_cast< const kernel::Object_ABC& >( entity ), kernel::Nothing(), geoPoint, point );
+    controllers_.actions_.ContextMenu( static_cast< const kernel::UrbanObject_ABC& >( entity ), kernel::Nothing(), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +282,7 @@ void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool sh
 {
     const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >();
     const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::Hierarchies >();
-    if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( this ) || ( positions && !positions->IsSelected() ) )
+    if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( &entity ) || ( positions && !positions->IsSelected() ) )
         EntityLayerBase::Select( entity, control, shift );
     else
     {
@@ -304,15 +292,14 @@ void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool sh
         bool districtSelected = citySelected ? false : ( district && std::find( actualSelection_.begin(), actualSelection_.end(), district ) != actualSelection_.end() );
         if( citySelected || districtSelected )
         {
-            kernel::ActionController::T_SelectedMap newSelectionMap;
-            kernel::ActionController::T_Selectables& newSelection = newSelectionMap[ this ];
+            kernel::ActionController::T_Selectables newSelection;
             for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = actualSelection_.begin(); it != actualSelection_.end(); ++it )
                 newSelection.push_back( *it );
             if( citySelected )
                 AppendCity( newSelection, city, district, &entity );
             else
                 AppendDistrict( newSelection, district, &entity );
-            controllers_.actions_.SetMultipleSelection( newSelectionMap );
+            controllers_.actions_.SetMultipleSelection( newSelection );
         }
         else
             EntityLayerBase::Select( entity, control, shift );

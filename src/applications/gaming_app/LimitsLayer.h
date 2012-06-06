@@ -11,7 +11,7 @@
 #define __LimitsLayer_h_
 
 #include "clients_gui/TacticalLinesLayer.h"
-#include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
 #include "clients_kernel/FourStateOption.h"
 
 class TacticalLineFactory;
@@ -23,8 +23,8 @@ class TacticalLineFactory;
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
-                  , public tools::SelectionObserver_Base< kernel::Automat_ABC >
-                  , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public kernel::MultipleSelectionObserver_Base< kernel::Automat_ABC >
+                  , public kernel::MultipleSelectionObserver_Base< kernel::Formation_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -46,9 +46,8 @@ private:
     virtual void CreateLima( const T_PointVector& points );
 
     virtual void BeforeSelection();
-    virtual void Select( const kernel::TacticalLine_ABC& entity );
-    virtual void Select( const kernel::Automat_ABC& entity );
-    virtual void Select( const kernel::Formation_ABC& entity );
+    virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
+    virtual void MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements );
     virtual void AfterSelection();
     //@}
 

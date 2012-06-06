@@ -52,6 +52,24 @@ void UrbanKnowledge_ABC::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanKnowledge_ABC::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void UrbanKnowledge_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const UrbanKnowledge_ABC* > first;
+    std::vector< const Knowledge_ABC* > second;
+    std::vector< const Entity_ABC* > third;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const UrbanKnowledge_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Knowledge_ABC* >( elements[ i ] ) );
+        third.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second, third );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanKnowledge_ABC::ContextMenu
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------

@@ -41,6 +41,22 @@ void Drawing_ABC::Select( kernel::ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Drawing_ABC::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Drawing_ABC::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const Drawing_ABC* > first;
+    std::vector< const Entity_ABC* > second;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const Drawing_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Drawing_ABC::ContextMenu
 // Created: SBO 2008-05-29
 // -----------------------------------------------------------------------------

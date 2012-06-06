@@ -47,7 +47,11 @@ DrawerLayer::~DrawerLayer()
 void DrawerLayer::NotifyContextMenu( const Drawing_ABC& drawing, kernel::ContextMenu& menu )
 {
     if( selected_ != &drawing )
-        NotifySelected( &drawing );
+    {
+        std::vector< const Drawing_ABC* > vector;
+        vector.push_back( &drawing );
+        NotifySelectionChanged( vector );
+    }
     menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit drawing..." ), this, SLOT( OnEditDrawing() ) );
     menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Erase drawing" )  , this, SLOT( OnDeleteDrawing() ) );
 }
@@ -99,13 +103,13 @@ bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::NotifySelected
-// Created: SBO 2008-06-03
+// Name: DrawerLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void DrawerLayer::NotifySelected( const Drawing_ABC* selected )
+void DrawerLayer::NotifySelectionChanged( const std::vector< const Drawing_ABC* >& elements )
 {
-    EntityLayer< Drawing_ABC >::NotifySelected( selected );
-    selected_ = selected;
+    EntityLayer< Drawing_ABC >::NotifySelectionChanged( elements );
+    selected_ =  elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------

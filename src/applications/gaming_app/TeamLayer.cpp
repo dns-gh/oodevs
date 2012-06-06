@@ -95,12 +95,13 @@ bool TeamLayer::HandleMouseMove( QMouseEvent* , const geometry::Point2f& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamLayer::NotifySelected
-// Created: LDC 2010-10-26
+// Name: TeamLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void TeamLayer::NotifySelected( const kernel::Team_ABC* team )
+void TeamLayer::NotifySelectionChanged( const std::vector< const kernel::Team_ABC* >& elements )
 {
-    selected_ = team;
+    selected_ = elements.size() == 1 ? elements.front() : 0;
+    gui::EntityLayer< kernel::Team_ABC >::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

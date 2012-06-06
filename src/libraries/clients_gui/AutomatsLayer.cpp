@@ -144,13 +144,13 @@ bool AutomatsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatsLayer::NotifySelected
-// Created: SBO 2007-04-13
+// Name: AutomatsLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void AutomatsLayer::NotifySelected( const kernel::Automat_ABC* automat )
+void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements )
 {
-    EntityLayer< Automat_ABC >::NotifySelected( automat );
-    selected_ = automat;
+    EntityLayer< Automat_ABC >::NotifySelectionChanged( elements );
+    selected_ = elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------

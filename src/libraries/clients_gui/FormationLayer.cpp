@@ -133,14 +133,15 @@ void FormationLayer::Toggle( const kernel::Entity_ABC& entity, bool aggregate )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::NotifySelected
-// Created: LGY 2011-03-04
+// Name: FormationLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void FormationLayer::NotifySelected( const kernel::Formation_ABC* formation )
+void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements )
 {
-    EntityLayer< kernel::Formation_ABC >::NotifySelected( formation );
-    selected_ = formation;
+    EntityLayer< kernel::Formation_ABC >::NotifySelectionChanged( elements );
+    selected_ = elements.size() == 1 ? elements.front() : 0;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: FormationLayer::IsAggregated

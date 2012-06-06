@@ -28,7 +28,7 @@ using namespace dispatcher;
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg )
-    : Object_ABC          ( msg.object().id(), msg.name().c_str() )
+    : UrbanObject_ABC( msg.object().id(), msg.name().c_str() )
     , strName_            ( msg.name()  )
     , localisation_       ( msg.location() )
     , hasInfrastructures_ ( false )
@@ -207,24 +207,6 @@ void UrbanObject::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Created: PHC 2010-07-22
 // -----------------------------------------------------------------------------
 void UrbanObject::Display( kernel::Displayer_ABC& /*displayer*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObject::GetTeam
-// Created: SLG 2011-01-07
-// -----------------------------------------------------------------------------
-const Team_ABC& UrbanObject::GetTeam() const
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetType
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-const kernel::ObjectType& UrbanObject::GetType() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

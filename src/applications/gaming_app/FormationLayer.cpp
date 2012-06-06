@@ -82,12 +82,13 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::NotifySelected
-// Created: LDC 2010-10-06
+// Name: FormationLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void FormationLayer::NotifySelected( const kernel::Formation_ABC* formation )
+void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements )
 {
-    selected_ = formation;
+    selected_ = elements.size() == 1 ? elements.front() : 0;
+    gui::FormationLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

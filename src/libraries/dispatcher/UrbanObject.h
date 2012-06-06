@@ -11,7 +11,7 @@
 #define __UrbanObject_h_
 
 #include "Localisation.h"
-#include "Object_ABC.h"
+#include "UrbanObject_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace sword
@@ -40,7 +40,7 @@ namespace dispatcher
 */
 // Created: SLG 2009-12-03
 // =============================================================================
-class UrbanObject : public Object_ABC
+class UrbanObject : public UrbanObject_ABC
                   , public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::UrbanUpdate >
                   , public kernel::Updatable_ABC< sword::ObjectUpdate >
@@ -61,8 +61,6 @@ public:
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void DoUpdate( const sword::ObjectUpdate& msg );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual const Team_ABC& GetTeam() const;
-    const kernel::ObjectType& GetType() const;
     //@}
 
 private:

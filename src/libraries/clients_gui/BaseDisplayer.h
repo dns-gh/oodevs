@@ -17,6 +17,7 @@ namespace kernel
     class Automat_ABC;
     class Agent_ABC;
     class Object_ABC;
+    class UrbanObject_ABC;
     class Team_ABC;
     class DotationType;
     class EquipmentType;
@@ -66,6 +67,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::Agent_ABC >
                     , public tools::Caller< kernel::Automat_ABC >
                     , public tools::Caller< kernel::Object_ABC >
+                    , public tools::Caller< kernel::UrbanObject_ABC >
                     , public tools::Caller< kernel::Formation_ABC >
                     , public tools::Caller< kernel::Team_ABC >
                     , public tools::Caller< kernel::Entity_ABC >
@@ -115,6 +117,7 @@ private:
     virtual void Call( const kernel::Inhabitant_ABC& value );
     virtual void Call( const kernel::PopulationConcentration_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );
+    virtual void Call( const kernel::UrbanObject_ABC& value );
     virtual void Call( const kernel::Team_ABC& value );
     virtual void Call( const kernel::Entity_ABC& value );
     virtual void Call( const kernel::Formation_ABC& value );

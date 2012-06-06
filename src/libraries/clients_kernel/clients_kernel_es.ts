@@ -539,7 +539,7 @@
 <context>
     <name>Urban</name>
     <message>
-        <source>Urban block [%L1]</source>
+        <source>Urban block[%L1]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

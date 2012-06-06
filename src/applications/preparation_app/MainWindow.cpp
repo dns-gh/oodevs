@@ -270,7 +270,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     assert( dialogContainer_.get() && dockContainer_.get() );
     gui::PreferencesDialog& preferences     = dialogContainer_->GetPrefDialog();
     gui::Layer_ABC& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
-    ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
+    ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_, this );
     gui::TooltipsLayer_ABC& tooltipLayer    = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer_ABC& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
     gui::Layer_ABC& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
@@ -303,6 +303,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     AddLayer( *glProxy_, preferences, watershed,                "main",                         tr( "Watershed" ) );
     AddLayer( *glProxy_, preferences, elevation3d );
     AddLayer( *glProxy_, preferences, grid,                     "main" );
+    AddLayer( *glProxy_, preferences, metrics,                  "main" );
     AddLayer( *glProxy_, preferences, weather,                  "main" );
     AddLayer( *glProxy_, preferences, limits,                   "main" );
     AddLayer( *glProxy_, preferences, indicatorCreationLayer );
@@ -332,7 +333,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     // Readonly modes
     urbanLayer.SetReadOnlyModes( ePreparationMode_None );
     // Multiple Selection
-    controllers_.actions_.AllowLayerMultipleSelection( ePreparationMode_Terrain, &urbanLayer );
+    controllers_.actions_.AllowMultipleSelection< kernel::UrbanObject_ABC >( ePreparationMode_Terrain );
 
     // events order
     forward_->Register( terrain );

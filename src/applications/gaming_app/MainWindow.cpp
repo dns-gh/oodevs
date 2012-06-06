@@ -410,7 +410,20 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     replayerToolbar->hide();
     aar->SetStartup();
 
-    restoreState(settings.value("mainWindowState").toByteArray());
+    restoreState( settings.value( "mainWindowState" ).toByteArray() );
+}
+
+namespace
+{
+    template< typename Layer >
+    void AddLayer( gui::GlProxy& glProxy, gui::PreferencesDialog& preference, Layer& layer, const std::string& passes = "", const QString& text = "" )
+    {
+        glProxy.Register( layer );
+        if( !text.isEmpty() )
+            preference.AddLayer( text, layer );
+        if( !passes.empty() )
+            layer.SetPasses( passes );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -447,38 +460,38 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
-    glProxy_->Register( defaultLayer );
-    glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );         elevation2d         .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( contour );                  preferences.AddLayer( tr( "Contour Lines" ), contour );         contour             .SetPasses( "main,composition,miniviews" );
-    glProxy_->Register( urbanLayer );                                                                               urbanLayer          .SetPasses( "main,miniviews" );
-    glProxy_->Register( watershed );                preferences.AddLayer( tr( "Watershed" ), watershed );           watershed           .SetPasses( "main,composition,miniviews" );
+    AddLayer( *glProxy_, preferences, defaultLayer );
+    AddLayer( *glProxy_, preferences, elevation2d, "main,composition,miniviews", tr( "Elevation" ) );
+    AddLayer( *glProxy_, preferences, raster, "main,composition,miniviews", tr( "Raster" ) );
+    AddLayer( *glProxy_, preferences, terrain, "main,composition,miniviews", tr( "Terrain" ) );
+    AddLayer( *glProxy_, preferences, contour, "main,composition,miniviews", tr( "Contour Lines" ) );
+    AddLayer( *glProxy_, preferences, urbanLayer, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, watershed, "main,composition,miniviews", tr( "Watershed" ) );
     glProxy_->Register( elevation3d );
-    glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
-    glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main,miniviews" );
-    glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main,miniviews" );
-    glProxy_->Register( objectKnowledges );                                                                         objectKnowledges    .SetPasses( "main,miniviews" );
-    glProxy_->Register( populationKnowledges );                                                                     populationKnowledges.SetPasses( "main,miniviews" );
-    glProxy_->Register( agentKnowledges );                                                                          agentKnowledges     .SetPasses( "main,miniviews" );
-    glProxy_->Register( formationLayer );           preferences.AddLayer( tr( "Formations" ), formationLayer );     formationLayer      .SetPasses( "main,miniviews" );
-    glProxy_->Register( teamLayer );                                                                                teamLayer           .SetPasses( "main,miniviews" );
-    glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main,miniviews" );
-    glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowds" ),  populations );           populations         .SetPasses( "main,miniviews" );
-    glProxy_->Register( inhabitants );              preferences.AddLayer( tr( "Populations" ), inhabitants );       inhabitants         .SetPasses( "main,miniviews" );
-    glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main,miniviews" );
-    glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main,miniviews" );
-    glProxy_->Register( missionsLayer );                                                                            missionsLayer       .SetPasses( "main,miniviews" );
-    glProxy_->Register( actionsLayer );                                                                             actionsLayer        .SetPasses( "main" );
-    glProxy_->Register( creationsLayer );                                                                           creationsLayer      .SetPasses( "main" );
-    glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
-    glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
-    glProxy_->Register( locationsLayer );                                                                           locationsLayer      .SetPasses( "main" );
-    glProxy_->Register( profilerLayer );                                                                            profilerLayer       .SetPasses( "main" );
-    glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main,miniviews" );
-    glProxy_->Register( fogLayer );                                                                                 fogLayer            .SetPasses( "fog" );
-    glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
-    glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
+    AddLayer( *glProxy_, preferences, grid, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, weather, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, limits, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, objectKnowledges, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, populationKnowledges, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, agentKnowledges, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, formationLayer, "main,miniviews", tr( "Formations" ) );
+    AddLayer( *glProxy_, preferences, teamLayer, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, objectsLayer, "main,miniviews", tr( "Objects" ) );
+    AddLayer( *glProxy_, preferences, populations, "main,miniviews", tr( "Crowds" ) );
+    AddLayer( *glProxy_, preferences, inhabitants, "main,miniviews", tr( "Populations" ) );
+    AddLayer( *glProxy_, preferences, agents, "main,miniviews", tr( "Units" ) );
+    AddLayer( *glProxy_, preferences, automats, "main,miniviews", tr( "Automats" ) );
+    AddLayer( *glProxy_, preferences, missionsLayer, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, actionsLayer, "main" );
+    AddLayer( *glProxy_, preferences, creationsLayer, "main" );
+    AddLayer( *glProxy_, preferences, parameters, "main" );
+    AddLayer( *glProxy_, preferences, metrics, "main" );
+    AddLayer( *glProxy_, preferences, locationsLayer, "main" );
+    AddLayer( *glProxy_, preferences, profilerLayer, "main" );
+    AddLayer( *glProxy_, preferences, drawerLayer, "main,miniviews" );
+    AddLayer( *glProxy_, preferences, fogLayer, "fog" );
+    AddLayer( *glProxy_, preferences, tooltipLayer, "tooltip" );
+    AddLayer( *glProxy_, preferences, logoLayer, "main", tr( "Logo" ) );
 
     // ordre des evenements
     forward_->Register( terrain );

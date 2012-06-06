@@ -71,7 +71,7 @@ void SelectionLayer::Reset()
 // -----------------------------------------------------------------------------
 bool SelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( !controllers_.actions_.HasMultipleLayers() )
+    if( !controllers_.actions_.HasMultipleSelection() )
         return false;
     if( event->button() == Qt::LeftButton && event->buttons() == Qt::NoButton && displaying_ )
     {
@@ -104,7 +104,7 @@ bool SelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point
 // -----------------------------------------------------------------------------
 bool SelectionLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( !controllers_.actions_.HasMultipleLayers() )
+    if( !controllers_.actions_.HasMultipleSelection() )
         return false;
     if( event->buttons() == Qt::LeftButton )
     {

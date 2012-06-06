@@ -18,7 +18,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class Object_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace gui
@@ -35,7 +35,7 @@ class ModelBuilder;
 // Created: JSR 2012-05-15
 // =============================================================================
 class UrbanListView : public gui::EntityListView
-                    , public tools::ElementObserver_ABC< kernel::Object_ABC >
+                    , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
 
 public:
@@ -50,8 +50,8 @@ protected:
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    virtual void NotifyCreated( const kernel::Object_ABC& object );
-    virtual void NotifyDeleted( const kernel::Object_ABC& object );
+    virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
+    virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
     //@}

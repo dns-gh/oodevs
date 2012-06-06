@@ -113,6 +113,15 @@ void Entity::Select( kernel::ActionController& /*controller*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Entity::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Entity::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ContextMenu
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "SpinTableItem.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
@@ -32,10 +33,10 @@ using namespace kernel;
 ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::StringResolver< ResourceNetworkType >& resources )
     : RichDockWidget   ( controllers, parent, "resource", tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) )
     , controllers_     ( controllers )
-    , selected_        ( 0 )
     , selectedItem_    ( 0 )
     , resources_       ( resources )
-    , linkToChange_    ( 0 )
+    , sourceNode_      ( 0 )
+    , id_              ( 0 )
 {
     Q3VBox* mainLayout = new Q3VBox( this );
     setWidget( mainLayout );
@@ -110,7 +111,7 @@ ResourceLinksDialog_ABC::~ResourceLinksDialog_ABC()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::BeforeSelection()
 {
-    selected_ = 0;
+    selected_.clear();
     selectedItem_ = 0;
     pMainLayout_->hide();
 }
@@ -121,30 +122,41 @@ void ResourceLinksDialog_ABC::BeforeSelection()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::AfterSelection()
 {
-    if( selected_ )
-        Show();
+    Show();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::Select
-// Created: JSR 2010-09-09
+// Name: ResourceLinksDialog_ABC::MultipleSelect
+// Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::Select( const UrbanObject_ABC& object)
+void ResourceLinksDialog_ABC::MultipleSelect( const std::vector< const kernel::UrbanObject_ABC* >& elements )
 {
-    selected_ = const_cast< UrbanObject_ABC& >( object ).Retrieve< ResourceNetwork_ABC >();
-    id_ = object.GetId();
-    urban_ = true;
+    DoMultipleSelect( elements );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::Select
-// Created: JSR 2010-09-09
+// Name: ResourceLinksDialog_ABC::MultipleSelect
+// Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::Select( const Object_ABC& object )
+void ResourceLinksDialog_ABC::MultipleSelect( const std::vector< const kernel::Object_ABC* >& elements )
 {
-    selected_ = const_cast< Object_ABC& >( object ).Retrieve< ResourceNetwork_ABC >();
-    id_ = object.GetId();
-    urban_ = false;
+    DoMultipleSelect( elements );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::DoMultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+template< class T >
+void ResourceLinksDialog_ABC::DoMultipleSelect( const std::vector< const T* >& elements )
+{
+    id_ = ( elements.size() == 1 ? elements.front()->GetId() : 0 );
+    for( std::vector< const T* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    {
+        kernel::Entity_ABC* obj = const_cast< kernel::Entity_ABC* >( static_cast< const kernel::Entity_ABC* >( *it ) );
+        if( obj->Retrieve< ResourceNetwork_ABC >() )
+            selected_.push_back( obj );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +165,8 @@ void ResourceLinksDialog_ABC::Select( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
+    if( selected_.size() != 1 )
+        return;
     Q3ListBoxItem* item = dotationList_->selectedItem();
     if( !item )
     {
@@ -172,7 +186,7 @@ void ResourceLinksDialog_ABC::Update()
     table_->setColumnReadOnly( 0, true );
     for( unsigned int j = 0; j < node.links_.size(); ++j )
     {
-        table_->setText( j, 0, selected_->GetLinkName( resource, j ) );
+        table_->setText( j, 0, selected_.front()->Get< ResourceNetwork_ABC >().GetLinkName( resource, j ) );
         table_->setItem( j, 1, new Q3CheckTableItem( table_, ""  ) );
         table_->setItem( j, 2, new SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max() ) );
         bool limited = node.links_[ j ].capacity_ != -1;
@@ -270,6 +284,8 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Validate()
 {
+    if( selected_.size() != 1 )
+        return;
     if( dotationList_->selectedItem() )
     {
         // in case spin boxes have not been validated
@@ -279,7 +295,7 @@ void ResourceLinksDialog_ABC::Validate()
         resourceNodes_[ resource ].maxStock_ = maxStock_->value();
         resourceNodes_[ resource ].stock_ = stock_->value();
         DoValidate();
-        controllers_.controller_.Update( *selected_ );
+        controllers_.controller_.Update( selected_.front()->Get< ResourceNetwork_ABC >() );
     }
 }
 
@@ -289,10 +305,11 @@ void ResourceLinksDialog_ABC::Validate()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
 {
-    if( selected_ == element.Retrieve< ResourceNetwork_ABC >() )
+    std::vector< kernel::Entity_ABC* >::iterator it = std::find( selected_.begin(), selected_.end(), &element );
+    if( it != selected_.end() )
     {
         pMainLayout_->hide();
-        selected_ = 0;
+        selected_.erase( it );
     }
 }
 
@@ -302,22 +319,39 @@ void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, ContextMenu& menu )
 {
+    DoNotifyContextMenu( object, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::NotifyContextMenu
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu )
+{
+    DoNotifyContextMenu( object, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::DoNotifyContextMenu
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
     if( resources_.Count() == 0 )
         return;
-    const ResourceNetwork_ABC* node = object.Retrieve< ResourceNetwork_ABC >();
-    if( !node || !selected_ )
+    const ResourceNetwork_ABC* node = entity.Retrieve< ResourceNetwork_ABC >();
+    if( !node || selected_.empty() )
         return;
-    if( selected_ != node )
-        linkToChange_ = &object;
+    sourceNode_ = const_cast< ResourceNetwork_ABC* >( node );
     ContextMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int resourceId = 0;
     while( it.HasMoreElements() )
     {
         const ResourceNetworkType& resource = it.NextElement();
-        if( selected_ == node )
+        if( selected_.size() == 1 && selected_.front() == &entity )
         {
-            if( !selected_->FindResourceNode( resource.GetName() ) )
+            if( !node->FindResourceNode( resource.GetName() ) )
             {
                 ContextMenu* resourceMenu = new ContextMenu( subMenu );
                 subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
@@ -341,7 +375,9 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, Conte
 void ResourceLinksDialog_ABC::Show()
 {
     dotationList_->clear();
-    resourceNodes_ = selected_->GetResourceNodes();
+    if( selected_.size() != 1 )
+        return;
+    resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         if( it == resourceNodes_.begin() )
         {
@@ -374,6 +410,8 @@ void ResourceLinksDialog_ABC::Show()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
 {
+    if( sourceNode_ == 0 )
+        return;
     typedef ResourceNetwork_ABC::ResourceNode ResourceNode;
     typedef ResourceNetwork_ABC::ResourceLink ResourceLink;
     typedef ResourceNetwork_ABC::T_ResourceNodes T_ResourceNodes;
@@ -384,23 +422,29 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
         const ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
-            bool destUrban = linkToChange_->GetType().IsUrban();
-            unsigned long destId = linkToChange_->GetId();
-            ResourceNode& sourceNode = selected_->FindOrCreateResourceNode( resource.GetName() );
-            const_cast< ResourceNetwork_ABC& >( linkToChange_->Get< ResourceNetwork_ABC >() ).FindOrCreateResourceNode( resource.GetName() ); // necessary to create a node for this ressource
-            ResourceNetwork_ABC::IT_ResourceLinks itLink;
-            for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
-                if( itLink->urban_ == destUrban && itLink->id_ == destId )
-                    break;
-            if( itLink == sourceNode.links_.end() )
-                sourceNode.links_.push_back( ResourceLink( destUrban, destId ) );
-            else
-                sourceNode.links_.erase( itLink );
-            controllers_.controller_.Update( *selected_ );
+            ResourceNode& sourceNode = sourceNode_->FindOrCreateResourceNode( resource.GetName() );
+            for( std::vector< kernel::Entity_ABC* >::iterator it = selected_.begin(); it != selected_.end(); ++it )
+            {
+                kernel::Entity_ABC& dest = **it;
+                if( dest.Retrieve< ResourceNetwork_ABC >() == sourceNode_ )
+                    continue;
+                dest.Get< ResourceNetwork_ABC >().FindOrCreateResourceNode( resource.GetName() );
+                bool destUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( &dest ) != 0 );
+                unsigned long destId = dest.GetId();
+                ResourceNetwork_ABC::IT_ResourceLinks itLink;
+                for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
+                    if( itLink->urban_ == destUrban && itLink->id_ == destId )
+                        break;
+                if( itLink == sourceNode.links_.end() )
+                    sourceNode.links_.push_back( ResourceLink( destUrban, destId ) );
+                else
+                    sourceNode.links_.erase( itLink );
+            }
+            controllers_.controller_.Update( *sourceNode_ );
             break;
         }
     }
-    linkToChange_ = 0;
+    sourceNode_ = 0;
     Show();
     DoValidate();
 }
@@ -411,15 +455,18 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
 {
+    if( selected_.size() != 1 )
+        return;
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int index = 0;
+    ResourceNetwork_ABC& resourceNetwork = selected_.front()->Get< ResourceNetwork_ABC >();
     while( it.HasMoreElements() )
     {
         const ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
-            selected_->FindOrCreateResourceNode( resource.GetName() );
-            controllers_.controller_.Update( *selected_ );
+            resourceNetwork.FindOrCreateResourceNode( resource.GetName() );
+            controllers_.controller_.Update( resourceNetwork );
             break;
         }
     }
@@ -433,11 +480,13 @@ void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::GenerateProduction()
 {
+    if( selected_.size() != 1 )
+        return;
     if( dotationList_->selectedItem() )
         if( DoGenerateProduction() )
         {
             DoValidate();
-            controllers_.controller_.Update( *selected_ );
+            controllers_.controller_.Update( selected_.front()->Get< ResourceNetwork_ABC >() );
             Update();
         }
 }

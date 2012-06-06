@@ -11,7 +11,7 @@
 #define __ActionParameterResourceNetwork_h_
 
 #include "Entity.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 namespace kernel
 {
@@ -33,14 +33,14 @@ namespace actions
 */
 // Created: JSR 2011-05-02
 // =============================================================================
-class ResourceNetwork : public Entity< kernel::Object_ABC >
+class ResourceNetwork : public Entity< kernel::Entity_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetwork( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ResourceNetwork( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller );
+             ResourceNetwork( const kernel::OrderParameter& parameter, const kernel::Entity_ABC& object, const std::string& resource, kernel::Controller& controller );
              ResourceNetwork( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
              ResourceNetwork( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~ResourceNetwork();

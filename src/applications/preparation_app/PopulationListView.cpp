@@ -55,13 +55,17 @@ void PopulationListView::keyPressEvent( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationListView::NotifySelected
-// Created: SBO 2006-10-30
+// Name: PopulationListView::NotifySelectionChanged
+// Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void PopulationListView::NotifySelected( const kernel::Entity_ABC* element )
+void PopulationListView::NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements )
 {
-    selected_ = element;
-    gui::PopulationListView::NotifySelected( element );
+    // TODO généraliser au cas où y'a plusieurs éléments
+    if( elements.size() == 1 )
+        selected_ = elements.front();
+    else
+        selected_ = 0;
+    gui::PopulationListView::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

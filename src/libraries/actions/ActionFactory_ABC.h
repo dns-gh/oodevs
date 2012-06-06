@@ -90,8 +90,8 @@ public:
     virtual Action_ABC* CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected ) const = 0;
 
     virtual Action_ABC* CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId = 0 ) const = 0;
-    virtual Action_ABC* CreateObjectUpdateMagicAction( const kernel::Object_ABC& objet, parameters::ParameterList& attribute ) const = 0;
-    virtual Action_ABC* CreateObjectDestroyMagicAction( const kernel::Object_ABC& object ) const = 0;
+    virtual Action_ABC* CreateObjectUpdateMagicAction( const kernel::Entity_ABC& objet, parameters::ParameterList& attribute ) const = 0;
+    virtual Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object ) const = 0;
     //@}
 };
 

@@ -983,6 +983,9 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignFuneral.h">
       <Filter>Source Files\Model\Logistic\Consigns</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject_ABC.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl">

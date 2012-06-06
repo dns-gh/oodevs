@@ -52,13 +52,17 @@ void InhabitantListView::keyPressEvent( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantListView::NotifySelected
-// Created: SLG 2010-11-23
+// Name: InhabitantListView::NotifySelectionChanged
+// Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void InhabitantListView::NotifySelected( const kernel::Entity_ABC* element )
+void InhabitantListView::NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements )
 {
-    selected_ = element;
-    gui::InhabitantListView::NotifySelected( element );
+    // TODO généraliser au cas où y'a plusieurs éléments
+    if( elements.size() == 1 )
+        selected_ = elements.front();
+    else
+        selected_ = 0;
+    gui::InhabitantListView::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

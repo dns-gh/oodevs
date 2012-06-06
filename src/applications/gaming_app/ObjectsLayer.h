@@ -56,7 +56,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Object_ABC* object );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements );
     //@}
 
 private:

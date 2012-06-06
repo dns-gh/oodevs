@@ -86,8 +86,8 @@ public:
     Action_ABC* CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected );
     Action_ABC* CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected );
     Action_ABC* CreateObjectMagicAction( const std::string& action, unsigned long targetId );
-    Action_ABC* CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute );
-    Action_ABC* CreateObjectDestroyMagicAction( const kernel::Object_ABC& object );
+    Action_ABC* CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute );
+    Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object );
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );

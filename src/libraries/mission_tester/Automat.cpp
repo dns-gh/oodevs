@@ -110,6 +110,15 @@ void Automat::Select( kernel::ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Automat::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Automat::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    Entity::MultipleSelect( controller, elements );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::ContextMenu
 // Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------

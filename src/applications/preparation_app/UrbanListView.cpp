@@ -60,7 +60,7 @@ void UrbanListView::NotifyDeleted( const kernel::Team_ABC& /*team*/ )
 // Name: UrbanListView::NotifyCreated
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------
-void UrbanListView::NotifyCreated( const kernel::Object_ABC& object )
+void UrbanListView::NotifyCreated( const kernel::UrbanObject_ABC& object )
 {
     const kernel::Hierarchies* hierarchies = object.Retrieve< kernel::Hierarchies >();
     if( !hierarchies ) // $$$$ ABR 2012-05-22: Only urban block have hierarchies
@@ -86,7 +86,7 @@ void UrbanListView::NotifyCreated( const kernel::Object_ABC& object )
 // Name: UrbanListView::NotifyDeleted
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------
-void UrbanListView::NotifyDeleted( const kernel::Object_ABC& object )
+void UrbanListView::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 {
     // TODO
 }

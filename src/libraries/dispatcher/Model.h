@@ -89,7 +89,7 @@ public:
     virtual const tools::Resolver_ABC< Automat_ABC >&           Automats() const { return automats_; }
     virtual const tools::Resolver_ABC< Agent_ABC >&             Agents() const { return agents_; }
     virtual const tools::Resolver_ABC< Object_ABC >&            Objects() const { return objects_; }
-    virtual const tools::Resolver_ABC< Object_ABC >&            UrbanBlocks() const { return urbanBlocks_; }
+    virtual const tools::Resolver_ABC< UrbanObject_ABC >&       UrbanBlocks() const { return urbanBlocks_; }
     virtual const tools::Resolver_ABC< Population_ABC >&        Populations() const { return populations_; }
     virtual const tools::Resolver_ABC< Inhabitant_ABC >&        Inhabitants() const { return inhabitants_; }
     virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&    AgentKnowledges() const { return agentKnowledges_; }
@@ -163,7 +163,7 @@ private:
     tools::Resolver< Automat_ABC >           automats_;
     tools::Resolver< Agent_ABC >             agents_;
     tools::Resolver< Object_ABC >            objects_;
-    tools::Resolver< Object_ABC >            urbanBlocks_;
+    tools::Resolver< UrbanObject_ABC >       urbanBlocks_;
     tools::Resolver< Population_ABC >        populations_;
     tools::Resolver< Inhabitant_ABC >        inhabitants_;
     tools::Resolver< AgentKnowledge_ABC >    agentKnowledges_;

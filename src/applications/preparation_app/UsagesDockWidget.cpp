@@ -14,6 +14,7 @@
 #include "clients_gui/RichSpinBox.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"

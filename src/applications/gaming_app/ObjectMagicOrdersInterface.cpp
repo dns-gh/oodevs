@@ -17,6 +17,7 @@
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "gaming/InfrastructureAttribute.h"
 #include "gaming/StructuralStateAttribute.h"
 #include "gaming/TrafficabilityAttribute.h"
@@ -114,52 +115,58 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         return;
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
-    if( entity.GetType().IsUrban() )
+    AddMagic( tr( "Build" ), SLOT( BuildObject() ), magicMenu );
+    AddMagic( tr( "Destroy" ), SLOT( DestroyObject() ), magicMenu );
+    if( entity.GetType().CanBeValorized() )
     {
-        unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
-        AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
-        AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
-        AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
-        AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
-        AddMagic( tr( "Stop confine" ), SLOT( StopConfine() ), magicMenu );
-        AddMagic( tr( "Evacuate" ), SLOT( Evacuate() ), magicMenu );
-        AddMagic( tr( "Stop evacuate" ), SLOT( StopEvacuate() ), magicMenu );
-        if( const Infrastructure_ABC* infrastructure = entity.Retrieve< Infrastructure_ABC >() )
-        {
-            AddIntValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ), infrastructure->GetThreshold() );
-            AddMagic( tr( "Disable" ), SLOT( DisableInfrastructure() ), magicMenu );
-            AddMagic( tr( "Enable" ), SLOT( EnableInfrastructure() ), magicMenu );
-        }
+        AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
+        AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
     }
-    else
+    const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >();
+    if( obstacle && obstacle->IsReservedObstacle() )
     {
-        AddMagic( tr( "Build" ), SLOT( BuildObject() ), magicMenu );
-        AddMagic( tr( "Destroy" ), SLOT( DestroyObject() ), magicMenu );
-        if( entity.GetType().CanBeValorized() )
-        {
-            AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
-            AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
-        }
-        const kernel::ObstacleAttribute_ABC* obstacle = entity.Retrieve< kernel::ObstacleAttribute_ABC >();
-        if( obstacle && obstacle->IsReservedObstacle() )
-        {
-            if( obstacle->IsActivated() )
-                AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );
-            else
-                AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );
-        }
-        if( const kernel::UndergroundAttribute_ABC* underground = entity.Retrieve< kernel::UndergroundAttribute_ABC >() )
-        {
-            if( underground->IsActivated() )
-                AddMagic( tr( "Deactivate exit" ), SLOT( DeactivateUndergroundExit() ), magicMenu );
-            else
-                AddMagic( tr( "Activate exit" ), SLOT( ActivateUndergroundExit() ), magicMenu );
-        }
-        if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
-        {
-            double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
-            AddDoubleValuedMagic( magicMenu, menu, tr( "Limit Trafficability" ), SLOT( ChangeTrafficability() ), value );
-        }
+        if( obstacle->IsActivated() )
+            AddMagic( tr( "Deactivate reserved obstacle" ), SLOT( DeactivateReservedObstacle() ), magicMenu );
+        else
+            AddMagic( tr( "Activate reserved obstacle" ), SLOT( ActivateReservedObstacle() ), magicMenu );
+    }
+    if( const kernel::UndergroundAttribute_ABC* underground = entity.Retrieve< kernel::UndergroundAttribute_ABC >() )
+    {
+        if( underground->IsActivated() )
+            AddMagic( tr( "Deactivate exit" ), SLOT( DeactivateUndergroundExit() ), magicMenu );
+        else
+            AddMagic( tr( "Activate exit" ), SLOT( ActivateUndergroundExit() ), magicMenu );
+    }
+    if( const TrafficabilityAttribute_ABC* trafficability = entity.Retrieve< TrafficabilityAttribute_ABC >() )
+    {
+        double value = static_cast< const TrafficabilityAttribute* >( trafficability )->GetMaxValue();
+        AddDoubleValuedMagic( magicMenu, menu, tr( "Limit Trafficability" ), SLOT( ChangeTrafficability() ), value );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::NotifyContextMenu
+// Created: JSR 2012-06-06
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !profile_.CanDoMagic( entity ) )
+        return;
+    selectedEntity_ = &entity;
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
+    AddIntValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ), value );
+    AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
+    AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
+    AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
+    AddMagic( tr( "Stop confine" ), SLOT( StopConfine() ), magicMenu );
+    AddMagic( tr( "Evacuate" ), SLOT( Evacuate() ), magicMenu );
+    AddMagic( tr( "Stop evacuate" ), SLOT( StopEvacuate() ), magicMenu );
+    if( const Infrastructure_ABC* infrastructure = entity.Retrieve< Infrastructure_ABC >() )
+    {
+        AddIntValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ), infrastructure->GetThreshold() );
+        AddMagic( tr( "Disable" ), SLOT( DisableInfrastructure() ), magicMenu );
+        AddMagic( tr( "Enable" ), SLOT( EnableInfrastructure() ), magicMenu );
     }
 }
 

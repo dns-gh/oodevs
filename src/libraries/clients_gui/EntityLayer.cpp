@@ -142,12 +142,21 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayerBase::HandleMouseDoubleClick
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry::Point2f& point )
+{
+    return HandleMousePress( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Select( const Entity_ABC& entity, bool control, bool /*shift*/ )
 {
-    controllers_.actions_.SetSelected( this, entity, control );
+    controllers_.actions_.SetSelected( entity, control );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,7 +312,9 @@ void EntityLayerBase::SelectColor( const Entity_ABC& )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight )
 {
-    if( controllers_.actions_.IsSingleSelection( this ) )
+    if( entities_.empty() )
+        return;
+    if( controllers_.actions_.IsSingleSelection( entities_.front() ) )
         return;
     geometry::Rectangle2f rectangle( topLeft, bottomRight );
     selected_ = 0;
@@ -320,5 +331,5 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
         }
     }
     if( !selectables.empty() )
-        controllers_.actions_.AddToSelection( this, selectables );
+        controllers_.actions_.AddToSelection( selectables );
 }

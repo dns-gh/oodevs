@@ -61,7 +61,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Team_ABC* team );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Team_ABC* >& elements );
     //@}
 
 private:

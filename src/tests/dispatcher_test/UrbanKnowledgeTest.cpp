@@ -56,7 +56,7 @@ namespace
         MockAutomat automat;
         MockModel model;
         tools::Resolver< dispatcher::Team_ABC > sides;
-        tools::Resolver< dispatcher::Object_ABC > urbans;
+        tools::Resolver< dispatcher::UrbanObject_ABC > urbans;
         tools::Resolver< dispatcher::Automat_ABC > automats;
         std::auto_ptr< dispatcher::UrbanKnowledge_ABC > result;
         sword::SimToClient expected;

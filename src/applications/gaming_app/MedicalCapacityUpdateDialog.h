@@ -18,7 +18,9 @@
 
 namespace kernel
 {
+    class Entity_ABC;
     class Object_ABC;
+    class UrbanObject_ABC;
     class Controllers;
     class Profile_ABC;
     class Time_ABC;
@@ -51,6 +53,7 @@ class Q3ListBox;
 class MedicalCapacityUpdateDialog : public QDialog
                                , public tools::Observer_ABC
                                , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
 {
     Q_OBJECT;
 
@@ -64,6 +67,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -116,7 +120,7 @@ private:
     const kernel::StaticModel& static_;
     const kernel::Profile_ABC& profile_;
     const kernel::Time_ABC& simulation_;
-    kernel::SafePointer< kernel::Object_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 
     //! @name

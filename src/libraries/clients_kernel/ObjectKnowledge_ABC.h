@@ -52,6 +52,7 @@ public:
     //@{
     virtual QString GetTypeName() const;
     virtual void Select( kernel::ActionController& controller ) const;
+    virtual void MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
     //@}

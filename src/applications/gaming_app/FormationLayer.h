@@ -57,7 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Formation_ABC* formation );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements );
     void RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type );
     void RequestCreation( const geometry::Point2f& point, const kernel::PopulationPrototype& type );
     //@}

@@ -18,8 +18,8 @@
 #include "UrbanHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Polygon.h"
-#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "geometry/Types.h"
@@ -211,7 +211,7 @@ void UrbanModel::ReadCity( xml::xistream& xis )
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, 0 ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
+        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
         ptr->Polish();
         xis >> xml::optional
@@ -231,7 +231,7 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
+        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
         ptr->Polish();
         xis >> xml::optional
@@ -251,7 +251,7 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject_ABC* ptr = pTerrainObject.release();
+        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
         ptr->Polish();
     }

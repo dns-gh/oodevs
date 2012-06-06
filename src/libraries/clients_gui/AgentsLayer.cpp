@@ -45,11 +45,11 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool control, bool shift )
     const Entity_ABC* superior = entity.Get< CommunicationHierarchies >().GetSuperior();
     if( shift && superior )
     {
-        controllers_.actions_.SetSelected( this, *superior, control );
+        controllers_.actions_.SetSelected( *superior, control );
         superior->Activate( controllers_.actions_ );
     }
     else
-        controllers_.actions_.SetSelected( this, entity, control );
+        controllers_.actions_.SetSelected( entity, control );
 }
 
 // -----------------------------------------------------------------------------

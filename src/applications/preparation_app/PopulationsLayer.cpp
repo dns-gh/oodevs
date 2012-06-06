@@ -148,21 +148,21 @@ void PopulationsLayer::AfterSelection()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayer::Select
-// Created: SBO 2006-11-09
+// Name: PopulationsLayer::MultipleSelect
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void PopulationsLayer::Select( const kernel::Entity_ABC& element )
+void PopulationsLayer::MultipleSelect( const std::vector< const kernel::Entity_ABC* >& elements )
 {
-    selectedEntity_ = &element;
+    selectedEntity_ = elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayer::Select
-// Created: SBO 2006-11-09
+// Name: PopulationsLayer::MultipleSelect
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void PopulationsLayer::Select( const kernel::Population_ABC& element )
+void PopulationsLayer::MultipleSelect( const std::vector< const kernel::Population_ABC* >& elements )
 {
-    selectedPopulation_ = &element;
+    selectedPopulation_ = elements.size() == 1 ? elements.front() : 0;
 }
 
 // $$$$ AGE 2007-07-03: ^c^v...

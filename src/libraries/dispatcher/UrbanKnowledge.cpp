@@ -11,7 +11,7 @@
 #include "UrbanKnowledge.h"
 #include "Automat.h"
 #include "Model_ABC.h"
-#include "Object_ABC.h"
+#include "UrbanObject_ABC.h"
 #include "Side.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

@@ -35,13 +35,13 @@ InhabitantLayer::~InhabitantLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantLayer::NotifySelected
-// Created: LGY 2012-01-10
+// Name: InhabitantLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void InhabitantLayer::NotifySelected( const kernel::Inhabitant_ABC* inhabitant )
+void InhabitantLayer::NotifySelectionChanged( const std::vector< const kernel::Inhabitant_ABC* >& elements )
 {
     if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_LivingArea )
-        gui::InhabitantLayer::NotifySelected( inhabitant );
+        gui::InhabitantLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

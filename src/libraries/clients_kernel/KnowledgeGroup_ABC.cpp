@@ -52,6 +52,22 @@ void KnowledgeGroup_ABC::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup_ABC::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void KnowledgeGroup_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const KnowledgeGroup_ABC* > first;
+    std::vector< const Entity_ABC* > second;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const KnowledgeGroup_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second );
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup_ABC::ContextMenu
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------

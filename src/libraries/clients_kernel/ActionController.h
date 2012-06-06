@@ -20,6 +20,7 @@
 #include "MultipleSelectionObserver_ABC.h"
 #include "OverFlyingObserver_ABC.h"
 #include "Selectable_ABC.h"
+#include "Selectionners.h"
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
 
@@ -27,6 +28,7 @@ class MapLayer_ABC;
 
 namespace kernel
 {
+class Selectionner_ABC;
 
 // =============================================================================
 /** @class  ActionController
@@ -60,34 +62,35 @@ public:
     typedef T_Selectables::iterator             IT_Selectables;
     typedef T_Selectables::const_iterator      CIT_Selectables;
 
-    typedef std::map< const MapLayer_ABC*, T_Selectables > T_SelectedMap;
-    typedef T_SelectedMap::iterator                       IT_SelectedMap;
-    typedef T_SelectedMap::const_iterator                CIT_SelectedMap;
+    typedef std::map< const Selectionner_ABC*, T_Selectables > T_SelectedMap;
+    typedef T_SelectedMap::iterator                           IT_SelectedMap;
+    typedef T_SelectedMap::const_iterator                    CIT_SelectedMap;
 
-    typedef std::vector< const MapLayer_ABC* > T_Layers;
-    typedef T_Layers::iterator                IT_Layers;
-    typedef T_Layers::const_iterator         CIT_Layers;
+    typedef std::vector< const Selectionner_ABC* > T_Selectionners;
+    typedef T_Selectionners::iterator             IT_Selectionners;
+    typedef T_Selectionners::const_iterator      CIT_Selectionners;
 
-    typedef std::map< int, T_Layers >          T_MultipleLayers;
-    typedef T_MultipleLayers::iterator        IT_MultipleLayers;
-    typedef T_MultipleLayers::const_iterator CIT_MultipleLayers;
+    typedef std::map< int, T_Selectionners >          T_MultipleMode;
+    typedef T_MultipleMode::iterator                 IT_MultipleMode;
+    typedef T_MultipleMode::const_iterator          CIT_MultipleMode;
     //@}
 
 public:
     //! @name Operations
     //@{
-    void AllowLayerMultipleSelection( int mode, const MapLayer_ABC* layer );
-    bool IsSingleSelection( const MapLayer_ABC* layer ) const;
-    bool HasMultipleLayers() const;
-    T_Layers GetMultipleLayers() const;
+    template< typename T >
+    void AllowMultipleSelection( int mode );
+    bool IsSingleSelection( const Selectable_ABC* selectable ) const;
+    bool HasMultipleSelection() const;
+    const Selectionner_ABC* GetSelectionner( const Selectable_ABC* selectable ) const; // private ?
 
     // -----------------------------------------------------------------------------
     // Select
     // -----------------------------------------------------------------------------
-    void SetSelected( const MapLayer_ABC* layer, const Selectable_ABC& selectable, bool append );
-    void AddToSelection( const MapLayer_ABC* layer, const T_Selectables& selectables );
+    void SetSelected( const Selectable_ABC& selectable, bool append );
+    void AddToSelection( const T_Selectables& selectables );
     void NotifyRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight, bool append );
-    void SetMultipleSelection( const T_SelectedMap& selectables );
+    void SetMultipleSelection( const T_Selectables& selectables );
 
     template< typename T >
     void Select( const T& element )
@@ -141,7 +144,7 @@ public:
             selecting_ = true;
             if( !selectInRectangle_ )
                 Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
-            Apply( & kernel::MultipleSelectionObserver_Base< T >::MultipleSelect, element );
+            Apply( & kernel::MultipleSelectionObserver_Base< T >::MultipleSelect, elements );
             if( !selectInRectangle_ )
                 Apply( & kernel::MultipleSelectionObserver_ABC::AfterSelection );
         }
@@ -259,6 +262,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    void InitializeSelectionners();
     void ChangeMode( int newMode );
     void ShowMenu( const QPoint& where );
     void ClearSingleSelection();
@@ -274,11 +278,26 @@ private:
     bool overFlying_;
     bool selectInRectangle_;
     kernel::ContextMenu menu_;
-    T_MultipleLayers multipleLayers_;
+    T_Selectionners selectionners_;
+    T_MultipleMode multipleModes_;
     T_SelectedMap selectedMap_;
-    static const T_Selectables emptyList_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ActionController::AllowMultipleSelection
+// Created: JSR 2012-05-21
+// -----------------------------------------------------------------------------
+template< typename T >
+void ActionController::AllowMultipleSelection( int mode )
+{
+    for( CIT_Selectionners it = selectionners_.begin(); it != selectionners_.end(); ++it )
+        if( dynamic_cast< const Selectionner< T >* >( *it ) != 0 )
+        {
+            multipleModes_[ mode ].push_back( *it );
+            return;
+        }
+}
 
 }
 

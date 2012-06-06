@@ -83,12 +83,13 @@ void AutomatsLayer::Draw( const Entity_ABC& entity, Viewport_ABC& viewport )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatsLayer::NotifySelected
-// Created: SBO 2007-06-20
+// Name: AutomatsLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void AutomatsLayer::NotifySelected( const kernel::Automat_ABC* automat )
+void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements )
 {
-    selected_ = automat;
+    selected_ = elements.size() == 1 ? elements.front() : 0;
+    gui::AutomatsLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

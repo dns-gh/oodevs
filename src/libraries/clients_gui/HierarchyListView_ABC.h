@@ -68,7 +68,7 @@ public:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnSelectionChange( Q3ListViewItem* item );
+    virtual void OnSelectionChange();
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     void OnRequestCenter();
     void Update();

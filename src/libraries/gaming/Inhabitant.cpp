@@ -22,7 +22,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UrbanObject.h"
 #include <boost/foreach.hpp>
 
 using namespace geometry;
@@ -159,7 +159,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
         CIT_UrbanObjectVector it = livingUrbanObject_.find( occupation.object().id() );
         if( it != livingUrbanObject_.end() )
-            it->second->UpdateHumans( name_.ascii(), occupation );
+            static_cast< kernel::UrbanObject* >( it->second )->UpdateHumans( name_.ascii(), occupation );
     }
     if( msg.has_motivation() )
         motivation_ = msg.motivation();
@@ -294,7 +294,7 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const kernel::UrbanObject_ABC* pObject = it->second;
+        const kernel::UrbanObject* pObject = static_cast< const kernel::UrbanObject* >( it->second );
         if( !pObject )
             continue;
         nominalCapacity_ += static_cast< unsigned int >( pObject->GetNominalCapacity() );

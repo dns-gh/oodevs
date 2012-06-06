@@ -39,7 +39,7 @@ namespace
             MOCK_EXPECT( automat, GetId ).returns( 5 );
             automats.Register( automat.GetId(), automat );
             MOCK_EXPECT( urbanObject, GetId ).returns( 6 );
-            urbanObjects.Register( object.GetId(), object );
+            urbanObjects.Register( urbanObject.GetId(), urbanObject );
             MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
             MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
             MOCK_EXPECT( model, Objects ).returns( boost::ref( objects ) );
@@ -74,7 +74,7 @@ namespace
         tools::Resolver< dispatcher::Team_ABC > sides;
         tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
         tools::Resolver< dispatcher::Object_ABC > objects;
-        tools::Resolver< dispatcher::Object_ABC > urbanObjects;
+        tools::Resolver< dispatcher::UrbanObject_ABC > urbanObjects;
         tools::Resolver< dispatcher::Automat_ABC > automats;
         std::auto_ptr< dispatcher::ObjectKnowledge_ABC > result;
         sword::SimToClient expected;

@@ -20,6 +20,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/MedicalTreatmentAttribute.h"
@@ -161,6 +162,20 @@ MedicalCapacityUpdateDialog::~MedicalCapacityUpdateDialog()
 void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
 {
     if( profile_.CanDoMagic( object ) && ( object.GetType().HasMedicalCapacity() || object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() ) )
+    {
+        selected_ = &object;
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        subMenu->insertItem( tr( "Update medical capacity" ), this, SLOT( Show() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalCapacityUpdateDialog::NotifyContextMenu
+// Created: JSR 2012-06-06
+// -----------------------------------------------------------------------------
+void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu )
+{
+    if( profile_.CanDoMagic( object ) && object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
     {
         selected_ = &object;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );

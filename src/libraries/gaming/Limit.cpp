@@ -95,6 +95,24 @@ void Limit::Select( kernel::ActionController& actions ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Limit::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Limit::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const Limit* > first;
+    std::vector< const kernel::TacticalLine_ABC* > second;
+    std::vector< const Entity_ABC* > third;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const Limit* >( elements[ i ] ) );
+        second.push_back( static_cast< const kernel::TacticalLine_ABC* >( elements[ i ] ) );
+        third.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( third, second, first );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Limit::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------

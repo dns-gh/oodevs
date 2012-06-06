@@ -10,10 +10,24 @@
 #include "clients_kernel_pch.h"
 #include "ActionController.h"
 #include "RectangleSelectionHandler_ABC.h"
+#include "Selectionners.h"
+
+#include "UrbanObject_ABC.h"
+#include "Ghost_ABC.h"
+#include "Population_ABC.h"
+#include "PopulationPart_ABC.h"
+#include "Agent_ABC.h"
+#include "Automat_ABC.h"
+#include "Formation_ABC.h"
+#include "Inhabitant_ABC.h"
+#include "Knowledge_ABC.h"
+#include "KnowledgeGroup_ABC.h"
+#include "Object_ABC.h"
+#include "TacticalLine_ABC.h"
+#include "Team_ABC.h"
+//#include "Drawing_ABC.h" // TODO
 
 using namespace kernel;
-
-const ActionController::T_Selectables ActionController::emptyList_;
 
 // -----------------------------------------------------------------------------
 // Name: ActionController constructor
@@ -27,6 +41,7 @@ ActionController::ActionController()
     , menu_()
 {
     menu_.InitializeBaseCategories();
+    InitializeSelectionners();
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +50,30 @@ ActionController::ActionController()
 // -----------------------------------------------------------------------------
 ActionController::~ActionController()
 {
-    // NOTHING
+    for( CIT_Selectionners it = selectionners_.begin(); it != selectionners_.end(); ++it )
+        delete *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionController::InitializeSelectionners
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+void ActionController::InitializeSelectionners()
+{
+    selectionners_.push_back( new Selectionner< UrbanObject_ABC    >() ); // Apasser dans kernel
+    selectionners_.push_back( new Selectionner< Ghost_ABC          >() );
+    selectionners_.push_back( new Selectionner< Population_ABC     >() );
+    selectionners_.push_back( new Selectionner< PopulationPart_ABC >() );
+    selectionners_.push_back( new Selectionner< Agent_ABC          >() );
+    selectionners_.push_back( new Selectionner< Automat_ABC        >() );
+    selectionners_.push_back( new Selectionner< Formation_ABC      >() );
+    selectionners_.push_back( new Selectionner< Inhabitant_ABC     >() );
+    selectionners_.push_back( new Selectionner< Knowledge_ABC      >() );
+    selectionners_.push_back( new Selectionner< KnowledgeGroup_ABC >() );
+    selectionners_.push_back( new Selectionner< Object_ABC         >() );
+    selectionners_.push_back( new Selectionner< TacticalLine_ABC   >() );
+    selectionners_.push_back( new Selectionner< Team_ABC           >() );
+    //selectionners_.push_back( new Selectionner< Drawing_ABC        >() ); // à passer dans kernel
 }
 
 // -----------------------------------------------------------------------------
@@ -66,49 +104,44 @@ void ActionController::Unregister( tools::Observer_ABC& observer )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionController::AllowLayerMultipleSelection
-// Created: JSR 2012-05-21
-// -----------------------------------------------------------------------------
-void ActionController::AllowLayerMultipleSelection( int mode, const MapLayer_ABC* layer )
-{
-    multipleLayers_[ mode ].push_back( layer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionController::HasMultipleLayers
+// Name: ActionController::HasMultipleSelection
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-bool ActionController::HasMultipleLayers() const
+bool ActionController::HasMultipleSelection() const
 {
-    CIT_MultipleLayers it = multipleLayers_.find( currentMode_ );
-    return it != multipleLayers_.end() && it->second.size() > 0;
+    CIT_MultipleMode it = multipleModes_.find( currentMode_ );
+    return it != multipleModes_.end() && it->second.size() > 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionController::GetMultipleLayers
-// Created: JSR 2012-05-24
+// Name: ActionController::GetSelectionner
+// Created: JSR 2012-06-01
 // -----------------------------------------------------------------------------
-ActionController::T_Layers ActionController::GetMultipleLayers() const
+const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC* selectable ) const
 {
-    T_Layers layers;
-    CIT_MultipleLayers it = multipleLayers_.find( currentMode_ );
-    if( it != multipleLayers_.end() )
-        layers = it->second;
-    return layers;
+    if( selectable )
+        for( CIT_Selectionners it = selectionners_.begin(); it != selectionners_.end(); ++it )
+            if( ( *it )->IsOfSameType( selectable ) )
+                return *it;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionController::SetSelected
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_ABC& selectable, bool append )
+void ActionController::SetSelected( const Selectable_ABC& selectable, bool append )
 {
-    if( !append || IsSingleSelection( layer ) ) // single selection
+    const Selectionner_ABC* selectionner = GetSelectionner( &selectable );
+    assert( selectionner );
+    if( !selectionner )
+        return;
+    if( !append || IsSingleSelection( &selectable ) ) // single selection
     {
         // Déselection des éléments multiples
         ClearMultipleSelection();
         // Sélection d'un élément
-        selectedMap_[ layer ].push_back( &selectable );
+        selectedMap_[ selectionner ].push_back( &selectable );
         selectable.Select( *this );
 
         ActionController::T_Selectables list;
@@ -120,7 +153,7 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
         // Déselection d'un éventuel élément simple
         ClearSingleSelection();
         // Sélection multiple
-        IT_SelectedMap it = selectedMap_.find( layer );
+        IT_SelectedMap it = selectedMap_.find( selectionner );
         if( it != selectedMap_.end() )
         {
             IT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
@@ -128,20 +161,21 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
             {
                 if( it->second.size() == 1 )
                 {
-                    ( * itSelectable )->MultipleSelect( *this, emptyList_ );
+                    static const T_Selectables emptyList;
+                    ( * itSelectable )->MultipleSelect( *this, emptyList );
                     selectedMap_.erase( it );
                     return;
                 }
-                selectedMap_[ layer ].erase( itSelectable );
+                selectedMap_[ selectionner ].erase( itSelectable );
             }
             else
-                selectedMap_[ layer ].push_back( &selectable );
+                selectedMap_[ selectionner ].push_back( &selectable );
         }
         else
-            selectedMap_[ layer ].push_back( &selectable );
-        selectedMap_[ layer ].front()->MultipleSelect( *this, selectedMap_[ layer ] );
-        if( selectedMap_[ layer ].size() == 1 )
-            selectedMap_[ layer ].front()->Select( *this );
+            selectedMap_[ selectionner ].push_back( &selectable );
+        selectedMap_[ selectionner ].front()->MultipleSelect( *this, selectedMap_[ selectionner ] );
+        if( selectedMap_[ selectionner ].size() == 1 )
+            selectedMap_[ selectionner ].front()->Select( *this );
     }
 }
 
@@ -149,9 +183,16 @@ void ActionController::SetSelected( const MapLayer_ABC* layer, const Selectable_
 // Name: ActionController::AddToSelection
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void ActionController::AddToSelection( const MapLayer_ABC* layer, const T_Selectables& selectables )
+void ActionController::AddToSelection( const T_Selectables& selectables )
 {
-    selectedMap_[ layer ].insert( selectedMap_[ layer ].end(), selectables.begin(), selectables.end() );
+    for( CIT_Selectables it = selectables.begin(); it != selectables.end(); ++it )
+    {
+        const Selectionner_ABC* selectionner = GetSelectionner( *it );
+        assert( selectionner );
+        if( !selectionner )
+            continue;
+        selectedMap_[ selectionner ].push_back( *it );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -185,13 +226,18 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
 // Name: ActionController::SetMultipleSelection
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------
-void ActionController::SetMultipleSelection( const T_SelectedMap& selectables )
+void ActionController::SetMultipleSelection( const T_Selectables& selectables )
 {
     ClearSingleSelection();
     ClearMultipleSelection();
-    selectedMap_ = selectables;
-    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
+    for( CIT_Selectables it = selectables.begin(); it != selectables.end(); ++it )
+    {
+        const Selectionner_ABC* selectionner = GetSelectionner( *it );
+        if( selectionner )
+            selectedMap_[ selectionner ].push_back( *it );
+    }
     CleanSelectedMap(); // utile?
+    Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
     if( !selectedMap_.empty() )
         for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
         {
@@ -206,10 +252,11 @@ void ActionController::SetMultipleSelection( const T_SelectedMap& selectables )
 // Name: ActionController::IsSingleSelection
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-bool ActionController::IsSingleSelection( const MapLayer_ABC* layer ) const
+bool ActionController::IsSingleSelection( const Selectable_ABC* selectable ) const
 {
-    CIT_MultipleLayers it = multipleLayers_.find( currentMode_ );
-    return it == multipleLayers_.end() || std::find( it->second.begin(), it->second.end(), layer ) == it->second.end();
+    CIT_MultipleMode it = multipleModes_.find( currentMode_ );
+    const Selectionner_ABC* selectionner = GetSelectionner( selectable );
+    return !selectionner || it == multipleModes_.end() || std::find( it->second.begin(), it->second.end(), selectionner ) == it->second.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,9 +277,10 @@ void ActionController::ClearSingleSelection()
     if( !selectedMap_.empty() )
     {
         IT_SelectedMap it = selectedMap_.begin();
+        CIT_MultipleMode mode = multipleModes_.find( currentMode_ );
         while( it!= selectedMap_.end() )
         {
-            if( IsSingleSelection( it->first ) )
+            if( it->second.empty() || mode == multipleModes_.end() || std::find( mode->second.begin(), mode->second.end(), it->first ) == mode->second.end() )
                 it = selectedMap_.erase( it );
             else
                 ++it;

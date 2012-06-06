@@ -63,6 +63,10 @@ public:
     {
         // NOTHING
     }
+    virtual void MultipleSelect( kernel::ActionController& /*controller*/, const std::vector< const kernel::Selectable_ABC* >& /*elements*/ ) const
+    {
+        // NOTHING
+    }
     virtual void ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/ ) const
     {
         // NOTHING
