@@ -14,7 +14,7 @@ A unit won't follow if it cannot perform the mission (the mission is not activat
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links>
         <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">

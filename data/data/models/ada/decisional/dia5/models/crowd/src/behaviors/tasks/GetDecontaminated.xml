@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.GetDecontaminated" source-version="1.0.0">
+    <parameters>
+        <parameter name="decontaminationPlot">
+            <type>
+                <class name="agent.world.DecontaminationPlot"/>
+            </type>
+        </parameter>
+        <parameter name="garagePosition">
+            <type>
+                <class name="agent.world.Destination"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="go get decontaminated">
+            <skills>
+                <skill name="behaviors.skills.GetDecontaminated" main="true">
+                    <parameter name="decontaminationPlot">
+                        <value>
+                            <parameter>decontaminationPlot</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="reach garage position" disable-when-done="true">
+            <skills>
+                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
+                    <parameter name="destination">
+                        <value>
+                            <parameter>garagePosition</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

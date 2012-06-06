@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="world.classes.Object" source-version="1.0.0" extends="world.classes.LocalizedElement">
+    <description>Represents anything that is not a: &#xD;
+- Agent&#xD;
+- Crowd&#xD;
+- Urban block&#xD;
+- Area&#xD;
+- Position&#xD;
+- Planned work</description>
+    <realizes>agent.world.DecontaminationPlot</realizes>
+    <realizes>world.interfaces.Installation</realizes>
+    <methods>
+        <method name="useToGetDecontaminated" abstract="false">
+            <description>To decontaminate me through this element.&#xD;
+&#xD;
+Returns 'true' once decontamination is complete, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeUsedToGetDecontaminated" abstract="false">
+            <description>Returns 'true' if this entity can be used by the agent to get decontaminated.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPosition">
+            <return name="simPosition">
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <return>
+                <type>
+                    <list>
+                        <any/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="isDamaged" abstract="false">
+            <description>Returns 'true' if this element is damaged, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="damageIt" abstract="false">
+            <description>To damage this element. Returns 'true' upon action completion (once the quantity of damage has been applied on the element).</description>
+            <argument name="quantityOfDamage">
+                <description>The quantity of damage to use to damage the installation.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

@@ -24,7 +24,7 @@ Wounded human victims won't be evacuated if:&#xD;
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links>
         <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">

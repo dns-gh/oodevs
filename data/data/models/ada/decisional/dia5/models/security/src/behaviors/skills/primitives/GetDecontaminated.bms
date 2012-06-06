@@ -15,7 +15,7 @@ rootnode
         self.arrived = true
     end,
 
-    getDecontaminatedActionCompleted = function( self, params ) -- call by beDecontaminated action skill
+    getDecontaminatedActionCompleted = function( self, params ) -- call by getDecontaminated action skill
         Feedback( self.feedbacks.done )
     end,
 
@@ -33,7 +33,7 @@ rootnode
         local Activate = Activate
 
         if self.arrived then
-            if self.params.decontaminationPlot:canBeUsedToGetDecontaminate() then
+            if self.params.decontaminationPlot:canBeUsedToGetDecontaminated() then
                 Activate( skill.links.getDecontaminated, 1, 
                         { decontaminationPlot = self.params.decontaminationPlot } )
             else

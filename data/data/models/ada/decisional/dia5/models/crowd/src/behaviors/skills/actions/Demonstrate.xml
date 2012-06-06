@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.actions.Demonstrate" source-version="1.0.0">
+    <description>For the crowd agent, to enact the decision of demonstrating.</description>
+    <body-type>
+        <class name="world.classes.CrowdBody"/>
+    </body-type>
+    <feedbacks>
+        <feedback name="demonstrateActionRunning">
+            <description>Executed until the agent is demonstrating.</description>
+        </feedback>
+    </feedbacks>
+</skill>

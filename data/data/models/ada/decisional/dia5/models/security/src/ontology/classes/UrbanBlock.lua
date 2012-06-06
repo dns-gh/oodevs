@@ -11,6 +11,17 @@ method "alertIt" (
         return integration.alertUrbanBlock( self )
     end )
 
+method "canBeAlerted" ( 
+    function( self )
+        local isUrbanBlockAlerted = integration.isUrbanBlockAlerted( self )
+        if isUrbanBlockAlerted then
+            meKnowledge:sendMessage( "Urban block is already alerted" )
+            return false
+        else
+            return true
+        end 
+    end )
+
 method "undoAlertIt" ( 
     function( self )
         return integration.undoAlertUrbanBlock( self )
@@ -21,6 +32,17 @@ method "confineIt" (
         return integration.confineUrbanBlock( self )
     end )
 
+method "canBeConfined" ( 
+    function( self )
+        local isUrbanBlockConfined = integration.isUrbanBlockConfined( self )
+        if isUrbanBlockConfined then
+            meKnowledge:sendMessage( "Urban block is already confined" )
+            return false
+        else
+            return true
+        end 
+    end )
+
 method "undoConfineIt" (
     function( self )
         return integration.undoConfineUrbanBlock( self )
@@ -29,6 +51,17 @@ method "undoConfineIt" (
 method "evacuateIt" (
     function( self )
         return integration.evacuateUrbanBlock( self )
+    end )
+
+method "canBeEvacuated" ( 
+    function( self )
+        local isUrbanBlockEvacuated = integration.isUrbanBlockEvacuated( self )
+        if isUrbanBlockEvacuated then
+            meKnowledge:sendMessage( "Urban block is already evacuated" )
+            return false
+        else
+            return true
+        end 
     end )
 
 method "undoEvacuateIt" (
@@ -48,8 +81,7 @@ method "isConfined" (
 
 method "isEvacuated" (
     function( self )
-        local result = integration.isUrbanBlockEvacuated( self )
-        return result
+        return integration.isUrbanBlockEvacuated( self )
     end )
 
 -- --------------------------------------------------------------------------------

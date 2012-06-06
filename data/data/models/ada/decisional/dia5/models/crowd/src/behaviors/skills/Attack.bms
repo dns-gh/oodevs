@@ -1,0 +1,42 @@
+-- **************************************************************************** 
+-- Attack a unit or crowds on the objective
+-- self.params.objective: the element to attack or to reach
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo, skill.links.attack },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks and slot
+    -- --------------------------------------------------------------------------------
+    done = function( self ) -- call by moveTo actin skill.
+        Feedback( self.feedbacks.done ) -- the skill is done once all the crowd has reach the destination
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init --> set agressive attitude to attack the objective
+    -- user will be able, during the mission to change himself the attitude.
+    -- --------------------------------------------------------------------------------
+    create = function( self, params )
+        meKnowledge:adoptAgressiveAttitude()
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Movement and attack objectif
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- Crowd is under control, cannot commit agression
+        if not meKnowledge:canAttack( unit ) then
+            meKnowledge:sendReport( eRC_AgressionImpossible )
+            Feedback( self.feedbacks.failed )
+        end
+
+        -- once entity is reached attack it.
+        if self.params.unit:isReached() then
+            Activate( skill.links.attack, 1, { unit = self.params.unit } )
+        end
+        Activate( skill.links.moveTo, 1, { destination = self.params.unit } )
+    end
+}

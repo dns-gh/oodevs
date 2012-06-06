@@ -304,9 +304,9 @@ method "activateFitration" (
 -- --------------------------------------------------------------------------------
 -- Decontamination capability
 -- --------------------------------------------------------------------------------
-method "beDecontaminated" ( 
+method "getDecontaminated" ( 
     function( self, decontaminationPlot )
-        return decontaminationPlot:decontaminateMe() -- decontaminate me
+        return decontaminationPlot:useToGetDecontaminated()
     end )
 
 -- --------------------------------------------------------------------------------

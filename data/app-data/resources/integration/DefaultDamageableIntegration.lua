@@ -1,12 +1,14 @@
-integration.startDamageUrbanBlock = function( target )
-    target.actionDamage = DEC_DetruireBlocUrbain( target.source )
+integration.startDamageUrbanBlock = function( urbanBlock )
+    urbanBlock.actionDamage = DEC_DetruireBlocUrbain( urbanBlock.source )
+    return false
 end
 
-integration.stopDamageUrbanBlock = function( target )
-    if target.actionDamage then
-        target.actionDamage = DEC__StopAction( target.actionDamage )
-        target.actionDamage = nil
+integration.stopDamageUrbanBlock = function( urbanBlock )
+    if urbanBlock.actionDamage then
+        urbanBlock.actionDamage = DEC__StopAction( urbanBlock.actionDamage )
+        urbanBlock.actionDamage = nil
     end
+    return true
 end
 
 integration.getUrbanBlockState = function( urbanBlock ) 

@@ -35,7 +35,7 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links>
         <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.MeKnowledge" source-version="1.0.0">
     <description>Represents agent knowledge of its physical abilities. </description>
-    <realizes>agent.world.Body</realizes>
+    <realizes>agent.world.UnitBody</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -569,21 +569,6 @@ Returns 'true' when checkPoint is filtering.</description>
                 </type>
             </return>
         </method>
-        <method name="beDecontaminated" abstract="false">
-            <description>To be decontaminated with the given decontamination plot. Returns 'true' once decontamination is complete, 'false' otherwise.&#xD;
-Agent can be decontaminated only if issued decontamination site is being operated by specific units.</description>
-            <argument name="decontaminationPlot">
-                <description></description>
-                <type>
-                    <class name="agent.world.DecontaminationPlot"/>
-                </type>
-            </argument>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="selfDestruct" abstract="false">
             <description>To self destruct instanteneously. Agent life level is set to 0%, means that it is dead. This actin may be used to commit suicide.</description>
         </method>
@@ -738,6 +723,21 @@ This implemention</description>
                 <description>Returns the work created (and 100% built) upon simulation method completion. </description>
                 <type>
                     <class name="agent.world.Work"/>
+                </type>
+            </return>
+        </method>
+        <method name="getDecontaminated" abstract="false">
+            <description>To be decontaminated with the given decontamination plot. Returns 'true' once decontamination is complete, 'false' otherwise.&#xD;
+Agent can be decontaminated only if issued decontamination site is being operated by specific units.</description>
+            <argument name="decontaminationPlot">
+                <description></description>
+                <type>
+                    <class name="agent.world.DecontaminationPlot"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
                 </type>
             </return>
         </method>

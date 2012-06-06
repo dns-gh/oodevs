@@ -11,7 +11,7 @@ This action allows an agent to make a decontamination site or  a checkpoint runn
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <feedbacks>
         <feedback name="operateActionRunning">

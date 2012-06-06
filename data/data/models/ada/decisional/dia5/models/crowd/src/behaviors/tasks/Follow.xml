@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Follow" source-version="1.0.0">
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="agent.world.Destination"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Suivre l'objectif." disable-when-done="true">
+            <skills>
+                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
+                    <parameter name="destination">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

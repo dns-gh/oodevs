@@ -20,7 +20,7 @@ When several nodes should be visited, the agent acts on each node by following t
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links>
         <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">

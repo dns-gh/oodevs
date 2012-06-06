@@ -160,6 +160,10 @@ integration.hasReachUrbanBlock = function( target )
     return DEC_Population_HasReachedBlockBorder( target.source )
 end
 
+integration.hasReachedDestination = function( point )
+    return DEC_Population_HasReachedDestination( point.source )
+end
+
 integration.setDensitePopulationSortante = function( checkpoint, outgoingFlow )
    DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, outgoingFlow / 300 ) -- valeur entre 0.003 et 0.03
 end
@@ -351,4 +355,16 @@ end
 
 integration.getNbWoundedInCrowd = function( crowd )
     return DEC_Crowd_GetNbreOfWoundedHumans( crowd.source )
+end
+
+-- Crowd point of vue. Only "Crowd" agent can use this function 
+integration.damageObject = function( object, damageFactor )
+    DEC_ConnaissanceObjet_Degrader( object.source, damageFactor )
+end
+integration.UnitIsNeutralized = function( unit )
+    return unit.source:DEC_Agent_EtatOpsMajeur() == 0
+end
+
+integration.UnitIsDead = function( unit )
+    return unit.source:DEC_Agent_EstMort()
 end

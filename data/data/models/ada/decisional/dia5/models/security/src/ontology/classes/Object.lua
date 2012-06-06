@@ -190,7 +190,7 @@ method "filter" ( masalife.brain.integration.startStopAction(
 -- --------------------------------------------------------------------------------
 -- Decontamination plot
 -- --------------------------------------------------------------------------------
-method "decontaminateMe" ( 
+method "useToGetDecontaminated" ( 
     function( self )
         meKnowledge:sendReport( eRC_DemandeDecontamination )
         integration.requestForDecontamination( self )
@@ -201,7 +201,7 @@ method "decontaminateMe" (
         return false
     end )
 
-method "canBeUsedToGetDecontaminate" ( 
+method "canBeUsedToGetDecontaminated" ( 
     function( self )
         return integration.canDecontaminateAgents( self )
     end )

@@ -2518,10 +2518,10 @@ A visted crowd won't be healed if it could not be reached by the agent (it has m
     </mission>
     <mission dia-behavior="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" dia-type="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" id="4484" name="MLSECURITY - Attack urban blocks within area (with projectiles)">
       <description>
-        <doctrine><![CDATA[For an agent to launch a specified quantity of projectiles on a given set of urban blocks  within a specified area.]]></doctrine>
+        <doctrine><![CDATA[For the agent to launch a specified quantity of projectiles on a given set of urban blocks,  within a specified area.]]></doctrine>
         <usage><![CDATA[The agent will move toward each urban block until it is able to launch the projectile.
 
-A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation. In that specific case, agent will decide to act on the next urban block. In some cases (long range type of projectiles) the agent won't move from its initial position.]]></usage>
+A urban block won't be hit (unit cannot launch projectile) if the agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation. In that specific case, the agent will decide to act on the next urban block. In some cases (long range type of projectiles) the agent won't move from its initial position.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4438,4 +4438,4 @@ A unit won't follow the agent if it cannot perform the mission (mission is not s
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2304294507" -->
+<!-- signature="0301602427" -->

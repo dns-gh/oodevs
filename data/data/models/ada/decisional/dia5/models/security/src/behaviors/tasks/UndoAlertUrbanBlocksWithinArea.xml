@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" source-version="1.0.0">
+    <description>To lift alert on population located into a set of urban blocks in a given area.&#xD;
+&#xD;
+If no urban block exists in the area, the mission failed and terminates.</description>
     <parameters>
         <parameter name="area">
+            <description>The area with urban blocks to lift alert on.</description>
             <type>
                 <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage disable-when-done="true">
+        <stage label="lift alert on urban blocks" disable-when-done="true">
+            <description>Move along urban blocks in the area and lift the alert on them.</description>
             <skills>
                 <skill name="behaviors.skills.primitives.UndoAlert" main="true">
                     <parameter name="populatedAreas">

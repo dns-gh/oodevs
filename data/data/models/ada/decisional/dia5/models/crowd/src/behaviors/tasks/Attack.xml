@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Attack" source-version="1.0.0">
+    <description>Déplacement vers les objectifs etant agressif.</description>
+    <parameters>
+        <parameter name="unit">
+            <type>
+                <class name="world.classes.Unit"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="attack" permanent="true">
+            <description>Déplacement vers les objectifs etant agressif.</description>
+            <skills>
+                <skill name="behaviors.skills.Attack">
+                    <parameter name="unit">
+                        <value>
+                            <parameter>unit</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

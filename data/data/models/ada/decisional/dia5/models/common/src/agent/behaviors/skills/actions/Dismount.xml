@@ -2,7 +2,7 @@
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.Dismount" source-version="1.0.0">
     <description>To goes into dismounting state.</description>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <feedbacks>
         <feedback name="dismountActionRunning">

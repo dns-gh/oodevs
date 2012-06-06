@@ -8,7 +8,7 @@
 rootnode 
 {
     connections = { skill.links.reach, skill.links.confine },
-    feedbacks   = { "confined" },
+    feedbacks   = { "confined", "notConfined" },
 
     -- --------------------------------------------------------------------------------
     -- Feedbacks
@@ -19,6 +19,12 @@ rootnode
 
     confineActionCompleted = function( self, params ) -- from confine skill
         Feedback( self.feedbacks.confined, { populatedArea = params.populatedArea } )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+    end,
+
+    impossibleToConfine = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.notConfined, { populatedArea = params.populatedArea } )
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
     end,
@@ -42,7 +48,11 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.populatedArea = self.params.populatedAreas[ self.nextTargetIndex ]
                 if self.arrived then
-                    Activate( skill.links.confine, 1, { populatedArea = self.populatedArea } )
+                    if self.populatedArea:canBeConfined() then
+                        Activate( skill.links.confine, 1, { populatedArea = self.populatedArea } )
+                    else
+                        self:impossibleToConfine( { populatedArea = self.populatedArea } )
+                    end
                 else
                     Activate( skill.links.reach, 1, { destination = self.populatedArea } )
                 end

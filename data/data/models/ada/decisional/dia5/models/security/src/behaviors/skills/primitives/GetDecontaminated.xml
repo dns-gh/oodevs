@@ -11,7 +11,7 @@ Agent moves toward the given decontamination plot. Once it is reached, agent req
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links>
         <link name="getDecontaminated" skill="agent.behaviors.skills.actions.GetDecontaminated">

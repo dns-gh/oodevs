@@ -219,5 +219,35 @@ This implementation return 'true' is the agent has the physical capacity to buil
                 </type>
             </return>
         </method>
+        <method name="canBeAlerted" abstract="false">
+            <description>Returns 'true' if this element can be alerted.&#xD;
+&#xD;
+This implementation returns 'true' if this element is not already alerted. It returns 'false' otherwise (urban block is &quot;not alerted&quot;).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeConfined" abstract="false">
+            <description>Returns 'true' if this element can be confined. &#xD;
+&#xD;
+This implementation returns 'true' if this element is not already confined. It returns 'false' otherwise (urban block is &quot;not confined&quot;).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeEvacuated" abstract="false">
+            <description>Returns 'true' if this element can be evacuated.&#xD;
+&#xD;
+This implementation returns 'true' if this element is not already evacuated. It returns 'false' otherwise (urban block is &quot;not evacuated&quot;).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

@@ -12,7 +12,7 @@
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links>
         <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
@@ -32,7 +32,15 @@
                 </type>
             </argument>
         </feedback>
-             <feedback name="done">
+        <feedback name="notEvacuated">
+            <description>Sent each time a 'PopulatedArea' cannot be evacuated.</description>
+            <argument name="populatedArea">
+                <type>
+                    <class name="agent.world.PopulatedArea"/>
+                </type>
+            </argument>
+        </feedback>
+        <feedback name="done">
             <description>Sent when all 'populatedAreas' have been visited.</description>
         </feedback>
         <feedback name="failed">

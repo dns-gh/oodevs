@@ -1,0 +1,50 @@
+-- **************************************************************************** 
+-- Move toward and damage objective
+-- self.params.installation: the damagable element
+-- Comments: this skill uses the dalay between the moment where the crowd recahe the insdtallation
+-- and the moment it is entierly arrived.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo, skill.links.damage },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks 'done' function is called if objective is reached
+    -- --------------------------------------------------------------------------------
+    done = function( self )
+        if self.damageDone then
+            Feedback( self.feedbacks.done ) -- skill ends only if the crowd has entierly reached the objective 
+        end
+    end,
+    damageActionCompleted = function( self ) -- from MoveTo
+        self.damageDone = true
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init --> set agressive attitude to attack the objective
+    -- user will be able, during the mission to change himself the attitude.
+    -- --------------------------------------------------------------------------------
+    create = function( self, params )
+        self.damageDone = false
+        meKnowledge:adoptAgressiveAttitude()
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Moveto element and start destroying it when arrived
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- Crowd is under control, cannot commit agression
+        if not meKnowledge:canDamage( self.params.installation ) then
+            meKnowledge:sendReport( eRC_AgressionImpossible )
+            Feedback( self.feedbacks.failed )
+        end
+
+        if self.params.installation:isReached() then
+            Activate( skill.links.damage, 1, 
+              { installation = self.params.installation, quantityOfDamage = self.params.quantityOfDamage } )
+        end
+        Activate( skill.links.moveTo, 1, { destination = self.params.installation } )
+    end
+}

@@ -12,7 +12,7 @@
     </parameters>
     <modifiers/>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <links/>
     <resources/>

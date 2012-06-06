@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.GetDecontaminated" source-version="1.0.0">
+    <description>$$$ TODO</description>
+    <parameters>
+        <parameter name="decontaminationPlot">
+            <description>$$$ TODO</description>
+            <type>
+                <class name="agent.world.DecontaminationPlot"/>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveTo" skill="agent.behaviors.skills.actions.MoveTo">
+            <description/>
+        </link>
+        <link name="getDecontaminated" skill="agent.behaviors.skills.actions.GetDecontaminated">
+            <description/>
+        </link>
+    </links>
+    <feedbacks>
+        <feedback name="done">
+            <description/>
+        </feedback>
+        <feedback name="failed">
+            <description/>
+        </feedback>
+    </feedbacks>
+</skill>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.PopulatedArea" source-version="1.0.0" extends="agent.world.Destination">
-    <description>A PopulatedArea is a region of the terrain that can contain populations. To act on a population, the agent acts on the populated area containing it.   </description>
+    <description>A PopulatedArea is a region of the terrain that can contain populations. To act on a population, the agent acts on the populated area containing it. </description>
     <methods>
         <method name="alertIt">
             <description>To alert the populations contained in the populated area. </description>
@@ -79,6 +79,30 @@ This action can take time (depending on the current status of the population, e.
             <description>To lift the confinement of a population into the populated area.</description>
             <return name="undoEvacuation">
                 <description>True if the confinement is lifted or if the populated area does not contain confined population, false otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeAlerted">
+            <description>Returns 'true' if this element can be alerted.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeConfined">
+            <description>Returns 'true' if this element can be confined.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeEvacuated">
+            <description>Returns 'true' if this element can be evacuated.</description>
+            <return>
                 <type>
                     <simple name="boolean"/>
                 </type>

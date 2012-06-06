@@ -8,7 +8,7 @@
 rootnode 
 {
     connections = { skill.links.reach, skill.links.alert },
-    feedbacks   = { "alerted" },
+    feedbacks   = { "alerted", "notAlerted" },
 
     -- --------------------------------------------------------------------------------
     -- Feedbacks
@@ -21,6 +21,12 @@ rootnode
         Feedback( self.feedbacks.alerted, { populatedArea = params.populatedArea } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
+    end,
+
+    impossibleToAlert = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.notAlerted, { populatedArea = params.populatedArea } )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
     end,
 
     -- --------------------------------------------------------------------------------
@@ -42,7 +48,11 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.populatedArea = self.params.populatedAreas[ self.nextTargetIndex ]
                 if self.arrived then
-                    Activate( skill.links.alert, 1, { populatedArea = self.populatedArea } )
+                    if self.populatedArea:canBeAlerted() then
+                        Activate( skill.links.alert, 1, { populatedArea = self.populatedArea } )
+                    else
+                        self:impossibleToAlert( { populatedArea = self.populatedArea } )
+                    end
                 else
                     Activate( skill.links.reach, 1, { destination = self.populatedArea } )
                 end

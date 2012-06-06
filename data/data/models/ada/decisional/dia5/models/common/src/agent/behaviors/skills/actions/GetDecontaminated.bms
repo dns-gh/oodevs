@@ -8,7 +8,7 @@ rootnode
     feedbacks = { "getDecontaminatedActionCompleted" },
 
     select = function( self )
-        if meKnowledge:beDecontaminated( self.params.decontaminationPlot ) then
+        if meKnowledge:getDecontaminated( self.params.decontaminationPlot ) then
             Feedback( self.feedbacks.getDecontaminatedActionCompleted )
         end
     end

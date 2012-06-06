@@ -146,7 +146,7 @@ This implementation returns true once the crowds filtration property is running.
                 </type>
             </return>
         </method>
-        <method name="decontaminateMe" abstract="false">
+        <method name="useToGetDecontaminated" abstract="false">
             <description>To decontaminate me through this element.&#xD;
 &#xD;
 Returns 'true' once decontamination is complete, 'false' otherwise.</description>
@@ -269,7 +269,7 @@ If this element's construction level is smaller than 100%, this impementation al
                 </type>
             </return>
         </method>
-        <method name="canBeUsedToGetDecontaminate" abstract="false">
+        <method name="canBeUsedToGetDecontaminated" abstract="false">
             <description>Returns 'true' if this entity can be used by the agent to get decontaminated.&#xD;
 &#xD;
 This implementation returns 'true' if this element has the capacity to decontaminate (see 'capacity' properties for 'Objects' in authoring tool).</description>

@@ -20,7 +20,7 @@ Once the action is complete, the resource node production will be definitely inc
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.world.Body"/>
+        <class name="agent.world.UnitBody"/>
     </body-type>
     <feedbacks>
         <feedback name="enhanceProductionActionCompleted">
