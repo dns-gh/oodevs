@@ -925,7 +925,7 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectIn
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
-                if( ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                if( ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strType_.GetData() == object.strType_.GetData() )
                     result << (*itCategory)->strName_.GetData().c_str();
     }
     return result;
