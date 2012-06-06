@@ -42,7 +42,7 @@ DrawingFactory::~DrawingFactory()
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-gui::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& message ) const
+kernel::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& message ) const
 {
     const kernel::Entity_ABC* diffusionEntity = 0;
     if( message.shape().has_diffusion() )
@@ -53,7 +53,7 @@ gui::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& messa
             diffusionEntity = resolver_.FindFormation( message.shape().diffusion().formation().id() );
     }
     DrawingPositions* location = new DrawingPositions( converter_, message );
-    gui::Drawing_ABC* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_ );
+    kernel::Drawing_ABC* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_ );
     drawing->Attach< kernel::Positions >( *location );
     return drawing;
 }
@@ -62,10 +62,10 @@ gui::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& messa
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-gui::Drawing_ABC* DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
+kernel::Drawing_ABC* DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
 {
     DrawingPositions* location = new DrawingPositions();
-    gui::Drawing_ABC* drawing = new Drawing( controllers_, style, color, entity, *location, publisher_, converter_ );
+    kernel::Drawing_ABC* drawing = new Drawing( controllers_, style, color, entity, *location, publisher_, converter_ );
     drawing->Attach< kernel::Positions >( *location );
     return drawing;
 }
@@ -74,7 +74,7 @@ gui::Drawing_ABC* DrawingFactory::CreateShape( const gui::DrawingTemplate& style
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-gui::Drawing_ABC* DrawingFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
+kernel::Drawing_ABC* DrawingFactory::CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const
 {
     DrawingPositions location;
     new Drawing( controllers_, xis, entity, types_, location, publisher_, converter_ );

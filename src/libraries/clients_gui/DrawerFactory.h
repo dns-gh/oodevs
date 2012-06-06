@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
-    virtual Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
+    virtual kernel::Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
+    virtual kernel::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
     //@}
 
 private:

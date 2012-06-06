@@ -17,13 +17,13 @@ namespace kernel
 {
     struct Nothing;
     class Location_ABC;
+    class Drawing_ABC;
 }
 
 namespace gui
 {
     class ParametersLayer;
     class ShapeHandler_ABC;
-    class Drawing_ABC;
 
 // =============================================================================
 /** @class  LocationCreator
@@ -35,8 +35,8 @@ class LocationCreator : public QObject
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
-                      , public kernel::ContextMenuObserver_ABC< Drawing_ABC >
-                      , public tools::ElementObserver_ABC    < Drawing_ABC >
+                      , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
+                      , public tools::ElementObserver_ABC     < kernel::Drawing_ABC >
 {
     Q_OBJECT;
 
@@ -70,8 +70,8 @@ private:
     //@{
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
-    virtual void NotifyContextMenu( const Drawing_ABC&, kernel::ContextMenu& );
-    virtual void NotifyDeleted( const Drawing_ABC& );
+    virtual void NotifyContextMenu( const kernel::Drawing_ABC&, kernel::ContextMenu& );
+    virtual void NotifyDeleted( const kernel::Drawing_ABC& );
     //@}
 
 private:
@@ -90,7 +90,7 @@ private:
     QString menu_;
     geometry::Point2f popupPoint_;
 
-    const Drawing_ABC* drawing_;
+    const kernel::Drawing_ABC* drawing_;
 
     bool pointAllowed_;
     bool lineAllowed_;

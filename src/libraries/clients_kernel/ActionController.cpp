@@ -25,7 +25,7 @@
 #include "Object_ABC.h"
 #include "TacticalLine_ABC.h"
 #include "Team_ABC.h"
-//#include "Drawing_ABC.h" // TODO
+#include "Drawing_ABC.h"
 
 using namespace kernel;
 
@@ -60,7 +60,7 @@ ActionController::~ActionController()
 // -----------------------------------------------------------------------------
 void ActionController::InitializeSelectionners()
 {
-    selectionners_.push_back( new Selectionner< UrbanObject_ABC    >() ); // Apasser dans kernel
+    selectionners_.push_back( new Selectionner< UrbanObject_ABC    >() );
     selectionners_.push_back( new Selectionner< Ghost_ABC          >() );
     selectionners_.push_back( new Selectionner< Population_ABC     >() );
     selectionners_.push_back( new Selectionner< PopulationPart_ABC >() );
@@ -73,7 +73,7 @@ void ActionController::InitializeSelectionners()
     selectionners_.push_back( new Selectionner< Object_ABC         >() );
     selectionners_.push_back( new Selectionner< TacticalLine_ABC   >() );
     selectionners_.push_back( new Selectionner< Team_ABC           >() );
-    //selectionners_.push_back( new Selectionner< Drawing_ABC        >() ); // à passer dans kernel
+    selectionners_.push_back( new Selectionner< Drawing_ABC        >() );
 }
 
 // -----------------------------------------------------------------------------

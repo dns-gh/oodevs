@@ -484,6 +484,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp">
+      <Filter>Source Files\Model\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
@@ -1142,6 +1145,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawing_ABC.h">
+      <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

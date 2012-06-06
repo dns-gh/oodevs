@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
 #include "moc_DrawerLayer.cpp"
+#include "Drawing.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 
@@ -23,7 +24,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC& filter )
-    : EntityLayer< Drawing_ABC >( controllers, tools, strategy, view, profile, filter )
+    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, filter )
     , parameters_( parameters )
     , tools_     ( tools )
     , selected_  ( 0 )
@@ -44,11 +45,11 @@ DrawerLayer::~DrawerLayer()
 // Name: DrawerLayer::NotifyContextMenu
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void DrawerLayer::NotifyContextMenu( const Drawing_ABC& drawing, kernel::ContextMenu& menu )
+void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu )
 {
     if( selected_ != &drawing )
     {
-        std::vector< const Drawing_ABC* > vector;
+        std::vector< const kernel::Drawing_ABC* > vector;
         vector.push_back( &drawing );
         NotifySelectionChanged( vector );
     }
@@ -63,7 +64,7 @@ void DrawerLayer::NotifyContextMenu( const Drawing_ABC& drawing, kernel::Context
 void DrawerLayer::OnEditDrawing()
 {
     if( selected_ )
-        const_cast< Drawing_ABC* >( selected_ )->Edit( parameters_ );
+        static_cast< Drawing* >( const_cast< kernel::Drawing_ABC* >( selected_ ) )->Edit( parameters_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +75,7 @@ void DrawerLayer::OnDeleteDrawing()
 {
     if( selected_ )
     {
-        controllers_.controller_.Delete( *const_cast< Drawing_ABC* >( selected_ ) );
+        controllers_.controller_.Delete( *const_cast< kernel::Drawing_ABC* >( selected_ ) );
         delete selected_;
         selected_ = 0;
     }
@@ -96,9 +97,9 @@ void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    const kernel::Entity_ABC* diffusion = static_cast< const Drawing_ABC& >( entity ).GetDiffusionEntity();
+    const kernel::Entity_ABC* diffusion = static_cast< const kernel::Drawing_ABC& >( entity ).GetDiffusionEntity();
     if( diffusion )
-        return EntityLayer< Drawing_ABC >::ShouldDisplay( *diffusion );
+        return EntityLayer< kernel::Drawing_ABC >::ShouldDisplay( *diffusion );
     return true;
 }
 
@@ -106,9 +107,9 @@ bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 // Name: DrawerLayer::NotifySelectionChanged
 // Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void DrawerLayer::NotifySelectionChanged( const std::vector< const Drawing_ABC* >& elements )
+void DrawerLayer::NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements )
 {
-    EntityLayer< Drawing_ABC >::NotifySelectionChanged( elements );
+    EntityLayer< kernel::Drawing_ABC >::NotifySelectionChanged( elements );
     selected_ =  elements.size() == 1 ? elements.front() : 0;
 }
 
@@ -119,7 +120,7 @@ void DrawerLayer::NotifySelectionChanged( const std::vector< const Drawing_ABC* 
 void DrawerLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& )
 {
     if( ShouldDisplay( entity ) )
-        static_cast< const Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
+        static_cast< const kernel::Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,5 +137,5 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
         OnDeleteDrawing();
         return true;
     }
-    return EntityLayer< Drawing_ABC >::HandleKeyPress( k );
+    return EntityLayer< kernel::Drawing_ABC >::HandleKeyPress( k );
 }

@@ -30,7 +30,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color,
                           const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : kernel::EntityImplementation< Drawing_ABC >( controllers.controller_, id, style.GetName() )
+    : Drawing( controllers.controller_, id, style.GetName() )
     , controller_         ( controllers.controller_ )
     , style_              ( style )
     , location_           ( location )
@@ -65,7 +65,7 @@ namespace
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
                           kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : kernel::EntityImplementation< Drawing_ABC >( controllers.controller_, id, ReadStyle( xis, types ).GetName() )
+    : Drawing( controllers.controller_, id, ReadStyle( xis, types ).GetName() )
     , controller_         ( controllers.controller_ )
     , style_              ( ReadStyle( xis, types ) )
     , location_           ( proxy )

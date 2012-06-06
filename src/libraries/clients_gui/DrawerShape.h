@@ -10,8 +10,7 @@
 #ifndef __GUI_DrawerShape_h_
 #define __GUI_DrawerShape_h_
 
-#include "Drawing_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
+#include "Drawing.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -40,7 +39,7 @@ namespace gui
 */
 // Created: AGE 2006-08-31
 // =============================================================================
-class DrawerShape : public kernel::EntityImplementation< Drawing_ABC >
+class DrawerShape : public Drawing
                   , public kernel::Extension_ABC
 {
 public:
