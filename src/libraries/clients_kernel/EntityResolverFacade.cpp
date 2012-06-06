@@ -106,24 +106,6 @@ Object_ABC& EntityResolverFacade::GetObject( unsigned int id ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityResolverFacade::FindUrbanObject
-// Created: JSR 2011-06-28
-// -----------------------------------------------------------------------------
-Object_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
-{
-    return model_.GetUrbanObjectResolver().Find( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityResolverFacade::GetUrbanObject
-// Created: JSR 2011-06-28
-// -----------------------------------------------------------------------------
-Object_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
-{
-    return model_.GetUrbanObjectResolver().Get( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindPopulation
 // Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
@@ -193,4 +175,22 @@ Team_ABC* EntityResolverFacade::FindTeam( unsigned int id ) const
 Team_ABC& EntityResolverFacade::GetTeam( unsigned int id ) const
 {
     return model_.GetTeamResolver().Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityResolverFacade::FindUrbanObject
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+UrbanObject_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
+{
+    return model_.GetUrbanObjectResolver().Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityResolverFacade::GetUrbanObject
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+UrbanObject_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
+{
+    return model_.GetUrbanObjectResolver().Get( id );
 }

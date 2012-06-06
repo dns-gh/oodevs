@@ -56,6 +56,24 @@ void Lima::Select( kernel::ActionController& actions ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Lima::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Lima::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const Lima* > first;
+    std::vector< const kernel::TacticalLine_ABC* > second;
+    std::vector< const Entity_ABC* > third;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const Lima* >( elements[ i ] ) );
+        second.push_back( static_cast< const kernel::TacticalLine_ABC* >( elements[ i ] ) );
+        third.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second, third );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Lima::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------

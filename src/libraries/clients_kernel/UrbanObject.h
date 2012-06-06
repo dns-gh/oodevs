@@ -12,11 +12,31 @@
 
 #include "UrbanObject_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "HumanDefs.h"
+#include "EntityImplementation.h"
+#include "Extension_ABC.h"
+#include "Displayable_ABC.h"
+
+namespace sword
+{
+    class PopulationUpdate_BlockOccupation;
+    class UrbanUpdate;
+}
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
     class Controllers;
     class UrbanDisplayOptions;
+    class AccommodationTypes;
+    class Controller;
+    class Displayer_ABC;
+    class ObjectType;
+    class PropertiesDictionary;
 
 // =============================================================================
 /** @class  UrbanObject
@@ -24,7 +44,10 @@ namespace kernel
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanObject : public UrbanObject_ABC
+class UrbanObject : public EntityImplementation< kernel::UrbanObject_ABC >
+                  , public Extension_ABC
+                  , public Displayable_ABC
+                  , public kernel::Updatable_ABC< sword::UrbanUpdate >
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< UrbanDisplayOptions >
 {
@@ -39,10 +62,53 @@ public:
     virtual ~UrbanObject();
     //@}
 
+    //! @name Accessors
+    //@{
+    virtual QString GetName() const;
+    virtual const kernel::ObjectType& GetType() const { return type_; }
+    //@}
+
     //! @name Operations
     //@{
+    virtual void DoUpdate( const sword::UrbanUpdate& msg );
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& ) const {}
+    void UpdateHumans( const std::string& inhabitant, const sword::PopulationUpdate_BlockOccupation& occupation );
+    float GetLivingSpace() const;
+    float GetLivingSpace( unsigned int floorNumber, unsigned int occupation ) const;
+    double GetNominalCapacity() const;
+    double GetNominalCapacity( const std::string& motivation ) const;
+    const kernel::AccommodationTypes& GetAccommodations() const;
+    const T_HumansStrMap& GetHumansMap() const { return humans_; }
+    void ComputeConvexHull();
     virtual void UpdateColor();
     virtual void NotifyUpdated( const UrbanDisplayOptions& );
+    void CreateDictionary( bool readOnly );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void UpdateDensity();
+    unsigned int GetHumans() const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef T_HumansStrMap T_Humans;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    PropertiesDictionary& dictionary_;
+    float density_;
+    T_Humans humans_;
+    T_BlockOccupation motivations_;
+    const kernel::ObjectType& type_;
+    const kernel::AccommodationTypes& accommodations_;
+    mutable float livingSpace_;
+    mutable double nominalCapacity_;
     //@}
 
 protected:

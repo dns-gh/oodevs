@@ -68,11 +68,11 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectsLayer::NotifySelected
-// Created: SBO 2007-04-26
+// Name: ObjectsLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void ObjectsLayer::NotifySelected( const kernel::Object_ABC* object )
+void ObjectsLayer::NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements )
 {
-    selected_ = object;
-    gui::ObjectsLayer::NotifySelected( object );
+    selected_ = elements.size() == 1 ? elements.front() : 0;
+    gui::ObjectsLayer::NotifySelectionChanged( elements );
 }

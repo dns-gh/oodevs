@@ -53,7 +53,7 @@ bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
     if( mouse && mouse->buttons() != Qt::NoButton )
     {
         point_ = point;
-        if( controllers_.actions_.HasMultipleLayers() && mouse->button() == Qt::LeftButton )
+        if( controllers_.actions_.HasMultipleSelection() && mouse->button() == Qt::LeftButton )
         {
             controllers_.actions_.DeselectAll();
             controllers_.actions_.Select( point_ );

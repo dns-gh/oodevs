@@ -239,30 +239,30 @@ void GhostsLayer::AfterSelection()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostsLayer::Select
-// Created: ABR 2011-10-19
+// Name: GhostsLayer::MultipleSelect
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void GhostsLayer::Select( const kernel::Ghost_ABC& element )
+void GhostsLayer::MultipleSelect( const std::vector< const kernel::Ghost_ABC* >& elements )
 {
-    selectedGhost_ = &element;
+    selectedGhost_ = elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostsLayer::Select
-// Created: ABR 2011-10-19
+// Name: GhostsLayer::MultipleSelect
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void GhostsLayer::Select( const kernel::Automat_ABC& element )
+void GhostsLayer::MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements )
 {
-    selectedAutomat_ = &element;
+    selectedAutomat_ = elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostsLayer::Select
-// Created: ABR 2011-10-19
+// Name: GhostsLayer::MultipleSelect
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void GhostsLayer::Select( const kernel::Formation_ABC& element )
+void GhostsLayer::MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements )
 {
-    selectedFormation_ = &element;
+    selectedFormation_ = elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------

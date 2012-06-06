@@ -10,7 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamUrbanBlock.h"
 #include "actions/UrbanBlock.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "MissionInterface_ABC.h"
 
@@ -22,7 +22,7 @@ using namespace kernel;
 // Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
 ParamUrbanBlock::ParamUrbanBlock( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : EntityParameter< Object_ABC >( builder, parameter )
+    : EntityParameter< UrbanObject_ABC >( builder, parameter )
 {
     // NOTHING
 }
@@ -40,10 +40,9 @@ ParamUrbanBlock::~ParamUrbanBlock()
 // Name: ParamUrbanBlock::NotifyContextMenu
 // Created: LGY 2011-04-05
 // -----------------------------------------------------------------------------
-void ParamUrbanBlock::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+void ParamUrbanBlock::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( entity.GetType().IsUrban() )
-        EntityParameter< Object_ABC >::NotifyContextMenu( entity, menu );
+    EntityParameter< UrbanObject_ABC >::NotifyContextMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +51,7 @@ void ParamUrbanBlock::NotifyContextMenu( const kernel::Object_ABC& entity, kerne
 // -----------------------------------------------------------------------------
 void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< Object_ABC > > param( new actions::parameters::UrbanBlock( parameter_, controller_ ) );
-    EntityParameter< Object_ABC >::CommitTo( *param );
+    std::auto_ptr< actions::parameters::Entity< kernel::UrbanObject_ABC > > param( new actions::parameters::UrbanBlock( parameter_, controller_ ) );
+    EntityParameter< UrbanObject_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }

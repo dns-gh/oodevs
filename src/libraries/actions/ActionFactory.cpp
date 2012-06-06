@@ -45,6 +45,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Population_ABC.h"
@@ -559,7 +560,7 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( const std::string& 
 // Name: ActionFactory::CreateObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute ) const
+Action_ABC* ActionFactory::CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute ) const
 {
     std::auto_ptr< actions::ObjectMagicAction > action;
     action.reset( new actions::ObjectMagicAction( &object, magicActions_.Get( "update_object" ), controller_, true ) );
@@ -578,7 +579,7 @@ Action_ABC* ActionFactory::CreateObjectUpdateMagicAction( const kernel::Object_A
 // Name: ActionFactory::CreateObjectDestroyMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionFactory::CreateObjectDestroyMagicAction( const kernel::Object_ABC& object ) const
+Action_ABC* ActionFactory::CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object ) const
 {
     std::auto_ptr< actions::ObjectMagicAction > action;
     action.reset( new actions::ObjectMagicAction( &object, magicActions_.Get( "destroy_object" ), controller_, true ) );

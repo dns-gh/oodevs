@@ -27,7 +27,7 @@ using namespace parameters;
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 UrbanBlock::UrbanBlock( const OrderParameter& parameter, kernel::Controller& controller )
-    : Entity< Object_ABC >( parameter, controller )
+    : Entity< UrbanObject_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -37,7 +37,7 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, kernel::Controller& con
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Object_ABC >( parameter, &resolver.GetUrbanObject( id ), controller )
+    : Entity< UrbanObject_ABC >( parameter, &resolver.GetUrbanObject( id ), controller )
 {
     // NOTHING
 }
@@ -47,7 +47,7 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, const
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 UrbanBlock::UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Object_ABC >( OrderParameter( xis.attribute< std::string >( "name", "" ), "UrbanBlock", false ), controller )
+    : Entity< UrbanObject_ABC >( OrderParameter( xis.attribute< std::string >( "name", "" ), "UrbanBlock", false ), controller )
 {
     if( xis.has_attribute( "value" ) )
         SetValue( &resolver.GetUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
@@ -58,7 +58,7 @@ UrbanBlock::UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& re
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< Object_ABC >( parameter, controller )
+    : Entity< UrbanObject_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
         SetValue( &resolver.GetUrbanObject( xis.attribute< unsigned long >( "value" ) ) );
@@ -113,7 +113,7 @@ void UrbanBlock::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< Object_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_urbanknowledge() );
+        Entity< UrbanObject_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_urbanknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: UrbanBlock::CommitTo
@@ -122,7 +122,7 @@ void UrbanBlock::CommitTo( sword::MissionParameter& message ) const
 void UrbanBlock::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< Object_ABC >::CommitTo( *message.mutable_urbanknowledge() );
+        Entity< UrbanObject_ABC >::CommitTo( *message.mutable_urbanknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ geometry::Point2f UrbanBlock::GetPosition() const
     if( IsSet() )
         if( const kernel::UrbanPositions_ABC* positions = GetValue()->Retrieve< kernel::UrbanPositions_ABC >() )
             return positions->Barycenter();
-    return Entity< Object_ABC >::GetPosition();
+    return Entity< UrbanObject_ABC >::GetPosition();
 }
 
 // -----------------------------------------------------------------------------

@@ -69,8 +69,6 @@ public:
     virtual void Activate( ActionController& controller ) const = 0;
     virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
 
-    virtual void MultipleSelect( ActionController& /*controller*/, const std::vector< const Selectable_ABC* >& /*elements*/ ) const {}  // $$$$ JSR 2012-05-22: TODO à redéfinir où nécessaire pour la multisélection
-
     template< typename T >
     void Update( const T& updateMessage )
     {

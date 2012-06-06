@@ -34,7 +34,7 @@ private:
     //! @name Helpers
     //@{
     virtual Q3DragObject* dragObject();
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual void keyPressEvent( QKeyEvent* key );
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}

@@ -17,7 +17,6 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -43,7 +42,6 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
                  , public kernel::Displayable_ABC
-                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

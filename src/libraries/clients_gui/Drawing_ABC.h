@@ -12,7 +12,6 @@
 
 #include "ShapeHandler_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -36,7 +35,6 @@ namespace gui
 // =============================================================================
 class Drawing_ABC : public kernel::Entity_ABC
                   , public ShapeHandler_ABC
-                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -57,6 +55,7 @@ public:
     virtual void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const = 0;
 
     virtual void Select( kernel::ActionController& controller ) const;
+    virtual void MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 

@@ -45,14 +45,14 @@ public:
     virtual KnowledgeGroup_ABC& GetKnowledgeGroup( unsigned int id ) const;
     virtual Object_ABC* FindObject( unsigned int id ) const;
     virtual Object_ABC& GetObject( unsigned int id ) const;
-    virtual Object_ABC* FindUrbanObject( unsigned int id ) const;
-    virtual Object_ABC& GetUrbanObject( unsigned int id ) const;
     virtual Population_ABC* FindPopulation( unsigned int id ) const;
     virtual Population_ABC& GetPopulation( unsigned int id ) const;
     virtual Formation_ABC* FindFormation( unsigned int id ) const;
     virtual Formation_ABC& GetFormation( unsigned int id ) const;
     virtual Team_ABC* FindTeam( unsigned int id ) const;
     virtual Team_ABC& GetTeam( unsigned int id ) const;
+    virtual UrbanObject_ABC* FindUrbanObject( unsigned int id ) const;
+    virtual UrbanObject_ABC& GetUrbanObject( unsigned int id ) const;
     //@}
 
 private:

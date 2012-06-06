@@ -70,7 +70,7 @@ protected:
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void NotifyContextMenu     ( const kernel::Nothing&, kernel::ContextMenu& menu );
-    virtual void NotifySelected        ( const kernel::TacticalLine_ABC* element );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::TacticalLine_ABC* >& elements );
     virtual void OptionChanged         ( const std::string& /*name*/, const kernel::OptionVariant& /*value*/ ) {}
 
     virtual void Handle( kernel::Location_ABC& location );

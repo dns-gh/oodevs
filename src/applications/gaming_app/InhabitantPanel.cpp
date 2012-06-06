@@ -102,7 +102,7 @@ namespace
     }
 
     template< typename T >
-    QStandardItem* Create( T data, const QString& text, const kernel::Object_ABC* object )
+    QStandardItem* Create( T data, const QString& text, const kernel::UrbanObject_ABC* object )
     {
         QStandardItem* item = new QStandardItem( text );
         item->setTextAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
@@ -122,7 +122,7 @@ namespace
 void InhabitantPanel::Visit( unsigned int id, const std::string& name, unsigned int resident, bool alerted,
                              float angriness, bool confined, bool evacuated )
 {
-    if( const kernel::Object_ABC* object = model_.FindUrbanObject( id ) )
+    if( const kernel::UrbanObject_ABC* object = model_.FindUrbanObject( id ) )
     {
         QList< QStandardItem* > items;
         items.push_back( Create( name.c_str(), name.c_str(), object ) );

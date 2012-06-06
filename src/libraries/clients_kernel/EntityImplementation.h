@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -26,6 +27,7 @@ namespace kernel
 // =============================================================================
 template< typename I >
 class EntityImplementation : public I
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -50,12 +52,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EntityImplementation( const EntityImplementation& );            //!< Copy constructor
-    EntityImplementation& operator=( const EntityImplementation& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     I& This();

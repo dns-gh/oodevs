@@ -195,7 +195,7 @@ Action_ABC* ActionsModel::CreateObjectMagicAction( const std::string& magicActio
 // Name: ActionsModel::CreateObjectUpdateMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute )
+Action_ABC* ActionsModel::CreateObjectUpdateMagicAction( const kernel::Entity_ABC& object, parameters::ParameterList& attribute )
 {
     Action_ABC* action = factory_.CreateObjectUpdateMagicAction( object, attribute );
     Register( action->GetId(), *action );
@@ -206,7 +206,7 @@ Action_ABC* ActionsModel::CreateObjectUpdateMagicAction( const kernel::Object_AB
 // Name: ActionsModel::CreateObjectDestroyMagicAction
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateObjectDestroyMagicAction( const kernel::Object_ABC& object )
+Action_ABC* ActionsModel::CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object )
 {
     Action_ABC* action = factory_.CreateObjectDestroyMagicAction( object );
     Register( action->GetId(), *action );

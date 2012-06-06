@@ -32,9 +32,10 @@ using namespace kernel;
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent )
     : gui::AgentsLayer( controllers, tools, strategy, view, profile, filter )
     , model_            ( model )
+    , modelBuilder_     ( modelBuilder )
     , selectedAgent_    ( controllers )
     , selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
@@ -65,48 +66,48 @@ void AgentsLayer::BeforeSelection()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::MultipleSelect
+// Created: JSR 2012-05-31
+// -----------------------------------------------------------------------------
+void AgentsLayer::MultipleSelect( const std::vector< const kernel::Agent_ABC* >& elements )
+{
+    selectedAgent_ = elements.size() == 1 ? elements.front() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::MultipleSelect
+// Created: JSR 2012-05-31
+// -----------------------------------------------------------------------------
+void AgentsLayer::MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements )
+{
+    selectedAutomat_ = elements.size() == 1 ? elements.front() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::MultipleSelect
+// Created: JSR 2012-05-31
+// -----------------------------------------------------------------------------
+void AgentsLayer::MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements )
+{
+    selectedFormation_ = elements.size() == 1 ? elements.front() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::MultipleSelect
+// Created: JSR 2012-05-31
+// -----------------------------------------------------------------------------
+void AgentsLayer::MultipleSelect( const std::vector< const kernel::Team_ABC* >& elements )
+{
+    selectedTeam_ = elements.size() == 1 ? elements.front() : 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::AfterSelection
-// Created: SBO 2006-10-09
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
 void AgentsLayer::AfterSelection()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Select
-// Created: SBO 2006-09-01
-// -----------------------------------------------------------------------------
-void AgentsLayer::Select( const kernel::Agent_ABC& element )
-{
-    selectedAgent_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Select
-// Created: SBO 2006-10-09
-// -----------------------------------------------------------------------------
-void AgentsLayer::Select( const kernel::Automat_ABC& element )
-{
-    selectedAutomat_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Select
-// Created: SBO 2006-09-01
-// -----------------------------------------------------------------------------
-void AgentsLayer::Select( const kernel::Formation_ABC& element )
-{
-    selectedFormation_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Select
-// Created: AGE 2007-05-30
-// -----------------------------------------------------------------------------
-void AgentsLayer::Select( const kernel::Team_ABC& element )
-{
-    selectedTeam_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,6 +244,27 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return Move( *selectedAgent_, point );
         if( selectedFormation_ )
             return Move( *selectedFormation_, point );
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleKeyPress
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleKeyPress( QKeyEvent* key )
+{
+    if( key->key() == Qt::Key_Delete && ( selectedAgent_ || selectedAutomat_ || selectedFormation_ || selectedTeam_ ) )
+    {
+        if( selectedTeam_ )
+            modelBuilder_.DeleteEntity( *selectedTeam_ );
+        else if( selectedFormation_ )
+            modelBuilder_.DeleteEntity( *selectedFormation_ );
+        else if( selectedAutomat_ )
+            modelBuilder_.DeleteEntity( *selectedAutomat_ );
+        else if( selectedAgent_ )
+            modelBuilder_.DeleteEntity( *selectedAgent_ );
+        return true;
     }
     return false;
 }

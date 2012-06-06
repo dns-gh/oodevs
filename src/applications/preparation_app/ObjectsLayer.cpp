@@ -138,14 +138,13 @@ bool ObjectsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectsLayer::NotifySelected
-// Created: SBO 2006-10-16
+// Name: ObjectsLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void ObjectsLayer::NotifySelected( const kernel::Object_ABC* object )
+void ObjectsLayer::NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements )
 {
-    selected_ = object;
-    if( object )
-        SelectEntity( *object );
+    selected_ = elements.size() == 1 ? elements.front() : 0;
+    gui::ObjectsLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

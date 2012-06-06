@@ -265,6 +265,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Selectionners.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h" />

@@ -56,7 +56,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void NotifySelected( const kernel::Formation_ABC* formation );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements );
     virtual void NotifyActivated( const kernel::Formation_ABC& formation );
     //@}
 

@@ -496,8 +496,8 @@
 <context>
     <name>Urban</name>
     <message>
-        <source>Urban block [%L1]</source>
-        <translation>Bloc urbain [%L1]</translation>
+        <source>Urban block[%L1]</source>
+        <translation>Bloc urbain[%L1]</translation>
     </message>
 </context>
 <context>

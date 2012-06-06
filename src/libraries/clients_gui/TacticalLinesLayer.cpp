@@ -108,18 +108,19 @@ bool TacticalLinesLayer::CanCreateLine()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLinesLayer::NotifySelected
-// Created: AGE 2006-11-21
+// Name: TacticalLinesLayer::NotifySelectionChanged
+// Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void TacticalLinesLayer::NotifySelected( const kernel::TacticalLine_ABC* element )
+void TacticalLinesLayer::NotifySelectionChanged( const std::vector< const kernel::TacticalLine_ABC* >& elements )
 {
-    if( isEditing_ && ( !element || element->GetId() != selected_->GetId() ) )
+    const kernel::TacticalLine_ABC* newSelected = elements.size() == 1 ? elements.front() : 0;
+    if( isEditing_ && ( !newSelected || newSelected->GetId() != selected_->GetId() ) )
     {
         parameters_.Reset();
         isEditing_ = false;
     }
-    selected_ = element;
-    gui::EntityLayer< kernel::TacticalLine_ABC >::NotifySelected( element );
+    selected_ = newSelected;
+    gui::EntityLayer< kernel::TacticalLine_ABC >::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

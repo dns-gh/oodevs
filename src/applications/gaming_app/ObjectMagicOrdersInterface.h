@@ -21,7 +21,9 @@ namespace actions
 
 namespace kernel
 {
+    class Entity_ABC;
     class Object_ABC;
+    class UrbanObject_ABC;
     class Profile_ABC;
 }
 
@@ -34,6 +36,7 @@ namespace kernel
 class ObjectMagicOrdersInterface : public QObject
                                  , public tools::Observer_ABC
                                  , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                                 , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
                                  , private boost::noncopyable
 {
     Q_OBJECT
@@ -48,6 +51,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -90,7 +94,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
-    kernel::SafePointer< kernel::Object_ABC > selectedEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     const kernel::Profile_ABC& profile_;
     //@}
 };

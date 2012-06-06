@@ -227,24 +227,6 @@ kernel::Object_ABC& Model::GetObject( unsigned int /*id*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::FindUrbanObject
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-kernel::Object_ABC* Model::FindUrbanObject( unsigned int /*id*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::GetUrbanObject
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-kernel::Object_ABC& Model::GetUrbanObject( unsigned int /*id*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Model::FindPopulation
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
@@ -315,3 +297,22 @@ kernel::Team_ABC& Model::GetTeam( unsigned int /*id*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ ": not implemented" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Model::FindUrbanObject
+// Created: PHC 2011-03-28
+// -----------------------------------------------------------------------------
+kernel::UrbanObject_ABC* Model::FindUrbanObject( unsigned int /*id*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetUrbanObject
+// Created: PHC 2011-03-28
+// -----------------------------------------------------------------------------
+kernel::UrbanObject_ABC& Model::GetUrbanObject( unsigned int /*id*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+}
+

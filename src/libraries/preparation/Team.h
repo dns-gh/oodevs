@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Team.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,7 +37,6 @@ class Team : public kernel::Team
            , public kernel::Extension_ABC
            , public kernel::Serializable_ABC
            , public tools::Observer_ABC
-           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

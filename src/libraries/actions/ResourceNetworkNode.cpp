@@ -14,6 +14,8 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "protocol/Protocol.h"
 #include <windows.h>
 #include <gl/gl.h>
@@ -26,7 +28,7 @@ using namespace parameters;
 // Created: ABR 2011-11-17
 // -----------------------------------------------------------------------------
 ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, kernel::Controller& controller )
-    : Entity< kernel::Object_ABC >( parameter, controller )
+    : Entity< kernel::Entity_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -35,8 +37,8 @@ ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& paramete
 // Name: ResourceNetworkNode constructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller )
-    : Entity< kernel::Object_ABC >( parameter, &object, controller )
+ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Entity_ABC& object, const std::string& resource, kernel::Controller& controller )
+    : Entity< kernel::Entity_ABC >( parameter, &object, controller )
 {
     AddResourceParameter( resource );
 }
@@ -46,10 +48,10 @@ ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& paramete
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
 ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< kernel::Object_ABC >( parameter, controller )
+    : Entity< kernel::Entity_ABC >( parameter, controller )
 {
     unsigned long id = resourceNetwork.object().id();
-    const kernel::Object_ABC* object = resolver.FindUrbanObject( id );
+    const kernel::Entity_ABC* object = resolver.FindUrbanObject( id );
     if( !object )
         object = resolver.FindObject( id );
     SetValue( object );
@@ -61,12 +63,12 @@ ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& paramete
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
 ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
-    : Entity< kernel::Object_ABC >( parameter, controller )
+    : Entity< kernel::Entity_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
     {
         unsigned long id = xis.attribute< unsigned long >( "value" );
-        const kernel::Object_ABC* object = resolver.FindUrbanObject( id );
+        const kernel::Entity_ABC* object = resolver.FindUrbanObject( id );
         if( !object )
             object = resolver.FindObject( id );
         SetValue( object );
@@ -133,7 +135,7 @@ geometry::Point2f ResourceNetworkNode::GetPosition() const
     if( IsSet() )
         if( const kernel::UrbanPositions_ABC* positions = GetValue()->Retrieve< kernel::UrbanPositions_ABC >() )
             return positions->Barycenter();
-    return Entity< kernel::Object_ABC >::GetPosition();
+    return Entity< kernel::Entity_ABC >::GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +184,7 @@ void ResourceNetworkNode::ReadParameter( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ResourceNetworkNode::CommitTo( sword::ResourceNetworkElement& resourceNetwork ) const
 {
-    Entity< kernel::Object_ABC >::CommitTo( *resourceNetwork.mutable_object() );
+    Entity< kernel::Entity_ABC >::CommitTo( *resourceNetwork.mutable_object() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetType() == "resource" )
             static_cast< const Resource* >( it->second )->CommitTo( *resourceNetwork.mutable_resource()->mutable_name() );

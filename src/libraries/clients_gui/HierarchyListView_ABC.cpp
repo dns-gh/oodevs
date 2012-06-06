@@ -13,6 +13,7 @@
 #include "HierarchyListView_ABC.h"
 #include "moc_HierarchyListView_ABC.cpp"
 #include "EntitySymbols.h"
+#include "Layer_ABC.h"
 #include "ListItemToolTip.h"
 #include "ValuedDragObject.h"
 #include "ValuedListItem.h"
@@ -56,7 +57,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     connect( this,   SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
     connect( this,   SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this,   SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
-    connect( this,   SIGNAL( selectionChanged    ( Q3ListViewItem* ) ),                     this, SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
+    connect( this,   SIGNAL( selectionChanged    (                 ) ),                     this, SLOT( OnSelectionChange() ) );
     connect( timer_, SIGNAL( timeout() ),                                                   this, SLOT( Update() ) );
 }
 
@@ -169,10 +170,17 @@ void HierarchyListView_ABC::SetVisible( Q3ListViewItem* item, bool visible )
 // Name: HierarchyListView_ABC::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::OnSelectionChange( Q3ListViewItem* item )
+void HierarchyListView_ABC::OnSelectionChange()
 {
-    if( item )
-        static_cast< ValuedListItem* >( item )->Select( controllers_.actions_ );
+    ActionController::T_Selectables list;
+    Q3ListViewItemIterator it( this );
+    while( ValuedListItem* item = dynamic_cast< ValuedListItem* >( *it ) )
+    {
+        if( item->isSelected() && item->IsA< const Entity_ABC >() )
+            list.push_back( item->GetValueNoCheck< const Entity_ABC >() );
+        ++it;
+    }
+    controllers_.actions_.SetMultipleSelection( list );
 }
 
 // -----------------------------------------------------------------------------

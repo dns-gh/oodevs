@@ -15,6 +15,7 @@
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Object.h"
+#include "UrbanObject.h"
 #include "Population.h"
 #include "Inhabitant.h"
 #include "Side.h"
@@ -113,24 +114,6 @@ kernel::Object_ABC& ModelAdapter::GetObject( unsigned int id ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelAdapter::FindUrbanObject
-// Created: LGY 2011-03-01
-// -----------------------------------------------------------------------------
-kernel::Object_ABC* ModelAdapter::FindUrbanObject( unsigned int id ) const
-{
-    return model_.UrbanBlocks().Find( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelAdapter::GetUrbanObject
-// Created: LGY 2011-03-01
-// -----------------------------------------------------------------------------
-kernel::Object_ABC& ModelAdapter::GetUrbanObject( unsigned int id ) const
-{
-    return model_.UrbanBlocks().Get( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ModelAdapter::FindPopulation
 // Created: SBO 2010-05-10
 // -----------------------------------------------------------------------------
@@ -200,4 +183,22 @@ kernel::Inhabitant_ABC* ModelAdapter::FindInhabitant( unsigned int id ) const
 kernel::Inhabitant_ABC& ModelAdapter::GetInhabitant( unsigned int id ) const
 {
     return model_.Inhabitants().Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelAdapter::FindUrbanObject
+// Created: LGY 2011-03-01
+// -----------------------------------------------------------------------------
+kernel::UrbanObject_ABC* ModelAdapter::FindUrbanObject( unsigned int id ) const
+{
+    return model_.UrbanBlocks().Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelAdapter::GetUrbanObject
+// Created: LGY 2011-03-01
+// -----------------------------------------------------------------------------
+kernel::UrbanObject_ABC& ModelAdapter::GetUrbanObject( unsigned int id ) const
+{
+    return model_.UrbanBlocks().Get( id );
 }

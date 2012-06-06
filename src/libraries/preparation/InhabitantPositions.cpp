@@ -20,7 +20,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/function.hpp>
@@ -253,7 +253,7 @@ void InhabitantPositions::UpdateDictionary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const kernel::UrbanObject_ABC* pProxy = it->get< 2 >();
+        const kernel::UrbanObject* pProxy = static_cast< const kernel::UrbanObject* >( it->get< 2 >() );
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
         if( pProxy->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
             ++medicalInfrastructures_;

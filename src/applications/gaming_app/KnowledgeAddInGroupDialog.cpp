@@ -23,6 +23,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace actions;
 using namespace kernel;
@@ -166,6 +167,15 @@ void KnowledgeAddInGroupDialog::NotifyContextMenu( const Agent_ABC& entity, Cont
 // Created: MMC 2011-06-06
 // -----------------------------------------------------------------------------
 void KnowledgeAddInGroupDialog::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
+{
+    InsertInMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::NotifyContextMenu
+// Created: JSR 2012-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu )
 {
     InsertInMenu( entity, menu );
 }

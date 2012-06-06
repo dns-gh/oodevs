@@ -13,7 +13,6 @@
 #include "ListView.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
 #include "tools/Observer_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -33,7 +32,6 @@ namespace gui
 // =============================================================================
 class EntityListView : public ListView< EntityListView >
                      , public tools::Observer_ABC
-                     , public tools::SelectionObserver< kernel::Entity_ABC >
                      , public kernel::MultipleSelectionObserver< kernel::Entity_ABC >
                      , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                      , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -52,7 +50,6 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const = 0;
@@ -68,7 +65,6 @@ protected slots:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange( Q3ListViewItem* item );
     void OnSelectionChange();
     void OnRequestCenter();
     //@}

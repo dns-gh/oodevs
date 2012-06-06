@@ -29,7 +29,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class ClientPublisher_ABC;
-    class Object_ABC;
+    class UrbanObject_ABC;
 
 // =============================================================================
 /** @class  UrbanKnowledge
@@ -90,7 +90,7 @@ private:
     //@{
     const Model_ABC& model_;
     const kernel::Team_ABC& team_;
-    const Object_ABC* pUrban_;
+    const UrbanObject_ABC* pUrban_;
     unsigned int rProgress_;
     unsigned int rMaxProgress_;
     bool bPerceived_;

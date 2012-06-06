@@ -40,7 +40,7 @@ private:
     virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual void keyPressEvent( QKeyEvent* key );
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}

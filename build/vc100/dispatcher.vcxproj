@@ -298,6 +298,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\AutomatOrder.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Order_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PopulationOrder.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Visitors.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\CompositeFactory.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ExtensionFactory_ABC.h" />

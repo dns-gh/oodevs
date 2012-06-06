@@ -11,7 +11,7 @@
 #define __ParamUrbanBlock_h_
 
 #include "EntityParameter.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 namespace actions
 {
@@ -23,7 +23,7 @@ namespace gui
 */
 // Created: LGY 2011-02-25
 // =============================================================================
-class ParamUrbanBlock : public EntityParameter< kernel::Object_ABC >
+class ParamUrbanBlock : public EntityParameter< kernel::UrbanObject_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 };

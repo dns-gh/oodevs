@@ -9,7 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "ResourceNetworkDialog.h"
-#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
@@ -50,7 +51,9 @@ ResourceNetworkDialog::~ResourceNetworkDialog()
 // -----------------------------------------------------------------------------
 void ResourceNetworkDialog::DoValidate()
 {
-    static_cast< ResourceNetworkAttribute* >( const_cast< ResourceNetwork_ABC* >( selected_ ) )->Update( resourceNodes_ );
+    if( selected_.size() != 1 )
+        return;
+    static_cast< ResourceNetworkAttribute& >( selected_.front()->Get< ResourceNetwork_ABC >() ).Update( resourceNodes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +62,8 @@ void ResourceNetworkDialog::DoValidate()
 // -----------------------------------------------------------------------------
 bool ResourceNetworkDialog::DoGenerateProduction()
 {
+    if( id_ == 0 )
+        return false;
     std::string resource = dotationList_->selectedItem()->text().toStdString();
     std::set< unsigned int > array;
     array.insert( id_ );
@@ -77,15 +82,15 @@ bool ResourceNetworkDialog::DoGenerateProduction()
 
 namespace
 {
-    const Object_ABC* FindObject( unsigned int id, const EntityResolver_ABC& resolver )
+    const Entity_ABC* FindObject( unsigned int id, const EntityResolver_ABC& resolver )
     {
-        const Object_ABC* object = resolver.FindUrbanObject( id );
+        const Entity_ABC* object = resolver.FindUrbanObject( id );
         if( !object )
             object = resolver.FindObject( id );
         return object;
     }
 
-    const ResourceNetwork_ABC::ResourceNode* FindNode( const Object_ABC& object, const std::string& resource )
+    const ResourceNetwork_ABC::ResourceNode* FindNode( const Entity_ABC& object, const std::string& resource )
     {
         if( const ResourceNetwork_ABC* blockNodes = object.Retrieve< ResourceNetwork_ABC >() )
             return blockNodes->FindResourceNode( resource );
@@ -101,7 +106,7 @@ bool ResourceNetworkDialog::IsNetworkValid( const ResourceNetwork_ABC::ResourceN
 {
     // Depth-first search algorithm to find back edges (cycles in graph)
     for( ResourceNetwork_ABC::CIT_ResourceLinks link = node.links_.begin(); link != node.links_.end(); ++link )
-        if( const Object_ABC* object = FindObject( link->id_, resolver_ ) )
+        if( const Entity_ABC* object = FindObject( link->id_, resolver_ ) )
         {
             if( array.insert( object->GetId() ).second == false )
             {
@@ -126,12 +131,12 @@ bool ResourceNetworkDialog::IsNetworkValid( const ResourceNetwork_ABC::ResourceN
 // -----------------------------------------------------------------------------
 unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const std::string& resource, double inhabitantConsumption ) const
 {
-    const Object_ABC* object = FindObject( id, resolver_ );
+    const Entity_ABC* object = FindObject( id, resolver_ );
     if( !object )
         return 0;
     int consumption = 0;
     if( inhabitantConsumption > 0)
-        if( const kernel::UrbanObject_ABC* block = dynamic_cast< const kernel::UrbanObject_ABC* >( object ) )
+        if( const kernel::UrbanObject* block = dynamic_cast< const kernel::UrbanObject* >( object ) )
         {
             double tmp = inhabitantConsumption * block->GetNominalCapacity();
             if( tmp >= std::numeric_limits< int >::max() )

@@ -18,7 +18,7 @@ Team.cpp \
 Tools.cpp \
 TristateOption.cpp \
 Units.cpp \
-UrbanObject_ABC.cpp \
+UrbanObject.cpp \
 Usages.cpp \
 XmlDescription.cpp \
 

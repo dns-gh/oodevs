@@ -75,24 +75,14 @@ void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entit
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayer::NotifySelected
-// Created: AGE 2006-06-19
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::NotifySelected( const ConcreteEntity* entity )
-{
-    if( entity )
-        SelectEntity( *entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayer::NotifySelectionChanged
 // Created: JSR 2012-05-22
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::NotifySelectionChanged( const std::vector< const ConcreteEntity* >& /*elements*/ )
+void EntityLayer< ConcreteEntity >::NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements )
 {
-    // TODO
+    if( elements.size() >= 1 )
+        SelectEntity( *elements.front() );
 }
 
 // -----------------------------------------------------------------------------

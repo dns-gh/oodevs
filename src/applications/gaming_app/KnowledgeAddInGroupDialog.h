@@ -19,6 +19,7 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Object_ABC;
+    class UrbanObject_ABC;
     class KnowledgeGroup_ABC;
     class Population_ABC;
     class Controllers;
@@ -42,6 +43,7 @@ class KnowledgeAddInGroupDialog : public QDialog
     , public tools::Observer_ABC
     , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
     , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+    , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
     , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
     , private boost::noncopyable
 {
@@ -75,6 +77,7 @@ private:
     void setDefaultTargetName();
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     void InsertInMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}

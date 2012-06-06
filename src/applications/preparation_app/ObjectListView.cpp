@@ -96,13 +96,17 @@ void ObjectListView::keyPressEvent( QKeyEvent* key )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectListView::NotifySelected
-// Created: SBO 2006-10-30
+// Name: ObjectListView::NotifySelectionChanged
+// Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifySelected( const kernel::Entity_ABC* element )
+void ObjectListView::NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements )
 {
-    selected_ = element;
-    gui::ObjectListView::NotifySelected( element );
+    // TODO généraliser au cas où y'a plusieurs éléments
+    if( elements.size() == 1 )
+        selected_ = elements.front();
+    else
+        selected_ = 0;
+    gui::ObjectListView::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

@@ -54,7 +54,7 @@ protected:
     //! @name Operations
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual void NotifySelected( const kernel::Automat_ABC* automat );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements );
     virtual void NotifyActivated( const kernel::Automat_ABC& automat );
     //@}
 

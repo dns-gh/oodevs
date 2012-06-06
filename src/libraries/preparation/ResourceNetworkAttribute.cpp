@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "ResourceNetworkAttribute.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"

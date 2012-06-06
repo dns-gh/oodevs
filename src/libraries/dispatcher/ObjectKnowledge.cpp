@@ -185,10 +185,7 @@ const kernel::Team_ABC* ObjectKnowledge::GetTeam() const
 // -----------------------------------------------------------------------------
 const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 {
-    const kernel::Object_ABC* object = model_.Objects().Find( entityId_ );
-    if( !object )
-        object = model_.UrbanBlocks().Find( entityId_ );
-    return object;
+    return model_.Objects().Find( entityId_ );
 }
 
 // -----------------------------------------------------------------------------

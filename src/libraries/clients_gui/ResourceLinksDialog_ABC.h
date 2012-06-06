@@ -14,7 +14,7 @@
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
 #include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
 
@@ -37,11 +37,12 @@ namespace gui
 // Created: JSR 2010-08-24
 // =============================================================================
 class ResourceLinksDialog_ABC : public RichDockWidget
-                              , public tools::SelectionObserver_ABC
-                              , public tools::SelectionObserver_Base< kernel::UrbanObject_ABC >
-                              , public tools::SelectionObserver_Base< kernel::Object_ABC >
+                              , public kernel::MultipleSelectionObserver_ABC
+                              , public kernel::MultipleSelectionObserver_Base< kernel::UrbanObject_ABC >
+                              , public kernel::MultipleSelectionObserver_Base< kernel::Object_ABC >
                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                              , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
 {
     Q_OBJECT
 
@@ -75,23 +76,28 @@ private:
     virtual void DoValidate() = 0;
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const kernel::UrbanObject_ABC& object );
-    virtual void Select( const kernel::Object_ABC& element );
+    virtual void MultipleSelect( const std::vector< const kernel::UrbanObject_ABC* >& elements );
+    virtual void MultipleSelect( const std::vector< const kernel::Object_ABC* >& elements );
+
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC&, kernel::ContextMenu& menu );
     virtual bool DoGenerateProduction() { return false; }
+
     void Show();
+    void DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    template< class T >
+    void DoMultipleSelect( const std::vector< const T* >& elements );
     //@}
 
 protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::ResourceNetwork_ABC* selected_;
+    std::vector< kernel::Entity_ABC* > selected_;
     Q3ListBoxItem* selectedItem_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
-    const kernel::Object_ABC* linkToChange_;
-    bool urban_;
+    kernel::ResourceNetwork_ABC* sourceNode_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     Q3VBox* pMainLayout_;

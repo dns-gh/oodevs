@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const kernel::Inhabitant_ABC* inhabitant );
+    virtual void NotifySelectionChanged( const std::vector< const kernel::Inhabitant_ABC* >& elements );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 

@@ -55,6 +55,22 @@ void Inhabitant_ABC::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Inhabitant_ABC::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Inhabitant_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const Inhabitant_ABC* > first;
+    std::vector< const Entity_ABC* > second;
+    for( unsigned int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const Inhabitant_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Inhabitant_ABC::ContextMenu
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------

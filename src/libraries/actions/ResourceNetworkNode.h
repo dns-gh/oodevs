@@ -11,7 +11,7 @@
 #define __action_ResourceNetworkNode_h_
 
 #include "Entity.h"
-#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 namespace kernel
 {
@@ -33,14 +33,14 @@ namespace actions
 */
 // Created: ABR 2012-02-15
 // =============================================================================
-class ResourceNetworkNode : public Entity< kernel::Object_ABC >
+class ResourceNetworkNode : public Entity< kernel::Entity_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
     ResourceNetworkNode( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-    ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller );
+    ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Entity_ABC& object, const std::string& resource, kernel::Controller& controller );
     ResourceNetworkNode( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     ResourceNetworkNode( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~ResourceNetworkNode();

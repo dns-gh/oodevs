@@ -1149,9 +1149,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.h">
       <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject.h">
-      <Filter>Source Files\Model\Entities\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanDisplayOptions.h">
       <Filter>Source Files\Options</Filter>
     </ClInclude>
@@ -1163,6 +1160,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Selectionners.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject.h">
+      <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h">
       <Filter>Source Files\Model\Extensions\Urban</Filter>

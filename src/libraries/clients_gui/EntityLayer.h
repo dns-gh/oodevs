@@ -14,7 +14,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/RectangleSelectionHandler_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -61,6 +60,7 @@ protected:
     //! @name Events
     //@{
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMouseDoubleClick( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
@@ -131,7 +131,6 @@ private:
 // =============================================================================
 template< typename ConcreteEntity >
 class EntityLayer : public EntityLayerBase
-                  , public tools::SelectionObserver< ConcreteEntity >
                   , public kernel::MultipleSelectionObserver< ConcreteEntity >
                   , public tools::ElementObserver_ABC< ConcreteEntity >
                   , public kernel::ActivationObserver_ABC< ConcreteEntity >
@@ -150,7 +149,6 @@ protected:
     virtual void NotifyCreated( const ConcreteEntity& );
     virtual void NotifyDeleted( const ConcreteEntity& );
     virtual void NotifyActivated( const ConcreteEntity& );
-    virtual void NotifySelected( const ConcreteEntity* );
     virtual void NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements );
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );

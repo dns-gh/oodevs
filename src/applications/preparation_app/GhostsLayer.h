@@ -30,8 +30,8 @@ class Model;
 // =============================================================================
 class GhostsLayer : public QObject
                   , public gui::EntityLayer< kernel::Ghost_ABC >
-                  , public tools::SelectionObserver_Base< kernel::Automat_ABC >
-                  , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public kernel::MultipleSelectionObserver_Base< kernel::Automat_ABC >
+                  , public kernel::MultipleSelectionObserver_Base< kernel::Formation_ABC >
 {
 
 public:
@@ -56,9 +56,9 @@ private:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const kernel::Ghost_ABC& element );
-    virtual void Select( const kernel::Automat_ABC& element );
-    virtual void Select( const kernel::Formation_ABC& element );
+    virtual void MultipleSelect( const std::vector< const kernel::Ghost_ABC* >& elements );
+    virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
+    virtual void MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements );
     virtual void SetAlpha( float alpha );
     bool IsEligibleForDrag( const geometry::Point2f& point );
     //@}

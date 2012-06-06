@@ -12,7 +12,7 @@
 
 #include "clients_gui/PopulationsLayer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -28,7 +28,7 @@ class Model;
 // Created: SBO 2006-11-09
 // =============================================================================
 class PopulationsLayer : public gui::PopulationsLayer
-                       , public tools::SelectionObserver_Base< kernel::Entity_ABC >
+                       , public kernel::MultipleSelectionObserver_Base< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -52,8 +52,8 @@ private:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const kernel::Entity_ABC& element );
-    virtual void Select( const kernel::Population_ABC& element );
+    virtual void MultipleSelect( const std::vector< const kernel::Entity_ABC* >& elements );
+    virtual void MultipleSelect( const std::vector< const kernel::Population_ABC* >& elements );
     bool IsEligibleForDrag( const geometry::Point2f& point );
     //@}
 

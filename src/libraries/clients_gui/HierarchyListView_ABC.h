@@ -68,7 +68,7 @@ public:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnSelectionChange( Q3ListViewItem* item );
+    virtual void OnSelectionChange();
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     void OnRequestCenter();

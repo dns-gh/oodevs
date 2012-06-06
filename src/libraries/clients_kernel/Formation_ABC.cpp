@@ -52,6 +52,22 @@ void Formation_ABC::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Formation_ABC::MultipleSelect
+// Created: JSR 2012-05-30
+// -----------------------------------------------------------------------------
+void Formation_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+{
+    std::vector< const Formation_ABC* > first;
+    std::vector< const Entity_ABC* > second;
+    for( int i = 0; i < elements.size(); ++i )
+    {
+        first.push_back( static_cast< const Formation_ABC* >( elements[ i ] ) );
+        second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
+    }
+    controller.MultipleSelect( first, second );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Formation_ABC::ContextMenu
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------

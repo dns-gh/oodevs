@@ -13,6 +13,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/InternalLinks.h"
 #include "clients_gui/Tools.h"
@@ -112,6 +113,24 @@ void RcEntityResolver::NotifyDeleted( const Object_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: RcEntityResolver::NotifyCreated
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+void RcEntityResolver::NotifyCreated( const kernel::UrbanObject_ABC& element )
+{
+    tools::Resolver< UrbanObject_ABC >::Register( element.GetId(), const_cast< UrbanObject_ABC& >( element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RcEntityResolver::NotifyDeleted
+// Created: JSR 2012-06-01
+// -----------------------------------------------------------------------------
+void RcEntityResolver::NotifyDeleted( const kernel::UrbanObject_ABC& element )
+{
+    tools::Resolver< UrbanObject_ABC >::Remove( element.GetId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RcEntityResolver::CreateLink
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
@@ -123,6 +142,8 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
         return CreateLink< Automat_ABC >( id );
     else if( type == Object_ABC::typeName_ )
         return CreateLink< Object_ABC >( id );
+    else if( type == UrbanObject_ABC::typeName_ )
+        return CreateLink< UrbanObject_ABC >( id );
     else if( type == Population_ABC::typeName_ )
         return CreateLink< Population_ABC >( id );
     return QString::number( id );
