@@ -2452,7 +2452,7 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Objects_Data_Object
     {
         ComposanteInfos* pComp = *it;
         for( IT_ObjectInfos_Vector itObject = pComp->vObjects_.begin(); itObject != pComp->vObjects_.end(); ++itObject )
-            if( (*itObject)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
+            if( (*itObject)->ptrObject_.GetData()->strType_.GetData() == object.strType_.GetData() )
                 result << pComp->strName_.GetData().c_str();
     }
     return result;
