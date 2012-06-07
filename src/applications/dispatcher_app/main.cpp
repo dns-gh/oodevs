@@ -29,17 +29,15 @@ int Run( int argc, char** argv )
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-    bool silentMode = false;
     int maxConnections = 0;
     int nResult = EXIT_FAILURE;
     try
     {
-        silentMode = ( std::find( argv, argv+argc, "--silent" ) != argv+argc );
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // Check license
-        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeNormal ) );
-        std::auto_ptr< FlexLmLicense > license_dispatch( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeNormal ) );
+        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, "license.dat;.", FlexLmLicense::eCheckModeSilent ) );
+        std::auto_ptr< FlexLmLicense > license_dispatch( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f, "license.dat;.", FlexLmLicense::eCheckModeSilent ) );
         try
         {
             maxConnections = license_dispatch->GetAuthorisedUsers();

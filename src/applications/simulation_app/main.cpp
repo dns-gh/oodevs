@@ -67,17 +67,15 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
     SIM_App* app = 0;
     int nResult = EXIT_FAILURE;
-    bool silentMode = false;
     int maxConnections = 0;
     try
     {
         // Silent mode
         std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
-        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
 
         // Check license
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, "license.dat;.", silentMode ? FlexLmLicense::eCheckModeSilent : FlexLmLicense::eCheckModeNormal ) );
+        std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, "license.dat;.", FlexLmLicense::eCheckModeSilent ) );
         try
         {
             FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
@@ -98,7 +96,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
         // Memory handlers
         _set_new_mode   ( 1 );
-        _set_new_handler( ( silentMode ) ? SilentNoMoreMemoryHandler : NoMoreMemoryHandler );
+        _set_new_handler( SilentNoMoreMemoryHandler );
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -115,27 +113,19 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;
         MT_LOG_ERROR_MSG( strMsg.str().c_str() );
-        if( !silentMode )
-            MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
     catch( xml::exception& exception )
     {
         MT_LOG_ERROR_MSG( exception.what() );
-        if( !silentMode )
-            MessageBox( 0, exception.what(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
-    }
+   }
     catch( std::bad_alloc& /*exception*/ )
     {
         MT_LOG_ERROR_MSG( "Bad alloc" );
-        if( !silentMode )
-            MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
-    }
+     }
     catch( std::exception& exception )
     {
         MT_LOG_ERROR_MSG( exception.what() );
-        if( !silentMode )
-            MessageBox( 0, exception.what(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
-    }
+   }
 
     google::protobuf::ShutdownProtobufLibrary();
     delete app;

@@ -35,7 +35,7 @@ struct SpawnCommand::InternalData
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach ,
-                            std::string commanderEndpoint, bool makeSilent /* = false */ )
+                            std::string commanderEndpoint )
     : config_                  ( config )
     , internal_                ( new InternalData() )
     , attach_                  ( attach )
@@ -45,8 +45,6 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
     , networkCommanderEndpoint_( commanderEndpoint )
 {
     AddArgument( exe );
-    if( makeSilent )
-        AddArgument( "--silent" );
 }
 
 // -----------------------------------------------------------------------------

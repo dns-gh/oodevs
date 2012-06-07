@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false,
-                  std::string commanderEndpoint = "", bool makeSilent = false  );
+                  std::string commanderEndpoint = "" );
     SpawnCommand( const tools::GeneralConfig& config, unsigned long processId, bool attach = false,
                   std::string commanderEndpoint = "" );
     virtual ~SpawnCommand();

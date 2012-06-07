@@ -488,8 +488,6 @@ void SIM_App::CreateConsoleLog()
     {
         std::string errorMsg = "Console output failed. No messages will be available.";
         MT_LOG_ERROR_MSG( errorMsg );
-        if( !startupConfig_->IsSilentMode() )
-            ::MessageBox(NULL, errorMsg.c_str(),"Console error", MB_OK | MB_ICONWARNING);
     }
     std::ios::sync_with_stdio();
 }

@@ -34,8 +34,8 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, bool makeSilent /*= false*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, makeSilent )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/ )
+    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise.ascii(), session.ascii() ) )
     , percentage_( 0 )
 {
@@ -53,8 +53,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, bool makeSilent /*= false*/ )
-    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, makeSilent )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/ )
+    : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise.ascii(), session.ascii() ) )
     , percentage_( 0 )
 {

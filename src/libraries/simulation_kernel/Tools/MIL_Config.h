@@ -60,7 +60,6 @@ public:
     unsigned short     GetNetworkPort            () const;
     unsigned long      GetNetworkTimeout         () const;
     bool               IsThreadedNetwork         () const;
-    bool               IsSilentMode              () const;
 
     bool               UseCheckPointCRC          () const;
     bool               UseDiaDebugger            () const;
@@ -154,7 +153,6 @@ private:
     bool           bFrozenMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
-    bool           bSilentMode_;
     std::string    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;
