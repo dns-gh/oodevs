@@ -88,6 +88,7 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libpq.dll"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
+    File "${RUNDIR}\libiconv-2.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
 
