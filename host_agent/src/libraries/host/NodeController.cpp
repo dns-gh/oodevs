@@ -327,7 +327,7 @@ Tree NodeController::UploadCache( const Uuid& id, std::istream& src ) const
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[" << type_ << "] " << err.what();
-        LOG_ERROR( log_ ) << "[" << type_ << "] " << " Unable to unpack cache";
+        LOG_ERROR( log_ ) << "[" << type_ << "] Unable to unpack cache";
     }
     return node->GetCache();
 }
