@@ -159,6 +159,13 @@ bool ItemOrder( const Package_ABC::T_Item& lhs, const Package_ABC::T_Item& rhs )
     return lhs->GetChecksum() < rhs->GetChecksum();
 }
 
+bool IsItemData( size_t offset, const Path& item )
+{
+    Path::const_iterator it = item.begin();
+    std::advance( it, offset );
+    return *it != "sessions";
+}
+
 struct Item : Package_ABC::Item_ABC
 {
     Item( const FileSystem_ABC& system, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
@@ -250,7 +257,8 @@ struct Item : Package_ABC::Item_ABC
 
     void MakeChecksum( const FileSystem_ABC& system )
     {
-        checksum_ = system.Checksum( root_ / GetSuffix() );
+        const Path root = root_ / GetSuffix();
+        checksum_ = system.Checksum( root, IsExercise() ? boost::bind( &IsItemData, std::distance( root.begin(), root.end() ), _1 ) : FileSystem_ABC::T_Predicate() );
     }
 
     void Install( const FileSystem_ABC& system, const Path& trash, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const
