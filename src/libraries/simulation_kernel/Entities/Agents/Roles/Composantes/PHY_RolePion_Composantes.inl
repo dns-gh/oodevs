@@ -23,7 +23,7 @@ inline void load_construct_data( Archive& archive, PHY_RolePion_Composantes* rol
 {
     MIL_Agent_ABC* pion;
     archive >> pion;
-    ::new( role )PHY_RolePion_Composantes( *pion );
+    ::new( role )PHY_RolePion_Composantes( *pion, false );
 }
 
 // -----------------------------------------------------------------------------
