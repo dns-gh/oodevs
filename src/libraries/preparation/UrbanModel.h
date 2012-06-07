@@ -40,6 +40,7 @@ namespace tools
 class IdManager;
 class StaticModel;
 class UrbanFactory_ABC;
+class UrbanMenuManager;
 
 // =============================================================================
 /** @class  UrbanModel
@@ -69,6 +70,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
+    void Load();
     void LoadUrban( xml::xistream& xis );
     void LoadUrbanState( xml::xistream& xis );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
@@ -111,6 +113,7 @@ private:
     std::auto_ptr< UrbanFactory_ABC >               factory_;
     std::auto_ptr< geostore::GeoStoreManager >      geostore_;
     std::auto_ptr< T_QuadTree >                     quadTree_;
+    std::auto_ptr< UrbanMenuManager >               menuManager_;
     float                                           precision_;
     float                                           maxElementSize_;
     //@}

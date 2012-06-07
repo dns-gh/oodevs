@@ -818,6 +818,13 @@ Détail: %1.</translation>
     </message>
 </context>
 <context>
+    <name>UrbanMenuManager</name>
+    <message>
+        <source>Create district</source>
+        <translation>Créer un quartier</translation>
+    </message>
+</context>
+<context>
     <name>UrbanPositions</name>
     <message>
         <source>Info/Area</source>

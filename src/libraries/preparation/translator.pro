@@ -52,6 +52,7 @@ TrafficabilityAttribute.cpp \
 UndergroundAttribute.cpp \
 UrbanColor.cpp \
 UrbanFactory.cpp \
+UrbanMenuManager.cpp \
 UrbanPositions.cpp \
 WeatherModel.cpp \
 

@@ -16,6 +16,7 @@
 #include "StructuralStateAttribute.h"
 #include "UrbanFactory.h"
 #include "UrbanHierarchies.h"
+#include "UrbanMenuManager.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/UrbanObject.h"
@@ -143,6 +144,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
     , geostore_           ( new geostore::GeoStoreManager( *this ) )
+    , menuManager_        ( new UrbanMenuManager( controllers, *this ) )
 {
     controllers_.Register( *this );
 }
@@ -176,6 +178,16 @@ void UrbanModel::Purge()
     quadTree_.reset();
     geostore_.reset( new geostore::GeoStoreManager( *this ) );
     DeleteAll();
+    menuManager_->Unregister();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::Load
+// Created: JSR 2012-06-07
+// -----------------------------------------------------------------------------
+void UrbanModel::Load()
+{
+    menuManager_->Register();
 }
 
 // -----------------------------------------------------------------------------

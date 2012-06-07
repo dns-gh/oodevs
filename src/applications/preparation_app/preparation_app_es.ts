@@ -2531,6 +2531,17 @@ Do you want to save the terrain &apos;%1&apos;?</source>
     </message>
 </context>
 <context>
+    <name>UrbanListView</name>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create city</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UsagesDockWidget</name>
     <message>
         <source>Usages</source>

@@ -235,7 +235,7 @@ void Model::Purge()
     ClearLoadingErrors();
     UpdateName( "orbat" );
     profiles_.Purge();
-    urban_.DeleteAll();
+    urban_.Purge();
     successFactors_.Purge();
     scores_.Purge();
     weather_.Purge();
@@ -280,6 +280,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) );
     config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
     symbolsFactory_.Load( config );
+    urban_.Load();
 
     const std::string orbatFile = config.GetOrbatFile();
     if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
