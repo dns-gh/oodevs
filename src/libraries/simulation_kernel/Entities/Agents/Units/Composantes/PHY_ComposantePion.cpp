@@ -530,20 +530,20 @@ double PHY_ComposantePion::GetMinRangeToFireOnWithPosture( const DEC_Knowledge_A
 // Name: PHY_ComposantePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-double PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : -1.;
+    return ( CanFire() || theoric ) ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : -1.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-double PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : std::numeric_limits< double >::max();
+    return ( CanFire() || theoric ) ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), dotationCategory, bCheckDotationsAvailability ) : std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------

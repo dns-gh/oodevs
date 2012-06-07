@@ -1221,11 +1221,11 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Kno
 // Name: PHY_RolePion_Composantes::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const
 {
     double rRange = -1.;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::max( rRange, ( *it )->GetMaxRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
+        rRange = std::max( rRange, ( *it )->GetMaxRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability, theoric ) );
     return rRange;
 }
 
@@ -1233,11 +1233,11 @@ double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCa
 // Name: PHY_RolePion_Composantes::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-double PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability, bool theoric ) const
 {
     double rRange = std::numeric_limits< double >::max();
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::min( rRange, ( *it )->GetMinRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
+        rRange = std::min( rRange, ( *it )->GetMinRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability, theoric ) );
     return rRange;
 }
 
