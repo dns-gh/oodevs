@@ -359,7 +359,7 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
     if( !cache_ )
         return Tree();
     install_->Install( root_, *cache_, list );
-    ParseInline( packages_, install_, root_ / "install" );
+    install_->Identify( *install_ );
     cache_->Identify( *install_ );
     return cache_->GetProperties();
 }

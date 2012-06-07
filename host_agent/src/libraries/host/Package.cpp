@@ -24,6 +24,8 @@
 using namespace host;
 using runtime::Utf8Convert;
 
+typedef boost::function< void( const Path& ) > PathOperand;
+
 struct Package_ABC::Item_ABC : public boost::noncopyable
 {
     virtual Tree        GetProperties() const = 0;
@@ -39,7 +41,8 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        IsInstalled() const = 0;
     virtual bool        IsLinked() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
-    virtual void        Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
+    virtual void        Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& output,
+                                 const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const = 0;
     virtual void        Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst ) = 0;
     virtual void        Reinstall( const FileSystem_ABC& system ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
@@ -321,7 +324,7 @@ struct Item : Package_ABC::Item_ABC
         checksum_ = system.Checksum( root, IsExercise() ? boost::bind( &IsItemData, std::distance( root.begin(), root.end() ), _1 ) : FileSystem_ABC::T_Predicate() );
     }
 
-    void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets ) const
+    void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const
     {
         BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
             if( !dst.Find( *dep, true ) && !HasItem( targets, *dep ) )
@@ -338,6 +341,7 @@ struct Item : Package_ABC::Item_ABC
         meta_.Save( system, output );
         if( old )
             old->Uninstall( async, system, tomb );
+        operand( output );
     }
 
     void Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst )
@@ -706,6 +710,15 @@ Package_ABC::T_Item Package::Find( const Path& root, const std::string& checksum
     return it == items_.end() ? T_Item() : *it;
 }
 
+namespace
+{
+void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& path )
+{
+    boost::lock_guard< boost::mutex > lock( access );
+    list.push_back( path );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Package::Install
 // Created: BAX 2012-05-24
@@ -718,11 +731,22 @@ void Package::Install( const Path& tomb, const Package_ABC& src, const std::vect
             install.push_back( item );
     if( install.empty() )
         return;
+
     system_.MakePaths( path_ );
     Async async( pool_ );
+    boost::mutex access;
+    std::vector< Path > paths;
+    PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
         async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( async ), boost::cref( system_ ),
-                  tomb, path_, boost::cref( *this ), boost::cref( install ) ) );
+                  tomb, path_, boost::cref( *this ), boost::cref( install ), op ) );
+    async.Join();
+
+    BOOST_FOREACH( const Path& path, paths )
+        FillItems( async, system_, path, items_, 0 );
+    async.Join();
+
+    std::sort( items_.begin(), items_.end(), &ItemOrder );
 }
 
 namespace
