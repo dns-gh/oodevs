@@ -19,13 +19,12 @@ template< typename T = void >
 struct TaskHandler
 {
     typedef boost::packaged_task< T > Package;
-    typedef boost::shared_future< T > Future;
 
     template< typename U >
     explicit TaskHandler( const U& task )
         : package_( boost::make_shared< Package >( task ) )
-        , future_ ( package_->get_future() )
     {
+        // NOTHING
     }
 
     ~TaskHandler()
@@ -38,22 +37,7 @@ struct TaskHandler
         (*package_)();
     }
 
-    Future GetFuture() const
-    {
-        return future_;
-    }
-
-    template< typename U >
-    static Future Go( const U& task )
-    {
-        TaskHandler< T > handler( task );
-        boost::thread detached( handler );
-        return handler.future_;
-    }
-
-private:
     boost::shared_ptr< Package > package_;
-    Future future_;
 };
 }
 
@@ -80,11 +64,9 @@ Pool::~Pool()
 
 namespace
 {
-template< typename T >
-typename Pool::Future Post( boost::asio::io_service& service, T task )
+void DetachThread( const Pool::Task& task )
 {
-    service.post( task );
-    return task.GetFuture();
+    boost::thread detached( task );
 }
 }
 
@@ -94,12 +76,16 @@ typename Pool::Future Post( boost::asio::io_service& service, T task )
 // -----------------------------------------------------------------------------
 Pool::Future Pool::Post( const Task& task )
 {
-    return ::Post( service_, TaskHandler< void >( task ) );
+    TaskHandler< void > handler( task );
+    service_.post( handler );
+    return handler.package_->get_future();
 }
 
-Pool::Future Pool::Go( const Task& task ) const
+Pool::Future Pool::Go( const Task& task )
 {
-    return TaskHandler< void >::Go( task );
+    TaskHandler< void > handler( task );
+    service_.post( boost::bind( &DetachThread, handler ) );
+    return handler.package_->get_future();
 }
 
 // -----------------------------------------------------------------------------

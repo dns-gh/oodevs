@@ -39,7 +39,7 @@ struct Pool_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual Future Post( const Task& task ) = 0;
-    virtual Future Go( const Task& task ) const = 0;
+    virtual Future Go( const Task& task ) = 0;
     virtual void Stop() = 0;
     //@}
 };

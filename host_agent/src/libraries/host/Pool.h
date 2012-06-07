@@ -43,7 +43,7 @@ public:
     //! @name Methods
     //@{
     virtual Future Post( const Task& task );
-    virtual Future Go( const Task& task ) const;
+    virtual Future Go( const Task& task );
     virtual void Stop();
     //@}
 
