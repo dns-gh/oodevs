@@ -202,6 +202,7 @@ void ExerciseProperties::ReadBriefingText( xml::xistream& xis )
 void ExerciseProperties::ModelChanged()
 {
     dataChanged_ = true;
+    emit ExercisePropertiesChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -218,4 +219,14 @@ void ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
             frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().ascii(), model.back().ascii() );
         }
     dataChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseProperties::IsValid
+// Created: LGY 2012-06-07
+// -----------------------------------------------------------------------------
+bool ExerciseProperties::IsValid() const
+{
+    return terrainList_->currentText().ascii() != tools::translate( "ExerciseProperties", "Terrain:" ) &&
+           modelList_->currentText().ascii() != tools::translate( "ExerciseProperties", "Model:" );
 }

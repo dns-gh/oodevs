@@ -55,6 +55,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     }
     {
         properties_ = new ExerciseProperties( box, config, fileLoader, showBrief, showParams, enableParams );
+        connect( properties_, SIGNAL( ExercisePropertiesChanged() ), this, SLOT( OnExercisePropertiesChanged() ) );
     }
     controllers_.Register( *this );
 }
@@ -182,7 +183,6 @@ void ExerciseList::customEvent( QCustomEvent* e )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ExerciseList::UpdateExerciseEntry
 // Created: SBO 2010-11-04
@@ -209,6 +209,15 @@ bool ExerciseList::Exists( const QString& exercise ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseList::IsPropertiesValid
+// Created: LGY 2012-06-07
+// -----------------------------------------------------------------------------
+bool ExerciseList::IsPropertiesValid() const
+{
+    return properties_->IsValid();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseList::ChangeExerciceParameters
 // Created: SLG 2010-07-08
 // -----------------------------------------------------------------------------
@@ -216,4 +225,13 @@ void ExerciseList::ChangeExerciceParameters()
 {
     if( const frontend::Exercise_ABC* exercise = GetSelectedExercise() )
         properties_->Commit( *exercise );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::OnExercisePropertiesChanged
+// Created: LGY 2012-06-07
+// -----------------------------------------------------------------------------
+void ExerciseList::OnExercisePropertiesChanged()
+{
+    emit ExercisePropertiesChanged();
 }

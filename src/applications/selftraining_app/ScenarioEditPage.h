@@ -80,6 +80,7 @@ private slots:
     virtual void OnDelete();
     void Update();
     void OnSelect( const frontend::Exercise_ABC& exercise );
+    void OnExercisePropertiesChanged();
     void ClearSelection();
     void EditNameChanged( const QString& string );
     void ComboChanged( int index );

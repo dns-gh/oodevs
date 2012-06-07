@@ -60,6 +60,7 @@ public:
     //@{
     void SetFilter( const frontend::ExerciseFilter_ABC& filter );
     bool Exists( const QString& exercise ) const;
+    bool IsPropertiesValid() const;
     void ChangeExerciceParameters();
     //@}
 
@@ -68,6 +69,7 @@ signals:
     //@{
     void Select( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
+    void ExercisePropertiesChanged();
     //@}
 
 public slots:
@@ -81,6 +83,7 @@ private slots:
     //@{
     void SelectExercise( Q3ListViewItem* item );
     void SelectProfile( const frontend::Profile& profile );
+    void OnExercisePropertiesChanged();
     //@}
 
 private:
