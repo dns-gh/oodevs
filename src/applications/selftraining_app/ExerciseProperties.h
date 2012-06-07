@@ -52,6 +52,13 @@ public:
     void Update();
     void Select( const frontend::Exercise_ABC* exercise );
     void Commit( const frontend::Exercise_ABC& exercise );
+    bool IsValid() const;
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ExercisePropertiesChanged();
     //@}
 
 private slots:

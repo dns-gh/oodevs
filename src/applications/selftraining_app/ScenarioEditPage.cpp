@@ -45,6 +45,7 @@ ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, co
             exercises_ = new ExerciseList( mainTabs_, config_, fileLoader_, controllers, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
+            connect( exercises_, SIGNAL( ExercisePropertiesChanged() ), SLOT( OnExercisePropertiesChanged() ) );
             mainTabs_->addTab( exercises_, "" );
         }
         // eTabs_Create
@@ -215,7 +216,7 @@ void ScenarioEditPage::UpdateEditButton()
     switch( mainTabs_->currentPageIndex() )
     {
     case eTabs_Edit:
-        enable = exercise_ != 0;
+        enable = exercise_ != 0 && exercises_->IsPropertiesValid();
         SetButtonText( eButtonEdit, tools::translate( "Page_ABC", "Edit" ) );
         break;
     case eTabs_Create:
@@ -241,6 +242,15 @@ void ScenarioEditPage::UpdateEditButton()
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::UpdateEditButton( QWidget* )
+{
+    UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::OnExercisePropertiesChanged
+// Created: LGY 2012-06-07
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::OnExercisePropertiesChanged()
 {
     UpdateEditButton();
 }
