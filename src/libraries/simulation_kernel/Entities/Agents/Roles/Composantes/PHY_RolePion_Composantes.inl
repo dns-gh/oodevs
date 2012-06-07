@@ -11,6 +11,21 @@
 
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Composantes* role, const unsigned int /*version*/ )
+{
+    const MIL_Agent_ABC* const pion = &role->owner_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Composantes* role, const unsigned int /*version*/ )
+{
+    MIL_Agent_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePion_Composantes( *pion, false );
+}
+
 // -----------------------------------------------------------------------------
 // Name: template< typename T > void PHY_RolePion_Composantes::ApplyOnWeapons
 // Created: NLD 2006-08-07

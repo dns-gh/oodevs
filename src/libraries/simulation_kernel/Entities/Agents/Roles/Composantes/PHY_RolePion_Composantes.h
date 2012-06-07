@@ -342,7 +342,6 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Composantes )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Composantes, MIL_Agent_ABC )
 
 #include "PHY_RolePion_Composantes.inl"
 
