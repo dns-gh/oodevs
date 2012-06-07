@@ -277,7 +277,7 @@ void AbortArchive( cpplog::BaseLogger& log, Archive* arc )
 {
     const std::string err = archive_error_string( arc );
     LOG_ERROR( log ) << "[archive] " << err;
-    throw std::runtime_error( "[archive] Operation aborted" );
+    throw std::runtime_error( "Operation aborted" );
 }
 
 void CheckArchiveCode( cpplog::BaseLogger& log, Archive* arc, int err )
