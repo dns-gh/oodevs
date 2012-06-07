@@ -26,6 +26,7 @@ namespace runtime
 
 namespace host
 {
+    struct Node_ABC;
     struct Port_ABC;
     struct PortFactory_ABC;
 
@@ -40,8 +41,8 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const Path& root, const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
-             Session( const Path& root, const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
+             Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
 
@@ -81,7 +82,7 @@ private:
     //@{
     const Uuid id_;
     const Path root_;
-    const Uuid node_;
+    const Node_ABC& node_;
     const std::string name_;
     const std::string exercise_;
     const std::auto_ptr< boost::shared_mutex > access_;

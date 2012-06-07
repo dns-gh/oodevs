@@ -9,6 +9,7 @@
 
 #include "Session.h"
 
+#include "Node_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "runtime/Process_ABC.h"
@@ -99,7 +100,7 @@ Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC&
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Uuid& id, const Uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
+Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
     : id_      ( id )
     , root_    ( root )
     , node_    ( node )
@@ -117,10 +118,10 @@ Session::Session( const Path& root, const Uuid& id, const Uuid& node, const std:
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : id_      ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
     , root_    ( root )
-    , node_    ( boost::uuids::string_generator()( tree.get< std::string >( "node" ) ) )
+    , node_    ( node )
     , name_    ( tree.get< std::string >( "name" ) )
     , exercise_( tree.get< std::string >( "exercise" ) )
     , port_    ( AcquirePort( tree.get< int >( "port" ), ports ) )
@@ -164,7 +165,7 @@ Path Session::GetRoot() const
 // -----------------------------------------------------------------------------
 Uuid Session::GetNode() const
 {
-    return node_;
+    return node_.GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +203,7 @@ Tree Session::GetProperties() const
 {
     Tree tree;
     tree.put( "id", id_ );
-    tree.put( "node", node_ );
+    tree.put( "node", node_.GetId() );
     tree.put( "name", name_ );
     tree.put( "exercise", exercise_ );
     tree.put( "port", port_->Get() );

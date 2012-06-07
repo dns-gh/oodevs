@@ -17,6 +17,7 @@
 #include <boost/uuid//uuid_io.hpp>
 
 using namespace host;
+using mocks::MockNode;
 using mocks::MockPort;
 using mocks::MockPortFactory;
 using mocks::MockProcess;
@@ -40,15 +41,17 @@ namespace
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
         MockRuntime runtime;
         MockPortFactory ports;
+        MockNode node;
         MOCK_FUNCTOR( Starter, ProcessPtr( const Session_ABC& ) );
         Fixture()
+            : node( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) )
         {
             // NOTHING
         }
 
         SessionPtr MakeSession()
         {
-            return boost::make_shared< Session >( "", defaultId, defaultNode, defaultName, defaultExercise, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Session >( "", defaultId, node, defaultName, defaultExercise, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -56,7 +59,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Session >( "", tree, runtime, ports );
+            return boost::make_shared< Session >( "", tree, node, runtime, ports );
         }
 
         ProcessPtr StartSession( Session& session, int pid, const std::string& name )

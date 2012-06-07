@@ -330,8 +330,6 @@ Reply Agent::GetSession( const Uuid& id ) const
 Reply Agent::CreateSession( const Uuid& node, const std::string& name, const std::string& exercise )
 {
     boost::lock_guard< boost::mutex > lock( *access_ );
-    if( !nodes_.Has( node ) )
-        return Reply( "invalid node", false );
     return Create( sessions_.Create( node, name, exercise ), "session" );
 }
 

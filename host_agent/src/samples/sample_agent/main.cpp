@@ -32,6 +32,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/uuid/string_generator.hpp>
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -163,28 +164,40 @@ struct PackageFactory : public PackageFactory_ABC
 
 struct SessionFactory : public SessionFactory_ABC
 {
-    SessionFactory( const FileSystem_ABC& system, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, PortFactory_ABC& ports )
+    SessionFactory( const FileSystem_ABC& system, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const NodeController_ABC& nodes, PortFactory_ABC& ports )
         : system ( system )
         , runtime( runtime )
         , uuids  ( uuids )
+        , nodes  ( nodes )
         , ports  ( ports )
     {
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const Uuid& node, const std::string& name, const std::string& exercise ) const
+    Ptr Make( const Path& root, const Uuid& id, const std::string& name, const std::string& exercise ) const
     {
-        return boost::make_shared< Session >( root, uuids.Create(), node, name, exercise, ports.Create() );
+        NodeController_ABC::T_Node node = nodes.Get( id );
+        if( !node )
+            return Ptr();
+        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, ports.Create() );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        return boost::make_shared< Session >( Path( tag ).remove_filename(), FromJson( system.ReadFile( tag ) ), runtime, ports );
+        const Tree tree = FromJson( system.ReadFile( tag ) );
+        const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
+        if( id == boost::none )
+            throw std::runtime_error( "missing node id in " + Utf8Convert( tag ) );
+        NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
+        if( !node )
+            throw std::runtime_error( "unknown node " + *id );
+        return boost::make_shared< Session >( Path( tag ).remove_filename(), tree, *node, runtime, ports );
     }
 
     const FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
+    const NodeController_ABC& nodes;
     PortFactory_ABC& ports;
 };
 
@@ -199,7 +212,7 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
     NodeController nodes( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool );
     NodeController cluster( log, runtime, system, proxy, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool );
-    SessionFactory fsessions( system, runtime, uuids, ports );
+    SessionFactory fsessions( system, runtime, uuids, nodes, ports );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );

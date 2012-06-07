@@ -112,7 +112,6 @@ namespace
             const std::string uuid = CreatePrefixedUuid( idx );
             boost::shared_ptr< MockSession > session = CreateMockSession( node, uuid, exercise, name );
             MOCK_EXPECT( sessions.Create ).once().with( node, exercise, name ).returns( session );
-            MOCK_EXPECT( nodes.Has ).once().with( node ).returns( true );
             CheckReply( agent.CreateSession( node, exercise, name ), ToJson( session->GetProperties() ) );
             return session;
         }
@@ -249,8 +248,8 @@ BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture<> )
 {
-    MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( false );
-    CheckReply( agent.CreateSession( defaultNode, "exercise", "name" ), "invalid node", false );
+    MOCK_EXPECT( sessions.Create ).once().returns( boost::shared_ptr< MockSession >() );
+    CheckReply( agent.CreateSession( defaultNode, "exercise", "name" ), "unable to create new session", false );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )
