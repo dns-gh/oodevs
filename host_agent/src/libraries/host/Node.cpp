@@ -256,12 +256,20 @@ void ParseInline( const T& packages, U& dst, const Path& path, U reference = U()
 void Node::UploadCache( std::istream& src )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( output, src );
-    unpacker->Unpack();
-
-    boost::shared_ptr< Package_ABC > next = packages_.Make( output, false );
-    if( !next->Parse() )
-        return;
+    boost::shared_ptr< Package_ABC > next;
+    try
+    {
+        FileSystem_ABC::T_Unpacker unpacker = system_.Unpack( output, src );
+        unpacker->Unpack();
+        next = packages_.Make( output, false );
+        if( !next->Parse() )
+            throw std::runtime_error( "invalid package contents" );
+    }
+    catch( ... )
+    {
+        async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+        throw;
+    }
 
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     next->Identify( *install_ );
