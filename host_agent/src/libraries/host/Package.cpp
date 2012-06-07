@@ -734,6 +734,11 @@ bool IsItemIn( const std::vector< size_t >& list, const Package_ABC::T_Item& ite
             return true;
     return false;
 }
+template< typename T, typename U >
+void RemoveItems( T& list, U predicate )
+{
+    list.erase( std::remove_if( list.begin(), list.end(), predicate ), list.end() );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -747,7 +752,7 @@ void Package::Uninstall( const Path& tomb, const std::vector< size_t >& ids )
         if( IsItemIn( ids, item, false ) )
             async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( async ), boost::cref( system_ ), tomb ) );
     async.Join();
-    items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) ), items_.end() );
+    RemoveItems( items_, boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -837,6 +842,11 @@ void Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const 
     if( item )
         item->Unlink( async, system );
 }
+
+bool IsOrphaned( const Package_ABC::T_Item& item )
+{
+    return !item->IsInstalled() && !item->IsLinked();
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -848,4 +858,5 @@ void Package::UnlinkItem( Async& async, const Tree& src )
     Unlink( async, system_, src, "exercise", *this );
     Unlink( async, system_, src, "terrain", *this );
     Unlink( async, system_, src, "model", *this );
+    RemoveItems( items_, &IsOrphaned );
 }
