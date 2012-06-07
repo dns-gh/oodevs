@@ -387,5 +387,6 @@ size_t Node::CountExercises() const
 // -----------------------------------------------------------------------------
 void Node::SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const
 {
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
     install_->SetExercisePaths( name, model, terrain, exercise );
 }
