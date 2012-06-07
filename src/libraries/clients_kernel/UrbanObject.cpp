@@ -286,20 +286,6 @@ const kernel::AccommodationTypes& UrbanObject::GetAccommodations() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObject::ComputeConvexHull
-// Created: ABR 2012-06-04
-// -----------------------------------------------------------------------------
-void UrbanObject::ComputeConvexHull()
-{
-    //T_PointVector vertices;
-    //const kernel::Hierarchies& hierarchy = Get< kernel::Hierarchies >();
-    //kernel::UrbanPositions_ABC& urbanPosition = Get< UrbanPositions_ABC >();
-    //urbanPosition.ComputeConvexHull( vertices );
-    //if( UrbanObject_ABC* parent = const_cast< UrbanObject_ABC* >( static_cast< const UrbanObject_ABC* >( hierarchy.GetSuperior() ) ) )
-    //    parent->ComputeConvexHull();
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanObject::UpdateColor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------

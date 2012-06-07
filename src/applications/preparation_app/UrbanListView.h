@@ -37,6 +37,7 @@ class ModelBuilder;
 class UrbanListView : public gui::EntityListView
                     , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -54,12 +55,20 @@ protected:
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
+    virtual void OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnCreateCity();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    ModelBuilder& modelBuilder_;
     //@}
 };
 

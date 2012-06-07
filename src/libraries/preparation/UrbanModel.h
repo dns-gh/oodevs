@@ -25,6 +25,7 @@ namespace geostore
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class Location_ABC;
     class Object_ABC;
     class ObjectTypes;
@@ -71,9 +72,10 @@ public:
     void LoadUrban( xml::xistream& xis );
     void LoadUrbanState( xml::xistream& xis );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    void CreateUrbanBlocs( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
-    void DeleteBlocs( int minimumArea );
-    void DeleteBlocs( const kernel::UrbanObject_ABC& urbanObject );
+    void CreateCityOrDistrict( kernel::Entity_ABC* parent );
+    void CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
+    void DeleteBlocks( int minimumArea );
+    void DeleteBlocks( const kernel::UrbanObject_ABC& urbanObject );
     //@}
 
     //! @name Accessors

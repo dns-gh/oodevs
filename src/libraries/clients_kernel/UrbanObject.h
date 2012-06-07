@@ -80,7 +80,6 @@ public:
     double GetNominalCapacity( const std::string& motivation ) const;
     const kernel::AccommodationTypes& GetAccommodations() const;
     const T_HumansStrMap& GetHumansMap() const { return humans_; }
-    void ComputeConvexHull();
     virtual void UpdateColor();
     virtual void NotifyUpdated( const UrbanDisplayOptions& );
     void CreateDictionary( bool readOnly );

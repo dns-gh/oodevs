@@ -14,6 +14,7 @@
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/UrbanModel.h"
 #include "preparation/EntityCommunications.h"
 #include "preparation/FormationModel.h"
 #include "preparation/KnowledgeGroupsModel.h"
@@ -152,6 +153,15 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
     const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
     if( element )
         model_.limits_.CreateLima( points, *const_cast< Entity_ABC* >( element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::CreateCityOrDistrict
+// Created: JSR 2012-06-07
+// -----------------------------------------------------------------------------
+void ModelBuilder::CreateCityOrDistrict( kernel::Entity_ABC* parent )
+{
+    model_.urban_.CreateCityOrDistrict( parent );
 }
 
 // -----------------------------------------------------------------------------

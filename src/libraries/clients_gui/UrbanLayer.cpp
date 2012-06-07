@@ -107,7 +107,11 @@ void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanO
 {
     DeselectAll();
     for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    {
+        static const bool bTrue = true;
+         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
         DoSelect( *it );
+    }
     actualSelection_ = elements;
     EntityLayer< kernel::UrbanObject_ABC >::NotifySelectionChanged( elements );
 }

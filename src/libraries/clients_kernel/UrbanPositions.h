@@ -45,6 +45,7 @@ public:
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const;
     virtual float ComputeArea() const;
+    virtual void ResetConvexHull();
     //@}
 
     //! @name Drawable_ABC

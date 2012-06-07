@@ -21,6 +21,7 @@
 #include "UrbanObject.h"
 #include "UrbanPositions.h"
 #include "Usages.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Architecture.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanExtensions.h"
@@ -80,8 +81,6 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
         pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, controllers_, *pTerrainObject, dictionary, staticModel_.objectTypes_ ) );
         pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( staticModel_.objectTypes_, dictionary, &controllers_, pTerrainObject ) );
         pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_, false ) );
-        //assert( parent != 0 );
-        //static_cast< kernel::UrbanObject_ABC* >( parent )->ComputeConvexHull(); // needed ?
     }
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
     return pTerrainObject;
@@ -126,8 +125,9 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& locati
     pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_, false ) );
 
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
-    //static_cast< kernel::UrbanObject_ABC* >( parent )->ComputeConvexHull(); // needed ?
 
-    parent->Select( controllers_.actions_ );
+    parent->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
+
+    controllers_.actions_.SetSelected( *parent, false );
     return pTerrainObject;
 }

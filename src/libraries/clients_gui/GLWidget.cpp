@@ -621,11 +621,9 @@ void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, c
         glMatrixMode( GL_MODELVIEW );
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprint.front() ) );
-        UpdateStipple();
         glLineWidth( 1.5 );
         glColor4fv( color );
         glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-        glDisable( GL_LINE_STIPPLE );
         glPopAttrib();
     }
     // TODO!!!

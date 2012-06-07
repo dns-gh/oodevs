@@ -696,9 +696,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h">
       <Filter>Source Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\UrbanListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\DialogContainer.h">
       <Filter>Source Files\Dialogs</Filter>
     </ClInclude>
@@ -954,6 +951,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterPartiesListView.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UrbanListView.h">
+      <Filter>Source Files\Lists</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
