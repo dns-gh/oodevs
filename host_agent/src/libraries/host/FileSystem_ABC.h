@@ -10,6 +10,7 @@
 #ifndef FILE_SYSTEM_ABC_H
 #define FILE_SYSTEM_ABC_H
 
+#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <string>
@@ -63,6 +64,7 @@ struct FileSystem_ABC : public boost::noncopyable
     //! @name Public helpers
     //@{
     typedef boost::shared_ptr< Unpacker_ABC > T_Unpacker;
+    typedef boost::function< bool( const Path& ) > T_Predicate;
     //@}
 
     //! @name Methods
@@ -81,7 +83,7 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual std::vector< Path > Glob( const Path& path, const std::wstring& name ) const = 0;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
-    virtual std::string Checksum( const Path& root ) const = 0;
+    virtual std::string Checksum( const Path& root, const T_Predicate& predicate = T_Predicate() ) const = 0;
     virtual Path MakeAnyPath( const Path& root ) const = 0;
     //@}
 };

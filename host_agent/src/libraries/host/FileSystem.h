@@ -51,7 +51,7 @@ public:
     virtual std::vector< Path > Glob( const Path& path, const std::wstring& name ) const;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const;
-    virtual std::string Checksum( const Path& root ) const;
+    virtual std::string Checksum( const Path& root, const T_Predicate& predicate = T_Predicate() ) const;
     virtual Path MakeAnyPath( const Path& root ) const;
     //@}
 
