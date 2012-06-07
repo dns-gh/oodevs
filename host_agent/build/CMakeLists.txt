@@ -107,6 +107,9 @@ file( GLOB files
 )
 add_executable_target( host_test ${files} )
 set_target_folder( host_test tests )
+if( MSVC )
+    add_target_compile_flag( host_test "/bigobj" )
+endif()
 target_link_libraries( host_test
     host
 )

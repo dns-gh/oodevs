@@ -35,6 +35,10 @@ macro( add_target_include target dir )
     set_property( TARGET ${target} APPEND PROPERTY COMPILE_FLAGS "-I${dir}" )
 endmacro()
 
+macro( add_target_compile_flag target flag )
+    set_property( TARGET ${target} APPEND PROPERTY COMPILE_FLAGS ${flag} )
+endmacro()
+
 macro( set_target_folder target folder )
     set_property( TARGET ${target} PROPERTY FOLDER ${folder} )
 endmacro()
