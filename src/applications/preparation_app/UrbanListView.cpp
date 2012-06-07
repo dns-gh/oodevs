@@ -9,6 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "UrbanListView.h"
+#include "moc_UrbanListView.cpp"
+#include "ModelBuilder.h"
 #include "PreparationProfile.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -22,7 +24,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanListView::UrbanListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : EntityListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
-    , controllers_( controllers )
+    , controllers_ ( controllers )
+    , modelBuilder_( modelBuilder )
 {
     addColumn( tr( "Urban" ) );
     //setAcceptDrops( true );
@@ -108,4 +111,33 @@ void UrbanListView::NotifyModeChanged( int newMode )
 {
     ModesObserver_ABC::NotifyModeChanged( newMode );
     setSelectionMode( newMode == ePreparationMode_Terrain ? Q3ListView::Extended : Q3ListView::Single );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::OnContextMenuRequested
+// Created: JSR 2012-06-07
+// -----------------------------------------------------------------------------
+void UrbanListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int col )
+{
+    if( !IsReadOnly() )
+    {
+        if( i == 0 && GetCurrentMode() == ePreparationMode_Terrain )
+        {
+            QMenu* menu = new QMenu( this );
+            menu->addAction( tr( "Create city" ), this, SLOT( OnCreateCity() ) );
+            menu->popup( pos );
+        }
+        else
+            gui::EntityListView::OnContextMenuRequested( i, pos, col );
+    }
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::OnCreateCity
+// Created: JSR 2012-06-07
+// -----------------------------------------------------------------------------
+void UrbanListView::OnCreateCity()
+{
+    modelBuilder_.CreateCityOrDistrict( 0 );
 }

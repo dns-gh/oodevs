@@ -45,6 +45,7 @@ public:
     virtual bool IsInside( const geometry::Point2f& point ) const = 0;
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const = 0;
     virtual void SetInfrastructurePresent() = 0;
+    virtual void ResetConvexHull() = 0;
     //@}
 };
 

@@ -61,6 +61,7 @@ public:
     bool CanCreateLine() const;
     void CreateLimit( const T_PointVector& points );
     void CreateLima( const T_PointVector& points );
+    void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     void DeleteEntity( const kernel::Entity_ABC& entity );
     //@}
 

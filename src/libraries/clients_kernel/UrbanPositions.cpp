@@ -172,6 +172,8 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
             std::vector< geometry::Point2f > points;
             ComputeConvexHull( points );
             const_cast< UrbanPositions* >( this )->ComputeCachedValues( points );
+            if( Entity_ABC* parent = const_cast< Entity_ABC* >( object_.Get< kernel::Hierarchies >().GetSuperior() ) )
+                parent->Get< UrbanPositions_ABC >().ResetConvexHull();
         }
         if( level_ == eUrbanLevelDistrict )
         {
@@ -243,6 +245,16 @@ namespace
         }
         return bFound;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::ResetConvexHull
+// Created: JSR 2012-06-07
+// -----------------------------------------------------------------------------
+void UrbanPositions::ResetConvexHull()
+{
+    if( level_ != eUrbanLevelBlock )
+        polygon_ = geometry::Polygon2f();
 }
 
 // -----------------------------------------------------------------------------

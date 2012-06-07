@@ -379,10 +379,25 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& ob
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanModel::CreateDistrict
+// Created: JSR 2012-06-07
+// -----------------------------------------------------------------------------
+void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
+{
+    std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( parent ) );
+    if( !Find( pTerrainObject->GetId() ) )
+    {
+        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
+        Register( ptr->GetId(), *ptr );
+        ptr->Polish();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanModel::CreateUrbanBlocs
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::CreateUrbanBlocs( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto )
+void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto )
 {
     T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
     if( points.front() == points.back() )
@@ -409,14 +424,14 @@ void UrbanModel::CreateUrbanBlocs( const kernel::Location_ABC& location, kernel:
 // Name: UrbanModel::DeleteBlocs
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::DeleteBlocs( const kernel::UrbanObject_ABC& urbanObject )
+void UrbanModel::DeleteBlocks( const kernel::UrbanObject_ABC& urbanObject )
 {
     const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() );
     tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        DeleteBlocs( static_cast< const kernel::UrbanObject_ABC& >( child ) );
+        DeleteBlocks( static_cast< const kernel::UrbanObject_ABC& >( child ) );
     }
     controllers_.controller_.Delete< kernel::UrbanObject_ABC >( urbanObject );
     Remove( urbanObject.GetId() );
@@ -426,7 +441,7 @@ void UrbanModel::DeleteBlocs( const kernel::UrbanObject_ABC& urbanObject )
 // Name: UrbanModel::DeleteBlocs
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::DeleteBlocs( int minimumArea )
+void UrbanModel::DeleteBlocks( int minimumArea )
 {
     tools::Iterator< const kernel::UrbanObject_ABC& > it = CreateIterator();
     while( it.HasMoreElements() )
@@ -436,7 +451,7 @@ void UrbanModel::DeleteBlocs( int minimumArea )
             if( hierarchy->GetLevel() == eUrbanLevelBlock )
                 if( const kernel::UrbanPositions_ABC* position = urbanObject.Retrieve< kernel::UrbanPositions_ABC >() )
                     if( position->ComputeArea() < minimumArea )
-                        DeleteBlocs( urbanObject );
+                        DeleteBlocks( urbanObject );
     }
 }
 

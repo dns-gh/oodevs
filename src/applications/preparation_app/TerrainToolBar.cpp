@@ -148,7 +148,7 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
 {
     if( !selected_ )
         return;
-    urbanModel_.CreateUrbanBlocs( location, *selected_.ConstCast(), isAuto_ );
+    urbanModel_.CreateUrbanBlocks( location, *selected_.ConstCast(), isAuto_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ void TerrainToolBar::OnRemoveBlocks()
     bool ok;
     int area = QInputDialog::getInt( this, tr( "Delete blocks" ), tr("Minimum size (m²): "), 100, 0, std::numeric_limits< int >::max(), 1, &ok );
     if( ok )
-        urbanModel_.DeleteBlocs( area );
+        urbanModel_.DeleteBlocks( area );
 }
 
 // -----------------------------------------------------------------------------
