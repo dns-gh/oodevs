@@ -118,7 +118,7 @@ void ExerciseProperties::Update()
         }
         if( modelList_->count() == 2 )
             modelList_->setCurrentItem( 1 );
-        modelList_->setShown( modelList_->count() > 2 );
+        modelList_->setShown( modelList_->count() > 1 );
     }
 }
 
