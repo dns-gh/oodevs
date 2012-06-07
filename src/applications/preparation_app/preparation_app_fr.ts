@@ -2481,6 +2481,17 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
     </message>
 </context>
 <context>
+    <name>UrbanListView</name>
+    <message>
+        <source>Urban</source>
+        <translation>Zone urbaine</translation>
+    </message>
+    <message>
+        <source>Create city</source>
+        <translation>Créer une ville</translation>
+    </message>
+</context>
+<context>
     <name>UsagesDockWidget</name>
     <message>
         <source>Usages</source>

@@ -75,6 +75,7 @@ TerrainToolBar.cpp \
 UnitStateDialog.cpp \
 UnitStateTableResource.cpp \
 UrbanInfosDockWidget.cpp \
+UrbanListView.cpp \
 UsagesDockWidget.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \

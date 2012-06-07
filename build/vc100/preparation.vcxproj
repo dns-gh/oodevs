@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanHierarchies.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanMenuManager.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\WeatherModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ProfileFactory.cpp" />
@@ -314,6 +315,20 @@
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h" />
+    <CustomBuild Include="..\..\src\libraries\preparation\UrbanMenuManager.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\preparation\WeatherModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileFactory.h" />

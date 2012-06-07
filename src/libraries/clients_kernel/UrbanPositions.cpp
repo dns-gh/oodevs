@@ -150,7 +150,7 @@ bool UrbanPositions::IsSelected() const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( !viewport.IsHotpointVisible() )
+    if( !viewport.IsHotpointVisible() && ( level_ == eUrbanLevelBlock || !polygon_.IsEmpty() ) )
         return;
     std::string name;
     unsigned int nameSize = 13;
