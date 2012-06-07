@@ -63,7 +63,6 @@ namespace mocks
         MOCK_METHOD( InstallFromCache, 2 );
         MOCK_METHOD( GetExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
-        MOCK_METHOD( SetExercisePaths, 5 );
     };
 
     MOCK_BASE_CLASS( MockNode, host::Node_ABC )
@@ -92,7 +91,9 @@ namespace mocks
         MOCK_METHOD( InstallFromCache, 1 );
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
-        MOCK_METHOD( SetExercisePaths, 4 );
+        MOCK_METHOD_EXT( LinkExercise, 1, host::Tree( const std::string& ), LinkExerciseName );
+        MOCK_METHOD_EXT( LinkExercise, 1, host::Tree( const host::Tree& ), LinkExerciseTree );
+        MOCK_METHOD( UnlinkExercise, 1 );
     };
 
     MOCK_BASE_CLASS( MockSessionController, host::SessionController_ABC )
@@ -126,20 +127,20 @@ namespace mocks
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
             MOCK_EXPECT( GetNode ).returns( node );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
-            MOCK_EXPECT( GetConfiguration ).returns( "some config" );
             MOCK_EXPECT( Save ).returns( tree );
         }
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetRoot, 0 );
+        MOCK_METHOD( GetPath, 1 );
         MOCK_METHOD( GetNode, 0 );
         MOCK_METHOD( GetExercise, 0 );
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetPort, 0 );
-        MOCK_METHOD( GetConfiguration, 0 );
         MOCK_METHOD( GetProperties, 0 );
         MOCK_METHOD( Save, 0 );
-        MOCK_METHOD( Start, 1 );
+        MOCK_METHOD( Start, 2 );
         MOCK_METHOD( Stop, 0 );
+        MOCK_METHOD( Unlink, 0 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
@@ -252,13 +253,14 @@ namespace mocks
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
         MOCK_METHOD( Install, 3 );
-        MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( size_t ), FindId );
-        MOCK_METHOD_EXT( Find, 1, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC& ), FindItem );
-        MOCK_METHOD_EXT( Move, 1, void( const host::Path& ), MoveAll );
-        MOCK_METHOD_EXT( Move, 2, void( const host::Path&, const std::vector< size_t >& ), MoveItems );
+        MOCK_METHOD( Uninstall, 2 );
+        MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( size_t, bool ), FindId );
+        MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC&, bool ), FindItem );
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
-        MOCK_METHOD( SetExercisePaths, 4 );
+        MOCK_METHOD_EXT( LinkItem, 1, host::Tree( const std::string& name ), LinkItemName );
+        MOCK_METHOD_EXT( LinkItem, 1, host::Tree( const host::Tree& tree ), LinkItemTree );
+        MOCK_METHOD( UnlinkItem, 2 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

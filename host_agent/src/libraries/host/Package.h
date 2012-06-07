@@ -39,15 +39,18 @@ public:
     //@{
     virtual Tree GetProperties() const;
     virtual Path GetPath() const;
-    virtual T_Item Find( size_t id ) const;
-    virtual T_Item Find( const Item_ABC& item ) const;
+    virtual T_Item Find( size_t id, bool alive ) const;
+    virtual T_Item Find( const Item_ABC& item, bool alive ) const;
+    virtual T_Item Find( const Path& root, const std::string& checksum, bool alive ) const;
     virtual T_Exercises GetExercises( int offset, int limit ) const;
     virtual size_t CountExercises() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
-    virtual void Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids );
-    virtual void Move( const Path& trash, const std::vector< size_t >& ids );
-    virtual void SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const;
+    virtual void Install( const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
+    virtual void Uninstall( const Path& root, const std::vector< size_t >& ids );
+    virtual Tree LinkItem( const std::string& name );
+    virtual Tree LinkItem( const Tree& tree );
+    virtual void UnlinkItem( Async& async, const Tree& tree );
     //@}
 
 public:

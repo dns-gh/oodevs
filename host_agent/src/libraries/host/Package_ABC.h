@@ -24,6 +24,7 @@ namespace filesystem3
 
 namespace host
 {
+    struct Async;
     struct FileSystem_ABC;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
@@ -53,15 +54,17 @@ struct Package_ABC : public boost::noncopyable
     //@{
     virtual Tree GetProperties() const = 0;
     virtual Path GetPath() const = 0;
-    virtual T_Item Find( size_t id ) const = 0;
-    virtual T_Item Find( const Item_ABC& item ) const = 0;
+    virtual T_Item Find( size_t id, bool alive ) const = 0;
+    virtual T_Item Find( const Item_ABC& item, bool alive ) const = 0;
     virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
     virtual size_t CountExercises() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
-    virtual void Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
-    virtual void Move( const Path& trash, const std::vector< size_t >& ids ) = 0;
-    virtual void SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const = 0;
+    virtual void Install( const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
+    virtual void Uninstall( const Path& root, const std::vector< size_t >& ids ) = 0;
+    virtual Tree LinkItem( const std::string& name ) = 0;
+    virtual Tree LinkItem( const Tree& tree ) = 0;
+    virtual void UnlinkItem( Async& async, const Tree& tree ) = 0;
     //@}
 };
 

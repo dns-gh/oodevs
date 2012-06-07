@@ -31,6 +31,7 @@ namespace runtime
 
 namespace host
 {
+    struct FileSystem_ABC;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
@@ -60,18 +61,19 @@ struct Session_ABC : public boost::noncopyable
     virtual Uuid GetId() const = 0;
     virtual Path GetRoot() const = 0;
     virtual Uuid GetNode() const = 0;
-    virtual std::string GetExercise() const = 0;
+    virtual Path GetExercise() const = 0;
     virtual std::string GetName() const = 0;
     virtual int GetPort() const = 0;
-    virtual std::string GetConfiguration() const = 0;
     virtual Tree GetProperties() const = 0;
+    virtual Path GetPath( const std::string& type ) const = 0;
     //@}
 
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const T_Starter& starter ) = 0;
+    virtual bool Start( const FileSystem_ABC& system, const T_Starter& starter ) = 0;
     virtual bool Stop() = 0;
+    virtual void Unlink() = 0;
     //@}
 };
 

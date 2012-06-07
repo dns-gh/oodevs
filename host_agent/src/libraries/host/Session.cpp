@@ -9,11 +9,13 @@
 
 #include "Session.h"
 
+#include "FileSystem_ABC.h"
 #include "Node_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
+#include "runtime/Utf8.h"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
@@ -32,6 +34,7 @@
 #endif
 
 using namespace host;
+using runtime::Utf8Convert;
 
 namespace
 {
@@ -94,6 +97,11 @@ Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC&
         return Session::T_Process();
     return ptr;
 }
+
+Path GetPath( const Tree& src, const std::string& key )
+{
+    return Utf8Convert( src.get< std::string >( key ) );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -101,15 +109,15 @@ Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC&
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
-    : id_      ( id )
-    , root_    ( root )
-    , node_    ( node )
-    , name_    ( name )
-    , exercise_( exercise )
-    , port_    ( port )
-    , access_  ( new boost::shared_mutex )
-    , process_ ()
-    , status_  ( Session::STATUS_STOPPED )
+    : id_     ( id )
+    , root_   ( root )
+    , node_   ( node )
+    , name_   ( name )
+    , links_  ( node.LinkExercise( exercise ) )
+    , port_   ( port )
+    , access_ ( new boost::shared_mutex )
+    , process_()
+    , status_ ( Session::STATUS_STOPPED )
 {
     // NOTHING
 }
@@ -119,15 +127,15 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
-    : id_      ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
-    , root_    ( root )
-    , node_    ( node )
-    , name_    ( tree.get< std::string >( "name" ) )
-    , exercise_( tree.get< std::string >( "exercise" ) )
-    , port_    ( AcquirePort( tree.get< int >( "port" ), ports ) )
-    , access_  ( new boost::shared_mutex )
-    , process_ ( AcquireProcess( tree, runtime, port_->Get() ) )
-    , status_  ( process_ ? ConvertStatus( tree.get< std::string >( "status" ) ) : Session::STATUS_STOPPED )
+    : id_     ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
+    , root_   ( root )
+    , node_   ( node )
+    , name_   ( tree.get< std::string >( "name" ) )
+    , links_  ( node.LinkExercise( tree.get_child( "links" ) ) )
+    , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
+    , access_ ( new boost::shared_mutex )
+    , process_( AcquireProcess( tree, runtime, port_->Get() ) )
+    , status_ ( process_ ? ConvertStatus( tree.get< std::string >( "status" ) ) : Session::STATUS_STOPPED )
 {
     // NOTHING
 }
@@ -172,9 +180,9 @@ Uuid Session::GetNode() const
 // Name: Session::GetExercise
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-std::string Session::GetExercise() const
+Path Session::GetExercise() const
 {
-    return exercise_;
+    return ::GetPath( links_, "exercise.name" );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +213,7 @@ Tree Session::GetProperties() const
     tree.put( "id", id_ );
     tree.put( "node", node_.GetId() );
     tree.put( "name", name_ );
-    tree.put( "exercise", exercise_ );
+    tree.put_child( "links", links_ );
     tree.put( "port", port_->Get() );
     tree.put( "status", ConvertStatus( status_ ) );
     return tree;
@@ -224,25 +232,6 @@ Tree Session::Save() const
     tree.put( "process.pid", process_->GetPid() );
     tree.put( "process.name", process_->GetName() );
     return tree;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::Start
-// Created: BAX 2012-04-19
-// -----------------------------------------------------------------------------
-bool Session::Start( const T_Starter& starter )
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_ )
-        return true;
-
-    T_Process ptr = starter( *this );
-    if( !ptr )
-        return false;
-
-    process_ = ptr;
-    status_  = Session::STATUS_PLAYING;
-    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -306,13 +295,55 @@ std::string GetConfiguration( const std::string& name, int base )
     GetSimulationConfiguration( tree, base );
     return ToXml( tree );
 }
+
+void WriteSettings( const FileSystem_ABC& system, const Path& file, const std::string& data )
+{
+    system.MakePaths( Path( file ).remove_filename() );
+    system.WriteFile( file, data );
+}
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::GetConfiguration
+// Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-std::string Session::GetConfiguration() const
+bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
 {
-    return ::GetConfiguration( name_, port_->Get() );
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( process_ )
+        return true;
+
+    const Path output = GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id_ ) / "session.xml";
+    WriteSettings( system, output, GetConfiguration( name_, port_->Get() ) );
+    T_Process ptr = starter( *this );
+    if( !ptr )
+        return false;
+
+    process_ = ptr;
+    status_  = Session::STATUS_PLAYING;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::GetPath
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+Path Session::GetPath( const std::string& type ) const
+{
+    if( type == "exercise" )
+        return ::GetPath( links_, "exercise.root" ) / "exercises";
+    if( type == "model" )
+        return ::GetPath( links_, "model.root" ) / "data" / "models";
+    if( type == "terrain" )
+        return ::GetPath( links_, "terrain.root" ) / "data" / "terrains";
+    return Path();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Unlink
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+void Session::Unlink()
+{
+    node_.UnlinkExercise( links_ );
 }

@@ -13,6 +13,7 @@
 #include "Session_ABC.h"
 
 #include <boost/filesystem/path.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace boost
 {
@@ -51,18 +52,19 @@ public:
     virtual Uuid GetId() const;
     virtual Path GetRoot() const;
     virtual Uuid GetNode() const;
-    virtual std::string GetExercise() const;
+    virtual Path GetExercise() const;
     virtual std::string GetName() const;
     virtual int GetPort() const;
-    virtual std::string GetConfiguration() const;
     virtual Tree GetProperties() const;
+    virtual Path GetPath( const std::string& type ) const;
     //@}
 
     //! @name Public methods
     //@{
-    Tree Save() const;
-    bool Start( const T_Starter& starter );
-    bool Stop();
+    virtual Tree Save() const;
+    virtual bool Start( const FileSystem_ABC& system, const T_Starter& starter );
+    virtual bool Stop();
+    virtual void Unlink();
     //@}
 
     //! @name Status enumeration
@@ -84,7 +86,7 @@ private:
     const Path root_;
     const Node_ABC& node_;
     const std::string name_;
-    const std::string exercise_;
+    const Tree links_;
     const std::auto_ptr< boost::shared_mutex > access_;
     const std::auto_ptr< Port_ABC > port_;
     T_Process process_;

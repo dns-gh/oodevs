@@ -17,6 +17,7 @@
 #include <boost/uuid//uuid_io.hpp>
 
 using namespace host;
+using mocks::MockFileSystem;
 using mocks::MockNode;
 using mocks::MockPort;
 using mocks::MockPortFactory;
@@ -34,11 +35,17 @@ namespace
     const int defaultPort = 1337;
     const int processPid = 7331;
     const std::string processName = "myProcessName";
+    const std::string links = "{"
+        "\"exercise\":{\"name\":\"a\",\"root\":\"b\",\"checksum\":\"c\"},"
+        "\"terrain\":{\"name\":\"a\",\"root\":\"b\",\"checksum\":\"c\"},"
+        "\"model\":{\"name\":\"a\",\"root\":\"b\",\"checksum\":\"c\"}"
+        "}";
 
     struct Fixture
     {
         typedef boost::shared_ptr< Session > SessionPtr;
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
+        MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
         MockNode node;
@@ -51,6 +58,7 @@ namespace
 
         SessionPtr MakeSession()
         {
+            MOCK_EXPECT( node.LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
             return boost::make_shared< Session >( "", defaultId, node, defaultName, defaultExercise, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
@@ -59,6 +67,8 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
+            const Tree data = FromJson( links );
+            MOCK_EXPECT( node.LinkExerciseTree ).once().with( data ).returns( data );
             return boost::make_shared< Session >( "", tree, node, runtime, ports );
         }
 
@@ -66,7 +76,9 @@ namespace
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( Starter ).with( mock::same( session ) ).returns( process );
-            BOOST_REQUIRE( session.Start( Starter ) );
+            MOCK_EXPECT( system.MakePaths ).once();
+            MOCK_EXPECT( system.WriteFile ).once().returns( true );
+            BOOST_REQUIRE( session.Start( system, Starter ) );
             return process;
         }
 
@@ -99,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
         "\"node\":\"10123456-cdef-9876-90ab-543212345678\","
         "\"name\":\"myName\","
-        "\"exercise\":\"MyExercise\","
+        "\"links\":" + links + ","
         "\"port\":\"1337\",";
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\""
@@ -154,5 +166,5 @@ BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )
 {
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
-    BOOST_CHECK( session->Start( Starter ) );
+    BOOST_CHECK( session->Start( system, Starter ) );
 }

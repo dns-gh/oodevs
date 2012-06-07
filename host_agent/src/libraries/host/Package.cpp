@@ -18,7 +18,6 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 
@@ -35,11 +34,16 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual std::string GetChecksum() const = 0;
     virtual bool        Compare( size_t id ) const = 0;
     virtual bool        Compare( const Item_ABC& item ) const = 0;
+    virtual bool        Compare( const std::pair< Path, std::string >& pair ) const = 0;
     virtual bool        IsExercise() const = 0;
+    virtual bool        IsInstalled() const = 0;
+    virtual bool        IsLinked() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
-    virtual void        Install( const FileSystem_ABC& system, const Path& trash, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
-    virtual void        Move( const FileSystem_ABC& system, const Path& dst ) const = 0;
-    virtual void        SetExercisePaths( const Package_ABC& src, Path& model, Path& terrain, Path& exercise ) const = 0;
+    virtual void        Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
+    virtual void        Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst ) = 0;
+    virtual void        Reinstall( const FileSystem_ABC& system ) = 0;
+    virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
+    virtual void        Unlink( Async& async, const FileSystem_ABC& system ) = 0;
 };
 
 namespace
@@ -55,6 +59,7 @@ struct Metadata
     Metadata( const std::string& package, const std::string& version )
         : package_( package )
         , version_( version )
+        , links_  ( 0 )
     {
         // NOTHING
     }
@@ -73,6 +78,8 @@ struct Metadata
     {
         Tree rpy;
         SaveTo( rpy );
+        if( !tomb_.empty() )
+            rpy.put( "tomb", Utf8Convert( tomb_ ) );
         return rpy;
     }
 
@@ -102,36 +109,84 @@ struct Metadata
         system.WriteFile( root / GetFilename(), ToJson( GetProperties(), true ) );
     }
 
+    void TryUninstall( Async& async, const FileSystem_ABC& system, const Path& root, const Path& tomb )
+    {
+        tomb_ = tomb;
+        if( IsLinked() )
+            Save( system, root );
+        TryKill( async, system, root );
+    }
+
+    void Reinstall( const FileSystem_ABC& system, const Path& root )
+    {
+        tomb_.clear();
+        Save( system, root );
+    }
+
+    bool IsInstalled() const
+    {
+        return tomb_.empty();
+    }
+
+    bool IsLinked() const
+    {
+        return !!links_;
+    }
+
+    void Link()
+    {
+        links_++;
+    }
+
+    void Unlink( Async& async, const FileSystem_ABC& system, const Path& root )
+    {
+        links_--;
+        TryKill( async, system, root );
+    }
+
 private:
     Metadata( const Tree& tree )
         : package_( Get( tree, "package", "" ) )
         , version_( GetVersion( tree, "version" ) )
+        , tomb_   ( Utf8Convert( Get( tree, "tomb", "" ) ) )
+        , links_  ( 0 )
     {
         // NOTHING
     }
 
     Metadata& operator=( const Metadata& );
 
+    void TryKill( Async& async, const FileSystem_ABC& system, const Path& root )
+    {
+        if( IsLinked() || IsInstalled() )
+            return;
+        const Path next = system.MakeAnyPath( tomb_ );
+        system.Rename( root, next / "_" );
+        async.Go( boost::bind( &FileSystem_ABC::Remove, &system, next ) );
+    }
+
     const std::string package_;
     const std::string version_;
+    Path tomb_;
+    size_t links_;
 };
 
 template< typename T, typename U >
-bool ItemCompare( const T& lhs, const U& rhs )
+bool ItemCompare( const T& lhs, const U& rhs, bool installed )
 {
-    return lhs->Compare( rhs );
+    return lhs->Compare( rhs ) && ( !installed || lhs->IsInstalled() );
 }
 
 template< typename T, typename U >
-typename T::const_iterator FindItem( const T& list, const U& item )
+typename T::const_iterator FindItem( const T& list, const U& item, bool installed )
 {
-    return std::find_if( list.begin(), list.end(), boost::bind( &ItemCompare< typename T::value_type, U >, _1, boost::cref( item ) ) );
+    return std::find_if( list.begin(), list.end(), boost::bind( &ItemCompare< typename T::value_type, U >, _1, boost::cref( item ), installed ) );
 }
 
 template< typename T, typename U >
 bool HasItem( const T& list, const U& item )
 {
-    return FindItem( list, item ) != list.end();
+    return FindItem( list, item, true ) != list.end();
 }
 
 int GetTypeOrder( const std::string& type )
@@ -193,12 +248,12 @@ struct Item : Package_ABC::Item_ABC
     virtual Tree GetProperties() const
     {
         Tree tree;
-        meta_.SaveTo( tree );
         tree.put( "id", id_ );
         tree.put( "type", GetType() );
         tree.put( "name", Utf8Convert( name_ ) );
         tree.put( "date", date_ );
         tree.put( "checksum", checksum_ );
+        meta_.SaveTo( tree );
         if( !action_.empty() )
             tree.put( "action", action_ );
         if( !error_.empty() )
@@ -231,6 +286,11 @@ struct Item : Package_ABC::Item_ABC
         return name_ == item.GetName() && GetType() == item.GetType();
     }
 
+    virtual bool Compare( const std::pair< Path, std::string >& pair ) const
+    {
+        return pair.first == root_ && pair.second == checksum_;
+    }
+
     typedef std::vector< Package_ABC::T_Item > T_Dependencies;
     virtual T_Dependencies GetDependencies() const
     {
@@ -242,13 +302,13 @@ struct Item : Package_ABC::Item_ABC
         action_.clear();
         error_.clear();
         BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
-            if( !ref.Find( *dep ) && !root.Find( *dep ) )
+            if( !ref.Find( *dep, true ) && !root.Find( *dep, true ) )
             {
                 action_ = "error";
                 error_ = "Missing " + dep->GetType() + " " + Utf8Convert( dep->GetName() );
                 return;
             }
-        Package_ABC::T_Item next = ref.Find( *this );
+        Package_ABC::T_Item next = ref.Find( *this, true );
         if( !next )
             action_ = "add";
         else if( checksum_ != next->GetChecksum() )
@@ -261,23 +321,33 @@ struct Item : Package_ABC::Item_ABC
         checksum_ = system.Checksum( root, IsExercise() ? boost::bind( &IsItemData, std::distance( root.begin(), root.end() ), _1 ) : FileSystem_ABC::T_Predicate() );
     }
 
-    void Install( const FileSystem_ABC& system, const Path& trash, const Path& output, const Package_ABC& dst, const Package::T_Items& targets ) const
+    void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets ) const
     {
         BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
-            if( !dst.Find( *dep ) && !HasItem( targets, *dep ) )
+            if( !dst.Find( *dep, true ) && !HasItem( targets, *dep ) )
                 return;
-        Package_ABC::T_Item old = dst.Find( *this );
-        const Path next = output / GetSuffix();
-        system.MakePaths( next );
-        system.CopyDirectory( root_ / GetSuffix(), next );
+
+        Package_ABC::T_Item old = dst.Find( *this, false );
+        if( old && old->GetChecksum() == checksum_ )
+            return old->Reinstall( system );
+
+        const Path output = system.MakeAnyPath( root );
+        const Path sub =  output / GetSuffix();
+        system.MakePaths( sub );
+        system.CopyDirectory( root_ / GetSuffix(), sub );
         meta_.Save( system, output );
         if( old )
-            old->Move( system, trash );
+            old->Uninstall( async, system, tomb );
     }
 
-    void Move( const FileSystem_ABC& system, const Path& dst ) const
+    void Uninstall( Async& async, const FileSystem_ABC& system, const Path& dst )
     {
-        system.Rename( root_, dst );
+        meta_.TryUninstall( async, system, root_, dst );
+    }
+
+    void Reinstall( const FileSystem_ABC& system )
+    {
+        meta_.Reinstall( system, root_ );
     }
 
     bool IsExercise() const
@@ -285,9 +355,32 @@ struct Item : Package_ABC::Item_ABC
         return false;
     }
 
-    void SetExercisePaths( const Package_ABC&, Path&, Path&, Path& ) const
+    bool IsInstalled() const
     {
-        throw std::runtime_error( "Unexpected call to SetExercisePaths on non-exercise item" );
+        return meta_.IsInstalled();
+    }
+
+    bool IsLinked() const
+    {
+        return meta_.IsLinked();
+    }
+
+    void Link( Tree& tree, const Package_ABC& ref, bool recurse )
+    {
+        const std::string prefix = GetType();
+        tree.put( prefix + ".name", Utf8Convert( name_ ) );
+        tree.put( prefix + ".root", Utf8Convert( root_ ) );
+        tree.put( prefix + ".checksum", checksum_ );
+        if( recurse )
+            BOOST_FOREACH( const T_Dependencies::value_type& it, GetDependencies() )
+                for( Package_ABC::T_Item next = ref.Find( *it, true ); next; next.reset() )
+                    next->Link( tree, ref, false );
+        meta_.Link();
+    }
+
+    void Unlink( Async& async, const FileSystem_ABC& system )
+    {
+        meta_.Unlink( async, system, root_ );
     }
 
 protected:
@@ -295,7 +388,7 @@ protected:
     const size_t id_;
     const Path name_;
     const std::string date_;
-    const Metadata meta_;
+    Metadata meta_;
     std::string checksum_;
     std::string action_;
     std::string error_;
@@ -411,13 +504,6 @@ struct Dependency : public Item
     const std::string type_;
 };
 
-void SetPathFromDependency( Path& dst, const Package_ABC& src, const std::string& type, const std::string& name )
-{
-    Package_ABC::T_Item item = src.Find( Dependency( type, name ) );
-    if( item )
-        dst = item->GetRoot();
-}
-
 struct Exercise : public Item
 {
     Exercise( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
@@ -461,13 +547,6 @@ struct Exercise : public Item
     bool IsExercise() const
     {
         return true;
-    }
-
-    void SetExercisePaths( const Package_ABC& src, Path& model, Path& terrain, Path& exercise ) const
-    {
-        exercise = root_;
-        SetPathFromDependency( model, src, "model", model_ );
-        SetPathFromDependency( terrain, src, "terrain", terrain_ );
     }
 
     template< typename T >
@@ -524,7 +603,8 @@ Tree Package::GetProperties() const
     }
     Tree& items = tree.put_child( "items", Tree() );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
-        items.push_back( std::make_pair( "", item->GetProperties() ) );
+        if( item->IsInstalled() )
+            items.push_back( std::make_pair( "", item->GetProperties() ) );
     return tree;
 }
 
@@ -600,9 +680,9 @@ void Package::Identify( const Package_ABC& ref )
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::T_Item Package::Find( size_t id ) const
+Package_ABC::T_Item Package::Find( size_t id, bool installed ) const
 {
-    T_Items::const_iterator it = FindItem( items_, id );
+    T_Items::const_iterator it = FindItem( items_, id, installed );
     return it == items_.end() ? T_Item() : *it;
 }
 
@@ -610,9 +690,19 @@ Package_ABC::T_Item Package::Find( size_t id ) const
 // Name: Package::Find
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Package_ABC::T_Item Package::Find( const Item_ABC& item ) const
+Package_ABC::T_Item Package::Find( const Item_ABC& item, bool installed ) const
 {
-    T_Items::const_iterator it = FindItem( items_, item );
+    T_Items::const_iterator it = FindItem( items_, item, installed );
+    return it == items_.end() ? T_Item() : *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::Find
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+Package_ABC::T_Item Package::Find( const Path& root, const std::string& checksum, bool installed ) const
+{
+    T_Items::const_iterator it = FindItem( items_, std::make_pair( root, checksum ), installed );
     return it == items_.end() ? T_Item() : *it;
 }
 
@@ -620,51 +710,44 @@ Package_ABC::T_Item Package::Find( const Item_ABC& item ) const
 // Name: Package::Install
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Package::Install( const Path& trash, const Package_ABC& src, const std::vector< size_t >& ids )
+void Package::Install( const Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
 {
     T_Items install;
     BOOST_FOREACH( size_t id, ids )
-    {
-        T_Item item = src.Find( id );
-        if( item )
+        for( T_Item item = src.Find( id, true ); item; item.reset() )
             install.push_back( item );
-    }
     if( install.empty() )
         return;
     system_.MakePaths( path_ );
     Async async( pool_ );
-    size_t idx = 0;
     BOOST_FOREACH( const T_Items::value_type& item, install )
-        async.Go( boost::bind( &Item_ABC::Install, item, boost::cref( system_ ),
-                  trash / boost::lexical_cast< std::string >( idx++ ),
-                  system_.MakeAnyPath( path_ ), boost::cref( *this ), boost::cref( install ) ) );
+        async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( async ), boost::cref( system_ ),
+                  tomb, path_, boost::cref( *this ), boost::cref( install ) ) );
 }
 
 namespace
 {
-bool IsItemIn( const std::vector< size_t >& list, const Package_ABC::T_Item& item )
+bool IsItemIn( const std::vector< size_t >& list, const Package_ABC::T_Item& item, bool unlinked )
 {
     BOOST_FOREACH( const size_t& id, list )
-        if( item->Compare( id ) )
+        if( ( !unlinked || !item->IsLinked() ) && item->Compare( id ) )
             return true;
     return false;
 }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Package::Move
+// Name: Package::Uninstall
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-void Package::Move( const Path& trash, const std::vector< size_t >& ids )
+void Package::Uninstall( const Path& tomb, const std::vector< size_t >& ids )
 {
     Async async( pool_ );
-    size_t idx = 0;
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
-        if( IsItemIn( ids, item ) )
-            async.Go( boost::bind( &Item_ABC::Move, item, boost::cref( system_ ),
-                      trash / boost::lexical_cast< std::string >( idx++ ) ) );
+        if( IsItemIn( ids, item, false ) )
+            async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( async ), boost::cref( system_ ), tomb ) );
     async.Join();
-    items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1 ) ), items_.end() );
+    items_.erase( std::remove_if( items_.begin(), items_.end(), boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) ), items_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -677,6 +760,8 @@ Package::T_Exercises Package::GetExercises( int offset, int limit ) const
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
     {
         if( !item->IsExercise() )
+            continue;
+        if( !item->IsInstalled() )
             continue;
         if( offset-- > 0 )
             continue;
@@ -695,17 +780,72 @@ size_t Package::CountExercises() const
 {
     size_t reply = 0;
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
-        reply += item->IsExercise();
+        reply += item->IsExercise() && item->IsInstalled();
     return reply;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Package::SetExercisePaths
-// Created: BAX 2012-06-04
-// -----------------------------------------------------------------------------
-void Package::SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const
+namespace
 {
-    Package_ABC::T_Item next = Find( Dependency( "exercise", name ) );
-    if( next )
-        next->SetExercisePaths( *this, model, terrain, exercise );
+Tree Link( const Package_ABC::T_Item& item, const Package_ABC& pkg, bool recurse )
+{
+    Tree dst;
+    if( item )
+        item->Link( dst, pkg, recurse );
+    return dst;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::LinkExercise
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+Tree Package::LinkItem( const std::string& name )
+{
+    return Link( Find( Dependency( "exercise", name ), true ), *this, true );
+}
+
+namespace
+{
+void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pkg )
+{
+    const Path root = Utf8Convert( src.get< std::string >( key + ".root" ) );
+    const std::string checksum = src.get< std::string >( key + ".checksum" );
+    Package_ABC::T_Item item = pkg.Find( root, checksum, false );
+    if( item )
+        item->Link( dst, pkg, false );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::LinkExercise
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+Tree Package::LinkItem( const Tree& tree )
+{
+    Tree dst;
+    Link( dst, tree, "exercise", *this );
+    Link( dst, tree, "terrain", *this );
+    Link( dst, tree, "model", *this );
+    return dst;
+}
+
+namespace
+{
+void Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const std::string& key, const Package_ABC& pkg )
+{
+    Package_ABC::T_Item item = pkg.Find( Dependency( key, src.get< std::string >( key + ".name" ) ), false );
+    if( item )
+        item->Unlink( async, system );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::UnlinkExercise
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+void Package::UnlinkItem( Async& async, const Tree& src )
+{
+    Unlink( async, system_, src, "exercise", *this );
+    Unlink( async, system_, src, "terrain", *this );
+    Unlink( async, system_, src, "model", *this );
 }

@@ -375,10 +375,3 @@ size_t NodeController::CountExercises( const Uuid& id ) const
     T_Node node = nodes_->Get( id );
     return node ? node->CountExercises() : 0;
 }
-
-void NodeController::SetExercisePaths( const Uuid& id, const std::string& name, Path& model, Path& terrain, Path& exercise ) const
-{
-    T_Node node = nodes_->Get( id );
-    if( node )
-        node->SetExercisePaths( name, model, terrain, exercise );
-}

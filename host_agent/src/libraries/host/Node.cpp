@@ -112,8 +112,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , async_    ( new Async( pool ) )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
-    const Path next = cache == boost::none ? Path() : Utf8Convert( *cache );
-    async_->Post( boost::bind( &Node::ParsePackages, this, next ) );
+    ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,13 +326,11 @@ Tree Node::GetCache() const
 // -----------------------------------------------------------------------------
 Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 {
-    const Path other = system_.MakeAnyPath( root_ );
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    install_->Move( other, ids );
+    install_->Uninstall( root_, ids );
     install_->Identify( *install_ );
     if( cache_ )
         cache_->Identify( *install_ );
-    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
     return install_->GetProperties();
 }
 
@@ -358,14 +355,12 @@ Tree Node::DeleteCache()
 // -----------------------------------------------------------------------------
 Tree Node::InstallFromCache( const std::vector< size_t >& list )
 {
-    const Path other = system_.MakeAnyPath( root_ );
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( !cache_ )
         return Tree();
-    install_->Install( other, *cache_, list );
+    install_->Install( root_, *cache_, list );
     ParseInline( packages_, install_, root_ / "install" );
     cache_->Identify( *install_ );
-    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, other ) );
     return cache_->GetProperties();
 }
 
@@ -390,11 +385,31 @@ size_t Node::CountExercises() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::SetExercisePaths
-// Created: BAX 2012-06-04
+// Name: Node::LinkExercise
+// Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-void Node::SetExercisePaths( const std::string& name, Path& model, Path& terrain, Path& exercise ) const
+Tree Node::LinkExercise( const std::string& name ) const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    install_->SetExercisePaths( name, model, terrain, exercise );
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    return install_->LinkItem( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::LinkExercise
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+Tree Node::LinkExercise( const Tree& tree ) const
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    return install_->LinkItem( tree );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::UnlinkExercise
+// Created: BAX 2012-06-06
+// -----------------------------------------------------------------------------
+void Node::UnlinkExercise( const Tree& tree ) const
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    install_->UnlinkItem( *async_, tree );
 }

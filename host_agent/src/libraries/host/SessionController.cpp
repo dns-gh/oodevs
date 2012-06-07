@@ -151,7 +151,7 @@ void SessionController::Create( Session_ABC& session, bool isReload )
     LOG_INFO( log_ ) << "[session] " << ( isReload ? "Reloaded " : "Added " )
                      << session.GetId() << " "
                      << session.GetName() << " "
-                     << session.GetExercise() << " :" << session.GetPort();
+                     << Utf8Convert( session.GetExercise() ) << " :" << session.GetPort();
     if( isReload )
         return Save( session );
     Start( session, true );
@@ -191,20 +191,9 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     Stop( *session, true );
+    session->Unlink();
     async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
     return session;
-}
-
-namespace
-{
-void WriteSettings( const FileSystem_ABC& system, const Session_ABC& session, const Path& cfg )
-{
-    const Path file = cfg / "session.xml";
-    if( system.IsFile( file ) )
-        return;
-    system.MakePaths( cfg );
-    system.WriteFile( file, session.GetConfiguration() );
-}
 }
 
 // -----------------------------------------------------------------------------
@@ -213,15 +202,11 @@ void WriteSettings( const FileSystem_ABC& system, const Session_ABC& session, co
 // -----------------------------------------------------------------------------
 boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Session_ABC& session ) const
 {
-    const std::string name = session.GetExercise();
-    Path model, terrain, exercise;
-    nodes_.SetExercisePaths( session.GetNode(), name, model, terrain, exercise );
-    WriteSettings( system_, session, exercise / "exercises" / name / "sessions" / boost::lexical_cast< std::string >( session.GetId() ) );
     return runtime_.Start( Utf8Convert( apps_ / "simulation_app.exe" ), boost::assign::list_of
-        ( MakeOption( "exercises-dir", Utf8Convert( exercise / "exercises" ) ) )
-        ( MakeOption( "terrains-dir", Utf8Convert( terrain / "data" / "terrains" ) ) )
-        ( MakeOption( "models-dir", Utf8Convert( model / "data" / "models" ) ) )
-        ( MakeOption( "exercise", name ) )
+        ( MakeOption( "exercises-dir", Utf8Convert( session.GetPath( "exercise" ) ) ) )
+        ( MakeOption( "terrains-dir", Utf8Convert( session.GetPath( "terrain" ) ) ) )
+        ( MakeOption( "models-dir", Utf8Convert( session.GetPath( "model" ) ) ) )
+        ( MakeOption( "exercise", Utf8Convert( session.GetExercise() ) ) )
         ( MakeOption( "session",  session.GetId() ) ),
         Utf8Convert( apps_ ),
         Utf8Convert( session.GetRoot() / "session.log" ) );
@@ -259,7 +244,7 @@ SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void SessionController::Start( Session_ABC& session, bool mustSave ) const
 {
-    bool valid = session.Start( boost::bind( &SessionController::StartWith, this, _1 ) );
+    bool valid = session.Start( system_, boost::bind( &SessionController::StartWith, this, _1 ) );
     if( valid || mustSave )
         Save( session );
 }
