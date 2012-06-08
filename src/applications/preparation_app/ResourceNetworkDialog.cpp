@@ -20,6 +20,7 @@
 #include "clients_kernel/Usages_ABC.h"
 #include "preparation/ResourceNetworkAttribute.h"
 #include "preparation/StaticModel.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 using namespace kernel;
 
@@ -32,8 +33,7 @@ ResourceNetworkDialog::ResourceNetworkDialog( QMainWindow* parent, Controllers& 
     , staticModel_( staticModel )
     , resolver_   ( resolver )
 {
-    stockBox_->show();
-    generateProduction_->show();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -152,4 +152,23 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
         consumption = std::max( static_cast< int >( consumption + childMaxConsumption * node->links_.size() - node->production_ ), 0 );
     }
     return consumption;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkDialog::NotifyModeChanged
+// Created: ABR 2012-06-08
+// -----------------------------------------------------------------------------
+void ResourceNetworkDialog::NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    ResourceLinksDialog_ABC::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    if( newMode == ePreparationMode_Exercise )
+    {
+        generateProduction_->setVisible( true );
+        stockBox_->setVisible( true );
+    }
+    else if( newMode == ePreparationMode_Terrain )
+    {
+        generateProduction_->setVisible( false );
+        stockBox_->setVisible( false );
+    }
 }
