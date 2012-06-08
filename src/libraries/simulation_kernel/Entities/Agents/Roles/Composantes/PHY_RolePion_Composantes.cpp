@@ -264,8 +264,8 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
         const PHY_ComposantePion& composante = **it;
 
         xos.start( "equipment" );
-        xos.attribute( "state", composante.GetType().GetName() );
-        xos.attribute( "type", composante.GetState().GetName() );
+        xos.attribute( "state", composante.GetState().GetName() );
+        xos.attribute( "type", composante.GetType().GetName() );
         if( composante.GetState() == PHY_ComposanteState::repairableWithEvacuation_ )
         {
             const PHY_Breakdown* breakdown = composante.GetBreakdown();
