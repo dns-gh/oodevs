@@ -76,7 +76,7 @@ namespace
 
     bool StringCompare( const wchar_t* actual, const std::string& expected )
     {
-        return Utf8Convert( actual ) == expected;
+        return Utf8Convert( std::wstring( actual ) ) == expected;
     }
 
     void ExpectOpenProcess( MockApi& api, void* handle, int pid )
