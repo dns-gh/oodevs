@@ -11,6 +11,7 @@
 #define __kernel_Architecture_h_
 
 #include "Architecture_ABC.h"
+#include "Units.h"
 
 namespace kernel
 {
@@ -36,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( const ObjectTypes& objectTypes, float height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
+    virtual void Initialize( const ObjectTypes& objectTypes, unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" );
     virtual const MaterialCompositionType& GetMaterial() const;
     virtual const RoofShapeType& GetRoofShape() const;
@@ -56,14 +57,14 @@ protected:
 protected:
     //! @name Member Data
     //@{
-    PropertiesDictionary&    dictionary_;
-    MaterialCompositionType* material_;
-    RoofShapeType*           roofShape_;
-    float                    height_;
-    unsigned int             floorNumber_;
-    unsigned int             parkingFloors_;
-    unsigned int             occupation_;
-    float                    trafficability_;
+    PropertiesDictionary&       dictionary_;
+    MaterialCompositionType*    material_;
+    RoofShapeType*              roofShape_;
+    UnitedValue< unsigned int > height_;
+    unsigned int                floorNumber_;
+    unsigned int                parkingFloors_;
+    UnitedValue< unsigned int > occupation_;
+    UnitedValue< float >        trafficability_;
     //@}
 };
 
