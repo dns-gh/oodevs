@@ -165,6 +165,15 @@ void ModelBuilder::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelBuilder::DeleteBlocks
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void ModelBuilder::DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects )
+{
+    model_.urban_.DeleteBlocks( urbanObjects );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelBuilder::NotifyContextMenu
 // Created: SBO 2006-11-28
 // -----------------------------------------------------------------------------

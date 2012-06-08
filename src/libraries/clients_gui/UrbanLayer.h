@@ -71,12 +71,12 @@ private:
     //! @name Member data
     //@{
     View_ABC& view_;
-    std::vector< const kernel::UrbanObject_ABC* > actualSelection_;
     //@}
 
 protected:
     //! @name Member data
     //@{
+    std::vector< const kernel::UrbanObject_ABC* > actualSelection_;
     kernel::Controllers& controllers_;
     //@}
 };

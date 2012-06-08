@@ -15,6 +15,7 @@
 #include "InhabitantPositions_ABC.h"
 #include "geometry/types.h"
 #include <boost/tuple/tuple.hpp>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
@@ -43,6 +44,8 @@ class UrbanModel;
 class InhabitantPositions : public InhabitantPositions_ABC
                           , public kernel::Serializable_ABC
                           , public kernel::Drawable_ABC
+                          , public tools::Observer_ABC
+                          , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
 public:
     //! @name Types
@@ -82,6 +85,8 @@ public:
     void Update( const geometry::Point2f& point );
     void Accept();
     void Reject();
+
+    virtual void NotifyDeleted( const kernel::UrbanObject_ABC& block );
     //@}
 
 private:

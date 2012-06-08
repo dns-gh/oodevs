@@ -279,7 +279,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     gui::Layer_ABC& raster                  = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer_ABC& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer_ABC& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    gui::Layer_ABC& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile, *simpleFilter_ );
     gui::Layer_ABC& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer_ABC& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
     gui::Layer_ABC& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );

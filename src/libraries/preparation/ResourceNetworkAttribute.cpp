@@ -12,6 +12,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/Options.h"
@@ -39,6 +40,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
     xis >> xml::optional >> xml::start( "resources" )
             >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode )
         >> xml::end;
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +56,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
     , resources_  ( resources )
     , needSaving_ ( needSaving )
 {
-    // NOTHING
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +65,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::~ResourceNetworkAttribute()
 {
-    // NOTHING
+    controllers_.controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +181,24 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
         }
         xos << xml::end;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::NotifyDeleted
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::NotifyDeleted( const kernel::Object_ABC& object )
+{
+    RemoveLinks( false, object.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::NotifyDeleted
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::NotifyDeleted( const kernel::UrbanObject_ABC& object )
+{
+    RemoveLinks( true, object.GetId() );
 }
 
 // -----------------------------------------------------------------------------

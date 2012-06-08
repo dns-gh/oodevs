@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "UrbanLayer.h"
 #include "preparation/UrbanHierarchies.h"
+#include "preparation/UrbanModel.h"
 #include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -17,8 +18,9 @@
 // Created: LGY 2012-01-06
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                        gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter)
+                        gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter)
     : gui::UrbanLayer( controllers, tools, strategy, view, profile, filter )
+    , model_( model )
 {
     // NOTHING
 }
@@ -65,4 +67,16 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& 
     if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() == ePreparationMode_LivingArea )
         return false;
     return gui::UrbanLayer::HandleMousePress( event, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::HandleKeyPress
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+bool UrbanLayer::HandleKeyPress( QKeyEvent* key )
+{
+    if( key->key() != Qt::Key_Delete || ( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_Terrain ) || actualSelection_.empty() )
+        return false;
+    model_.DeleteBlocks( actualSelection_ );
+    return true;
 }

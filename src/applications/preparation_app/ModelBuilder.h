@@ -25,6 +25,7 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class Ghost_ABC;
+    class UrbanObject_ABC;
 }
 
 class Model;
@@ -62,6 +63,7 @@ public:
     void CreateLimit( const T_PointVector& points );
     void CreateLima( const T_PointVector& points );
     void CreateCityOrDistrict( kernel::Entity_ABC* parent );
+    void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteEntity( const kernel::Entity_ABC& entity );
     //@}
 

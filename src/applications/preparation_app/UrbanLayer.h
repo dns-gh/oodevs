@@ -27,6 +27,8 @@ namespace gui
     class LayerFilter_ABC;
 }
 
+class UrbanModel;
+
 // =============================================================================
 /** @class  UrbanLayer
     @brief  Urban layer
@@ -39,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                         gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
+                         gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
     virtual ~UrbanLayer();
     //@}
 
@@ -48,6 +50,13 @@ public:
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleKeyPress( QKeyEvent* key );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    UrbanModel& model_;
     //@}
 };
 

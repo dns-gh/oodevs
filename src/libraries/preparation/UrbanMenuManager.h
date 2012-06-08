@@ -55,6 +55,7 @@ private slots:
     //! @name Slots
     //@{
     void OnCreateDistrict();
+    void OnDelete();
     //@}
 
 private:

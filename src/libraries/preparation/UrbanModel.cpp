@@ -28,6 +28,7 @@
 #include "tools/SchemaWriter_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
+#include <QtGui/qmessagebox.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( disable : 4355 )
@@ -230,7 +231,6 @@ void UrbanModel::ReadCity( xml::xistream& xis )
                 >> xml::start( "urban-objects" )
                     >> xml::list( "urban-object", *this, &UrbanModel::ReadDistrict, ptr )
                >> xml::end;
-        //ptr->ComputeConvexHull(); // needed ?
     }
 }
 
@@ -250,7 +250,6 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
             >> xml::start( "urban-objects" )
                 >> xml::list( "urban-object", *this, &UrbanModel::ReadBlock, ptr )
             >> xml::end;
-        //ptr->ComputeConvexHull(); // needed ?
     }
 }
 
@@ -433,24 +432,64 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::DeleteBlocs
+// Name: UrbanModel::DeleteBlock
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::DeleteBlocks( const kernel::UrbanObject_ABC& urbanObject )
+void UrbanModel::DeleteBlock( const kernel::UrbanObject_ABC& urbanObject )
 {
-    const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() );
+    const UrbanHierarchies& hierarchy = static_cast< const UrbanHierarchies& >( urbanObject.Get< kernel::Hierarchies >() );
+    if( hierarchy.GetSuperior() )
+        const_cast< kernel::Entity_ABC* >( hierarchy.GetSuperior() )->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
     tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        DeleteBlocks( static_cast< const kernel::UrbanObject_ABC& >( child ) );
+        DeleteBlock( static_cast< const kernel::UrbanObject_ABC& >( child ) );
     }
-    controllers_.controller_.Delete< kernel::UrbanObject_ABC >( urbanObject );
     Remove( urbanObject.GetId() );
+    delete &urbanObject;
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::DeleteBlocs
+// Name: UrbanModel::DeleteBlocks
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void UrbanModel::DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects )
+{
+    if( QMessageBox::warning( 0, tools::translate( "UrbanModel", "Warning" ), tools::translate( "UrbanModel", "Delete all selected elements?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+        return;
+    std::set< const kernel::UrbanObject_ABC* > toDelete;
+    for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = urbanObjects.begin(); it != urbanObjects.end(); ++it )
+    {
+        const kernel::UrbanObject_ABC* object = *it;
+        if( !object )
+            continue;
+        const UrbanHierarchies* hierarchy = static_cast< const UrbanHierarchies* >( object->Retrieve< kernel::Hierarchies >() );
+        if( !hierarchy )
+            return;
+        if( hierarchy->GetLevel() == eUrbanLevelCity )
+            toDelete.insert( object );
+        else if( hierarchy->GetLevel() == eUrbanLevelDistrict )
+        {
+            if( hierarchy->GetSuperior() && std::find( urbanObjects.begin(), urbanObjects.end(), hierarchy->GetSuperior() ) == urbanObjects.end() )
+                toDelete.insert( object );
+        }
+        else if( hierarchy->GetLevel() == eUrbanLevelBlock )
+        {
+            if( hierarchy->GetSuperior() && std::find( urbanObjects.begin(), urbanObjects.end(), hierarchy->GetSuperior() ) == urbanObjects.end() )
+            {
+                const kernel::Hierarchies* district = hierarchy->GetSuperior()->Retrieve< kernel::Hierarchies >();
+                if( district && district->GetSuperior() && std::find( urbanObjects.begin(), urbanObjects.end(), district->GetSuperior() ) == urbanObjects.end() )
+                    toDelete.insert( object );
+            }
+        }
+    }
+    for( std::set< const kernel::UrbanObject_ABC* >::const_iterator itDelete = toDelete.begin(); itDelete != toDelete.end(); ++itDelete )
+        DeleteBlock( **itDelete );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::DeleteBlocks
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
 void UrbanModel::DeleteBlocks( int minimumArea )
@@ -463,7 +502,7 @@ void UrbanModel::DeleteBlocks( int minimumArea )
             if( hierarchy->GetLevel() == eUrbanLevelBlock )
                 if( const kernel::UrbanPositions_ABC* position = urbanObject.Retrieve< kernel::UrbanPositions_ABC >() )
                     if( position->ComputeArea() < minimumArea )
-                        DeleteBlocks( urbanObject );
+                        DeleteBlock( urbanObject );
     }
 }
 

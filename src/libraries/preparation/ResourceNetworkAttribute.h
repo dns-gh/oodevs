@@ -13,7 +13,8 @@
 #include "Overridable_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
+#include <tools/ElementObserver_ABC.h>
 
 namespace kernel
 {
@@ -37,6 +38,9 @@ namespace xml
 class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
                                , public kernel::Serializable_ABC
                                , public Overridable_ABC
+                               , public tools::Observer_ABC
+                               , public tools::ElementObserver_ABC< kernel::Object_ABC >
+                               , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {
 private:
     //! @name Types
@@ -64,6 +68,8 @@ public:
     virtual bool IsOverriden() const;
     void Update( xml::xistream& xis );
     void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
+    virtual void NotifyDeleted( const kernel::Object_ABC& object );
+    virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     //@}
 
     //! @name Serializable_ABC

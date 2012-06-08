@@ -145,6 +145,32 @@ void UrbanListView::OnCreateCity()
     modelBuilder_.CreateCityOrDistrict( 0 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: UrbanListView::keyPressEvent
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void UrbanListView::keyPressEvent( QKeyEvent* key )
+{
+    if( GetCurrentMode() == ePreparationMode_Terrain && key->key() == Qt::Key_Delete )
+    {
+        std::vector< const kernel::UrbanObject_ABC* > blocks;
+        Q3ListViewItemIterator it( this );
+        while( gui::ValuedListItem* item = dynamic_cast< gui::ValuedListItem* >( *it ) )
+        {
+            if( item->isSelected() && item->IsA< const kernel::Entity_ABC >() )
+                blocks.push_back( static_cast< const kernel::UrbanObject_ABC* >( item->GetValueNoCheck< const kernel ::Entity_ABC >() ) );
+            ++it;
+        }
+        if( !blocks.empty() )
+        {
+            modelBuilder_.DeleteBlocks( blocks );
+            key->accept();
+            return;
+        }
+    }
+    gui::EntityListView::keyPressEvent( key );
+}
+
 namespace
 {
     struct sUrbanDrag {};
@@ -156,7 +182,7 @@ namespace
 // -----------------------------------------------------------------------------
 Q3DragObject* UrbanListView::dragObject()
 {
-    if( GetCurrentMode() != ePreparationMode_Terrain)
+    if( GetCurrentMode() != ePreparationMode_Terrain )
         return 0;
     gui::EntityListView::dragObject();
     dragged_.clear();
