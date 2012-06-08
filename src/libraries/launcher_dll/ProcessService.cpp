@@ -263,11 +263,11 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
 
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), false, false, endpoint, true ) );
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), false, false, endpoint ) );
     else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, false, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, true ) );
+        command.reset( new frontend::StartDispatcher( config_, false, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint ) );
     else
-        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, false, endpoint, true ) );
+        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, false, endpoint ) );
 
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
