@@ -203,6 +203,7 @@ namespace mocks
         MOCK_METHOD( Unpack, 2 );
         MOCK_METHOD( Checksum, 2 );
         MOCK_METHOD( MakeAnyPath, 1 );
+        MOCK_METHOD( GetLastWrite, 1 );
     };
 
     MOCK_BASE_CLASS( MockUnpack, host::Unpacker_ABC )

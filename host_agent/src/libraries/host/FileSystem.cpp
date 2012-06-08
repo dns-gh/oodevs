@@ -442,3 +442,12 @@ Path FileSystem::MakeAnyPath( const Path& root ) const
             return next;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::GetLastWrite
+// Created: BAX 2012-06-08
+// -----------------------------------------------------------------------------
+std::time_t FileSystem::GetLastWrite( const Path& file ) const
+{
+    return boost::filesystem::last_write_time( file );
+}

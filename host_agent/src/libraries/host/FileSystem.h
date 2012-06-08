@@ -53,6 +53,7 @@ public:
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const;
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate = T_Predicate() ) const;
     virtual Path MakeAnyPath( const Path& root ) const;
+    virtual std::time_t GetLastWrite( const Path& file ) const;
     //@}
 
 private:

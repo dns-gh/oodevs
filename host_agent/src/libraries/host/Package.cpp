@@ -405,11 +405,6 @@ std::string Format( const std::time_t& time )
     return std::string( tmp, size );
 }
 
-std::string GetDate( const Path& file )
-{
-    return Format( boost::filesystem::last_write_time( file ) );
-}
-
 Path PopFilename( Path& path )
 {
     Path reply = path.filename();
@@ -436,7 +431,7 @@ void AttachItem( Async& async, const FileSystem_ABC& system, T& items, const U& 
 struct Model : public Item
 {
     Model( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
-        : Item( system, root, id, Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), GetDate( file ), meta )
+        : Item( system, root, id, Utf8Convert( Path( file ).remove_filename().remove_filename().filename() ), Format( system.GetLastWrite( file ) ), meta )
     {
         // NOTHING
     }
@@ -462,7 +457,7 @@ struct Model : public Item
 struct Terrain : public Item
 {
     Terrain( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta )
-        : Item( system, root, id, GetFilename( file, "terrains" ), GetDate( file ), meta )
+        : Item( system, root, id, GetFilename( file, "terrains" ), Format( system.GetLastWrite( file ) ), meta )
     {
         // NOTHING
     }
@@ -511,7 +506,7 @@ struct Dependency : public Item
 struct Exercise : public Item
 {
     Exercise( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
-        : Item     ( system, root, id, GetFilename( file, "exercises" ), GetDate( file ), meta )
+        : Item     ( system, root, id, GetFilename( file, "exercises" ), Format( system.GetLastWrite( file ) ), meta )
         , briefing_( Get( more, "exercise.meta.briefing.text" ) )
         , model_   ( Get( more, "exercise.model.<xmlattr>.dataset" ) )
         , terrain_ ( Get( more, "exercise.terrain.<xmlattr>.name" ) )
