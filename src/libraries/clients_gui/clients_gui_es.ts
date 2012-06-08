@@ -162,6 +162,37 @@
     </message>
 </context>
 <context>
+    <name>gui::ConsistencyDialog_ABC</name>
+    <message>
+        <source>Consistency analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished">Nivel</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+</context>
+<context>
     <name>gui::ConstructionPrototype_ABC</name>
     <message>
         <source>Construction</source>

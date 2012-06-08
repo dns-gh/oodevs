@@ -1182,6 +1182,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

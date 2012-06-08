@@ -22,6 +22,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class ColorEditor_ABC;
+    class ConsistencyDialog_ABC;
     class EntitySymbols;
     class ItemFactory_ABC;
     class LightingProxy;
@@ -39,7 +40,6 @@ namespace tools
 class ExerciseDialog;
 class FilterDialogs;
 class Model;
-class ModelConsistencyDialog;
 class PerformanceDialog;
 class ProfileDialog;
 class ProfileWizardDialog;
@@ -79,7 +79,7 @@ public:
     ScoreDialog& GetScoreDialog() const;
     SuccessFactorDialog& GetSuccessFactorDialog() const;
     ExerciseDialog& GetExerciseDialog() const;
-    ModelConsistencyDialog& GetConsistencyDialog() const;
+    gui::ConsistencyDialog_ABC& GetConsistencyDialog() const;
     PerformanceDialog& GetPerformanceDialog() const;
     FilterDialogs& GetFiltersDialog() const;
     //@}
@@ -87,15 +87,15 @@ public:
 private:
     //! @name Member data
     //@{
-    gui::PreferencesDialog* prefDialog_;
-    ProfileDialog*          profileDialog_;
-    ProfileWizardDialog*    profileWizardDialog_;
-    ScoreDialog*            scoreDialog_;
-    SuccessFactorDialog*    successFactorDialog_;
-    ExerciseDialog*         exerciseDialog_;
-    ModelConsistencyDialog* consistencyDialog_;
-    PerformanceDialog*      performanceDialog_;
-    FilterDialogs*          filtersDialog_;
+    gui::PreferencesDialog*     prefDialog_;
+    ProfileDialog*              profileDialog_;
+    ProfileWizardDialog*        profileWizardDialog_;
+    ScoreDialog*                scoreDialog_;
+    SuccessFactorDialog*        successFactorDialog_;
+    ExerciseDialog*             exerciseDialog_;
+    gui::ConsistencyDialog_ABC* consistencyDialog_;
+    PerformanceDialog*          performanceDialog_;
+    FilterDialogs*              filtersDialog_;
     //@}
 };
 

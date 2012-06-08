@@ -10,7 +10,7 @@
 #ifndef __ModelConsistencyChecker_h_
 #define __ModelConsistencyChecker_h_
 
-#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ConsistencyChecker_ABC.h"
 #include "ConsistencyErrorTypes.h"
 #include <boost/noncopyable.hpp>
 
@@ -34,8 +34,10 @@ class StaticModel;
 */
 // Created: ABR 2011-09-22
 // =============================================================================
-class ModelConsistencyChecker : private boost::noncopyable
+class ModelConsistencyChecker : public kernel::ConsistencyChecker< E_ConsistencyCheck, kernel::SafePointer< kernel::Entity_ABC > >
 {
+    typedef kernel::ConsistencyChecker< E_ConsistencyCheck, kernel::SafePointer< kernel::Entity_ABC > > T_Parent;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,28 +46,8 @@ public:
     //@}
 
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< kernel::SafePointer< kernel::Entity_ABC >* > T_SafeEntities;
-    typedef T_SafeEntities::iterator                                 IT_SafeEntities;
-    typedef T_SafeEntities::const_iterator                          CIT_SafeEntities;
-
-    struct ConsistencyError
-    {
-        ConsistencyError( E_ConsistencyCheck type ) : type_( type ) {}
-
-        E_ConsistencyCheck type_;
-        T_SafeEntities     entities_;
-        std::string        optional_;
-    };
-    //@}
-
     //! @name Typedef
     //@{
-    typedef std::vector< ConsistencyError >       T_ConsistencyErrors;
-    typedef T_ConsistencyErrors::iterator        IT_ConsistencyErrors;
-    typedef T_ConsistencyErrors::const_iterator CIT_ConsistencyErrors;
-
     typedef std::vector< const kernel::Entity_ABC* > T_Entities;
     typedef T_Entities::iterator                    IT_Entities;
     typedef T_Entities::const_iterator             CIT_Entities;
@@ -73,14 +55,12 @@ public:
 
     //! @name Operations
     //@{
-    const T_ConsistencyErrors& GetConsistencyErrors() const;
-    bool CheckConsistency( bool( *IsError )( E_ConsistencyCheck type ) );
+    virtual bool CheckConsistency();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ClearErrors();
     void AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional = "" );
     void FillEntitiesCopy( E_ConsistencyCheck type );
     void CheckUniqueness( E_ConsistencyCheck type, bool ( *comparator )( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) );
@@ -107,7 +87,6 @@ private:
     const Model&         model_;
     const StaticModel&   staticModel_;
     kernel::Controllers& controllers_;
-    T_ConsistencyErrors  errors_;
     T_Entities           entities_;
     const tools::RealFileLoaderObserver_ABC& fileLoaderObserver_;
     //@}

@@ -699,6 +699,9 @@
     <ClInclude Include="..\..\src\applications\preparation_app\UrbanInfosDockWidget.h">
       <Filter>Source Files\Panels\Urban</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -879,9 +882,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
-      <Filter>Source Files\Dialogs\Consistency</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterInputArgument.h">
       <Filter>Source Files\Dialogs\Filter</Filter>

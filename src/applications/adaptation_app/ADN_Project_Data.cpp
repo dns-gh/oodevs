@@ -14,7 +14,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_OpenFile_Exception.h"
-#include "ADN_Resources.h"
+#include "XmlResources.cpp"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "tools/Loader_ABC.h"

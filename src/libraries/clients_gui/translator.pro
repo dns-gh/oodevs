@@ -10,6 +10,7 @@ BypassPrototype_ABC.cpp \
 ChangeSuperiorDialog.cpp \
 ClearButton.cpp \
 ColorButton.cpp \
+ConsistencyDialog_ABC.cpp \
 ConstructionPrototype_ABC.cpp \
 ComboTableItem.cpp \
 CoordinateSystemsPanel.cpp \

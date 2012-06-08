@@ -10,8 +10,6 @@
 #ifndef __VariantPointer_h_
 #define __VariantPointer_h_
 
-//#include <QMetaType>
-
 namespace kernel
 {
 
@@ -37,7 +35,8 @@ public:
     //@}
 };
 
-}
+} //! namespace kernel
+
 Q_DECLARE_METATYPE( kernel::VariantPointer )
 
 #endif // __VariantPointer_h_

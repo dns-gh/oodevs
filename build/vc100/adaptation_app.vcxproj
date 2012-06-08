@@ -154,6 +154,8 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.cpp" />
@@ -1842,22 +1844,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ProgressIndicator_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SplashScreen.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\UnitsFilter.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\XmlResources.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debug|win32'">true</ExcludedFromBuild>
@@ -1946,6 +1932,22 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyErrorTypes.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Data_Container.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.h">
@@ -3965,7 +3967,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl" />
@@ -3999,9 +4000,6 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl" />
     <None Include="..\..\src\applications\adaptation_app\res\checked_box.xpm" />
     <None Include="..\..\src\applications\adaptation_app\res\empty_box.xpm" />
-    <None Include="..\..\src\applications\adaptation_app\res\filenew.xpm" />
-    <None Include="..\..\src\applications\adaptation_app\res\fileopen.xpm" />
-    <None Include="..\..\src\applications\adaptation_app\res\filesave.xpm" />
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_es.ts" />
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_fr.ts">
       <SubType>Designer</SubType>

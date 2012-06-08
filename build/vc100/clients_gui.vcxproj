@@ -103,6 +103,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ColorController.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ComboTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CommonDelegate.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListEditor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
@@ -483,6 +484,20 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ColorController.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ContourLinesObserver.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListEditor.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -498,6 +513,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemFactory_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\Logger.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -2307,6 +2323,7 @@
       <SubType>Designer</SubType>
     </CustomBuild>
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
+    <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />

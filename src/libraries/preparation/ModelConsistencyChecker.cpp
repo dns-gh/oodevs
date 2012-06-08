@@ -84,15 +84,6 @@ ModelConsistencyChecker::~ModelConsistencyChecker()
     entities_.clear();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ModelConsistencyChecker::GetConsistencyErrors
-// Created: ABR 2011-09-22
-// -----------------------------------------------------------------------------
-const ModelConsistencyChecker::T_ConsistencyErrors& ModelConsistencyChecker::GetConsistencyErrors() const
-{
-    return errors_;
-}
-
 namespace
 {
     class EntityWithLongNameExtractor : private boost::noncopyable
@@ -134,7 +125,7 @@ namespace
 // Name: ModelConsistencyChecker::CheckConsistency
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-bool ModelConsistencyChecker::CheckConsistency( bool( *IsError )( E_ConsistencyCheck type ) )
+bool ModelConsistencyChecker::CheckConsistency()
 {
     ClearErrors();
 
@@ -165,29 +156,9 @@ bool ModelConsistencyChecker::CheckConsistency( bool( *IsError )( E_ConsistencyC
 
     CheckFiles();
 
-    bool isValid = true;
-    for( IT_ConsistencyErrors it = errors_.begin(); it != errors_.end(); ++it )
-        if( IsError( it->type_ ) )
-        {
-            isValid = false;
-            break;
-        }
-    const_cast< Model& >( model_ ).SetExerciseValidity( isValid );
-
     return !errors_.empty();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ModelConsistencyChecker::ClearErrors
-// Created: JSR 2011-12-06
-// -----------------------------------------------------------------------------
-void ModelConsistencyChecker::ClearErrors()
-{
-    for( IT_ConsistencyErrors it = errors_.begin(); it != errors_.end(); ++it )
-        for( IT_SafeEntities entityIt = it->entities_.begin(); entityIt != it->entities_.end(); ++entityIt )
-            delete *entityIt;
-    errors_.clear();
-}
 
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::FillEntitiesCopy
@@ -280,21 +251,21 @@ void ModelConsistencyChecker::CheckUniqueness( E_ConsistencyCheck type, bool ( *
             if( ( *comparator )( entity1, entity2 ) )
             {
                 bool bFound = false;
-                for( CIT_SafeEntities safeIt = error.entities_.begin(); safeIt != error.entities_.end(); ++safeIt )
+                for( CIT_Items safeIt = error.items_.begin(); safeIt != error.items_.end(); ++safeIt )
                     if( **safeIt == &entity1 )
                     {
                         bFound = true;
                         break;
                     }
                 if( !bFound )
-                    error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity1 ) );
-                error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity2 ) );
+                    error.items_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity1 ) );
+                error.items_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity2 ) );
                 iter = entities_.erase( iter );
             }
             else
                 ++iter;
         }
-        if( !error.entities_.empty() )
+        if( !error.items_.empty() )
             errors_.push_back( error );
     }
 }
@@ -735,12 +706,10 @@ void ModelConsistencyChecker::CheckFiles()
 
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::AddError
-// Created: ABR 2011-09-27
+// Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
-void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const Entity_ABC* entity, const std::string& optional /*= ""*/ )
+void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional /*= ""*/ )
 {
-    ConsistencyError error( type );
-    error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, entity ) );
-    error.optional_ = optional;
-    errors_.push_back( error );
+    kernel::SafePointer< kernel::Entity_ABC >* safePtr = new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity );
+    T_Parent::AddError( type, safePtr, optional );
 }

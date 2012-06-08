@@ -1232,10 +1232,6 @@ Do you want to save the terrain &apos;%1&apos;?</source>
 <context>
     <name>ModelConsistencyDialog</name>
     <message>
-        <source>Consistency analysis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1246,14 +1242,6 @@ Do you want to save the terrain &apos;%1&apos;?</source>
     <message>
         <source>Description</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
     </message>
     <message>
         <source>Duplicate long name for units %1.</source>
@@ -1308,31 +1296,11 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ghost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unicity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Long name size limit exceeded : %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Allocated stocks of nature %1 exceed max capacity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1345,10 +1313,6 @@ Do you want to save the terrain &apos;%1&apos;?</source>
     </message>
     <message>
         <source>Unknown population type &quot;%1&quot;, some populations could not be loaded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Command Post</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1372,22 +1336,6 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">Alerta</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No valid logistic base defined.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1401,6 +1349,30 @@ Do you want to save the terrain &apos;%1&apos;?</source>
     </message>
     <message>
         <source>Logistic base&apos;s party differs from object&apos;s party.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ghost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
