@@ -11,6 +11,7 @@
 #include "ADN_ConsistencyDialog.h"
 #include "moc_ADN_ConsistencyDialog.cpp"
 #include "clients_gui/FilterProxyModel.h"
+#include "clients_kernel/VariantPointer.h"
 #include <boost/assign/list_of.hpp>
 
 namespace
@@ -79,7 +80,7 @@ ADN_ConsistencyDialog::~ADN_ConsistencyDialog()
 void ADN_ConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 {
     // Go select the right item
-    const ADN_ConsistencyChecker::T_Items* gotoList = static_cast< const ADN_ConsistencyChecker::T_Items* >( index.data( Qt::UserRole ).value< gui::VariantPointer >().ptr_ );
+    const ADN_ConsistencyChecker::T_Items* gotoList = static_cast< const ADN_ConsistencyChecker::T_Items* >( index.data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ );
     assert( gotoList );
     if( gotoList->size() == 1 )
     {

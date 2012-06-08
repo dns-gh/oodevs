@@ -50,7 +50,7 @@ void ConsistencyDialog< EnumError, TargetItem >::AddIcon( const TargetItem& targ
     QStandardItem* item = new QStandardItem( qApp->style()->standardIcon( isError ? QStyle::SP_MessageBoxCritical : QStyle::SP_MessageBoxWarning ), "" );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();
-    variant->setValue( VariantPointer( &targetItem ) );
+    variant->setValue( kernel::VariantPointer( &targetItem ) );
     item->setData( *variant, Qt::UserRole );
     QVariant* errorType = new QVariant( type );
     item->setData( *errorType, Qt::UserRole + 1 );
@@ -69,7 +69,7 @@ void ConsistencyDialog< EnumError, TargetItem >::AddItem( T data, QString text, 
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();
-    variant->setValue( VariantPointer( &targetItem ) );
+    variant->setValue( kernel::VariantPointer( &targetItem ) );
     item->setData( *variant, Qt::UserRole );
     QVariant* errorType = new QVariant( type );
     item->setData( *errorType, Qt::UserRole + 1 );

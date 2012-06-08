@@ -15,6 +15,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/VariantPointer.h"
 #include "preparation/ModelConsistencyChecker.h"
 #include "tools/Loader_ABC.h"
 #include <boost/assign/list_of.hpp>
@@ -128,7 +129,7 @@ ModelConsistencyDialog::~ModelConsistencyDialog()
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 {
-    const kernel::SafePointer< kernel::Entity_ABC >* entity = static_cast< const kernel::SafePointer< kernel::Entity_ABC >* >( index.data( Qt::UserRole ).value< gui::VariantPointer >().ptr_ );
+    const kernel::SafePointer< kernel::Entity_ABC >* entity = static_cast< const kernel::SafePointer< kernel::Entity_ABC >* >( index.data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ );
     if( entity && *entity )
     {
         ( *entity )->Select( actionController_ );

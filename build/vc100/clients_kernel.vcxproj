@@ -298,6 +298,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Usages.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h" />

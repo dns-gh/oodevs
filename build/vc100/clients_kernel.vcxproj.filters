@@ -1152,6 +1152,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">
