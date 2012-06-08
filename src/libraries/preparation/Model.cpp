@@ -238,6 +238,7 @@ void Model::Purge()
     weather_.Purge();
     limits_.Purge();
     ghosts_.Purge();
+    drawings_.Purge();
     agents_.Purge();
     formations_.Purge();
     knowledgeGroups_.Purge();
