@@ -723,7 +723,7 @@ void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& p
 // Name: Package::Install
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Package::Install( const Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
+void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
 {
     T_Items install;
     BOOST_FOREACH( size_t id, ids )
@@ -738,7 +738,7 @@ void Package::Install( const Path& tomb, const Package_ABC& src, const std::vect
     std::vector< Path > paths;
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
-        async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( async ), boost::cref( system_ ),
+        async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( system_ ),
                   tomb, path_, boost::cref( *this ), boost::cref( install ), op ) );
     async.Join();
 
@@ -769,12 +769,12 @@ void RemoveItems( T& list, U predicate )
 // Name: Package::Uninstall
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-void Package::Uninstall( const Path& tomb, const std::vector< size_t >& ids )
+void Package::Uninstall( Async& io, const Path& tomb, const std::vector< size_t >& ids )
 {
     Async async( pool_ );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( IsItemIn( ids, item, false ) )
-            async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( async ), boost::cref( system_ ), tomb ) );
+            async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( io ), boost::cref( system_ ), tomb ) );
     async.Join();
     RemoveItems( items_, boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) );
 }

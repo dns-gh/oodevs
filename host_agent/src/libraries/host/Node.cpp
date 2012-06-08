@@ -327,7 +327,7 @@ Tree Node::GetCache() const
 Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    install_->Uninstall( root_, ids );
+    install_->Uninstall( *async_, root_, ids );
     install_->Identify( *install_ );
     if( cache_ )
         cache_->Identify( *install_ );
@@ -358,7 +358,7 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( !cache_ )
         return Tree();
-    install_->Install( root_, *cache_, list );
+    install_->Install( *async_, root_, *cache_, list );
     install_->Identify( *install_ );
     cache_->Identify( *install_ );
     return cache_->GetProperties();

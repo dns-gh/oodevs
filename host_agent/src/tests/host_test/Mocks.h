@@ -252,8 +252,8 @@ namespace mocks
         MOCK_METHOD( GetPath, 0 );
         MOCK_METHOD( Parse, 0 );
         MOCK_METHOD( Identify, 1 );
-        MOCK_METHOD( Install, 3 );
-        MOCK_METHOD( Uninstall, 2 );
+        MOCK_METHOD( Install, 4 );
+        MOCK_METHOD( Uninstall, 3 );
         MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( size_t, bool ), FindId );
         MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC&, bool ), FindItem );
         MOCK_METHOD( GetExercises, 2 );
