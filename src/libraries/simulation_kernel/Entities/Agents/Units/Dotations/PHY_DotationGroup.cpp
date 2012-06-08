@@ -181,7 +181,8 @@ void PHY_DotationGroup::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
     PHY_Dotation* pDotation = GetDotation( capacity.GetCategory() );
     assert( pDotation );
-    pDotation->RemoveCapacity( capacity );
+    if( pDotation )
+        pDotation->RemoveCapacity( capacity );
 }
 
 // -----------------------------------------------------------------------------
