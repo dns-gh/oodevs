@@ -240,7 +240,7 @@ HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, const
     if( !log )
     {
         STARTUPINFOW info = { sizeof info };
-        return ::MakeProcess( app, args, run, &info, pid );
+        return MakeProcess( app, args, run, &info, pid );
     }
 
     HANDLE inherits[2] = {};
