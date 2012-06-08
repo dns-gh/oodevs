@@ -125,6 +125,9 @@
     <Filter Include="Source Files\Dialogs\Unit state">
       <UniqueIdentifier>{e8554d88-bc82-45a3-987b-288d58dbfb0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Consistency">
+      <UniqueIdentifier>{933d723c-eea0-40d6-89c9-d42e04cfabfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
@@ -844,6 +847,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Drawing.cpp">
       <Filter>Source Files\Creation\Drawings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.cpp">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1362,6 +1368,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Drawing.h">
       <Filter>Source Files\Creation\Drawings</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1378,6 +1387,9 @@
     </None>
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl">
       <Filter>Source Files\Dialogs\Unit state</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1710,6 +1722,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ListView.h">
       <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.h">
+      <Filter>Source Files\Dialogs\Consistency</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

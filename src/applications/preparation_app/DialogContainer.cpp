@@ -159,7 +159,7 @@ ExerciseDialog& DialogContainer::GetExerciseDialog() const
 // Name: DialogContainer::GetConsistencyDialog
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-ModelConsistencyDialog& DialogContainer::GetConsistencyDialog() const
+gui::ConsistencyDialog_ABC& DialogContainer::GetConsistencyDialog() const
 {
     return *consistencyDialog_;
 }

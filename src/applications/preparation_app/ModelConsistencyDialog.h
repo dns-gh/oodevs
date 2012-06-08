@@ -10,9 +10,9 @@
 #ifndef __ModelConsistencyDialog_h_
 #define __ModelConsistencyDialog_h_
 
-#include <boost/noncopyable.hpp>
-#include <map>
-#include "preparation/ModelConsistencyChecker.h"
+#include "clients_gui/ConsistencyDialog_ABC.h"
+#include "clients_kernel/SafePointer.h"
+#include "preparation/ConsistencyErrorTypes.h"
 
 namespace kernel
 {
@@ -26,23 +26,8 @@ namespace tools
     class RealFileLoaderObserver_ABC;
 }
 
-// =============================================================================
-/** @class  VariantPointer
-    @brief  VariantPointer
-*/
-// Created: ABR 2011-09-23
-// =============================================================================
-struct VariantPointer
-{
-    VariantPointer() : ptr_( 0 ) {}
-    VariantPointer( const VariantPointer& other ) : ptr_( other.ptr_ ) {}
-    VariantPointer( const void* ptr ) : ptr_( ptr ) {}
-
-    const void* ptr_;
-};
-Q_DECLARE_METATYPE( VariantPointer );
-
-class FilterProxyModel;
+class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  ModelConsistencyDialog
@@ -50,10 +35,9 @@ class FilterProxyModel;
 */
 // Created: ABR 2011-09-23
 // =============================================================================
-class ModelConsistencyDialog : public QDialog
-                             , private boost::noncopyable
+class ModelConsistencyDialog : public gui::ConsistencyDialog< E_ConsistencyCheck, kernel::SafePointer< kernel::Entity_ABC > >
 {
-    Q_OBJECT
+    typedef gui::ConsistencyDialog< E_ConsistencyCheck, kernel::SafePointer< kernel::Entity_ABC > > T_Parent;
 
 public:
     //! @name Constructors/Destructor
@@ -62,67 +46,21 @@ public:
     virtual ~ModelConsistencyDialog();
     //@}
 
-    //! @name Public
-    //@{
-    //@}
-
-public slots:
+private:
     //! @name Slots
     //@{
-    void CheckConsistency();
-    void Display();
-    //@}
-
-private:
-    //! @name Enums
-    //@{
-    enum E_Column { eIcon = 0, eID = 1, eName = 2, eLongName = 3, eDescription = 4 };
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, QString > T_Types;
+    virtual void OnSelectionChanged( const QModelIndex& );
     //@}
 
     //! @name Helpers
     //@{
-    void CreateCheckbox( QGridLayout& layout, const T_Types& names );
-    void UpdateDataModel();
-    void AddIcon( const kernel::SafePointer< kernel::Entity_ABC >& entity, E_ConsistencyCheck type, QList< QStandardItem* >& items );
-    template< typename T >
-    void AddItem( T data, QString text, const kernel::SafePointer< kernel::Entity_ABC >& entity,
-                  E_ConsistencyCheck type, QList< QStandardItem* >& items );
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void ClearLoadingErrors();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnRefresh();
-    void OnClose();
-    void OnSelectionChanged( const QModelIndex& );
-    void OnFilterChanged( int type );
-    void OnLevelChanged();
+    virtual void UpdateDataModel();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::ActionController&         actionController_;
-    ModelConsistencyChecker           checker_;
-    QTableView*                       tableView_;
-    QCheckBox*                        warningCheckBox_;
-    QCheckBox*                        errorCheckBox_;
-    QStandardItemModel*               dataModel_;
-    FilterProxyModel*                 proxyModel_;
-    QStringList                       horizontalHeaders_;
-    std::map< unsigned int, QString > errorDescriptions_;
-    QSignalMapper*                    pMapper_;
+    kernel::ActionController& actionController_;
     //@}
 };
 

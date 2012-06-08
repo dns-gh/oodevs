@@ -241,6 +241,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Drawing_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />

@@ -1214,10 +1214,6 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
 <context>
     <name>ModelConsistencyDialog</name>
     <message>
-        <source>Consistency analysis</source>
-        <translation>Analyse de cohérence</translation>
-    </message>
-    <message>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -1228,14 +1224,6 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
     <message>
         <source>Description</source>
         <translation>Description</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Actualiser</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
     </message>
     <message>
         <source>Duplicate long name for units %1.</source>
@@ -1290,32 +1278,12 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
     </message>
     <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
-    </message>
-    <message>
-        <source>Ghost</source>
-        <translation>Fantôme</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
-    </message>
-    <message>
-        <source>Unicity</source>
-        <translation>Unicité</translation>
-    </message>
-    <message>
         <source>Long name size limit exceeded : %1.</source>
         <translation>Limite de taille du nom long dépassée : %1</translation>
     </message>
     <message>
         <source>Allocated stocks of nature %1 exceed max capacity.</source>
         <translation>Stocks affectés de nature %1 supérieurs à la capacité maximum.</translation>
-    </message>
-    <message>
-        <source>Others</source>
-        <translation>Autres</translation>
     </message>
     <message>
         <source>Unknown object type &quot;%1&quot;, some objects could not be loaded.</source>
@@ -1328,10 +1296,6 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
     <message>
         <source>Unknown population type &quot;%1&quot;, some populations could not be loaded.</source>
         <translation>Type de population &quot;%1&quot; inconnu, certaines populations n&apos;ont pas pu être chargées.</translation>
-    </message>
-    <message>
-        <source>Command Post</source>
-        <translation>Poste de Commande</translation>
     </message>
     <message>
         <source>No valid logistic base defined.</source>
@@ -1358,22 +1322,6 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <translation>Les définitions des facteurs de réussite contiennent des erreurs: %1</translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation>Niveau</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Alerte</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-    <message>
         <source>No orbat.xml found. The orbat.xml file will be created after the first save.</source>
         <translation>Orbat.xml non présent. Le fichier orbat.xml sera créé après la première sauvegarde.</translation>
     </message>
@@ -1396,6 +1344,30 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
     <message>
         <source>Long name</source>
         <translation>Nom long</translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation>Unicité</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation>Profile</translation>
+    </message>
+    <message>
+        <source>Ghost</source>
+        <translation>Fantôme</translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation>Poste de commande</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation>Autres</translation>
     </message>
 </context>
 <context>
