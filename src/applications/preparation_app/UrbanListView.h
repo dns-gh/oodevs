@@ -56,6 +56,10 @@ protected:
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
     virtual void OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int );
+    virtual Q3DragObject* dragObject();
+    virtual void viewportDropEvent( QDropEvent* pEvent );
+    virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );
+    virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     //@}
 
 private slots:
@@ -65,10 +69,17 @@ private slots:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    kernel::Entity_ABC* Drop( QDropEvent* pEvent ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     ModelBuilder& modelBuilder_;
+    std::vector< kernel::Entity_ABC* > dragged_;
     //@}
 };
 
