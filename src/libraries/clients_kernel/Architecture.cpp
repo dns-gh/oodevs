@@ -23,11 +23,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Architecture::Architecture( PropertiesDictionary& dictionary )
     : dictionary_    ( dictionary )
-    , height_        ( 0 )
+    , height_        ( 0, Units::meters )
     , floorNumber_   ( 0 )
     , parkingFloors_ ( 0 )
-    , occupation_    ( 0 )
-    , trafficability_( 0 )
+    , occupation_    ( 0, Units::percentage )
+    , trafficability_( 0, Units::tons )
     , material_      ( 0 )
     , roofShape_     ( 0 )
 {
@@ -47,14 +47,14 @@ Architecture::~Architecture()
 // Name: Architecture::Initialize
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( const ObjectTypes& objectTypes, float height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
+void Architecture::Initialize( const ObjectTypes& objectTypes, unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                                float trafficability, const std::string& material /* = "" */, const std::string& roofShape /* = "" */ )
 {
-    height_ = height;
+    height_.value_ = height;
     floorNumber_ = floorNumber;
     parkingFloors_ = parkingFloors;
-    occupation_ = static_cast< unsigned int >( occupation * 100u );
-    trafficability_ = trafficability;
+    occupation_.value_ = static_cast< unsigned int >( occupation * 100u );
+    trafficability_.value_ = trafficability;
 
     if( material.empty() || material == "default" )
     {
@@ -148,7 +148,7 @@ unsigned int Architecture::GetParkingFloors() const
 // -----------------------------------------------------------------------------
 unsigned int Architecture::GetOccupation() const
 {
-    return occupation_;
+    return occupation_.value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ unsigned int Architecture::GetOccupation() const
 // -----------------------------------------------------------------------------
 unsigned int Architecture::GetHeight() const
 {
-    return static_cast< unsigned int >( height_ );
+    return height_.value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,5 +166,5 @@ unsigned int Architecture::GetHeight() const
 // -----------------------------------------------------------------------------
 float Architecture::GetTrafficability() const
 {
-    return trafficability_;
+    return trafficability_.value_;
 }

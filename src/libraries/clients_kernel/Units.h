@@ -25,15 +25,19 @@ namespace kernel
 class Unit
 {
 public:
-    explicit Unit( const QString& symbol, double minValue, double maxValue );
+    explicit Unit( const QString& symbol, double minValue, double maxValue, unsigned short decimal );
     ~Unit() {}
     const QString& AsString() const { return symbol_; }
     const double GetMinValue() const { return minValue_; }
     const double GetMaxValue() const { return maxValue_; }
+    const unsigned short GetDecimal() const { return decimal_; }
+
+    bool operator==( const Unit& other ) const { return symbol_ == other.symbol_; }
 private:
-    QString symbol_;
-    double minValue_;
-    double maxValue_;
+    QString         symbol_;
+    double          minValue_;
+    double          maxValue_;
+    unsigned short  decimal_;
 };
 
 // =============================================================================

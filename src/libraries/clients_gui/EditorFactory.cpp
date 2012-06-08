@@ -199,7 +199,7 @@ namespace
             spinBox = new UnitEditor< RichDoubleSpinBox, double, T >( parent, UnitedValue< T >( value, *unit ));
         else
             spinBox = new NumberEditor< RichDoubleSpinBox, double, T >( parent, value );
-        spinBox->setDecimals( decimals );
+        spinBox->setDecimals( ( unit ) ? unit->GetDecimal() : decimals );
         return spinBox;
     }
 }

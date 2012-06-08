@@ -31,7 +31,7 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
         const kernel::PhysicalAttribute_ABC& parentPhysicalAttribute = parent->Get< kernel::PhysicalAttribute_ABC >();
         const kernel::Architecture_ABC& parentArchitecture = parentPhysicalAttribute.GetArchitecture();
         Initialize( objectTypes,
-                    static_cast< float >( parentArchitecture.GetHeight() ),
+                    parentArchitecture.GetHeight(),
                     parentArchitecture.GetFloorNumber(),
                     parentArchitecture.GetParkingFloors(),
                     static_cast< float >( parentArchitecture.GetOccupation() ) / 100.f,
@@ -40,7 +40,7 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
                     parentArchitecture.GetRoofShape().GetName() );
     }
     else
-        Initialize( objectTypes, 20.f, 6, 0, 0.5f, 0.5f );
+        Initialize( objectTypes, 20, 6, 0, 0.5f, 0.5f );
 
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
@@ -72,7 +72,7 @@ Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis
             >> xml::optional >> xml::attribute( "trafficability", trafficability )
             >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
         >> xml::end;
-    Initialize( objectTypes, static_cast< float >( height ), floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
+    Initialize( objectTypes, height, floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
     NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
@@ -96,12 +96,12 @@ void Architecture::SerializeAttributes( xml::xostream& xos ) const
 {
     assert( roofShape_ && material_ );
     xos << xml::start( "architecture" )
-            << xml::attribute( "height", height_ )
+            << xml::attribute( "height", height_.value_ )
             << xml::attribute( "floor-number", floorNumber_ )
             << xml::attribute( "roof-shape", roofShape_->GetName() )
             << xml::attribute( "material", material_->GetName() )
-            << xml::attribute( "occupation", static_cast< float >( occupation_ ) / 100.f )
-            << xml::attribute( "trafficability", trafficability_ );
+            << xml::attribute( "occupation", static_cast< float >( occupation_.value_ ) / 100.f )
+            << xml::attribute( "trafficability", trafficability_.value_ );
     if( parkingFloors_ > 0 )
         xos << xml::attribute( "parking-floors", parkingFloors_ );
     xos << xml::end;
