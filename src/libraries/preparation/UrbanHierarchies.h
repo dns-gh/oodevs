@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     EUrbanLevel GetLevel() const;
+    void ChangeSuperior( kernel::Entity_ABC& superior );
     //@}
 
     //! @name Serializable_ABC

@@ -47,6 +47,15 @@ EUrbanLevel UrbanHierarchies::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanHierarchies::ChangeSuperior
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void UrbanHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+{
+    kernel::EntityHierarchies< kernel::Hierarchies >::ChangeSuperior( &superior );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanHierarchies::SerializeAttributes
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
