@@ -1317,6 +1317,53 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
     </message>
 </context>
 <context>
+    <name>ADN_ConsistencyDialog</name>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initialization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate NNO code for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate EMAT8 code for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has no NNO code defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has no EMAT8 code defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The equipement &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The resource &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> and &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Consumptions_Table</name>
     <message>
         <source>Resource network</source>
@@ -2660,6 +2707,10 @@ tirador</translation>
     </message>
     <message>
         <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consistency analysis</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

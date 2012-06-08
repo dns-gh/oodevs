@@ -202,11 +202,11 @@ public:
         void Initialize();
 
     public:
-        E_DotationFamily      nType_;
+        E_DotationFamily       nType_;
         ADN_Type_String        strName_;
         T_CategoryInfos_Vector categories_;
     };
-    TYPEDEF_WITH_ITERATOR_DECLARATION( ADN_Type_Vector_ABC<ResourceInfos>, ResourceInfos_Vector );
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ResourceInfos>, ResourceInfos_Vector );
 
 // *****************************************************************************
 public:

@@ -12,7 +12,7 @@
 #include "moc_ADN_MainWindow.cpp"
 #include "ADN_Workspace.h"
 #include "ADN_Config.h"
-#include "ADN_Resources.h"
+#include "ADN_ConsistencyDialog.h"
 #include "ADN_Tools.h"
 #include "ADN_Table.h"
 #include "ADN_TableDialog.h"
@@ -29,6 +29,7 @@
 #include "ADN_SplashScreen.h"
 #include "ADN_FileLoaderObserver.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/resources.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
@@ -130,27 +131,27 @@ void ADN_MainWindow::Build()
     connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainTabWidget_.get(), SLOT( OnChangeTab( E_WorkspaceElements ) ) );
     mainTabWidget_->hide();
 
+    consistencyDialog_.reset( new ADN_ConsistencyDialog( this ) );
+
     // Actions
-    QAction* pProjectNewAction = new QAction( MAKE_PIXMAP(filenew), tr("&New"), Qt::CTRL + Qt::Key_N, this, "new" );
+    QAction* pProjectNewAction = new QAction( MAKE_ICON( new ), tr("&New"), Qt::CTRL + Qt::Key_N, this, "new" );
     connect( pProjectNewAction, SIGNAL( activated() ) , this, SLOT( NewProject() ) );
-
-    pProjectLoadAction_ = new QAction( MAKE_PIXMAP(fileopen), tr("&Open"), Qt::CTRL + Qt::Key_O, this, "open" );
+    pProjectLoadAction_ = new QAction( MAKE_ICON( open ), tr("&Open"), Qt::CTRL + Qt::Key_O, this, "open" );
     connect( pProjectLoadAction_, SIGNAL( activated() ) , this, SLOT( OpenProject() ) );
-
-    pActionSave_ = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), Qt::CTRL + Qt::Key_S, this, "save" );
+    pActionSave_ = new QAction( MAKE_ICON( save ), tr("&Save"), Qt::CTRL + Qt::Key_S, this, "save" );
     connect( pActionSave_, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
-
+    pActionSaveAs_ = new QAction( MAKE_ICON( saveas ), tr( "Save &As" ), Qt::CTRL + Qt::SHIFT + Qt::Key_S, this, "saveas" );
+    connect( pActionSaveAs_, SIGNAL( activated() ) , this, SLOT( SaveAsProject() ) );
+    // Navigation
     QAction* pBack = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowLeft ), tr( "Back (ctrl + left)" ), Qt::CTRL + Qt::Key_Left, this, "back" );
     connect( pBack, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnBack() ) );
     connect( mainTabWidget_.get(), SIGNAL( BackEnabled( bool ) ), pBack, SLOT( setEnabled( bool ) ) );
     QAction* pForward = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), tr( "Forward (ctrl + right)" ), Qt::CTRL + Qt::Key_Right, this, "forward" );
     connect( pForward, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnForward() ) );
     connect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), pForward, SLOT( setEnabled( bool ) ) );
-
     // Test Data
     //QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
     //connect( pProjectTestDataAction, SIGNAL( activated() ), this, SLOT( TestData() ) );
-
     // Undo
     //QAction* pUndoAction = QtUndoManager::manager()->createUndoAction( this );
     //pUndoAction->setAccel( QKeySequence( "Ctrl+Z" ) );
@@ -161,6 +162,7 @@ void ADN_MainWindow::Build()
         pProjectNewAction->addTo( pToolBar );
         pProjectLoadAction_->addTo( pToolBar );
         pActionSave_->addTo( pToolBar );
+        pActionSaveAs_->addTo( pToolBar );
         pToolBar->addSeparator();
         pBack->addTo( pToolBar );
         pForward->addTo( pToolBar );
@@ -179,25 +181,25 @@ void ADN_MainWindow::Build()
 
         pProjectMenu_->insertSeparator();
         pActionSave_->addTo( pProjectMenu_ );
-        rIdSaveAs_ = pProjectMenu_->insertItem( tr("Save &As"),  this, SLOT(SaveAsProject()) );
-        pProjectMenu_->insertItem( tr("&Export HTML"),  this, SLOT(ExportHtml()) );
+        pActionSaveAs_->addTo( pProjectMenu_ );
+        pProjectMenu_->insertSeparator();
+        pProjectMenu_->insertItem( tr( "&Export HTML" ), this, SLOT(ExportHtml()) );
+        pProjectMenu_->insertItem( tr( "Consistency analysis" ), consistencyDialog_.get(), SLOT( Display() ) );
+
         pProjectMenu_->insertSeparator();
         pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );
     }
-
     // Consistency tables menu
     {
         pCoheranceTablesMenu_ = new Q3PopupMenu( this );
         menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
     }
-
     // Configuration menu
     //{
     //    pConfigurationMenu_ = new QPopupMenu( this );
     //    menuBar()->insertItem( tr( "Confi&guration" ), pConfigurationMenu_ );
     //    pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
     //}
-
     // Help menu
     {
         gui::HelpSystem* help = new gui::HelpSystem( this, generalConfig_->BuildResourceChildFile( "help/adaptation.xml" ) );
@@ -207,7 +209,6 @@ void ADN_MainWindow::Build()
         pHelpMenu_->insertSeparator();
         pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
     }
-
     // Disable the menus.
     SetMenuEnabled( false );
 
@@ -262,7 +263,7 @@ void ADN_MainWindow::AddListView( const QString& strTableName, ADN_Callback_ABC<
 void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 {
     pActionSave_->setEnabled( bEnabled );
-    pProjectMenu_->setItemEnabled( rIdSaveAs_, bEnabled );
+    pActionSaveAs_->setEnabled( bEnabled );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,6 +291,7 @@ void ADN_MainWindow::SaveProject()
     bool bNoReadOnlyFiles = true;
     try
     {
+        consistencyDialog_->CheckConsistency();
         bNoReadOnlyFiles = workspace_.Save();
     }
     catch( ADN_Exception_ABC& exception )

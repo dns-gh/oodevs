@@ -446,6 +446,9 @@
     <Filter Include="Source Files\Workspace\Categories\Categories GUI\Wizard">
       <UniqueIdentifier>{d8687a76-bad9-47a6-b0bc-2f6277dc72ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tools\Consistency">
+      <UniqueIdentifier>{095a10bc-af39-4fff-a3af-28c38df1c342}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1282,9 +1285,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.cpp">
       <Filter>Source Files\Common widgets\Color selector</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\XmlResources.cpp">
       <Filter>Resources\xml</Filter>
     </ClCompile>
@@ -1365,6 +1365,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.cpp">
+      <Filter>Source Files\Tools\Consistency</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.cpp">
+      <Filter>Source Files\Tools\Consistency</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2013,9 +2019,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ProgressIndicator_ABC.h">
       <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
@@ -2087,6 +2090,10 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyErrorTypes.h">
+      <Filter>Source Files\Tools\Consistency</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2175,15 +2182,6 @@
       <Filter>Resources\xpm</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\res\empty_box.xpm">
-      <Filter>Resources\xpm</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\res\filenew.xpm">
-      <Filter>Resources\xpm</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\res\fileopen.xpm">
-      <Filter>Resources\xpm</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\res\filesave.xpm">
       <Filter>Resources\xpm</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_es.ts">
@@ -2491,6 +2489,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\infrastructures_fr.ts">
       <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.h">
+      <Filter>Source Files\Tools\Consistency</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

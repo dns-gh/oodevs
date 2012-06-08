@@ -15,6 +15,11 @@
 #include <boost/noncopyable.hpp>
 #include <map>
 
+namespace gui
+{
+    class ConsistencyDialog_ABC;
+}
+
 namespace tools
 {
     class GeneralConfig;
@@ -97,34 +102,38 @@ private:
 
 private:
     typedef std::pair< QString, ADN_Callback_ABC<ADN_Table*>* > T_TableRegistrationItem;
+
     typedef std::map< int, T_TableRegistrationItem >            T_TableRegistrationMap;
     typedef T_TableRegistrationMap::iterator                   IT_TableRegistrationMap;
 
     typedef std::pair< QString, ADN_Callback_ABC<ADN_ListView*>* > T_ListViewRegistrationItem;
+
     typedef std::map< int, T_ListViewRegistrationItem >            T_ListViewRegistrationMap;
     typedef T_ListViewRegistrationMap::iterator                   IT_ListViewRegistrationMap;
 
 private:
-    std::auto_ptr< tools::GeneralConfig > generalConfig_;
-    std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
-    std::auto_ptr< tools::Loader_ABC > fileLoader_;
-    std::auto_ptr< ADN_MainTabWidget > mainTabWidget_;
-    const QString strAdminPassword_;
-    ADN_Workspace& workspace_;
-    ADN_Config& config_;
-    QAction* pProjectLoadAction_;
-    Q3PopupMenu* pProjectMenu_;
-    Q3PopupMenu* pCoheranceTablesMenu_;
-    Q3PopupMenu* pConfigurationMenu_;
-    Q3PopupMenu* pHelpMenu_;
-    QAction* pActionSave_;
-    int rIdSaveAs_;
-    int nIdSaveTable_;
-    int nIdPrint_;
-    int nIdChangeOpenMode_;
-    bool bNeedSave_;
-    T_TableRegistrationMap vTableRegistrations_;
-    T_ListViewRegistrationMap vListViewRegistrations_;
+    std::auto_ptr< tools::GeneralConfig >       generalConfig_;
+    std::auto_ptr< ADN_FileLoaderObserver >     fileLoaderObserver_;
+    std::auto_ptr< tools::Loader_ABC >          fileLoader_;
+    std::auto_ptr< ADN_MainTabWidget >          mainTabWidget_;
+    std::auto_ptr< gui::ConsistencyDialog_ABC > consistencyDialog_;
+    const QString   strAdminPassword_;
+    ADN_Workspace&  workspace_;
+    ADN_Config&     config_;
+    QAction*        pProjectLoadAction_;
+    Q3PopupMenu*    pProjectMenu_;
+    Q3PopupMenu*    pCoheranceTablesMenu_;
+    Q3PopupMenu*    pConfigurationMenu_;
+    Q3PopupMenu*    pHelpMenu_;
+    QAction*        pActionSave_;
+    QAction*        pActionSaveAs_;
+    int             rIdSaveAs_;
+    int             nIdSaveTable_;
+    int             nIdPrint_;
+    int             nIdChangeOpenMode_;
+    bool            bNeedSave_;
+    T_TableRegistrationMap      vTableRegistrations_;
+    T_ListViewRegistrationMap   vListViewRegistrations_;
 };
 
 

@@ -58,6 +58,7 @@ ADN_Composantes_Sensors_GUI.cpp \
 ADN_Composantes_Speeds_GUI.cpp \
 ADN_Composantes_WeaponsListView.cpp \
 ADN_ConfigDialog.cpp \
+ADN_ConsistencyDialog.cpp \
 ADN_Consumptions_Table.cpp \
 ADN_DataException.cpp \
 ADN_DialogLog.cpp \

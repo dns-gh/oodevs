@@ -1317,6 +1317,53 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_ConsistencyDialog</name>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Initialization</source>
+        <translation>Initialisation</translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation>Unicité</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation>Autres</translation>
+    </message>
+    <message>
+        <source>Duplicate NNO code for %1.</source>
+        <translation>Les éléments %1 possèdent le même code NNO.</translation>
+    </message>
+    <message>
+        <source>Duplicate EMAT8 code for %1.</source>
+        <translation>Les éléments %1 possèdent le même code EMAT8.</translation>
+    </message>
+    <message>
+        <source>%1 has no NNO code defined.</source>
+        <translation>%1 n&apos;a pas de code NNO de défini.</translation>
+    </message>
+    <message>
+        <source>%1 has no EMAT8 code defined.</source>
+        <translation>%1 n&apos;a pas de code EMAT8 de défini.</translation>
+    </message>
+    <message>
+        <source>The equipement &apos;</source>
+        <translation>L&apos;équipement &apos;</translation>
+    </message>
+    <message>
+        <source>The resource &apos;</source>
+        <translation>La ressource &apos;</translation>
+    </message>
+    <message>
+        <source> and &apos;</source>
+        <translation> et &apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Consumptions_Table</name>
     <message>
         <source>Resource network</source>
@@ -2661,6 +2708,10 @@ du tireur</translation>
     <message>
         <source>Help</source>
         <translation>Aide</translation>
+    </message>
+    <message>
+        <source>Consistency analysis</source>
+        <translation>Analyse de cohérence</translation>
     </message>
 </context>
 <context>
