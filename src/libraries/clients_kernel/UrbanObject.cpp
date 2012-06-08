@@ -62,7 +62,11 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const ObjectType& type
     , const AccommodationTypes& accommodations, UrbanDisplayOptions& options )
-    : EntityImplementation< UrbanObject_ABC >( controllers.controller_, xis.attribute< unsigned int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    : EntityImplementation< UrbanObject_ABC >( controllers.controller_,
+                                               xis.attribute< unsigned int >( "id" ),
+                                               ( xis.attribute< std::string >( "name" ).empty() )
+                                               ? tools::translate( "Urban", "Urban block[%L1]" ).arg( xis.attribute< unsigned int >( "id" ) )
+                                               : xis.attribute< std::string >( "name" ).c_str() )
     , dictionary_     ( *new PropertiesDictionary( controllers.controller_ ) )
     , density_        ( 0 )
     , type_           ( type )
