@@ -86,14 +86,15 @@ void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsign
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
-    : pion_                  ( pion )
-    , rContaminationState_   ( 0. )
-    , rContaminationQuantity_( 0. )
-    , bNbcProtectionSuitWorn_( false )
-    , bHasChanged_           ( true )
-    , poisoned_              ( false )
-    , intoxicated_           ( false )
-    , immune_                ( false )
+    : pion_                    ( pion )
+    , rContaminationState_     ( 0. )
+    , rContaminationQuantity_  ( 0. )
+    , bNbcProtectionSuitWorn_  ( false )
+    , bHasChanged_             ( true )
+    , poisoned_                ( false )
+    , intoxicated_             ( false )
+    , immune_                  ( false )
+    , forcedImmuneByDecisional_( false )
 {
     // NOTHING
 }
