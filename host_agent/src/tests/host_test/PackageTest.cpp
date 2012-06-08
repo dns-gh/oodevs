@@ -25,19 +25,22 @@ using mocks::MockPool;
 
 namespace
 {
-const Path root = "a";
+const Path defRoot = "a";
+const Path nexRoot = "b";
 
 struct Fixture
 {
     Fixture()
-        : package( pool, system, root, true )
+        : install( pool, system, defRoot, true )
+        , cache  ( pool, system, nexRoot, false )
     {
         // NOTHING
     }
 
     MockPool pool;
     MockFileSystem system;
-    Package package;
+    Package install;
+    Package cache;
     std::vector< Path > models;
     std::vector< Path > terrains;
     std::vector< Path > exercises;
@@ -53,9 +56,19 @@ struct Fixture
     }
 
     template< typename T >
-    void AddItem( T& list, const Path& prefix, const Path& name, const Path& suffix, const std::string& checksum, const std::string& data, const std::string& metadata )
+    void AddItem( const Path& root, bool ref, T& list, const Path& prefix, const Path& name, const Path& suffix, const std::string& checksum, const std::string& data, const std::string& metadata )
     {
-        const Path sub = root / GetFileIndex();
+        Path sub = ref ? root / GetFileIndex() : root;
+        if( !ref )
+        {
+            const Path content = root / "content.xml";
+            MOCK_EXPECT( system.IsFile ).once().with( content ).returns( true );
+            Tree next;
+            next.put( "content.name", "some_name" );
+            next.put( "content.description", "some_description" );
+            next.put( "content.version", "some_version" );
+            MOCK_EXPECT( system.ReadFile ).once().with( content ).returns( ToXml( next ).c_str() );
+        }
         const Path target = sub / prefix / name / suffix;
         list.push_back( target );
         MOCK_EXPECT( system.GetLastWrite ).with( target ).returns( std::time_t() );
@@ -63,22 +76,23 @@ struct Fixture
         MOCK_EXPECT( system.ReadFile ).with( sub / "metadata.tag" ).returns( metadata );
         MOCK_EXPECT( system.Checksum ).once().with( sub / prefix / name, mock::any ).returns( checksum );
         MOCK_EXPECT( system.Glob ).with( sub / prefix, suffix.filename() ).returns( boost::assign::list_of( target ) );
-        MOCK_EXPECT( system.Glob ).exactly( 2 ).returns( std::vector< Path >() );
+        if( ref )
+            MOCK_EXPECT( system.Glob ).exactly( 2 ).returns( std::vector< Path >() );
     }
 
-    void AddModel( const Path& name, const std::string checksum, const std::string& metadata = std::string() )
+    void AddModel( const Path& root, bool ref, const Path& name, const std::string checksum, const std::string& metadata = std::string() )
     {
-        AddItem( models, "data/models", name, "decisional/decisional.xml", checksum, std::string(), metadata );
+        AddItem( root, ref, models, "data/models", name, "decisional/decisional.xml", checksum, std::string(), metadata );
     }
 
-    void AddTerrain( const Path& name, const std::string checksum, const std::string& metadata = std::string() )
+    void AddTerrain( const Path& root, bool ref, const Path& name, const std::string checksum, const std::string& metadata = std::string() )
     {
-        AddItem( terrains, "data/terrains", name, "Terrain.xml", checksum, std::string(), metadata );
+        AddItem( root, ref, terrains, "data/terrains", name, "Terrain.xml", checksum, std::string(), metadata );
     }
 
-    void AddExercise( const Path& name, const std::string& checksum, const std::string& model, const std::string& terrain, const std::string& metadata = std::string() )
+    void AddExercise( const Path& root, bool ref, const Path& name, const std::string& checksum, const std::string& model, const std::string& terrain, const std::string& metadata = std::string() )
     {
-        AddItem( exercises, "exercises", name, "exercise.xml", checksum, MakeExerciseData( model, terrain ), metadata );
+        AddItem( root, ref, exercises, "exercises", name, "exercise.xml", checksum, MakeExerciseData( model, terrain ), metadata );
     }
 
     Path Decompose( const Path& path, size_t offset )
@@ -104,7 +118,7 @@ struct Fixture
         return rpy;
     }
 
-    void SetFileSystem()
+    void SetFileSystem( const Path& root )
     {
         const std::vector< Path > paths = GetItemRoots( boost::assign::list_of( models )( terrains )( exercises ) );
         MOCK_EXPECT( system.Walk ).once().with( root, false ).returns( paths );
@@ -128,39 +142,63 @@ struct Fixture
                     return it->second;
         throw std::runtime_error( "unknown item" );
     }
+
+    void AddSomePackages( const Package_ABC& pkg, bool ref )
+    {
+        const Path root = pkg.GetPath();
+        AddModel( root, ref, "ada", "01234567" );
+        AddTerrain( root, ref, "egypt", "12345678" );
+        AddExercise( root, ref, "shore", "23456789", "ada", "egypt" );
+
+        if( !ref )
+            return;
+
+        AddExercise( root, ref, "castle", "34567890", "ada", "avalon" );
+        SetFileSystem( root );
+    }
+
+    void CheckSomePackages( const Package_ABC& pkg, bool ref )
+    {
+        const Tree data = pkg.GetProperties();
+        BOOST_CHECK_EQUAL( CountItemType( data, "model" ), size_t( 1 ) );
+        BOOST_CHECK_EQUAL( CountItemType( data, "terrain" ), size_t( 1 ) );
+        BOOST_CHECK_EQUAL( CountItemType( data, "exercise" ), size_t( 1 + !!ref ) );
+
+        const Tree ada = GetItem( data, "model", "ada" );
+        BOOST_CHECK_EQUAL( ada.get< std::string >( "checksum" ), "01234567" );
+
+        const Tree egypt = GetItem( data, "terrain", "egypt" );
+        BOOST_CHECK_EQUAL( egypt.get< std::string >( "checksum" ), "12345678" );
+
+        const Tree shore = GetItem( data, "exercise", "shore" );
+        BOOST_CHECK_EQUAL( shore.get< std::string >( "checksum" ), "23456789" );
+        BOOST_CHECK_EQUAL( shore.get< std::string >( "model" ), "ada" );
+        BOOST_CHECK_EQUAL( shore.get< std::string >( "terrain" ), "egypt" );
+
+        if( !ref )
+            return;
+
+        const Tree castle = GetItem( data, "exercise", "castle" );
+        BOOST_CHECK_EQUAL( castle.get< std::string >( "checksum" ), "34567890" );
+        BOOST_CHECK_EQUAL( castle.get< std::string >( "model" ), "ada" );
+        BOOST_CHECK_EQUAL( castle.get< std::string >( "terrain" ), "avalon" );
+        BOOST_CHECK( !castle.get< std::string >( "error" ).empty() );
+    }
 };
 }
 
-BOOST_FIXTURE_TEST_CASE( package_parses, Fixture )
+BOOST_FIXTURE_TEST_CASE( install_parses, Fixture )
 {
-    AddModel( "ada", "01234567" );
-    AddTerrain( "egypt", "12345678" );
-    AddExercise( "shore", "23456789", "ada", "egypt" );
-    AddExercise( "castle", "34567890", "ada", "avalon" );
-    SetFileSystem();
+    AddSomePackages( install, true );
+    install.Parse();
+    install.Identify( install );
+    CheckSomePackages( install, true );
+}
 
-    package.Parse();
-    package.Identify( package );
-
-    const Tree data = package.GetProperties();
-    BOOST_CHECK_EQUAL( CountItemType( data, "model" ), size_t( 1 ) );
-    BOOST_CHECK_EQUAL( CountItemType( data, "terrain" ), size_t( 1 ) );
-    BOOST_CHECK_EQUAL( CountItemType( data, "exercise" ), size_t( 2 ) );
-
-    const Tree ada = GetItem( data, "model", "ada" );
-    BOOST_CHECK_EQUAL( ada.get< std::string >( "checksum" ), "01234567" );
-
-    const Tree egypt = GetItem( data, "terrain", "egypt" );
-    BOOST_CHECK_EQUAL( egypt.get< std::string >( "checksum" ), "12345678" );
-
-    const Tree shore = GetItem( data, "exercise", "shore" );
-    BOOST_CHECK_EQUAL( shore.get< std::string >( "checksum" ), "23456789" );
-    BOOST_CHECK_EQUAL( shore.get< std::string >( "model" ), "ada" );
-    BOOST_CHECK_EQUAL( shore.get< std::string >( "terrain" ), "egypt" );
-
-    const Tree castle = GetItem( data, "exercise", "castle" );
-    BOOST_CHECK_EQUAL( castle.get< std::string >( "checksum" ), "34567890" );
-    BOOST_CHECK_EQUAL( castle.get< std::string >( "model" ), "ada" );
-    BOOST_CHECK_EQUAL( castle.get< std::string >( "terrain" ), "avalon" );
-    BOOST_CHECK( !castle.get< std::string >( "error" ).empty() );
+BOOST_FIXTURE_TEST_CASE( cache_parses, Fixture )
+{
+    AddSomePackages( cache, false );
+    cache.Parse();
+    cache.Identify( cache );
+    CheckSomePackages( cache, false );
 }
