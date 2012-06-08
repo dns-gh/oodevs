@@ -114,6 +114,24 @@ public:
             return 0;
         return &it->second;
     }
+    void RemoveLinks( bool urban, unsigned int id )
+    {
+        for( IT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+        {
+            T_ResourceLinks& links = it->second.links_;
+            if( !links.empty() )
+            {
+                IT_ResourceLinks link = links.begin();
+                while( link != links.end() )
+                {
+                    if( link->id_ == id && link->urban_ == urban )
+                        link = links.erase( link );
+                    else
+                        ++link;
+                }
+            }
+        }
+    }
     //@}
 
 protected:

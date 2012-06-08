@@ -56,6 +56,7 @@ protected:
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
     virtual void OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int );
+    virtual void keyPressEvent( QKeyEvent* key );
     virtual Q3DragObject* dragObject();
     virtual void viewportDropEvent( QDropEvent* pEvent );
     virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );

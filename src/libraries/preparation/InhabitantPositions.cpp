@@ -86,6 +86,7 @@ InhabitantPositions::InhabitantPositions( kernel::Controller& controller, const 
     location.Accept( visitor );
     ComputePosition();
     UpdateDictionary();
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +111,7 @@ InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller
         >> xml::end;
     ComputePosition();
     UpdateDictionary();
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +120,7 @@ InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller
 // -----------------------------------------------------------------------------
 InhabitantPositions::~InhabitantPositions()
 {
-    //NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -380,6 +382,29 @@ void InhabitantPositions::Reject()
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
     livingUrbanObject_ = edition_;
+    UpdateDictionary();
+    controller_.Update( inhabitant_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::NotifyDeleted
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void InhabitantPositions::NotifyDeleted( const kernel::UrbanObject_ABC& block )
+{
+    if( livingUrbanObject_.empty() )
+        return;
+    IT_UrbanObjectVector it = livingUrbanObject_.begin();
+    while( it != livingUrbanObject_.end() )
+    {
+        if( it->get< 2 >() == &block )
+        {
+            dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( it->get< 0 >() ) );
+            it = livingUrbanObject_.erase( it );
+        }
+        else
+            ++it;
+    }
     UpdateDictionary();
     controller_.Update( inhabitant_ );
 }

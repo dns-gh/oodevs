@@ -815,6 +815,21 @@ Détail: %1.</translation>
         <source>Create district</source>
         <translation>Créer un quartier</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>UrbanModel</name>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>Delete all selected elements?</source>
+        <translation>Supprimer tous les éléments sélectionnés?</translation>
+    </message>
 </context>
 <context>
     <name>UrbanPositions</name>

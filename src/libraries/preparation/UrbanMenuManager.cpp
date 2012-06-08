@@ -73,6 +73,7 @@ void UrbanMenuManager::NotifyContextMenu( const kernel::UrbanObject_ABC& object,
     const UrbanHierarchies& hierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
     if( hierarchies.GetLevel() == eUrbanLevelCity )
         menu.InsertItem( "Urban", tr( "Create district" ), this, SLOT( OnCreateDistrict() ) );
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,4 +89,13 @@ void UrbanMenuManager::OnCreateDistrict()
         if( hierarchies.GetLevel() == eUrbanLevelCity )
             model_.CreateCityOrDistrict( const_cast< kernel::UrbanObject_ABC* >( &object ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMenuManager::OnDelete
+// Created: JSR 2012-06-08
+// -----------------------------------------------------------------------------
+void UrbanMenuManager::OnDelete()
+{
+    model_.DeleteBlocks( selected_ );
 }
