@@ -147,7 +147,7 @@ unsigned int PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, unsign
 // -----------------------------------------------------------------------------
 unsigned int PHY_HumansComposante::OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop /*= false*/, bool contaminated /*= false*/ )
 {
-    if( newWound == PHY_HumanWound::notWounded_ )
+    if( ( newWound == PHY_HumanWound::notWounded_ ) && !psyop && !contaminated )
         return 0;
     unsigned int nNbrChanged = 0;
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
@@ -157,8 +157,7 @@ unsigned int PHY_HumansComposante::OverloadHumans( const PHY_HumanRank& rank, un
             continue;
         if( psyop )
             human.ForceMentalDisease();
-        if( newWound != PHY_HumanWound::notWounded_ )
-            human.SetWound( newWound );
+        human.SetWound( newWound );
         if( contaminated )
         {
             std::vector< const MIL_NbcAgentType* > nbcTypes;

@@ -358,7 +358,6 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
     PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
     while( number )
     {
-        assert( *pWound != PHY_HumanWound::notWounded_ || psyop || contaminated );
         number -= ( *itCurrentComp )->OverloadHumans( *pRank, number, *pWound, psyop, contaminated );
         if( ++itCurrentComp == composantes_.end() && number > 0 )
         {
