@@ -65,9 +65,16 @@ void Async::Go( const Pool_ABC::Task& task )
 // -----------------------------------------------------------------------------
 void Async::Join()
 {
-    boost::lock_guard< boost::mutex > lock( access_ );
-    boost::wait_for_all( futures_.begin(), futures_.end() );
-    futures_.clear();
+    for(;;)
+    {
+        T_Futures next;
+        boost::unique_lock< boost::mutex > lock( access_ );
+        next.swap( futures_ );
+        lock.unlock();
+        if( next.empty() )
+            return;
+        boost::wait_for_all( next.begin(), next.end() );
+    }
 }
 
 // -----------------------------------------------------------------------------

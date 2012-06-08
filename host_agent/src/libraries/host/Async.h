@@ -28,6 +28,11 @@ struct Async : public boost::noncopyable
             ~Async();
     //@}
 
+    //! @name Typedef helpers
+    //@{
+    typedef std::vector< Pool_ABC::Future > T_Futures;
+    //@}
+
     //! @name Public Methods
     //@{
     void Post( const Pool_ABC::Task& task );
@@ -41,7 +46,7 @@ private:
     //@{
     Pool_ABC& pool_;
     boost::mutex access_;
-    std::vector< Pool_ABC::Future > futures_;
+    T_Futures futures_;
     //@}
 };
 }
