@@ -149,10 +149,13 @@ namespace
         if( infrastructure )
         {
             const kernel::InfrastructureType* infraType = infrastructure->GetType();
-            if( infraType && infraType->FindCapacity( "medical" ) )
-                ++medicalInfrastructures;
-            else
-                ++nonMedicalInfrastructures;
+            if( infraType )
+            {
+                if( infraType->FindCapacity( "medical" ) )
+                    ++medicalInfrastructures;
+                else
+                    ++nonMedicalInfrastructures;
+            }
         }
 
         // Usages
