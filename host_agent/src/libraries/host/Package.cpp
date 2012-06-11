@@ -40,6 +40,7 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual bool        IsExercise() const = 0;
     virtual bool        IsInstalled() const = 0;
     virtual bool        IsLinked() const = 0;
+    virtual bool        IsValid() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
     virtual void        Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& output,
                                  const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const = 0;
@@ -367,6 +368,11 @@ struct Item : Package_ABC::Item_ABC
     bool IsLinked() const
     {
         return meta_.IsLinked();
+    }
+
+    bool IsValid() const
+    {
+        return error_.empty();
     }
 
     void Link( Tree& tree, const Package_ABC& ref, bool recurse )
@@ -788,6 +794,8 @@ Package::T_Exercises Package::GetExercises( int offset, int limit ) const
         if( !item->IsExercise() )
             continue;
         if( !item->IsInstalled() )
+            continue;
+        if( !item->IsValid() )
             continue;
         if( offset-- > 0 )
             continue;
