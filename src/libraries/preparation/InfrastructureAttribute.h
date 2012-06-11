@@ -58,6 +58,7 @@ public:
     virtual bool HasValidType() const;
     virtual unsigned int GetThreshold() const;
     virtual const kernel::InfrastructureType* GetType() const;
+    virtual void SetType( kernel::InfrastructureType* infrastructure );
     //@}
 
     //! @name Operations
@@ -79,12 +80,19 @@ public:
     virtual void NotifyModeChanged( int newMode );
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    void UpdateDictionnary();
+    //@}
+
 public:
     //! @name Member data
     //@{
     kernel::Controllers&          controllers_;
     kernel::PropertiesDictionary& dico_;
     kernel::InfrastructureType*   type_;
+    kernel::UrbanObject_ABC&      object_;
     bool                          enabled_;
     unsigned int                  threshold_;
     std::string                   role_;

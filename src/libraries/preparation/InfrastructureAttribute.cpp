@@ -11,6 +11,7 @@
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
@@ -45,6 +46,7 @@ InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controlle
     : controllers_( controllers )
     , dico_       ( dico )
     , type_       ( 0 )
+    , object_     ( object )
     , enabled_    ( true )
     , threshold_  ( DEFAULT_THRESHOLD )
     , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
@@ -62,6 +64,7 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     : controllers_( controllers )
     , dico_       ( dico )
     , type_       ( 0 )
+    , object_     ( object )
     , enabled_    ( true )
     , threshold_  ( DEFAULT_THRESHOLD )
     , position_   ( object.Get< kernel::UrbanPositions_ABC >().Barycenter() )
@@ -210,13 +213,37 @@ const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::SetType
+// Created: JSR 2012-06-11
+// -----------------------------------------------------------------------------
+void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructure )
+{
+    if( type_ != infrastructure )
+    {
+        type_ = infrastructure;
+        UpdateDictionnary();
+        controllers_.controller_.Update( *this );
+        controllers_.controller_.Update( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::NotifyModeChanged
 // Created: ABR 2012-05-30
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::NotifyModeChanged( int newMode )
 {
     kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    if( newMode == ePreparationMode_Exercise )
+    UpdateDictionnary();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::UpdateDictionnary
+// Created: JSR 2012-06-11
+// -----------------------------------------------------------------------------
+void InfrastructureAttribute::UpdateDictionnary()
+{
+    if( GetCurrentMode() == ePreparationMode_Exercise )
     {
         if( type_ )
         {
@@ -229,7 +256,7 @@ void InfrastructureAttribute::NotifyModeChanged( int newMode )
             dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Type" ) );
         }
     }
-    else if( newMode == ePreparationMode_Terrain )
+    else if( GetCurrentMode() == ePreparationMode_Terrain )
     {
         dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) );
         dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) );
