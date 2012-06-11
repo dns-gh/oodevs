@@ -823,7 +823,7 @@ Tree Link( const Package_ABC::T_Item& item, const Package_ABC& pkg, bool recurse
 // Name: Package::LinkExercise
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-Tree Package::LinkItem( const std::string& name )
+Tree Package::LinkExercise( const std::string& name )
 {
     return Link( Find( Dependency( "exercise", name ), true ), *this, true );
 }
@@ -841,7 +841,7 @@ void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pk
 }
 
 // -----------------------------------------------------------------------------
-// Name: Package::LinkExercise
+// Name: Package::LinkItem
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
 Tree Package::LinkItem( const Tree& tree )
@@ -869,7 +869,7 @@ bool IsOrphaned( const Package_ABC::T_Item& item )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Package::UnlinkExercise
+// Name: Package::UnlinkItem
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
 void Package::UnlinkItem( Async& async, const Tree& src )

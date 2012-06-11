@@ -259,8 +259,8 @@ namespace mocks
         MOCK_METHOD_EXT( Find, 2, host::Package_ABC::T_Item( const host::Package_ABC::Item_ABC&, bool ), FindItem );
         MOCK_METHOD( GetExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
-        MOCK_METHOD_EXT( LinkItem, 1, host::Tree( const std::string& name ), LinkItemName );
-        MOCK_METHOD_EXT( LinkItem, 1, host::Tree( const host::Tree& tree ), LinkItemTree );
+        MOCK_METHOD( LinkExercise, 1 );
+        MOCK_METHOD( LinkItem, 1 );
         MOCK_METHOD( UnlinkItem, 2 );
     };
 

@@ -48,7 +48,7 @@ public:
     virtual void Identify( const Package_ABC& reference );
     virtual void Install( Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
     virtual void Uninstall( Async& async, const Path& root, const std::vector< size_t >& ids );
-    virtual Tree LinkItem( const std::string& name );
+    virtual Tree LinkExercise( const std::string& name );
     virtual Tree LinkItem( const Tree& tree );
     virtual void UnlinkItem( Async& async, const Tree& tree );
     //@}

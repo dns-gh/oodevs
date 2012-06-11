@@ -391,7 +391,7 @@ size_t Node::CountExercises() const
 Tree Node::LinkExercise( const std::string& name ) const
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    return install_->LinkItem( name );
+    return install_->LinkExercise( name );
 }
 
 // -----------------------------------------------------------------------------

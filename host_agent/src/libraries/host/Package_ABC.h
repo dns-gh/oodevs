@@ -62,7 +62,7 @@ struct Package_ABC : public boost::noncopyable
     virtual void Identify( const Package_ABC& ref ) = 0;
     virtual void Install( Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
     virtual void Uninstall( Async& async, const Path& root, const std::vector< size_t >& ids ) = 0;
-    virtual Tree LinkItem( const std::string& name ) = 0;
+    virtual Tree LinkExercise( const std::string& name ) = 0;
     virtual Tree LinkItem( const Tree& tree ) = 0;
     virtual void UnlinkItem( Async& async, const Tree& tree ) = 0;
     //@}
