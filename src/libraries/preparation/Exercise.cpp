@@ -125,7 +125,7 @@ namespace
 {
     void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
     {
-        if( name != "meta" && name != "action-planning" && name != "settings" )
+        if( name != "meta" && name != "action-planning" && name != "settings" && name != "terrain" )
             xos << xml::content( name, xis );
     }
     void CopyFromFile( const std::string& file, xml::xostream& xos )
@@ -157,6 +157,7 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
     xos     << xml::end;
     CopyFromFile( file, xos );
     xos << xml::start( "settings" ) << xml::attribute( "file", config.GetSettingsFileName() ) << xml::end;
+    xos << xml::start( "terrain" ) << xml::attribute( "name", config.GetTerrainName() ) << xml::end;
     if( !actionPlanning_.empty() )
         xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
     xos << xml::end;

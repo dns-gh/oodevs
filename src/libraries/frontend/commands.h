@@ -57,6 +57,7 @@ namespace frontend
         bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
         bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
         bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint );
+        bool TerrainExists( const tools::GeneralConfig& config, const std::string& terrain );
     }
 }
 

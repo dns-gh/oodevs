@@ -82,9 +82,10 @@ TerrainToolBar::~TerrainToolBar()
 // -----------------------------------------------------------------------------
 void TerrainToolBar::OnSwitchMode()
 {
-    if( static_cast< MainWindow* >( parent() )->SwitchToTerrainMode( switchModeButton_->isChecked() ) )
+    if( static_cast< MainWindow* >( parent() )->CheckSaving( true ) )
     {
         // Succeed
+        controllers_.ChangeMode( switchModeButton_->isChecked() ? ePreparationMode_Terrain : ePreparationMode_Exercise );
         UncheckBlockCreationButtons();
         EnableBlockCreationButtons( false );
         blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );

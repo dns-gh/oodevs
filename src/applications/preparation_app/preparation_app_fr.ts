@@ -1008,6 +1008,26 @@ Do you want to save the terrain &apos;%1&apos;?</source>
         <translation>Modifications détectées.
 Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
     </message>
+    <message>
+        <source>Save terrain as ...</source>
+        <translation>Enregistrer le terrain sous ...</translation>
+    </message>
+    <message>
+        <source>The terrain &apos;%1&apos; already exist. Please, enter a new terrain name:</source>
+        <translation>Le terrain &apos;%1&apos; existe déjà. Merci de saisir un nouveau nom de terrain:</translation>
+    </message>
+    <message>
+        <source>Enter a terrain name:</source>
+        <translation>Saisir un nom de terrain:</translation>
+    </message>
+    <message>
+        <source>Type terrain name here</source>
+        <translation>Entrer le nom du terrain ici</translation>
+    </message>
+    <message>
+        <source>Preparation - %1 - [%2]</source>
+        <translation>Preparation - %1 - [%2]</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

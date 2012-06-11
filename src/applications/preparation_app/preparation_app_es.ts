@@ -1006,6 +1006,26 @@ Do you want to save the exercise &apos;%1&apos;?</source>
 Do you want to save the terrain &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save terrain as ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The terrain &apos;%1&apos; already exist. Please, enter a new terrain name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a terrain name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type terrain name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preparation - %1 - [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

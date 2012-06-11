@@ -97,4 +97,5 @@ void Controllers::ChangeMode( int newMode )
     if( modes_ )
         modes_->ChangeMode( newMode );
     actions_.ChangeMode( newMode );
+    actions_.DeselectAll();
 }

@@ -114,6 +114,10 @@ namespace
 
 namespace frontend
 {
+    void Copy( const std::string& from, const std::string& to )
+    {
+        ::Copy( from, to, from, to, 0, -1 );
+    }
     void CreateExercise( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
     {
         const std::string dir = config.GetExerciseDir( name );
@@ -162,7 +166,7 @@ namespace frontend
                     boost::algorithm::replace_first( file, "exercises/" + params.from_, "" );
                 bfs::path from( dirFrom / file );
                 bfs::path to( dirTo / file );
-                Copy( from, to, from, to, ( item->childCount() != 0 ) ? &params.iterator_ : 0 );
+                ::Copy( from, to, from, to, ( item->childCount() != 0 ) ? &params.iterator_ : 0 );
             }
         }
     }

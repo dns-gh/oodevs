@@ -81,6 +81,7 @@ public:
 
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
+    void LoadTerrain( const std::string& terrainName ); //$$$ Rien à foutre la non plus
 
     std::string GetDataSet() const;
     std::string GetPhysicalBase() const;
