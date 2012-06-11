@@ -3725,6 +3725,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Sites de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="typePontage" name="Type pontage" optional="false" type="Enumeration">
         <value id="0" name="continu"/>
@@ -4249,4 +4250,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="0140771671" -->
+<!-- signature="0831837912" -->
