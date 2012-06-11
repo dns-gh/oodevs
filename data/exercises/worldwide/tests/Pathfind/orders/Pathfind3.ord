@@ -854,4 +854,33 @@
       </parameter>
     </parameter>
   </action>
+  <action id="create_object" name="Création d'objet" time="2011-09-19T20:17:50" type="magicobject">
+    <parameter name="Type" type="string" value="mines"/>
+    <parameter name="Location" type="location">
+      <location type="point">
+        <point coordinates="30UYU1380820345"/>
+      </location>
+    </parameter>
+    <parameter name="Name" type="string" value=""/>
+    <parameter name="Camp" type="army" value="1326"/>
+    <parameter name="Attributes" type="list">
+      <parameter name="ActivityTime" type="list">
+        <parameter name="AttributeId" type="identifier" value="3"/>
+        <parameter name="Time" type="quantity" value="0"/>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="COMMON - move" target="1366" time="2011-09-19T20:24:20" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="0"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYU1405219989"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
 </actions>

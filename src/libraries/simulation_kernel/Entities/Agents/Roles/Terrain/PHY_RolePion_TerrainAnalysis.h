@@ -54,6 +54,13 @@ private:
     void UpdateSafety( float radius, float safetyDistance );
     //@}
 
+private:
+    //! @name Copy/Assignment
+    //@{
+    PHY_RolePion_TerrainAnalysis( const PHY_RolePion_TerrainAnalysis& );            //!< Copy constructor
+    PHY_RolePion_TerrainAnalysis& operator=( const PHY_RolePion_TerrainAnalysis& ); //!< Assignment operator
+    //@}
+
     //! @name Types
     //@{
     typedef std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > T_Buffer;

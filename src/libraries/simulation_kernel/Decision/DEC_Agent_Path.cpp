@@ -236,9 +236,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     if( pathClass_.AvoidObjects() )
     {
         T_KnowledgeObjectVector knowledgesObject;
-        const double rHeight = queryMaker_.GetRole< PHY_RoleInterface_Location >().GetHeight();
         MIL_DangerousObjectFilter filter;
-        queryMaker_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, rHeight, filter );
+        queryMaker_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
 
         T_PointVector firstPointVector;
         if( !pathPoints.empty() )

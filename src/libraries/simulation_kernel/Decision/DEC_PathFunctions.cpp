@@ -131,10 +131,8 @@ namespace
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
         boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
         double rDistanceCollision = 0.;
-        const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
-        const double rHeight = roleLocation.GetHeight();
         T_KnowledgeObjectVector knowledges;
-        callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
+        callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, callerAgent, filter );
         if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( knowledges, rDistanceCollision, pObjectColliding, callerAgent, false, false ) )
         {
             result.first = false;

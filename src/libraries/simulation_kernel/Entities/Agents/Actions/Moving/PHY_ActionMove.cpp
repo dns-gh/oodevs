@@ -61,10 +61,8 @@ PHY_ActionMove::~PHY_ActionMove()
 bool PHY_ActionMove::UpdateObjectsToAvoid()
 {
     T_KnowledgeObjectVector knowledges;
-    const double rHeight = pion_.GetRole< PHY_RoleInterface_Location >().GetHeight();
-
     MIL_DangerousObjectFilter filter;
-    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
+    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion_, filter );
     if( knowledges != objectsToAvoid_ )
     {
         objectsToAvoid_ = knowledges;

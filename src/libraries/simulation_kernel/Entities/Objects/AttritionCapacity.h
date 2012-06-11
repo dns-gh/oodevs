@@ -57,6 +57,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
 
+    virtual void CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract );
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
     //@}
@@ -71,7 +72,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    bool HasInteractionCapabilities( MIL_Object_ABC& object ) const;
+    bool HasInteractionCapabilities( const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name types

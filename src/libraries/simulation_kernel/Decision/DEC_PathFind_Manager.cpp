@@ -38,7 +38,7 @@
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
-    , nMaxEndConnections_     ( 4 )
+    , nMaxEndConnections_     ( 8 )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {

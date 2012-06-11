@@ -14,7 +14,7 @@
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
+#include "entities/Objects/MIL_Object_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <map>
 
