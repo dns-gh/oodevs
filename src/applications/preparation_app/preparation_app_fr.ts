@@ -1008,6 +1008,13 @@ Voulez-vous sauvegarder le terrain &apos;%1&apos; ?</translation>
         <source>Preparation - %1 - [%2]</source>
         <translation>Preparation - %1 - [%2]</translation>
     </message>
+    <message>
+        <source>Terrain file modified in order to match the exercise physical base.
+Possible impacts on the exercises using this terrain!</source>
+        <translation>Fichier &apos;terrain&apos; modifié afin de correspondre à la base physique de l&apos;exercice.
+Impactes possibles sur les exercices utilisant ce terrain !
+        </translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

@@ -99,7 +99,7 @@ public:
     //@
     void Load( const tools::ExerciseConfig& config );
     void SaveExercise( const tools::ExerciseConfig& config );
-    void SaveTerrain( const tools::ExerciseConfig& config );
+    void SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban = true );
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
     const T_LoadingErrors& GetLoadingErrors() const;
     void ClearLoadingErrors();

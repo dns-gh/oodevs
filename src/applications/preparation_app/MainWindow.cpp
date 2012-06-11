@@ -567,6 +567,14 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
             if( checkConsistency )
                 emit CheckConsistency();
             model_.SaveExercise( config_ );
+            if( !config_.IsTerrainSamePhysicalRef() )
+            {
+                model_.SaveTerrain( config_, false );
+                if( model_.IsLoaded() )
+                    QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ),
+                                             tools::translate( "MainWindow", "Terrain file modified in order to match the exercise physical base."
+                                                                             "\nPossible impacts on the exercises using this terrain!" ) );
+            }
         }
         else
         {

@@ -345,12 +345,13 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
 // Name: Model::SaveTerrain
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-void Model::SaveTerrain( const tools::ExerciseConfig& config )
+void Model::SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban /* = true */ )
 {
     if( !loaded_ )
         return;
     const tools::SchemaWriter schemaWriter;
-    SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
+    if( saveUrban )
+        SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
     config.SerializeAndSignTerrainFiles( schemaWriter );
 }
 

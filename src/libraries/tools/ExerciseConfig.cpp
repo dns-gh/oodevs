@@ -805,6 +805,15 @@ std::string ExerciseConfig::GetPathfindNodesFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::IsTerrainSamePhysicalRef
+// Created: MMC 2012-06-08
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::IsTerrainSamePhysicalRef() const
+{
+    return pWorldParameters_->terrainSamePhysical_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::SerializeAndSignTerrainFiles
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
