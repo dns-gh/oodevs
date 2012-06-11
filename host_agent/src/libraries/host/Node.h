@@ -102,7 +102,6 @@ private:
     //! @name Private methods
     //@{
     void ParsePackages( const Path& cache );
-    void IdentifyPackages();
     Tree GetCommonProperties() const;
     //@}
 

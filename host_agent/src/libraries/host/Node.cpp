@@ -290,17 +290,6 @@ void Node::ParsePackages( const Path& cache )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::IdentifyPackages
-// Created: BAX 2012-05-30
-// -----------------------------------------------------------------------------
-void Node::IdentifyPackages()
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    install_->Identify( *install_ );
-    cache_->Identify( *install_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Node::GetInstall
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
