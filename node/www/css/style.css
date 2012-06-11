@@ -33,6 +33,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .briefing_content h3,.briefing_content h2,.briefing_content h1{font-size:small;font-weight:bold;}
 .briefing_content h1:first-child{display:none;}
 .package_row .type:first-letter,.package_row .name:first-letter{text-transform:uppercase;}
+.package_row .date{font-size:small;white-space:nowrap;}
 .package th:first-child,.package td:first-child{padding-left:20px;}
 .item_briefing{padding-top:20px !important;}
 .briefing_content{margin-top:20px;}
