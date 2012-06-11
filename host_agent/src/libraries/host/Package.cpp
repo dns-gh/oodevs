@@ -69,6 +69,7 @@ struct Metadata
     }
 
     Metadata()
+        : links_( 0 )
     {
         // NOTHING
     }
