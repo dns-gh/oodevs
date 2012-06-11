@@ -89,16 +89,17 @@ integration.updateRemoveIt = function( object )
 end
 
 integration.stopRemoveIt = function( object )
-    object[myself] = object[myself] or {} 
+    object[myself] = object[myself] or {}
+    object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
     if object[myself].actionRemoveState == eActionObjetTerminee then
         meKnowledge:RC( eRC_FinDegagement )
+        object[myself].actionRemoveState = nil
         return true
     else
+        object[myself].actionRemoveState = nil
         DEC_Trace( "pause work remove" )
         return false
     end
-    object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
-    return true
 end
 
 integration.isInAvoidanceArea = function( object )
