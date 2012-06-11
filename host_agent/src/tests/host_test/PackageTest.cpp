@@ -202,11 +202,18 @@ struct Fixture
 
     void CheckSomePackages( const Package_ABC& pkg, bool ref )
     {
+        const size_t numExercises = 1 + !!ref;
         const Tree data = pkg.GetProperties();
-        CheckCounts( data, 1, 1, 1 + !!ref );
+        CheckCounts( data, 1, 1, numExercises );
         CheckItem( data, "model", "ada", "01234567" );
         CheckItem( data, "terrain", "egypt", "12345678" );
         CheckExercise( data, "shore", "23456789", "ada", "egypt" );
+
+        BOOST_CHECK_EQUAL( pkg.CountExercises(), numExercises );
+        const Package_ABC::T_Exercises list = pkg.GetExercises( 0, INT_MAX );
+        BOOST_CHECK_EQUAL( list.size(), 1 );
+        BOOST_CHECK_EQUAL( list[0], "shore" );
+
         if( !ref )
             return;
         const Tree castle = CheckExercise( data, "castle", "34567890", "ada", "avalon" );
