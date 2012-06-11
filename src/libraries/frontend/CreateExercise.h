@@ -34,6 +34,8 @@ namespace frontend
         Q3ListViewItemIterator iterator_;
     };
 
+    void Copy( const std::string& from, const std::string& to );
+
     void CreateExercise( const tools::GeneralConfig& config, const std::string& name,
                          const std::string& terrain, const std::string& model, const std::string& physical = "" );
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name,

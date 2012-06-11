@@ -330,5 +330,11 @@ namespace frontend
             const QStringList checkpoints = ListCheckpoints( config, exercise, session );
             return checkpoints.find( checkpoint.c_str() ) != checkpoints.end();
         }
+
+        bool TerrainExists( const tools::GeneralConfig& config, const std::string& terrain )
+        {
+            const QStringList terrains = ListTerrains( config );
+            return terrains.find( terrain.c_str() ) != terrains.end();
+        }
     }
 }

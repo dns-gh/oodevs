@@ -191,6 +191,16 @@ std::string ExerciseConfig::BuildExerciseChildFile( const std::string& file ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::LoadTerrain
+// Created: ABR 2012-06-11
+// -----------------------------------------------------------------------------
+void ExerciseConfig::LoadTerrain( const std::string& terrainName )
+{
+    terrain_ = terrainName;
+    pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetPhysicalFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------

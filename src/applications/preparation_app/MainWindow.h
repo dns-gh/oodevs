@@ -11,6 +11,7 @@
 #define __MainWindow_h_
 
 #include "tools/ControllerObserver_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -62,6 +63,7 @@ class ToolbarContainer;
 class MainWindow : public QMainWindow
                  , public tools::Observer_ABC
                  , public tools::ControllerObserver_ABC
+                 , public kernel::ModesObserver_ABC
                  , private boost::noncopyable
 {
     Q_OBJECT;
@@ -76,7 +78,6 @@ public:
     //! @name Operations
     //@{
     bool CheckSaving( bool switchingMode = false );
-    bool SwitchToTerrainMode( bool terrainMode );
     //@}
 
 public slots:
@@ -118,6 +119,7 @@ private:
     virtual void NotifyCreated();
     virtual void NotifyUpdated();
     virtual void NotifyDeleted();
+    virtual void NotifyModeChanged( int newMode );
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
     void SetProgression( int value, const QString& text );
@@ -132,6 +134,7 @@ private:
     Config&              config_;
     bool                 loading_;
     bool                 needsSaving_;
+    bool                 terrainHasChanged_;
 
     std::auto_ptr< ModelBuilder >                modelBuilder_;
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
