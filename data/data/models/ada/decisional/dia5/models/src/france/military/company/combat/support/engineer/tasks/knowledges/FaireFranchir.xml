@@ -34,6 +34,15 @@
 				</type>
 			</return>
 		</method>
+        <method name="getMeetingPoint">
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
 		<method name="init" abstract="false">
 			<description>Methode d'initialisation appelée une seule fois</description>
 		</method>

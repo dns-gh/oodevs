@@ -21,5 +21,9 @@ return
     getObjectives = function( self, params, entity )
       return params.entities
     end,
+    
+    getMeetingPoint = function( self, params, entity )
+      return {params.meetingPoint}
+    end,
 
 }

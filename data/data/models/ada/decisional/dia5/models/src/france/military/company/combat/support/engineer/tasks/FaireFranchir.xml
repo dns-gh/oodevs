@@ -13,6 +13,11 @@
 				<simple name="numeric"/>
 			</type>
 		</parameter>
+		<parameter name="meetingPoint">
+			<type>
+				<class name="sword.military.world.Point"/>
+			</type>
+		</parameter>
 	</parameters>
 	<stages>
 		<stage label="Reconnaissance">
@@ -40,7 +45,7 @@
 					</parameter>
 					<parameter name="defaultTask">
 						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
 						</value>
 					</parameter>
 					<parameter name="disableWhenDone">
@@ -76,7 +81,7 @@
 					</parameter>
 					<parameter name="defaultTask">
 						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
 						</value>
 					</parameter>
 				</skill>
