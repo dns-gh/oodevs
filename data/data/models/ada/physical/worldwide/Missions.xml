@@ -3383,9 +3383,11 @@ overwhelming force.]]></doctrine>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="358" name="Change population ROE">
       <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement population" optional="false" type="Enumeration">
-        <value id="0" name="use of force forbidden"/>
-        <value id="1" name="holding civilians in position by usage of non lethal means"/>
-        <value id="2" name="lethal weapons authorized for use"/>
+        <value id="0" name="none"/>
+        <value id="1" name="emploi_force_interdit"/>
+        <value id="2" name="holding civilians in position by usage of non lethal means"/>
+        <value id="3" name="dispersing civilians by active defense means"/>
+        <value id="4" name="lethal weapons authorized for use"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="359" name="Cross departure line"/>
@@ -3511,4 +3513,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1811570443" -->
+<!-- signature="2070212633" -->
