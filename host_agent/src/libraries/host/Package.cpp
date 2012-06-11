@@ -815,7 +815,7 @@ size_t Package::CountExercises() const
 {
     size_t reply = 0;
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
-        reply += item->IsExercise() && item->IsInstalled();
+        reply += item->IsExercise() && item->IsInstalled() && item->IsValid();
     return reply;
 }
 
