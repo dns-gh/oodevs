@@ -19,10 +19,12 @@
 namespace kernel
 {
     class Controllers;
+    class StaticModel;
     class UrbanObject_ABC;
 }
 
 class UrbanModel;
+class QSignalMapper;
 
 // =============================================================================
 /** @class  UrbanMenuManager
@@ -41,7 +43,7 @@ class UrbanMenuManager : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanMenuManager( kernel::Controllers& controllers, UrbanModel& model );
+             UrbanMenuManager( kernel::Controllers& controllers, UrbanModel& model, const kernel::StaticModel& staticModel );
     virtual ~UrbanMenuManager();
     //@}
 
@@ -56,6 +58,8 @@ private slots:
     //@{
     void OnCreateDistrict();
     void OnDelete();
+    void OnDeleteInfrastructures();
+    void OnCreateInfrastructure( const QString& name );
     //@}
 
 private:
@@ -63,6 +67,7 @@ private:
     //@{
     virtual void NotifySelectionChanged( const T_Elements& elements );
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu );
+    void CreateInfrastructuresMenu( kernel::ContextMenu& menu ) const;
     //@}
 
 private:
@@ -70,6 +75,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     UrbanModel& model_;
+    const kernel::StaticModel& staticModel_;
+    kernel::UrbanObject_ABC* element_;
+    QSignalMapper* pMapper_;
     T_Elements selected_;
     //@}
 };

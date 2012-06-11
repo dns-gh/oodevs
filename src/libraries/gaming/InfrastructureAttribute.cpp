@@ -143,3 +143,12 @@ const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
 {
     return type_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::SetType
+// Created: JSR 2012-06-11
+// -----------------------------------------------------------------------------
+void InfrastructureAttribute::SetType( kernel::InfrastructureType* /*infrastructure*/ )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}

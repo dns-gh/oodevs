@@ -145,7 +145,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
     , geostore_           ( new geostore::GeoStoreManager( *this ) )
-    , menuManager_        ( new UrbanMenuManager( controllers, *this ) )
+    , menuManager_        ( new UrbanMenuManager( controllers, *this, staticModel_ ) )
 {
     controllers_.Register( *this );
 }

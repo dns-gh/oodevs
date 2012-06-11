@@ -43,6 +43,7 @@ public:
     virtual bool HasValidType() const;
     virtual unsigned int GetThreshold() const;
     virtual const kernel::InfrastructureType* GetType() const;
+    virtual void SetType( kernel::InfrastructureType* infrastructure );
     //@}
 
     //! @name Operations

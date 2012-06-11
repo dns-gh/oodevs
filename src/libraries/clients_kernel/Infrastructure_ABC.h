@@ -40,6 +40,7 @@ public:
     virtual bool HasValidType() const = 0;
     virtual unsigned int GetThreshold() const = 0;
     virtual const InfrastructureType* GetType() const = 0;
+    virtual void SetType( InfrastructureType* infrastructure ) = 0;
     //@}
 
     //! @name Operations

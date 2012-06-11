@@ -113,7 +113,17 @@ void EntityListView::MultipleSelectionChanged()
 // -----------------------------------------------------------------------------
 void EntityListView::OnRequestCenter()
 {
-    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( selectedItem() ) )
+    Q3ListViewItem* selected = 0;
+    if( selectionMode() == Q3ListView::Single )
+        selected = selectedItem();
+    else
+    {
+        Q3ListViewItemIterator it( this );
+        for( ; !selected && *it; ++it )
+            if( ( *it )->isSelected() )
+                selected = *it;
+    }
+    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( selected ) )
         value->Activate( controllers_.actions_ );
 }
 
