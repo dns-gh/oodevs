@@ -209,7 +209,7 @@ struct Fixture
         CheckItem( data, "terrain", "egypt", "12345678" );
         CheckExercise( data, "shore", "23456789", "ada", "egypt" );
 
-        BOOST_CHECK_EQUAL( pkg.CountExercises(), numExercises );
+        BOOST_CHECK_EQUAL( pkg.CountExercises(), 1 );
         const Package_ABC::T_Exercises list = pkg.GetExercises( 0, INT_MAX );
         BOOST_CHECK_EQUAL( list.size(), 1 );
         BOOST_CHECK_EQUAL( list[0], "shore" );
