@@ -27,7 +27,7 @@
 		<description>Se déplacer tactiquement vers les éléments et les reconnaître.</description>
 	</goal>
 	<stages>
-		<stage label="Reconnaissance de l'itineraire" disable-when-done="true">
+		<stage label="Reconnaissance" disable-when-done="true">
 			<description>Mouvement tactique et reonnaissance des objectifs. Détection des ennemis, prise de contact si possible.</description>
 			<goal>
 				<description>Obtenir des informations sur les objectifs avec agressivité.</description>
