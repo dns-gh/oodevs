@@ -302,7 +302,6 @@ BOOST_FIXTURE_TEST_CASE( package_uninstalls, Fixture )
 
     ExpectItemRemoval( dst );
     install.Uninstall( async, dst, boost::assign::list_of( 0 ) );
-    install.Identify( install );
 
     data = install.GetProperties();
     CheckCounts( data, 0, 1, 1 );

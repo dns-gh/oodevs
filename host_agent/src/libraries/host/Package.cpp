@@ -742,6 +742,7 @@ void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, cons
     async.Join();
 
     std::sort( items_.begin(), items_.end(), &ItemOrder );
+    Identify( *this );
 }
 
 namespace
@@ -772,6 +773,7 @@ void Package::Uninstall( Async& io, const Path& tomb, const std::vector< size_t 
             async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( io ), boost::cref( system_ ), tomb ) );
     async.Join();
     RemoveItems( items_, boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) );
+    Identify( *this );
 }
 
 // -----------------------------------------------------------------------------
