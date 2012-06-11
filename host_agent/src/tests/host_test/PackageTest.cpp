@@ -62,12 +62,12 @@ struct Fixture
         if( !ref )
         {
             const Path content = root / "content.xml";
-            MOCK_EXPECT( system.IsFile ).once().with( content ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( content ).returns( true );
             Tree next;
             next.put( "content.name", "some_name" );
             next.put( "content.description", "some_description" );
             next.put( "content.version", "some_version" );
-            MOCK_EXPECT( system.ReadFile ).once().with( content ).returns( ToXml( next ).c_str() );
+            MOCK_EXPECT( system.ReadFile ).with( content ).returns( ToXml( next ).c_str() );
         }
         const Path target = sub / prefix / name / suffix;
         list.push_back( target );
