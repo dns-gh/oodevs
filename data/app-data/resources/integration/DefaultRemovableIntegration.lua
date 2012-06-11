@@ -40,15 +40,16 @@ end
 
 integration.stopDemineIt = function( object )
     object[myself] = object[myself] or {} 
+    object[myself].actionDemine = DEC__StopAction( object[myself].actionDemine )
     if object[myself].actionDemineState == eActionObjetTerminee then
         meKnowledge:RC( eRC_FinDevalorisation, object.source )
+        object[myself].actionDemineState = nil
         return true
     else
+        object[myself].actionDemineState = nil
         DEC_Trace( "pause work demine" )
         return false
     end
-    object[myself].actionDemine = DEC__StopAction( object[myself].actionDemine )
-    return true
 end
 --- Return if the unit has the capacity to remove the selected object
 -- @param knowledge on an object
@@ -95,16 +96,17 @@ integration.updateRemoveIt = function( object )
 end
 
 integration.stopRemoveIt = function( object )
-    object[myself] = object[myself] or {} 
+    object[myself] = object[myself] or {}
+    object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
     if object[myself].actionRemoveState == eActionObjetTerminee then
+        meKnowledge:RC( eRC_FinDegagement )
+        object[myself].actionRemoveState = nil
         return true
     else
+        object[myself].actionRemoveState = nil
         DEC_Trace( "pause work remove" )
         return false
     end
-    meKnowledge:RC( eRC_FinDegagement )
-    object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
-    return true
 end
 
 integration.isInAvoidanceArea = function( object )
