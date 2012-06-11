@@ -301,10 +301,8 @@ activate = function( self )
             if not exists( oldEntities, entity ) then
               F_Pion_SeteEtatEchelon( entity.source, eEtatEchelon_Second ) -- on met les nouveaux pions au second echelon
               if not DEC_HasMission( entity.source ) then -- Si le pion n'a pas de mission
-                  issueMission ( self, self.params.supportTasks, 1, eEtatEchelon_Second, { entity } )
-                  if not DEC_HasMission( entity.source ) then -- Si le pion n'a toujours pas de mission
-                      issueMission ( self, self.params.defaultTask, 1, eEtatEchelon_Second, { entity } )
-                  end
+                  local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
+                  issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
               end
             end
         end
