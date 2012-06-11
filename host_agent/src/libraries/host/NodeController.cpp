@@ -104,7 +104,7 @@ NodeController::~NodeController()
 // -----------------------------------------------------------------------------
 void NodeController::Reload()
 {
-    BOOST_FOREACH( const Path& path, system_.Glob( root_, Utf8Convert( type_ ) + L".id" ) )
+    BOOST_FOREACH( const Path& path, system_.Glob( root_, type_ + ".id" ) )
         try
         {
             T_Node node = factory_.Make( path );

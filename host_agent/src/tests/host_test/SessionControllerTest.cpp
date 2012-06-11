@@ -136,7 +136,7 @@ namespace
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( root / "sessions", L"session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
+            MOCK_EXPECT( sub.system.Glob ).once().with( root / "sessions", "session.id" ).returns( boost::assign::list_of< Path >( "a/b/c/session.id" )( "session.id" ) );
             active = AddSession( idActive, idNode, sessionActive, "a/b/c/session.id" );
             idle = AddSession( idIdle, idNode, sessionIdle, "session.id" );
             control.Reload( &IsKnownNode );

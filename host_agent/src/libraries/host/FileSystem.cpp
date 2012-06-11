@@ -233,7 +233,7 @@ std::string FileSystem::ReadFile( const Path& path ) const
 // Name: FileSystem::Glob
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::vector< Path > FileSystem::Glob( const Path& path, const std::wstring& name ) const
+std::vector< Path > FileSystem::Glob( const Path& path, const Path& name ) const
 {
     std::vector< Path > paths;
     if( IsDirectory( path ) )

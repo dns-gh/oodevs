@@ -67,7 +67,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     system_.MakePaths( root_ );
     if( !system_.IsDirectory( apps_ ) )
         throw std::runtime_error( runtime::Utf8Convert( apps_ ) + " is not a directory" );
-    const Path app = apps_ / L"simulation_app.exe";
+    const Path app = apps_ / "simulation_app.exe";
     if( !system_.Exists( app ) )
         throw std::runtime_error( Utf8Convert( app ) + " is missing" );
     if( !system_.IsFile( app ) )
@@ -89,7 +89,7 @@ SessionController::~SessionController()
 // -----------------------------------------------------------------------------
 void SessionController::Reload( T_Predicate predicate )
 {
-    BOOST_FOREACH( const Path& path, system_.Glob( root_, L"session.id" ) )
+    BOOST_FOREACH( const Path& path, system_.Glob( root_, "session.id" ) )
         try
         {
             boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );

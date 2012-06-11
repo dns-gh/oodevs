@@ -80,7 +80,7 @@ struct Fixture
     {
         const Path data = root / prefix;
         const Path file = data / name / suffix;
-        MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename().wstring() ).returns( boost::assign::list_of( file ) );
+        MOCK_EXPECT( system.Glob ).once().with( data, suffix.filename() ).returns( boost::assign::list_of( file ) );
         if( ref )
             MOCK_EXPECT( system.Glob ).exactly( 2 ).with( boost::bind( &BeginWith, root, _1 ), mock::any ).returns( std::vector< Path >() );
         MOCK_EXPECT( system.GetLastWrite ).with( file ).returns( std::time_t() );

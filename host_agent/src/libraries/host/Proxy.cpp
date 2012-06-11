@@ -62,7 +62,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
         throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is missing" );
     if( !system_.IsFile( jar_ ) )
         throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
-    const Path tag = GetPath() / L"proxy.id";
+    const Path tag = GetPath() / "proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << port;
     bool hasProcess = system_.IsFile( tag );
     if( hasProcess )
@@ -187,7 +187,7 @@ void Proxy::Stop()
 void Proxy::Save() const
 {
     const Path path = GetPath();
-    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToJson( GetProperties() ) ) );
+    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / "proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------

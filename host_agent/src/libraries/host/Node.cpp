@@ -194,7 +194,7 @@ Tree Node::Save() const
 
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     if( cache_ )
-        tree.put( "cache", Utf8Convert( cache_->GetPath().filename().wstring() ) );
+        tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );

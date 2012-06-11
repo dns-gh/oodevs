@@ -53,10 +53,21 @@ bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const c
     return true;
 }
 
+template<>
+bool ReadParameter( Path& dst, const std::string& name, int& idx, int argc, const char* argv[] )
+{
+    if( name != argv[idx] )
+        return false;
+    if( ++idx >= argc )
+        throw std::runtime_error( "missing " + name + " parameter" );
+    dst = Utf8Convert( std::string( argv[idx] ) );
+    return true;
+}
+
 struct Configuration
 {
-    std::wstring root;
-    std::wstring java;
+    Path root;
+    Path java;
     struct
     {
         int proxy;
@@ -66,7 +77,7 @@ struct Configuration
     } ports;
     struct
     {
-        std::wstring jar;
+        Path jar;
     } proxy;
     struct
     {
@@ -74,12 +85,12 @@ struct Configuration
     } cluster;
     struct
     {
-        std::wstring jar;
-        std::wstring root;
+        Path jar;
+        Path root;
     } node;
     struct
     {
-        std::wstring apps;
+        Path apps;
     } session;
 
     bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
@@ -206,7 +217,7 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     Pool pool( 8 );
     UuidFactory uuids;
     web::Client client;
-    Proxy proxy( log, runtime, system, cfg.root + L"/log", cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
+    Proxy proxy( log, runtime, system, cfg.root / "log", cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( pool, system );
     NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
@@ -243,16 +254,12 @@ struct NullLogger : public cpplog::BaseLogger
 
 Path GetRootDir( int argc, const char* argv[] )
 {
-    std::wstring dir;
+    Path reply;
     for( int i = 0; i < argc; ++i )
-        if( ReadParameter( dir, "--root", i, argc, argv ) )
-            return dir;
+        if( ReadParameter( reply, "--root", i, argc, argv ) )
+            return reply;
     NullLogger nil;
-    runtime::Factory factory( nil );
-    Path reply = factory.GetRuntime().GetModuleFilename();
-    reply.remove_filename();
-    reply.remove_filename();
-    return reply;
+    return runtime::Factory( nil ).GetRuntime().GetModuleFilename().remove_filename().remove_filename();
 }
 
 int StartServer( int argc, const char* argv[] )

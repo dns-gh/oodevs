@@ -456,7 +456,7 @@ struct Model : public Item
     template< typename T >
     static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", L"decisional.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "models", "decisional.xml" ) )
             AttachItem( async, system, items, boost::make_shared< Model >( system, root, path, items.size(), meta ) );
     }
 };
@@ -482,7 +482,7 @@ struct Terrain : public Item
     template< typename T >
     static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", L"Terrain.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "data" / "terrains", "Terrain.xml" ) )
             AttachItem( async, system, items,
                         boost::make_shared< Terrain >( system, root, path, items.size(), meta ) );
     }
@@ -558,7 +558,7 @@ struct Exercise : public Item
     template< typename T >
     static void Parse( Async& async, const FileSystem_ABC& system, const Path& root, T& items, const Metadata* meta )
     {
-        BOOST_FOREACH( const Path& path, system.Glob( root / "exercises", L"exercise.xml" ) )
+        BOOST_FOREACH( const Path& path, system.Glob( root / "exercises", "exercise.xml" ) )
             AttachItem( async, system, items,
                         boost::make_shared< Exercise >( system, root, path, items.size(), meta, FromXml( system.ReadFile( path ) ) ) );
     }
