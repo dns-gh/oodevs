@@ -18,7 +18,6 @@
 #include "LogisticAttribute.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
-#include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -328,7 +327,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object )
 {
-    MIL_ObjectLoader::GetLoader().GetCapacityFactory().Update( object, capacity, xis );
+    builder_->Update( capacity, xis, object );
 }
 
 // -----------------------------------------------------------------------------

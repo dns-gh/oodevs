@@ -11,6 +11,7 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_Object_ABC.h"
+#include "CapacityFactory.h"
 #include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -113,4 +114,13 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const MIL_ObjectBuilder_ABC& bui
 MIL_Object_ABC* MIL_ObjectFactory::BuildUrbanObject( const urban::TerrainObject_ABC& object )
 {
     return MIL_ObjectLoader::GetLoader().CreateUrbanObject( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectFactory::Update
+// Created: LGY 2012-06-12
+// -----------------------------------------------------------------------------
+void MIL_ObjectFactory::Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const
+{
+    return MIL_ObjectLoader::GetLoader().GetCapacityFactory().Update( object, capacity, xis );
 }

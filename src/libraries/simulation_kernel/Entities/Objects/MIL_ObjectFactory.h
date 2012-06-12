@@ -63,6 +63,8 @@ public:
                                  sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, unsigned int forcedId = 0u );
     MIL_Object_ABC* BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army );
     MIL_Object_ABC* BuildUrbanObject( const urban::TerrainObject_ABC& object );
+
+    void Update( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Accessors
