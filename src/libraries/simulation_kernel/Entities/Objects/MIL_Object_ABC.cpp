@@ -18,8 +18,10 @@
 #include "SpawnCapacity.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -189,8 +191,11 @@ bool MIL_Object_ABC::CanCollideWithEntity() const
 // Name: MIL_Object_ABC::CanInteractWith
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& /*agent*/ ) const
+bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
+    const InteractWithSideCapacity* pSideInteraction = Retrieve< InteractWithSideCapacity >();
+    if( pSideInteraction && pArmy_ )
+        return pSideInteraction->IsPossible( *pArmy_, agent.GetArmy() ) && CanCollideWithEntity();
     return CanCollideWithEntity();
 }
 
