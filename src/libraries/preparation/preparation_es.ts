@@ -842,6 +842,10 @@ Detalle: %1.</translation>
         <source>Templates</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Apply properties to children</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UrbanModel</name>
