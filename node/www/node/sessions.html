@@ -49,18 +49,21 @@
     </script>
     <script type="text/template" id="session_template">
         <div id="id_{{{id}}}" class="span9">
-            <div class="well session_row">
+            <div class="row-fluid well session_row">
                 <span class="well {{{status}}}"></span>
-                <div class="span2">
-                    <div class="session_name">{{name}}</div>
-                    <div class="session_exercise">{{exercise}}</div>
-                    <div class="session_model">Model: 2010-12-10</div>
-                </div>
-                <div class="span6">
-                    <div>Started 2012-01-01 at 00:00:00</div>
-                    <div>Time running 00:00:00</div>
-                    <div>0 clients connected</div>
-                </div>
+                    <div class="span3">
+                        <div class="session_name">{{name}}</div>
+                        <div class="shift_right">
+                            <div><span class="item_label">Model</span> {{model.name}}</div>
+                            <div><span class="item_label">Terrain</span> {{terrain.name}}</div>
+                            <div><span class="item_label">Exercise</span> {{exercise.name}}</div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div>Started 2012-01-01 at 00:00:00</div>
+                        <div>Time running 00:00:00</div>
+                        <div>0 clients connected</div>
+                    </div>
                 <div class="btn-group session_top_right">
                     <a title="Loading..." class="btn hide disabled spin_btn"></a>
                     {{#is_option status playing="" paused="" replaying=""}}
