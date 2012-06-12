@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="503" name="Common - move parallel" target="1351" time="2011-09-19T20:14:50" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="319"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30TXT9185467276"/>
+        <point coordinates="30TYT2011046926"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30TYT1121538695"/>
+        <point coordinates="30TXT8425253557"/>
+      </location>
+    </parameter>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYT0425755463"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYT0143956969"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT9906857803"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT9645557862"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT8856457427"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYT0438449765"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="Common - move" target="1332" time="2011-09-19T20:29:50" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN1811747258"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN1896848333"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN1992450092"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN2860248280"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN2809235939"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN2022938904"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCN2336640497"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="Common - move" target="1366" time="2011-09-19T20:39:30" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TYU1887413401"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="Common - move" target="1361" time="2011-09-19T20:53:40" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU8423731051"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="Common - move" target="1365" time="2011-09-19T20:40:40" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UYU1271522287"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="Common - move" target="1372" time="2011-09-19T20:29:20" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3274729156"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2964228089"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2607428279"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2289528775"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2370126482"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2724427330"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 7" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2983427864"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3562526511"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="133" name="Common - move" target="1375" time="2011-09-19T20:28:40" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU4412925264"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU4653823439"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU5063220930"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXU5618413409"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU5377921609"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU4866922290"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 7" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU4639923321"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 8" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU4370425821"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU3711126326"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="503" name="Common - move parallel" target="1379" time="2011-09-19T20:09:00" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31UCP3039036257"/>
+        <point coordinates="31UCP2533129209"/>
+        <point coordinates="31UCP1121834906"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UCP0581628977"/>
+        <point coordinates="31TCP2757516958"/>
+        <point coordinates="31UCP3423329286"/>
+        <point coordinates="31UCP3423329286"/>
+      </location>
+    </parameter>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2753027634"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2709825145"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2655522607"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2713719531"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCP2783918031"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2283421182"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 7" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2377722831"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 8" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP2229724037"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 9" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP1981226048"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31UCP0744830977"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="223" name="Armor - control" target="1391" time="2011-09-19T20:05:30" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31UCP0581628977"/>
+        <point coordinates="31TCP2757516958"/>
+        <point coordinates="31UCP3423329286"/>
+        <point coordinates="31UCP3423329286"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31UCP3039036257"/>
+        <point coordinates="31UCP2533129209"/>
+        <point coordinates="31UCP1121834906"/>
+      </location>
+    </parameter>
+    <parameter name="Area to control" type="polygon">
+      <location type="polygon">
+        <point coordinates="31UCP1606925553"/>
+        <point coordinates="31UCP1627023629"/>
+        <point coordinates="31UCP1917623648"/>
+        <point coordinates="31UCP1806725142"/>
+        <point coordinates="31UCP1606925553"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="503" name="Common - move parallel" target="1400" time="2011-09-19T20:02:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30TXT5041678332"/>
+        <point coordinates="30TXT4791353787"/>
+        <point coordinates="30TXT4174629114"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30TXT3581775945"/>
+        <point coordinates="30TXT3297950813"/>
+        <point coordinates="30TXT3473126733"/>
+        <point coordinates="30TXT3562026765"/>
+      </location>
+    </parameter>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT3524161204"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT4593261868"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT3660954507"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT4488651712"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT3525145184"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT4354841826"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 7" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT3564234236"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 8" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT4056030758"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXT4056030758"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="261" name="Engineer - perform work" target="1396" time="2011-09-19T20:27:40" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30TXT3581775945"/>
+        <point coordinates="30TXT3297950813"/>
+        <point coordinates="30TXT3473126733"/>
+        <point coordinates="30TXT3562026765"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30TXT5041678332"/>
+        <point coordinates="30TXT4791353787"/>
+        <point coordinates="30TXT4174629114"/>
+      </location>
+    </parameter>
+    <parameter name="Work" type="list">
+      <parameter name="Work (élément 1)" type="plannedwork" value="abattis">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Position d'obstacle" type="location">
+          <location type="polygon">
+            <point coordinates="30TXT4078965491"/>
+            <point coordinates="30TXT3714357732"/>
+            <point coordinates="30TXT4513559192"/>
+            <point coordinates="30TXT4078965491"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Work (élément 2)" type="plannedwork" value="anti tank obstacle">
+        <parameter name="Position d'obstacle" type="location">
+          <location type="polygon">
+            <point coordinates="30TXT4080657531"/>
+            <point coordinates="30TXT3525853706"/>
+            <point coordinates="30TXT4748255276"/>
+            <point coordinates="30TXT4080657531"/>
+          </location>
+        </parameter>
+      </parameter>
+      <parameter name="Work (élément 3)" type="plannedwork" value="movement forbidden area">
+        <parameter name="Position d'obstacle" type="location">
+          <location type="polygon">
+            <point coordinates="30TXT3396151846"/>
+            <point coordinates="30TXT3460146655"/>
+            <point coordinates="30TXT4621752511"/>
+            <point coordinates="30TXT3396151846"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+    <parameter name="Meeting point" type="polygon">
+      <location type="polygon">
+        <point coordinates="30TXT3697435038"/>
+        <point coordinates="30TXT3979432988"/>
+        <point coordinates="30TXT4005436713"/>
+        <point coordinates="30TXT3697435038"/>
+      </location>
+    </parameter>
+  </action>
+</actions>
