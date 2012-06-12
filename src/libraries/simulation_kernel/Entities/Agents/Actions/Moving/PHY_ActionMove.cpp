@@ -26,7 +26,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -117,8 +116,7 @@ bool PHY_ActionMove::AvoidObstacles()
     assert( pObjectColliding && pObjectColliding->IsValid() );
     obstacleId_ = pObjectColliding->GetObjectKnown() ? pObjectColliding->GetObjectKnown()->GetID() : 0;
 
-    const std::string name = MIL_ObjectLoader::GetLoader().GetType( pObjectColliding->GetType().GetName() ).GetRealName();
-    role_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
+    role_.SendRC( MIL_Report::eReport_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
     return true;
 }
 

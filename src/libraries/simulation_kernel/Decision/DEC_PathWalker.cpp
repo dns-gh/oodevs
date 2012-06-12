@@ -15,7 +15,6 @@
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -163,8 +162,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
             const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
             if( object.IsInside( lastWaypoint ) )
             {
-                const std::string name = MIL_ObjectLoader::GetLoader().GetType( object.GetType().GetName() ).GetRealName();
-                movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
+                movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, object.GetType().GetRealName() );
                 isInsideObject = true;
                 break;
             }

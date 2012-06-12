@@ -21,7 +21,6 @@
 #include "Entities\Objects\MIL_ObjectType_ABC.h"
 #include "ObstacleAttribute.h"
 #include "BypassAttribute.h"
-#include "MIL_ObjectLoader.h"
 #include "ConstructionAttribute.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -164,8 +163,7 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
     unsigned int hits = fireResult.GetHits();
     if( hits > 0 )
     {
-        const std::string name = MIL_ObjectLoader::GetLoader().GetType(  object.GetType().GetName() ).GetRealName();
-        MIL_Report::PostEvent( agent, MIL_Report::eReport_ExplosionSurBouchonMine, name );
+        MIL_Report::PostEvent( agent, MIL_Report::eReport_ExplosionSurBouchonMine, object.GetType().GetRealName() );
         construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
     }
 }
