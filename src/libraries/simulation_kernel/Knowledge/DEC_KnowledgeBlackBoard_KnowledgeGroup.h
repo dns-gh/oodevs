@@ -103,7 +103,7 @@ public:
     //! @name Queries
     //@{
     // Knowledge agents
-    DEC_Knowledge_Agent& CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
     DEC_Knowledge_Population& CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived );
     bool IsKnown( const MIL_Agent_ABC& agent ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const DEC_Knowledge_AgentPerception& perception ) const;

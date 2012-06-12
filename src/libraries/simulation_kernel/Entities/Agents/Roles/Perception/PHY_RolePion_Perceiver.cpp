@@ -26,6 +26,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -958,6 +959,9 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
             (**itPerception).FinalizePerception();
     }
     NotifyPerception( pion_, PHY_PerceptionLevel::identified_, false );
+    const MIL_Agent_ABC* transporter = pion_.GetRole< transport::PHY_RoleInterface_Transported >().GetTransporter();
+    if( transporter )
+        NotifyPerception( const_cast< MIL_Agent_ABC& >( *transporter ), PHY_PerceptionLevel::identified_, false );
 }
 
 // -----------------------------------------------------------------------------

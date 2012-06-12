@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
     void                 DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
     void                 SaveAllCurrentKnowledgeAgent();
     void Accept( KnowledgesVisitor_ABC& visitor ) const;

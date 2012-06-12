@@ -163,8 +163,9 @@ public:
     // LTO end
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
-    DEC_Knowledge_Agent& CreateKnowledgeAgent ( MIL_Agent_ABC& perceived );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent ( const MIL_Agent_ABC& perceived );
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
+    void UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived );
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
@@ -195,7 +196,7 @@ private:
     DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown );
     void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep  );
     void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep  );
-    DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception );
