@@ -109,6 +109,8 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
     brain[ "DEC_Agent_CanMoveOn" ] =
         boost::function< bool( const DEC_Decision_ABC*, boost::shared_ptr< MT_Vector2D > )>( boost::bind( &DEC_TerrainFunctions::CanMoveOn, _1, _2 ) );
+    
+    brain[ "DEC_Agent_ForcerImmunisationNbc" ] = &DEC_AgentFunctions::TemporaryImmunizeAgent;
 }
 
 // -----------------------------------------------------------------------------
