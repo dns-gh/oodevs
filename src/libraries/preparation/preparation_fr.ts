@@ -76,6 +76,13 @@
     </message>
 </context>
 <context>
+    <name>Block</name>
+    <message>
+        <source>PhysicalFeatures/Architecture</source>
+        <translation>Eléments physiques/Architecture</translation>
+    </message>
+</context>
+<context>
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
@@ -830,6 +837,10 @@ Détail: %1.</translation>
     <message>
         <source>Delete on selection</source>
         <translation>Supprimer pour la sélection</translation>
+    </message>
+    <message>
+        <source>Templates</source>
+        <translation>Patrons</translation>
     </message>
 </context>
 <context>

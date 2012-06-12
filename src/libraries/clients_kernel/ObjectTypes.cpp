@@ -21,6 +21,7 @@
 #include "ObjectType.h"
 #include "ResourceNetworkType.h"
 #include "RoofShapeType.h"
+#include "UrbanTemplateType.h"
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
 #include "LogisticSupplyClass.h"
@@ -71,6 +72,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     loader.LoadPhysicalFile( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) );
     loader.LoadPhysicalFile( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) );
     loader.LoadPhysicalFile( "urban", boost::bind( &ObjectTypes::ReadUrbanTypes, this, _1 ) );;
+    loader.LoadOptionalPhysicalFile( "urban-templates", boost::bind( &ObjectTypes::ReadUrbanTemplateTypes, this, _1 ) );;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +96,7 @@ void ObjectTypes::Purge()
     tools::StringResolver< RoofShapeType >::DeleteAll();
     tools::StringResolver< InfrastructureType >::DeleteAll();
     tools::StringResolver< LogisticSupplyClass >::DeleteAll();
+    tools::StringResolver< UrbanTemplateType >::DeleteAll();
     nVolumeId = 0;
 }
 
@@ -385,4 +388,23 @@ void ObjectTypes::ReadInfrastructureType( xml::xistream& xis )
 {
     InfrastructureType* type = new InfrastructureType( xis );
     StringResolver< InfrastructureType >::Register( type->GetName(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadUrbanTemplateTypes
+// Created: JSR 2012-06-11
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadUrbanTemplateTypes( xml::xistream& xis )
+{
+    xis >> xml::start( "templates" ) >> list ( "template", *this, &ObjectTypes::ReadUrbanTemplateType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadUrbanTemplateType
+// Created: JSR 2012-06-11
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadUrbanTemplateType( xml::xistream& xis )
+{
+    UrbanTemplateType* urbanTemplate = new UrbanTemplateType( xis );
+    StringResolver< UrbanTemplateType >::Register( urbanTemplate->GetName(), *urbanTemplate );
 }

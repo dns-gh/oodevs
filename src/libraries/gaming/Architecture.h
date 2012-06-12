@@ -36,6 +36,14 @@ public:
     //@{
              Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
+
+    virtual void SetMaterial( kernel::MaterialCompositionType& material );
+    virtual void SetRoofShape( kernel::RoofShapeType& roofShape );
+    virtual void SetFloorNumber( unsigned int floorNumber );
+    virtual void SetParkingFloors( unsigned int parkingFloors );
+    virtual void SetOccupation( unsigned int occupation );
+    virtual void SetHeight( unsigned int height );
+    virtual void SetTrafficability( float trafficability);
     //@}
 };
 

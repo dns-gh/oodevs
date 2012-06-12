@@ -53,6 +53,7 @@ public:
     virtual unsigned int Find( const std::string& usage ) const = 0;
     virtual const T_Occupations& GetOccupations() const = 0;
     virtual const T_Usages& GetUsages() const = 0;
+    virtual void ClearAll() = 0;
     //@}
 };
 

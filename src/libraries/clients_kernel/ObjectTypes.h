@@ -40,6 +40,7 @@ namespace kernel
     class FacadeType;
     class RoofShapeType;
     class LogisticSupplyClass;
+    class UrbanTemplateType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -63,6 +64,7 @@ class ObjectTypes
     , public tools::StringResolver< FacadeType >
     , public tools::StringResolver< RoofShapeType >
     , public tools::StringResolver< InfrastructureType >
+    , public tools::StringResolver< UrbanTemplateType >
 {
 public:
     //! @name Constructors/Destructor
@@ -115,6 +117,8 @@ private:
     void ReadInfrastructureType( xml::xistream& xis );
     void ReadLogisticSupplyClasses( xml::xistream& xis );
     void ReadLogisticSupplyClass( xml::xistream& xis );
+    void ReadUrbanTemplateTypes( xml::xistream& xis );
+    void ReadUrbanTemplateType( xml::xistream& xis );
     //@}
 
 private:

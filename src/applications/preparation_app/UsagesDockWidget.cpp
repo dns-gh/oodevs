@@ -308,8 +308,5 @@ void UsagesDockWidget::Delete()
         if( pItem && pItem->column() == 0 )
         {
             RemoveMotivation( pItem->text().toStdString() );
-            deleteRow.push_back( pItem->row() );
         }
-    BOOST_FOREACH( int row, deleteRow )
-        pTable_->removeRow( row );
 }

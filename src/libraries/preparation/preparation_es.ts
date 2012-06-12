@@ -76,6 +76,13 @@
     </message>
 </context>
 <context>
+    <name>Block</name>
+    <message>
+        <source>PhysicalFeatures/Architecture</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
@@ -829,6 +836,10 @@ Detalle: %1.</translation>
     </message>
     <message>
         <source>Delete on selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Templates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

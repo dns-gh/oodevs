@@ -50,6 +50,13 @@ public:
     virtual unsigned int GetOccupation() const = 0;
     virtual unsigned int GetHeight() const = 0;
     virtual float GetTrafficability() const = 0;
+    virtual void SetMaterial( MaterialCompositionType& material ) = 0;
+    virtual void SetRoofShape( RoofShapeType& roofShape ) = 0;
+    virtual void SetFloorNumber( unsigned int floorNumber ) = 0;
+    virtual void SetParkingFloors( unsigned int parkingFloors ) = 0;
+    virtual void SetOccupation( unsigned int occupation ) = 0;
+    virtual void SetHeight( unsigned int height ) = 0;
+    virtual void SetTrafficability( float trafficability) = 0;
     //@}
 };
 
