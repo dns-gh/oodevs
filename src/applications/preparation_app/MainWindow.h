@@ -95,6 +95,7 @@ public slots:
     void ClearLoadingErrors();
     void OnForceSaveAndAddActionPlanning( const std::string& filename );
     void OnAddRaster();
+    void OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus );
     //@}
 
 signals:
@@ -153,6 +154,7 @@ private:
     std::auto_ptr< gui::GlSelector >             selector_;
     std::auto_ptr< QProgressDialog >             progressDialog_;
     std::auto_ptr< gui::HelpSystem >             help_;
+    std::auto_ptr< QProcess >                    process_;
     //@}
 };
 

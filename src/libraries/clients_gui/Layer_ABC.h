@@ -57,6 +57,9 @@ public:
     virtual void RegisterIn( Gl3dWidget& widget );
     virtual void RegisterIn( GlWidget& widget );
 
+    virtual void UnregisterIn( Gl3dWidget& widget );
+    virtual void UnregisterIn( GlWidget& widget );
+
     virtual void Reset2d();
     virtual void Reset3d();
 
@@ -121,6 +124,7 @@ public:
     //@{
     virtual void Paint( const ViewFrustum& ) {}
     virtual void RegisterIn( Gl3dWidget& )   {}
+    virtual void UnregisterIn( Gl3dWidget& ) {}
 
     virtual void Reset2d();
     virtual void Reset();
@@ -146,6 +150,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& ) {}
     virtual void RegisterIn( GlWidget& )               {}
+    virtual void UnregisterIn( GlWidget& )             {}
 
     virtual void Reset3d();
     virtual void Reset();

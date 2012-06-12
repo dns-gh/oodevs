@@ -85,6 +85,73 @@
     </message>
 </context>
 <context>
+    <name>gui::AddRasterDialog</name>
+    <message>
+        <source>Add a raster layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">Nom:</translation>
+    </message>
+    <message>
+        <source>Files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pixel size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>No name defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; doesn&apos;t exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select USRP header file or GeoTIFF File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter layer&apos;s name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter files to import</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -702,6 +769,14 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Display Infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a user raster layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove a user raster layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

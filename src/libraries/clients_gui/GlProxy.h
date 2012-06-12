@@ -53,6 +53,7 @@ public:
 
     void Register( Layer_ABC& layer );
     void Register( TooltipsLayer_ABC& layer );
+    void Unregister( Layer_ABC& layer );
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );

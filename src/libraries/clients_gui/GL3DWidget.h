@@ -55,6 +55,7 @@ public:
     //! @name Operations
     //@{
     void Register( Layer_ABC& layer );
+    void Unregister( Layer_ABC& layer );
 
     virtual unsigned short  StipplePattern( int factor = 1 ) const;
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;

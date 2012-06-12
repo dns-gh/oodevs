@@ -15,6 +15,7 @@
 #include "Gl3dWidget.h"
 #include "GlProxy.h"
 #include "IconLayout.h"
+#include "Layer_ABC.h"
 #include "LayersRenderPass.h"
 #include "TextureRenderPass.h"
 #include "CompositionPass.h"
@@ -89,6 +90,32 @@ void GlSelector::Load()
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
     widget2d_->show();
     emit Widget2dChanged( widget2d_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlSelector::AddLayer
+// Created: ABR 2012-06-11
+// -----------------------------------------------------------------------------
+void GlSelector::AddLayer( Layer_ABC& layer )
+{
+    proxy_.Register( layer );
+    if( widget2d_ )
+        layer.RegisterIn( *widget2d_ );
+    if( widget3d_ )
+        layer.RegisterIn( *widget3d_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlSelector::RemoveLayer
+// Created: ABR 2012-06-11
+// -----------------------------------------------------------------------------
+void GlSelector::RemoveLayer( Layer_ABC& layer )
+{
+    proxy_.Unregister( layer );
+    if( widget2d_ )
+        layer.UnregisterIn( *widget2d_ );
+    if( widget3d_ )
+        layer.UnregisterIn( *widget3d_ );
 }
 
 // -----------------------------------------------------------------------------

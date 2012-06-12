@@ -11,6 +11,7 @@
 #define __PreferencesDialog_h_
 
 #include "ModalDialog.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -21,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class Elevation2dLayer;
+    class GlSelector;
     class GraphicPreferences;
     class GraphicsPanel;
     class Layer_ABC;
@@ -37,6 +39,7 @@ namespace gui
 // Created: SBO 2006-05-03
 // =============================================================================
 class PreferencesDialog : public ModalDialog
+                        , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -44,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter );
+                                const Painter_ABC& painter, GlSelector& selector );
     virtual ~PreferencesDialog();
     //@}
 
@@ -56,7 +59,7 @@ public:
     GraphicPreferences& GetPreferences() const;
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
-    void AddLayer( const QString& name, gui::Layer_ABC& layer );
+    void AddLayer( const QString& name, gui::Layer_ABC& layer, bool dynamic = false );
     void AddLayer( const QString& name, gui::Elevation2dLayer& layer ); // $$$$ AGE 2007-01-17:
     //@}
 
@@ -67,13 +70,10 @@ private slots:
     void OnCancel();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    PreferencesDialog( const PreferencesDialog& );            //!< Copy constructor
-    PreferencesDialog& operator=( const PreferencesDialog& ); //!< Assignment operator
-    //@}
+signals:
+    void OnAddRaster();
 
+private:
     //! @name Types
     //@{
     typedef std::vector< PreferencePanel_ABC* > T_Pages;

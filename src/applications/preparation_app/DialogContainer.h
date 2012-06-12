@@ -20,10 +20,12 @@ namespace kernel
 
 namespace gui
 {
+    class AddRasterDialog;
     class ColorStrategy_ABC;
     class ColorEditor_ABC;
     class ConsistencyDialog_ABC;
     class EntitySymbols;
+    class GlSelector;
     class ItemFactory_ABC;
     class LightingProxy;
     class Painter_ABC;
@@ -61,7 +63,7 @@ public:
              DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const kernel::Profile_ABC& profile,
                               gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                               const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                              gui::ItemFactory_ABC& factory, gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools );
+                              gui::ItemFactory_ABC& factory, gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools, gui::GlSelector& selector );
     virtual ~DialogContainer();
     //@}
 
@@ -82,6 +84,7 @@ public:
     gui::ConsistencyDialog_ABC& GetConsistencyDialog() const;
     PerformanceDialog& GetPerformanceDialog() const;
     FilterDialogs& GetFiltersDialog() const;
+    gui::AddRasterDialog& GetAddRasterDialog() const;
     //@}
 
 private:
@@ -96,6 +99,7 @@ private:
     gui::ConsistencyDialog_ABC* consistencyDialog_;
     PerformanceDialog*          performanceDialog_;
     FilterDialogs*              filtersDialog_;
+    gui::AddRasterDialog*       addRasterDialog_;
     //@}
 };
 

@@ -12,6 +12,7 @@
 
 #include "PreferencePanel_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -21,8 +22,10 @@ namespace kernel
 
 namespace gui
 {
-    class Layer_ABC;
     class CheckBox;
+    class GlSelector;
+    class Layer_ABC;
+    class ValuedListItem;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -33,19 +36,20 @@ namespace gui
 class LayersPanel : public PreferencePanel_ABC
                   , public tools::Observer_ABC
                   , public kernel::OptionsObserver_ABC
+                  , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LayersPanel( QWidget* parent, kernel::Controllers& controllers );
+             LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlSelector& selector );
     virtual ~LayersPanel();
     //@}
 
     //! @name Operations
     //@{
-    void AddLayer( const QString& name, Layer_ABC& layer );
+    void AddLayer( const QString& name, Layer_ABC& layer, bool dynamic = false );
     void Update();
     virtual void Commit();
     virtual void Reset();
@@ -60,20 +64,16 @@ private slots:
     void OnDown();
     void OnFogOfWarChanged( bool value );
     void OnInfraChanged( bool value );
+    void OnRemoveDynamicLayer();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LayersPanel( const LayersPanel& );            //!< Copy constructor
-    LayersPanel& operator=( const LayersPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     void UpdateLeastAndMostVisible();
     void ResetLayers();
+    void RemoveDynamicLayer( ValuedListItem& layer );
     //@}
 
     //! @name Types
@@ -88,7 +88,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::Options& options_;
+    GlSelector& selector_;
     T_Layers layers_;
+    T_Layers dynamicLayers_;
     T_Alphas current_;
     T_Alphas new_;
     T_Names  names_;
@@ -100,6 +102,7 @@ private:
     int currentLayer_;
     T_Layers currentLayers_;
     T_Layers newLayers_;
+    QWidget* removeButton_;
     //@}
 };
 

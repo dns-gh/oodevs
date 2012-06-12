@@ -12,25 +12,40 @@
 #include "clients_gui_pch.h"
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"
-#include "Layer_ABC.h"
 #include "CheckBox.h"
+#include "GlSelector.h"
+#include "Layer_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "ValuedListItem.h"
 #include "resources.h"
 
 using namespace gui;
 
+namespace
+{
+    QWidget* AddButton( const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
+    {
+        QPushButton* button = new QPushButton( icon, QString::null );
+        button->setFixedSize( 32, 32 );
+        QToolTip::add( button, tooltip );
+        button->connect( button, SIGNAL( clicked() ), receiver, member );
+        return button;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LayersPanel constructor
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
+LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlSelector& selector )
     : PreferencePanel_ABC( parent, "LayersPanel" )
     , controllers_       ( controllers )
     , options_           ( controllers.options_ )
     , currentLayer_      ( -1 )
+    , selector_          ( selector )
 {
     Q3VBox* container = new Q3VBox( this );
     {
@@ -46,6 +61,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
     }
 
     {
+        // ListView
         Q3GroupBox* groupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Layer display order and transparency" ), container );
         Q3VBox* vBox = new Q3VBox( groupBox );
         vBox->setSpacing( 6 );
@@ -59,16 +75,19 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
         layersList_->setBackgroundColor( Qt::white );
         connect( layersList_, SIGNAL( selectionChanged( Q3ListViewItem * ) ), SLOT( OnSelectionChanged( Q3ListViewItem * ) ) );
 
-        Q3VBox* buttonBox = new Q3VBox( box );
-        buttonBox->layout()->setAlignment( Qt::AlignVCenter );
-        QPushButton* up   = new QPushButton( MAKE_PIXMAP( arrow_up ), QString::null, buttonBox );
-        up->setFixedSize( 32, 32 );
-        QToolTip::add( up, tr( "Move the selected layer forwards" ) );
-        connect( up, SIGNAL( clicked() ), SLOT( OnUp() ) );
-        QPushButton* down = new QPushButton( MAKE_PIXMAP( arrow_down ), QString::null, buttonBox );
-        down->setFixedSize( 32, 32 );
-        QToolTip::add( down, tr( "Move the selected layer backwards" ) );
-        connect( down, SIGNAL( clicked() ), SLOT( OnDown() ) );
+        // Buttons
+        QWidget* up   = AddButton( MAKE_PIXMAP( arrow_up ),   tr( "Move the selected layer forwards" ),  this,   SLOT( OnUp() ) );
+        QWidget* down = AddButton( MAKE_PIXMAP( arrow_down ), tr( "Move the selected layer backwards" ), this,   SLOT( OnDown() ) );
+        QWidget* add  = AddButton( MAKE_PIXMAP( add_point ),  tr( "Add a user raster layer" ),           parent, SIGNAL( OnAddRaster() ) );
+        removeButton_ = AddButton( MAKE_PIXMAP( trash ),      tr( "Remove a user raster layer" ),        this,   SLOT( OnRemoveDynamicLayer() ) );
+        QWidget* buttonBox = new QWidget( box );
+        QVBoxLayout* layout = new QVBoxLayout( buttonBox );
+        layout->setMargin( 10 );
+        layout->addWidget( up );
+        layout->addWidget( down );
+        layout->addStretch();
+        layout->addWidget( add );
+        layout->addWidget( removeButton_ );
 
         transparencyLabel_ = new QLabel( tr( "Transparency " ), vBox );
         transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal, vBox );
@@ -92,18 +111,72 @@ LayersPanel::~LayersPanel()
 // Name: LayersPanel::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
+void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer, bool dynamic /* = false */ )
 {
     ValuedListItem* item = new ValuedListItem( layersList_ );
     item->SetValue( &layer );
-    item->setText( 0, "  "+name );
+    item->setText( 0, "  " + name );
 
+    if( dynamic )
+        dynamicLayers_.push_back( &layer );
     layers_       .push_back( &layer );
     currentLayers_.push_back( &layer );
     newLayers_    .push_back( &layer );
     current_.push_back( 1 );
     new_    .push_back( 1 );
     names_  .push_back( name.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OnRemoveDynamicLayer
+// Created: ABR 2012-06-11
+// -----------------------------------------------------------------------------
+void LayersPanel::OnRemoveDynamicLayer()
+{
+    ValuedListItem* item = static_cast< ValuedListItem* >( layersList_->selectedItem() );
+    if( !item )
+        return;
+    RemoveDynamicLayer( *item );
+}
+
+namespace
+{
+    template< typename T >
+    void RemoveFromVector( Layer_ABC* layer, std::vector< Layer_ABC* >& layerVector, std::vector< T >& otherVector )
+    {
+        for( unsigned i = 0; i < layerVector.size(); ++i )
+            if( layerVector[ i ] == layer )
+            {
+                layerVector.erase( layerVector.begin() + i );
+                otherVector.erase( otherVector.begin() + i );
+                break;
+            }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::RemoveDynamicLayer
+// Created: ABR 2012-06-12
+// -----------------------------------------------------------------------------
+void LayersPanel::RemoveDynamicLayer( ValuedListItem& item )
+{
+    Layer_ABC* layer = item.GetValue< Layer_ABC >();
+    if( !layer )
+        return;
+
+    T_Layers::iterator itDynamic = std::find( dynamicLayers_.begin(), dynamicLayers_.end(), layer );
+    if( itDynamic == dynamicLayers_.end() )
+        return;
+
+    dynamicLayers_.erase( itDynamic );
+
+    RemoveFromVector( layer, currentLayers_, current_ );
+    RemoveFromVector( layer, newLayers_, new_ );
+    RemoveFromVector( layer, layers_, names_ );
+
+    layersList_->removeItem( &item );
+    selector_.RemoveLayer( *layer );
+    UpdateLeastAndMostVisible();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,6 +191,8 @@ void LayersPanel::Commit()
     currentLayers_ = newLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
     {
+        if( std::find( dynamicLayers_.begin(), dynamicLayers_.end(), layers_[ i ] ) != dynamicLayers_.end() )
+            continue;
         options_.Change( std::string( "Layers/" ) + names_[ i ].ascii() + "/Alpha", current_[ i ] );
         T_Layers::const_iterator it = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
         if( it != currentLayers_.end() )
@@ -134,6 +209,8 @@ void LayersPanel::Reset()
     fogOfWar_->Revert();
     infra_->Revert();
     ResetLayers();
+    for( Q3ListViewItem* item = layersList_->firstChild(); item != 0; item = item->nextSibling() )
+        RemoveDynamicLayer( static_cast< ValuedListItem& >( *item ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,6 +289,7 @@ void LayersPanel::OnSelectionChanged( Q3ListViewItem* i )
                 transparencyLabelText += tr( "for %1:" ).arg( *nIT );
                 break;
             }
+        removeButton_->setEnabled( std::find( dynamicLayers_.begin(), dynamicLayers_.end(), *it ) != dynamicLayers_.end() );
     }
     transparencyLabel_->setText( transparencyLabelText );
 }

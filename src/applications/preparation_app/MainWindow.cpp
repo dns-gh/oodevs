@@ -34,6 +34,7 @@
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
 #include "OrbatPanel.h"
+#include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -91,6 +92,8 @@
 #include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
+#include "geodata/ProjectionException.h"
+#include "geodata/ExtentException.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/GhostModel.h"
@@ -109,6 +112,7 @@
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/lexical_cast.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -184,7 +188,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::RichItemFactory* factory = new gui::RichItemFactory( this );
 
     // Dialogs
-    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_ ) );
+    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_, *selector_ ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_ ) );
@@ -221,6 +225,10 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
     restoreGeometry( settings.value( "mainWindowGeometry").toByteArray() );
 
+    // Raster_app process
+    process_.reset( new QProcess( this ) );
+    connect( process_.get(), SIGNAL( finished( int, QProcess::ExitStatus ) ), this, SLOT( OnRasterProcessExited( int, QProcess::ExitStatus ) ) );
+
     // Initialize
     SetWindowTitle( false );
     controllers_.Register( *this );
@@ -246,6 +254,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 MainWindow::~MainWindow()
 {
     controllers_.Unregister( *this );
+    process_->kill();
 }
 
 namespace
@@ -872,5 +881,69 @@ void MainWindow::NotifyModeChanged( int newMode )
 // -----------------------------------------------------------------------------
 void MainWindow::OnAddRaster()
 {
-    // $$$$ ABR 2012-05-15: TODO
+    try
+    {
+        if( !bfs::exists( config_.BuildTerrainChildFile( "config.xml" ) ) )
+        {
+            QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
+            return;
+        }
+
+        gui::AddRasterDialog& dialog = dialogContainer_->GetAddRasterDialog();
+        QDialog::DialogCode result = static_cast< QDialog::DialogCode >( dialog.exec() );
+        if( result == QDialog::Accepted )
+        {
+            QStringList parameters;
+            parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
+            parameters << ( std::string( "--raster=" ) + dialog.GetFiles().toStdString() ).c_str();
+            parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( dialog.GetPixelSize() ) ).c_str();
+            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin" );
+            parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
+            bfs::path workingDirectory = bfs::system_complete( "../Terrain/applications/" );
+            process_->setWorkingDirectory( workingDirectory.string().c_str() );
+            process_->start( bfs::path( workingDirectory / "raster_app.exe" ).string().c_str(), parameters );
+        }
+    }
+    catch( geodata::ProjectionException& )
+    {
+        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
+        // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI   
+    }
+    catch( geodata::ExtentException& )
+    {
+        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing extent information.") ) ;
+    }
+    catch( ... )
+    {
+        QMessageBox::critical( this, tr( "Error loading image file" ), tr( "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnRasterProcessExited
+// Created: JSR 2012-02-10
+// -----------------------------------------------------------------------------
+void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus )
+{
+    if( exitStatus == QProcess::NormalExit && exitCode == EXIT_SUCCESS )
+    {
+        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, "~~tmp.texture.bin" );
+        raster.SetPasses( "main" );
+        selector_->AddLayer( raster );
+        dialogContainer_->GetPrefDialog().AddLayer( tr( "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
+        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
+        raster.GenerateTexture();
+        try
+        {
+            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin";
+            if( bfs::exists( aggregated ) )
+                bfs::remove( aggregated );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
+    else
+        QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
 }

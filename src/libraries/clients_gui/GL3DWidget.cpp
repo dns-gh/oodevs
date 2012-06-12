@@ -63,6 +63,17 @@ void Gl3dWidget::Register( Layer_ABC& layer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::Unregister
+// Created: ABR 2012-06-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::Unregister( Layer_ABC& layer )
+{
+    CIT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
+    if( it != layers_.end() )
+        layers_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::initializeGL
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

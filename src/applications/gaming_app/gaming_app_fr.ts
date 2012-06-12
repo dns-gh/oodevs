@@ -1807,6 +1807,40 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Logistic</source>
         <translation>Logistique</translation>
     </message>
+    <message>
+        <source>Error loading image file</source>
+        <translation>Une erreur s&apos;est produite lors du chargement du fichier</translation>
+    </message>
+    <message>
+        <source>Error while loading Raster source.</source>
+        <translation>Erreur au chargement du Raster.</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>This functionality is not available with old terrain format.</source>
+        <translation>Cette fonctionnalité n&apos;est pas disponible pour les anciens formats de terrain.</translation>
+    </message>
+    <message>
+        <source>The following raster you add is missing extent information.</source>
+        <translation>Ce raster n&apos;a pas de zone géographique définie.</translation>
+    </message>
+    <message>
+        <source>Fatal error adding Raster source.</source>
+        <translation>Erreur fatale en ajoutant la source de Raster.</translation>
+    </message>
+    <message>
+        <source>User layer [%1]</source>
+        <translation>Calque utilisateur [%1]</translation>
+    </message>
+    <message>
+        <source>The following raster you add is missing spatial reference information.
+This data can&apos;t be projected.</source>
+        <translation>L&apos;image que vous rajoutez manque d&apos;information de référence spatiale.
+Ces données ne peuvent pas être projetées.</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>
