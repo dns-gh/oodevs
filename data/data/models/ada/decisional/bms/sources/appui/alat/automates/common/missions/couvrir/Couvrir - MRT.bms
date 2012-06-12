@@ -57,7 +57,7 @@ includedFiles["sources/appui/alat/automates/common/missions/couvrir/Couvrir - MR
                 end
 
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
             end
         end
 

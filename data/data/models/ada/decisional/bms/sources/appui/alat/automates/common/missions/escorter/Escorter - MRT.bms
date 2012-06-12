@@ -38,7 +38,7 @@ local emptyTable = emptyTable
             do
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeHAP, self.listeHAC )
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeHAM )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir ) ) then
                     do

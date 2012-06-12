@@ -20,7 +20,7 @@ node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
         if( ModuleBegins() ) then
             do
                 S_Liste_Concatene( self.listeDetruire, self.listeHAC, self.listeHAP )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listeDetruire ) ) then
                     do

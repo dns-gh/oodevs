@@ -51,7 +51,7 @@ includedFiles["sources/appui/alat/automates/sgpt hm/missions/heliporter/Heliport
                     end
                 end
 
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
             end
         end
 

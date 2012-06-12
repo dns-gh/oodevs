@@ -35,7 +35,7 @@ local emptyTable = emptyTable
         if( ModuleBegins() ) then
             do
                 S_Liste_Concatene( self.listeAttaquer, self.listeHAP, self.listeHAC )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listeAttaquer ) ) then
                     do

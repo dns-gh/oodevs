@@ -25,7 +25,7 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MR
         if( ModuleBegins() ) then
             do
                 S_Liste_Concatene( self.listePeutAppuyerOuDetruire, self.listeHAP, self.listeHAC )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------
 ]]--[[// 1. Vérifier les moyens, determiner les patrouilles qui vont aller 

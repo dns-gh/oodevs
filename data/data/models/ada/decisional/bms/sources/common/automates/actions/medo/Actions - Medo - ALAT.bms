@@ -57,7 +57,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]--[[//( dir dangereuse, ROE... )
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres particuliers de cette mission
-]]DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+]]DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -125,7 +125,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres particuliers de cette mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "unitesAAppuyer_", self._namedParams.listePionsAAppuyer )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -193,7 +193,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres particuliers de cette mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "positionRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -265,7 +265,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointEmbarquement, self.missionPion, "pointEmbarquement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "unitesAHeliporter_", self._namedParams.listeUnitesAHeliporter )
         DEC_AssignMissionParameter( self.missionPion, "avecMateriel_", self._namedParams.avecMateriel )
         if( self._namedParams.ePhase == ePhase_CDT ) then
@@ -339,7 +339,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointEmbarquement, self.missionPion, "pointEmbarquement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "unitesAHelitransporter_", self._namedParams.listeUnitesAHelitransporter )
         DEC_AssignMissionParameter( self.missionPion, "avecMateriel_", self._namedParams.avecMateriel )
         if( self._namedParams.ePhase == ePhase_CDT ) then
@@ -407,7 +407,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -477,7 +477,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointDislocation, self.missionPion, "pointDislocation_" )
         DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -544,7 +544,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
@@ -611,7 +611,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -678,7 +678,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
@@ -746,7 +746,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
@@ -814,7 +814,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "uniteADetruire_", self._namedParams.listeEnis )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
@@ -887,7 +887,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
         DEC_Copie_Point_Mission( self._namedParams.pointDislocation, self.missionPion, "pointDislocation_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "neutraliser_", self._namedParams.neutraliser )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         if( self._namedParams.ePhase == ePhase_CDT ) then
@@ -957,7 +957,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         DEC_AssignMissionParameter( self.missionPion, "unitesAAppuyer_", self._namedParams.unitesAAppuyer )
         if( self._namedParams.ePhase == ePhase_CDT ) then
@@ -1028,7 +1028,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres mission
 ]]DEC_AssignMissionParameter( self.missionPion, "unitesAEscorter_", self._namedParams.uniteAEscorter )
         DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
@@ -1102,7 +1102,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "unitesACouvrir_", self._namedParams.uniteACouvrir )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
@@ -1171,7 +1171,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_Copie_Localisation_Mission( self._namedParams.localisation, self.missionPion, "zone_" )
-        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements )
+        DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements or emptyTable )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
