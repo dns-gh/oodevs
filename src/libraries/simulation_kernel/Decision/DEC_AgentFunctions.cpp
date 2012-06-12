@@ -171,9 +171,9 @@ void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::TemporaryImmunizeAgent
 // Created: GGE 2012-05-14
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::TemporaryImmunizeAgent( MIL_Agent_ABC& callerAgent, bool bImmunize )
+void DEC_AgentFunctions::TemporaryImmunizeAgent( DEC_Decision_ABC* pAgent, bool bImmunize )
 {
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( bImmunize );
+    pAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( bImmunize );
 }
 
 // -----------------------------------------------------------------------------

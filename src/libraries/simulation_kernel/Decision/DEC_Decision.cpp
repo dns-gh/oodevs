@@ -111,6 +111,8 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
     brain[ "DEC_Agent_EstImmobilise" ] = &DEC_AgentFunctions::IsImmobilized;
     brain[ "DEC_Agent_CanMoveOn" ] = &DEC_TerrainFunctions::CanMoveOn;
+    
+    brain[ "DEC_Agent_ForcerImmunisationNbc" ] = &DEC_AgentFunctions::TemporaryImmunizeAgent;
 }
 
 // -----------------------------------------------------------------------------

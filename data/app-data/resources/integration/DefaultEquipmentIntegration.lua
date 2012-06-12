@@ -619,7 +619,7 @@ integration.stopImmuniserNbc = function( self )
 end
 
 integration.forcerImmunisationNbc = function( self, immunize )
-    DEC_Agent_ForcerImmunisationNbc( immunize )
+    DEC_Agent_ForcerImmunisationNbc( self.source, immunize )
 end
 
 integration.getUnitPC = function( self ) 
