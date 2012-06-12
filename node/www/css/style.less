@@ -6,6 +6,10 @@
 @replay: #6FA8DC;
 @stop:   #E06666;
 
+@common_padding: 24px;
+@session_margin:  6px;
+@topbar_margin:  20px;
+
 body
 {
     padding-top:    60px;
@@ -50,8 +54,14 @@ body
 
 .session_row
 {
-    position:       relative;
-    min-height:     64px;
+    position:   relative;
+    width:      auto !important;
+}
+
+.session_name
+{
+    padding-left:   32px;
+    padding-bottom: 12px;
 }
 
 .session_name, .package_name
@@ -62,11 +72,8 @@ body
 
 .shift_right
 {
-    padding-left:   24px;
+    padding-left:   @common_padding;
 }
-
-@session_margin: 6px;
-@topbar_margin: 20px;
 
 .session_top_right
 {
@@ -98,7 +105,7 @@ body
 
 .session_search input
 {
-    padding-left:   24px;
+    padding-left:   @common_padding;
 }
 
 .session_actions a
@@ -138,7 +145,7 @@ body
 
 .node_header a
 {
-    margin-left: 24px;
+    margin-left: @common_padding;
 }
 
 .read_only
@@ -166,7 +173,7 @@ body
 
 .sub_header td
 {
-    padding-top:    24px;
+    padding-top:    @common_padding;
     font-weight:    bold;
     border-top:     0;
 }
