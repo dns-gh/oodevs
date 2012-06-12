@@ -42,7 +42,7 @@ local emptyTable = emptyTable
             do
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionSurveiller, self.listeHAC, self.listeHAP )
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionSurveiller, self.listePatrouillesPeutFaireMissionSurveiller, self.listeHAM )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------
 ]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller 

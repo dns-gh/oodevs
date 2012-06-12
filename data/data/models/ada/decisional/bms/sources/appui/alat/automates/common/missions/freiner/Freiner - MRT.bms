@@ -37,7 +37,7 @@ node "MIS_Automate_MRT_ALAT_Freiner"
         if( ModuleBegins() ) then
             do
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionFreiner, self.listeHAC, self.listeHAP )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 local nbPionsPouvantFreiner = #( self.listePatrouillesPeutFaireMissionFreiner )
                 --[[//1 pion de reserve pour 3 qui peuvent Freiner

@@ -6,7 +6,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" id="2" name="PION ALAT Reconnaitre" package="control">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -14,7 +14,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
@@ -24,7 +24,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" id="4" name="PION ALAT Detruire Neutraliser Dans Zone" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -35,7 +35,7 @@
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Neutraliser" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireAeromobile" dia-type="T_Mission_Pion_ALAT_DetruireAeromobile" id="5" name="PION ALAT Detruire" package="attack">
@@ -45,7 +45,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="uniteADetruire_" max-occurs="unbounded" min-occurs="1" name="Unite a detruire" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Freiner" dia-type="T_Mission_Pion_ALAT_Freiner" id="6" name="PION ALAT Interdire" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -54,7 +54,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Jalonner" dia-type="T_Mission_Pion_ALAT_Jalonner" id="7" name="PION ALAT Jalonner" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -63,7 +63,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Escorter" dia-type="T_Mission_Pion_ALAT_Escorter" id="8" name="PION ALAT Escorter" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -73,7 +73,7 @@
       <parameter dia-name="unitesAEscorter_" max-occurs="unbounded" min-occurs="1" name="Unites a escorter" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Heliporter" dia-type="T_Mission_Pion_ALAT_Heliporter" id="9" name="PION ALAT Heliporter" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -84,7 +84,7 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" dia-type="T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" id="10" name="PION ALAT Heliporter Helitransporter Plot Ravitaillement" package="support">
@@ -94,7 +94,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Position regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Helitransporter" dia-type="T_Mission_Pion_ALAT_Helitransporter" id="11" name="PION ALAT Helitransporter" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -105,7 +105,7 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" id="12" name="PION ALAT IMEX" package="support">
@@ -115,7 +115,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" id="13" name="PION ALAT Eclairer" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -123,7 +123,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Surveiller" dia-type="T_Mission_Pion_ALAT_Surveiller" id="14" name="PION ALAT Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -132,7 +132,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_AppuyerDirectAuContact" dia-type="T_Mission_Pion_ALAT_AppuyerDirectAuContact" id="15" name="PION ALAT Appuyer Direct Au Contact" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -142,7 +142,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Couvrir" dia-type="T_Mission_Pion_ALAT_Couvrir" id="16" name="PION ALAT Couvrir" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -152,7 +152,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Unites a couvrir" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" id="17" name="PION ALAT Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -161,7 +161,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_FaireMouvement" dia-type="T_Mission_Pion_FaireMouvement" id="131" name="PION ALAT Faire Mouvement" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1571,7 +1571,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur" id="178" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" name="AUTOMATE ALAT Detruire Neutraliser Dans Profondeur" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1582,7 +1582,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Neutraliser" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansZone" id="179" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" name="AUTOMATE ALAT Detruire" package="attack">
@@ -1594,7 +1594,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Neutraliser" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DonnerCoupArret" dia-type="T_Mission_Automate_ALAT_DonnerCoupArret" id="180" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DonnerCoupArret" name="AUTOMATE ALAT Donner Coup Arret" package="defence">
@@ -1605,7 +1605,7 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" dia-type="T_Mission_Automate_ALAT_AttaquerFormationAeromobile" id="181" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" name="AUTOMATE ALAT Attaquer Formation Aeromobile" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1614,7 +1614,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="unitesAAttaquer_" max-occurs="unbounded" min-occurs="1" name="Unites a attaquer" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile" dia-type="T_Mission_Automate_ALAT_RecueillirFormationAeromobile" id="182" mrt-dia-behavior="MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile" name="AUTOMATE ALAT Recueillir" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1624,7 +1624,7 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Heliporter" dia-type="T_Mission_Automate_ALAT_Heliporter" id="183" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Heliporter" name="AUTOMATE ALAT Heliporter Helitransporter" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1635,7 +1635,7 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Jalonner" dia-type="T_Mission_Automate_ALAT_Jalonner" id="184" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Jalonner" name="AUTOMATE ALAT Jalonner" package="intelligence">
@@ -1645,7 +1645,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Helitransporter" dia-type="T_Mission_Automate_ALAT_Helitransporter" id="185" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Helitransporter" name="AUTOMATE ALAT Helitransporter" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1656,7 +1656,7 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Appuyer" dia-type="T_Mission_Automate_ALAT_Appuyer" id="186" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Appuyer" name="AUTOMATE ALAT Appuyer" package="support">
@@ -1667,7 +1667,7 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
@@ -1679,7 +1679,7 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Surveiller" dia-type="T_Mission_Automate_ALAT_Surveiller" id="188" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Surveiller" name="AUTOMATE ALAT Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1688,7 +1688,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointLogistique_" name="Point logistique" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" name="AUTOMATE ALAT Reconnaitre" package="intelligence">
@@ -1697,7 +1697,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="PointRegroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Freiner" dia-type="T_Mission_Automate_ALAT_Freiner" id="190" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Freiner" name="AUTOMATE ALAT Interdire" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1706,7 +1706,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Escorter" dia-type="T_Mission_Automate_ALAT_Escorter" id="191" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Escorter" name="AUTOMATE ALAT Escorter" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1716,7 +1716,7 @@
       <parameter dia-name="unitesAEscorter_" max-occurs="unbounded" min-occurs="1" name="Unites a escorter" optional="false" type="Agent"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Attaquer" dia-type="T_Mission_Automate_ALAT_Attaquer" id="192" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Attaquer" name="AUTOMATE ALAT Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1725,7 +1725,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Decrocher" dia-type="T_Mission_Automate_Decrocher" id="297" mrt-dia-behavior="MIS_Automate_MRT_Decrocher" name="AUTOMATE Decrocher" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3140,4 +3140,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="1740456264" -->
+<!-- signature="2238668479" -->

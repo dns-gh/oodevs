@@ -56,7 +56,7 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
         self.listePionsAvecPC = self.listePionsAvecPC or {}
         self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
         --[[//netoyage des connaissances
-]]myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )
+]]myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ) or emptyTable
         Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------

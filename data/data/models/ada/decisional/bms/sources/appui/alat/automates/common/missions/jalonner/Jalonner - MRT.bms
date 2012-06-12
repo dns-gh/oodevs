@@ -52,7 +52,7 @@ include "bit.lua"
             do
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listeHAC, self.listeHAP )
                 S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listePatrouillesPeutFaireMissionJalonner, self.listeHAM )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------
 ]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller 

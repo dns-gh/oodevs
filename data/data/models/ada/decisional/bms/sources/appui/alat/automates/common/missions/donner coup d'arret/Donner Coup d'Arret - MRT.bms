@@ -52,7 +52,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 S_Liste_Concatene( self.listePeutDonnerCoupArret, self.listeHAC, self.listeHAP )
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
                 local unSurDeux = false
                 for _,x in pairs( self.listePeutDonnerCoupArret or emptyTable ) do

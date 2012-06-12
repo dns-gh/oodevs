@@ -32,7 +32,7 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( S_ListePionsALAT( DEC_Automate_PionsAvecPC() ) )
         if( ModuleBegins() ) then
             do
-                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or emptyTable
                 DEC_SetMission( myself, self._namedParams.mission )
             end
         end

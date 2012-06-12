@@ -84,8 +84,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eAttendre
-                                                        do return end
-
+                            self.eEtat = eActionEnCours
+                            do return end
                         end
                     end
 
@@ -117,8 +117,8 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = 
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eHelitransporter
-                                                        do return end
-
+                            self.eEtat = eActionEnCours
+                            do return end
                         end
                     end
 
@@ -148,8 +148,8 @@ self.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2 = function( self, _, v ) self.eE
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eDebarquer
-                                                        do return end
-
+                            self.eEtat = eActionEnCours
+                            do return end
                         end
                     end
 
@@ -181,8 +181,8 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eSExfiltrer
-                                                        do return end
-
+                            self.eEtat = eActionEnCours
+                            do return end
                         end
                     end
 
@@ -196,7 +196,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
 
                     Activate( self.activations.ACT_Info_Trace, 1, { "unit lands FARP", } )
                     Activate( self.activations.ACT_Log_Pion_ALAT_RealiserPlotLogistique, 1, { myself:DEC_Agent_Position(), } )
-self.done_ACT_Log_Pion_ALAT_RealiserPlotLogistique = function( self, _, v ) self.eEtat = v[1] end
+self.done_ACT_Log_Pion_ALAT_RealiserPlotLogistique = function( self, _, v )  self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
@@ -207,8 +207,8 @@ self.done_ACT_Log_Pion_ALAT_RealiserPlotLogistique = function( self, _, v ) self
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.ePhase = eFinMission
-                                                        do return end
-
+                            self.eEtat = eActionEnCours
+                            do return end
                         end
                     end
 
