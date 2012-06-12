@@ -256,7 +256,7 @@
   <report category="exceptional" id="194" message="Pris à partie par camp neutre"/>
   <report category="exceptional" id="195" message="Tir sur civils"/>
   <report category="exceptional" id="196" message="Pris à partie par civils"/>
-  <report category="exceptional" id="197" message="Tir indirect fratricide"/>
+  <report category="exceptional" id="197" message="Tir à proximité de troupes amies"/>
   <report category="exceptional" id="198" message="Tir indirect sur la foule"/>
   <report category="exceptional" id="199" message="Destruction de PC"/>
   <report category="exceptional" id="200" message="Décès de blessé"/>
@@ -660,4 +660,4 @@
   <report category="operational" id="465" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
   <report category="operational" id="466" message="La cible n'est plus valide"/>
 </reports>
-<!-- signature="2533748731" -->
+<!-- signature="2264739135" -->
