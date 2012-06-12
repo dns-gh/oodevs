@@ -2576,69 +2576,69 @@
     </unit>
     <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
       <missions>
-        <mission name="MLSECURITY - Follow"/>
-        <mission name="MLSECURITY - Move toward"/>
-        <mission name="MLSECURITY - Confine urban blocks within area"/>
-        <mission name="MLSECURITY - Lift confinement on urban blocks  within area"/>
-        <mission name="MLSECURITY - Increase resource node production"/>
-        <mission name="MLSECURITY - Evacuate urban blocks within area "/>
-        <mission name="MLSECURITY - Lift evacuation on urban blocks within area"/>
-        <mission name="MLSECURITY - Ensure victims evacuation"/>
-        <mission name="MLSECURITY - Extract victims from crowds"/>
-        <mission name="MLSECURITY - Alert urban blocks within area"/>
-        <mission name="MLSECURITY - Lift alert on urban blocks within area"/>
-        <mission name="MLSECURITY - Enable resource nodes"/>
-        <mission name="MLSECURITY - Disable resource nodes"/>
-        <mission name="MLSECURITY - Patrol"/>
-        <mission name="MLSECURITY - Transport units"/>
-        <mission name="MLSECURITY - Transport a crowd"/>
-        <mission name="MLSECURITY - Extinguish a fire"/>
-        <mission name="MLSECURITY - Extinguish fires within area"/>
-        <mission name="MLSECURITY - Decontaminate"/>
-        <mission name="MLSECURITY - Perform public works"/>
-        <mission name="MLSECURITY - Resume public works"/>
-        <mission name="MLSECURITY - Create and operate a decontamination site"/>
-        <mission name="MLSECURITY - Create and operate a checkpoint (filter crowds)"/>
-        <mission name="MLSECURITY - Light up fires"/>
-        <mission name="MLSECURITY - Perform a bomb attack (from a position)"/>
-        <mission name="MLSECURITY - Operate a decontamination site"/>
-        <mission name="MLSECURITY - Operate a checkpoint (filter crowds)"/>
-        <mission name="MLSECURITY - Heal victims within crowds"/>
-        <mission name="MLSECURITY - Go get decontaminated"/>
-        <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
-        <mission name="MLSECURITY - Commit a suicide attack (against units)"/>
-        <mission name="MLSECURITY - Stay/hide within a crowd"/>
-        <mission name="MLSECURITY - Order to follow"/>
-        <mission name="MLSECURITY - Reinforce"/>
-        <mission name="MLSECURITY - Deconstruct (and remove) works"/>
-        <mission name="MLSECURITY - Patrol within area"/>
-        <mission name="MLSECURITY - Operate a road block (prevent crowds from crossing)"/>
-        <mission name="MLSECURITY - Create and operate a roadblock (filter crowds)"/>
-        <mission name="MLSECURITY - Build a dyke"/>
-        <mission name="MLSECURITY - Build a firebreak"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Confine urban blocks within area"/>
+        <mission name="SAFETY - Lift confinement on urban blocks  within area"/>
+        <mission name="SAFETY - Increase resource node production"/>
+        <mission name="SAFETY - Evacuate urban blocks within area "/>
+        <mission name="SAFETY - Lift evacuation on urban blocks within area"/>
+        <mission name="SAFETY - Ensure victims evacuation"/>
+        <mission name="SAFETY - Extract victims from crowds"/>
+        <mission name="SAFETY - Alert urban blocks within area"/>
+        <mission name="SAFETY - Lift alert on urban blocks within area"/>
+        <mission name="SAFETY - Enable resource nodes"/>
+        <mission name="SAFETY - Disable resource nodes"/>
+        <mission name="SAFETY - Patrol"/>
+        <mission name="SAFETY - Transport units"/>
+        <mission name="SAFETY - Transport a crowd"/>
+        <mission name="SAFETY - Extinguish a fire"/>
+        <mission name="SAFETY - Extinguish fires within area"/>
+        <mission name="SAFETY - Decontaminate"/>
+        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Create and operate a decontamination site"/>
+        <mission name="SAFETY - Create and operate a checkpoint (filter crowds)"/>
+        <mission name="SAFETY - Light up fires"/>
+        <mission name="SAFETY - Perform a bomb attack (from a position)"/>
+        <mission name="SAFETY - Operate a decontamination site"/>
+        <mission name="SAFETY - Operate a checkpoint (filter crowds)"/>
+        <mission name="SAFETY - Heal victims within crowds"/>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Attack urban blocks within area (with projectiles)"/>
+        <mission name="SAFETY - Commit a suicide attack (against units)"/>
+        <mission name="SAFETY - Stay/hide within a crowd"/>
+        <mission name="SAFETY - Order to follow"/>
+        <mission name="SAFETY - Reinforce"/>
+        <mission name="SAFETY - Deconstruct (and remove) works"/>
+        <mission name="SAFETY - Patrol within area"/>
+        <mission name="SAFETY - Operate a road block (prevent crowds from crossing)"/>
+        <mission name="SAFETY - Create and operate a roadblock (filter crowds)"/>
+        <mission name="SAFETY - Build a dyke"/>
+        <mission name="SAFETY - Build a firebreak"/>
       </missions>
       <fragorders/>
     </unit>
     <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_Terrorist">
       <missions>
-        <mission name="MLSECURITY - Follow"/>
-        <mission name="MLSECURITY - Move toward"/>
-        <mission name="MLSECURITY - Enable resource nodes"/>
-        <mission name="MLSECURITY - Disable resource nodes"/>
-        <mission name="MLSECURITY - Patrol"/>
-        <mission name="MLSECURITY - Light up fires"/>
-        <mission name="MLSECURITY - Perform a bomb attack (from a position)"/>
-        <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
-        <mission name="MLSECURITY - Commit a suicide attack (against units)"/>
-        <mission name="MLSECURITY - Increase resource node production"/>
-        <mission name="MLSECURITY - Operate a decontamination site"/>
-        <mission name="MLSECURITY - Transport units"/>
-        <mission name="MLSECURITY - Operate a checkpoint (filter crowds)"/>
-        <mission name="MLSECURITY - Stay/hide within a crowd"/>
-        <mission name="MLSECURITY - Order to follow"/>
-        <mission name="MLSECURITY - Reinforce"/>
-        <mission name="MLSECURITY - Deconstruct (and remove) works"/>
-        <mission name="MLSECURITY - Damage urban blocks within area"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Enable resource nodes"/>
+        <mission name="SAFETY - Disable resource nodes"/>
+        <mission name="SAFETY - Patrol"/>
+        <mission name="SAFETY - Light up fires"/>
+        <mission name="SAFETY - Perform a bomb attack (from a position)"/>
+        <mission name="SAFETY - Attack urban blocks within area (with projectiles)"/>
+        <mission name="SAFETY - Commit a suicide attack (against units)"/>
+        <mission name="SAFETY - Increase resource node production"/>
+        <mission name="SAFETY - Operate a decontamination site"/>
+        <mission name="SAFETY - Transport units"/>
+        <mission name="SAFETY - Operate a checkpoint (filter crowds)"/>
+        <mission name="SAFETY - Stay/hide within a crowd"/>
+        <mission name="SAFETY - Order to follow"/>
+        <mission name="SAFETY - Reinforce"/>
+        <mission name="SAFETY - Deconstruct (and remove) works"/>
+        <mission name="SAFETY - Damage urban blocks within area"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3882,4 +3882,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3092383675" -->
+<!-- signature="0759829127" -->
