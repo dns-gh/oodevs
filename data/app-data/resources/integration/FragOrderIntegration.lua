@@ -37,6 +37,7 @@ integration.isTask = function( self )
          orderType == "security.behaviors.tasks.StopAndGoToGarage" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
+         orderType == "Rep_OrderConduite_SArreter" or
          orderType == "Rep_OrderConduite_Poursuivre" or
          orderType == "Rep_OrderConduite_PasserEnSilenceRadar" or
          orderType == "Rep_OrderConduite_ArreterSilenceRadar" or
@@ -76,6 +77,7 @@ integration.mustBePropagate = function( self )
          orderType == "france.military.platoon.tasks.DeposerUnite" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
+         orderType == "Rep_OrderConduite_SArreter" or
          orderType == "Rep_OrderConduite_Poursuivre" or
          orderType == "Rep_OrderConduite_PoursuivreConvoi" or
          orderType == "Rep_OrderConduite_PasserEnSilenceRadar" or
@@ -155,6 +157,10 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "france.military.platoon.tasks.Orienter" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
+    local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
+    mission.objectives = { point }
+    orderType = "sword.military.platoon.tasks.frago.WaitOn"
+  elseif orderType == "Rep_OrderConduite_SArreter" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objectives = { point }
     orderType = "sword.military.platoon.tasks.frago.WaitOn"
