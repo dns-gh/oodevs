@@ -42,8 +42,7 @@ public:
     virtual bool CanMoveOnUrbanBlock            ( const std::vector< MT_Vector2D >& points ) const;
     virtual bool CanMoveOnBurningCells          ( const std::vector< MT_Vector2D >& points ) const;
     virtual bool CanMoveOnKnowledgeObject       ( const std::vector< MT_Vector2D >& points ) const;
-    virtual bool CanMoveOn                      ( boost::shared_ptr< MT_Vector2D > position ) const;
-
+    virtual bool CanMoveOn                      ( const MT_Vector2D& position ) const;
     //@}
 
 private:
@@ -61,13 +60,18 @@ private:
     PHY_RolePion_TerrainAnalysis& operator=( const PHY_RolePion_TerrainAnalysis& ); //!< Assignment operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > T_Buffer;
+    //@}
+
 private:
     //! @name Member data
     //@{
     MIL_Agent_ABC& pion_;
     MT_Vector2D lastPos_;
-    std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > crossroadsBuffer_;
-    std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > safetyBuffer_;
+    T_Buffer crossroadsBuffer_;
+    T_Buffer safetyBuffer_;
     MIL_Fuseau fuseau_;
     float cacheRadius_;
     float cacheSafety_;

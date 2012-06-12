@@ -126,7 +126,7 @@ void AttritionCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: AttritionCapacity::HasInteractionCapabilities
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------
-bool AttritionCapacity::HasInteractionCapabilities( MIL_Object_ABC& object ) const
+bool AttritionCapacity::HasInteractionCapabilities( const MIL_Object_ABC& object ) const
 {
     // Is Bypassed
     const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
@@ -137,6 +137,15 @@ bool AttritionCapacity::HasInteractionCapabilities( MIL_Object_ABC& object ) con
     if( obstacle && !obstacle->IsActivated() )
         return false;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttritionCapacity::CanInteractWith
+// Created: CMA 2012-06-11
+// -----------------------------------------------------------------------------
+void AttritionCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& /*agent*/, bool& canInteract )
+{
+    canInteract &= HasInteractionCapabilities( object );
 }
 
 // -----------------------------------------------------------------------------

@@ -36,8 +36,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
-    , bTerrainReportSent_( false )
-    , obstacle_          ( 0 )
+    , pathSet_           ( eFinished )
 {
     // NOTHING
 }
@@ -55,11 +54,11 @@ DEC_PathWalker::~DEC_PathWalker()
 // Name: DEC_PathWalker::ComputeFutureObjectCollision
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+bool DEC_PathWalker::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const
 {
     if( !pCurrentPath_.get() )
         return false;
-    return pCurrentPath_->ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistanceBefore, rDistanceAfter, pObject );
+    return pCurrentPath_->ComputeFutureObjectCollision( objectsToTest, rDistance, pObject, agent, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,11 +147,11 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
         MT_LOG_ERROR_MSG( "List of path points resulting from pathfind is empty" );
-    itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath( movingEntity_.GetPosition() );
+    itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath();
     if( itCurrentPathPoint_ == pPath->GetResult().end() )
         return eItineraireMustBeJoined;
     if( *itCurrentPathPoint_ )
-        pPath->NotifyPointReached( (*itCurrentPathPoint_)->GetPos() );
+        pPath->NotifyPointReached( itCurrentPathPoint_ );
     if( ( pPath->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
 	{
         bool isInsideObject = false;
@@ -214,7 +213,7 @@ void DEC_PathWalker::SetCurrentPathPoint( DEC_PathResult& path )
 {
     itCurrentPathPoint_ = itNextPathPoint_;
     if( itCurrentPathPoint_ != path.GetResult().end() && *itCurrentPathPoint_ )
-        path.NotifyPointReached( (*itCurrentPathPoint_)->GetPos() );
+        path.NotifyPointReached( itCurrentPathPoint_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -225,7 +224,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 {
     // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
     TER_Object_ABC::T_ObjectVector objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vNewPos_, ( vEnd - vStart ).Magnitude(), objects );
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vStart, ( vEnd - vStart ).Magnitude(), objects );
     MT_Line lineTmp( vStart, vEnd );
     moveStepSet.insert( T_MoveStep( vStart ) );
     moveStepSet.insert( T_MoveStep( vEnd   ) );
@@ -286,7 +285,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove )
 {
-    static int nDistanceBeforeBlockingObject = -20;
+    static const double rDistanceBeforeBlockingObject = TER_World::GetWorld().GetWeldValue();
     CIT_ObjectSet itObject;
 
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
@@ -305,18 +304,11 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                     vNewPos_ = itCurMoveStep->vPos_;
                     do
                     {
-                        vNewPos_ += vNewDir_ * nDistanceBeforeBlockingObject;
-                    } while( object.IsInside( vNewPos_ ) );
+                        vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
+                    } while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
 
                     movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
-                    if( !bTerrainReportSent_ )
-                    {
-                        const std::string name = MIL_ObjectLoader::GetLoader().GetType( object.GetType().GetName() ).GetRealName();
-                        movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
-                        bTerrainReportSent_ = true;
-                    }
                     pathSet_ = eBlockedByObject;
-                    obstacle_ = object.GetID();
                     return false;
                 }
             }
@@ -338,18 +330,11 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                 vNewPos_ = itCurMoveStep->vPos_;
                 do
                 {
-                    vNewPos_ += vNewDir_ * nDistanceBeforeBlockingObject;
-                } while( object.IsInside( vNewPos_ ) );
+                    vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
+                } while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
 
                 movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
-                if( !bTerrainReportSent_ )
-                {
-                    const std::string name = MIL_ObjectLoader::GetLoader().GetType( object.GetType().GetName() ).GetRealName();
-                    movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
-                    bTerrainReportSent_ = true;
-                }
                 pathSet_ = eBlockedByObject;
-                obstacle_ = object.GetID();
                 return false;
             }
         }
@@ -397,18 +382,23 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
         MT_LOG_ERROR_MSG( "Current speed is not positive" );
         return false;
     }
-//    bool bFirstMove = ( vNewPos_.Distance( (*path.GetResult().begin())->GetPos() ) <= 10. );
-    bool bFirstMove = ( static_cast< float>( vNewPos_.rX_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rX_ ) && static_cast< float >( vNewPos_.rY_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rY_ ) );
 
-    sMoveStepCmp cmp( vNewPos_ );
+    MT_Vector2D vNewPos( vNewPos_ );
+    bool bFirstMove = ( static_cast< float >( vNewPos_.rX_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rX_ ) &&
+                        static_cast< float >( vNewPos_.rY_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rY_ ) );
+    if( bFirstMove )
+        vNewPos = (*path.GetResult().begin())->GetPos();
+
+    sMoveStepCmp cmp( vNewPos );
     T_MoveStepSet moveStepSet( cmp );
-    ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
+    ComputeObjectsCollision( vNewPos, vNewPosTmp, moveStepSet );
     if( moveStepSet.size() < 2 )
     {
         MT_LOG_ERROR_MSG( "Move step set has not at least 2 elements" ); // $$$$ LDC RC Can never happen.
         return false;
     }
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();
+
     CIT_MoveStepSet itNextMoveStep = moveStepSet.begin();
     ++itNextMoveStep;
     while( rTimeRemaining > 0. )
@@ -492,7 +482,6 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
                 Apply();
             return pathSet_;
         }
-        bTerrainReportSent_ = false;
 
         rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 
@@ -538,6 +527,7 @@ void DEC_PathWalker::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath )
         bForcePathCheck_ = true;
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::Apply
 // Created: NLD 2004-09-23
@@ -570,13 +560,4 @@ bool DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
         return false;
     pCurrentPath_->Serialize( asn );
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathWalker::GetObstacle
-// Created: NLD 2011-01-12
-// -----------------------------------------------------------------------------
-int DEC_PathWalker::GetObstacle() const
-{
-    return( pathSet_ == eBlockedByObject ) ? obstacle_ : 0;
 }

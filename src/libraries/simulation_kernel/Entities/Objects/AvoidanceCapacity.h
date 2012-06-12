@@ -53,6 +53,7 @@ public:
     //! @name Accessors
     //@{
     const TER_Localisation& GetLocalisation() const;
+    const double GetDistance() const;
     //@}
 
 private:
@@ -70,9 +71,9 @@ private:
 private:
     //! @name Member data
     //@{
-    TER_Localisation            avoid_;
-    MIL_DynamicPathDataHandler  handler_;
-    double                    distance_;
+    TER_Localisation           avoid_;
+    MIL_DynamicPathDataHandler handler_;
+    double                     distance_;
     //@}
 };
 

@@ -300,7 +300,7 @@ void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentr
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 {
-    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_ );
+    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_, vDirection_ );
 }
 
 // -----------------------------------------------------------------------------

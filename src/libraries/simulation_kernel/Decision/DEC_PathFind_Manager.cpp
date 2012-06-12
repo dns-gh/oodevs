@@ -38,12 +38,14 @@
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
+    , nMaxEndConnections_     ( 8 )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
     std::vector< unsigned int > dangerousObjects;
     MIL_DangerousObjectFilter filter;
     MIL_ObjectFactory::FindDangerousIDs( dangerousObjects, filter );
+    double rMinEndConnectionLength = MIL_ObjectFactory::GetMaxAvoidanceDistance();
 
     const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, dangerousObjects ) );
     config.AddFileToCRC( fileLoaded );
@@ -51,10 +53,10 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start
-        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, true ) );
+        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, rMinEndConnectionLength, true ) );
     else
         for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
-            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
+            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, rMinEndConnectionLength ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +71,10 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, const std::vector< 
     if( tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time w<= 0" );
 
-    xis     >> xml::end;
+    xis         >> xml::optional >> xml::attribute( "max-end-connections", nMaxEndConnections_ )
+            >> xml::end;
+    if( nMaxEndConnections_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-end-connections <= 0" );
 
     DEC_PathType   ::Initialize();
     DEC_PathFactory::Initialize( xis, dangerousObjects );

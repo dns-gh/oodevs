@@ -71,6 +71,7 @@ public:
     const MIL_ObjectType_ABC& GetType( const std::string& type ) const;
     const CapacityFactory& GetCapacityFactory() const;
     const void GetDangerousIDs( std::vector< unsigned int >& dangerousIDs, const MIL_ObjectFilter& filter ) const;
+    const double GetMaxAvoidanceDistance() const;
     //@}
 
     //! @name Singleton

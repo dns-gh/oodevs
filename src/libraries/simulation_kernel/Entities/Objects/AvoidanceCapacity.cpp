@@ -121,6 +121,15 @@ const TER_Localisation& AvoidanceCapacity::GetLocalisation() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AvoidanceCapacity::GetDistance
+// Created: CMA 2012-04-25
+// -----------------------------------------------------------------------------
+const double AvoidanceCapacity::GetDistance() const
+{
+    return distance_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AvoidanceCapacity::Initialize
 // Created: JCR 2008-08-11
 // -----------------------------------------------------------------------------

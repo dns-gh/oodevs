@@ -189,17 +189,17 @@ void PHY_RolePion_TerrainAnalysis::FindSafetyPositionsWithinCircle( std::vector<
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.empty() )
+        return true;
+
+    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
-            double maxSpeed = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
-            if( maxSpeed <= 0. )
-                return false;
-        }
+        const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
+        double maxSpeed = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
+        if( maxSpeed > 0. )
+            return true;
     }
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,16 +208,14 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetType().GetUnitType().CanFly() )
-    {
-        double weight = pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
-                return false;
-        }
-    }
-    return true;
+    if( pion_.GetType().GetUnitType().CanFly() || points.empty() )
+        return true;
+
+    double weight = pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
+    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,15 +224,16 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
-    {
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            if( it != points.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
-                return false;
-        }
-    }
-    return true;
+    if( pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.size() <= 1 )
+        return true;
+
+    std::vector< MT_Vector2D >::const_iterator itStart = points.begin();
+    std::vector< MT_Vector2D >::const_iterator itEnd = points.begin();
+    ++itEnd;
+    for( ; itEnd != points.end(); ++itStart, ++itEnd )
+        if( MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *itStart, *itEnd ) )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,26 +242,41 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< MT_Vector2D >& points ) const
 {
+    if( pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.empty() )
+        return true;
+
     T_KnowledgeObjectVector knowledgesObject;
     pion_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
-    for( CIT_KnowledgeObjectVector it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
+    if( knowledgesObject.empty() )
+        return true;
+
+    for( std::vector< MT_Vector2D >::const_iterator itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
-        const DEC_Knowledge_Object& knowledge = **it;
-        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( points, pion_ ) )
-            return false;
+        bool isInside = false;
+        T_PointVector pathPoints;
+        pathPoints.push_back( *itPoint );
+        for( CIT_KnowledgeObjectVector itKnowledge = knowledgesObject.begin(); itKnowledge != knowledgesObject.end(); ++itKnowledge )
+        {
+            const DEC_Knowledge_Object& knowledge = **itKnowledge;
+            if( knowledge.CanCollideWith( pion_ ) && knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( pathPoints, pion_ ) )
+            {
+                isInside = true;
+                break;
+            }
+        }
+        if( !isInside )
+            return true;
     }
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis::CanMoveOn
 // Created: CMA 2011-08-30
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_TerrainAnalysis::CanMoveOn( boost::shared_ptr< MT_Vector2D > position ) const
+bool PHY_RolePion_TerrainAnalysis::CanMoveOn( const MT_Vector2D& position ) const
 {
-    if( !position )
-        return false;
     std::vector< MT_Vector2D > points;
-    points.push_back( *position );
+    points.push_back( position );
     return CanMoveOnTerrain( points ) && CanMoveOnUrbanBlock( points ) && CanMoveOnBurningCells( points ) && CanMoveOnKnowledgeObject( points );
 }

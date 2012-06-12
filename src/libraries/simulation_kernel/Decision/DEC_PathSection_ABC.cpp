@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection_ABC.h"
-#include "DEC_Path_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <ctime>
 
@@ -19,7 +18,7 @@
 // Name: DEC_PathSection_ABC constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path_ABC& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
+DEC_PathSection_ABC::DEC_PathSection_ABC( DEC_Path& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
     : startPoint_         ( startPoint )
     , endPoint_           ( endPoint   )
     , path_               ( path  )

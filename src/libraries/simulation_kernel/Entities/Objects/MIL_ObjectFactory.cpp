@@ -61,6 +61,15 @@ const void MIL_ObjectFactory::FindDangerousIDs( std::vector< unsigned int >& dan
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectFactory::GetMaxAvoidanceDistance
+// Created: CMA 2012-04-25
+// -----------------------------------------------------------------------------
+const double MIL_ObjectFactory::GetMaxAvoidanceDistance()
+{
+    return MIL_ObjectLoader::GetLoader().GetMaxAvoidanceDistance();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-05-29
 // -----------------------------------------------------------------------------

@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     static TER_PathFindManager& GetPathFindManager();
-    TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread = false );
+    TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread = false );
 
     void AddDynamicData   ( TER_DynamicData& data );
     void RemoveDynamicData( TER_DynamicData& data );

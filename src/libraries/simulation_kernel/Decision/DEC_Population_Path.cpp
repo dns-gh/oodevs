@@ -20,6 +20,7 @@
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Decision/DEC_Population_PathSection.h"
 #include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -36,7 +37,8 @@
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination )
-    : pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
+    : DEC_PathResult( DEC_PathType::movement_ )
+    , pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
     , population_( population )
     , rCostOutsideOfAllObjects_( 0. )
     , profiler_()
@@ -134,7 +136,7 @@ double DEC_Population_Path::GetCostOutsideOfChanneling() const
 // -----------------------------------------------------------------------------
 void DEC_Population_Path::CleanAfterComputation()
 {
-    DEC_Path_ABC::CleanAfterComputation();
+    DEC_Path::CleanAfterComputation();
     channelers_.clear();
 }
 
@@ -154,7 +156,7 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
     }
     if( !resultList_.empty() )
         throw std::runtime_error( "List of path points is not empty before running pathfind" );
-    DEC_Path_ABC::Execute( pathfind );
+    DEC_Path::Execute( pathfind );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         double rComputationTime = profiler_.Stop();

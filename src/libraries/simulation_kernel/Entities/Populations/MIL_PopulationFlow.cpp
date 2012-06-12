@@ -365,7 +365,7 @@ bool MIL_PopulationFlow::ManageSplit()
     IT_PointList itSplit = flowShape_.begin();
     for( IT_PointList it = flowShape_.begin(); it != flowShape_.end(); ++it )
     {
-        if( pTailPath_->GetCurrentKeyOnPath( *it ) == pTailPath_->GetResult().end() )
+        if( !pTailPath_->IsOnPath( *it ) )
         {
             bSplit = true;
             break;

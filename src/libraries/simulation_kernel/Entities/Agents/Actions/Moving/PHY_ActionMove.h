@@ -15,7 +15,6 @@
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "Decision/DEC_PathResult.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_AgentPion;
@@ -25,7 +24,6 @@ namespace moving
 }
 class DEC_Path_ABC;
 class DEC_Agent_Path;
-class MIL_Object_ABC;
 
 // =============================================================================
 // @class  PHY_ActionMove
@@ -56,35 +54,21 @@ public:
 private:
     //! @name Tools
     //@{
-    bool CreateJoiningPath( const MT_Vector2D* lastJoiningPoint = 0 );
-    void DestroyJoiningPath();
-    MT_Vector2D GetLastPointAndDestroyJoiningPath();
     bool AvoidObstacles();
     bool UpdateObjectsToAvoid();
-    void CreateFinalPath();
-    int CreatePathAfterObjectCollision( boost::shared_ptr< DEC_PathResult > pCurrentPath, MIL_Object_ABC* obstacle );
-    int CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::set< unsigned int > T_ObjectKnowledgeSet; // Dia ids
+    void CreateNewPath();
     //@}
 
 private:
     MIL_AgentPion& pion_;
     moving::PHY_RoleAction_Moving& role_;
     boost::shared_ptr< DEC_Agent_Path > pMainPath_;
-    boost::shared_ptr< DEC_Agent_Path > pJoiningPath_;
-    T_ObjectKnowledgeSet objectAvoidAttempts_;
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
-    bool forceNextPoint_;
-    bool hasTreatedJoining_;
-    bool mustWaitForKnowledge_;
-    std::pair< std::pair< MT_Vector2D, MT_Vector2D >, unsigned int > lastBlockedPoint_;
-    int obstacle_;
+    bool executionSuspended_;
+    bool isBlockedByObject_;
+    unsigned int blockedTickCounter_;
+    int obstacleId_;
 };
 
 #endif // __PHY_ActionMove_h_

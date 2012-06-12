@@ -18,6 +18,8 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_Urban.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -277,9 +279,9 @@ namespace
     class sObjectKnowledgesFilteredHeightInserter
     {
     public:
-        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter, const MIL_Army_ABC* army )
+        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter, const MIL_Army_ABC* army )
             : pContainer_( &container )
-            , rHeight_   ( rHeight )
+            , agent_     ( agent )
             , filter_    ( filter )
             , army_      ( army )
         {
@@ -290,7 +292,7 @@ namespace
         {
             if( !knowledge->IsValid() )
                 return;
-            if( rHeight_ > knowledge->GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
+            if( !knowledge->CanCollideWith( agent_ ) )
                 return;
             const InteractWithSideCapacity* pSideInteraction = knowledge->GetType().GetCapacity< InteractWithSideCapacity >();
             if( pSideInteraction )
@@ -305,21 +307,22 @@ namespace
 
     private:
         T_KnowledgeObjectVector* pContainer_;
-        const double rHeight_;
+        const MIL_Agent_ABC& agent_;
         const MIL_ObjectFilter& filter_;
         const MIL_Army_ABC* army_;
     };
 }
 
-void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter ) const
+void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter ) const
 {
     bool useCache = ( dynamic_cast< const MIL_DangerousObjectFilter* >( &filter ) != 0 );
+    const double rHeight = agent.GetRole< PHY_RoleInterface_Location >().GetHeight();
     if( useCache && pKnowledgeObjectContainer_->HasObjectsAtInteractionHeightCache( rHeight ) )
     {
         pKnowledgeObjectContainer_->GetCachedObjectsAtInteractionHeight( container, rHeight );
         return ;
     }
-    sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter, pArmy_ );
+    sObjectKnowledgesFilteredHeightInserter functor( container, agent, filter, pArmy_ );
 
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );

@@ -577,7 +577,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     if( pKnowledge )
     {
         pResult.reset( new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) ) );
-        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
             pResult.reset();
     }
     return pResult;
@@ -614,7 +614,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
-        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
             pResult.reset();
     }
     return pResult;
@@ -984,15 +984,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject )
 {
-	typedef std::vector< boost::shared_ptr< MT_Vector2D > > T_Vectors;
+    typedef std::vector< boost::shared_ptr< MT_Vector2D > > T_Vectors;
     T_Vectors result;
     if( pUrbanObject )
     {
         boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
         result.push_back( position );
         const T_Vectors& area = pUrbanObject->ComputeLocalisationsInsideBlock();
-		for( T_Vectors::const_iterator it = area.begin(); it != area.end(); ++it )
-			result.push_back( *it );
+        for( T_Vectors::const_iterator it = area.begin(); it != area.end(); ++it )
+            result.push_back( *it );
     }
     return result;
 }

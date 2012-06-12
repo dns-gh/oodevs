@@ -19,7 +19,6 @@
 class DEC_Path_KnowledgeAgent;
 class DEC_Path_KnowledgeObject_ABC;
 class DEC_Path_KnowledgePopulation;
-class DEC_PathType;
 class MIL_LimaOrder;
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
@@ -78,16 +77,15 @@ public:
     double GetCostOutsideOfAllObjects() const;
     const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const;
     const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
-    const DEC_PathType& GetPathType() const;
     const DEC_Agent_PathClass& GetPathClass() const;
     double GetUnitMajorWeight() const;
-    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle, bool forceNextPoint ) const;
+    const T_PointVector& GetNextWaypoints() const;
     //@}
 
     //! @name Tools
     //@{
     virtual void InsertDecPoints();
-    virtual void NotifyPointReached( const MT_Vector2D& point );
+    virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
@@ -127,10 +125,10 @@ private:
     //@{
     const MIL_Agent_ABC& queryMaker_;
     // Path calculation parameters
-    const DEC_PathType& pathType_; //$$$ A VIRER
     const DEC_Agent_PathClass& pathClass_;
     bool bRefine_;
-    T_PointVector initialPathPoints_;
+    T_PointVector initialWaypoints_;
+    T_PointVector nextWaypoints_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
     MT_Vector2D vDirDanger_;
