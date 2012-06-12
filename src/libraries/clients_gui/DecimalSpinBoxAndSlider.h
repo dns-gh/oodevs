@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __DecimalSpinBoxAndSlider_h_
-#define __DecimalSpinBoxAndSlider_h_
+#ifndef __gui_DecimalSpinBoxAndSlider_h_
+#define __gui_DecimalSpinBoxAndSlider_h_
+
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -20,6 +22,7 @@ namespace gui
 // Created: ABR 2011-01-28
 // =============================================================================
 class DecimalSpinBoxAndSlider : public QWidget
+                              , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -59,13 +62,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DecimalSpinBoxAndSlider( const DecimalSpinBoxAndSlider& );            //!< Copy constructor
-    DecimalSpinBoxAndSlider& operator=( const DecimalSpinBoxAndSlider& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     Q3BoxLayout* layout_;
@@ -78,4 +74,4 @@ private:
 
 }
 
-#endif // __DecimalSpinBoxAndSlider_h_
+#endif // __gui_DecimalSpinBoxAndSlider_h_

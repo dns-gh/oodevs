@@ -39,14 +39,11 @@ DisplayToolbar::DisplayToolbar( QMainWindow* parent, kernel::Controllers& contro
     addWidget( new BooleanOptionButton( MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "gui::DisplayToolbar", "Fog of war" ), this, controllers.options_, "FogOfWar" ) );
 
     // Raster
-    if( controllers.modes_ != 0 ) // $$$$ ABR 2012-05-15: Enable only in preparation for now
-    {
-        QAction* rasterAction = new QAction( tr( "Add raster data" ), this );
-        rasterAction->setIcon( QIcon( "resources/images/gui/raster.png" ) );
-        rasterAction->setToolTip( tr( "Add raster data" ) );
-        connect( rasterAction, SIGNAL( triggered() ), parent, SLOT( OnAddRaster() ) );
-        addAction( rasterAction );
-    }
+    QAction* rasterAction = new QAction( tr( "Add raster data" ), this );
+    rasterAction->setIcon( QIcon( "resources/images/gui/raster.png" ) );
+    rasterAction->setToolTip( tr( "Add raster data" ) );
+    connect( rasterAction, SIGNAL( triggered() ), parent, SLOT( OnAddRaster() ) );
+    addAction( rasterAction );
 }
 
 // -----------------------------------------------------------------------------

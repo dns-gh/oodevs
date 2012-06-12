@@ -21,9 +21,10 @@ using namespace gui;
 // Name: RasterLayer constructor
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-RasterLayer::RasterLayer( kernel::Controller& controller )
-    : controller_( controller )
-    , ignore_    ( false )
+RasterLayer::RasterLayer( kernel::Controller& controller, const std::string& textureName /* = "usrp.texture" */ )
+    : controller_ ( controller )
+    , ignore_     ( false )
+    , textureName_( textureName )
 {
     controller_.Register( *this );
 }
@@ -46,15 +47,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
     if( ! textures_.get() && ! graphicsDirectory_.empty() && ! ignore_ )
-        try
-        {
-            textures_.reset( new TextureSet( graphicsDirectory_ + "/usrp.texture" ) );
-        }
-        catch( ... )
-        {
-            // $$$$ AGE 2007-01-04:
-            ignore_ = true;
-        }
+        GenerateTexture();
     if( textures_.get() )
     {
         glColor4f( 1, 1, 1, GetAlpha() );
@@ -63,6 +56,23 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
         glBindTexture( GL_TEXTURE_2D, 0 );
         glDisable( GL_TEXTURE_GEN_S );
         glDisable( GL_TEXTURE_GEN_T );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: RasterLayer::GenerateTexture
+// Created: ABR 2012-06-12
+// -----------------------------------------------------------------------------
+void RasterLayer::GenerateTexture()
+{
+    try
+    {
+        textures_.reset( new TextureSet( graphicsDirectory_ + "/" + textureName_ ) );
+    }
+    catch( ... )
+    {
+        // $$$$ AGE 2007-01-04:
+        ignore_ = true;
     }
 }
 

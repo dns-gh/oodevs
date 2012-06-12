@@ -102,6 +102,73 @@
     </message>
 </context>
 <context>
+    <name>gui::AddRasterDialog</name>
+    <message>
+        <source>Add a raster layer</source>
+        <translation>Ajouter un calque raster</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Général</translation>
+    </message>
+    <message>
+        <source>Enter layer&apos;s name</source>
+        <translation>Saisir le nom du calque</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Files:</source>
+        <translation>Fichiers:</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avancé</translation>
+    </message>
+    <message>
+        <source>Pixel size:</source>
+        <translation>Taille de pixel:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>No name defined.</source>
+        <translation>Aucun nom défini.</translation>
+    </message>
+    <message>
+        <source>No files defined.</source>
+        <translation>Aucun fichier défini.</translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; doesn&apos;t exist.</source>
+        <translation>Le fichier &apos;%1&apos; n&apos;existe pas.</translation>
+    </message>
+    <message>
+        <source>Select USRP header file or GeoTIFF File</source>
+        <translation>Selectionnez un fichier header USRP ou un fichier GeoTIFF</translation>
+    </message>
+    <message>
+        <source>USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)</source>
+        <translation>Base de donnée USRP (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;Tous les fichiers (*.*)</translation>
+    </message>
+    <message>
+        <source>Enter files to import</source>
+        <translation>Saisir les fichiers à importer</translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -727,6 +794,14 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Display Infrastructures</source>
         <translation>Afficher les infrastructures</translation>
+    </message>
+    <message>
+        <source>Add a user raster layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove a user raster layer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

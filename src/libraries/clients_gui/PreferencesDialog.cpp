@@ -33,7 +33,7 @@ using namespace gui;
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                      const Painter_ABC& painter )
+                                      const Painter_ABC& painter, GlSelector& selector )
     : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
@@ -71,7 +71,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     grid->addWidget( box, 1, 0 );
 
     pGraphicPrefPanel_       = new GraphicsPanel( this, controllers );
-    layersPanel_             = new LayersPanel( this, controllers );
+    layersPanel_             = new LayersPanel( this, controllers, selector );
     pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
 
     AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
@@ -80,7 +80,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "2D" ), *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
-//    AddPage( tr( "Orbat" ), *new OrbatPanel( this, controllers ) );
 
     box = new Q3HBox( this );
     box->setMargin( 5 );
@@ -92,6 +91,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
+    connect( this, SIGNAL( OnAddRaster() ), parent, SLOT( OnAddRaster() ) );
 
     hide();
 }
@@ -181,9 +181,9 @@ void PreferencesDialog::OnCancel()
 // Name: PreferencesDialog::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void PreferencesDialog::AddLayer( const QString& name, gui::Layer_ABC& layer )
+void PreferencesDialog::AddLayer( const QString& name, gui::Layer_ABC& layer, bool dynamic /* = false */ )
 {
-    layersPanel_->AddLayer( name, layer );
+    layersPanel_->AddLayer( name, layer, dynamic );
 }
 
 // -----------------------------------------------------------------------------

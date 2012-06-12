@@ -79,7 +79,8 @@ void Layer_ABC::Paint( kernel::Viewport_ABC& )
 // -----------------------------------------------------------------------------
 void Layer_ABC::RegisterIn( Gl3dWidget& widget )
 {
-    widget.Register( *new MapLayerProxy( *this ) );
+    currentProxy_  = new MapLayerProxy( *this );
+    widget.Register( static_cast< gui::Layer_ABC& >( *currentProxy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +92,24 @@ void Layer_ABC::RegisterIn( GlWidget& widget )
     currentWidget_ = &widget;
     currentProxy_  = new MapLayerProxy( *this );
     widget.Register( *currentProxy_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::UnregisterIn
+// Created: ABR 2012-06-11
+// -----------------------------------------------------------------------------
+void Layer_ABC::UnregisterIn( Gl3dWidget& widget )
+{
+    widget.Unregister( static_cast< gui::Layer_ABC& >( *currentProxy_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer_ABC::UnregisterIn
+// Created: ABR 2012-06-11
+// -----------------------------------------------------------------------------
+void Layer_ABC::UnregisterIn( GlWidget& widget )
+{
+    widget.Unregister( *currentProxy_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -82,6 +82,7 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Tools.h"
 #include "gaming/ColorController.h"
+#include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GraphicPreferences.h"
@@ -131,11 +132,14 @@
 #include "clients_gui/SimpleFilter.h"
 #include "clients_gui/UrbanFilter.h"
 #include "clients_gui/TerrainProfiler.h"
+#include "geodata/ProjectionException.h"
+#include "geodata/ExtentException.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
@@ -178,12 +182,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
-    lighting_ = new SimulationLighting( controllers, this );
-    gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
-    gui::PreferencesDialog* prefDialog = new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_ );
-    prefDialog->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog, controllers ) );
-    new VisionConesToggler( controllers, publisher, this );
-
     glProxy_ = new gui::GlProxy();
     strategy_ = new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
@@ -203,6 +201,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
+
+    lighting_ = new SimulationLighting( controllers, this );
+    gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_ ) );
+    preferenceDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( preferenceDialog_.get(), controllers ) );
+    new VisionConesToggler( controllers, publisher, this );
 
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profile );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
@@ -249,6 +253,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     //Dialogs
     new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config, rcResolver, *factory, *parameters_ );
+    addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
 
     // Profile
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
@@ -337,7 +342,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Layers
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
-    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
+    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), *picker );
     WeatherLayer* meteoLayer = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
 
     // object/unit creation window
@@ -395,9 +400,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
 
     help_ = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
-    setMenuBar( new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help_, *interpreter, network_, logger ) );
+    setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, *factory, license, *help_, *interpreter, network_, logger ) );
 
-    CreateLayers( *pMissionPanel_, *creationPanels, *parameters_, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
+    CreateLayers( *pMissionPanel_, *creationPanels, *parameters_, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *preferenceDialog_, profile, simulation, *picker );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
@@ -411,6 +416,23 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     aar->SetStartup();
 
     restoreState( settings.value( "mainWindowState" ).toByteArray() );
+
+    // Raster_app process
+    process_.reset( new QProcess( this ) );
+    connect( process_.get(), SIGNAL( finished( int, QProcess::ExitStatus ) ), this, SLOT( OnRasterProcessExited( int, QProcess::ExitStatus ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow destructor
+// Created: APE 2004-03-01
+// -----------------------------------------------------------------------------
+MainWindow::~MainWindow()
+{
+    process_->kill();
+    controllers_.Unregister( *this );
+    delete pMissionPanel_;
+    delete parameters_;
+    delete selector_;
 }
 
 namespace
@@ -573,18 +595,6 @@ void MainWindow::Close()
         logisticListView_->Purge();
     model_.Purge();
     staticModel_.Purge();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow destructor
-// Created: APE 2004-03-01
-// -----------------------------------------------------------------------------
-MainWindow::~MainWindow()
-{
-    controllers_.Unregister( *this );
-    delete pMissionPanel_;
-    delete parameters_;
-    delete selector_;
 }
 
 // -----------------------------------------------------------------------------
@@ -802,4 +812,76 @@ QMenu* MainWindow::createPopupMenu()
         menu->addAction( toolbar->toggleViewAction() );
     }
     return menu;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnAddRaster
+// Created: ABR 2012-06-12
+// -----------------------------------------------------------------------------
+void MainWindow::OnAddRaster()
+{
+    try
+    {
+        if( !bfs::exists( config_.BuildTerrainChildFile( "config.xml" ) ) )
+        {
+            QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
+            return;
+        }
+
+        QDialog::DialogCode result = static_cast< QDialog::DialogCode >( addRasterDialog_->exec() );
+        if( result == QDialog::Accepted )
+        {
+            QStringList parameters;
+            parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
+            parameters << ( std::string( "--raster=" ) + addRasterDialog_->GetFiles().toStdString() ).c_str();
+            parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( addRasterDialog_->GetPixelSize() ) ).c_str();
+            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin" );
+            parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
+            bfs::path workingDirectory = bfs::system_complete( "../Terrain/applications/" );
+            process_->setWorkingDirectory( workingDirectory.string().c_str() );
+            process_->start( bfs::path( workingDirectory / "raster_app.exe" ).string().c_str(), parameters );
+        }
+    }
+    catch( geodata::ProjectionException& )
+    {
+        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
+        // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI   
+    }
+    catch( geodata::ExtentException& )
+    {
+        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing extent information.") ) ;
+    }
+    catch( ... )
+    {
+        QMessageBox::critical( this, tr( "Error loading image file" ), tr( "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnRasterProcessExited
+// Created: ABR 2012-06-12
+// -----------------------------------------------------------------------------
+void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus )
+{
+    if( exitStatus == QProcess::NormalExit && exitCode == EXIT_SUCCESS )
+    {
+        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, "~~tmp.texture.bin" );
+        raster.SetPasses( "main" );
+        selector_->AddLayer( raster );
+        preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
+        raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
+        raster.GenerateTexture();
+        try
+        {
+            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin";
+            if( bfs::exists( aggregated ) )
+                bfs::remove( aggregated );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
+    else
+        QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
 }

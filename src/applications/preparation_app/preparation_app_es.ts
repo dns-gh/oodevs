@@ -1011,6 +1011,39 @@ Do you want to save the terrain &apos;%1&apos;?</source>
 Possible impacts on the exercises using this terrain!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error loading image file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error while loading Raster source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
+    </message>
+    <message>
+        <source>This functionality is not available with old terrain format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following raster you add is missing extent information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fatal error adding Raster source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User layer [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following raster you add is missing spatial reference information.
+This data can&apos;t be projected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

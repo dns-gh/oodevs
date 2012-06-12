@@ -31,6 +31,7 @@ namespace kernel
 
 namespace gui
 {
+    class AddRasterDialog;
     class OptionsPanel;
     class ParametersLayer;
     class AgentsLayer;
@@ -109,6 +110,8 @@ public slots:
     void OnNameChanged();
     void ToggleFullScreen();
     void ToggleDocks();
+    void OnAddRaster();
+    void OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus );
     //@}
 
 private:
@@ -145,6 +148,9 @@ private:
     std::auto_ptr< gui::LayerFilter_ABC > urbanFilter_;
     std::auto_ptr< ColorController > pColorController_;
     std::auto_ptr< actions::gui::InterfaceBuilder_ABC > interfaceBuilder_;
+    std::auto_ptr< QProcess > process_;
+    std::auto_ptr< gui::AddRasterDialog > addRasterDialog_;
+    std::auto_ptr< gui::PreferencesDialog > preferenceDialog_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

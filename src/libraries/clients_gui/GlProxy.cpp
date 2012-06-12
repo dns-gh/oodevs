@@ -60,6 +60,17 @@ void GlProxy::Register( TooltipsLayer_ABC& layer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::Unregister
+// Created: ABR 2012-06-12
+// -----------------------------------------------------------------------------
+void GlProxy::Unregister( Layer_ABC& layer )
+{
+    CIT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
+    if( it != layers_.end() )
+        layers_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::ChangeTo
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
