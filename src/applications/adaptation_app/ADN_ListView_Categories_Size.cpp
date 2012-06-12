@@ -65,7 +65,7 @@ ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, con
     // Connector creation
     pConnector_ = new ADN_CLV_Categories_Size( *this );
 
-    this->SetDeletionEnabled( true, false );
+    this->SetDeletionEnabled( true, true );
 }
 
 
@@ -146,7 +146,7 @@ void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
                 if( pCurSize->IsMultiRef() && bDeletionWarning_ && ! ADN_GuiTools::MultiRefWarning() )
                     return;
 
-                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurSize);
+                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurSize );
             }
             break;
         }
