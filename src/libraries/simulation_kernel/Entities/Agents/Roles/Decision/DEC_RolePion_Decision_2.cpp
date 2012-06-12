@@ -787,9 +787,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Tir_PorteeTheoriqueMaxTirIndirect" ] =
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetTheoricMaxRangeToIndirectFire, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Tir_PorteeMinTirIndirect" ] =
-        boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetTheoricMinRangeToIndirectFire, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_Tir_PorteeTheoriqueMinTirIndirect" ] =
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMinRangeToIndirectFire, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_Tir_PorteeTheoriqueMinTirIndirect" ] =
+        boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetTheoricMinRangeToIndirectFire, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions" ] =
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions" ] =
