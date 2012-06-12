@@ -18,6 +18,7 @@
 #include "runtime/Utf8.h"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
@@ -205,18 +206,34 @@ int Session::GetPort() const
 
 // -----------------------------------------------------------------------------
 // Name: Session::GetProperties
-// Created: BAX 2012-04-19
+// Created: BAX 2012-06-11
 // -----------------------------------------------------------------------------
-Tree Session::GetProperties() const
+Tree Session::GetProperties( bool save ) const
 {
     Tree tree;
     tree.put( "id", id_ );
     tree.put( "node", node_.GetId() );
     tree.put( "name", name_ );
-    tree.put_child( "links", links_ );
     tree.put( "port", port_->Get() );
     tree.put( "status", ConvertStatus( status_ ) );
+    if( save )
+        tree.put_child( "links", links_ );
+    else
+        BOOST_FOREACH( const Tree::value_type& it, links_ )
+        {
+            tree.put( it.first + ".name",     it.second.get< std::string >( "name" ) );
+            tree.put( it.first + ".checksum", it.second.get< std::string >( "checksum" ) );
+        }
     return tree;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::GetProperties
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+Tree Session::GetProperties() const
+{
+    return GetProperties( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +242,7 @@ Tree Session::GetProperties() const
 // -----------------------------------------------------------------------------
 Tree Session::Save() const
 {
-    Tree tree = GetProperties();
+    Tree tree = GetProperties( true );
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( !process_ )
         return tree;

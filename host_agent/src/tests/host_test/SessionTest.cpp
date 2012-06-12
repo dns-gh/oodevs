@@ -40,6 +40,10 @@ namespace
         "\"terrain\":{\"name\":\"a\",\"root\":\"b\",\"checksum\":\"c\"},"
         "\"model\":{\"name\":\"a\",\"root\":\"b\",\"checksum\":\"c\"}"
         "}";
+    const std::string items =
+        "\"exercise\":{\"name\":\"a\",\"checksum\":\"c\"},"
+        "\"terrain\":{\"name\":\"a\",\"checksum\":\"c\"},"
+        "\"model\":{\"name\":\"a\",\"checksum\":\"c\"}";
 
     struct Fixture
     {
@@ -111,20 +115,23 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
         "\"node\":\"10123456-cdef-9876-90ab-543212345678\","
         "\"name\":\"myName\","
-        "\"links\":" + links + ","
         "\"port\":\"1337\",";
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\""
+        "," + items +
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"stopped\""
+        ",\"links\":" + links +
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"playing\""
+        "," + items +
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"playing\","
+        "\"links\":" + links + ","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
@@ -132,9 +139,11 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
     StopSession( *session, process );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\""
+        "," + items +
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"stopped\""
+        ",\"links\":" + links +
         "}" );
 }
 

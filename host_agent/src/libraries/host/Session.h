@@ -80,6 +80,12 @@ public:
     //@}
 
 private:
+    //! @name Private methods
+    //@{
+    virtual Tree GetProperties( bool save ) const;
+    //@}
+
+private:
     //! @name Private members
     //@{
     const Uuid id_;
