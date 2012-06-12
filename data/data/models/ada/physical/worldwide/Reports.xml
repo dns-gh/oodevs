@@ -575,7 +575,7 @@
   <report category="operational" id="403" message="No platoon can do the main effect"/>
   <report category="operational" id="404" message="Section undeployed"/>
   <report category="operational" id="405" message="Starting undeploy"/>
-  <report category="operational" id="406" message="No population in the urban block"/>
+  <report category="operational" id="406" message="Urban block cannot be inhabited"/>
   <report category="operational" id="407" message="Objective alerted"/>
   <report category="operational" id="408" message="Objective is no longer alerted"/>
   <report category="operational" id="409" message="Objective confined"/>
@@ -660,4 +660,4 @@
   <report category="operational" id="465" message="Impossible to have the critical intelligence : weak force ratio"/>
   <report category="operational" id="466" message="The target is no longer valid"/>
 </reports>
-<!-- signature="3787396539" -->
+<!-- signature="0559720296" -->
