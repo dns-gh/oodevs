@@ -218,7 +218,7 @@ return
     end,
     hasPionsInDanger = function( self, entities )
         for _, entity in pairs( entities ) do
-            if meKnowledge:getForceRatioAgent( entity ) < 0.9 then
+            if meKnowledge:getForceRatioAgent( entity ) <= 0.55 then -- Le pion a un rapport de force neutre ou défavorable
                 return true
             end
         end
