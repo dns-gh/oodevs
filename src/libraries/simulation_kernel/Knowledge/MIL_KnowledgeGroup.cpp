@@ -1177,7 +1177,7 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown )
+DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
     if( pKnowledge.get() )
@@ -1189,9 +1189,9 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( MIL_Agent_AB
 // Name: MIL_KnowledgeGroup::CreateKnowledgeAgent
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( MIL_Agent_ABC& perceived )
+DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( const MIL_Agent_ABC& perceived )
 {
-    return knowledgeBlackBoard_->CreateKnowledgeAgent( *this, perceived );
+    return knowledgeBlackBoard_->CreateKnowledgeAgent( *this, const_cast< MIL_Agent_ABC& >( perceived ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1201,6 +1201,17 @@ DEC_Knowledge_Agent& MIL_KnowledgeGroup::CreateKnowledgeAgent( MIL_Agent_ABC& pe
 DEC_Knowledge_Population& MIL_KnowledgeGroup::CreateKnowledgePopulation( MIL_Population& perceived )
 {
     return knowledgeBlackBoard_->CreateKnowledgePopulation( *this, perceived );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateKnowledgeFromTransported
+// Created: LDC 2012-06-12
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateKnowledgeFromTransported( const MIL_Agent_ABC& perceived )
+{
+    DEC_Knowledge_Agent& agent = GetAgentKnowledgeToUpdate( perceived );
+    agent.Extrapolate();
+    agent.UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------

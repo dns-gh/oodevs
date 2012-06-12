@@ -14,6 +14,8 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+class MIL_Agent_ABC;
+
 namespace client
 {
     class UnitAttributes;
@@ -51,6 +53,7 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
+    virtual const MIL_Agent_ABC* GetTransporter() const = 0;
     //@}
 
     //! @name Human transporters ... $$$

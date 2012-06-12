@@ -28,6 +28,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Fire.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "protocol/ClientSenders.h"
 
@@ -217,7 +218,10 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
         owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
     if( pTransporter_ )
+    {
         owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
+        owner_.GetKnowledgeGroup().UpdateKnowledgeFromTransported( *pTransporter_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

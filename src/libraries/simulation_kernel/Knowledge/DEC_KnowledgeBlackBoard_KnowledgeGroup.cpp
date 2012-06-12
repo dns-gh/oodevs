@@ -689,7 +689,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception( int cu
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent
 // Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& perceived )
+DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_Agent_ABC& perceived )
 {
     return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );
 }
