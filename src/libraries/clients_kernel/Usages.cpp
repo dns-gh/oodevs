@@ -122,6 +122,22 @@ void Usages::Remove( const std::string& usage )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Usages::ClearAll
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Usages::ClearAll()
+{
+    while( usages_.size() > 1 )
+    {
+        CIT_Usages it = usages_.begin();
+        const std::string usage = it->first;
+        if( usage == defaultStr_ )
+            ++it;
+        Remove( usage );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Usages::Find
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------

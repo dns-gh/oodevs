@@ -60,6 +60,7 @@ private slots:
     void OnDelete();
     void OnDeleteInfrastructures();
     void OnCreateInfrastructure( const QString& name );
+    void OnApplyTemplate( const QString& name );
     //@}
 
 private:
@@ -68,6 +69,7 @@ private:
     virtual void NotifySelectionChanged( const T_Elements& elements );
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu );
     void CreateInfrastructuresMenu( kernel::ContextMenu& menu ) const;
+    void CreateTemplatesMenu( kernel::ContextMenu& menu ) const;
     //@}
 
 private:
@@ -77,7 +79,8 @@ private:
     UrbanModel& model_;
     const kernel::StaticModel& staticModel_;
     kernel::UrbanObject_ABC* element_;
-    QSignalMapper* pMapper_;
+    QSignalMapper* pInfraMapper_;
+    QSignalMapper* pTemplateMapper_;
     T_Elements selected_;
     //@}
 };

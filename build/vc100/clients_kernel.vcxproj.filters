@@ -487,6 +487,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp">
       <Filter>Source Files\Model\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
@@ -1154,6 +1157,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.h">
+      <Filter>Source Files\XML model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

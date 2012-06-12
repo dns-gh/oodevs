@@ -85,3 +85,12 @@ void UrbanColor_ABC::SetColor( int red, int green, int blue, int alpha )
 {
     current_ = UrbanBlockColor( red, green, blue, alpha );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanColor_ABC::SetColor
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void UrbanColor_ABC::SetColor( const UrbanBlockColor& color )
+{
+    current_ = color;
+}

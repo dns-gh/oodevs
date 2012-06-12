@@ -39,6 +39,7 @@ namespace kernel
     class MaterialCompositionType;
     class FacadeType;
     class RoofShapeType;
+    class UrbanTemplateType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -61,6 +62,7 @@ class ObjectTypes
     , public tools::StringResolver< FacadeType >
     , public tools::StringResolver< RoofShapeType >
     , public tools::StringResolver< InfrastructureType >
+    , public tools::StringResolver< UrbanTemplateType >
 {
 public:
     //! @name Constructors/Destructor
@@ -111,6 +113,8 @@ private:
     void ReadMaterialCompositionType( xml::xistream& xis );
     void ReadRoofShapeType( xml::xistream& xis );
     void ReadInfrastructureType( xml::xistream& xis );
+    void ReadUrbanTemplateTypes( xml::xistream& xis );
+    void ReadUrbanTemplateType( xml::xistream& xis );
     //@}
 
 private:

@@ -256,7 +256,11 @@ void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, con
         if( !path.empty() )
             subWidgets_[it->second]->UpdatePath( message, path.join( "/" ), parent );
         else
+        {
+            if( it->second < subWidgets_.size() && subWidgets_[it->second] != 0 )
+                subWidgets_[ it->second ]->show();
             message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), parent );
+        }
     }
     else
     {
@@ -284,6 +288,9 @@ void PropertiesWidget::ClearPath( const QString& name )
         if( !path.empty() )
             subWidgets_[it->second]->ClearPath( path.join( "/" ) );
         else
+        {
             subWidgets_[it->second]->Clear();
+            subWidgets_[it->second]->hide();
+        }
     }
 }

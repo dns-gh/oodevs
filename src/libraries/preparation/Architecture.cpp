@@ -119,3 +119,66 @@ void Architecture::NotifyModeChanged( int newMode )
     else if( newMode == ePreparationMode_Terrain )
         CreateDictionnary( false );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetMaterial
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetMaterial( kernel::MaterialCompositionType& material )
+{
+    material_ = &material;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetRoofShape
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetRoofShape( kernel::RoofShapeType& roofShape )
+{
+    roofShape_ = &roofShape;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetFloorNumber
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetFloorNumber( unsigned int floorNumber )
+{
+    floorNumber_ = floorNumber;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetParkingFloors
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetParkingFloors( unsigned int parkingFloors )
+{
+    parkingFloors_ = parkingFloors;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetOccupation
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetOccupation( unsigned int occupation )
+{
+    occupation_.value_ = occupation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetHeight
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetHeight( unsigned int height )
+{
+    height_.value_ = height;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetTrafficability
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetTrafficability( float trafficability)
+{
+    trafficability_.value_ = trafficability;
+}

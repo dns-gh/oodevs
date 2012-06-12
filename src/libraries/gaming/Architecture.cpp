@@ -37,3 +37,66 @@ Architecture::~Architecture()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetMaterial
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetMaterial( kernel::MaterialCompositionType& material )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetRoofShape
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetRoofShape( kernel::RoofShapeType& roofShape )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetFloorNumber
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetFloorNumber( unsigned int floorNumber )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetParkingFloors
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetParkingFloors( unsigned int parkingFloors )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetOccupation
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetOccupation( unsigned int occupation )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetHeight
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetHeight( unsigned int height )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::SetTrafficability
+// Created: JSR 2012-06-12
+// -----------------------------------------------------------------------------
+void Architecture::SetTrafficability( float trafficability)
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
