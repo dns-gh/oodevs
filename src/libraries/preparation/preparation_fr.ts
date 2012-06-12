@@ -850,6 +850,10 @@ Détail: %1.</translation>
         <source>Templates</source>
         <translation>Patrons</translation>
     </message>
+    <message>
+        <source>Apply properties to children</source>
+        <translation>Appliquer les propriétés aux éléments inférieurs</translation>
+    </message>
 </context>
 <context>
     <name>UrbanModel</name>

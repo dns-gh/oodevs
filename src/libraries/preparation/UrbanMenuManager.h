@@ -19,6 +19,8 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
+    class InfrastructureType;
     class StaticModel;
     class UrbanObject_ABC;
 }
@@ -61,6 +63,7 @@ private slots:
     void OnDeleteInfrastructures();
     void OnCreateInfrastructure( const QString& name );
     void OnApplyTemplate( const QString& name );
+    void OnApplyToChildren();
     //@}
 
 private:
@@ -70,6 +73,8 @@ private:
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu );
     void CreateInfrastructuresMenu( kernel::ContextMenu& menu ) const;
     void CreateTemplatesMenu( kernel::ContextMenu& menu ) const;
+    void DoApplyInfrastructure( kernel::Entity_ABC& object, kernel::InfrastructureType* type ) const;
+    void DoApplyToChildren( kernel::Entity_ABC& object ) const;
     //@}
 
 private:

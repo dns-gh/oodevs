@@ -42,7 +42,7 @@ Architecture::~Architecture()
 // Name: Architecture::SetMaterial
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetMaterial( kernel::MaterialCompositionType& material )
+void Architecture::SetMaterial( kernel::MaterialCompositionType& /*material*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -51,7 +51,7 @@ void Architecture::SetMaterial( kernel::MaterialCompositionType& material )
 // Name: Architecture::SetRoofShape
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetRoofShape( kernel::RoofShapeType& roofShape )
+void Architecture::SetRoofShape( kernel::RoofShapeType& /*roofShape*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -60,7 +60,7 @@ void Architecture::SetRoofShape( kernel::RoofShapeType& roofShape )
 // Name: Architecture::SetFloorNumber
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetFloorNumber( unsigned int floorNumber )
+void Architecture::SetFloorNumber( unsigned int /*floorNumber*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -69,7 +69,7 @@ void Architecture::SetFloorNumber( unsigned int floorNumber )
 // Name: Architecture::SetParkingFloors
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetParkingFloors( unsigned int parkingFloors )
+void Architecture::SetParkingFloors( unsigned int /*parkingFloors*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -78,7 +78,7 @@ void Architecture::SetParkingFloors( unsigned int parkingFloors )
 // Name: Architecture::SetOccupation
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetOccupation( unsigned int occupation )
+void Architecture::SetOccupation( unsigned int /*occupation*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -87,7 +87,7 @@ void Architecture::SetOccupation( unsigned int occupation )
 // Name: Architecture::SetHeight
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetHeight( unsigned int height )
+void Architecture::SetHeight( unsigned int /*height*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -96,7 +96,7 @@ void Architecture::SetHeight( unsigned int height )
 // Name: Architecture::SetTrafficability
 // Created: JSR 2012-06-12
 // -----------------------------------------------------------------------------
-void Architecture::SetTrafficability( float trafficability)
+void Architecture::SetTrafficability( float /*trafficability*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
