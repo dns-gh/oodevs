@@ -1751,6 +1751,57 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>RemoveBlocksDialog</name>
+    <message>
+        <source>Remove urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m²</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Area (m²)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Borrar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>The following urban blocks will be removed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScoreDef</name>
     <message>
         <source>Total</source>
@@ -2411,14 +2462,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Error during automatic process creation of urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Minimum size (m²): </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

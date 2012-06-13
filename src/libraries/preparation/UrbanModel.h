@@ -76,7 +76,6 @@ public:
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     void CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
-    void DeleteBlocks( int minimumArea );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
     //@}

@@ -28,6 +28,7 @@ namespace gui
 
 class FileToolbar;
 class LocationEditorToolbar;
+class RemoveBlocksDialog;
 class StaticModel;
 class UrbanModel;
 
@@ -44,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view,
-                               gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel );
+                               gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog );
     virtual ~ToolbarContainer();
     //@}
 

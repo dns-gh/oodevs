@@ -28,6 +28,7 @@
 #include "PerformanceDialog.h"
 #include "ProfileDialog.h"
 #include "ProfileWizardDialog.h"
+#include "RemoveBlocksDialog.h"
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "SymbolEditor.h"
@@ -73,6 +74,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );
     filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
     addRasterDialog_ = new gui::AddRasterDialog( parent );
+    removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, model.urban_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,4 +193,13 @@ FilterDialogs& DialogContainer::GetFiltersDialog() const
 gui::AddRasterDialog& DialogContainer::GetAddRasterDialog() const
 {
     return *addRasterDialog_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DialogContainer::GetRemoveBlocksDialog
+// Created: ABR 2012-06-13
+// -----------------------------------------------------------------------------
+RemoveBlocksDialog& DialogContainer::GetRemoveBlocksDialog() const
+{
+    return *removeBlocksDialog_;
 }

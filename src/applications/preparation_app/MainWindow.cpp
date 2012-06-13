@@ -191,7 +191,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_, *selector_ ) );
 
     // ToolBars
-    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_ ) );
+    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog() ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );

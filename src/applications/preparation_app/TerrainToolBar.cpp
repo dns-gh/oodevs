@@ -10,6 +10,8 @@
 #include "preparation_app_pch.h"
 #include "TerrainToolBar.h"
 #include "moc_TerrainToolBar.cpp"
+#include "MainWindow.h"
+#include "RemoveBlocksDialog.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/Controllers.h"
@@ -18,7 +20,6 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
-#include "MainWindow.h"
 
 namespace
 {
@@ -39,7 +40,7 @@ namespace
 // Name: TerrainToolBar constructor
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel )
+TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog )
     : gui::RichToolBar( controllers, parent, "terrainToolBar", tr( "Terrain" ) )
     , eventStrategy_( eventStrategy )
     , paramLayer_   ( paramLayer )
@@ -54,7 +55,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     // Multi blocks creation button
     blockCreationAutoButton_ = AddButton( this, this, SLOT( OnBlockCreationAuto() ), tr( "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
     // Remove blocks button
-    blockRemoveButton_ = AddButton( this, this, SLOT( OnRemoveBlocks() ), tr( "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
+    blockRemoveButton_ = AddButton( this, &removeBlocksDialog, SLOT( show() ), tr( "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
     // Layout
     addWidget( switchModeButton_ );
     addSeparator();
@@ -185,18 +186,6 @@ void TerrainToolBar::OnBlockCreationAuto()
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainToolBar::OnRemoveBlocks
-// Created: ABR 2012-05-15
-// -----------------------------------------------------------------------------
-void TerrainToolBar::OnRemoveBlocks()
-{
-    bool ok;
-    int area = QInputDialog::getInt( this, tr( "Delete blocks" ), tr("Minimum size (m²): "), 100, 0, std::numeric_limits< int >::max(), 1, &ok );
-    if( ok )
-        urbanModel_.DeleteBlocks( area );
 }
 
 // -----------------------------------------------------------------------------
