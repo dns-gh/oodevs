@@ -44,7 +44,7 @@ namespace
 typedef boost::filesystem::path Path;
 typedef boost::property_tree::ptree Tree;
 
-const std::string serviceName = "Sword Cloud Server";
+const std::string serviceName = "Sword Cloud";
 
 template< typename T >
 bool ReadSingle( T& cmd, const std::string& name, const char* argv, const T& value )

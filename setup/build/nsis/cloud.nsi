@@ -81,7 +81,6 @@ Section $(^Name)
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
-    CreateShortcut "$SMPROGRAMS\$(^Name)\Cloud Server.lnk" "$INSTDIR\bin\cloud_server.exe" ""
 
     ; registry
     WriteRegStr HKLM "Software\MASA Group\$(^Name)" "Install_Dir" "$INSTDIR"
@@ -91,6 +90,8 @@ Section $(^Name)
     File "${SWORD}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
+    nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --register'
+    nsExec::Exec 'net start "Sword Cloud"'
 SectionEnd
 
 ;--------------------------------
@@ -106,6 +107,8 @@ SectionEnd
 ;--------------------------------
 Section "Uninstall"
     SetShellVarContext all
+    nsExec::Exec 'net stop "Sword Cloud"'
+    nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --unregister'
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
     DeleteRegKey HKLM "Software\MASA Group\$(^Name)"
     RmDir /r "$INSTDIR"
