@@ -43,7 +43,7 @@ NBCPrototype::~NBCPrototype()
 // Name: NBCPrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void NBCPrototype::Commit()
+void NBCPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "NBC" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_nbc );

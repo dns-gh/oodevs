@@ -42,7 +42,7 @@ FirePrototype::~FirePrototype()
 // Name: FirePrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void FirePrototype::Commit()
+void FirePrototype::Commit( const kernel::Team_ABC& )
 {
     if( const kernel::FireClass* fireClass = fireClass_->GetValue() )
     {

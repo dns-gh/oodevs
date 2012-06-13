@@ -216,7 +216,7 @@ void ObjectPrototype_ABC::Commit()
         loader_->StartLoad();
         while( loader_->LoadNext() )
             if( CheckValidity() )
-                DoCommit();
+                DoCommit( *( teams_->GetValue() ) );
         name_->clear();
         ResetLocation();
     }
@@ -224,7 +224,7 @@ void ObjectPrototype_ABC::Commit()
     {
         if( CheckValidity() )
         {
-            DoCommit();
+            DoCommit( *( teams_->GetValue() ) );
             name_->clear();
             ResetLocation();
         }
@@ -235,9 +235,9 @@ void ObjectPrototype_ABC::Commit()
 // Name: ObjectPrototype_ABC::DoCommit
 // Created: BCI 2011-05-10
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::DoCommit()
+void ObjectPrototype_ABC::DoCommit( const kernel::Team_ABC& team )
 {
-    attributes_->Commit();
+    attributes_->Commit( team );
 }
 
 // -----------------------------------------------------------------------------

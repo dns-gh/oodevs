@@ -42,7 +42,7 @@ SupplyRoutePrototype::~SupplyRoutePrototype()
 // Name: SupplyRoutePrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void SupplyRoutePrototype::Commit()
+void SupplyRoutePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

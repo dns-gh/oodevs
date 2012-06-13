@@ -37,7 +37,7 @@ TrafficabilityPrototype::~TrafficabilityPrototype()
 // Name: TrafficabilityPrototype::Commit
 // Created: CMA 2011-09-05
 // -----------------------------------------------------------------------------
-void TrafficabilityPrototype::Commit()
+void TrafficabilityPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Trafficability" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_trafficability );

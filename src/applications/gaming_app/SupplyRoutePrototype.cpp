@@ -43,7 +43,7 @@ SupplyRoutePrototype::~SupplyRoutePrototype()
 // Name: SupplyRoutePrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void SupplyRoutePrototype::Commit()
+void SupplyRoutePrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "SupplyRoute" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_supply_route );

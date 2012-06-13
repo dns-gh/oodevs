@@ -23,8 +23,10 @@ using namespace gui;
 ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time" ) )
 {
-    new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time:" ), this );
-    activityTime_ = new LoadableTimeEdit( this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time:" ) ) );
+    activityTime_ = new LoadableTimeEdit( 0 );
+    layout->addWidget( activityTime_ );
 }
 
 // -----------------------------------------------------------------------------

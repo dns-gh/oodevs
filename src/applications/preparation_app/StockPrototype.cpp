@@ -41,7 +41,7 @@ StockPrototype::~StockPrototype()
 // Name: StockPrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void StockPrototype::Commit()
+void StockPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

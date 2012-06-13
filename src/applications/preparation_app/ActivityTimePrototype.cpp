@@ -40,7 +40,7 @@ ActivityTimePrototype::~ActivityTimePrototype()
 // Name: ActivityTimePrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void ActivityTimePrototype::Commit()
+void ActivityTimePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

@@ -43,7 +43,7 @@ AltitudeModifierPrototype::~AltitudeModifierPrototype()
 // Name: AltitudeModifierPrototype::Commit
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void AltitudeModifierPrototype::Commit()
+void AltitudeModifierPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

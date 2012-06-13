@@ -37,7 +37,9 @@ namespace
 ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle" ) )
 {
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
     Q3VBox* vbox = new Q3VBox( this );
+    layout->addWidget( vbox );
     {
         Q3HBox* hBox = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle type:" ), hBox );
@@ -90,7 +92,7 @@ void ObstaclePrototype_ABC::showEvent( QShowEvent* e )
 {
     Populate( eNbrDemolitionTargetType, *types_ );
     OnObstacleTypeChanged();
-    Q3GroupBox::showEvent( e );
+    RichGroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

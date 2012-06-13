@@ -41,7 +41,7 @@ TrafficabilityPrototype::~TrafficabilityPrototype()
 // Name: TrafficabilityPrototype::Commit
 // Created: LGY 2011-08-22
 // -----------------------------------------------------------------------------
-void TrafficabilityPrototype::Commit()
+void TrafficabilityPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

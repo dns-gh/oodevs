@@ -30,9 +30,11 @@ StockPrototype_ABC::StockPrototype_ABC( QWidget* parent, const tools::Resolver_A
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::StockPrototype_ABC", "Stock parameters" ) )
     , resolver_( resolver )
 {
-    QSpinBox* dotationCount = new RichSpinBox( this, 0, 100, 1 );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    QSpinBox* dotationCount = new RichSpinBox( 0, 0, 100, 1 );
     dotationCount->setValue( 0 );
     dotationCount->connect( dotationCount, SIGNAL( valueChanged(int) ), this, SLOT( dotationCountChanged(int) ) );
+    layout->addWidget( dotationCount );
 }
 
 // -----------------------------------------------------------------------------

@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Commit();
+    virtual void Commit( const kernel::Team_ABC& );
     //@}
 
 private:

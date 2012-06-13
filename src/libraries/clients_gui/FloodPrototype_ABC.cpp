@@ -24,13 +24,16 @@ using namespace gui;
 FloodPrototype_ABC::FloodPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FloodPrototype_ABC", "Flood" ) )
 {
-    new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Depth:" ), this );
-    depth_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Depth:" ) ) );
+    depth_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
     depth_->setSuffix( kernel::Units::meters.AsString() );
+    layout->addWidget( depth_ );
 
-    new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Reference distance:" ), this );
-    refDist_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    layout->addWidget( new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Reference distance:" ) ) );
+    refDist_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
     refDist_->setSuffix( kernel::Units::meters.AsString() );
+    layout->addWidget( refDist_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -100,11 +100,11 @@ bool ObjectAttributePrototypeContainer::CheckValidity( const kernel::Team_ABC& t
 // Name: ObjectAttributePrototypeContainer::Commit
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-void ObjectAttributePrototypeContainer::Commit()
+void ObjectAttributePrototypeContainer::Commit( const kernel::Team_ABC& team )
 {
     if( current_.get() )
         for( T_AttributeContainer::iterator it = current_->begin(); it != current_->end(); ++it )
-            (*it)->Commit();
+            (*it)->Commit( team );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,8 @@ void ObjectAttributePrototypeContainer::Commit()
 void ObjectAttributePrototypeContainer::Hide()
 {
     if( current_.get() )
-        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::hide, _1 ) );
+        for( T_AttributeContainer::const_iterator it = current_->begin(); it != current_->end(); ++it )
+            (*it)->hide();
     current_.reset();
 }
 
@@ -125,7 +126,8 @@ void ObjectAttributePrototypeContainer::Hide()
 void ObjectAttributePrototypeContainer::Show()
 {
     if( current_.get() )
-        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::show, _1 ) );
+        for( T_AttributeContainer::const_iterator it = current_->begin(); it != current_->end(); ++it )
+            (*it)->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,5 +137,6 @@ void ObjectAttributePrototypeContainer::Show()
 void ObjectAttributePrototypeContainer::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
     if( current_.get() )
-        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::SetLoader, _1, loader ) );
+        for( T_AttributeContainer::const_iterator it = current_->begin(); it != current_->end(); ++it )
+            (*it)->SetLoader( loader );
 }

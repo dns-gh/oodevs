@@ -49,7 +49,7 @@ public:
     //@{
     virtual bool CheckValidity( const kernel::Team_ABC& ) const;
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
-    virtual void Commit() = 0;
+    virtual void Commit( const kernel::Team_ABC& ) = 0;
     //@}
 
 private:

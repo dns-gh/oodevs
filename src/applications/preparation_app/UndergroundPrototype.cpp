@@ -41,7 +41,7 @@ UndergroundPrototype::~UndergroundPrototype()
 // Name: UndergroundPrototype::Commit
 // Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-void UndergroundPrototype::Commit()
+void UndergroundPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

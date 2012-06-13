@@ -38,7 +38,7 @@ MinePrototype::~MinePrototype()
 // Name: MinePrototype::Commit
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MinePrototype::Commit()
+void MinePrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "mine" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_mine );

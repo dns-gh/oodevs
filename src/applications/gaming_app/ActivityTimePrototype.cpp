@@ -42,7 +42,7 @@ ActivityTimePrototype::~ActivityTimePrototype()
 // Name: ActivityTimePrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ActivityTimePrototype::Commit()
+void ActivityTimePrototype::Commit( const kernel::Team_ABC& )
 {
     int time = 3600 * activityTime_->time().hour() +
                60 * activityTime_->time().minute() +

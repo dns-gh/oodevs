@@ -46,7 +46,7 @@ MedicalTreatmentPrototype::~MedicalTreatmentPrototype()
 // Name: MedicalTreatmentPrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void MedicalTreatmentPrototype::Commit()
+void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

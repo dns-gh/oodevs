@@ -47,7 +47,7 @@ ResourceNetworkPrototype::~ResourceNetworkPrototype()
 // Name: ResourceNetworkPrototype::Commit
 // Created: JSR 2010-02-23
 // -----------------------------------------------------------------------------
-void ResourceNetworkPrototype::Commit()
+void ResourceNetworkPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
         creation_->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, creation_->Get< Positions >().GetPosition(), urbans_, objects_, resources_, true ) );

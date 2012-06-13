@@ -43,7 +43,7 @@ FloodPrototype::~FloodPrototype()
 // Name: FloodPrototype::Commit
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
-void FloodPrototype::Commit()
+void FloodPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

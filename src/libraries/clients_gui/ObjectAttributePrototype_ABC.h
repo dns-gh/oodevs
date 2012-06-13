@@ -10,6 +10,7 @@
 #ifndef __ObjectAttributePrototype_ABC_h_
 #define __ObjectAttributePrototype_ABC_h_
 
+#include "clients_gui/RichGroupBox.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -27,8 +28,7 @@ namespace gui
 */
 // Created: JCR 2008-06-11
 // =============================================================================
-class ObjectAttributePrototype_ABC : public Q3GroupBox
-                                   , private boost::noncopyable
+class ObjectAttributePrototype_ABC : public RichGroupBox
 {
 public:
     //! @name Constructor/Destructor
@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity( const kernel::Team_ABC& team ) const = 0;
-    virtual void Commit() = 0;
+    virtual void Commit( const kernel::Team_ABC& team ) = 0;
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 };

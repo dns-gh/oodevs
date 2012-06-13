@@ -33,8 +33,10 @@ LogisticPrototype_ABC::LogisticPrototype_ABC( QWidget* parent, Controllers& cont
     , controllers_( controllers )
     , selected_   ( controllers )
 {
-    new QLabel( tr( "Logistic unit:" ), this );
-    logSuperiors_ = new ValuedComboBox< const Entity_ABC* >( this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tr( "Logistic unit:" ) ) );
+    logSuperiors_ = new ValuedComboBox< const Entity_ABC* >( 0 );
+    layout->addWidget( logSuperiors_ );
     connect( logSuperiors_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
     controllers_.Register( *this );
 }

@@ -23,8 +23,10 @@ using namespace gui;
 DelayPrototype_ABC::DelayPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
 {
-    new QLabel( tools::translate( "gui::DelayPrototype_ABC", "Delay time:" ), this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::DelayPrototype_ABC", "Delay time:" ) ) );
     delayTime_ = new LoadableTimeEdit( this );
+    layout->addWidget( delayTime_ );
 }
 
 // -----------------------------------------------------------------------------

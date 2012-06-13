@@ -39,7 +39,7 @@ StockPrototype::~StockPrototype()
 // Name: StockPrototype::Commit
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
-void StockPrototype::Commit()
+void StockPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Stock" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_stock );

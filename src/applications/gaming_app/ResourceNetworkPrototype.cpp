@@ -36,7 +36,7 @@ ResourceNetworkPrototype::~ResourceNetworkPrototype()
 // Name: ResourceNetworkPrototype::Commit
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
-void ResourceNetworkPrototype::Commit()
+void ResourceNetworkPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Resource" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::resource_network );
