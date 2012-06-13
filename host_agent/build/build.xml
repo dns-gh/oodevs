@@ -5,7 +5,7 @@
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="samples.dir" value="../src/samples"/>
+    <property name="applications.dir" value="../src/applications"/>
 
     <condition property="os.platform" value="windows" else="linux">
         <os family="windows"/>
@@ -34,11 +34,11 @@
         </build-lib>
     </target>
 
-    <!-- Samples -->
-    <target name="samples" depends="sample_agent" description="build all samples"/>
+    <!-- Applications -->
+    <target name="applications" depends="cloud_server" description="build all applications"/>
 
-    <target name="sample_agent" depends="runtime,host,web" description="build sample host agent">
-        <build-app name="sample_agent" subsystem="console" depends="boost,cpp-netlib,libarchive" root="${samples.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix},zlib">
+    <target name="cloud_server" depends="runtime,host,web" description="build cloud server">
+        <build-app name="cloud_server" subsystem="console" depends="boost,cpp-netlib,libarchive" root="${applications.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix},zlib">
             <syslibset libs="advapi32,ws2_32"/>
             <defineset define="_CRT_SECURE_NO_WARNINGS"/>
         </build-app>
@@ -93,5 +93,5 @@
     </target>
 
     <!-- All -->
-    <target name="all" depends="configure,libraries,samples,tests,reports"/>
+    <target name="all" depends="configure,libraries,applications,tests,reports"/>
 </project>

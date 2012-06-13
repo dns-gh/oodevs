@@ -35,7 +35,7 @@ Section $(^Name)
     SetOutPath "$INSTDIR\bin"
 
     ; cloud applications
-    File "${HOST_AGENT}\out\${PLATFORM}\release\samples\sample_agent\sample_agent.exe"
+    File "${HOST_AGENT}\out\${PLATFORM}\release\applications\cloud_server\cloud_server.exe"
     File "${NODE}\out\jar\node.jar"
     File "${PROXY}\out\jar\log4j.properties"
     File "${PROXY}\out\jar\proxy.jar"
@@ -81,7 +81,7 @@ Section $(^Name)
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
-    CreateShortcut "$SMPROGRAMS\$(^Name)\Cloud Server.lnk" "$INSTDIR\bin\sample_agent.exe" ""
+    CreateShortcut "$SMPROGRAMS\$(^Name)\Cloud Server.lnk" "$INSTDIR\bin\cloud_server.exe" ""
 
     ; registry
     WriteRegStr HKLM "Software\MASA Group\$(^Name)" "Install_Dir" "$INSTDIR"

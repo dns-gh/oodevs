@@ -57,19 +57,19 @@ target_link_libraries( host runtime )
 set_target_folder( host libraries )
 
 ################################################################################
-# sample_agent
+# cloud_server
 ################################################################################
 file( GLOB files
-    "${root_dir}/src/samples/sample_agent/*.cpp"
+    "${root_dir}/src/applications/cloud_server/*.cpp"
 )
-add_executable_target( sample_agent ${files} )
-set_target_folder( sample_agent samples )
-add_target_external_library( sample_agent cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
-add_target_external_library( sample_agent cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
-add_target_external_library( sample_agent cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
-add_target_external_library( sample_agent archive_static_d archive_static )
-add_target_external_library( sample_agent zlibd zlib )
-target_link_libraries( sample_agent
+add_executable_target( cloud_server ${files} )
+set_target_folder( cloud_server applications )
+add_target_external_library( cloud_server cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+add_target_external_library( cloud_server cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
+add_target_external_library( cloud_server cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+add_target_external_library( cloud_server archive_static_d archive_static )
+add_target_external_library( cloud_server zlibd zlib )
+target_link_libraries( cloud_server
     runtime
     host
     web
