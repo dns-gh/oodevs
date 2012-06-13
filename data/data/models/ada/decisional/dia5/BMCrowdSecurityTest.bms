@@ -4,35 +4,17 @@ LoadResourcesFile( "Integration.lua" )
 
 local libPath = select(1,...)
 local role    = select(2,...)
+masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", libPath .. "/models/common/src", libPath .. "/models/security/src", libPath .. "/models/security_test/src" } )
 
-masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", libPath .. "/models/common/src", libPath .. "/models/crowd/src" } )
-
-integration.ontology = 
-{
-    types = 
-    {
-        body       = world.classes.CrowdBody,
-        object     = world.classes.Object,
-        urbanBlock = world.classes.UrbanBlock,
-        point      = world.classes.Position,
-        area       = world.classes.Area,
-        population = world.classes.Crowd,
-        agent      = world.classes.Unit,
-
-        --[[
-        direction = sword.military.world.Direction,
-        automat = sword.military.world.Company,
-        agentKnowledge = world.classes.Unit,
-        genObject = sword.military.world.EngineerObject,
-        limaStatique = sword.military.world.LimaStatique,
-        ]]
-        
-    }
+integration.ontology = {
+    types = {
+        --- Type exists only the test library, to test task taking a crowd in parameter
+        body = knowledge.CrowdBody,
+        }
 }
 
 local swordErrorHandler = function( err )
     DEC_Trace( tostring( err )..debug.traceback() )
-    return err
 end
 
 errorhandlermanager.installErrorHandler( swordErrorHandler )
