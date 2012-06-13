@@ -28,6 +28,12 @@ FunctionEnd
 
 ;--------------------------------
 
+!macro CreateInternetShortcut FILENAME URL
+WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
+!macroend
+
+;--------------------------------
+
 Section $(^Name)
     SectionIn RO
     SetShellVarContext all
@@ -81,6 +87,7 @@ Section $(^Name)
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
+    !insertmacro CreateInternetShortcut "$SMPROGRAMS\$(^Name)\Cluster" "http://localhost:8080/cluster/"    
 
     ; registry
     WriteRegStr HKLM "Software\MASA Group\$(^Name)" "Install_Dir" "$INSTDIR"
@@ -90,6 +97,8 @@ Section $(^Name)
     File "${SWORD}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
+
+    ; service    
     nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --register'
     nsExec::Exec 'net start "Sword Cloud"'
 SectionEnd
