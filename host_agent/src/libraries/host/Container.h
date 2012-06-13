@@ -13,6 +13,7 @@
 #include <string>
 
 #include <boost/foreach.hpp>
+#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <vector>
