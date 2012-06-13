@@ -65,7 +65,7 @@ void GlProxy::Register( TooltipsLayer_ABC& layer )
 // -----------------------------------------------------------------------------
 void GlProxy::Unregister( Layer_ABC& layer )
 {
-    CIT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
+    IT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
         layers_.erase( it );
 }

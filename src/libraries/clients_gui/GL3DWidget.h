@@ -117,6 +117,7 @@ protected:
     //! @name Types
     //@{
     typedef std::vector< Layer_ABC* >  T_Layers;
+    typedef T_Layers::iterator        IT_Layers;
     typedef T_Layers::const_iterator CIT_Layers;
     //@}
 
