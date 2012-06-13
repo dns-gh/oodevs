@@ -549,6 +549,34 @@ integration.stopActivateRadar = function ( area, eTypeRadar )
     end
 end
 -- -------------------------------------------------------------------------------- 
+-- Activate radar for indirect fire on area
+-- @param area
+-- @author LMT
+-- @release 2012-06-13
+-- -------------------------------------------------------------------------------- 
+integration.startActivateRadarTirIndirect = function ( area )
+    area[myself] = area[myself] or {}
+    area[myself].actionRadar = DEC_Perception_ActiverPerceptionTirsIndirect( area.source )
+    actionCallbacks[ area[myself].actionRadar ] = function( arg ) area[myself].actionRadar = arg end
+
+    meKnowledge:RC( eRC_DebutSurveillance )
+end
+-- -------------------------------------------------------------------------------- 
+-- Desactivate radar for indirect fire on area
+-- @param area
+-- @author LMT
+-- @release 2012-06-13
+-- -------------------------------------------------------------------------------- 
+integration.stopActivateRadarTirIndirect = function ( area )
+    area[myself] = area[myself] or {} 
+    if area[myself].actionRadar == eActionObjetTerminee then
+        meKnowledge:RC( eRC_FinSurveillance )
+    end  
+    if area[myself].actionRadar then
+        area[myself].actionRadar = DEC_Perception_DesactiverPerceptionTirsIndirect( area[myself].actionRadar )
+    end
+end
+-- -------------------------------------------------------------------------------- 
 -- Return true if agent has tapping radar
 -- @author DDA
 -- @release 2011-12-10
