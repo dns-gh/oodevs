@@ -59,7 +59,10 @@ bool LogisticPrototype_ABC::CheckValidity( const kernel::Team_ABC& team ) const
     if( !logSuperiors_->count() )
         return false;
     const kernel::Entity_ABC* superior = logSuperiors_->GetValue();
-    return superior && ( superior->Get< kernel::TacticalHierarchies >().GetTop().GetId() == team.GetId() );
+    bool result = superior && ( superior->Get< kernel::TacticalHierarchies >().GetTop().GetId() == team.GetId() );
+    if( !result )
+        const_cast< LogisticPrototype_ABC* >( this )->Warn();
+    return result;
 }
 
 namespace
