@@ -84,10 +84,10 @@ public:
 
     //! @name Operations
     //@{
-    void GenerateFlood( bool force = false );
-    const TER_Localisation& GetLocalisation() const;
-    const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
-    const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
+    virtual void GenerateFlood( bool force = false );
+    virtual const TER_Localisation& GetLocalisation() const;
+    virtual const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
+    virtual const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
     //@}
 
 private:
