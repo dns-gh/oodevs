@@ -42,7 +42,7 @@ AltitudeModifierPrototype_ABC::~AltitudeModifierPrototype_ABC()
 // Name: AltitudeModifierPrototype_ABC::CheckValidity
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-bool AltitudeModifierPrototype_ABC::CheckValidity() const
+bool AltitudeModifierPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

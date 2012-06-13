@@ -44,7 +44,7 @@ MinePrototype_ABC::~MinePrototype_ABC()
 // Name: MinePrototype_ABC::CheckValidity
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-bool MinePrototype_ABC::CheckValidity() const
+bool MinePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

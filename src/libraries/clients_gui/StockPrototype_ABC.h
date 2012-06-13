@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity() const;
+    virtual bool CheckValidity( const kernel::Team_ABC& ) const;
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 

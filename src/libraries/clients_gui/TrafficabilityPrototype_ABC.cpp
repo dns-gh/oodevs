@@ -45,7 +45,7 @@ TrafficabilityPrototype_ABC::~TrafficabilityPrototype_ABC()
 // Name: TrafficabilityPrototype_ABC::CheckValidity
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-bool TrafficabilityPrototype_ABC::CheckValidity() const
+bool TrafficabilityPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

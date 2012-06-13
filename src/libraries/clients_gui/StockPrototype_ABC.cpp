@@ -76,7 +76,7 @@ void StockPrototype_ABC::showEvent( QShowEvent* e )
 // Name: StockPrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-bool StockPrototype_ABC::CheckValidity() const
+bool StockPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     bool bValid = true;
     BOOST_FOREACH( DotationWidget* dotationWidget, dotationWidgets_ )

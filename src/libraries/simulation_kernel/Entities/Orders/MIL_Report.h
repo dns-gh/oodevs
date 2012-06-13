@@ -148,6 +148,7 @@ public:
         eReport_SetUponByPopulation,
         eReport_Questionning,
         eReport_UnderIEDFire,
+        eReport_FragOrderReceived,
         eNbrReport
     };
 
@@ -620,6 +621,7 @@ public:
         eRC_Questionning,
         eRC_criticalIntelligenceImpossible,
         eRC_InvalidTarget,
+        eRC_FragOrderReceived,
         eLast
     };
     //@}

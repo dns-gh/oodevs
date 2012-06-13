@@ -53,7 +53,7 @@ CrossingSitePrototype_ABC::~CrossingSitePrototype_ABC()
 // Name: CrossingSitePrototype_ABC::CheckValidity
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-bool CrossingSitePrototype_ABC::CheckValidity() const
+bool CrossingSitePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

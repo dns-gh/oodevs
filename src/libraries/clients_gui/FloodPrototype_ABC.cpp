@@ -46,7 +46,7 @@ FloodPrototype_ABC::~FloodPrototype_ABC()
 // Name: FloodPrototype_ABC::CheckValidity
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
-bool FloodPrototype_ABC::CheckValidity() const
+bool FloodPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

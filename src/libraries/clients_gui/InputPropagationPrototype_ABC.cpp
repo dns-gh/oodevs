@@ -116,7 +116,7 @@ void InputPropagationPrototype_ABC::FillInPaths()
 // Name: InputPropagationPrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-bool InputPropagationPrototype_ABC::CheckValidity() const
+bool InputPropagationPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return ! propagationFiles_->GetValue().empty() && ! dataField_->GetValue().empty();
 }

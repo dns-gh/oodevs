@@ -40,7 +40,7 @@ DelayPrototype_ABC::~DelayPrototype_ABC()
 // Name: DelayPrototype_ABC::CheckValidity
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-bool DelayPrototype_ABC::CheckValidity() const
+bool DelayPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

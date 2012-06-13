@@ -38,7 +38,7 @@ BypassPrototype_ABC::~BypassPrototype_ABC()
 // Name: BypassPrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-bool BypassPrototype_ABC::CheckValidity() const
+bool BypassPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }
