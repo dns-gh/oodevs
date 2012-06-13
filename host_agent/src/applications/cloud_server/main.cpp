@@ -297,6 +297,21 @@ Path GetRootDir( int argc, const char* argv[] )
     return runtime::Factory( nil ).GetRuntime().GetModuleFilename().remove_filename().remove_filename();
 }
 
+void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
+{
+    LOG_INFO( log ) << "[cfg] root "            << cfg.root;
+    LOG_INFO( log ) << "[cfg] ports.period "    << cfg.ports.period;
+    LOG_INFO( log ) << "[cfg] ports.min "       << cfg.ports.min;
+    LOG_INFO( log ) << "[cfg] ports.max "       << cfg.ports.max;
+    LOG_INFO( log ) << "[cfg] ports.proxy "     << cfg.ports.proxy;
+    LOG_INFO( log ) << "[cfg] cluster.enabled " << ( cfg.cluster.enabled ? "true" : "false" );
+    LOG_INFO( log ) << "[cfg] java "            << cfg.java;
+    LOG_INFO( log ) << "[cfg] proxy.jar "       << cfg.proxy.jar;
+    LOG_INFO( log ) << "[cfg] node.jar "        << cfg.node.jar;
+    LOG_INFO( log ) << "[cfg] node.root "       << cfg.node.root;
+    LOG_INFO( log ) << "[cfg] session.apps "    << cfg.session.apps;
+}
+
 Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
                                   const Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
 {
@@ -361,6 +376,7 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
         const runtime::Runtime_ABC& runtime = factory.GetRuntime();
         FileSystem system( log );
         Configuration cfg = ParseConfiguration( runtime, system, root, log, argc-1, argv+1 );
+        PrintConfiguration( log, cfg );
         runtime::Daemon daemon( log, runtime );
         runtime::Daemon::T_Args args;
         switch( cfg.command )
