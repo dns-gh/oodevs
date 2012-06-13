@@ -47,7 +47,8 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
-    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, bool fromArchive = false );
+             PHY_RolePion_Dotations();
+    explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Dotations();
 
     //! @name CheckPoints
@@ -138,7 +139,7 @@ private:
     bool HasChanged() const;
     //@}
 
-    MIL_AgentPion& pion_;
+    MIL_AgentPion*              pion_;
     PHY_DotationGroupContainer* pDotations_;
 
     const PHY_ConsumptionType* pCurrentConsumptionMode_;
@@ -146,8 +147,6 @@ private:
     T_DotationReservedMap reservedConsumptions_;
 
     std::vector< const PHY_DotationCategory* > forbiddenDotations_;
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 };
 
 } // namespace dotation
