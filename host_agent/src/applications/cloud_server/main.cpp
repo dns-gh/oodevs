@@ -20,6 +20,7 @@
 #include <host/Session.h>
 #include <host/SessionController.h>
 #include <host/UuidFactory.h>
+#include <runtime/Daemon.h>
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Utf8.h>
 #include <web/Client.h>
@@ -36,11 +37,23 @@
 
 using namespace host;
 using runtime::Utf8Convert;
+typedef runtime::Daemon::T_Waiter Waiter;
 
 namespace
 {
 typedef boost::filesystem::path Path;
 typedef boost::property_tree::ptree Tree;
+
+const std::string serviceName = "Sword Cloud Server";
+
+template< typename T >
+bool ReadSingle( T& cmd, const std::string& name, const char* argv, const T& value )
+{
+    if( name != argv )
+        return false;
+    cmd = value;
+    return true;
+}
 
 template< typename T >
 bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const char* argv[] )
@@ -64,8 +77,17 @@ bool ReadParameter( Path& dst, const std::string& name, int& idx, int argc, cons
     return true;
 }
 
+enum Command
+{
+    CMD_REGISTER,
+    CMD_UNREGISTER,
+    CMD_DAEMON,
+    CMD_EXECUTE,
+};
+
 struct Configuration
 {
+    Command command;
     Path root;
     Path java;
     struct
@@ -95,9 +117,13 @@ struct Configuration
 
     bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
     {
+        command = CMD_EXECUTE;
         for( int i = 0; i < argc; ++i )
         {
             bool found = false;
+            found |= ReadSingle( command, "--register", argv[i], CMD_REGISTER );
+            found |= ReadSingle( command, "--unregister", argv[i], CMD_UNREGISTER );
+            found |= ReadSingle( command, "--daemon", argv[i], CMD_DAEMON );
             found |= ReadParameter( root, "--root", i, argc, argv );
             found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
             found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
@@ -212,7 +238,7 @@ struct SessionFactory : public SessionFactory_ABC
     PortFactory_ABC& ports;
 };
 
-void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, Configuration& cfg )
+int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )
 {
     Pool pool( 8 );
     UuidFactory uuids;
@@ -231,7 +257,8 @@ void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const 
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
     proxy.Register( "api", "localhost", host->Get() );
-    getc( stdin );
+    waiter();
+    return 0;
 }
 
 template< typename T >
@@ -252,17 +279,74 @@ struct NullLogger : public cpplog::BaseLogger
     }
 };
 
-Path GetRootDir( int argc, const char* argv[] )
+Path GetSinglePath( int argc, const char** argv, const std::string& name )
 {
     Path reply;
     for( int i = 0; i < argc; ++i )
-        if( ReadParameter( reply, "--root", i, argc, argv ) )
+        if( ReadParameter( reply, name, i, argc, argv ) )
             return reply;
+    return reply;
+}
+
+Path GetRootDir( int argc, const char* argv[] )
+{
+    Path reply = GetSinglePath( argc, argv, "--root" );
+    if( !reply.empty() )
+        return reply;
     NullLogger nil;
     return runtime::Factory( nil ).GetRuntime().GetModuleFilename().remove_filename().remove_filename();
 }
 
-int StartServer( int argc, const char* argv[] )
+Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+                                  const Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
+{
+    const Path module = runtime.GetModuleFilename();
+    const Path config = Path( module ).replace_extension( ".config" );
+
+    Tree tree;
+    if( system.IsFile( config ) )
+        tree = FromJson( system.ReadFile( config ) );
+
+    const char* jhome = getenv( "JAVA_HOME" );
+    const Path bin = Path( module ).remove_filename();
+    Configuration cfg;
+    cfg.root            = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
+    cfg.ports.period    = GetTree( tree, "ports.period", 40 );
+    cfg.ports.min       = GetTree( tree, "ports.min", 50000 );
+    cfg.ports.max       = GetTree( tree, "ports.max", 60000 );
+    cfg.ports.proxy     = GetTree( tree, "ports.proxy", 8080 );
+    cfg.cluster.enabled = GetTree( tree, "cluster.enabled", true );
+    cfg.java            = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
+    cfg.proxy.jar       = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
+    cfg.node.jar        = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
+    cfg.node.root       = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / ".." / "www" ) ) );
+    cfg.session.apps    = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
+    system.WriteFile( config, ToJson( tree, true ) );
+
+    bool valid = cfg.Parse( log, argc, argv );
+    if( !valid )
+        throw std::runtime_error( "Invalid configuration" );
+
+    return cfg;
+}
+
+bool IsCommand( const char* arg )
+{
+    if( !strcmp( arg, "--register" ) )
+        return true;
+    if( !strcmp( arg, "--unregister" ) )
+        return true;
+    if( !strcmp( arg, "--daemon" ) )
+        return true;
+    return false;
+}
+
+void ConsoleWaiter()
+{
+    getc( stdin );
+}
+
+int StartServer( int argc, const char* argv[], const Waiter& waiter )
 {
     const Path root = GetRootDir( argc-1, argv+1 );
     cpplog::TeeLogger tee(
@@ -276,37 +360,32 @@ int StartServer( int argc, const char* argv[] )
         runtime::Factory factory( log );
         const runtime::Runtime_ABC& runtime = factory.GetRuntime();
         FileSystem system( log );
+        Configuration cfg = ParseConfiguration( runtime, system, root, log, argc-1, argv+1 );
+        runtime::Daemon daemon( log, runtime );
+        runtime::Daemon::T_Args args;
+        switch( cfg.command )
+        {
+        case CMD_REGISTER:
+            args.push_back( "--daemon" );
+            for( int i = 1; i < argc; ++i )
+                if( !IsCommand( argv[i] ) )
+                    args.push_back( argv[i] );
+            daemon.Register( serviceName, args, std::string(), std::string() );
+            break;
 
-        Tree tree;
-        const Path config = root / "host" / "host_agent.config";
-        if( system.IsFile( config ) )
-            tree = FromJson( system.ReadFile( config ) );
+        case CMD_UNREGISTER:
+            daemon.Unregister( serviceName );
+            break;
 
-        const char* jhome = getenv( "JAVA_HOME" );
-        const std::string java = GetTree( tree, "java", jhome ? std::string( jhome ) + "/bin/java.exe" : "" );
-        if( java.empty() )
-            throw std::runtime_error( "Missing JAVA_HOME environment variable. Please install a Java Runtime Environment" );
+        case CMD_DAEMON:
+            daemon.Run( boost::bind( &Start, boost::ref( log ), boost::cref( runtime ), boost::cref( system ), boost::cref( cfg ), _1 ) );
+            break;
 
-        const Path bin = runtime.GetModuleFilename().remove_filename();
-        Configuration cfg;
-        cfg.root            = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
-        cfg.ports.period    = GetTree( tree, "ports.period", 40 );
-        cfg.ports.min       = GetTree( tree, "ports.min", 50000 );
-        cfg.ports.max       = GetTree( tree, "ports.max", 60000 );
-        cfg.ports.proxy     = GetTree( tree, "ports.proxy", 8080 );
-        cfg.cluster.enabled = GetTree( tree, "cluster.enabled", true );
-        cfg.java            = Utf8Convert( java );
-        cfg.proxy.jar       = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
-        cfg.node.jar        = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
-        cfg.node.root       = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / "../www" ) ) );
-        cfg.session.apps    = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
-
-        system.WriteFile( root / "host" / "host_agent.config", ToJson( tree, true ) );
-
-        bool valid = cfg.Parse( log, argc-1, argv+1 );
-        if( !valid )
-            return -1;
-        Start( log, runtime, system, cfg );
+        default:
+        case CMD_EXECUTE:
+            Start( log, runtime, system, cfg, waiter );
+            break;
+        }
     }
     catch( const std::exception& err )
     {
@@ -321,5 +400,5 @@ int StartServer( int argc, const char* argv[] )
 
 int main( int argc, const char* argv[] )
 {
-    return StartServer( argc, argv );
+    return StartServer( argc, argv, &ConsoleWaiter );
 }
