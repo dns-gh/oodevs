@@ -129,7 +129,7 @@ template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( static_cast< int >( flyingShell.GetFireID() ) ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateTir( static_cast< int >( flyingShell.GetFireID() ) ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }
