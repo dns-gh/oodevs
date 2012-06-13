@@ -376,7 +376,6 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
         const runtime::Runtime_ABC& runtime = factory.GetRuntime();
         FileSystem system( log );
         Configuration cfg = ParseConfiguration( runtime, system, root, log, argc-1, argv+1 );
-        PrintConfiguration( log, cfg );
         runtime::Daemon daemon( log, runtime );
         runtime::Daemon::T_Args args;
         switch( cfg.command )
@@ -394,11 +393,13 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
             break;
 
         case CMD_DAEMON:
+            PrintConfiguration( log, cfg );
             daemon.Run( boost::bind( &Start, boost::ref( log ), boost::cref( runtime ), boost::cref( system ), boost::cref( cfg ), _1 ) );
             break;
 
         default:
         case CMD_EXECUTE:
+            PrintConfiguration( log, cfg );
             Start( log, runtime, system, cfg, waiter );
             break;
         }
