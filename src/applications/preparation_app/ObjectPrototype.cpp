@@ -269,10 +269,10 @@ ObjectPrototype::~ObjectPrototype()
 // Name: ObjectPrototype::DoCommit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::DoCommit()
+void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
 {
-    creation_ = model_.CreateObject( *teams_->GetValue(), *objectTypes_->GetValue(), GetCurrentName(), GetCurrentLocation() );
+    creation_ = model_.CreateObject( team, *objectTypes_->GetValue(), GetCurrentName(), GetCurrentLocation() );
     if( creation_ )
-        ObjectPrototype_ABC::DoCommit( *teams_->GetValue() );
+        ObjectPrototype_ABC::DoCommit( team );
     creation_ = 0;
 }
