@@ -95,7 +95,7 @@ public:
 private:
     //! @name Member data
     //@{
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     const std::auto_ptr< boost::mutex > access_;
     NodeController_ABC* cluster_;
     Uuid clusterId_;

@@ -199,7 +199,7 @@ bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
 {
     try
     {
-        boost::filesystem::ofstream( path ) << content;
+        boost::filesystem::ofstream( path ) << content.c_str();
     }
     catch( const std::exception& err )
     {
@@ -389,7 +389,7 @@ struct Unpacker : public Unpacker_ABC
 // -----------------------------------------------------------------------------
 FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, std::istream& src ) const
 {
-    return boost::make_shared< Unpacker >( log_, output, src );
+    return boost::make_shared< Unpacker >( boost::ref( log_ ), output, boost::ref( src ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -410,7 +410,7 @@ std::string FileSystem::Checksum( const Path& root, const FileSystem_ABC::T_Pred
         // msvc does not support utf-8 strings
         std::ifstream in( it->path().wstring(), std::ifstream::binary );
 #else
-        std::ifstream in( Utf8Convert( *it ), std::ifstream::binary );
+        std::ifstream in( Utf8Convert( *it ).c_str(), std::ifstream::binary );
 #endif
         if( in.bad() )
         {

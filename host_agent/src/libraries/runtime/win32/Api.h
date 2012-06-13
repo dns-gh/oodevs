@@ -50,7 +50,7 @@ public:
     //@}
 
 private:
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     void* exit_;
 };
 

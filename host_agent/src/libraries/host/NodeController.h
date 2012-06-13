@@ -105,7 +105,7 @@ private:
 private:
     //! @name Private members
     //@{
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const Proxy_ABC& proxy_;

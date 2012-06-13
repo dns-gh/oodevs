@@ -78,14 +78,14 @@ Pool::Future Pool::Post( const Task& task )
 {
     TaskHandler< void > handler( task );
     service_.post( handler );
-    return handler.package_->get_future();
+    return Future( handler.package_->get_future() );
 }
 
 Pool::Future Pool::Go( const Task& task )
 {
     TaskHandler< void > handler( task );
     service_.post( boost::bind( &DetachThread, handler ) );
-    return handler.package_->get_future();
+    return Future( handler.package_->get_future() );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,7 @@
 
 #include "Pool_ABC.h"
 
-#if defined(_MSC_VER) && !defined(_WIN32_WINNT)
+#if defined(WIN32) && !defined(_WIN32_WINNT)
 #define  _WIN32_WINNT 0x0501
 #define  UNDEF_WIN32_WINNT
 #endif

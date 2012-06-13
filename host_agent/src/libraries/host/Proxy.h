@@ -80,7 +80,7 @@ private:
 
     //! @name Member data
     //@{
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const Path logs_;

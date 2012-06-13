@@ -97,22 +97,30 @@ class HttpException : public std::exception
 {
 public:
     HttpException( HttpStatusCode code, const std::string& error )
-        : std::exception( error.c_str() )
-        , code_         ( code )
+        : error_( error )
+        , code_ ( code )
     {
         // NOTHING
     }
-    ~HttpException()
+
+    ~HttpException() throw()
     {
         // NOTHING
     }
+
+    const char* what() const throw()
+    {
+        return error_.c_str();
+    }
+
     HttpStatusCode GetCode() const
     {
         return code_;
     }
 
 private:
-    HttpStatusCode code_;
+    const std::string error_;
+    const HttpStatusCode code_;
 };
 
 // -----------------------------------------------------------------------------

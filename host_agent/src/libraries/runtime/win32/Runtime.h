@@ -46,7 +46,7 @@ public:
     //@}
 
 private:
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     const Api_ABC& api_;
 };
 

@@ -78,8 +78,8 @@ void Unquote( std::string& val )
 {
     if( val.empty() )
         return;
-    if( !( val.front() == '\'' && val.back() == '\''
-        || val.front() == '"'  && val.back() == '"' ) )
+    if( !( *val.begin() == '\'' && *val.rbegin() == '\''
+        || *val.begin() == '"'  && *val.rbegin() == '"' ) )
         return;
     val = val.substr( 1, val.size() - 2 );
 }
@@ -244,7 +244,7 @@ template< typename T >
 typename T::value_type NextPart( T& data, const std::string& name )
 {
     typedef typename T::value_type U;
-    typename T::const_iterator it = std::find_if( data.begin(), data.end(), boost::bind( &IsName< U >, name, _1 ) );
+    typename T::iterator it = std::find_if( data.begin(), data.end(), boost::bind( &IsName< U >, name, _1 ) );
     if( it == data.end() )
         return U();
     U part = *it;

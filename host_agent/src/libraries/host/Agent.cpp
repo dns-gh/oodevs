@@ -65,7 +65,7 @@ template< typename T >
 Reply List( const T& list )
 {
     std::string json;
-    BOOST_FOREACH( const T::value_type& value, list )
+    BOOST_FOREACH( const typename T::value_type& value, list )
         json += ToJson( value->GetProperties() ) + ",";
     return Reply( "[" + json.substr( 0, json.size() - 1 ) + "]" );
 }

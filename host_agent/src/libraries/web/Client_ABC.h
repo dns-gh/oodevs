@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <map>
+#include <string>
 
 namespace web
 {

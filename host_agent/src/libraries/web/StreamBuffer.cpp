@@ -7,8 +7,12 @@
 //
 // *****************************************************************************
 
+#define __STDC_LIMIT_MACROS
 #include "StreamBuffer.h"
 
+#include <cstring>
+#include <istream>
+#include <stdexcept>
 #include <stdint.h>
 
 using namespace web;

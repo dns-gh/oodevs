@@ -65,8 +65,8 @@ public:
         // NOTHING
     }
 
-    template< typename T >
-    void Foreach( const T& operand, const T_Predicate& predicate = T_Predicate(), int offset = 0, int limit = INT_MAX )
+    template< typename U >
+    void Foreach( const U& operand, const T_Predicate& predicate = T_Predicate(), int offset = 0, int limit = INT_MAX )
     {
         T_Objects copy;
         boost::shared_lock< boost::shared_mutex > lock( access_ );
@@ -75,7 +75,7 @@ public:
 
         offset = Clip< int >( offset, 0, static_cast< int >( copy.size() ) );
         limit  = Clip< int >( limit, 0, static_cast< int >( copy.size() - offset ) );
-        BOOST_FOREACH( const T_Objects::value_type& value, copy )
+        BOOST_FOREACH( const typename T_Objects::value_type& value, copy )
             if( !predicate || predicate( *value.second ) )
                 if( --offset < 0 || limit-- > 0 )
                     operand( *value.second );
@@ -88,7 +88,7 @@ public:
         boost::shared_lock< boost::shared_mutex > lock( access_ );
         offset = Clip< int >( offset, 0, static_cast< int >( objects_.size() ) );
         limit  = Clip< int >( limit, 0, static_cast< int >( objects_.size() ) - offset );
-        BOOST_FOREACH( const T_Objects::value_type& value, objects_ )
+        BOOST_FOREACH( const typename T_Objects::value_type& value, objects_ )
             if( !predicate || predicate( *value.second ) )
                 if( --offset < 0 || limit-- > 0 )
                     reply.push_back( value.second );
@@ -105,7 +105,7 @@ public:
     {
         size_t reply = 0;
         boost::shared_lock< boost::shared_mutex > lock( access_ );
-        BOOST_FOREACH( const T_Objects::value_type& value, objects_ )
+        BOOST_FOREACH( const typename T_Objects::value_type& value, objects_ )
             reply += predicate( *value.second );
         return reply;
     }
@@ -132,7 +132,7 @@ public:
     T_ObjectPtr Detach( const Uuid& id )
     {
         boost::lock_guard< boost::shared_mutex > lock( access_ );
-        typename T_Objects::const_iterator it = objects_.find( id );
+        typename T_Objects::iterator it = objects_.find( id );
         if( it == objects_.end() )
             return T_ObjectPtr();
         T_ObjectPtr ptr = it->second;
@@ -146,4 +146,4 @@ private:
 };
 }
 
-#endif CONTAINER_H
+#endif //CONTAINER_H

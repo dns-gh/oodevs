@@ -165,12 +165,12 @@ struct NodeFactory : public NodeFactory_ABC
 
     Ptr Make( const Path& root, const std::string& name ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, pool, root, name, ports );
+        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), root, name, boost::ref( ports ) );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, pool, Path( tag ).remove_filename(), FromJson( system.ReadFile( tag ) ), runtime, ports );
+        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), Path( tag ).remove_filename(), FromJson( system.ReadFile( tag ) ), runtime, boost::ref( ports ) );
     }
 
     const PackageFactory_ABC& packages;
@@ -192,7 +192,7 @@ struct PackageFactory : public PackageFactory_ABC
 
     boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const
     {
-        return boost::make_shared< Package >( pool, system, path, reference );
+        return boost::make_shared< Package >( boost::ref( pool ), system, path, reference );
     }
 
     Pool_ABC& pool;
@@ -216,7 +216,8 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, ports.Create() );
+        std::auto_ptr< Port_ABC > port( ports.Create() );
+        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, boost::ref( port ) );
     }
 
     Ptr Make( const Path& tag ) const
@@ -228,7 +229,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
-        return boost::make_shared< Session >( Path( tag ).remove_filename(), tree, *node, runtime, ports );
+        return boost::make_shared< Session >( Path( tag ).remove_filename(), tree, *node, runtime, boost::ref( ports ) );
     }
 
     const FileSystem_ABC& system;

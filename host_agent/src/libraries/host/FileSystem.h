@@ -57,7 +57,7 @@ public:
     //@}
 
 private:
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
 };
 
 }

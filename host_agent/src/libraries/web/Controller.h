@@ -101,7 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     host::Agent_ABC& agent_;
     //@}
 };
