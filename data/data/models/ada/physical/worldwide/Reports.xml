@@ -615,5 +615,8 @@
   <report category="operational" id="420" message="Being interrogated"/>
   <report category="operational" id="421" message="Impossible to have the critical intelligence : weak force ratio"/>
   <report category="operational" id="422" message="The target is no longer valid"/>
+  <report category="operational" id="423" message="%1 fragmentary order received">
+    <parameter type="String"/>
+  </report>
 </reports>
-<!-- signature="2562136538" -->
+<!-- signature="1218394779" -->

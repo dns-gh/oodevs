@@ -43,7 +43,7 @@ ConstructionPrototype_ABC::~ConstructionPrototype_ABC()
 // Name: ConstructionPrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-bool ConstructionPrototype_ABC::CheckValidity() const
+bool ConstructionPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

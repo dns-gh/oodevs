@@ -45,7 +45,7 @@ UndergroundPrototype_ABC::~UndergroundPrototype_ABC()
 // Name: UndergroundPrototype_ABC::CheckValidity
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-bool UndergroundPrototype_ABC::CheckValidity() const
+bool UndergroundPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     if( network_->currentText().isEmpty() )
     {

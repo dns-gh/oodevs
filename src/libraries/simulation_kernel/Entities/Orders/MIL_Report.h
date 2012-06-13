@@ -148,6 +148,7 @@ public:
         eReport_SetUponByPopulation,
         eReport_Questionning,
         eReport_UnderIEDFire,
+        eReport_FragOrderReceived,
         eNbrReport
     };
 
@@ -573,9 +574,10 @@ public:
         eRC_PrisSousTirIED,
         eRC_NotInSameUndergroundNetwork,
         eRC_TerroristDropped,
-        eRC_Questionning,
+        eRC_Questionning, // 420
         eRC_criticalIntelligenceImpossible,
         eRC_InvalidTarget,
+        eRC_FragOrderReceived,
         eLast
     };
     //@}

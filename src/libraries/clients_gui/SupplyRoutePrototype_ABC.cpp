@@ -57,7 +57,7 @@ SupplyRoutePrototype_ABC::~SupplyRoutePrototype_ABC()
 // Name: SupplyRoutePrototype_ABC::CheckValidity
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-bool SupplyRoutePrototype_ABC::CheckValidity() const
+bool SupplyRoutePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

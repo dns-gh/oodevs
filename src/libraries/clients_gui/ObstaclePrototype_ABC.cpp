@@ -87,7 +87,7 @@ void ObstaclePrototype_ABC::showEvent( QShowEvent* e )
 // Name: ObstaclePrototype_ABC::CheckValidity
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-bool ObstaclePrototype_ABC::CheckValidity() const
+bool ObstaclePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return types_->count() > 0;
 }

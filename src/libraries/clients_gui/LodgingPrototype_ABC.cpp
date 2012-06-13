@@ -40,7 +40,7 @@ LodgingPrototype_ABC::~LodgingPrototype_ABC()
 // Name: LodgingPrototype_ABC::CheckValidity
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-bool LodgingPrototype_ABC::CheckValidity() const
+bool LodgingPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

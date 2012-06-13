@@ -40,7 +40,7 @@ ActivityTimePrototype_ABC::~ActivityTimePrototype_ABC()
 // Name: ActivityTimePrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-bool ActivityTimePrototype_ABC::CheckValidity() const
+bool ActivityTimePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

@@ -87,11 +87,11 @@ const ObjectAttributePrototypeContainer::T_AttributeContainer* ObjectAttributePr
 // Name: ObjectAttributePrototypeContainer::CheckValidity
 // Created: SBO 2009-06-09
 // -----------------------------------------------------------------------------
-bool ObjectAttributePrototypeContainer::CheckValidity() const
+bool ObjectAttributePrototypeContainer::CheckValidity( const kernel::Team_ABC& team ) const
 {
     if( current_.get() )
         for( T_AttributeContainer::const_iterator it = current_->begin(); it != current_->end(); ++it )
-            if( ! (*it)->CheckValidity() )
+            if( ! (*it)->CheckValidity( team ) )
                 return false;
     return true;
 }

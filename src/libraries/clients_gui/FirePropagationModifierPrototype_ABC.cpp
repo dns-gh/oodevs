@@ -38,7 +38,7 @@ FirePropagationModifierPrototype_ABC::~FirePropagationModifierPrototype_ABC()
 // Name: FirePropagationModifierPrototype_ABC::CheckValidity
 // Created: BCI 2011-01-11
 // -----------------------------------------------------------------------------
-bool FirePropagationModifierPrototype_ABC::CheckValidity() const
+bool FirePropagationModifierPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

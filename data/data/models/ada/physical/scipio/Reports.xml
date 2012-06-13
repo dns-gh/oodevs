@@ -615,5 +615,8 @@
   <report category="operational" id="420" message="Subit un interrogatoire"/>
   <report category="operational" id="421" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
   <report category="operational" id="422" message="La cible n'est plus valide"/>
+  <report category="operational" id="423" message="Ordre de conduite %1 reçu">
+    <parameter type="String"/>
+  </report>
 </reports>
-<!-- signature="3722264892" -->
+<!-- signature="2100186535" -->

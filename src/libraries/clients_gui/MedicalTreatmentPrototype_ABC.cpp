@@ -83,7 +83,7 @@ void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 // Name: MedicalTreatmentPrototype_ABC::CheckValidity
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-bool MedicalTreatmentPrototype_ABC::CheckValidity() const
+bool MedicalTreatmentPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return referenceID_->text().length() > 0;
 }

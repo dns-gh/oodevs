@@ -98,7 +98,7 @@ void NBCPrototype_ABC::showEvent( QShowEvent* e )
 // Name: NBCPrototype_ABC::CheckValidity
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-bool NBCPrototype_ABC::CheckValidity() const
+bool NBCPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     const int count = static_cast< int >( GetAgentCount() );
     if( ( maxToxic_ != -1 && maxToxic_ != count ) || ( maxToxic_ == -1 && count == 0 ) )

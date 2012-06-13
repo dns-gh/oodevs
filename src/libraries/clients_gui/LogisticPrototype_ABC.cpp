@@ -14,10 +14,12 @@
 #include "LongNameHelper.h"
 #include "moc_LogisticPrototype_ABC.cpp"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -50,9 +52,12 @@ LogisticPrototype_ABC::~LogisticPrototype_ABC()
 // Name: LogisticPrototype_ABC::CheckValidity
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-bool LogisticPrototype_ABC::CheckValidity() const
+bool LogisticPrototype_ABC::CheckValidity( const kernel::Team_ABC& team ) const
 {
-    return logSuperiors_->count() && logSuperiors_->GetValue();
+    if( !logSuperiors_->count() )
+        return false;
+    const kernel::Entity_ABC* superior = logSuperiors_->GetValue();
+    return superior && ( superior->Get< kernel::TacticalHierarchies >().GetTop().GetId() == team.GetId() );
 }
 
 namespace

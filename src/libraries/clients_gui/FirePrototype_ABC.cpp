@@ -88,7 +88,7 @@ void FirePrototype_ABC::showEvent( QShowEvent* e )
 // Name: FirePrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-bool FirePrototype_ABC::CheckValidity() const
+bool FirePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return fireClass_->count() && fireClass_->GetValue();
 }

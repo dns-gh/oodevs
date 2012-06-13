@@ -174,7 +174,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
         position_->Warn( 3000 );
         return false;
     }
-    return attributes_->CheckValidity();
+    return attributes_->CheckValidity( *( teams_->GetValue() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -21,6 +21,7 @@ namespace boost
 namespace kernel
 {
     class ObjectType;
+    class Team_ABC;
 }
 
 class QWidget;
@@ -54,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    bool CheckValidity() const;
+    bool CheckValidity( const kernel::Team_ABC& team ) const;
     void Commit();
     void Clean();
     void Hide();

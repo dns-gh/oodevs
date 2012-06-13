@@ -39,7 +39,7 @@ ResourceNetworkPrototype_ABC::~ResourceNetworkPrototype_ABC()
 // Name: ResourceNetworkPrototype_ABC::CheckValidity
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-bool ResourceNetworkPrototype_ABC::CheckValidity() const
+bool ResourceNetworkPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return true;
 }

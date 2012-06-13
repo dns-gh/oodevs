@@ -12,6 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace kernel
+{
+    class Team_ABC;
+}
+
 namespace gui
 {
     class ObjectPrototypeLoader_ABC;
@@ -34,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckValidity() const = 0;
+    virtual bool CheckValidity( const kernel::Team_ABC& team ) const = 0;
     virtual void Commit() = 0;
     virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
