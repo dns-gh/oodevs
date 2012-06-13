@@ -27,8 +27,11 @@ UndergroundPrototype_ABC::UndergroundPrototype_ABC( QWidget* parent, kernel::Con
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::UndergroundPrototype_ABC", "Underground" ) )
     , controller_( controller )
 {
-    networkLabel_ = new RichLabel( tools::translate( "gui::UndergroundPrototype_ABC", "Network:" ), this );
-    network_ = new LoadableComboBox( true, this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    networkLabel_ = new RichLabel( tools::translate( "gui::UndergroundPrototype_ABC", "Network:" ) );
+    layout->addWidget( networkLabel_ );
+    network_ = new LoadableComboBox( true, 0 );
+    layout->addWidget( network_ );
     controller_.Register( *this );
 }
 

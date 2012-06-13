@@ -39,9 +39,9 @@ LogisticPrototype::~LogisticPrototype()
 // Name: LogisticPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void LogisticPrototype::Commit()
+void LogisticPrototype::Commit( const kernel::Team_ABC& team )
 {
-    if( CheckValidity() )
+    if( CheckValidity( team ) )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Logistic" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::logistic );

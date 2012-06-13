@@ -24,9 +24,11 @@ using namespace gui;
 AltitudeModifierPrototype_ABC::AltitudeModifierPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::AltitudeModifierPrototype_ABC", "Altitude modifier" ) )
 {
-    new QLabel( tools::translate( "gui::AltitudeModifierPrototype_ABC", "Height:" ), this );
-    height_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::AltitudeModifierPrototype_ABC", "Height:" ) ) );
+    height_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
     height_->setSuffix( kernel::Units::meters.AsString() );
+    layout->addWidget( height_ );
 }
 
 // -----------------------------------------------------------------------------

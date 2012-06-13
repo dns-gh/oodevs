@@ -25,23 +25,29 @@ using namespace gui;
 SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
 {
-    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Flow:" ), this );
-    flow_ = new LoadableSpinBox( 1, 10000, 1, this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Flow:" ) ) );
+    flow_ = new LoadableSpinBox( 1, 10000, 1, 0 );
     flow_->setSuffix( kernel::Units::vehiclesPerHour.AsString() );
+    layout->addWidget( flow_ );
 
-    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Width:" ), this );
-    width_ = new LoadableSpinBox( 1, 10000, 1, this );
+    layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Width:" ) ) );
+    width_ = new LoadableSpinBox( 1, 10000, 1, 0 );
     width_->setSuffix( kernel::Units::meters.AsString() );
+    layout->addWidget( width_ );
 
-    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Length:" ), this );
-    length_ = new LoadableSpinBox( 1, 10000, 1, this );
+    layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Length:" ) ) );
+    length_ = new LoadableSpinBox( 1, 10000, 1, 0 );
     length_->setSuffix( kernel::Units::meters.AsString() );
+    layout->addWidget( length_ );
 
-    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Maximum weight:" ), this );
-    maxWeight_ = new LoadableSpinBox( 1, 10000, 1, this );
+    layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Maximum weight:" ) ) );
+    maxWeight_ = new LoadableSpinBox( 1, 10000, 1, 0 );
     maxWeight_->setSuffix( kernel::Units::tons.AsString() );
+    layout->addWidget( maxWeight_ );
 
-    equipped_ = new LoadableCheckBox( tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), this );
+    equipped_ = new LoadableCheckBox( tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), 0 );
+    layout->addWidget( equipped_ );
 }
 
 // -----------------------------------------------------------------------------

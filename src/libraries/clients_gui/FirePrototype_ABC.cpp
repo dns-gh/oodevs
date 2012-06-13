@@ -27,11 +27,14 @@ FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC
     , resolver_( resolver )
     , hasFirePropagation_( false )
 {
-    new QLabel( tools::translate( "gui::FirePrototype_ABC", "Fire Class:" ), this );
-    fireClass_ = new ValuedComboBox< const kernel::FireClass* >( this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::FirePrototype_ABC", "Fire Class:" ) ) );
+    fireClass_ = new ValuedComboBox< const kernel::FireClass* >( 0 );
+    layout->addWidget( fireClass_ );
 
-    new QLabel( tools::translate( "gui::FirePrototype_ABC", "Max combustion energy:" ), this );
-    maxCombustionEnergy_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    layout->addWidget( new QLabel( tools::translate( "gui::FirePrototype_ABC", "Max combustion energy:" ) ) );
+    maxCombustionEnergy_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
+    layout->addWidget( maxCombustionEnergy_ );
 
     FillTypes();
 }

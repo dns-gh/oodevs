@@ -42,7 +42,7 @@ MinePrototype::~MinePrototype()
 // Name: MinePrototype::Commit
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MinePrototype::Commit()
+void MinePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

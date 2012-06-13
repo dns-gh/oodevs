@@ -37,7 +37,7 @@ LodgingPrototype::~LodgingPrototype()
 // Name: LodgingPrototype::Commit
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void LodgingPrototype::Commit()
+void LodgingPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

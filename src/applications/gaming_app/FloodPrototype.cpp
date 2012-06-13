@@ -39,7 +39,7 @@ FloodPrototype::~FloodPrototype()
 // Name: FloodPrototype::Commit
 // Created: JSR 2011-01-03
 // -----------------------------------------------------------------------------
-void FloodPrototype::Commit()
+void FloodPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Flood" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::flood );

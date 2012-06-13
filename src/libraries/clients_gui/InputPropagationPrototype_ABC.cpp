@@ -31,18 +31,21 @@ InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, c
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
     , root_ ( config.GetRootDir() )
 {
-    new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ), this );
-    propagationFiles_ = new ValuedComboBox< std::string >( this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ) ) );
+    propagationFiles_ = new ValuedComboBox< std::string >( 0 );
+    layout->addWidget( propagationFiles_ );
     FillInPaths();
 
-    new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Lookup data:" ), this );
+    layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Lookup data:" ) ) );
     dataField_ = new ValuedComboBox< std::string >( this );
-    // TODO : %TMP%
     dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
     dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
+    layout->addWidget( dataField_ );
 
-    new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Send data:" ), this );
-    exportData_ = new QCheckBox( this );
+    layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Send data:" ) ) );
+    exportData_ = new QCheckBox();
+    layout->addWidget( exportData_ );
 }
 
 // -----------------------------------------------------------------------------

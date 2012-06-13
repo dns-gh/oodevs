@@ -43,7 +43,7 @@ MedicalTreatmentPrototype::~MedicalTreatmentPrototype()
 // Name: MedicalTreatmentPrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void MedicalTreatmentPrototype::Commit()
+void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "MedicalTreatment" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );

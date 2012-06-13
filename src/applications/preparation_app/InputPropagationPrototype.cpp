@@ -39,7 +39,7 @@ InputPropagationPrototype::~InputPropagationPrototype()
 // Name: InputPropagationPrototype::Commit
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void InputPropagationPrototype::Commit()
+void InputPropagationPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {

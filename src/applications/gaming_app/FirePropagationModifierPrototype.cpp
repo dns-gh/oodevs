@@ -41,7 +41,7 @@ FirePropagationModifierPrototype::~FirePropagationModifierPrototype()
 // Name: FirePropagationModifierPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void FirePropagationModifierPrototype::Commit()
+void FirePropagationModifierPrototype::Commit( const kernel::Team_ABC& )
 {
     //NOTHING
 }

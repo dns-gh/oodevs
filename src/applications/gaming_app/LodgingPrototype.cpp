@@ -40,9 +40,9 @@ LodgingPrototype::~LodgingPrototype()
 // Name: LodgingPrototype::Commit
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void LodgingPrototype::Commit()
+void LodgingPrototype::Commit( const kernel::Team_ABC& team )
 {
-    if( CheckValidity() )
+    if( CheckValidity( team ) )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Lodging" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_lodging );

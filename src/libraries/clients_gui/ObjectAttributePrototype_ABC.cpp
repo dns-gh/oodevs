@@ -17,7 +17,7 @@ using namespace gui;
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
 ObjectAttributePrototype_ABC::ObjectAttributePrototype_ABC( QWidget* parent, const QString& name )
-    : Q3GroupBox( 2, Qt::Horizontal, name, parent )
+    : RichGroupBox( name, parent )
 {
     hide();
 }

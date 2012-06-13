@@ -259,7 +259,7 @@ void ObjectPrototype::DoCommit()
         attributesList_ = new ParameterList( it.NextElement() );
         action->AddParameter( *attributesList_ );
 
-        ObjectPrototype_ABC::DoCommit();
+        ObjectPrototype_ABC::DoCommit( *( teams_->GetValue() ) );
 
         action->Attach( *new actions::ActionTiming( controllers_.controller_, *currentSimulationTime_ ) );
         action->RegisterAndPublish( *currentActionsModel_ );

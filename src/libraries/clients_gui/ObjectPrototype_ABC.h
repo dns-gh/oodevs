@@ -109,7 +109,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    virtual void DoCommit();
+    virtual void DoCommit( const kernel::Team_ABC& team );
     QString GetCurrentName() const;
     const kernel::Location_ABC& GetCurrentLocation() const;
     //@}

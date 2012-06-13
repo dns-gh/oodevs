@@ -36,7 +36,7 @@ ObstaclePrototype::~ObstaclePrototype()
 // Name: ObstaclePrototype::Commit
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstaclePrototype::Commit()
+void ObstaclePrototype::Commit( const kernel::Team_ABC& )
 {
     if( types_ )
     {

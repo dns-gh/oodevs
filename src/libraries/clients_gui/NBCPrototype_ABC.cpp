@@ -30,18 +30,23 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     , resolver_( resolver )
     , maxToxic_( maxToxic )
 {
-    new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ), this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ) ) );
     danger_ = new LoadableSpinBox( 0, 10, 1, this );
-    nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ), this );
-    nbcAgents_ = new Q3ListView( this );
+    layout->addWidget( danger_ );
+    nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ) );
+    layout->addWidget( nbcAgentsLabel_ );
+    nbcAgents_ = new Q3ListView();
     nbcAgents_->setResizeMode( Q3ListView::AllColumns );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
+    layout->addWidget( nbcAgents_ );
 
-    new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ), this );
+    layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ) ) );
     nbcStates_ = new ValuedComboBox< std::string >( this );
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Gaseous" ), std::string( "gaseous" ) );
+    layout->addWidget( nbcStates_ );
 
     UpdateSelection();
     FillTypes();
@@ -91,7 +96,7 @@ void NBCPrototype_ABC::FillTypes()
 void NBCPrototype_ABC::showEvent( QShowEvent* e )
 {
     FillTypes();
-    Q3GroupBox::showEvent( e );
+    RichGroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

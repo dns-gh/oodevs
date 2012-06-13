@@ -24,10 +24,12 @@ using namespace gui;
 ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
 {
-    new QLabel( tools::translate( "gui::ConstructionPrototype_ABC", "Value:" ), this );
-    completion_ = new LoadableSpinBox( 1, 100, 1, this );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->addWidget( new QLabel( tools::translate( "gui::ConstructionPrototype_ABC", "Value:" ) ) );
+    completion_ = new LoadableSpinBox( 1, 100, 1, 0 );
     completion_->setSuffix( kernel::Units::percentage.AsString() );
     completion_->setValue( 100 );
+    layout->addWidget( completion_ );
 }
 
 // -----------------------------------------------------------------------------

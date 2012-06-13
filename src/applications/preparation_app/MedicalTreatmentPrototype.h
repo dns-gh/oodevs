@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Commit();
+    virtual void Commit( const kernel::Team_ABC& );
 /*  JCR: TODO $$$$: to be activated
     virtual bool CanLoad();
     virtual void CommitShapeObject( const kernel::ShapeObject& importObject );

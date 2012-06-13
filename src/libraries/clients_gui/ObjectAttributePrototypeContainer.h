@@ -56,7 +56,7 @@ public:
     //! @name Operations
     //@{
     bool CheckValidity( const kernel::Team_ABC& team ) const;
-    void Commit();
+    void Commit( const kernel::Team_ABC& );
     void Clean();
     void Hide();
     void Show();

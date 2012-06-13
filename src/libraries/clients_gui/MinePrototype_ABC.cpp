@@ -25,10 +25,14 @@ using namespace gui;
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Improvable" ) )
 {
-    densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Value:" ), this );
-    density_ = new LoadableSpinBox( 0, 100, 1, this );
+    
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Value:" ) );
+    layout->addWidget( densityLabel_ );
+    density_ = new LoadableSpinBox( 0, 100, 1, 0 );
     density_->setSuffix( kernel::Units::percentage.AsString() );
     density_->setValue( 100 );
+    layout->addWidget( density_ );
 }
 
 // -----------------------------------------------------------------------------

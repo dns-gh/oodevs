@@ -41,9 +41,9 @@ LogisticPrototype::~LogisticPrototype()
 // Name: LogisticPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void LogisticPrototype::Commit()
+void LogisticPrototype::Commit( const kernel::Team_ABC& team )
 {
-    if( creation_ && selected_ != 0 )
+    if( creation_ && selected_ != 0 && CheckValidity( team ) )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         LogisticAttribute* attribute = new LogisticAttribute( dico, controllers_, *creation_ );

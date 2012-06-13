@@ -28,7 +28,9 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
     , resolver_( resolver )
 {
-    Q3VBox* vbox = new Q3VBox( this, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
+    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    Q3VBox* vbox = new Q3VBox( 0, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
+    layout->addWidget( vbox );
     {
         Q3HBox* canvas = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
@@ -76,7 +78,7 @@ void MedicalTreatmentPrototype_ABC::FillCapacityTypes( QWidget* parent )
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 {
-    Q3GroupBox::showEvent( e );
+    RichGroupBox::showEvent( e );
 }
 
 // -----------------------------------------------------------------------------

@@ -273,6 +273,6 @@ void ObjectPrototype::DoCommit()
 {
     creation_ = model_.CreateObject( *teams_->GetValue(), *objectTypes_->GetValue(), GetCurrentName(), GetCurrentLocation() );
     if( creation_ )
-        ObjectPrototype_ABC::DoCommit();
+        ObjectPrototype_ABC::DoCommit( *teams_->GetValue() );
     creation_ = 0;
 }

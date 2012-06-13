@@ -42,7 +42,7 @@ DelayPrototype::~DelayPrototype()
 // Name: DelayPrototype::Commit
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayPrototype::Commit()
+void DelayPrototype::Commit( const kernel::Team_ABC& )
 {
     int time = 3600 * delayTime_->time().hour() +
                60 * delayTime_->time().minute() +

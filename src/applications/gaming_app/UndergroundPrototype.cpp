@@ -37,9 +37,9 @@ UndergroundPrototype::~UndergroundPrototype()
 // Name: UndergroundPrototype::Commit
 // Created: JSR 2011-07-08
 // -----------------------------------------------------------------------------
-void UndergroundPrototype::Commit()
+void UndergroundPrototype::Commit( const kernel::Team_ABC& team )
 {
-    if( CheckValidity() )
+    if( CheckValidity( team ) )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Underground" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::underground );

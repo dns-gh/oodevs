@@ -38,7 +38,7 @@ ConstructionPrototype::~ConstructionPrototype()
 // Name: ConstructionPrototype::Commit
 // Created: SBO 2009-06-09
 // -----------------------------------------------------------------------------
-void ConstructionPrototype::Commit()
+void ConstructionPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
