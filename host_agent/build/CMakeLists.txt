@@ -53,7 +53,6 @@ file( GLOB files
     "${root_dir}/src/libraries/host/*.cpp"
 )
 add_static_library( host ${files} )
-target_link_libraries( host runtime )
 set_target_folder( host libraries )
 
 ################################################################################
@@ -70,8 +69,8 @@ add_target_external_library( cloud_server cpp-netlib_client-${platform}-mt_d cpp
 add_target_external_library( cloud_server archive_static_d archive_static )
 add_target_external_library( cloud_server zlibd zlib )
 target_link_libraries( cloud_server
-    runtime
     host
+    runtime
     web
     ws2_32
 )
@@ -112,6 +111,7 @@ if( MSVC )
 endif()
 target_link_libraries( host_test
     host
+    runtime
 )
 add_test_target( host_test host )
 
