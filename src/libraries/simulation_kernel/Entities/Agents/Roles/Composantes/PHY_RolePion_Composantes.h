@@ -132,6 +132,7 @@ public:
     void CreateWounds( unsigned int quantity, bool randomWound, sword::EnumHumanWound wound );
     void ChangeEquipmentState( const PHY_ComposanteTypePion& composanteType, const sword::MissionParameter_Value& message );
     void ChangeHumanState( const sword::MissionParameters& msg );
+    bool CanEvacuateCasualties() const;
     //@}
 
     //! @name Pret de composantes

@@ -23,6 +23,7 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
@@ -233,14 +234,16 @@ bool DEC_AgentFunctions::IsPC( const MIL_Agent_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsMedical
+// Name: DEC_AgentFunctions::CanPerformHealthEvacuation
 // Created: JSR 2012-04-18
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsMedical( const DEC_Decision_ABC* agent )
+bool DEC_AgentFunctions::CanPerformHealthEvacuation( const DEC_Decision_ABC* agent )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in DEC_AgentFunctions::IsMedical" );
-    return dynamic_cast< const MIL_AgentTypePionLOGMedical* >( &agent->GetPion().GetType() ) != 0;
+        throw std::runtime_error( "Invalid pion in DEC_AgentFunctions::CanPerformHealthEvacuation" );
+
+    const PHY_RolePion_Composantes& pComposantes = agent->GetPion().GetRole< PHY_RolePion_Composantes >();
+    return pComposantes.CanEvacuateCasualties();
 }
 
 // -----------------------------------------------------------------------------

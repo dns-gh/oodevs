@@ -34,7 +34,7 @@ public:
     //@{
     // Accessors
     static bool IsPC( const MIL_Agent_ABC& callerAgent );
-    static bool IsMedical( const DEC_Decision_ABC* agent );
+    static bool CanPerformHealthEvacuation( const DEC_Decision_ABC* agent );
     static bool IsDead( const MIL_Agent_ABC& callerAgent );
     static bool IsAutomateEngaged( const MIL_Agent_ABC& callerAgent );
     static bool IsTransported( const MIL_Agent_ABC& callerAgent );

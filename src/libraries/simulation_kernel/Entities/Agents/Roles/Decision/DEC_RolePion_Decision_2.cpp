@@ -409,7 +409,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Pion accessors
     brain[ "DEC_Agent_EstPC" ] = boost::bind( &DEC_AgentFunctions::IsPC, boost::cref( GetPion() ) );
-    brain[ "DEC_Agent_IsMedical" ] = &DEC_AgentFunctions::IsMedical;
+    brain[ "DEC_Agent_CanPerformHealthEvacuation" ] = &DEC_AgentFunctions::CanPerformHealthEvacuation;
     brain[ "DEC_Agent_EstTransporte" ] = boost::bind( &DEC_AgentFunctions::IsTransported, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstEnVol" ] = boost::bind( &DEC_AgentFunctions::IsFlying, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_HauteurDeVol" ] =

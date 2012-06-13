@@ -1970,3 +1970,19 @@ void PHY_RolePion_Composantes::ChangeHumanState( const sword::MissionParameters&
     if( remaining )
         MT_LOG_WARNING_MSG( "Agent " << owner_->GetID() << " - Cannot apply all the human states in the magic action, " << remaining << " states remaining." );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanEvacuateCasualties
+// Created: MMC 2012-06-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanEvacuateCasualties() const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin(); itCurrentComp != composantes_.end(); ++itCurrentComp )
+    {
+        const PHY_ComposantePion& composante = **itCurrentComp;
+        const PHY_ComposanteTypePion& compType = composante.GetType();
+        if( compType.CanEvacuateCasualties() )
+            return true;
+    }
+    return false;
+}

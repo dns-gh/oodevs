@@ -34,5 +34,5 @@ integration.finMissionConvoi = function()
 end
 
 integration.isMedical = function( agent )
-    return DEC_Agent_IsMedical( agent.source ) -- works with myself
+    return DEC_Agent_CanPerformHealthEvacuation( agent.source ) -- works with myself
 end
