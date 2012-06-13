@@ -242,7 +242,7 @@ void ObjectPrototype::SetCommitContext( actions::ActionsModel& currentActionsMod
 // Name: ObjectPrototype::DoCommit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::DoCommit()
+void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
 {
     if( currentActionsModel_ && currentSimulationTime_ )
     {
@@ -254,12 +254,12 @@ void ObjectPrototype::DoCommit()
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
         action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, GetCurrentLocation() ) );
         action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().ascii() ) );
-        action->AddParameter( *new Army( it.NextElement(), *teams_->GetValue(), controllers_.controller_ ) );
+        action->AddParameter( *new Army( it.NextElement(), team, controllers_.controller_ ) );
 
         attributesList_ = new ParameterList( it.NextElement() );
         action->AddParameter( *attributesList_ );
 
-        ObjectPrototype_ABC::DoCommit( *( teams_->GetValue() ) );
+        ObjectPrototype_ABC::DoCommit( team );
 
         action->Attach( *new actions::ActionTiming( controllers_.controller_, *currentSimulationTime_ ) );
         action->RegisterAndPublish( *currentActionsModel_ );
