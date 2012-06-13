@@ -489,24 +489,6 @@ void UrbanModel::DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC*
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::DeleteBlocks
-// Created: ABR 2012-06-01
-// -----------------------------------------------------------------------------
-void UrbanModel::DeleteBlocks( int minimumArea )
-{
-    tools::Iterator< const kernel::UrbanObject_ABC& > it = CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::UrbanObject_ABC& urbanObject = it.NextElement();
-        if( const UrbanHierarchies* hierarchy = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() ) )
-            if( hierarchy->GetLevel() == eUrbanLevelBlock )
-                if( const kernel::UrbanPositions_ABC* position = urbanObject.Retrieve< kernel::UrbanPositions_ABC >() )
-                    if( position->ComputeArea() < minimumArea )
-                        DeleteBlock( urbanObject );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanModel::CreateQuadTree
 // Created: JSR 2010-03-24
 // -----------------------------------------------------------------------------

@@ -104,6 +104,9 @@
     <Filter Include="Source Files\Panels\Urban">
       <UniqueIdentifier>{67878d91-efdd-4c5d-9501-97f7325012a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Urban">
+      <UniqueIdentifier>{989feade-54a7-4ddf-8489-1b2cbc8103e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -319,9 +322,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ExerciseDialog.cpp">
       <Filter>Source Files\Dialogs\Exercise</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.cpp">
-      <Filter>Source Files\Dialogs\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ExerciseCreationDialog.cpp">
       <Filter>Source Files\Dialogs\ExerciseCreation</Filter>
     </ClCompile>
@@ -511,6 +511,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FilterPartiesListView.cpp">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.cpp">
+      <Filter>Source Files\Dialogs\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.cpp">
+      <Filter>Source Files\Dialogs\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -612,9 +618,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ScoreProfilesPage.h">
       <Filter>Source Files\Dialogs\Scores\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.h">
-      <Filter>Source Files\Dialogs\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\AgentAffinitiesDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
@@ -707,6 +710,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.h">
+      <Filter>Source Files\Dialogs\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -948,6 +954,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\UrbanListView.h">
       <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.h">
+      <Filter>Source Files\Dialogs\Urban</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

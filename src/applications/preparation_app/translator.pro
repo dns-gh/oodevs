@@ -55,6 +55,7 @@ ProfileConsistencyDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
 PropertiesTableDisplayer.cpp \
+RemoveBlocksDialog.cpp \
 ScoreDialog.cpp \
 ScoreEditor.cpp \
 ScoreGaugeConfiguration.cpp \

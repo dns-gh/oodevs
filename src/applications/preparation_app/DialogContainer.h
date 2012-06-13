@@ -45,6 +45,7 @@ class Model;
 class PerformanceDialog;
 class ProfileDialog;
 class ProfileWizardDialog;
+class RemoveBlocksDialog;
 class ScoreDialog;
 class StaticModel;
 class SuccessFactorDialog;
@@ -85,6 +86,7 @@ public:
     PerformanceDialog& GetPerformanceDialog() const;
     FilterDialogs& GetFiltersDialog() const;
     gui::AddRasterDialog& GetAddRasterDialog() const;
+    RemoveBlocksDialog& GetRemoveBlocksDialog() const;
     //@}
 
 private:
@@ -100,6 +102,7 @@ private:
     PerformanceDialog*          performanceDialog_;
     FilterDialogs*              filtersDialog_;
     gui::AddRasterDialog*       addRasterDialog_;
+    RemoveBlocksDialog*         removeBlocksDialog_;
     //@}
 };
 

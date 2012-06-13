@@ -28,6 +28,7 @@ namespace kernel
     class UrbanObject_ABC;
 }
 
+class RemoveBlocksDialog;
 class UrbanModel;
 
 // =============================================================================
@@ -45,7 +46,7 @@ class TerrainToolBar : public gui::RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel );
+             TerrainToolBar( QWidget* parent, kernel::Controllers& controllers, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog );
     virtual ~TerrainToolBar();
     //@}
 
@@ -77,7 +78,6 @@ private slots:
     void OnSwitchMode();
     void OnBlockCreation();
     void OnBlockCreationAuto();
-    void OnRemoveBlocks();
     //@}
 
 private:

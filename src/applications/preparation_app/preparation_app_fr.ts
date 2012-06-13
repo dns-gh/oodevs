@@ -1793,6 +1793,57 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>RemoveBlocksDialog</name>
+    <message>
+        <source>Remove urban blocks</source>
+        <translation>Supprimer des blocs urbains</translation>
+    </message>
+    <message>
+        <source>Minimum size:</source>
+        <translation>Taille minimum:</translation>
+    </message>
+    <message>
+        <source>m²</source>
+        <translation>m²</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Area (m²)</source>
+        <translation>Surface (m²)</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Check:</source>
+        <translation>Cocher:</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>The following urban blocks will be removed:</source>
+        <translation>Les blocs urbains suivant vont être supprimé:</translation>
+    </message>
+</context>
+<context>
     <name>ScoreDef</name>
     <message>
         <source>Total</source>
@@ -2454,14 +2505,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Error during automatic process creation of urban blocks</source>
         <translation>Erreur lors de la génération automatique de blocks urbains</translation>
-    </message>
-    <message>
-        <source>Delete blocks</source>
-        <translation>Supprimer des blocs urbains</translation>
-    </message>
-    <message>
-        <source>Minimum size (m²): </source>
-        <translation>Taille minimum (m²) :</translation>
     </message>
 </context>
 <context>
