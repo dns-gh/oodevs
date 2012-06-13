@@ -52,7 +52,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DoCommit();
+    virtual void DoCommit( const kernel::Team_ABC& team );
     //@}
 
     //! @name Copy/Assignment
