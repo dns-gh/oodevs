@@ -83,7 +83,8 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public network::NetworkMessageSender_ABC
 {
 public:
-    explicit PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise = true );
+    explicit PHY_RolePion_Composantes();
+    explicit PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialize = true );
     virtual ~PHY_RolePion_Composantes();
 
     //! @name CheckPoints
@@ -310,13 +311,8 @@ private:
     void AddEquipmentDotation( client::UnitAttributes& msg, const PHY_ComposanteTypePion& compType, const T_ComposanteTypeProperties& properties ) const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Composantes )
-    //@}
-
 private:
-    MIL_Agent_ABC& owner_;
+    MIL_Agent_ABC* owner_;
     PHY_ComposantePion::T_ComposantePionVector composantes_;
     T_ComposanteTypeMap composanteTypes_;
     unsigned int nNbrComposanteChanged_;

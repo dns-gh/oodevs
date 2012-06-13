@@ -204,6 +204,11 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pBrainLogistic_;
     pExtensions_.reset( pExtensions );
     pColor_.reset( pColor );
+    if( pBrainLogistic_.get() )
+    {
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        this->RegisterAction( pLogisticAction_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

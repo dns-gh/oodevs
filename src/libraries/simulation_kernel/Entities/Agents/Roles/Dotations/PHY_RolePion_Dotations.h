@@ -47,6 +47,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_Dotations();
     explicit PHY_RolePion_Dotations( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Dotations();
 
@@ -134,15 +135,10 @@ private:
     bool HasChanged() const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Dotations )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&                              owner_;
+    MIL_AgentPion*                              owner_;
     PHY_DotationGroupContainer*                 pDotations_;
     const PHY_ConsumptionType*                  pCurrentConsumptionMode_;
     const PHY_ConsumptionType*                  pPreviousConsumptionMode_;
@@ -154,9 +150,5 @@ private:
 } // namespace dotation
 
 BOOST_CLASS_EXPORT_KEY( dotation::PHY_RolePion_Dotations )
-namespace dotation
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Dotations, MIL_AgentPion )
-}
 
 #endif // __PHY_RolePion_Dotations_h_

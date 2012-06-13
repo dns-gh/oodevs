@@ -88,8 +88,21 @@ namespace dotation
 // Name: PHY_RolePion_Dotations constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
+PHY_RolePion_Dotations::PHY_RolePion_Dotations()
+    : owner_                     ( 0 )
+    , pCurrentConsumptionMode_   ( 0 )
+    , pPreviousConsumptionMode_  ( 0 )
+    , reservedConsumptions_      ()
+    , pDotations_                ( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations constructor
+// Created: NLD 2004-08-13
+// -----------------------------------------------------------------------------
 PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
-    : owner_                     ( pion )
+    : owner_                     ( &pion )
     , pCurrentConsumptionMode_   ( 0 )
     , pPreviousConsumptionMode_  ( 0 )
     , reservedConsumptions_      ()
@@ -119,6 +132,7 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
+         >> owner_ 
          >> pDotations_;
 
     unsigned int nID;
@@ -140,6 +154,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigne
     unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (unsigned int)-1 ) ,
              previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (unsigned int)-1 );
     file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
+         << owner_
          << pDotations_
          << current
          << previous
@@ -251,8 +266,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     pDotations_->CancelConsumptionReservations();
 
     sConsumptionReservation func( consumptionMode, *pDotations_ );
-    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    owner_.Execute( *dotationComputer );
+    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
+    owner_->Execute( *dotationComputer );
 
     if( func.bReservationOK_ )
     {
@@ -267,8 +282,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
-        std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback ) );
-        owner_.Execute( *dotationComputer );
+        std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( funcRollback ) );
+        owner_->Execute( *dotationComputer );
         assert( funcRollback.bReservationOK_ );
     }
     return false;
@@ -341,8 +356,8 @@ double PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_ConsumptionTy
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
-    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    owner_.Execute( *dotationComputer );
+    std::auto_ptr< OnComponentComputer_ABC > dotationComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
+    owner_->Execute( *dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 
@@ -367,7 +382,7 @@ const PHY_ConsumptionType& PHY_RolePion_Dotations::GetConsumptionMode() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const
 {
-    MIL_AutomateLOG* pTC2 = owner_.GetLogisticHierarchy().GetPrimarySuperior();
+    MIL_AutomateLOG* pTC2 = owner_->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 )
         return;
     assert( pDotations_ );
@@ -382,12 +397,11 @@ void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dot
 {
     if( bNewNeed )
     {
-        MIL_Report::PostEvent( owner_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
-        if( owner_.GetType().IsRefugee() || owner_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
-            MIL_Report::PostEvent( owner_, MIL_Report::eReport_PrisonersUnsupplied );
+        MIL_Report::PostEvent( *owner_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
+        if( owner_->GetType().IsRefugee() || owner_->GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
+            MIL_Report::PostEvent( *owner_, MIL_Report::eReport_PrisonersUnsupplied );
     }
-
-    owner_.GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
+    owner_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,14 +410,12 @@ void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::Update( bool bIsDead )
 {
-
     if( bIsDead )
         return;
 
     assert( pDotations_ );
-
-    std::auto_ptr< ConsumptionComputer_ABC > consumptionComputer = owner_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
-    owner_.Execute( *consumptionComputer );
+    std::auto_ptr< ConsumptionComputer_ABC > consumptionComputer = owner_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionComputer();
+    owner_->Execute( *consumptionComputer );
     SetConsumptionMode( consumptionComputer->Result() );
 
     pDotations_->ConsumeConsumptionReservations();
@@ -413,7 +425,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
     pDotations_->ConsumeFireReservations();
 
     if( HasChanged() )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -596,7 +608,7 @@ void PHY_RolePion_Dotations::SetForbiddenDotation( const PHY_DotationCategory& c
             break;
     if( it == forbiddenDotations_.end() )
     {
-        MIL_Report::PostEvent( owner_, MIL_Report::eReport_MunitionInterdite, category );
+        MIL_Report::PostEvent( *owner_, MIL_Report::eReport_MunitionInterdite, category );
         forbiddenDotations_.push_back( &category );
     }
 }
@@ -612,7 +624,7 @@ void PHY_RolePion_Dotations::RemoveForbiddenDotation( const PHY_DotationCategory
             break;
     if( it != forbiddenDotations_.end() )
     {
-       MIL_Report::PostEvent( owner_, MIL_Report::eReport_MunitionAutorise, category );
+       MIL_Report::PostEvent( *owner_, MIL_Report::eReport_MunitionAutorise, category );
        forbiddenDotations_.erase( it );
     }
 }
@@ -648,8 +660,8 @@ namespace
 bool PHY_RolePion_Dotations::HasDotationForFiring( const PHY_DotationCategory& category, int iterations )
 {
     FireData firerWeapons( category );
-    std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
-    owner_.Execute( *weaponAvailabilityComputer );
+    std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
+    owner_->Execute( *weaponAvailabilityComputer );
     return( GetDotationNumber( category ) >= iterations * firerWeapons.number_ );
 }
 
