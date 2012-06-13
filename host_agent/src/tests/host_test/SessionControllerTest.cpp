@@ -130,7 +130,8 @@ namespace
             {
                 MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( mock::any, text ).returns( true );
+            MOCK_EXPECT( sub.system.WriteFile ).returns( true );
+            MOCK_EXPECT( session->Stop ).once().returns( true );
             return session;
         }
 
@@ -172,7 +173,6 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
     Reload();
 
     MOCK_EXPECT( sub.system.Remove ).once().returns( true );
-    MOCK_EXPECT( active->Stop ).once().returns( true );
     MOCK_EXPECT( active->Unlink ).once();
     SessionController::T_Session session = control.Delete( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
@@ -180,7 +180,6 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
     MOCK_EXPECT( sub.system.Remove ).once().returns( true );
-    MOCK_EXPECT( idle->Stop ).once().returns( true );
     MOCK_EXPECT( idle->Unlink ).once();
     session = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
@@ -191,7 +190,6 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     SessionController::T_Session session = control.Start( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }
@@ -200,7 +198,6 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     SessionController::T_Session session = control.Stop( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }

@@ -51,6 +51,7 @@ public:
     typedef T T_Object;
     typedef boost::shared_ptr< T_Object > T_ObjectPtr;
     typedef boost::unordered_map< Uuid, T_ObjectPtr > T_Objects;
+    typedef boost::function< bool( const T_Object& ) > T_Predicate;
 
 public:
     Container()
@@ -63,12 +64,27 @@ public:
         // NOTHING
     }
 
-    template< typename U, typename V >
-    std::vector< boost::shared_ptr< U > > List( V predicate, int offset, int limit )
+    template< typename T >
+    void Foreach( const T& operand, const T_Predicate& predicate = T_Predicate(), int offset = 0, int limit = INT_MAX )
+    {
+        T_Objects copy;
+        boost::shared_lock< boost::shared_mutex > lock( access_ );
+        copy = objects_;
+        lock.unlock();
+
+        offset = Clip< int >( offset, 0, static_cast< int >( copy.size() ) );
+        limit  = Clip< int >( limit, 0, static_cast< int >( copy.size() - offset ) );
+        BOOST_FOREACH( const T_Objects::value_type& value, copy )
+            if( !predicate || predicate( *value.second ) )
+                if( --offset < 0 || limit-- > 0 )
+                    operand( *value.second );
+    }
+
+    template< typename U >
+    std::vector< boost::shared_ptr< U > > List( const T_Predicate& predicate, int offset, int limit )
     {
         std::vector< boost::shared_ptr< U > > reply;
         boost::shared_lock< boost::shared_mutex > lock( access_ );
-        typename T_Objects::const_iterator it = objects_.begin();
         offset = Clip< int >( offset, 0, static_cast< int >( objects_.size() ) );
         limit  = Clip< int >( limit, 0, static_cast< int >( objects_.size() ) - offset );
         BOOST_FOREACH( const T_Objects::value_type& value, objects_ )
@@ -84,8 +100,7 @@ public:
         return objects_.size();
     }
 
-    template< typename T >
-    size_t Count( T predicate )
+    size_t Count( const T_Predicate& predicate )
     {
         size_t reply = 0;
         boost::shared_lock< boost::shared_mutex > lock( access_ );

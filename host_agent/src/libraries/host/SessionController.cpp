@@ -80,7 +80,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 SessionController::~SessionController()
 {
-    // NOTHING
+    sessions_->Foreach( boost::bind( &SessionController::Stop, this, _1, false ) );
 }
 
 // -----------------------------------------------------------------------------

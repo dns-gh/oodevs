@@ -118,15 +118,15 @@ namespace
             {
                 MOCK_EXPECT( sub.nodes.Make1 ).once().returns( node );
             }
-            MOCK_EXPECT( sub.system.WriteFile ).once().with( mock::any, data ).returns( true );
+            MOCK_EXPECT( sub.system.WriteFile ).returns( true );
             MOCK_EXPECT( sub.proxy.Register ).once().with( idText, "localhost", node->GetPort() );
+            MOCK_EXPECT( node->Stop ).once().returns( true );
             return node;
         }
 
         void Reload()
         {
             MOCK_EXPECT( sub.system.Glob ).once().with( root / "nodes", "node.id" ).returns( boost::assign::list_of< Path >( "a/b/c/node.id" )( "node.id" ) );
-
             active = AddNode( idActive, nodeActive, "a/b/c/node.id" );
             idle = AddNode( idIdle, nodeIdle, "node.id" );
             control.Reload();
@@ -163,7 +163,6 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
 
     MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idActiveText );
-    MOCK_EXPECT( active->Stop ).once().returns( true );
     NodeController::T_Node node = control.Delete( idActive );
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
@@ -171,7 +170,6 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
 
     MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idIdleText );
-    MOCK_EXPECT( idle->Stop ).once().returns( true );
     node = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 0 ) );
@@ -181,7 +179,6 @@ BOOST_FIXTURE_TEST_CASE( node_controller_starts, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     NodeController::T_Node node = control.Start( idIdle );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
 }
@@ -190,7 +187,6 @@ BOOST_FIXTURE_TEST_CASE( node_controller_stops, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     NodeController::T_Node node = control.Stop( idActive );
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
 }
@@ -201,7 +197,6 @@ BOOST_FIXTURE_TEST_CASE( node_controller_upload_cache, Fixture<> )
     std::istringstream stream;
     MOCK_EXPECT( idle->UploadCache ).once().with( boost::ref( stream ) );
     MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
-    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     Tree tree = control.UploadCache( idIdle, stream );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }
@@ -218,7 +213,6 @@ BOOST_FIXTURE_TEST_CASE( node_controller_delete_cache, Fixture<> )
 {
     Reload();
     MOCK_EXPECT( idle->DeleteCache ).once().returns( Tree() );
-    MOCK_EXPECT( sub.system.WriteFile ).once().returns( true );
     Tree tree = control.DeleteCache( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
 }

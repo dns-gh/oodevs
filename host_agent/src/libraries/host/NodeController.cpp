@@ -95,7 +95,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 NodeController::~NodeController()
 {
-    // NOTHING
+    nodes_->Foreach( boost::bind( &NodeController::Stop, this, _1, false ) );
 }
 
 // -----------------------------------------------------------------------------
