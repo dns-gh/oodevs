@@ -51,6 +51,11 @@ return
         start = integration.startActivateRadar,
         stop = integration.stopActivateRadar
     } ),
+    activateRadarTirIndirect = masalife.brain.integration.startStopAction( 
+    { 
+        start = integration.startActivateRadarTirIndirect,
+        stop = integration.stopActivateRadarTirIndirect
+    } ),
     getIntelligence = masalife.brain.integration.startStopAction( 
     { 
         start = integration.startRensRecceArea,

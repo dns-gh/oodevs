@@ -395,6 +395,13 @@
                 </type>
             </return>
         </method>
+        <method name="activateRadarTirIndirect" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isObservingFor">

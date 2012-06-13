@@ -1556,7 +1556,7 @@
       </parameter>
       <parameter dia-name="heureDebarquement" name="Heure debarquement" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.art.tasks.RATACAcquerirObjectif" dia-type="france.military.platoon.combat.support.art.tasks.COBRAAcquerirObjectif" id="28795" name="PION ASS COBRA Acquerir Objectifs">
+    <mission dia-behavior="france.military.platoon.combat.support.art.tasks.COBRAAcquerirObjectif" dia-type="france.military.platoon.combat.support.art.tasks.COBRAAcquerirObjectif" id="28795" name="PION ASS COBRA Acquerir Objectifs">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3140,4 +3140,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="2238668479" -->
+<!-- signature="2356335691" -->
