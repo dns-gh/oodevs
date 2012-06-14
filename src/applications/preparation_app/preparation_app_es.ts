@@ -2486,10 +2486,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export shapefiles directory: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2519,6 +2515,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Error during export process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export shapefiles directory:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

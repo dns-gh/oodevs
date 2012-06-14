@@ -48,8 +48,9 @@ void ModeController< EnumType >::ChangeMode( int newMode )
         SaveGeometry();
 
     currentMode_ = static_cast< EnumType >( newMode );
-    Apply( &ModesObserver_ABC::NotifyModeChanged, currentMode_ );
+    // $$$$ ABR 2012-06-14: Update Displayable first so simple observer can update display when swapping mode (Save action for example)
     Apply( &DisplayableModesObserver_ABC::NotifyModeChanged, currentMode_, useDefault_, firstChangeToSavedMode_ );
+    Apply( &ModesObserver_ABC::NotifyModeChanged, currentMode_ );
 
     if( firstChangeToSavedMode_ && static_cast< EnumType >( newMode ) == savedMode_ )
         firstChangeToSavedMode_ = false;
