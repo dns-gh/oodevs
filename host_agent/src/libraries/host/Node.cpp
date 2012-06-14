@@ -210,10 +210,10 @@ Tree Node::Save() const
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const T_Starter& starter, bool restart )
+bool Node::Start( const T_Starter& starter, bool weak )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( stopped_ && restart )
+    if( stopped_ && weak )
         return false;
 
     bool modified = stopped_;
@@ -233,11 +233,11 @@ bool Node::Start( const T_Starter& starter, bool restart )
 // Name: Node::Stop
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Stop()
+bool Node::Stop( bool weak )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    bool modified = !stopped_;
-    stopped_ = true;
+    bool modified = !stopped_ && !weak;
+    stopped_ |= !weak;
     if( !process_ )
         return modified;
 

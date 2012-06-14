@@ -100,8 +100,8 @@ private:
     void Save( const Node_ABC& node ) const;
     void Create( Node_ABC& node, bool reload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Node_ABC& node ) const;
-    void Start( Node_ABC& node, bool force, bool restart ) const;
-    void Stop( Node_ABC& node, bool skip ) const;
+    void Start( Node_ABC& node, bool force, bool weak ) const;
+    void Stop( Node_ABC& node, bool skip, bool weak ) const;
     //@}
 
 private:

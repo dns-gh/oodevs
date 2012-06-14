@@ -68,8 +68,8 @@ struct Node_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const T_Starter& starter, bool restart ) = 0;
-    virtual bool Stop() = 0;
+    virtual bool Start( const T_Starter& starter, bool weak ) = 0;
+    virtual bool Stop( bool weak ) = 0;
     //@}
 
     //! @name Install methods

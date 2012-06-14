@@ -97,7 +97,7 @@ NodeController::~NodeController()
 {
     end_.Signal();
     async_->Join();
-    nodes_->Foreach( boost::bind( &NodeController::Stop, this, _1, false ) );
+    nodes_->Foreach( boost::bind( &NodeController::Stop, this, _1, false, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
         return node;
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
     proxy_.Unregister( GetPrefix( type_, *node ) );
-    Stop( *node, true );
+    Stop( *node, true, false );
     async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, node->GetRoot() ) );
     return node;
 }
@@ -269,7 +269,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
     T_Node node = nodes_->Get( id );
     if( !node )
         return T_Node();
-    Stop( *node, false );
+    Stop( *node, false, false );
     return node;
 }
 
@@ -277,9 +277,9 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Start( Node_ABC& node, bool force, bool restart ) const
+void NodeController::Start( Node_ABC& node, bool force, bool weak ) const
 {
-    bool modified = node.Start( boost::bind( &NodeController::StartWith, this, _1 ), restart );
+    bool modified = node.Start( boost::bind( &NodeController::StartWith, this, _1 ), weak );
     if( modified || force )
         Save( node );
 }
@@ -288,9 +288,9 @@ void NodeController::Start( Node_ABC& node, bool force, bool restart ) const
 // Name: NodeController::Stop
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Stop( Node_ABC& node, bool skip ) const
+void NodeController::Stop( Node_ABC& node, bool skip, bool weak ) const
 {
-    bool modified = node.Stop();
+    bool modified = node.Stop( weak );
     if( modified && !skip )
         Save( node );
 }

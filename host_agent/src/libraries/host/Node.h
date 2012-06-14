@@ -71,8 +71,8 @@ public:
     //! @name Public methods
     //@{
     virtual Tree Save() const;
-    virtual bool Start( const T_Starter& starter, bool restart );
-    virtual bool Stop();
+    virtual bool Start( const T_Starter& starter, bool weak );
+    virtual bool Stop( bool weak );
     //@}
 
     //! @name Node_ABC methods

@@ -82,7 +82,7 @@ namespace mocks
         MOCK_METHOD( GetProperties, 0 );
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 2 );
-        MOCK_METHOD( Stop, 0 );
+        MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( GetInstall, 0 );
         MOCK_METHOD( DeleteInstall, 1 );
         MOCK_METHOD( UploadCache, 1 );

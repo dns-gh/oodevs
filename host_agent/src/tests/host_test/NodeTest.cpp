@@ -92,7 +92,7 @@ namespace
         {
             if( process )
                 MOCK_EXPECT( process->Kill ).once().returns( true );
-            BOOST_CHECK( node.Stop() );
+            BOOST_CHECK( node.Stop( false ) );
         }
     };
 }
@@ -163,7 +163,7 @@ BOOST_FIXTURE_TEST_CASE( node_rejects_bind_to_another_process, Fixture )
     StartNode( *node, processPid, processName );
     const Tree save = node->Save();
     node = ReloadNode( save, boost::make_shared< MockProcess >( processPid, processName + "_" ) );
-    BOOST_CHECK( node->Stop() );
+    BOOST_CHECK( node->Stop( false ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
