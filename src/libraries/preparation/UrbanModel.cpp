@@ -25,6 +25,10 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include "geometry/Types.h"
 #include "geostore/GeoStoreManager.h"
+#include "preparation/UrbanExportManager.h"
+#include "terrain/Translator.h"
+#include "terrain/TerrainExportManager.h"
+#include "terrain/PlanarCartesianProjector.h"
 #include "tools/SchemaWriter_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
@@ -559,4 +563,21 @@ void UrbanModel::GetListWithinCircle( const geometry::Point2f& center, float rad
         quadTree_->Apply( intersecter, extractor );
         std::swap( extractor.data_, result );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ExportShapeFile
+// Created: ABR 2012-06-13
+// -----------------------------------------------------------------------------
+void UrbanModel::ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config ) const
+{
+    boost::shared_ptr< Translator > trans( new Translator( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) ) );
+
+    std::auto_ptr< TerrainExportManager > pTerrainExportManager( new TerrainExportManager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, *trans ) );
+    pTerrainExportManager->Run();
+    pTerrainExportManager.release();
+
+    std::auto_ptr< UrbanExportManager > pUrbanExportManager( new UrbanExportManager( exportDirectory, *trans, *this ) );
+    pUrbanExportManager->Run();
+    pUrbanExportManager.release();
 }

@@ -20,6 +20,7 @@
 #include "ScoreDialog.h"
 #include "ModelConsistencyDialog.h"
 #include "FilterDialogs.h"
+#include "TerrainExportDialog.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
@@ -35,7 +36,7 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 
-int Menu::filtersIndex_ = 6;
+int Menu::filtersIndex_ = 7;
 
 namespace
 {
@@ -95,7 +96,9 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
         action = fileMenu_->InsertItem( "1", tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), QKeySequence( Qt::CTRL + Qt::Key_W ) );
         AddModdedAction( action, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
 
-        fileMenu_->GetCategoryCreateIFN( "2" ); // Filters category
+        fileMenu_->GetCategoryCreateIFN( "2" ); // Export/import category
+        action = fileMenu_->InsertItem( "2", tools::translate( "Menu", "&Export..." ), &dialogs.GetTerrainExportDialog(), SLOT( exec() ), QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_E ) );
+        AddModdedAction( action, ePreparationMode_All ^ ePreparationMode_Terrain, ePreparationMode_Terrain );
 
         saveAction_ = fileMenu_->InsertItem( "3", tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ), QKeySequence( Qt::CTRL + Qt::Key_S ) );
         saveAction_->setIcon( MAKE_ICON( save ) );

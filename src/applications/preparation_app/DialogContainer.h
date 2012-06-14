@@ -49,6 +49,7 @@ class RemoveBlocksDialog;
 class ScoreDialog;
 class StaticModel;
 class SuccessFactorDialog;
+class TerrainExportDialog;
 
 // =============================================================================
 /** @class  DialogContainer
@@ -87,6 +88,7 @@ public:
     FilterDialogs& GetFiltersDialog() const;
     gui::AddRasterDialog& GetAddRasterDialog() const;
     RemoveBlocksDialog& GetRemoveBlocksDialog() const;
+    TerrainExportDialog& GetTerrainExportDialog() const;
     //@}
 
 private:
@@ -103,6 +105,7 @@ private:
     FilterDialogs*              filtersDialog_;
     gui::AddRasterDialog*       addRasterDialog_;
     RemoveBlocksDialog*         removeBlocksDialog_;
+    TerrainExportDialog*        terrainExportDialog_;
     //@}
 };
 

@@ -119,6 +119,9 @@
     <Filter Include="Source Files\Model\Performance">
       <UniqueIdentifier>{dfa8c364-e048-4ed4-ab14-540845f7d2e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Urban\Export">
+      <UniqueIdentifier>{231b3b84-21ce-4d8c-9ad0-9caec4b9ff98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
@@ -540,6 +543,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\UrbanMenuManager.cpp">
       <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanExportManager.cpp">
+      <Filter>Source Files\Model\Urban\Export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanFileExporter.cpp">
+      <Filter>Source Files\Model\Urban\Export</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1016,6 +1025,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanExportManager.h">
+      <Filter>Source Files\Model\Urban\Export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanFileExporter.h">
+      <Filter>Source Files\Model\Urban\Export</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

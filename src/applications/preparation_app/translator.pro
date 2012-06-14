@@ -72,6 +72,7 @@ SymbolEditor.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
+TerrainExportDialog.cpp \
 TerrainToolBar.cpp \
 UnitStateDialog.cpp \
 UnitStateTableResource.cpp \

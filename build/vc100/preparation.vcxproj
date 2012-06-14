@@ -160,7 +160,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\PopulationHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\PopulationPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\TrafficabilityAttribute.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanExportManager.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanFileExporter.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanMenuManager.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\UrbanObject.cpp" />
@@ -312,8 +314,10 @@
     <ClInclude Include="..\..\src\libraries\preparation\PopulationRepartition.h" />
     <ClInclude Include="..\..\src\libraries\preparation\PopulationHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\PopulationPositions.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanExportManager.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanFileExporter.h" />
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h" />
     <CustomBuild Include="..\..\src\libraries\preparation\UrbanMenuManager.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
