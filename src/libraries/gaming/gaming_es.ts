@@ -155,22 +155,6 @@
         <translation>Estado militar/Refugiados acogidos</translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation>Info</translation>
-    </message>
-    <message>
-        <source>Operational state:</source>
-        <translation>Estado operacional:</translation>
-    </message>
-    <message>
-        <source>Dead:</source>
-        <translation>Muerto:</translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation>Neutralizado:</translation>
-    </message>
-    <message>
         <source>Speed:</source>
         <translation>Velocidad:</translation>
     </message>
@@ -191,46 +175,6 @@
         <translation>desembarcado</translation>
     </message>
     <message>
-        <source>Human transportation:</source>
-        <translation>Transporte de personal:</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Unavailable</source>
-        <translation>No disponible</translation>
-    </message>
-    <message>
-        <source>Stances</source>
-        <translation>Postura</translation>
-    </message>
-    <message>
-        <source>Previous stance:</source>
-        <translation>Postura anterior:</translation>
-    </message>
-    <message>
-        <source>New stance:</source>
-        <translation>Nueva postura:</translation>
-    </message>
-    <message>
-        <source>Setup state:</source>
-        <translation>Instalación:</translation>
-    </message>
-    <message>
-        <source>Communications</source>
-        <translation>Comunicaciones</translation>
-    </message>
-    <message>
-        <source>Jammed:</source>
-        <translation>Perturbado:</translation>
-    </message>
-    <message>
-        <source>Decisional state</source>
-        <translation>Estado decisional</translation>
-    </message>
-    <message>
         <source>Rules of engagement:</source>
         <translation>Reglas de enfrentamiento:</translation>
     </message>
@@ -239,36 +183,8 @@
         <translation>Relación de fuerzas:</translation>
     </message>
     <message>
-        <source>Indirect fire availability:</source>
-        <translation>Capacidad de fuego indirecto:</translation>
-    </message>
-    <message>
-        <source>Intention:</source>
-        <translation>Intención:</translation>
-    </message>
-    <message>
-        <source>Military state</source>
-        <translation>Estado militar</translation>
-    </message>
-    <message>
-        <source>Prisoner:</source>
-        <translation>Prisionero:</translation>
-    </message>
-    <message>
-        <source>Surrender:</source>
-        <translation>Rendido:</translation>
-    </message>
-    <message>
-        <source>Refugees picked up:</source>
-        <translation>Refugiados acogidos:</translation>
-    </message>
-    <message>
         <source>Info/Heading</source>
         <translation>Info/Dirección</translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation>Direction:</translation>
     </message>
     <message>
         <source>Stances/Setup state</source>
@@ -283,23 +199,7 @@
         <translation>Comunicaciones/Silencio de radio receptor</translation>
     </message>
     <message>
-        <source>Radio Emitter silence:</source>
-        <translation>Silencio de radio emisor:</translation>
-    </message>
-    <message>
-        <source>Radio Receiver silence:</source>
-        <translation>Silencio de radio receptor:</translation>
-    </message>
-    <message>
-        <source>Crowd RoE:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Critical intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Critical intelligence:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -315,27 +215,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Satisfaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lodging:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Security:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Health:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info/Underground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Underground:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -344,6 +224,26 @@
     </message>
     <message>
         <source>Crowd transported:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Dead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Troops on board</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Human transportation available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decisional state/Crowd RoE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decisional state/Indirect fire availability</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -436,7 +336,7 @@
     </message>
     <message>
         <source>Heading:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dirección:</translation>
     </message>
     <message>
         <source>Speed:</source>

@@ -89,11 +89,15 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 {
     // $$$$ AGE 2006-06-22: unité !
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Dead" ),                            bDead_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Critical intelligence" ),           criticalIntelligence_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Troops on board" ),                 bLoadingState_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Human transportation available" ),  bHumanTransportersReady_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
@@ -101,8 +105,10 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Rules of engagement" ), nRulesOfEngagementState_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Crowd RoE" ),           nRulesOfEngagementPopulationState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Force ratio" ),         nFightRateState_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Indirect fire availability" ), nIndirectFireAvailability_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
@@ -236,59 +242,6 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     }
 
     controller_.Update( *(Attributes_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Attributes::Display
-// Created: AGE 2006-02-22
-// -----------------------------------------------------------------------------
-void Attributes::Display( Displayer_ABC& displayer ) const
-{
-    // $$$$ AGE 2006-03-17: Split attributes ?
-    displayer.Group( tools::translate( "Attributes", "Info" ) )
-                .Display( tools::translate( "Attributes", "Operational state:" ),     nRawOpState_ * Units::percentage )
-                .Display( tools::translate( "Attributes", "Dead:" ),                  bDead_ )
-                .Display( tools::translate( "Attributes", "Neutralized:" ),           bNeutralized_ )
-                .Display( tools::translate( "Attributes", "Speed:" ),                 nSpeed_ * Units::kilometersPerHour )
-                .Display( tools::translate( "Attributes", "Heading:" ),               nDirection_ * Units::degrees )
-                .Display( tools::translate( "Attributes", "Underground:" ),           bUnderground_ )
-                .Display( tools::translate( "Attributes", "Critical intelligence:" ), criticalIntelligence_ )
-                .Display( tools::translate( "Attributes", "Height:" ),                nAltitude_  * Units::meters )
-                .Display( tools::translate( "Attributes", "Troops:" ),                bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) )
-                .Display( tools::translate( "Attributes", "Human transportation:" ),  bHumanTransportersReady_ ? tools::translate( "Attributes", "Available" ) : tools::translate( "Attributes", "Unavailable" ) );
-
-    displayer.Group( tools::translate( "Attributes", "Stances" ) )
-                .Display( tools::translate( "Attributes", "Previous stance:" ), nOldPosture_ )
-                .Item( tools::translate( "Attributes", "New stance:" ) )
-                    .Start( nCurrentPosture_ )
-                    .Add( " (" )
-                    .Add( nPostureCompletionPourcentage_ * Units::percentage )
-                    .Add( ")" ).End();
-    displayer.Group( tools::translate( "Attributes", "Stances" ) )
-                .Display( tools::translate( "Attributes", "Setup state:" ), nInstallationState_ * Units::percentage );
-
-    displayer.Group( tools::translate( "Attributes", "Communications" ) )
-                .Display( tools::translate( "Attributes", "Jammed:" ), bCommJammed_ )
-                .Display( tools::translate( "Attributes", "Radio Emitter silence:" ), bRadioEmitterSilence_ )
-                .Display( tools::translate( "Attributes", "Radio Receiver silence:" ), bRadioReceiverSilence_ );
-
-    displayer.Group( tools::translate( "Attributes", "Decisional state" ) )
-                .Display( tools::translate( "Attributes", "Operational state:" ), nOpState_ )
-                .Display( tools::translate( "Attributes", "Rules of engagement:" ), nRulesOfEngagementState_ )
-                .Display( tools::translate( "Attributes", "Crowd RoE:" ), nRulesOfEngagementPopulationState_ )
-                .Display( tools::translate( "Attributes", "Force ratio:" ), nFightRateState_ )
-                .Display( tools::translate( "Attributes", "Indirect fire availability:" ), nIndirectFireAvailability_ )
-                .Display( tools::translate( "Attributes", "Intention:" ), nCloseCombatState_ );
-
-    displayer.Group( tools::translate( "Attributes", "Military state" ) )
-            .Display( tools::translate( "Attributes", "Prisoner:" ), bPrisoner_ )
-            .Display( tools::translate( "Attributes", "Surrender:" ), surrenderedTo_ )
-            .Display( tools::translate( "Attributes", "Refugees picked up:" ), bRefugeesManaged_ );
-
-    displayer.Group( tools::translate( "Attributes", "Satisfaction" ) )
-        .Display( tools::translate( "Attributes", "Lodging:" ), fLodgingSatisfactionPercent_ )
-        .Display( tools::translate( "Attributes", "Security:" ), fSecuritySatisfactionPercent_ )
-        .Display( tools::translate( "Attributes", "Health:" ), fHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------
