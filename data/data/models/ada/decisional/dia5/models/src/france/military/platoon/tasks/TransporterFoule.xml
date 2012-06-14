@@ -52,7 +52,7 @@
         <stage label="Déplacement vers le point de regroupement" disable-when-done="true">
             <description>se deplace vers le point de rendez vous donne en parametre</description>
             <skills>
-                <skill name="sword.military.platoon.skills.MoveToward" main="true">
+                <skill name="sword.military.platoon.skills.MoveAlong" main="true">
                     <parameter name="entities">
                         <value>
                             <list>
