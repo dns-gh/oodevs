@@ -517,6 +517,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ResourceNetworkDialog.cpp">
       <Filter>Source Files\Dialogs\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\TerrainExportDialog.cpp">
+      <Filter>Source Files\Dialogs\Urban</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -956,6 +959,9 @@
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.h">
+      <Filter>Source Files\Dialogs\Urban</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\TerrainExportDialog.h">
       <Filter>Source Files\Dialogs\Urban</Filter>
     </CustomBuild>
   </ItemGroup>

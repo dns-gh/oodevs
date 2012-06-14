@@ -1239,6 +1239,10 @@ This data can&apos;t be projected.</source>
         <source>Performance...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -2473,6 +2477,49 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Create template</source>
         <translation>Crear plantillas</translation>
+    </message>
+</context>
+<context>
+    <name>TerrainExportDialog</name>
+    <message>
+        <source>Terrain Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export shapefiles directory: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Select export directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export in progress...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export successfull.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error during export process</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

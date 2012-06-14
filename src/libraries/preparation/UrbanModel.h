@@ -34,6 +34,7 @@ namespace kernel
 
 namespace tools
 {
+    class ExerciseConfig;
     class SchemaWriter_ABC;
 }
 
@@ -78,6 +79,7 @@ public:
     void CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
+    void ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config ) const;
     //@}
 
     //! @name Accessors

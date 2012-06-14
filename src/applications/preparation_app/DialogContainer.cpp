@@ -32,6 +32,7 @@
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "SymbolEditor.h"
+#include "TerrainExportDialog.h"
 #include "UnitStateDialog.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/PreferencesDialog.h"
@@ -75,6 +76,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
     addRasterDialog_ = new gui::AddRasterDialog( parent );
     removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, model.urban_ );
+    terrainExportDialog_ = new TerrainExportDialog( parent, config, model.urban_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,4 +204,13 @@ gui::AddRasterDialog& DialogContainer::GetAddRasterDialog() const
 RemoveBlocksDialog& DialogContainer::GetRemoveBlocksDialog() const
 {
     return *removeBlocksDialog_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DialogContainer::GetTerrainExportDialog
+// Created: ABR 2012-06-13
+// -----------------------------------------------------------------------------
+TerrainExportDialog& DialogContainer::GetTerrainExportDialog() const
+{
+    return *terrainExportDialog_;
 }

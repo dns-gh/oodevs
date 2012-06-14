@@ -1244,6 +1244,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Performance...</source>
         <translation>Performance...</translation>
     </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation>&amp;Exporter...</translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -2478,6 +2482,49 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Create template</source>
         <translation>Créer un modèle</translation>
+    </message>
+</context>
+<context>
+    <name>TerrainExportDialog</name>
+    <message>
+        <source>Terrain Export</source>
+        <translation>Export du terrain</translation>
+    </message>
+    <message>
+        <source>Export shapefiles directory:</source>
+        <translation>Répertoire d&apos;export:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Select export directory</source>
+        <translation>Sélectionner un répertoire d&apos;export</translation>
+    </message>
+    <message>
+        <source>Export in progress...</source>
+        <translation>Export en cours...</translation>
+    </message>
+    <message>
+        <source>Terrain export</source>
+        <translation>Export terrain</translation>
+    </message>
+    <message>
+        <source>Export successfull.</source>
+        <translation>Export réussi.</translation>
+    </message>
+    <message>
+        <source>Error during export process</source>
+        <translation>Erreur lors de l&apos;export</translation>
     </message>
 </context>
 <context>
