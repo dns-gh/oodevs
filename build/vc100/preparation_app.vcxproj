@@ -51,7 +51,6 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_zip.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
@@ -76,7 +75,6 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_zip.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
@@ -101,7 +99,6 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_zip.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
@@ -126,7 +123,6 @@
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_zip.props" />
-    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
