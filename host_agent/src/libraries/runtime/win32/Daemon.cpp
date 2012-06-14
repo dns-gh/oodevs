@@ -15,9 +15,6 @@
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
 
-#if defined(_MSC_VER) && !defined(_WIN64)
-#define  BOOST_BIND_ENABLE_STDCALL
-#endif
 #include <boost/bind.hpp>
 
 #include <boost/foreach.hpp>
@@ -64,6 +61,12 @@ struct Scoper
 private:
     Task task_;
 };
+
+// avoid stdcall incompatibility with boost::bind
+void CloseScHandle( SC_HANDLE handle )
+{
+    CloseServiceHandle( handle );
+}
 }
 
 struct Daemon::Private
@@ -125,7 +128,7 @@ struct Daemon::Private
         SC_HANDLE manager = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
         ABORT_IF( !manager, "Unable to open service manager" );
 
-        Scoper closeManager( boost::bind( &CloseServiceHandle, manager ) );
+        Scoper closeManager( boost::bind( &CloseScHandle, manager ) );
         const std::wstring module = api_.GetModuleFilename();
         ABORT_IF( module.empty(), "Empty module name" );
 
@@ -144,7 +147,7 @@ struct Daemon::Private
                                             hasPassword ? Utf8Convert( password ).c_str() : NULL );
         ABORT_IF( !service, "Unable to create service" );
 
-        Scoper closeService( boost::bind( &CloseServiceHandle, service ) );
+        Scoper closeService( boost::bind( &CloseScHandle, service ) );
         bool done = SetFailureActions( service, true );
         ABORT_IF( !done, "Unable to set service reboot action" );
 
@@ -201,12 +204,12 @@ struct Daemon::Private
         SC_HANDLE manager = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
         ABORT_IF( !manager, "Unable to open service manager" );
 
-        Scoper closeManager( boost::bind( &CloseServiceHandle, manager ) );
+        Scoper closeManager( boost::bind( &CloseScHandle, manager ) );
         const std::wstring wname = Utf8Convert( name );
         SC_HANDLE service = OpenServiceW( manager, wname.c_str(), SERVICE_STOP | SERVICE_QUERY_STATUS | SERVICE_CHANGE_CONFIG | DELETE );
         ABORT_IF( !service, "Unable to open service" );
 
-        Scoper closeService( boost::bind( &CloseServiceHandle, service ) );
+        Scoper closeService( boost::bind( &CloseScHandle, service ) );
         bool done = SetFailureActions( service, false );
         if( !done )
             DAEMON_ERROR( "Unable to deactivate service restart action" );
@@ -234,9 +237,10 @@ struct Daemon::Private
         task_ = task;
         lock.unlock();
 
-        const SERVICE_TABLE_ENTRYW dispatch[] =
+        wchar_t name[] = L"";
+        SERVICE_TABLE_ENTRYW dispatch[] =
         {
-            { L"",  &Private::ServiceMain },
+            { name, &Private::ServiceMain },
             { NULL, NULL },
         };
         bool done = !!StartServiceCtrlDispatcherW( dispatch );

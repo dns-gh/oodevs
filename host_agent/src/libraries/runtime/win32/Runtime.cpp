@@ -30,10 +30,10 @@ template< typename T >
 bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
 {
     unsigned long size = 0;
-    bool done = api.EnumProcesses( &pids[0], static_cast< int >( pids.size() * sizeof T ), &size );
+    bool done = api.EnumProcesses( &pids[0], static_cast< int >( pids.size() * sizeof(T) ), &size );
     if( !done )
         return true;
-    if( size == pids.size() * sizeof T )
+    if( size == pids.size() * sizeof(T) )
         return false;
     pids.resize( size / sizeof size );
     BOOST_FOREACH( const T& id, pids )

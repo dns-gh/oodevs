@@ -18,7 +18,7 @@
 
 using namespace runtime;
 
-BOOST_STATIC_ASSERT( sizeof Handle::pointer == sizeof HANDLE );
+BOOST_STATIC_ASSERT( sizeof(Handle::pointer) == sizeof(HANDLE) );
 
 // -----------------------------------------------------------------------------
 // Name: runtime::MakeHandle
@@ -142,7 +142,7 @@ namespace
             return false;
 
         DWORD threadId;
-        LPTHREAD_START_ROUTINE exit = reinterpret_cast< LPTHREAD_START_ROUTINE >( api.GetExitProcessPointer() );
+        void* exit = api.GetExitProcessPointer();
         HANDLE thread = api.CreateRemoteThreadExt( process, 0, exit, &code, 0, &threadId );
         if( !thread )
             return false;
