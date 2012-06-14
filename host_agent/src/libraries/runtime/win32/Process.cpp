@@ -109,6 +109,16 @@ const std::string& Process::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Process::IsAlive
+// Created: BAX 2012-06-14
+// -----------------------------------------------------------------------------
+bool Process::IsAlive() const
+{
+    int reply = api_.WaitForSingleObjectEx( handle_.get(), 0, false );
+    return reply == WAIT_TIMEOUT;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Process::Join
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
