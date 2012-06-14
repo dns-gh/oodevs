@@ -300,6 +300,10 @@
         <source>Physical model:</source>
         <translation>Modèle physique:</translation>
     </message>
+    <message>
+        <source>Model name:</source>
+        <translation>Nom du modèle :</translation>
+    </message>
 </context>
 <context>
     <name>HomePage</name>

@@ -94,6 +94,12 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     {
         Q3GroupBox* box = AddTab( this, tabs_ );
         {
+            modelsNameLabel_ = new QLabel( box );
+            modelName_ = new QLineEdit( box );
+            modelName_->setMaximumHeight( 30 );
+            connect( modelName_, SIGNAL( textEdited( const QString& ) ), SLOT( OnModelNameChanged( const QString& ) ) );
+        }
+        {
             modelsDescriptionLabel_ = new QLabel( box );
             modelDescription_ = new QTextEdit( box );
             modelDescription_->setMaximumHeight( 30 );
@@ -140,6 +146,7 @@ void ExportWidget::OnLanguageChanged()
     packageContentLabel_->setText(      tools::translate( "ExportWidget", "Package content:" ) );
     terrainDescriptionLabel_->setText(  tools::translate( "ExportWidget", "Package description:" ) );
     terrainLabel_->setText(             tools::translate( "ExportWidget", "Terrain:" ) );
+    modelsNameLabel_->setText(          tools::translate( "ExportWidget", "Model name:" ) );
     modelsDescriptionLabel_->setText(   tools::translate( "ExportWidget", "Package description:" ) );
     modelsDecisionalLabel_->setText(    tools::translate( "ExportWidget", "Decisional model:" ) );
     modelsPhysicalLabel_->setText(      tools::translate( "ExportWidget", "Physical model:" ) );
@@ -163,8 +170,9 @@ QString ExportWidget::GetCurrentSelection() const
             result = item->text().ascii();
         break;
     case eTabs_Models:
-        if( Q3ListBoxItem* item = physicalList_->selectedItem() )
-            result = item->text().ascii();
+        if( !modelName_->text().isEmpty() )
+            if( Q3ListBoxItem* item = physicalList_->selectedItem() )
+                result = item->text().ascii();
         break;
     default:
         break;
@@ -191,6 +199,39 @@ QTextEdit* ExportWidget::GetCurrentDescription() const
     }
     assert( false );
     return 0;
+}
+
+namespace
+{
+    std::pair< std::string, std::string > Extract( const QString& text )
+    {
+        std::string selectedText = text.ascii();
+        size_t separator = selectedText.find_first_of( '/' );
+        std::string base = selectedText.substr( 0, separator );
+        std::string physical = selectedText.substr( separator, std::string::npos );
+        return std::make_pair( base, physical );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::GetCurrentPackage
+// Created: LGY 2012-06-14
+// -----------------------------------------------------------------------------
+QString ExportWidget::GetCurrentPackage() const
+{
+    QString text = GetCurrentSelection();
+    switch( tabs_->currentIndex() )
+    {
+    case eTabs_Exercise:
+        return text;
+    case eTabs_Terrain:
+        return text;
+    case eTabs_Models:
+        return modelName_->text() + Extract( text ).second.c_str();
+    default:
+        break;
+    }
+    return text;
 }
 
 // -----------------------------------------------------------------------------
@@ -224,6 +265,15 @@ void ExportWidget::OnSelectionChanged( Q3ListBoxItem* item )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExportWidget::OnModelNameChanged
+// Created: LGY 2012-06-14
+// -----------------------------------------------------------------------------
+void ExportWidget::OnModelNameChanged( const QString& /*text*/ )
+{
+    page_.UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExportWidget::Update
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
@@ -246,9 +296,13 @@ void ExportWidget::Update( Q3ListBoxItem* item /*= 0*/ )
                 physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
         }
         physicalList_->insertStringList( physicalBase );
+        modelName_->clear();
     }
     else if( tabs_->currentIndex() == eTabs_Models )
+    {
+        modelName_->setText( Extract( physicalList_->selectedItem()->text() ).first.c_str() );
         decisionalCheckBox_->setEnabled( true );
+    }
     page_.UpdateEditButton();
 }
 
@@ -321,7 +375,7 @@ namespace
         }
     }
 
-    void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos, bool recursive )
+    void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos, bool recursive, const std::string& exportName = "" )
     {
         const bfs::path root = bfs::path( base, bfs::native ) / name;
         if( ! bfs::exists( root ) )
@@ -329,7 +383,7 @@ namespace
         if( ! bfs::is_directory( root ) )
             CopyFile( root, name, zos );
         else
-            BrowseDirectory( root, name, zos, recursive );
+            BrowseDirectory( root, exportName != "" ? exportName : name, zos, recursive );
     }
 
     void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
@@ -425,11 +479,12 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
     if( !text.isEmpty() )
     {
         std::string description = GetCurrentDescription()->text().ascii();
+        QString package = GetCurrentPackage();
 
         if( description.empty() )
-            description = "Packaged scenario of " + text.toStdString() + ".";
+            description = "Packaged scenario of " + package.toStdString() + ".";
         xos << xml::start( "content" )
-            << xml::content( "name", text.toStdString() )
+            << xml::content( "name", package.toStdString() )
             << xml::content( "description", description )
             << xml::content( "version", tools::AppProjectVersion() )
             << xml::end;
@@ -468,23 +523,26 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     case eTabs_Models:
         {
             assert( physicalList_->selectedItem() );
-            std::string selectedText = physicalList_->selectedItem()->text().ascii();
-            size_t separator = selectedText.find_first_of( '/' );
-            std::string base = selectedText.substr( 0, separator );
-            std::string physical = selectedText.substr( separator, std::string::npos );
-            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / base;
+            std::pair< std::string, std::string > content( Extract( physicalList_->selectedItem()->text() ) );
+
+            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
+            bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().ascii();
+
             if( decisionalCheckBox_->isChecked() )
             {
                 progress_->setProgress( 0, 2 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / physical ).string(), archive, true );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true,
+                                                 bfs::path( exportPath / "physical" / content.second ).string() );
                 progress_->setProgress( 1 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true,
+                                                 bfs::path( exportPath / "decisional" ).string() );
                 progress_->setProgress( 2 );
             }
             else
             {
                 progress_->setProgress( 0, 1 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / physical ).string(), archive, true );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true,
+                                                 bfs::path( exportPath / "physical" / content.second ).string() );
                 progress_->setProgress( 1 );
             }
             break;
