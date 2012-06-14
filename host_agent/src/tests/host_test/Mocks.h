@@ -222,19 +222,27 @@ namespace mocks
     {
         MockPool()
         {
-            MOCK_EXPECT( Post ).calls( &MockPool::Call );
-            MOCK_EXPECT( Go ).calls( &MockPool::Call );
-        }
-        static Future Call( Task task )
-        {
-            boost::promise< void > promise;
-            task();
-            promise.set_value();
-            return promise.get_future();
+            MOCK_EXPECT( Post ).calls( boost::bind( &MockPool::Call, this, _1 ) );
+            MOCK_EXPECT( Go ).calls( boost::bind( &MockPool::Call, this, _1 ) );
         }
         MOCK_METHOD( Post, 1 );
         MOCK_METHOD( Go, 1 );
         MOCK_METHOD( Stop, 0 );
+    private:
+        typedef boost::promise< void > LazyPromise;
+        static void LazyCall( LazyPromise& promise, Task task )
+        {
+            task();
+            promise.set_value();
+        }
+        Future Call( Task task )
+        {
+            boost::shared_ptr< LazyPromise > ptr( new LazyPromise() );
+            ptr->set_wait_callback( boost::bind( &LazyCall, _1, task ) );
+            promises.push_back( ptr );
+            return ptr->get_future();
+        }
+        std::vector< boost::shared_ptr< LazyPromise > > promises;
     };
 
     MOCK_BASE_CLASS( MockUuidFactory, host::UuidFactory_ABC )
