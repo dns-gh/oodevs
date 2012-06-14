@@ -364,3 +364,16 @@ void Session::Unlink()
 {
     node_.UnlinkExercise( links_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Session::Update
+// Created: BAX 2012-06-14
+// -----------------------------------------------------------------------------
+void Session::Update()
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( !process_ || process_->IsAlive() )
+        return;
+    process_.reset();
+    status_ = Session::STATUS_STOPPED;
+}

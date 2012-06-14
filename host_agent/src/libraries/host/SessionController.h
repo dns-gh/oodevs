@@ -11,7 +11,7 @@
 #define SESSION_CONTROLLER_H
 
 #include "SessionController_ABC.h"
-
+#include "runtime/Event.h"
 #include <boost/filesystem/path.hpp>
 
 namespace cpplog
@@ -75,6 +75,7 @@ public:
 private:
     //! @name Private methods
     //@{
+    void Update();
     void Save( const Session_ABC& session ) const;
     void Create( Session_ABC& session, bool isReload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Session_ABC& session ) const;
@@ -93,6 +94,7 @@ private:
     const Path root_;
     const Path apps_;
     const std::auto_ptr< Container< Session_ABC > > sessions_;
+    runtime::Event end_;
     const std::auto_ptr< Async > async_;
     //@}
 };

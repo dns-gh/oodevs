@@ -74,6 +74,7 @@ struct Session_ABC : public boost::noncopyable
     virtual bool Start( const FileSystem_ABC& system, const T_Starter& starter ) = 0;
     virtual bool Stop() = 0;
     virtual void Unlink() = 0;
+    virtual void Update() = 0;
     //@}
 };
 

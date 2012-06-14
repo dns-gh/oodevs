@@ -65,6 +65,7 @@ public:
     virtual bool Start( const FileSystem_ABC& system, const T_Starter& starter );
     virtual bool Stop();
     virtual void Unlink();
+    virtual void Update();
     //@}
 
     //! @name Status enumeration
