@@ -2614,7 +2614,7 @@
         <mission name="SAFETY - Patrol within area"/>
         <mission name="SAFETY - Operate a road block (prevent crowds from crossing)"/>
         <mission name="SAFETY - Create and operate a roadblock (filter crowds)"/>
-        <mission name="SAFETY - Build a dyke"/>
+        <mission name="SAFETY - Build a dike"/>
         <mission name="SAFETY - Build a firebreak"/>
       </missions>
       <fragorders/>
@@ -3882,4 +3882,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0759829127" -->
+<!-- signature="2221753415" -->
