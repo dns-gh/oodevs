@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.primitives.Illuminate" source-version="1.0.0">
-	<description>LTO - Illuminer une cible en vue d'un tir indirect</description>
+	<description>Illuminer une cible en vue d'un tir indirect</description>
 	<parameters>
 		<parameter name="entities">
 			<description>Les éléments à illuminer.</description>

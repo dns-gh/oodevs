@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.skills.CoordinateIlluminationAndIndirectFire" source-version="1.0.0">
-	<description>LTO - Coordonne l'illumination entre le tireur et l'illuminateur d'une cible en vue d'un tir indirect permettant au tireur de se déployer</description>
+	<description>Coordonne l'illumination entre le tireur et l'illuminateur d'une cible en vue d'un tir indirect permettant au tireur de se déployer</description>
 	<parameters>
 		<parameter name="entities">
 			<description>Les éléments à illuminer et à tirer.</description>

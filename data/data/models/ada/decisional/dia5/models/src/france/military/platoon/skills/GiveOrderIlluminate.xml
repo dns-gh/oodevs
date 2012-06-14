@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.skills.GiveOrderIlluminate" source-version="1.0.0">
-  <description>LTO - Coordonne l'illumination entre le tireur et l'illuminateur d'une cible en vue du déploiement du tireur et de son tir indirect</description>
+  <description>Coordonne l'illumination entre le tireur et l'illuminateur d'une cible en vue du déploiement du tireur et de son tir indirect</description>
   <parameters>
     <parameter name="entity">
       <type>
