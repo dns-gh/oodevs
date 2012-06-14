@@ -69,10 +69,10 @@ void Async::Join()
     {
         T_Futures next;
         boost::unique_lock< boost::mutex > lock( access_ );
+        if( futures_.empty() )
+            return;
         next.swap( futures_ );
         lock.unlock();
-        if( next.empty() )
-            return;
         boost::wait_for_all( next.begin(), next.end() );
     }
 }
