@@ -13,6 +13,7 @@
 #include "FileSystem_ABC.h"
 #include "Package_ABC.h"
 #include "PortFactory_ABC.h"
+#include "PropertyTree.h"
 #include "UuidFactory_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
@@ -67,7 +68,7 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
     Node::T_Process ptr = GetProcess( tree, runtime );
     if( !ptr  )
         return Node::T_Process();
-    if( expected == tree.get< int >( "port" ) && ptr->GetName() == tree.get< std::string >( "process.name" ) )
+    if( expected == Get< int >( tree, "port" ) && ptr->GetName() == Get< std::string >( tree, "process.name" ) )
         return ptr;
     return Node::T_Process();
 }
@@ -104,13 +105,13 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     : packages_ ( packages )
     , system_   ( system )
     , uuids_    ( uuids )
-    , id_       ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
-    , name_     ( tree.get< std::string >( "name" ) )
+    , id_       ( Get< Uuid >( tree, "id" ) )
+    , name_     ( Get< std::string >( tree, "name" ) )
     , root_     ( root )
-    , port_     ( AcquirePort( tree.get< int >( "port" ), ports ) )
+    , port_     ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , access_   ( new boost::shared_mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
-    , stopped_  ( tree.get< bool >( "stopped" ) )
+    , stopped_  ( Get< bool >( tree, "stopped" ) )
     , async_    ( new Async( pool ) )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );

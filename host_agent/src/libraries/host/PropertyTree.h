@@ -19,6 +19,13 @@ namespace host
     Tree FromJson( const std::string& data );
     std::string ToXml( const Tree& tree );
     Tree FromXml( const std::string& data );
+
+    template< typename T >
+    T Get( const Tree& tree, const std::string& key, const T& def = T() )
+    {
+        const boost::optional< T > data = tree.get_optional< T >( key );
+        return data == boost::none ? def : *data;
+    }
 }
 
 #endif // PROPERTY_TREE_H

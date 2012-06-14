@@ -52,12 +52,6 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
 
 namespace
 {
-std::string Get( const Tree& tree, const std::string& key, const std::string& def = std::string() )
-{
-    const boost::optional< std::string > data = tree.get_optional< std::string >( key );
-    return data == boost::none ? def : *data;
-}
-
 struct Metadata
 {
     Metadata( const std::string& package, const std::string& version )
@@ -101,7 +95,7 @@ struct Metadata
 
     static std::string GetVersion( const Tree& tree, const std::string& key )
     {
-        return Get( tree, key, "Unversioned" );
+        return Get< std::string >( tree, key, "Unversioned" );
     }
 
     static Metadata Reload( const FileSystem_ABC& system, const Path& root )
@@ -151,9 +145,9 @@ struct Metadata
 
 private:
     Metadata( const Tree& tree )
-        : package_( Get( tree, "package", "" ) )
+        : package_( Get< std::string >( tree, "package", "" ) )
         , version_( GetVersion( tree, "version" ) )
-        , tomb_   ( Utf8Convert( Get( tree, "tomb", "" ) ) )
+        , tomb_   ( Utf8Convert( Get< std::string >( tree, "tomb", "" ) ) )
         , links_  ( 0 )
     {
         // NOTHING
@@ -514,9 +508,9 @@ struct Exercise : public Item
 {
     Exercise( const FileSystem_ABC& system, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
         : Item     ( system, root, id, GetFilename( file, "exercises" ), Format( system.GetLastWrite( file ) ), meta )
-        , briefing_( Get( more, "exercise.meta.briefing.text" ) )
-        , model_   ( Get( more, "exercise.model.<xmlattr>.dataset" ) )
-        , terrain_ ( Get( more, "exercise.terrain.<xmlattr>.name" ) )
+        , briefing_( Get< std::string >( more, "exercise.meta.briefing.text" ) )
+        , model_   ( Get< std::string >( more, "exercise.model.<xmlattr>.dataset" ) )
+        , terrain_ ( Get< std::string >( more, "exercise.terrain.<xmlattr>.name" ) )
     {
         // NOTHING
     }
@@ -649,8 +643,8 @@ bool Package::Parse()
             return false;
 
         const Tree tree = FromXml( system_.ReadFile( index ) );
-        const std::string name = Get( tree, "content.name" );
-        const std::string description = Get( tree, "content.description" );
+        const std::string name = Get< std::string >( tree, "content.name" );
+        const std::string description = Get< std::string >( tree, "content.description" );
         if( name.empty() || description.empty() )
             return false;
 
@@ -843,8 +837,8 @@ namespace
 {
 void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pkg )
 {
-    const Path root = Utf8Convert( src.get< std::string >( key + ".root" ) );
-    const std::string checksum = src.get< std::string >( key + ".checksum" );
+    const Path root = Utf8Convert( Get< std::string >( src, key + ".root"  ) );
+    const std::string checksum = Get< std::string >( src, key + ".checksum" );
     Package_ABC::T_Item item = pkg.Find( root, checksum, false );
     if( item )
         item->Link( dst, pkg, false );
@@ -868,7 +862,7 @@ namespace
 {
 void Unlink( Async& async, const FileSystem_ABC& system, const Tree& src, const std::string& key, const Package_ABC& pkg )
 {
-    Package_ABC::T_Item item = pkg.Find( Dependency( key, src.get< std::string >( key + ".name" ) ), false );
+    Package_ABC::T_Item item = pkg.Find( Dependency( key, Get< std::string >( src, key + ".name" ) ), false );
     if( item )
         item->Unlink( async, system );
 }

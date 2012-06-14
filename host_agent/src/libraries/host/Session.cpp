@@ -94,14 +94,14 @@ Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC&
     Session::T_Process ptr = GetProcess( tree, runtime );
     if( !ptr  )
         return Session::T_Process();
-    if( expected != tree.get< int >( "port" ) || ptr->GetName() != tree.get< std::string >( "process.name" ) )
+    if( expected != Get< int >( tree, "port" ) || ptr->GetName() != Get< std::string >( tree, "process.name" ) )
         return Session::T_Process();
     return ptr;
 }
 
 Path GetPath( const Tree& src, const std::string& key )
 {
-    return Utf8Convert( src.get< std::string >( key ) );
+    return Utf8Convert( Get< std::string >( src, key ) );
 }
 }
 
@@ -128,15 +128,15 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
-    : id_     ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
+    : id_     ( Get< Uuid >( tree, "id" ) )
     , root_   ( root )
     , node_   ( node )
-    , name_   ( tree.get< std::string >( "name" ) )
+    , name_   ( Get< std::string >( tree, "name" ) )
     , links_  ( node.LinkExercise( tree.get_child( "links" ) ) )
-    , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
+    , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , access_ ( new boost::shared_mutex )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
-    , status_ ( process_ ? ConvertStatus( tree.get< std::string >( "status" ) ) : Session::STATUS_STOPPED )
+    , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
 {
     // NOTHING
 }
@@ -221,8 +221,8 @@ Tree Session::GetProperties( bool save ) const
     else
         BOOST_FOREACH( const Tree::value_type& it, links_ )
         {
-            tree.put( it.first + ".name",     it.second.get< std::string >( "name" ) );
-            tree.put( it.first + ".checksum", it.second.get< std::string >( "checksum" ) );
+            tree.put( it.first + ".name",     Get< std::string >( it.second, "name" ) );
+            tree.put( it.first + ".checksum", Get< std::string >( it.second, "checksum" ) );
         }
     return tree;
 }
