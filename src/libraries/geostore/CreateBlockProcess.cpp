@@ -13,9 +13,6 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "preparation/UrbanModel.h"
-#include "urban/GeometryAttribute.h"
-#include "urban/Model_ABC.h"
-#include "urban/TerrainObject_ABC.h"
 
 using namespace geostore;
 
