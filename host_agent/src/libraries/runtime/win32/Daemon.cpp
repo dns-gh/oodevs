@@ -11,6 +11,7 @@
 
 #include "Api.h"
 #include "cpplog/cpplog.hpp"
+#include "runtime/Event.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
@@ -79,7 +80,6 @@ struct Daemon::Private
         : log_    ( log )
         , runtime_( runtime )
         , api_    ( log )
-        , end_    ( false )
     {
         memset( &state_, 0, sizeof state_ );
         state_.dwServiceType      = SERVICE_WIN32;
@@ -306,14 +306,10 @@ struct Daemon::Private
         {
             case SERVICE_CONTROL_SHUTDOWN:
             case SERVICE_CONTROL_STOP:
-            {
-                boost::unique_lock< boost::mutex > lock( it->access_ );
-                it->SetState( SERVICE_STOP_PENDING );
-                // note that notify_one does nothing until daemon thread is ready to wait
-                for( ; !it->end_; it->signal_.timed_wait( lock, boost::posix_time::milliseconds( 100 ) ) )
-                    it->signal_.notify_one();
+                it->SetStateLocked( SERVICE_STOP_PENDING );
+                it->end_.Signal();
                 return NO_ERROR;
-            }
+
             case SERVICE_CONTROL_INTERROGATE:
                 return NO_ERROR;
         }
@@ -350,9 +346,7 @@ struct Daemon::Private
     // -----------------------------------------------------------------------------
     void Wait()
     {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        signal_.wait( lock );
-        end_ = true;
+        end_.Wait();
     }
 
 private:
@@ -360,12 +354,11 @@ private:
     const Runtime_ABC& runtime_;
     const Api api_;
     boost::mutex access_;
-    boost::condition_variable signal_;
     T_Task task_;
     SERVICE_STATUS_HANDLE service_;
     SERVICE_STATUS state_;
     static Private* this_;
-    bool end_;
+    Event end_;
 };
 
 Daemon::Private* Daemon::Private::this_ = 0;
