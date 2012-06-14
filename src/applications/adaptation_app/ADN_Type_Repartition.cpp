@@ -79,8 +79,14 @@ void ADN_Type_Repartition::WriteArchive( xml::xostream& output ) const
 // Name: ADN_Type_Repartition::WriteArchive
 // Created: MGD 2011-02-22
 //-----------------------------------------------------------------------------
-void ADN_Type_Repartition::CheckNoError( const std::string& filename ) const
+void ADN_Type_Repartition::CheckNoError( const std::string& filename, const QString& dataName ) const
 {
-    if( male_.GetData() + female_.GetData() + children_.GetData() != 100 )
-        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", "Invalid repartition on tab \'%1\' - Males/Females/Children repartition doesn't fit 100%." ).arg( parentGuiName_ ).ascii() );
+    double total = male_.GetData() + female_.GetData() + children_.GetData();
+    if( total!= 100 )
+        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", 
+                                                             "Invalid repartition on tab \'%1\' -"
+                                                             " Males/Females/Children repartition must be 100%."
+                                                             " Current value for \'%2\': %3%." ).arg( parentGuiName_ )
+                                                                                                .arg( dataName )
+                                                                                                .arg( total ).ascii() );
 }

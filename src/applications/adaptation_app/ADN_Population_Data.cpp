@@ -705,7 +705,7 @@ void ADN_Population_Data::PopulationInfos::ReadUrbanEffect( xml::xistream& input
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, int nMosId ) const
 {
-    repartition_.CheckNoError( "ADN_Population_Data" );
+    repartition_.CheckNoError( "ADN_Population_Data", strName_.GetData().c_str() );
 
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
