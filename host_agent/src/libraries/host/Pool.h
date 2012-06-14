@@ -12,15 +12,7 @@
 
 #include "Pool_ABC.h"
 
-#if defined(WIN32) && !defined(_WIN32_WINNT)
-#define  _WIN32_WINNT 0x0501
-#define  UNDEF_WIN32_WINNT
-#endif
 #include <boost/asio.hpp>
-#ifdef   UNDEF_WIN32_WINNT
-#undef   UNDEF_WIN32_WINNT
-#undef   _WIN32_WINNT
-#endif
 #include <boost/thread.hpp>
 
 namespace host

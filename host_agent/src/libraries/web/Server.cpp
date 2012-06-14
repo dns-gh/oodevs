@@ -21,9 +21,6 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
-#ifdef WIN32
-#   define _WIN32_WINNT 0x0501
-#endif
 #ifdef _MSC_VER
 #   pragma warning( push )
 #   pragma warning( disable : 4100 4127 4244 4345 4512 )

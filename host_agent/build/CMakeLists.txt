@@ -14,6 +14,11 @@ include_directories( ${root_dir}/src/libraries )
 add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 add_definitions( -D_SCL_SECURE_NO_WARNINGS )
 
+if( WIN32 )
+    add_definitions( -D_WIN32_WINNT=0x0600 )
+    add_definitions( -DWINVER=0x0600 )
+endif()
+
 set( BOOST_INCLUDEDIR ${dev_dir}/include )
 find_package( Boost REQUIRED )
 set( ZLIB_ROOT ${dev_dir}/include/zlib ${dev_dir}/lib/${platform} )
