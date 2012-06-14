@@ -209,8 +209,8 @@ Tree Node::Save() const
 bool Node::Start( const T_Starter& starter )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_ )
-        return true;
+    if( process_  && process_->IsAlive() )
+        return false;
 
     T_Process ptr = starter( *this );
     if( !ptr )
