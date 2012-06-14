@@ -199,7 +199,8 @@ bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
 {
     try
     {
-        boost::filesystem::ofstream( path ) << content.c_str();
+        boost::filesystem::ofstream ofs( path );
+        ofs << content;
     }
     catch( const std::exception& err )
     {
