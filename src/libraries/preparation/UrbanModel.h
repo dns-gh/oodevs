@@ -39,6 +39,7 @@ namespace tools
 }
 
 class IdManager;
+class QProgressDialog;
 class StaticModel;
 class UrbanFactory_ABC;
 class UrbanMenuManager;
@@ -79,7 +80,7 @@ public:
     void CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
-    void ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config ) const;
+    void ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const;
     //@}
 
     //! @name Accessors

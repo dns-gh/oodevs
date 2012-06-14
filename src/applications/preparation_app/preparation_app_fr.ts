@@ -2511,8 +2511,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Sélectionner un répertoire d&apos;export</translation>
     </message>
     <message>
-        <source>Export in progress...</source>
-        <translation>Export en cours...</translation>
+        <source>Error during export process</source>
+        <translation>Erreur lors de l&apos;export</translation>
     </message>
     <message>
         <source>Terrain export</source>
@@ -2521,10 +2521,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Export successfull.</source>
         <translation>Export réussi.</translation>
-    </message>
-    <message>
-        <source>Error during export process</source>
-        <translation>Erreur lors de l&apos;export</translation>
     </message>
 </context>
 <context>

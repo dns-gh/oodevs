@@ -2502,7 +2502,11 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export in progress...</source>
+        <source>Error during export process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export shapefiles directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2511,14 +2515,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Export successfull.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error during export process</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export shapefiles directory:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
