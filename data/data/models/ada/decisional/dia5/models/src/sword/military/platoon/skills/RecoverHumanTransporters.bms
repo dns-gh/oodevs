@@ -16,6 +16,5 @@ rootnode
         local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )       
             
         Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } } )
-DEC_Trace( "TOTO" )
     end
 }

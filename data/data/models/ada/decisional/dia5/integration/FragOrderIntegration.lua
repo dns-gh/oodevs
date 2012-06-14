@@ -135,8 +135,6 @@ integration.startFragOrderTask = function( self )
 
   local orderType = self.source:GetType()
 
-  DEC_Trace( "Order: "..orderType )
-
   if orderType == "france.military.platoon.tasks.Illuminer" then
       mission.entity = CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() )
       if self.source == meKnowledge.source then
