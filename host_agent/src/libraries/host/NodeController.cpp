@@ -14,7 +14,6 @@
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
 #include "Node_ABC.h"
-#include "Pool_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "Proxy_ABC.h"
@@ -87,6 +86,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
         throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
     if( !system_.IsDirectory( web_ ) )
         throw std::runtime_error( runtime::Utf8Convert( web_ ) + " is not a directory" );
+    async_->Go( boost::bind( &NodeController::Update, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,6 +95,8 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 NodeController::~NodeController()
 {
+    end_.Signal();
+    async_->Join();
     nodes_->Foreach( boost::bind( &NodeController::Stop, this, _1, false ) );
 }
 
@@ -119,6 +121,19 @@ void NodeController::Reload()
             LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path );
             continue; // skip invalid entry
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::Update
+// Created: BAX 2012-06-14
+// -----------------------------------------------------------------------------
+void NodeController::Update()
+{
+    while( !end_.IsSignaled() )
+    {
+        nodes_->Foreach( boost::bind( &NodeController::Start, this, _1, false, true ) );
+        end_.Wait( boost::posix_time::seconds( 5 ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +186,7 @@ void NodeController::Create( Node_ABC& node, bool reload )
     if( reload )
         Save( node );
     else
-        Start( node, true );
+        Start( node, true, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +256,7 @@ NodeController::T_Node NodeController::Start( const Uuid& id ) const
     T_Node node = nodes_->Get( id );
     if( !node )
         return T_Node();
-    Start( *node, false );
+    Start( *node, false, false );
     return node;
 }
 
@@ -262,10 +277,10 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Start( Node_ABC& node, bool force ) const
+void NodeController::Start( Node_ABC& node, bool force, bool restart ) const
 {
-    bool valid = node.Start( boost::bind( &NodeController::StartWith, this, _1 ), false );
-    if( valid || force )
+    bool modified = node.Start( boost::bind( &NodeController::StartWith, this, _1 ), restart );
+    if( modified || force )
         Save( node );
 }
 
@@ -275,8 +290,8 @@ void NodeController::Start( Node_ABC& node, bool force ) const
 // -----------------------------------------------------------------------------
 void NodeController::Stop( Node_ABC& node, bool skip ) const
 {
-    bool valid = node.Stop();
-    if( valid && !skip )
+    bool modified = node.Stop();
+    if( modified && !skip )
         Save( node );
 }
 

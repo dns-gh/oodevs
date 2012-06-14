@@ -11,6 +11,7 @@
 #define NODE_CONTROLLER_H
 
 #include "NodeController_ABC.h"
+#include "runtime/Event.h"
 #include <boost/filesystem/path.hpp>
 
 namespace cpplog
@@ -95,10 +96,11 @@ public:
 private:
     //! @name Private methods
     //@{
+    void Update();
     void Save( const Node_ABC& node ) const;
     void Create( Node_ABC& node, bool reload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Node_ABC& node ) const;
-    void Start( Node_ABC& node, bool force ) const;
+    void Start( Node_ABC& node, bool force, bool restart ) const;
     void Stop( Node_ABC& node, bool skip ) const;
     //@}
 
@@ -116,6 +118,7 @@ private:
     const Path web_;
     const std::string type_;
     const std::auto_ptr< Container< Node_ABC > > nodes_;
+    runtime::Event end_;
     const std::auto_ptr< Async > async_;
     //@}
 };
