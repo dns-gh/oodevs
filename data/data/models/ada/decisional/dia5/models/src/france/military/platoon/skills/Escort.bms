@@ -40,7 +40,6 @@ rootnode
                if F_Pion_GetNewEscorted( meKnowledge.source ) then
                     F_Pion_SetNewEscorted( meKnowledge.source, false )
                     self.route = F_Pion_GetitMvt( self.escortableUnit.source )
-                    myself.hasRouteForEscorting = false
                else
                     self.route = self.route or F_Pion_GetitMvt( self.escortableUnit.source )
                end
@@ -67,8 +66,23 @@ rootnode
             Activate( skill.links.moveAndTakePosition, 1, { entity  = itinerary } ) -- itinerary is reachable element and a reaching element.
         else
             if not self.arrived then
-                meKnowledge:sendNeedRoute( self.escortableUnit, false )
-                Activate( skill.links.moveToward, 1, { entities  = { self.escortableUnit } } )
+                if myself.canGiveRoute then
+                    if F_Pion_GetNewEscorted( meKnowledge.source ) then
+                        F_Pion_SetNewEscorted( meKnowledge.source, false )
+                    end
+                    self.route = F_Pion_GetitMvt( self.escortableUnit.source )
+                     if self.route then
+                         meKnowledge:sendNeedRoute( self.escortableUnit, false )
+                         local itinerary = CreateKnowledge( france.military.ontologie.classe.Itinerary, self.route )
+                         Activate( skill.links.moveAndTakePosition, 1, { entity  = itinerary } ) -- itinerary is reachable element and a reaching element.
+                     else
+                         meKnowledge:sendNeedRoute( self.escortableUnit, false )
+                         Activate( skill.links.moveToward, 1, { entities  = { self.escortableUnit } } )
+                     end    
+                else  
+                    meKnowledge:sendNeedRoute( self.escortableUnit, false )
+                    Activate( skill.links.moveToward, 1, { entities  = { self.escortableUnit } } )
+                end
             end
         end
     end,
