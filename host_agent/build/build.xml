@@ -11,26 +11,28 @@
         <os family="windows"/>
     </condition>
 
+    <condition property="win.defines" value="_CRT_SECURE_NO_WARNINGS,_SCL_SECURE_NO_WARNINGS,_WIN32_WINNT=0x0600,WINVER=0x0600">
+        <os family="windows"/>
+    </condition>    
+
     <!-- Libraries -->
     <target name="libraries" depends="runtime,host,web" description="build all libraries"/>
 
     <target name="runtime" description="build runtime library">
         <build-lib name="runtime">
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-lib>
     </target>
 
     <target name="host" description="build host library">
         <build-lib name="host">
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
-            <defineset define="_SCL_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-lib>
     </target>
 
     <target name="web" description="build web library">
         <build-lib name="web">
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
-            <defineset define="_SCL_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-lib>
     </target>
 
@@ -40,7 +42,7 @@
     <target name="cloud_server" depends="runtime,host,web" description="build cloud server">
         <build-app name="cloud_server" subsystem="console" depends="boost,cpp-netlib,libarchive" root="${applications.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix},zlib">
             <syslibset libs="advapi32,ws2_32"/>
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-app>
     </target>
 
@@ -49,19 +51,19 @@
 
     <target name="runtime_test" depends="runtime" description="build runtime tests">
         <build-test name="runtime" depends="boost" libs="runtime@{suffix}">
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-test>
     </target>
 
     <target name="host_test" depends="host,runtime" description="build host tests">
         <build-test name="host" depends="boost" libs="host@{suffix},runtime@{suffix}">
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-test>
     </target>
 
     <target name="web_test" depends="host,web" description="build web tests">
         <build-test name="web" depends="boost" libs="host@{suffix},web@{suffix}">
-            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="${win.defines}"/>
         </build-test>
     </target>
 
