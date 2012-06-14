@@ -121,6 +121,7 @@ public:
 private:
     const std::string error_;
     const HttpStatusCode code_;
+    HttpException& operator=( const HttpException& );
 };
 
 // -----------------------------------------------------------------------------
