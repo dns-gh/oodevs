@@ -72,6 +72,7 @@ private slots:
     //@{
     void OnSelectionChanged( Q3ListViewItem* item );
     void OnSelectionChanged( Q3ListBoxItem* item );
+    void OnModelNameChanged( const QString& text );
     //@}
 
 private:
@@ -83,6 +84,7 @@ private:
     virtual void OnLanguageChanged();
     QString GetCurrentSelection() const;
     QTextEdit* GetCurrentDescription() const;
+    QString GetCurrentPackage() const;
     bool BrowseClicked();
     void InternalExportPackage( zip::ozipfile& archive );
     void WriteContent( zip::ozipfile& archive ) const;
@@ -115,6 +117,7 @@ private:
     Q3ListBox*                  terrainList_;
     // Referential
     QTextEdit*                  modelDescription_;
+    QLineEdit*                  modelName_;
     QCheckBox*                  decisionalCheckBox_;
     Q3ListBox*                  physicalList_;
     // Labels
@@ -123,6 +126,7 @@ private:
     QLabel*                     packageContentLabel_;
     QLabel*                     terrainDescriptionLabel_;
     QLabel*                     terrainLabel_;
+    QLabel*                     modelsNameLabel_;
     QLabel*                     modelsDescriptionLabel_;
     QLabel*                     modelsPhysicalLabel_;
     //@}

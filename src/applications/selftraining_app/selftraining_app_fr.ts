@@ -300,6 +300,10 @@
         <source>Include decisional model</source>
         <translation>Inclure le modèle décisionnel</translation>
     </message>
+    <message>
+        <source>Model name:</source>
+        <translation>Nom du modèle :</translation>
+    </message>
 </context>
 <context>
     <name>HomePage</name>
