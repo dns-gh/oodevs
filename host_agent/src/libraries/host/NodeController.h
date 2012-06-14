@@ -96,10 +96,10 @@ private:
     //! @name Private methods
     //@{
     void Save( const Node_ABC& node ) const;
-    void Create( Node_ABC& node, bool isReload );
+    void Create( Node_ABC& node, bool reload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Node_ABC& node ) const;
-    void Start( Node_ABC& node, bool mustSave ) const;
-    void Stop( Node_ABC& node, bool skipSave ) const;
+    void Start( Node_ABC& node, bool force ) const;
+    void Stop( Node_ABC& node, bool skip ) const;
     //@}
 
 private:

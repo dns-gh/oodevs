@@ -170,9 +170,11 @@ namespace mocks
         {
             MOCK_EXPECT( GetPid ).returns( pid );
             MOCK_EXPECT( GetName ).returns( name );
+            MOCK_EXPECT( IsAlive ).returns( true );
         }
         MOCK_METHOD( GetPid, 0 );
         MOCK_METHOD( GetName, 0 );
+        MOCK_METHOD( IsAlive, 0 );
         MOCK_METHOD( Join, 1 );
         MOCK_METHOD( Kill, 1 );
     };

@@ -161,14 +161,14 @@ NodeController::T_Node NodeController::Get( const Uuid& id ) const
 // Name: NodeController::Create
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-void NodeController::Create( Node_ABC& node, bool isReload )
+void NodeController::Create( Node_ABC& node, bool reload )
 {
     const int port = node.GetPort();
-    LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetName() << " :" << port;
-    if( !isReload )
+    LOG_INFO( log_ ) << "[" << type_ << "] " << ( reload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetName() << " :" << port;
+    if( !reload )
         system_.MakePaths( node.GetRoot() );
     proxy_.Register( GetPrefix( type_, node ), "localhost", port );
-    if( isReload )
+    if( reload )
         Save( node );
     else
         Start( node, true );
@@ -262,10 +262,10 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Start( Node_ABC& node, bool mustSave ) const
+void NodeController::Start( Node_ABC& node, bool force ) const
 {
     bool valid = node.Start( boost::bind( &NodeController::StartWith, this, _1 ) );
-    if( valid || mustSave )
+    if( valid || force )
         Save( node );
 }
 
@@ -273,10 +273,10 @@ void NodeController::Start( Node_ABC& node, bool mustSave ) const
 // Name: NodeController::Stop
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void NodeController::Stop( Node_ABC& node, bool skipSave ) const
+void NodeController::Stop( Node_ABC& node, bool skip ) const
 {
     bool valid = node.Stop();
-    if( valid && !skipSave )
+    if( valid && !skip )
         Save( node );
 }
 
