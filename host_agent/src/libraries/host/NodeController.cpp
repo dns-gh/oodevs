@@ -264,7 +264,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void NodeController::Start( Node_ABC& node, bool force ) const
 {
-    bool valid = node.Start( boost::bind( &NodeController::StartWith, this, _1 ) );
+    bool valid = node.Start( boost::bind( &NodeController::StartWith, this, _1 ), false );
     if( valid || force )
         Save( node );
 }

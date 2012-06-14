@@ -88,6 +88,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , root_     ( root )
     , port_     ( ports.Create() )
     , access_   ( new boost::shared_mutex() )
+    , stopped_  ( false )
     , async_    ( new Async( pool ) )
 {
     install_ = packages_.Make( root_ / "install", true );
@@ -109,6 +110,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , port_     ( AcquirePort( tree.get< int >( "port" ), ports ) )
     , access_   ( new boost::shared_mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , stopped_  ( tree.get< bool >( "stopped" ) )
     , async_    ( new Async( pool ) )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
@@ -195,6 +197,7 @@ Tree Node::Save() const
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     if( cache_ )
         tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
+    tree.put( "stopped", stopped_ );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );
@@ -206,15 +209,20 @@ Tree Node::Save() const
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const T_Starter& starter )
+bool Node::Start( const T_Starter& starter, bool restart )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_  && process_->IsAlive() )
+    if( stopped_ && restart )
         return false;
+
+    bool modified = stopped_;
+    stopped_ = false;
+    if( process_  && process_->IsAlive() )
+        return modified;
 
     T_Process ptr = starter( *this );
     if( !ptr )
-        return false;
+        return modified;
 
     process_ = ptr;
     return true;
@@ -227,8 +235,10 @@ bool Node::Start( const T_Starter& starter )
 bool Node::Stop()
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    bool modified = !stopped_;
+    stopped_ = true;
     if( !process_ )
-        return true;
+        return modified;
 
     process_->Kill( 0 );
     process_.reset();

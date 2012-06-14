@@ -71,7 +71,7 @@ public:
     //! @name Public methods
     //@{
     virtual Tree Save() const;
-    virtual bool Start( const T_Starter& starter );
+    virtual bool Start( const T_Starter& starter, bool restart );
     virtual bool Stop();
     //@}
 
@@ -119,6 +119,7 @@ private:
     boost::shared_ptr< Package_ABC > install_;
     boost::shared_ptr< Package_ABC > cache_;
     T_Process process_;
+    bool stopped_;
     const std::auto_ptr< Async > async_;
     //@}
 };

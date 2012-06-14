@@ -84,7 +84,7 @@ namespace
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( Starter ).with( mock::same( node ) ).returns( process );
-            BOOST_REQUIRE( node.Start( Starter ) );
+            BOOST_REQUIRE( node.Start( Starter, false ) );
             return process;
         }
 
@@ -120,13 +120,15 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+        "\"stopped\":\"false\""
         "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"running\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+        "\"stopped\":\"false\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
@@ -135,7 +137,8 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+        "\"stopped\":\"true\""
         "}" );
 }
 
@@ -167,7 +170,7 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
 {
     NodePtr node = MakeNode();
     StartNode( *node, processPid, processName );
-    BOOST_CHECK( node->Start( Starter ) );
+    BOOST_CHECK( !node->Start( Starter, false ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
