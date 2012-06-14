@@ -172,6 +172,20 @@ bool ControlsChecker::IsWriteable( const kernel::Entity_ABC& entity, const UserP
 {
     if( profile.IsWriteable( entity ) )
         return true;
+    const kernel::TacticalHierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( hierarchy )
+    {
+        bool valid = true;
+        unsigned int count = 0u;
+        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            valid = profile.IsWriteable( it.NextElement() ) && valid;
+            ++count;
+        }
+        if( valid && count != 0u )
+            return true;
+    }
     if( const kernel::Entity_ABC* parent = entity.Get< ProfileHierarchies_ABC >().GetSuperior() )
         return IsWriteable( *parent, profile );
     return false;
