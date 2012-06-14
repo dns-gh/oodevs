@@ -84,12 +84,13 @@ void TerrainExportDialog::showEvent( QShowEvent* event )
 
 namespace
 {
-    void DisplayMessage( QSplashScreen& splash, const QString& message )
+    void SetProgression( QProgressDialog& progressDialog, int value, const QString& text )
     {
-        splash.show();
-        splash.raise();
-        splash.activateWindow();
-        splash.showMessage( message, Qt::AlignCenter, Qt::white );
+        if( !value )
+            progressDialog.show();
+        progressDialog.setLabelText( text );
+        progressDialog.setValue( value );
+        qApp->processEvents();
     }
 }
 
@@ -99,22 +100,25 @@ namespace
 // -----------------------------------------------------------------------------
 void TerrainExportDialog::accept()
 {
+    QDialog::accept();
     const std::string path = pathEditor_->text().toStdString();
     assert( !path.empty() && bfs::exists( path ) && bfs::is_directory( path ) );
-    QPixmap pixmap( 200, 50 );
-    pixmap.fill( Qt::black );
-    QSplashScreen splash( pixmap );
-    DisplayMessage( splash, tr( "Export in progress..." ) );
+
+    QProgressDialog progressDialog( "", "", 0, 100, this, Qt::SplashScreen );
+    progressDialog.setAutoClose( true );
+    progressDialog.setContentsMargins( 5, 5, 5, 5 );
+    progressDialog.setCancelButton( 0 );
+
     try
     {
-        urbanModel_.ExportShapeFile( path, config_ );
+        urbanModel_.ExportShapeFile( path, config_, progressDialog );
         QMessageBox::information( this, tr( "Terrain export" ),tr( "Export successfull." ) );
     }
     catch( std::exception& e )
     {
+        SetProgression( progressDialog, 100, "" );
         QMessageBox::critical( this, tr( "Error during export process" ), e.what() );
     }
-    QDialog::accept();
 }
 
 // -----------------------------------------------------------------------------

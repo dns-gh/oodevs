@@ -33,6 +33,7 @@
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 #include <QtGui/qmessagebox.h>
+#include <QtGui/qprogressdialog.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( disable : 4355 )
@@ -565,19 +566,33 @@ void UrbanModel::GetListWithinCircle( const geometry::Point2f& center, float rad
     }
 }
 
+namespace
+{
+    void SetProgression( QProgressDialog& progressDialog, int value, const QString& text )
+    {
+        if( !value )
+            progressDialog.show();
+        progressDialog.setLabelText( text );
+        progressDialog.setValue( value );
+        qApp->processEvents();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ExportShapeFile
 // Created: ABR 2012-06-13
 // -----------------------------------------------------------------------------
-void UrbanModel::ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config ) const
+void UrbanModel::ExportShapeFile( const std::string exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const
 {
     boost::shared_ptr< Translator > trans( new Translator( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) ) );
 
+    SetProgression( progressDialog, 0, tools::translate( "UrbanModel", "Exporting terrain data..." ) );
     std::auto_ptr< TerrainExportManager > pTerrainExportManager( new TerrainExportManager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, *trans ) );
     pTerrainExportManager->Run();
     pTerrainExportManager.release();
-
+    SetProgression( progressDialog, 50, tools::translate( "UrbanModel", "Exporting urban data..." ) );
     std::auto_ptr< UrbanExportManager > pUrbanExportManager( new UrbanExportManager( exportDirectory, *trans, *this ) );
     pUrbanExportManager->Run();
     pUrbanExportManager.release();
+    SetProgression( progressDialog, 100, "" );
 }

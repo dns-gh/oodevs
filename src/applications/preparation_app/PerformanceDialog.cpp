@@ -77,17 +77,6 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     loadLevel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     progressValue_->setOrientation( Qt::Vertical );
     limitLine_->setText( "<b>____<\b>" );
-
-    QDesktopWidget* pDesktop = QApplication::desktop();
-    if( pDesktop )
-    {
-        QWidget* pScreen = pDesktop->screen( pDesktop->primaryScreen() );
-        if( pScreen )
-        {
-            QRect scr = pScreen->geometry();
-            move( ( scr.x() + scr.width() - size().width() ) / 2, ( scr.y() + scr.height() - size().height() ) / 2 - 50 );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +94,6 @@ PerformanceDialog::~PerformanceDialog()
 // -----------------------------------------------------------------------------
 void PerformanceDialog::showEvent( QShowEvent* /* pEvent */ )
 {
-    if( parent() && parent()->parent() )
-    {
-        QPoint parentPos = static_cast< QWidget* >( parent()->parent() )->pos();
-        QSize parentSize = static_cast< QWidget* >( parent()->parent() )->size();
-        move( ( parentPos.x() + parentSize.width() - size().width() ) / 2, ( parentPos.y() + parentSize.height() - size().height() ) / 2 );
-    }
-
     UpdateDisplay();
 }
 
