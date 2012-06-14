@@ -37,6 +37,7 @@ integration.isTask = function( self )
          orderType == "security.behaviors.tasks.StopAndGoToGarage" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
+         orderType == "Rep_OrderConduite_RecupererTransporteurs" or
          orderType == "Rep_OrderConduite_SArreter" or
          orderType == "Rep_OrderConduite_Poursuivre" or
          orderType == "Rep_OrderConduite_PasserEnSilenceRadar" or
@@ -77,6 +78,7 @@ integration.mustBePropagate = function( self )
          orderType == "france.military.platoon.tasks.DeposerUnite" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
+         orderType == "Rep_OrderConduite_RecupererTransporteurs" or
          orderType == "Rep_OrderConduite_SArreter" or
          orderType == "Rep_OrderConduite_Poursuivre" or
          orderType == "Rep_OrderConduite_PoursuivreConvoi" or
@@ -297,7 +299,11 @@ integration.startFragOrderTask = function( self )
         obstacles[#obstacles + 1] = CreateKnowledge( integration.ontology.types.object, obstacle )
     end
     mission.obstacles = obstacles
-    obstacles = nil	
+    obstacles = nil
+  elseif orderType == "Rep_OrderConduite_RecupererTransporteurs" then
+    DEC_RecupererTransporteursSansDelai()
+    integration.cleanFragOrder( self )
+    return
   end
 
   masalife.brain.core.startTask( orderType, mission )
