@@ -38,11 +38,7 @@ end
 
 integration.startBuildIt = function( object )
     object[myself] = object[myself] or {}
-    if DEC_GenObject_TypeObstacleManoeuvre( object.source ) then
-        object[myself].actionBuild = DEC_StartPrepareObject( object.source )
-    else
-        object[myself].actionBuild = DEC_StartCreateObject( object.source )
-    end
+    object[myself].actionBuild = DEC_StartCreateObject( object.source )
     actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
