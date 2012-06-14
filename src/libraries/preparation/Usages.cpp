@@ -74,13 +74,13 @@ void Usages::SerializeAttributes( xml::xostream& xos ) const
         return;
 
     xos << xml::start( "usages" );
-    BOOST_FOREACH( const kernel::T_Usages::value_type& usage, usages_ )
+    for( kernel::CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
     {
-        if( usage.first == defaultStr_ )
+        if( it->first == defaultStr_ )
             continue;
         xos << xml::start( "usage" )
-            << xml::attribute( "type", usage.first )
-            << xml::attribute( "proportion", usage.second / 100.f )
+                << xml::attribute( "type", it->first )
+                << xml::attribute( "proportion", it->second / 100.f )
             << xml::end;
     }
     xos << xml::end;

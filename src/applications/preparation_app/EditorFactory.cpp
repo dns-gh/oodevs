@@ -345,6 +345,9 @@ void EditorFactory::Call( kernel::RoofShapeType** const& value )
     result_ = editor;
 }
 
+
+#include "clients_kernel/Controller.h"
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: ABR 2012-06-04
@@ -360,5 +363,6 @@ void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
         value->green_ = newColor.green();
         value->blue_  = newColor.blue();
         value->alpha_ = newColor.alpha();
+        controllers_.controller_.Update( *value );
     }
 }
