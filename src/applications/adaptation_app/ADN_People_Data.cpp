@@ -310,7 +310,7 @@ const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
                 !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
                     return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).ascii() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
                            "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
-    repartition_.CheckNoError( "ADN_People_Data" );
+    repartition_.CheckNoError( "ADN_People_Data", strName_.GetData().c_str() );
     return "";
 }
 

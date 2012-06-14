@@ -874,7 +874,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 
     if( bIsCivilian_.GetData() )
     {
-        repartition_.CheckNoError( "ADN_Units_Data" );
+        repartition_.CheckNoError( "ADN_Units_Data", strName_.GetData().c_str() );
         output << xml::start( "repartition" );
         repartition_.WriteArchive( output );
         output  << xml::end;

@@ -5433,8 +5433,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ADN_Type_Repartition</name>
     <message>
-        <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition doesn&apos;t fit 100%.</source>
-        <translation>Répartition invalide sur l&apos;onglet &apos;%1&apos; - La répartition Hommes/Femmes/Enfants ne fait pas 100%.</translation>
+        <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
+        <translation>Répartition invalide sur l&apos;onglet &apos;%1&apos; - La répartition Hommes/Femmes/Enfants doit faire 100%. Valeur actuelle pour &apos;%2&apos; : %3%.</translation>
     </message>
 </context>
 <context>
