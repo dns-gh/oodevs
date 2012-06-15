@@ -2,6 +2,7 @@ return
 {
     init = function( self, params )        
         myself.leadData.firePositionIndex = 0
+        myself.leadData.firePositions = {}
     end,
 
     -- point du stationnement
@@ -35,7 +36,7 @@ return
                 myself.leadData.firePositions = integration.getFirePositions( self.modeDeploiement, params.objective, self.angle )
             end
         end
-        myself.leadData.firePositionIndex = myself.leadData.firePositionIndex % #myself.leadData.firePositions + 1        
+        myself.leadData.firePositionIndex = myself.leadData.firePositionIndex % #myself.leadData.firePositions + 1
         return myself.leadData.firePositions[ myself.leadData.firePositionIndex ]
     end,
 }

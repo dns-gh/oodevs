@@ -412,7 +412,9 @@ integration.getFirePositions = function( modeDeploiement, zone, angle )
         firePositions = DEC_Geometrie_PosDeploiementDoubleRideau( nombrePositions, zone:getPosition(), M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_ENTRE_RIDEAUX, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
     elseif modeDeploiement == eDeploiementSimple_rideau then
         firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, zone:getPosition(), 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
-    end
+    else
+	    firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, zone:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
+	end
     local returnPositions = {}
     for i = 1, #firePositions do
         returnPositions[i] = CreateKnowledge(sword.military.world.Point, firePositions[i])
