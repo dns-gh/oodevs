@@ -21,6 +21,17 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" id="4" name="ArmyAviation - recon in force">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -31,6 +42,17 @@
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreContourEnnemi" dia-type="T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" id="5" name="ArmyAviation - recon enemy positions">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -39,6 +61,17 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" id="6" name="ArmyAviation - destroy (in an area)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -51,6 +84,17 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Targets to be neutralized" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireAeromobile" dia-type="T_Mission_Pion_ALAT_DetruireAeromobile" id="7" name="ArmyAviation - destroy flying enemy">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -60,6 +104,17 @@
       <parameter dia-name="uniteADetruire_" max-occurs="unbounded" min-occurs="1" name="Enemy to destroy" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Freiner" dia-type="T_Mission_Pion_ALAT_Freiner" id="8" name="ArmyAviation - delay">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -69,6 +124,17 @@
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Jalonner" dia-type="T_Mission_Pion_ALAT_Jalonner" id="9" name="ArmyAviation - screen">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -78,6 +144,17 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Escorter" dia-type="T_Mission_Pion_ALAT_Escorter" id="10" name="ArmyAviation - escort">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -88,6 +165,17 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" dia-type="T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" id="12" name="ArmyAviation - helitransport replenishment sites">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -97,6 +185,12 @@
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Helitransporter" dia-type="T_Mission_Pion_ALAT_Helitransporter" id="13" name="ArmyAviation - helitransport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -109,6 +203,12 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With non-loadable equipments" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" id="14" name="ArmyAviation - evacuate">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -118,6 +218,12 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" id="15" name="ArmyAviation - recon">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -126,6 +232,17 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Surveiller" dia-type="T_Mission_Pion_ALAT_Surveiller" id="16" name="ArmyAviation - monitor">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -135,6 +252,17 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_AppuyerDirectAuContact" dia-type="T_Mission_Pion_ALAT_AppuyerDirectAuContact" id="17" name="ArmyAviation - support (in contact)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -145,6 +273,17 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Couvrir" dia-type="T_Mission_Pion_ALAT_Couvrir" id="18" name="ArmyAviation - cover">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -155,6 +294,17 @@
       <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" id="19" name="ArmyAviation - attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -164,6 +314,17 @@
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreZone" dia-type="T_Mission_Pion_ASA_DefendreZone" id="22" name="AirDefenseArtillery - defend area">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2137,6 +2298,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur" id="190" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" name="ArmyAviation - destroy">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2149,6 +2321,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Unit to be neutralized" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansZone" id="191" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" name="ArmyAviation - destroy (in an area)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2161,6 +2344,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Unit to be neutralized" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DonnerCoupArret" dia-type="T_Mission_Automate_ALAT_DonnerCoupArret" id="192" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DonnerCoupArret" name="ArmyAviation - block">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2171,6 +2365,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" dia-type="T_Mission_Automate_ALAT_AttaquerFormationAeromobile" id="193" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" name="ArmyAviation - attack (flying enemy)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2180,6 +2385,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="unitesAAttaquer_" max-occurs="unbounded" min-occurs="1" name="Units to attack" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile" dia-type="T_Mission_Automate_ALAT_RecueillirFormationAeromobile" id="194" mrt-dia-behavior="MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile" name="ArmyAviation - assist flying unit in rearward maneuver">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2190,6 +2406,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Jalonner" dia-type="T_Mission_Automate_ALAT_Jalonner" id="196" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Jalonner" name="ArmyAviation - screen">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2199,6 +2426,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Helitransporter" dia-type="T_Mission_Automate_ALAT_Helitransporter" id="197" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Helitransporter" name="ArmyAviation - helitransport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2211,6 +2449,12 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Appuyer" dia-type="T_Mission_Automate_ALAT_Appuyer" id="198" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Appuyer" name="ArmyAviation - support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2223,6 +2467,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Couvrir" dia-type="T_Mission_Automate_ALAT_Couvrir" id="199" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Couvrir" name="ArmyAviation - cover">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2233,6 +2488,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Surveiller" dia-type="T_Mission_Automate_ALAT_Surveiller" id="200" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Surveiller" name="ArmyAviation - monitor">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2243,6 +2509,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="pointLogistique_" name="Point logistique" optional="false" type="Point"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" id="201" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" name="ArmyAviation - recon">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2251,6 +2528,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="PointRegroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Freiner" dia-type="T_Mission_Automate_ALAT_Freiner" id="202" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Freiner" name="ArmyAviation - delay">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2260,6 +2548,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Escorter" dia-type="T_Mission_Automate_ALAT_Escorter" id="203" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Escorter" name="ArmyAviation - escort">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2270,6 +2569,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Attaquer" dia-type="T_Mission_Automate_ALAT_Attaquer" id="204" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Attaquer" name="ArmyAviation - attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2279,6 +2589,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="courte_portee"/>
+        <value id="1" name="moyenne_portee"/>
+        <value id="2" name="longue_portee"/>
+        <value id="3" name="sans_munitions"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="aa"/>
+        <value id="1" name="as"/>
+        <value id="2" name="polyvalent"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreZone" dia-type="T_Mission_Automate_ASA_DefendreZone" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreZone" name="AirDefenseArtillery - defend area">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3513,4 +3834,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2070212633" -->
+<!-- signature="0168118234" -->

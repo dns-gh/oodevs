@@ -67,13 +67,17 @@ do
 
                                     _continue = false
                                 elseif switch_1 == eTypeLima_LCA then
+DEC_Trace( "LCA trouvee" )
                                     local lima = DEC_GetLimaPoint( pointLima )
                                     if( not DEC_GetMissionLimaFlag( lima ) ) then
+DEC_Trace( "LCA pas encore flaguee" )
                                         do
                                             DEC_SetMissionLimaFlag( lima, true )
                                             DEC_SetMissionLimaFlagHoraire( lima, true )
+DEC_Trace( "LCA est flaguee" )
                                                                                         do
                                                 if( airOrAlat_LCA() ) then
+DEC_Trace( "ALAT Je suis de l'ALAT" )
                                                     do
                                                         if( myself:DEC_Agent_EstEnMouvement() ) then
                                                             do
@@ -96,7 +100,9 @@ do
 
                                                     end
                                                 else
+DEC_Trace( "Not ALAT" )
 if( appuiGeniePions() ) then
+DEC_Trace( "appui Genie" )
                                                         do
                                                             if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                 do
@@ -108,6 +114,7 @@ if( appuiGeniePions() ) then
                                                         end
                                                     else
 if( appuiNbcPionsCommon() ) then
+DEC_Trace( "appui NBC" )
                                                             do
                                                                 if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                     do
@@ -121,6 +128,7 @@ if( appuiNbcPionsCommon() ) then
                                                             end
                                                         else
 if( meleeAbcPionsCommon() ) then
+DEC_Trace( "melee ABC" )
                                                                 do
                                                                     if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                         do
@@ -132,6 +140,7 @@ if( meleeAbcPionsCommon() ) then
                                                                 end
                                                             else
 if( meleeInfPionsCommon() ) then
+DEC_Trace( "melee INF" )
                                                                     do
                                                                         StartActivateOverride( self, self.activations.BEH_Lima_Pion_INF_SurLCA, 1, emptyTable )
                                                                     end

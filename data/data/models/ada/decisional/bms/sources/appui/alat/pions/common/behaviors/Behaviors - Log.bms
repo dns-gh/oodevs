@@ -377,6 +377,7 @@ node "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau"
     },
 
     create = function( self )
+        myself.plotsRavitaillement_ = myself.plotsRavitaillement_ or {}
     end,
 
     activate = function( self )

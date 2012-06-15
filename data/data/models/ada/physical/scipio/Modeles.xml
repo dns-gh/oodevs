@@ -1721,7 +1721,7 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
       <missions>
         <mission name="PION ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -1765,7 +1765,7 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
       <missions>
         <mission name="PION ALAT Appuyer Direct Au Contact"/>
         <mission name="PION ALAT Couvrir"/>
@@ -1811,7 +1811,7 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
       <missions>
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Jalonner"/>
@@ -1852,7 +1852,7 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="AACCP" file="glaise\glaise_appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
       <missions>
         <mission name="PION ALAT Faire Mouvement"/>
         <mission name="PION ALAT Se Faire Decontaminer"/>
@@ -7608,4 +7608,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0352740880" -->
+<!-- signature="2936359836" -->

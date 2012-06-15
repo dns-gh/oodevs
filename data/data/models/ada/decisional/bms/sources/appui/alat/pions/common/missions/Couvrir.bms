@@ -50,7 +50,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
@@ -92,6 +92,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             Activate( self.activations.Act_AbonnerPionAAppui, 1, { x, } )
 
         end
+
+        myself.porteeAction_ = self._namedParams.mission.porteeAction_
+        myself.ambianceMission_ = self._namedParams.mission.ambianceMission_
 
         if( not DIA_IsListEmpty( self.listeCourantePionsACouvrir ) ) then
             do

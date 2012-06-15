@@ -542,13 +542,16 @@ function S_Misc_Copie_MissionPion_Mission( misSrc, misDst )
     return S_Misc_Copie_MissionPion( misSrc, misDst )
 end
 
+local AssignMissionBoolParameter = function( missionPion, parameter, value )
+    DEC_AssignMissionBoolParameter( missionPion, parameter, valur or false )
+end
 local assignMission = {}
 local assignMissionListParameter = {}
 local initializeAssignMissions = function()
 assignMission[ "automateAAppuyer_" ] = DEC_AssignMissionAutomatParameter
 assignMission[ "automateAEscorter_" ] = DEC_AssignMissionAutomatParameter
-assignMission[ "avecMateriel_" ] = DEC_AssignMissionBoolParameter
-assignMission[ "bMarcheRetrograde_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "avecMateriel_" ] = AssignMissionBoolParameter
+assignMission[ "bMarcheRetrograde_" ] = AssignMissionBoolParameter
 assignMission[ "campPrisonniers_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "campRefugies_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "cible_" ] = DEC_AssignMissionPionParameter
@@ -559,7 +562,7 @@ assignMission[ "ennemi_" ] = DEC_AssignMissionAgentKnowledgeParameter
 assignMissionListParameter[ "itineraires_" ] = DEC_AssignMissionPathListParameter
 assignMission[ "modeDeploiement_" ] = DEC_AssignMissionEnumereParameter
 assignMission[ "natureObjectif_" ] = DEC_AssignMissionEnumereParameter
-assignMission[ "neutraliser_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "neutraliser_" ] = AssignMissionBoolParameter
 assignMission[ "objectif_" ] = DEC_AssignMissionLocationParameter
 assignMissionListParameter[ "plotsRavitaillement_" ] = DEC_AssignMissionObjectKnowledgeListParameter
 assignMission[ "pointCible_" ] = DEC_AssignMissionPointParameter
@@ -567,7 +570,7 @@ assignMission[ "pointDeDeploiement_" ] = DEC_AssignMissionPointParameter
 assignMission[ "pointObjectif_" ] = DEC_AssignMissionPointParameter
 assignMission[ "pontFlottant_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "positionDeploiement_" ] = DEC_AssignMissionPointParameter
-assignMission[ "preparerTerrain_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "preparerTerrain_" ] = AssignMissionBoolParameter
 assignMissionListParameter[ "refugies_" ] = DEC_AssignMissionAgentKnowledgeListParameter
 assignMission[ "siteDecontamination_" ] = DEC_AssignMissionObjectKnowledgeParameter
 assignMission[ "siteFranchissement_" ] = DEC_AssignMissionObjectKnowledgeParameter
@@ -598,8 +601,10 @@ assignMission[ "zoneRegroupement_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zone_" ] = DEC_AssignMissionLocationParameter
 assignMissionListParameter[ "zonesAcquisition_" ] = DEC_AssignMissionLocationListParameter
 assignMission[ "positionImplantation_" ] = DEC_AssignMissionPointParameter
-assignMission[ "presenceContreBatterie_" ] = DEC_AssignMissionBoolParameter
-assignMission[ "repeat_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "presenceContreBatterie_" ] = AssignMissionBoolParameter
+assignMission[ "repeat_" ] = AssignMissionBoolParameter
+assignMission[ "porteeAction_" ] = DEC_AssignMissionEnumereParameter
+assignMission[ "ambianceMission_" ] = DEC_AssignMissionEnumereParameter
 end
 
 function DEC_AssignMissionParameter( missionPion, parameter, value )

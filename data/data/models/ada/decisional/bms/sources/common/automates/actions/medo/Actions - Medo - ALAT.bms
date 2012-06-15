@@ -16,6 +16,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.ePhase = self.params[1]
         self._namedParams.pion = self.params[2]
         self._namedParams.plotsRavitaillement = self.params[3]
+        self._namedParams.porteeAction_ = self.params[4]
+        self._namedParams.ambianceMission_ = self.params[5]
     end,
 
     select = function( self )
@@ -58,6 +60,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//copie des paramètres particuliers de cette mission
 ]]DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -82,6 +86,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.listePionsAAppuyer = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     select = function( self )
@@ -126,6 +131,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "unitesAAppuyer_", self._namedParams.listePionsAAppuyer )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -150,6 +156,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.pointDebarquement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     select = function( self )
@@ -194,6 +201,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointDebarquement, self.missionPion, "pointDebarquement_" )
         DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "positionRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -221,6 +229,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.listeUnitesAHeliporter = self.params[7]
         self._namedParams.avecMateriel = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     select = function( self )
@@ -268,6 +277,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "unitesAHeliporter_", self._namedParams.listeUnitesAHeliporter )
         DEC_AssignMissionParameter( self.missionPion, "avecMateriel_", self._namedParams.avecMateriel )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -295,6 +305,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.listeUnitesAHelitransporter = self.params[7]
         self._namedParams.avecMateriel = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     select = function( self )
@@ -342,6 +353,7 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "unitesAHelitransporter_", self._namedParams.listeUnitesAHelitransporter )
         DEC_AssignMissionParameter( self.missionPion, "avecMateriel_", self._namedParams.avecMateriel )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -365,6 +377,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pion = self.params[2]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.porteeAction_ = self.params[5]
+        self._namedParams.ambianceMission_ = self.params[6]
     end,
 
     select = function( self )
@@ -408,6 +422,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -433,6 +449,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.zone = self.params[4]
         self._namedParams.pointRegroupement = self.params[5]
         self._namedParams.plotsRavitaillement = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     select = function( self )
@@ -478,6 +496,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_Copie_Point_Mission( self._namedParams.pointDislocation, self.missionPion, "pointDislocation_" )
         DEC_Copie_Localisation_Mission( self._namedParams.zone, self.missionPion, "zone_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -502,6 +522,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     select = function( self )
@@ -546,6 +568,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -569,6 +593,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pion = self.params[2]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.porteeAction_ = self.params[5]
+        self._namedParams.ambianceMission_ = self.params[6]
     end,
 
     select = function( self )
@@ -612,6 +638,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         --[[//copie des paramètres mission
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -636,6 +664,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     select = function( self )
@@ -680,6 +710,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -704,6 +736,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     select = function( self )
@@ -748,6 +782,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -772,6 +808,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.listeEnis = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     select = function( self )
@@ -816,6 +854,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "uniteADetruire_", self._namedParams.listeEnis )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -843,6 +883,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.ciblesPrioritaires = self.params[7]
         self._namedParams.neutraliser = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
+        self._namedParams.ambianceMission_ = self.params[10]
     end,
 
     select = function( self )
@@ -890,6 +932,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "neutraliser_", self._namedParams.neutraliser )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -915,6 +959,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.unitesAAppuyer = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     select = function( self )
@@ -960,6 +1006,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillement or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
         DEC_AssignMissionParameter( self.missionPion, "unitesAAppuyer_", self._namedParams.unitesAAppuyer )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -985,6 +1033,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.plotsRavitaillements = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.uniteAEscorter = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     select = function( self )
@@ -1030,6 +1080,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -1056,6 +1108,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.uniteACouvrir = self.params[6]
         self._namedParams.directionCouverture = self.params[7]
+        self._namedParams.porteeAction_ = self.params[8]
+        self._namedParams.ambianceMission_ = self.params[9]
     end,
 
     select = function( self )
@@ -1104,6 +1158,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         DEC_AssignMissionParameter( self.missionPion, "unitesACouvrir_", self._namedParams.uniteACouvrir )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements or emptyTable )
         DEC_AssignMissionParameter( self.missionPion, "ciblesPrioritaires_", self._namedParams.ciblesPrioritaires )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
@@ -1128,6 +1184,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
         self._namedParams.localisation = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillements = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     select = function( self )
@@ -1172,6 +1230,8 @@ includedFiles["sources/common/automates/actions/medo/Actions - Medo - ALAT.bms"]
 ]]DEC_Copie_Point_Mission( self._namedParams.pointRegroupement, self.missionPion, "pointRegroupement_" )
         DEC_Copie_Localisation_Mission( self._namedParams.localisation, self.missionPion, "zone_" )
         DEC_AssignMissionParameter( self.missionPion, "plotsRavitaillement_", self._namedParams.plotsRavitaillements or emptyTable )
+        DEC_AssignMissionParameter( self.missionPion, "porteeAction_", self._namedParams.porteeAction_ )
+        DEC_AssignMissionParameter( self.missionPion, "ambianceMission_", self._namedParams.ambianceMission_ )
         if( self._namedParams.ePhase == ePhase_CDT ) then
             DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
         end
