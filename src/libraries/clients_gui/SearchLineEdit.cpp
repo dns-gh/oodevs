@@ -21,7 +21,7 @@ using namespace gui;
 // Name: SearchLineEdit constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-SearchLineEdit::SearchLineEdit( QWidget* parent /*= 0*/ )
+SearchLineEdit::SearchLineEdit( QWidget* parent /* = 0*/ )
     : RichLineEdit( parent )
 {
     // search icon on the left

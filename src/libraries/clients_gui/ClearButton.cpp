@@ -17,7 +17,7 @@ using namespace gui;
 // Name: ClearButton constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ClearButton::ClearButton( QWidget *parent /*= 0*/ )
+ClearButton::ClearButton( QWidget *parent /* = 0*/ )
     : QAbstractButton(parent)
 {
     setCursor( Qt::ArrowCursor );
