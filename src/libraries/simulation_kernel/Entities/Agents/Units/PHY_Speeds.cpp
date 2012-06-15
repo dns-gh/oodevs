@@ -202,29 +202,33 @@ double PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
 {
     if( ! IsPassable( data ) )
         return 0;
-    double rMax = data == TerrainData() ? rBaseSpeed_ : 0;
+    double rMaxArea = data == TerrainData() ? rBaseSpeed_ : 0;
+    double rMaxBorder = rMaxArea;
+    double rMaxLinear = rMaxArea;
     {
         unsigned int nOffset = 0;
         const unsigned char area = data.Area();
         for( CIT_Speed it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
-            if( area & ( 1 << nOffset ) && *it > rMax )
-                rMax = *it;
+            if( area & ( 1 << nOffset ) && *it > rMaxArea )
+                rMaxArea = *it;
     }
     {
         unsigned int nOffset = 0;
         const unsigned char border = data.Border();
         for( CIT_Speed it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
-            if( border & ( 1 << nOffset ) && *it > rMax )
-                rMax = *it;
+            if( border & ( 1 << nOffset ) && *it > rMaxBorder )
+                rMaxBorder = *it;
     }
     {
         unsigned nOffset = 0;
         const unsigned short linear = data.Linear();
         for( CIT_Speed it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
-            if( linear & ( 1 << nOffset ) && *it > rMax )
-                rMax = *it;
+            if( linear & ( 1 << nOffset ) && *it > rMaxLinear )
+                rMaxLinear = *it;
     }
-    return rMax;
+    if( ( data.Area() & TerrainData::Urban().Area() ) && data.IsRoad() )
+        return ( rMaxArea + std::max( rMaxBorder, rMaxLinear ) ) / 2;
+    return std::max( rMaxArea, std::max( rMaxBorder, rMaxLinear ) );
 }
 
 // -----------------------------------------------------------------------------
