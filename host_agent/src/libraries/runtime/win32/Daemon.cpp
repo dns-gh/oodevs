@@ -20,8 +20,6 @@
 
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/thread/condition_variable.hpp>
 #include <windows.h>
 
 using namespace runtime;
@@ -326,7 +324,7 @@ struct Daemon::Private
         SetStateLocked( SERVICE_RUNNING );
         try
         {
-            reply = task_( boost::bind( &Private::Wait, this ) );
+            reply = task_( boost::bind( &Event::Wait, &end_ ) );
         }
         catch( const std::exception& err )
         {
@@ -338,15 +336,6 @@ struct Daemon::Private
             LOG_ERROR( log_ ) << "[daemon] unexpected error during execution";
         }
         SetStateLocked( SERVICE_STOPPED, reply );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: Private::Wait
-    // Created: BAX 2012-06-13
-    // -----------------------------------------------------------------------------
-    void Wait()
-    {
-        end_.Wait();
     }
 
 private:

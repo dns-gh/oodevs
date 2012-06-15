@@ -33,24 +33,17 @@ struct Event : public boost::noncopyable
         // NOTHING
     }
 
-    bool IsSignaled() const
-    {
-        boost::lock_guard< boost::mutex > lock( access_ );
-        return signaled_;
-    }
-
     void Wait()
     {
         boost::unique_lock< boost::mutex > lock( access_ );
-        if( !signaled_ )
-            condition_.wait( lock );
+        condition_.wait( lock, boost::bind( &Event::IsSignaled, this ) );
     }
 
     template< typename T >
     bool Wait( const T& timeout )
     {
         boost::unique_lock< boost::mutex > lock( access_ );
-        return signaled_ ? true : condition_.timed_wait( lock, timeout );
+        return condition_.timed_wait( lock, timeout, boost::bind( &Event::IsSignaled, this ) );
     }
 
     void Signal()
@@ -61,6 +54,10 @@ struct Event : public boost::noncopyable
     }
 
 private:
+    bool IsSignaled() const
+    {
+        return signaled_;
+    }
     mutable boost::mutex access_;
     boost::condition_variable condition_;
     bool signaled_;

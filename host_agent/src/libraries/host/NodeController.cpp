@@ -129,11 +129,8 @@ void NodeController::Reload()
 // -----------------------------------------------------------------------------
 void NodeController::Update()
 {
-    while( !end_.IsSignaled() )
-    {
+    while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
         nodes_->Foreach( boost::bind( &NodeController::Start, this, _1, false, true ) );
-        end_.Wait( boost::posix_time::seconds( 5 ) );
-    }
 }
 
 // -----------------------------------------------------------------------------

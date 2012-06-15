@@ -92,11 +92,8 @@ SessionController::~SessionController()
 // -----------------------------------------------------------------------------
 void SessionController::Update()
 {
-    while( !end_.IsSignaled() )
-    {
+    while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
         sessions_->Foreach( boost::bind( &Session_ABC::Update, _1 ) );
-        end_.Wait( boost::posix_time::seconds( 5 ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
