@@ -22,6 +22,7 @@
 #include "PhysicalAttribute_ABC.h"
 #include "PropertiesDictionary.h"
 #include "UrbanColor_ABC.h"
+#include "StructuralStateAttribute_ABC.h"
 #include "UrbanPositions_ABC.h"
 #include "Usages_ABC.h"
 #include "protocol/Simulation.h"
@@ -298,9 +299,12 @@ void UrbanObject::UpdateColor()
     PhysicalAttribute_ABC* pPhysical = Retrieve< PhysicalAttribute_ABC >();
     if( !pPhysical )
         return;
+    const StructuralStateAttribute_ABC* pStructuralStateAttribute = Retrieve< StructuralStateAttribute_ABC >();
+    if( !pStructuralStateAttribute )
+        return;
     const Usages_ABC& pUsages = pPhysical->GetUsages();
     UrbanColor_ABC& pColor = Get< UrbanColor_ABC >();
-    if( !options_.SetColor( pColor, GetLivingSpace(), GetHumansMap(), pUsages ) )
+    if( !options_.SetColor( pColor, GetLivingSpace(), GetHumansMap(), pUsages, pStructuralStateAttribute->GetValue() ) )
         pColor.Restore();
 }
 
@@ -313,3 +317,11 @@ void UrbanObject::NotifyUpdated( const UrbanDisplayOptions& )
     UpdateColor();
 }
 
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::NotifyUpdated
+// Created: LGY 2012-06-15
+// -----------------------------------------------------------------------------
+void UrbanObject::NotifyUpdated( const StructuralStateAttribute_ABC& )
+{
+    UpdateColor();
+}

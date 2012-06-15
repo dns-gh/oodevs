@@ -1191,6 +1191,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.h">
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StructuralStateAttribute_ABC.h">
+      <Filter>Source Files\Model\Extensions\Urban</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

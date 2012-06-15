@@ -103,7 +103,7 @@ namespace
 // Name: UrbanDisplayOptions::SetColor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages )
+bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages, unsigned int structuralState )
 {
     if( densityColor_ )
     {
@@ -111,11 +111,11 @@ bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, co
         for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
             for( CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
                 nbrHumans += it->second.first;
-        if( nbrHumans == 0 )
+        if( nbrHumans == 0 || structuralState == 0 )
             SetUrbanColor( unoccupiedDensity_, color );
         else
         {
-            float density = nbrHumans / livingSpace;
+            float density = nbrHumans / ( livingSpace * ( structuralState / 100u ) ) ;
             QColor result = pGradient_->Compute( density, color.Alpha(), minDensity_, maxDensity_ );
             SetUrbanColor( result, color );
         }
@@ -133,7 +133,7 @@ bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, co
                     nbrHumans += occupation->second.first;
             }
         }
-        if( nbrHumans == 0.f )
+        if( nbrHumans == 0.f || structuralState == 0 )
             SetUrbanColor( unoccupiedAccommodation_, color );
         else
         {
@@ -144,7 +144,7 @@ bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, co
             if( livingSpace == 0.f || proportion == 0.f || nominalCapacity == 0.f )
                 density = std::numeric_limits< float >::infinity();
             else
-                density = nbrHumans / ( livingSpace * proportion * nominalCapacity );
+                density = nbrHumans / ( livingSpace * proportion * nominalCapacity * ( structuralState / 100u ) );
             QColor result = pAccommodationGradient_->Compute( density, color.Alpha(), minAccommodationDensity_, maxAccommodationDensity_ );
             SetUrbanColor( result, color );
         }

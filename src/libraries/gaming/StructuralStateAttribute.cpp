@@ -13,7 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -86,5 +86,8 @@ void StructuralStateAttribute::UpdateData( const T& message )
     std::set< std::string > updated;
     UPDATE_SUBPROPERTY( message, structuralState_, structure, state, "Info", updated );
     if( !updated.empty() )
+    {
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info" ) ) );
+        controller_.Update( static_cast< kernel::StructuralStateAttribute_ABC& >( *this ) );
+    }
 }

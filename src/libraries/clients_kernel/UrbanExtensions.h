@@ -38,7 +38,6 @@ public:                                                                \
 
 namespace kernel
 {
-    DECLARE_EXTENSION( StructuralStateAttribute_ABC )
     DECLARE_EXTENSION( InfrastructureAttribute_ABC )
 }
 

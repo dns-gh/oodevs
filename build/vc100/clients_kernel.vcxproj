@@ -288,6 +288,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\SafePointer.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Settings_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StrongType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\StructuralStateAttribute_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Styles.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SubTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h" />

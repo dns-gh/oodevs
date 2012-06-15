@@ -91,3 +91,12 @@ void StructuralStateAttribute::NotifyModeChanged( int newMode )
     else if( newMode == ePreparationMode_Terrain )
         dico_.Remove( tools::translate( "StructuralStateAttribute", "Info/StructuralState" ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: StructuralStateAttribute::GetValue
+// Created: LGY 2012-06-15
+// -----------------------------------------------------------------------------
+unsigned int StructuralStateAttribute::GetValue() const
+{
+    return structuralState_;
+}

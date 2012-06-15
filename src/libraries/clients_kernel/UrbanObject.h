@@ -13,6 +13,7 @@
 #include "UrbanObject_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "HumanDefs.h"
+#include "StructuralStateAttribute_ABC.h"
 #include "EntityImplementation.h"
 #include "Extension_ABC.h"
 #include "Displayable_ABC.h"
@@ -50,6 +51,7 @@ class UrbanObject : public EntityImplementation< kernel::UrbanObject_ABC >
                   , public kernel::Updatable_ABC< sword::UrbanUpdate >
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< UrbanDisplayOptions >
+                  , public tools::ElementObserver_ABC< StructuralStateAttribute_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -82,6 +84,7 @@ public:
     const T_HumansStrMap& GetHumansMap() const { return humans_; }
     virtual void UpdateColor();
     virtual void NotifyUpdated( const UrbanDisplayOptions& );
+    virtual void NotifyUpdated( const StructuralStateAttribute_ABC& );
     void CreateDictionary( bool readOnly );
     //@}
 

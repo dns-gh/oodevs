@@ -46,7 +46,7 @@ public:
     //! @name Operations
     //@{
     void OptionChanged( const std::string& name, const OptionVariant& value );
-    bool SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages );
+    bool SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages, unsigned int structuralState );
     void ChangePopulationDisplay( const std::string& name, bool visible );
     void NotifyUpdated( const kernel::ChangePopulationDisplay& population );
     //@}

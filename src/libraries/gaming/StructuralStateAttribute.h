@@ -10,7 +10,7 @@
 #ifndef __StructuralStateAttribute_h_
 #define __StructuralStateAttribute_h_
 
-#include "clients_kernel/UrbanExtensions.h"
+#include "clients_kernel/StructuralStateAttribute_ABC.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetValue() const;
+    virtual unsigned int GetValue() const;
     //@}
 
 private:

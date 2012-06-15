@@ -13,7 +13,7 @@
 #include "Overridable_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/UrbanExtensions.h"
+#include "clients_kernel/StructuralStateAttribute_ABC.h"
 #include "tools/Observer_ABC.h"
 
 namespace kernel
@@ -49,6 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual bool IsOverriden() const;
+    virtual unsigned int GetValue() const;
     void Update( xml::xistream& xis );
     //@}
 
