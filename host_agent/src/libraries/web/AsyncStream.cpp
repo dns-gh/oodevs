@@ -18,6 +18,8 @@
 #   pragma warning( pop )
 #endif
 
+#include <boost/function.hpp>
+#include <boost/optional.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <vector>
 
@@ -66,17 +68,19 @@ private:
     T* ref_;
 };
 
-struct Notifier : public boost::noncopyable
+struct Scoper
 {
-    Notifier( boost::condition_variable& condition ) : condition_( condition )
+    typedef boost::function< void( void ) > Task;
+    Scoper( const Task& task ) : task_( task )
     {
         // NOTHING
     }
-    ~Notifier()
+    ~Scoper()
     {
-        condition_.notify_all();
+        task_();
     }
-    boost::condition_variable& condition_;
+private:
+    Task task_;
 };
 }
 
@@ -84,9 +88,8 @@ struct AsyncStream::Private : public boost::noncopyable
 {
     Private()
         : capacity_( UINT16_MAX )
-        , reading_ ( true )
         , writing_ ( true )
-        , started_ ( false )
+        , reading_ ( boost::none )
     {
         buffer_.reserve( capacity_ );
     }
@@ -96,73 +99,89 @@ struct AsyncStream::Private : public boost::noncopyable
         Join();
     }
 
+    void WakeAll()
+    {
+        condition_.notify_all();
+    }
+
+    template< typename T >
+    void SetState( T& dst, bool value )
+    {
+        boost::lock_guard< boost::mutex > lock( access_ );
+        dst = value;
+        WakeAll();
+    }
+
+    bool ShouldWrite() const
+    {
+        return writing_ && ( reading_ == boost::none || *reading_ );
+    }
+
+    bool HasCapacity() const
+    {
+        return buffer_.size() < capacity_;
+    }
+
     void Write( const char* data, size_t size )
     {
-        size_t fill = 0;
-        Notifier endWrite( condition_ );
         boost::unique_lock< boost::mutex > lock( access_ );
-        while( writing_ && ( !started_ || reading_ ) && fill < size )
+        for( size_t fill = 0; fill < size; )
         {
+            condition_.wait( lock, !boost::bind( &Private::ShouldWrite, this ) || boost::bind( &Private::HasCapacity, this ) );
+            if( !ShouldWrite() )
+                return;
             const size_t next = std::min( size - fill, capacity_ - buffer_.size() );
-            if( !next )
-            {
-                condition_.wait( lock );
-                continue;
-            }
-            Notifier hasWrite( condition_ );
             buffer_.insert( buffer_.end(), data + fill, data + fill + next );
             fill += next;
+            condition_.notify_all();
         }
     }
 
     void CloseWrite()
     {
-        Notifier endClose( condition_ );
-        boost::unique_lock< boost::mutex > lock( access_ );
-        writing_ = false;
+        SetState( writing_, false );
     }
 
     void Read( AsyncStream::Handler handler )
     {
-        Notifier endRead( condition_ );
-        boost::unique_lock< boost::mutex > lock( access_ );
-        started_ = true;
-        lock.unlock();
-
+        SetState( reading_, true );
+        Scoper stop( boost::bind( &Private::SetState< boost::optional< bool > >, this, boost::ref( reading_ ), false ) );
         Device< Private > device( this );
         boost::iostreams::stream< Device< Private > > stream( device );
         handler( stream );
+    }
 
-        lock.lock();
-        reading_ = false;
+    bool IsReading() const
+    {
+        return reading_ != boost::none && *reading_;
     }
 
     void Join()
     {
         boost::unique_lock< boost::mutex > lock( access_ );
-        while( started_ && reading_ )
-            condition_.wait( lock );
+        condition_.wait( lock, !boost::bind( &Private::IsReading, this ) );
+    }
+
+    bool IsWriteStoppedOrHasData() const
+    {
+        return !writing_ || buffer_.size();
     }
 
     std::streamsize Read( char* data, std::streamsize size )
     {
-        Notifier endRead( condition_ );
-        std::streamsize fill = 0;
         boost::unique_lock< boost::mutex > lock( access_ );
-        while( fill < size )
+        for( std::streamsize fill = 0; fill < size; )
         {
-            // we will never get more data if producer is stopped and buffer is empty
-            if( buffer_.empty() )
-                if( !writing_ )
-                    return fill ? fill : -1;
-                else
-                    condition_.wait( lock );
-            Notifier hasRead( condition_ );
+            Scoper wake( boost::bind( &Private::WakeAll, this ) );
+            condition_.wait( lock, boost::bind( &Private::IsWriteStoppedOrHasData, this ) );
             const std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
+            if( !next && !writing_ )
+                return fill ? fill : -1;
             MoveData( data + fill, buffer_, next );
             fill += next;
+            condition_.notify_all();
         }
-        return fill;
+        return size;
     }
 
 private:
@@ -170,9 +189,8 @@ private:
     const size_t capacity_;
     std::vector< char > buffer_;
     boost::condition_variable condition_;
-    bool reading_;
+    boost::optional< bool > reading_;
     bool writing_;
-    bool started_;
 };
 
 // -----------------------------------------------------------------------------
