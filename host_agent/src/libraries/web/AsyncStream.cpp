@@ -99,17 +99,12 @@ struct AsyncStream::Private : public boost::noncopyable
         Join();
     }
 
-    void WakeAll()
-    {
-        condition_.notify_all();
-    }
-
     template< typename T >
     void SetState( T& dst, bool value )
     {
         boost::lock_guard< boost::mutex > lock( access_ );
         dst = value;
-        WakeAll();
+        condition_.notify_all();
     }
 
     bool ShouldWrite() const
@@ -172,7 +167,6 @@ struct AsyncStream::Private : public boost::noncopyable
         boost::unique_lock< boost::mutex > lock( access_ );
         for( std::streamsize fill = 0; fill < size; )
         {
-            Scoper wake( boost::bind( &Private::WakeAll, this ) );
             condition_.wait( lock, boost::bind( &Private::IsWriteStoppedOrHasData, this ) );
             const std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
             if( !next && !writing_ )
