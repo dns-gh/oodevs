@@ -47,7 +47,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
                 local eEtatDecoupeLocalisation = nil--[[// surface de la zone et decoupage en zones de 10km²
 ]]--[[// -------------------------------------------------
 ]]
@@ -90,6 +90,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 self.eEtatOrdreFinMission = eActionEnCours
             end
         end
+
+        myself.porteeAction_ = self._namedParams.mission.porteeAction_
+        myself.ambianceMission_ = self._namedParams.mission.ambianceMission_
 
          do
             local _continue = true

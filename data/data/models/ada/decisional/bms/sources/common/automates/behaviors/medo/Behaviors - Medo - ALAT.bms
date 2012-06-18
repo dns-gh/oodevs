@@ -39,6 +39,8 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
         self._namedParams.listeLocalisations = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillements = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -55,7 +57,7 @@ include "Common/Automates/Actions/Medo/Actions - Medo - ALAT.bms"
                             iterateur = 0
                         end
 
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA, 1, { self._namedParams.ePhase, x, DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur ), self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -86,6 +88,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe"
         self._namedParams.listePionsAAppuyer = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     activate = function( self )
@@ -132,7 +135,7 @@ do
                             end
                         end
 
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionIMEXA, 1, { self._namedParams.ePhase, x, listePionsAAppuyerIMEXBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionIMEXA, 1, { self._namedParams.ePhase, x, listePionsAAppuyerIMEXBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, } )
                     end
 
                 end
@@ -160,6 +163,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe"
         self._namedParams.ePhase = self.params[1]
         self._namedParams.listePions = self.params[2]
         self._namedParams.plotsRavitaillement = self.params[3]
+        self._namedParams.porteeAction_ = self.params[4]
+        self._namedParams.ambianceMission_ = self.params[5]
     end,
 
     activate = function( self )
@@ -169,7 +174,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAllerSeRecompleterAListe"
             do
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA, 1, { self._namedParams.ePhase, x, self._namedParams.plotsRavitaillement, } )
+                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA, 1, { self._namedParams.ePhase, x, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 
                 end
 
@@ -198,6 +203,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.pointDebarquement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     activate = function( self )
@@ -207,7 +213,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe
             do
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, } )
+                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, } )
 
                 end
 
@@ -235,6 +241,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe"
         self._namedParams.listePions = self.params[2]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.porteeAction_ = self.params[5]
+        self._namedParams.ambianceMission_ = self.params[6]
     end,
 
     activate = function( self )
@@ -244,7 +252,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe"
             do
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 
                 end
 
@@ -273,6 +281,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -282,7 +292,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsJalonnerAListe"
             do
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 
                 end
 
@@ -311,6 +321,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -320,7 +332,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFreinerAListe"
             do
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionFreinerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionFreinerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 
                 end
 
@@ -347,6 +359,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -356,7 +370,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerAListe"
             do
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+                    StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 
                 end
 
@@ -386,6 +400,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAttaquerUneForamtionAeromobileAList
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.listeEnis = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -431,7 +447,7 @@ do
                             end
                         end
 
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, listeEnisADetruire, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, listeEnisADetruire, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                     end
 
                 end
@@ -466,6 +482,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsDetruireNeutraliserDansZoneAListe"
         self._namedParams.ciblesPrioritaires = self.params[7]
         self._namedParams.neutraliser = self.params[8]
         self._namedParams.dirSplit = self.params[9]
+        self._namedParams.porteeAction_ = self.params[10]
+        self._namedParams.ambianceMission_ = self.params[11]
     end,
 
     activate = function( self )
@@ -496,7 +514,7 @@ do
 
                         local localisationBuffer = DEC_UserTypeList_GetAt( listeZones, iterateurLocalisation )
                         --[[//attribue un point de dislocation et une zone pour le pion
-]]StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA, 1, { self._namedParams.ePhase, x, localisationBuffer, self._namedParams.pointDislocation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.neutraliser, } )
+]]StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA, 1, { self._namedParams.ePhase, x, localisationBuffer, self._namedParams.pointDislocation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.neutraliser, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                                                 iterateurLocalisation = iterateurLocalisation + 1
                     end
 
@@ -526,6 +544,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEclairerAListe"
         self._namedParams.listePions = self.params[2]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.porteeAction_ = self.params[5]
+        self._namedParams.ambianceMission_ = self.params[6]
     end,
 
     activate = function( self )
@@ -536,7 +556,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEclairerAListe"
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEclairerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEclairerA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                     end
 
                 end
@@ -567,6 +587,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe"
         self._namedParams.listePoints = self.params[4]
         self._namedParams.pointRegroupement = self.params[5]
         self._namedParams.plotsRavitaillement = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     activate = function( self )
@@ -585,7 +607,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreDansLaProfondeurAListe"
                         local localisationBuffer = DEC_UserTypeList_GetAt( self._namedParams.listeLocalisations, iterateur )
                         --[[//recherche du point le plus proche de la zone
 ]]local pointBuffer = S_Geometrie_PointPlusProcheLocalisation( localisationBuffer, self._namedParams.listePoints )
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA, 1, { self._namedParams.ePhase, x, pointBuffer, localisationBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA, 1, { self._namedParams.ePhase, x, pointBuffer, localisationBuffer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -617,6 +639,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEscorterAListe"
         self._namedParams.plotsRavitaillements = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.uniteAEscorter = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     activate = function( self )
@@ -627,7 +651,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsEscorterAListe"
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEscorterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteAEscorter, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionEscorterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteAEscorter, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                     end
 
                 end
@@ -664,6 +688,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe"
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.listeUnitesAHeliporter = self.params[7]
         self._namedParams.avecMateriel = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     activate = function( self )
@@ -710,7 +735,7 @@ do
                             end
                         end
 
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHeliporterBuffer, self._namedParams.avecMateriel, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHeliporterBuffer, self._namedParams.avecMateriel, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                     end
 
                 end
@@ -747,6 +772,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHelitransporterAListe"
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.listeUnitesAHelitransporter = self.params[7]
         self._namedParams.avecMateriel = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     activate = function( self )
@@ -793,7 +819,7 @@ do
                             end
                         end
 
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHelitransporterBuffer, self._namedParams.avecMateriel, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHelitransporterBuffer, self._namedParams.avecMateriel, self._namedParams.porteeAction_, } )
                     end
 
                 end
@@ -824,6 +850,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe"
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.unitesAAppuyer = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     activate = function( self )
@@ -834,7 +862,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsAppuyerDirectAuContactAListe"
                 for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.unitesAAppuyer, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.unitesAAppuyer, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                     end
 
                 end
@@ -867,6 +895,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe"
         self._namedParams.uniteACouvrir = self.params[6]
         self._namedParams.direction = self.params[7]
         self._namedParams.angle = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
+        self._namedParams.ambianceMission_ = self.params[10]
     end,
 
     activate = function( self )
@@ -884,7 +914,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsCouvrirAListe"
                         end
 
                         local directionBuffer = DEC_UserTypeList_GetAt( directionsCouverture, iterateur )
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -918,6 +948,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsFlancGarderAListe"
         self._namedParams.uniteACouvrir = self.params[6]
         self._namedParams.direction = self.params[7]
         self._namedParams.angle = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
+        self._namedParams.ambianceMission_ = self.params[10]
     end,
 
     activate = function( self )
@@ -980,7 +1012,7 @@ do
                         end
 
                         directionBuffer = DEC_UserTypeList_GetAt( directionsFlancGardeGauche, iterateur )
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1018,6 +1050,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA"
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.ciblesPrioritaires = self.params[7]
         self._namedParams.neutraliser = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
+        self._namedParams.ambianceMission_ = self.params[10]
     end,
 
     activate = function( self )
@@ -1043,7 +1077,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionDetruireNeutraliserDansZoneA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.pointDislocation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.neutraliser, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.pointDislocation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.neutraliser, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerDetruireNeutraliserDansZoneA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1068,6 +1102,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.pointDebarquement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     activate = function( self )
@@ -1093,7 +1128,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterPlotsRavitaillementA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, } )
 self.done_ACT_Mission_Automate_ALAT_AssignerHeliporterPlotsRavitaillementA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1116,6 +1151,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA"
         self._namedParams.ePhase = self.params[1]
         self._namedParams.pion = self.params[2]
         self._namedParams.plotsRavitaillement = self.params[3]
+        self._namedParams.porteeAction_ = self.params[4]
+        self._namedParams.ambianceMission_ = self.params[5]
     end,
 
     activate = function( self )
@@ -1141,7 +1178,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAllerSeRecompleterA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.plotsRavitaillement, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerAllerAllerSeRecompleterA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1166,6 +1203,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA"
         self._namedParams.listePionsAAppuyer = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     activate = function( self )
@@ -1191,7 +1229,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerIMEXA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.listePionsAAppuyer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerIMEXA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.listePionsAAppuyer, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, } )
 self.done_ACT_Mission_Automate_ALAT_AssignerIMEXA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1216,6 +1254,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA"
         self._namedParams.localisation = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillements = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -1241,7 +1281,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionSurveillerA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerSurveillerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.localisation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerSurveillerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.localisation, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerSurveillerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1265,6 +1305,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA"
         self._namedParams.pion = self.params[2]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.porteeAction_ = self.params[5]
+        self._namedParams.ambianceMission_ = self.params[6]
     end,
 
     activate = function( self )
@@ -1290,7 +1332,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreContourEniA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerReconnaitreContourEniA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1315,6 +1357,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -1340,7 +1384,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionJalonnerA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerJalonnerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerJalonnerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerJalonnerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1365,6 +1409,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -1390,7 +1436,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionFreinerA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerFreinerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerFreinerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerFreinerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1415,6 +1461,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -1440,7 +1488,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAttaquerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAttaquerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerAttaquerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1465,6 +1513,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA"
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.listeEnis = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
+        self._namedParams.ambianceMission_ = self.params[7]
     end,
 
     activate = function( self )
@@ -1490,7 +1540,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAttaquerUneFormationAeromobileA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.listeEnis, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.listeEnis, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerAttaquerUneFormationAeromobileA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1516,6 +1566,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA"
         self._namedParams.zone = self.params[4]
         self._namedParams.pointRegroupement = self.params[5]
         self._namedParams.plotsRavitaillement = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     activate = function( self )
@@ -1541,7 +1593,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionReconnaitreDansLaProfondeurA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointDislocation, self._namedParams.zone, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointDislocation, self._namedParams.zone, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerReconnaitreDansLaProfondeurA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1567,6 +1619,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA"
         self._namedParams.plotsRavitaillements = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.uniteAEscorter = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     activate = function( self )
@@ -1592,7 +1646,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEscorterA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerEscorterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteAEscorter, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerEscorterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteAEscorter, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerEscorterA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1620,6 +1674,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA"
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.listeUnitesAHeliporter = self.params[7]
         self._namedParams.avecMateriel = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     activate = function( self )
@@ -1645,7 +1700,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerHeliporterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, self._namedParams.listeUnitesAHeliporter, self._namedParams.avecMateriel, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerHeliporterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, self._namedParams.listeUnitesAHeliporter, self._namedParams.avecMateriel, self._namedParams.porteeAction_, } )
 self.done_ACT_Mission_Automate_ALAT_AssignerHeliporterA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1673,6 +1728,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA"
         self._namedParams.plotsRavitaillement = self.params[6]
         self._namedParams.listeUnitesAHelitransporter = self.params[7]
         self._namedParams.avecMateriel = self.params[8]
+        self._namedParams.porteeAction_ = self.params[9]
     end,
 
     activate = function( self )
@@ -1698,7 +1754,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionHelitransporterA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerHelitransporterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, self._namedParams.listeUnitesAHelitransporter, self._namedParams.avecMateriel, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerHelitransporterA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, self._namedParams.listeUnitesAHelitransporter, self._namedParams.avecMateriel, self._namedParams.porteeAction_, } )
 self.done_ACT_Mission_Automate_ALAT_AssignerHelitransporterA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1722,6 +1778,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA"
         self._namedParams.pion = self.params[2]
         self._namedParams.pointRegroupement = self.params[3]
         self._namedParams.plotsRavitaillement = self.params[4]
+        self._namedParams.porteeAction_ = self.params[5]
+        self._namedParams.ambianceMission_ = self.params[6]
     end,
 
     activate = function( self )
@@ -1747,7 +1805,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionEclairerA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerEclairerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerEclairerA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerEclairerA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1773,6 +1831,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA"
         self._namedParams.plotsRavitaillement = self.params[4]
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.unitesAAppuyer = self.params[6]
+        self._namedParams.porteeAction_ = self.params[7]
+        self._namedParams.ambianceMission_ = self.params[8]
     end,
 
     activate = function( self )
@@ -1798,7 +1858,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionAppuyerDirectAuContactA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.unitesAAppuyer, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillement, self._namedParams.ciblesPrioritaires, self._namedParams.unitesAAppuyer, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerAppuyerDirectAuContactA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
@@ -1825,6 +1885,8 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA"
         self._namedParams.ciblesPrioritaires = self.params[5]
         self._namedParams.uniteACouvrir = self.params[6]
         self._namedParams.directionCouverture = self.params[7]
+        self._namedParams.porteeAction_ = self.params[8]
+        self._namedParams.ambianceMission_ = self.params[9]
     end,
 
     activate = function( self )
@@ -1850,7 +1912,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA"
                                 end
             end
 
-        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerCouvrirA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, self._namedParams.directionCouverture, } )
+        Activate( self.activations.ACT_Mission_Automate_ALAT_AssignerCouvrirA, rForce, { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, self._namedParams.directionCouverture, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
 self.done_ACT_Mission_Automate_ALAT_AssignerCouvrirA = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 

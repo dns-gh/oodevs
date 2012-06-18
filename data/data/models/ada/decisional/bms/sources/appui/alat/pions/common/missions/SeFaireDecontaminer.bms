@@ -58,6 +58,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             end
         end
 
+        myself.porteeAction_ = eMoyennePortee
+        myself.ambianceMission_ = ePolyvalent
+
          do
             local _continue = true
 --[[// Rejoindre le site

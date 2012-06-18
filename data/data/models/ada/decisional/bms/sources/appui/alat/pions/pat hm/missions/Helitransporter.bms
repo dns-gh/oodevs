@@ -39,7 +39,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
                 DEC_Copie_Point( self._namedParams.mission.pointDebarquement_, self.pointDeDebarquement )
             end
@@ -81,6 +81,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 --[[// Gestion de l'ordre de conduite changer point de débarquement
 ]]--[[// ------------------------------------------------------------
 ]]        end
+
+        myself.porteeAction_ = self._namedParams.mission.porteeAction_
+        myself.ambianceMission_ = ePolyvalent
 
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         for _,x in pairs( ordres_recus or emptyTable ) do

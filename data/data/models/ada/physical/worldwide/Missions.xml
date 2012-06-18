@@ -21,6 +21,17 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" id="4" name="AIR - recon in force">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -31,6 +42,17 @@
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_ReconnaitreContourEnnemi" dia-type="T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" id="5" name="AIR - recon enemy positions">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -39,6 +61,17 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" id="6" name="AIR - destroy (in an area)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -51,6 +84,17 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Targets to be neutralized" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_DetruireAeromobile" dia-type="T_Mission_Pion_ALAT_DetruireAeromobile" id="7" name="AIR - destroy flying enemy">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -60,6 +104,17 @@
       <parameter dia-name="uniteADetruire_" max-occurs="unbounded" min-occurs="1" name="Enemy to destroy" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Freiner" dia-type="T_Mission_Pion_ALAT_Freiner" id="8" name="AIR - delay">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -69,6 +124,17 @@
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Jalonner" dia-type="T_Mission_Pion_ALAT_Jalonner" id="9" name="AIR - screen">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -78,6 +144,17 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Escorter" dia-type="T_Mission_Pion_ALAT_Escorter" id="10" name="AIR - escort">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -88,6 +165,17 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" dia-type="T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" id="12" name="AIR - helitransport replenishment sites">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -97,6 +185,12 @@
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Helitransporter" dia-type="T_Mission_Pion_ALAT_Helitransporter" id="13" name="AIR - helitransport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -109,6 +203,12 @@
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With non-loadable equipments" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" id="14" name="AIR - evacuate">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -118,6 +218,12 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" id="15" name="AIR - recon">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -126,6 +232,17 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Surveiller" dia-type="T_Mission_Pion_ALAT_Surveiller" id="16" name="AIR - monitor">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -135,6 +252,17 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_AppuyerDirectAuContact" dia-type="T_Mission_Pion_ALAT_AppuyerDirectAuContact" id="17" name="AIR - support (in contact)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -145,6 +273,17 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Units to support" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Couvrir" dia-type="T_Mission_Pion_ALAT_Couvrir" id="18" name="AIR - cover">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -155,6 +294,17 @@
       <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ALAT_Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" id="19" name="AIR - attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -164,6 +314,17 @@
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreZone" dia-type="T_Mission_Pion_ASA_DefendreZone" id="22" name="AAA - defend area">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3255,6 +3416,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur" id="190" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" name="AIR - destroy">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3267,6 +3439,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Unit to be neutralized" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansZone" id="191" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" name="AIR - destroy (in an area)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3279,6 +3462,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Unit to be neutralized" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_DonnerCoupArret" dia-type="T_Mission_Automate_ALAT_DonnerCoupArret" id="192" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DonnerCoupArret" name="AIR - block">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3289,6 +3483,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" dia-type="T_Mission_Automate_ALAT_AttaquerFormationAeromobile" id="193" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" name="AIR - attack (flying enemy)">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3298,6 +3503,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="unitesAAttaquer_" max-occurs="unbounded" min-occurs="1" name="Units to attack" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile" dia-type="T_Mission_Automate_ALAT_RecueillirFormationAeromobile" id="194" mrt-dia-behavior="MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile" name="AIR - assist flying unit in rearward maneuver">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3308,6 +3524,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Jalonner" dia-type="T_Mission_Automate_ALAT_Jalonner" id="196" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Jalonner" name="AIR - screen">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3317,6 +3544,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Helitransporter" dia-type="T_Mission_Automate_ALAT_Helitransporter" id="197" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Helitransporter" name="AIR - helitransport">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3329,6 +3567,12 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Boolean"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Appuyer" dia-type="T_Mission_Automate_ALAT_Appuyer" id="198" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Appuyer" name="AIR - support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3341,6 +3585,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Release point" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Couvrir" dia-type="T_Mission_Automate_ALAT_Couvrir" id="199" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Couvrir" name="AIR - cover">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3351,6 +3606,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Surveiller" dia-type="T_Mission_Automate_ALAT_Surveiller" id="200" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Surveiller" name="AIR - monitor">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3361,6 +3627,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointLogistique_" name="Point logistique" optional="false" type="Point"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" id="201" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" name="AIR - recon">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3369,6 +3646,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="PointRegroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Freiner" dia-type="T_Mission_Automate_ALAT_Freiner" id="202" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Freiner" name="AIR - delay">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3378,6 +3666,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Escorter" dia-type="T_Mission_Automate_ALAT_Escorter" id="203" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Escorter" name="AIR - escort">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3388,6 +3687,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Attaquer" dia-type="T_Mission_Automate_ALAT_Attaquer" id="204" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Attaquer" name="AIR - attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3397,6 +3707,17 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="ciblesPrioritaires_" name="Priority targets" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
+        <value id="0" name="low range"/>
+        <value id="1" name="medium range"/>
+        <value id="2" name="long range"/>
+        <value id="3" name="no ammunition"/>
+      </parameter>
+      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
+        <value id="0" name="Air"/>
+        <value id="1" name="Ground"/>
+        <value id="2" name="Mixed"/>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreZone" dia-type="T_Mission_Automate_ASA_DefendreZone" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreZone" name="AAA - defend area">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4993,4 +5314,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2165803177" -->
+<!-- signature="2913420498" -->

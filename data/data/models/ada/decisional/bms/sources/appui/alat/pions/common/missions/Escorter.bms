@@ -68,7 +68,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
                 self.pointARejoindre = DEC_Geometrie_CreerPoint()
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
@@ -118,6 +118,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pionDeTete:DEC_Agent_Position(), } )
             end
         end
+
+        myself.porteeAction_ = self._namedParams.mission.porteeAction_
+        myself.ambianceMission_ = self._namedParams.mission.ambianceMission_
 
          do
             local _continue = true

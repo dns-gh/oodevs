@@ -111,7 +111,7 @@ include "Appui/Alat/Pions/Common/Behaviors/Behaviors - Ordre.bms"
         Activate( self.activations.BEH_Rens, 1, emptyTable )
         Activate( self.activations.BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement, 1, emptyTable )
         Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )
-        myself.plotsRavitaillement_ = S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ )
+        myself.plotsRavitaillement_ = S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ or {} )
         if( S_Misc_EstDetruitPhysique() ) then
             do return end
         end

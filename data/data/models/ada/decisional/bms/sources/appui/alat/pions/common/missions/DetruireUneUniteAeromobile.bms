@@ -55,7 +55,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_ or {}
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                     Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
@@ -79,6 +79,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 self.eEtatOrdreFinMission = eActionEnCours
             end
         end
+
+        myself.porteeAction_ = self._namedParams.mission.porteeAction_
+        myself.ambianceMission_ = self._namedParams.mission.ambianceMission_
 
         self.listeConnaissancesADetruire = S_Liste_Pion_ALAT_UnitesADetruire( self._namedParams.mission.uniteADetruire_ )
         if( DIA_IsListEmpty( self.listeConnaissancesADetruire ) ) then
