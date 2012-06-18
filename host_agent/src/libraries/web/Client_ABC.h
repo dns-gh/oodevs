@@ -14,8 +14,36 @@
 #include <map>
 #include <string>
 
+namespace boost
+{
+    template< typename T > class optional;
+    template< typename T > class shared_ptr;
+}
+
 namespace web
 {
+// =============================================================================
+/** @class  Response_ABC
+    @brief  Response_ABC interface
+*/
+// Created: BAX 2012-06-18
+// =============================================================================
+struct Response_ABC : public boost::noncopyable
+{
+    //! @name Constructors/Destructor
+    //@{
+             Response_ABC() {}
+    virtual ~Response_ABC() {}
+    //@}
+
+    //! @name Methods
+    //@{
+    virtual int GetStatus() const = 0;
+    virtual std::string GetBody() const = 0;
+    virtual boost::optional< std::string > GetHeader( const std::string& key ) const = 0;
+    //@}
+};
+
 // =============================================================================
 /** @class  Client_ABC
     @brief  Client_ABC interface
@@ -33,11 +61,12 @@ struct Client_ABC : public boost::noncopyable
     //! @name Typedef helpers
     //@{
     typedef std::map< std::string, std::string > T_Parameters;
+    typedef boost::shared_ptr< Response_ABC > T_Response;
     //@}
 
     //! @name Methods
     //@{
-    virtual void Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters ) = 0;
+    virtual T_Response Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters ) = 0;
     //@}
 };
 

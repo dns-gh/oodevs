@@ -14,7 +14,7 @@
 
 #ifdef _MSC_VER
 #   pragma warning( push )
-#   pragma warning( disable : 4100 4127 4244 4512 )
+#   pragma warning( disable : 4100 4127 4244 4503 4512 )
 #   undef _SCL_SECURE_NO_WARNINGS
 #endif
 #include <boost/network/protocol/http/client.hpp>
@@ -41,7 +41,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual void Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters );
+    virtual T_Response Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters );
     //@}
 
 private:

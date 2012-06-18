@@ -26,6 +26,13 @@ using mocks::MockRuntime;
 
 namespace
 {
+    MOCK_BASE_CLASS( MockResponse, web::Response_ABC )
+    {
+        MOCK_METHOD( GetStatus, 0 );
+        MOCK_METHOD( GetBody, 0 );
+        MOCK_METHOD( GetHeader, 1 );
+    };
+
     struct Fixture
     {
         Fixture()
@@ -63,6 +70,7 @@ namespace
                 ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
                 "", mock::any ).returns( process );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
+            MOCK_EXPECT( process->Kill ).once().returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
 
@@ -72,6 +80,7 @@ namespace
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
+            MOCK_EXPECT( process->Kill ).once().returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
     };
@@ -98,9 +107,9 @@ BOOST_FIXTURE_TEST_CASE( proxy_registers, Fixture )
         boost::bind( &Contains, _1, boost::assign::map_list_of
             ( "prefix", dstPrefix )
             ( "host",   dstHost )
-            ( "port",   boost::lexical_cast< std::string >( dstPort ) ) ) );
+            ( "port",   boost::lexical_cast< std::string >( dstPort ) ) ) )
+        .returns( boost::make_shared< MockResponse >() );
     proxy->Register( dstPrefix, dstHost, dstPort );
-    MOCK_EXPECT( process->Kill ).once().returns( true );
 }
 
 BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
@@ -108,15 +117,13 @@ BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
     boost::shared_ptr< Proxy > proxy = MakeProxy();
     const std::string dstPrefix = "some_prefix";
     MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/unregister_proxy",
-        boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", dstPrefix ) ) );
+        boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", dstPrefix ) ) )
+        .returns( boost::make_shared< MockResponse >() );
     proxy->Unregister( dstPrefix );
-    MOCK_EXPECT( process->Kill ).once().returns( true );
 }
 
 BOOST_FIXTURE_TEST_CASE( proxy_reloads, Fixture )
 {
-    MOCK_EXPECT( process->Kill ).once().returns( true );
     MakeProxy();
-    MOCK_EXPECT( process->Kill ).once().returns( true );
     ReloadProxy();
 }
