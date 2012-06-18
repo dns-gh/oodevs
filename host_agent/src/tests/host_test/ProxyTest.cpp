@@ -138,3 +138,13 @@ BOOST_FIXTURE_TEST_CASE( proxy_reloads, Fixture )
     MakeProxy();
     ReloadProxy();
 }
+
+BOOST_FIXTURE_TEST_CASE( proxy_with_externally_killed_process_resaves, Fixture )
+{
+    boost::shared_ptr< Proxy > proxy = MakeProxy();
+    MOCK_RESET( process->IsAlive );
+    MOCK_EXPECT( process->IsAlive ).once().returns( false );
+    MOCK_EXPECT( runtime.Start ).once().returns( process );
+    MOCK_EXPECT( system.WriteFile ).once().returns( true );
+    proxy->Update();
+}

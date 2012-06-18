@@ -78,6 +78,10 @@ public:
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     //@}
 
+    //! @name Implementation methods
+    void Update();
+    //@}
+
 private:
     //! @name Private methods
     Path GetPath() const;
@@ -86,7 +90,6 @@ private:
     bool Reload( const Path& path );
     void Start();
     void Stop();
-    void Update();
     void Restart();
     void RegisterMissingLinks();
     T_Process MakeProcess() const;

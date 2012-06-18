@@ -137,6 +137,7 @@ void Proxy::Restart()
             cemetery.insert( value.first );
     BOOST_FOREACH( const std::string prefix, cemetery )
         links_.erase( prefix );
+    Save();
 }
 
 // -----------------------------------------------------------------------------
