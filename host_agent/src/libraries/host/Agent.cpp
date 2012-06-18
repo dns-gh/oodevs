@@ -23,16 +23,14 @@
 
 using namespace host;
 
-Reply::Reply( const Tree& tree )
-    : data ( ToJson( tree ) )
-    , valid( true )
-{
-    // NOTHING
-}
-
 namespace
 {
 #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
+
+Reply MakeReply( const Tree& tree )
+{
+    return Reply( ToJson( tree ) );
+}
 
 template< typename T >
 T Clip( T value, T min, T max )
@@ -64,7 +62,7 @@ Reply Count( size_t count )
 {
     Tree tree;
     tree.put( "count", count );
-    return Reply( tree );
+    return MakeReply( tree );
 }
 
 template< typename T >
@@ -72,7 +70,7 @@ Reply Create( T ptr, const std::string& name )
 {
     if( !ptr )
         return Reply( "unable to create new " + name, false );
-    return Reply( ptr->GetProperties() );
+    return MakeReply( ptr->GetProperties() );
 }
 
 template< typename T, typename U >
@@ -81,7 +79,7 @@ Reply Dispatch( T& controller, const U& member, const Uuid& id, const std::strin
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
         return Reply( "unable to " + action + " " + boost::lexical_cast< std::string >( id ), false );
-    return Reply( ptr->GetProperties() );
+    return MakeReply( ptr->GetProperties() );
 }
 
 template< typename T, typename U >
@@ -207,7 +205,7 @@ Reply Agent::DeleteNode( const Uuid& id )
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )
         sessions_.Delete( ptr->GetId() );
-    return Reply( ptr->GetProperties() );
+    return MakeReply( ptr->GetProperties() );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,7 +232,7 @@ Reply Agent::StopNode( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::GetInstall( const Uuid& id ) const
 {
-    return Reply( nodes_.GetInstall( id ) );
+    return MakeReply( nodes_.GetInstall( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +241,7 @@ Reply Agent::GetInstall( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Reply( nodes_.DeleteInstall( id, list ) );
+    return MakeReply( nodes_.DeleteInstall( id, list ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +250,7 @@ Reply Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 // -----------------------------------------------------------------------------
 Reply Agent::UploadCache( const Uuid& id, std::istream& src )
 {
-    return Reply( nodes_.UploadCache( id, src ) );
+    return MakeReply( nodes_.UploadCache( id, src ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +259,7 @@ Reply Agent::UploadCache( const Uuid& id, std::istream& src )
 // -----------------------------------------------------------------------------
 Reply Agent::GetCache( const Uuid& id ) const
 {
-    return Reply( nodes_.GetCache( id ) );
+    return MakeReply( nodes_.GetCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,7 +268,7 @@ Reply Agent::GetCache( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteCache( const Uuid& id )
 {
-    return Reply( nodes_.DeleteCache( id ) );
+    return MakeReply( nodes_.DeleteCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +277,7 @@ Reply Agent::DeleteCache( const Uuid& id )
 // -----------------------------------------------------------------------------
 Reply Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Reply( nodes_.InstallFromCache( id, list ) );
+    return MakeReply( nodes_.InstallFromCache( id, list ) );
 }
 
 // -----------------------------------------------------------------------------
