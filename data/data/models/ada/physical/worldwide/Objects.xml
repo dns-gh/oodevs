@@ -850,5 +850,12 @@
       <geometry symbol="G*GPGAZ---****X" type="polygon"/>
     </geometries>
   </object>
+  <object name="Crowd dispersion smoke" type="Scaterring grenade">
+    <geometries>
+      <geometry symbol="" type="circle"/>
+    </geometries>
+    <scattering human-by-time-step="1"/>
+    <time-limited/>
+  </object>
 </objects>
-<!-- signature="1647642494" -->
+<!-- signature="2981985203" -->

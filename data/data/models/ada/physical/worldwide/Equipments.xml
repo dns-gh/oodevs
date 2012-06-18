@@ -10404,6 +10404,7 @@
     <composition>
       <category name="munition">
         <resource capacity="120" logistic-threshold="10" name="9.00-mm Bullet" normalized-consumption="10"/>
+        <resource capacity="100" logistic-threshold="0" name="Dispersion grenade" normalized-consumption="0"/>
       </category>
       <category name="carburant">
         <resource capacity="60" logistic-threshold="1" name="Gasoil" normalized-consumption="60"/>
@@ -10430,6 +10431,7 @@
     </consumptions>
     <weapon-systems>
       <weapon-system launcher="Sig-Sauer SP 2022" munition="9.00-mm Bullet"/>
+      <weapon-system launcher="Hand" munition="Dispersion grenade"/>
     </weapon-systems>
     <human-protections/>
     <objects>
@@ -10831,6 +10833,7 @@
       <category name="munition">
         <resource capacity="100" logistic-threshold="0" name="Homemade bomb" normalized-consumption="0"/>
         <resource capacity="50" logistic-threshold="0" name="56-mm Explosive Grenade" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="0" name="Dispersion grenade" normalized-consumption="0"/>
       </category>
       <category name="carburant">
         <resource capacity="60" logistic-threshold="1" name="Gasoil" normalized-consumption="60"/>
@@ -10857,6 +10860,7 @@
     <weapon-systems>
       <weapon-system launcher="Hand" munition="Homemade bomb"/>
       <weapon-system launcher="Hand" munition="56-mm Explosive Grenade"/>
+      <weapon-system launcher="Hand" munition="Dispersion grenade"/>
     </weapon-systems>
     <human-protections/>
     <objects>
@@ -11393,4 +11397,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1734795578" -->
+<!-- signature="2023091396" -->

@@ -3060,7 +3060,7 @@ In that specific case, the agent decides to act on the next one.</P>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" dia-type="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" id="4484" name="SAFETY - Attack urban blocks within area (with projectiles)">
+    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" dia-type="behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" id="4484" name="SAFETY - Attack urban blocks within area (with projectiles)">
       <description>
         <doctrine><![CDATA[<P><dfn>To perform a terrorism attack, exactions against installations and population.</dfn></P>
 <P>In SWORD, units and crowds can assault urban blocks (or other units and structures). Assaulting a urban block causes <BR>
@@ -3397,6 +3397,21 @@ In that specific case, the agent decides to act on the next one.</P>
         <objects>
           <parameter type="Firebreak"/>
         </objects>
+      </parameter>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnACrowd" dia-type="behaviors.tasks.LaunchProjectileOnACrowd" id="4501" name="SAFETY - Disperse crowd (with projectile)">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowd" name="Crowd" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="dotationType" name="Projectile" optional="false" type="ResourceType"/>
+      <parameter dia-name="position" name="Position" optional="true" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
       </parameter>
     </mission>
   </units>
@@ -5295,4 +5310,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1382417817" -->
+<!-- signature="0720656772" -->

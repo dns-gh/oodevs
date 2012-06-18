@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.LaunchProjectileOnTargetsWithinArea" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" source-version="1.0.0">
     <description>For an agent to launch a specified quantity of projectiles on a given set of urban blocks target within a specified area.&#xD;
 &#xD;
 A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation). In that specific case, agent will decide to act on the next urban block.&#xD;
@@ -38,7 +38,7 @@ If a position is issued (optional) agent tries to launch projectiles from it. If
         </parameter>
     </parameters>
     <stages>
-        <stage label="attack begins" disable-when-done="true">
+        <stage label="launch projectile on urban blocks" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.LaunchProjectileOnTargets" main="true">
                     <parameter name="position">

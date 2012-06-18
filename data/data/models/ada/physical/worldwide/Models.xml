@@ -2715,6 +2715,7 @@
         <mission name="SAFETY - Create and operate a roadblock (filter crowds)"/>
         <mission name="SAFETY - Build a dike"/>
         <mission name="SAFETY - Build a firebreak"/>
+        <mission name="SAFETY - Disperse crowd (with projectile)"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3981,4 +3982,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1572689190" -->
+<!-- signature="2460067225" -->

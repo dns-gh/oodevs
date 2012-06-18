@@ -1140,6 +1140,12 @@
     </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Countermeasure" nature="Solid" network-usable="false" package-mass="1" package-size="1" package-volume="1" type="Obus"/>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1330 14 421 6852" id="95" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Dispersion grenade" nature="Solid" network-usable="false" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
+    <indirect-fires intervention-type="1" x-dispersion="20" y-dispersion="20">
+      <indirect-fire life-time="300s" setup-time="10s" type="fumigene"/>
+      <indirect-fire life-time="5m" object-type="Scaterring grenade" type="effect"/>
+    </indirect-fires>
+  </resource>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="15" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gasoil" nature="Gasoil" network-usable="false" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Diesel" nature="Diesel" network-usable="false" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gas" nature="Diesel" network-usable="false" package-mass="1" package-size="1000" package-volume="1"/>
@@ -1217,4 +1223,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="93" id-nature="3" logistic-supply-class="Class IV - Fortification and construction materials, and additional items" name="Body Bag" nature="Solid" network-usable="false" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="94" id-nature="3" logistic-supply-class="Class IV - Fortification and construction materials, and additional items" name="Coffin" nature="Solid" network-usable="false" package-mass="0.05" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3256909376" -->
+<!-- signature="1187603541" -->
