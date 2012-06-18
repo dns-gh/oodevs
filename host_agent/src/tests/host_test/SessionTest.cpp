@@ -63,7 +63,7 @@ namespace
         SessionPtr MakeSession()
         {
             MOCK_EXPECT( node.LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
-            return boost::make_shared< Session >( "", defaultId, node, defaultName, defaultExercise, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Session >( "", defaultId, node, defaultName, defaultExercise, Port( new MockPort( defaultPort ) ) );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )

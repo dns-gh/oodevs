@@ -60,7 +60,7 @@ Session::Status ConvertStatus( const std::string& status )
     return Session::STATUS_STOPPED;
 }
 
-std::auto_ptr< Port_ABC > AcquirePort( int wanted, PortFactory_ABC& ports )
+Port AcquirePort( int wanted, PortFactory_ABC& ports )
 {
     try
     {
@@ -100,7 +100,7 @@ Path GetPath( const Tree& src, const std::string& key )
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
+Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port )
     : id_     ( id )
     , root_   ( root )
     , node_   ( node )

@@ -14,7 +14,7 @@ using namespace host;
 
 namespace
 {
-    typedef std::vector< boost::shared_ptr< Port_ABC > > T_Ports;
+    typedef std::vector< Port > T_Ports;
 
     const int period = 17;
     const int offset = 23;
@@ -26,13 +26,13 @@ namespace
             : factory( period, offset, offset + size*period )
         {
             for( size_t i = 0; i < size; ++i )
-                ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create() ) );
+                ports.push_back( factory.Create() );
         }
         void RemoveAddCheck( size_t idx )
         {
             int unused = ports[idx]->Get();
             ports.erase( ports.begin() + idx );
-            ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create() ) );
+            ports.push_back( factory.Create() );
             BOOST_CHECK_EQUAL( unused, ports.back()->Get() );
         }
         PortFactory factory;

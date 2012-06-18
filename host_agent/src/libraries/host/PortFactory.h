@@ -40,8 +40,8 @@ public:
 
     //! @name Methods
     //@{
-    virtual std::auto_ptr< Port_ABC > Create();
-    virtual std::auto_ptr< Port_ABC > Create( int port );
+    virtual Port Create();
+    virtual Port Create( int port );
     //@}
 
 private:
@@ -52,7 +52,7 @@ private:
 
     //! @name Private methods
     //@{
-    std::auto_ptr< Port_ABC > Acquire( int port );
+    Port Acquire( int port );
     void Release( int port );
     //@}
 

@@ -38,6 +38,7 @@ namespace host
     struct Port_ABC;
     struct PortFactory_ABC;
     struct UuidFactory_ABC;
+    typedef boost::shared_ptr< const Port_ABC > Port;
 
 // =============================================================================
 /** @class  Node_ABC
@@ -115,7 +116,7 @@ private:
     const Uuid id_;
     const std::string name_;
     const Path root_;
-    const std::auto_ptr< Port_ABC > port_;
+    const Port port_;
     //@}
 
     //! @name Private members

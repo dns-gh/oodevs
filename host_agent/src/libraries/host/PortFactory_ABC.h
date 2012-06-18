@@ -11,7 +11,7 @@
 #define PORT_FACTORY_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <memory>
+#include <boost/shared_ptr.hpp>
 
 namespace host
 {
@@ -35,6 +35,8 @@ struct Port_ABC : public boost::noncopyable
     //@}
 };
 
+typedef boost::shared_ptr< const Port_ABC > Port;
+
 // =============================================================================
 /** @class  PortFactory_ABC
     @brief  PortFactory_ABC interface
@@ -51,8 +53,8 @@ struct PortFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual std::auto_ptr< Port_ABC > Create() = 0;
-    virtual std::auto_ptr< Port_ABC > Create( int port ) = 0;
+    virtual Port Create() = 0;
+    virtual Port Create( int port ) = 0;
     //@}
 };
 

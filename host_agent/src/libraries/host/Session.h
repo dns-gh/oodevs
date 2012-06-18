@@ -31,6 +31,7 @@ namespace host
     struct Node_ABC;
     struct Port_ABC;
     struct PortFactory_ABC;
+    typedef boost::shared_ptr< const Port_ABC > Port;
 
 // =============================================================================
 /** @class  Session
@@ -43,7 +44,7 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
+             Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port );
              Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
@@ -95,7 +96,7 @@ private:
     const Node_ABC& node_;
     const std::string name_;
     const Tree links_;
-    const std::auto_ptr< Port_ABC > port_;
+    const Port port_;
     mutable boost::mutex access_;
     T_Process process_;
     Status status_;

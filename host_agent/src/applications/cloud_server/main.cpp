@@ -216,8 +216,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        std::auto_ptr< Port_ABC > port( ports.Create() );
-        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, boost::ref( port ) );
+        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, ports.Create() );
     }
 
     Ptr Make( const Path& tag ) const
@@ -254,7 +253,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
-    const std::auto_ptr< Port_ABC > host = ports.Create();
+    const Port host = ports.Create();
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
     proxy.Register( "api", "localhost", host->Get() );

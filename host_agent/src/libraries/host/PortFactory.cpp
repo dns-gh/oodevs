@@ -12,21 +12,22 @@
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
 #include <boost/function.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace host;
 
 namespace
 {
-class Port : public Port_ABC
+class PortLink : public Port_ABC
 {
 public:
-    explicit Port( int port, boost::function< void( int ) > deleter )
+    explicit PortLink( int port, boost::function< void( int ) > deleter )
         : port_   ( port )
         , deleter_( deleter )
     {
         // NOTHING
     }
-    ~Port()
+    ~PortLink()
     {
         deleter_( port_ );
     }
@@ -65,17 +66,17 @@ PortFactory::~PortFactory()
 // Name: PortFactory::Acquire
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-std::auto_ptr< Port_ABC > PortFactory::Acquire( int port )
+Port PortFactory::Acquire( int port )
 {
     ports_.insert( port );
-    return std::auto_ptr< Port_ABC >( new Port( port, boost::bind( &PortFactory::Release, this, _1 ) ) );
+    return boost::make_shared< PortLink >( port, boost::bind( &PortFactory::Release, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PortFactory::Create
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-std::auto_ptr< Port_ABC > PortFactory::Create()
+Port PortFactory::Create()
 {
     boost::lock_guard< boost::mutex > lock( access_ );
     // fast-check last value
@@ -96,7 +97,7 @@ std::auto_ptr< Port_ABC > PortFactory::Create()
 // Name: PortFactory::Create
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::auto_ptr< Port_ABC > PortFactory::Create( int port )
+Port PortFactory::Create( int port )
 {
     if( port < min_ || max_ <= port || ( ( port - min_ ) % period_ ) )
         throw std::runtime_error( ( boost::format( "invalid port value %1%" ) % port ).str() );

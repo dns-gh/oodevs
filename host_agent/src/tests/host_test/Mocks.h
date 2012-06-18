@@ -161,8 +161,8 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockPortFactory, host::PortFactory_ABC )
     {
-        MOCK_METHOD_EXT( Create, 0, std::auto_ptr< host::Port_ABC >(), Create0 );
-        MOCK_METHOD_EXT( Create, 1, std::auto_ptr< host::Port_ABC >( int ), Create1 );
+        MOCK_METHOD_EXT( Create, 0, host::Port(), Create0 );
+        MOCK_METHOD_EXT( Create, 1, host::Port( int ), Create1 );
     };
 
     MOCK_BASE_CLASS( MockProcess, runtime::Process_ABC )

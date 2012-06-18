@@ -34,7 +34,7 @@ using runtime::Pool_ABC;
 
 namespace
 {
-std::auto_ptr< Port_ABC > AcquirePort( int wanted, PortFactory_ABC& ports )
+Port AcquirePort( int wanted, PortFactory_ABC& ports )
 {
     try
     {
