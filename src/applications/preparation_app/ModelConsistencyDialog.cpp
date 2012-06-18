@@ -61,56 +61,56 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     connect( parent, SIGNAL( CheckConsistency() ), this, SLOT( CheckConsistency() ) );
 
     // Headers
-    horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Long name" ) << tr( "Description" );
+    horizontalHeaders_ << "" << tools::translate( "ModelConsistencyDialog", "ID" ) << tools::translate( "ModelConsistencyDialog", "Name" ) << tools::translate( "ModelConsistencyDialog", "Long name" ) << tools::translate( "ModelConsistencyDialog", "Description" ); // $$$$ LGY 2012-06-18: 
 
     // Type checkbox
-    CreateCheckbox( boost::assign::map_list_of( eUniquenessMask,  tr( "Unicity" ) )
-                                              ( eLogisticMask,    tr( "Logistic" ) )
-                                              ( eProfileMask,     tr( "Profile" ) )
-                                              ( eGhostMask,       tr( "Ghost" ) )
-                                              ( eCommandPostMask, tr( "Command Post" ) )
-                                              ( eOthersMask,      tr( "Others" ) ) );
+    CreateCheckbox( boost::assign::map_list_of( eUniquenessMask,  tools::translate( "ModelConsistencyDialog", "Unicity" ) )
+                                              ( eLogisticMask,    tools::translate( "ModelConsistencyDialog", "Logistic" ) )
+                                              ( eProfileMask,     tools::translate( "ModelConsistencyDialog", "Profile" ) )
+                                              ( eGhostMask,       tools::translate( "ModelConsistencyDialog", "Ghost" ) )
+                                              ( eCommandPostMask, tools::translate( "ModelConsistencyDialog", "Command Post" ) )
+                                              ( eOthersMask,      tools::translate( "ModelConsistencyDialog", "Others" ) ) );
 
     // Fill errors text
     // Uniqueness
-    errorDescriptions_[ eLongNameUniqueness ]              = tr( "Duplicate long name for units %1." );
-    errorDescriptions_[ eTeamNameUniqueness ]              = tr( "Duplicate name for parties %1." );
-    errorDescriptions_[ eObjectNameUniqueness ]            = tr( "Duplicate name for objects %1." );
-    errorDescriptions_[ eLimaNameUniqueness ]              = tr( "Duplicate name for limas %1." );
-    errorDescriptions_[ eLimitNameUniqueness ]             = tr( "Duplicate name for limits %1." );
+    errorDescriptions_[ eLongNameUniqueness ]              = tools::translate( "ModelConsistencyDialog", "Duplicate long name for units %1." );
+    errorDescriptions_[ eTeamNameUniqueness ]              = tools::translate( "ModelConsistencyDialog", "Duplicate name for parties %1." );
+    errorDescriptions_[ eObjectNameUniqueness ]            = tools::translate( "ModelConsistencyDialog", "Duplicate name for objects %1." );
+    errorDescriptions_[ eLimaNameUniqueness ]              = tools::translate( "ModelConsistencyDialog", "Duplicate name for limas %1." );
+    errorDescriptions_[ eLimitNameUniqueness ]             = tools::translate( "ModelConsistencyDialog", "Duplicate name for limits %1." );
 
     // Logistic
-    errorDescriptions_[ eStockInitialization ]             = tr( "No stocks initialized." );
-    errorDescriptions_[ eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
-    errorDescriptions_[ eStockMissing ]                    = tr( "Some resources used by logistic subordinate(s) are not initialized: %1." );
-    errorDescriptions_[ eLogisticInitialization ]          = tr( "No logistic link initialized." );
-    errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
-    errorDescriptions_[ eNoLogisticFormation ]             = tr( "Logistic sector not included in a logistic base." );
-    errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tr( "Logistic base's party differs from object's party." );
-    errorDescriptions_[ eStockInvalidDotation ]            = tr( "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
+    errorDescriptions_[ eStockInitialization ]             = tools::translate( "ModelConsistencyDialog", "No stocks initialized." );
+    errorDescriptions_[ eStockMaxExceeded ]                = tools::translate( "ModelConsistencyDialog", "Allocated stocks of nature %1 exceed max capacity." );
+    errorDescriptions_[ eStockMissing ]                    = tools::translate( "ModelConsistencyDialog", "Some resources used by logistic subordinate(s) are not initialized: %1." );
+    errorDescriptions_[ eLogisticInitialization ]          = tools::translate( "ModelConsistencyDialog", "No logistic link initialized." );
+    errorDescriptions_[ eNoLogisticBase ]                  = tools::translate( "ModelConsistencyDialog", "No valid logistic base defined." );
+    errorDescriptions_[ eNoLogisticFormation ]             = tools::translate( "ModelConsistencyDialog", "Logistic sector not included in a logistic base." );
+    errorDescriptions_[ eLogisticBaseNotSameTeam ]         = tools::translate( "ModelConsistencyDialog", "Logistic base's party differs from object's party." );
+    errorDescriptions_[ eStockInvalidDotation ]            = tools::translate( "ModelConsistencyDialog", "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
 
     // Profile
-    errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );
-    errorDescriptions_[ eProfileUnreadable ]               = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
-    errorDescriptions_[ eProfileUnwritable ]               = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+    errorDescriptions_[ eProfileUniqueness ]               = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );
+    errorDescriptions_[ eProfileUnreadable ]               = tools::translate( "ModelConsistencyDialog", "Not 'readable' to any user profile. You will not be able to see it on the game." );
+    errorDescriptions_[ eProfileUnwritable ]               = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
 
     // Ghost
-    errorDescriptions_[ eGhostExistence ]                  = tr( "A phantom unit is present." );
-    errorDescriptions_[ eGhostConverted ]                  = tr( "Unknown type '%1', a phantom unit has been created instead." );
+    errorDescriptions_[ eGhostExistence ]                  = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );
+    errorDescriptions_[ eGhostConverted ]                  = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a phantom unit has been created instead." );
 
     // Command Post
-    errorDescriptions_[ eNoCommandPost ]                   = tr( "Automat has no command post." );
-    errorDescriptions_[ eSeveralCommandPost ]              = tr( "Automat has more than one command post." );
+    errorDescriptions_[ eNoCommandPost ]                   = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );
+    errorDescriptions_[ eSeveralCommandPost ]              = tools::translate( "ModelConsistencyDialog", "Automat has more than one command post." );
 
     // Others
-    errorDescriptions_[ eLongNameSize ]                    = tr( "Long name size limit exceeded : %1." );
-    errorDescriptions_[ eUnknownObjectTypes ]              = tr( "Unknown object type \"%1\", some objects could not be loaded." );
-    errorDescriptions_[ eUnknownCrowdTypes ]               = tr( "Unknown crowd type \"%1\", some crowds could not be loaded." );
-    errorDescriptions_[ eUnknownPopulationTypes ]          = tr( "Unknown population type \"%1\", some populations could not be loaded." );
-    errorDescriptions_[ eNoKnowledgeGroup ]                = tr( "Automat has no knowledge group." );
-    errorDescriptions_[ eScoreError ]                      = tr( "Score definitions contain errors: %1" );
-    errorDescriptions_[ eSuccessFactorError ]              = tr( "Success factor definitions contain errors: %1" );
-    errorDescriptions_[ eNoOrbat ]                         = tr( "No orbat.xml found. The orbat.xml file will be created after the first save." );
+    errorDescriptions_[ eLongNameSize ]                    = tools::translate( "ModelConsistencyDialog", "Long name size limit exceeded : %1." );
+    errorDescriptions_[ eUnknownObjectTypes ]              = tools::translate( "ModelConsistencyDialog", "Unknown object type \"%1\", some objects could not be loaded." );
+    errorDescriptions_[ eUnknownCrowdTypes ]               = tools::translate( "ModelConsistencyDialog", "Unknown crowd type \"%1\", some crowds could not be loaded." );
+    errorDescriptions_[ eUnknownPopulationTypes ]          = tools::translate( "ModelConsistencyDialog", "Unknown population type \"%1\", some populations could not be loaded." );
+    errorDescriptions_[ eNoKnowledgeGroup ]                = tools::translate( "ModelConsistencyDialog", "Automat has no knowledge group." );
+    errorDescriptions_[ eScoreError ]                      = tools::translate( "ModelConsistencyDialog", "Score definitions contain errors: %1" );
+    errorDescriptions_[ eSuccessFactorError ]              = tools::translate( "ModelConsistencyDialog", "Success factor definitions contain errors: %1" );
+    errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found. The orbat.xml file will be created after the first save." );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 
@@ -153,7 +153,7 @@ void ModelConsistencyDialog::UpdateDataModel()
         for( ModelConsistencyChecker::CIT_Items entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt )
         {
             if( *entityIt && **entityIt )
-                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.items_.end() ) ? tr( " and " ) : ", " ) + locale().toString( static_cast< unsigned int >( ( **entityIt )->GetId() ) );
+                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.items_.end() ) ? tools::translate( "ModelConsistencyDialog", " and " ) : ", " ) + locale().toString( static_cast< unsigned int >( ( **entityIt )->GetId() ) );
         }
 
         for( ModelConsistencyChecker::CIT_Items entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt, ++currentRow )
