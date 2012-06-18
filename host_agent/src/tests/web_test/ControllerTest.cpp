@@ -113,7 +113,7 @@ namespace
         {
             // NOTHING
         }
-        void SetRequest( const std::string& method, const std::string& uri, const std::map< std::string, std::string >& parameters = std::map< std::string, std::string >() )
+        void SetRequest( const std::string& /*method*/, const std::string& uri, const std::map< std::string, std::string >& parameters = std::map< std::string, std::string >() )
         {
             MOCK_EXPECT( request.GetUri ).once().returns( uri );
             typedef std::map< std::string, std::string > Pair;
