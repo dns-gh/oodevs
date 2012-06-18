@@ -13,6 +13,7 @@
 #include "Proxy_ABC.h"
 
 #include "runtime/Async.h"
+#include "runtime/Event.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/thread/mutex.hpp>
@@ -44,6 +45,7 @@ namespace host
 {
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
+    struct ProxyLink;
 
 // =============================================================================
 /** @class  Proxy
@@ -66,8 +68,14 @@ public:
     //! @name Methods
     //@{
     virtual int GetPort() const;
-    virtual void Register( const std::string& prefix, const std::string& host, int port ) const;
-    virtual void Unregister( const std::string& prefix ) const;
+    virtual void Register( const std::string& prefix, const std::string& host, int port );
+    virtual void Unregister( const std::string& prefix );
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef std::map< const std::string, ProxyLink > T_Links;
+    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     //@}
 
 private:
@@ -78,6 +86,12 @@ private:
     bool Reload( const Path& path );
     void Start();
     void Stop();
+    void Update();
+    void Restart();
+    void RegisterMissingLinks();
+    T_Process MakeProcess() const;
+    void HttpRegister( const std::string& prefix, const ProxyLink& proxy );
+    void HttpUnregister( const std::string& prefix );
     //@}
 
     //! @name Member data
@@ -91,7 +105,9 @@ private:
     const int port_;
     boost::mutex access_;
     web::Client_ABC& client_;
-    boost::shared_ptr< runtime::Process_ABC > process_;
+    T_Process process_;
+    T_Links links_;
+    runtime::Event end_;
     mutable runtime::Async async_;
     //@}
 };

@@ -33,6 +33,17 @@ namespace
         MOCK_METHOD( GetHeader, 1 );
     };
 
+    bool Contains( const web::Client_ABC::T_Parameters& actual, const web::Client_ABC::T_Parameters& expected )
+    {
+        BOOST_FOREACH( const web::Client_ABC::T_Parameters::value_type& value, expected )
+        {
+            web::Client_ABC::T_Parameters::const_iterator it = actual.find( value.first );
+            if( it == actual.end() || value.second != it->second )
+                return false;
+        }
+        return true;
+    }
+
     struct Fixture
     {
         Fixture()
@@ -83,43 +94,43 @@ namespace
             MOCK_EXPECT( process->Kill ).once().returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
-    };
 
-    bool Contains( const web::Client_ABC::T_Parameters& actual, const web::Client_ABC::T_Parameters& expected )
-    {
-        BOOST_FOREACH( const web::Client_ABC::T_Parameters::value_type& value, expected )
+        void Register( boost::shared_ptr< Proxy > proxy, const std::string& prefix, const std::string& host, int next )
         {
-            web::Client_ABC::T_Parameters::const_iterator it = actual.find( value.first );
-            if( it == actual.end() || value.second != it->second )
-                return false;
+            boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
+            MOCK_EXPECT( response->GetStatus ).returns( 200 );
+            MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/register_proxy",
+                boost::bind( &Contains, _1, boost::assign::map_list_of
+                    ( "prefix", prefix )
+                    ( "host",   host )
+                    ( "port",   boost::lexical_cast< std::string >( next ) ) ) )
+                .returns( response );
+            proxy->Register( prefix, host, next );
         }
-        return true;
-    }
+
+        void Unregister( boost::shared_ptr< Proxy > proxy, const std::string& prefix )
+        {
+            boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
+            MOCK_EXPECT( response->GetStatus ).returns( 200 );
+            MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/unregister_proxy",
+                boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", prefix ) ) )
+                .returns( response );
+            proxy->Unregister( prefix );
+        }
+    };
 }
 
 BOOST_FIXTURE_TEST_CASE( proxy_registers, Fixture )
 {
     boost::shared_ptr< Proxy > proxy = MakeProxy();
-    const std::string dstPrefix = "some_prefix";
-    const std::string dstHost = "some_host";
-    const int dstPort = 15000;
-    MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/register_proxy",
-        boost::bind( &Contains, _1, boost::assign::map_list_of
-            ( "prefix", dstPrefix )
-            ( "host",   dstHost )
-            ( "port",   boost::lexical_cast< std::string >( dstPort ) ) ) )
-        .returns( boost::make_shared< MockResponse >() );
-    proxy->Register( dstPrefix, dstHost, dstPort );
+    Register( proxy, "some_prefix", "some_host", 15000 );
 }
 
 BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
 {
     boost::shared_ptr< Proxy > proxy = MakeProxy();
-    const std::string dstPrefix = "some_prefix";
-    MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/unregister_proxy",
-        boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", dstPrefix ) ) )
-        .returns( boost::make_shared< MockResponse >() );
-    proxy->Unregister( dstPrefix );
+    Register( proxy, "some_prefix", "some_host", 15000 );
+    Unregister( proxy, "some_prefix" );
 }
 
 BOOST_FIXTURE_TEST_CASE( proxy_reloads, Fixture )

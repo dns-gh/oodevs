@@ -50,14 +50,14 @@ public:
              NodeController( cpplog::BaseLogger& log,
                              const runtime::Runtime_ABC& runtime,
                              const runtime::FileSystem_ABC& system,
-                             const Proxy_ABC& proxy,
                              const NodeFactory_ABC& nodes,
                              const Path& root,
                              const Path& java,
                              const Path& jar,
                              const Path& web,
                              const std::string& type,
-                             runtime::Pool_ABC& pool );
+                             runtime::Pool_ABC& pool,
+                             Proxy_ABC& proxy );
     virtual ~NodeController();
     //@}
 
@@ -111,13 +111,13 @@ private:
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const runtime::FileSystem_ABC& system_;
-    const Proxy_ABC& proxy_;
     const NodeFactory_ABC& factory_;
     const Path root_;
     const Path java_;
     const Path jar_;
     const Path web_;
     const std::string type_;
+    Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Event end_;
     mutable runtime::Async async_;

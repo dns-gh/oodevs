@@ -55,24 +55,24 @@ std::string GetPrefix( const std::string& type, const Node_ABC& node )
 NodeController::NodeController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
                                 const FileSystem_ABC& system,
-                                const Proxy_ABC& proxy,
                                 const NodeFactory_ABC& nodes,
                                 const Path& root,
                                 const Path& java,
                                 const Path& jar,
                                 const Path& web,
                                 const std::string& type,
-                                Pool_ABC& pool )
+                                Pool_ABC& pool,
+                                Proxy_ABC& proxy )
     : log_     ( log )
     , runtime_ ( runtime )
     , system_  ( system )
-    , proxy_   ( proxy )
     , factory_ ( nodes )
     , root_    ( root / ( type == "cluster" ? type : "nodes" ) )
     , java_    ( java )
     , jar_     ( jar )
     , web_     ( web )
     , type_    ( type )
+    , proxy_   ( proxy )
     , async_   ( pool )
 {
     system.MakePaths( root_ );

@@ -18,15 +18,42 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <set>
 
 using namespace host;
 using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
+
+namespace
+{
+enum ProxyState
+{
+    PROXY_STATE_DISABLED,
+    PROXY_STATE_ENABLED,
+    PROXY_STATE_ZOMBIE,
+    PROXY_STATE_COUNT,
+};
+}
+
+struct host::ProxyLink
+{
+    ProxyLink( const std::string& host, int port )
+        : host ( host )
+        , port ( port )
+        , state( PROXY_STATE_DISABLED )
+    {
+        // NOTHING
+    }
+    const std::string host;
+    const int port;
+    ProxyState state;
+};
 
 // -----------------------------------------------------------------------------
 // Name: Proxy::Proxy
@@ -65,6 +92,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     }
     if( !hasProcess )
         Start();
+    async_.Go( boost::bind( &Proxy::Update, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +101,70 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
 // -----------------------------------------------------------------------------
 Proxy::~Proxy()
 {
+    end_.Signal();
+    async_.Join();
     if( process_ )
         process_->Kill( 0 );
     async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
+}
+
+namespace
+{
+bool KeepLink( ProxyState state )
+{
+    return state == PROXY_STATE_DISABLED
+        || state == PROXY_STATE_ENABLED;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Proxy::Restart
+// Created: BAX 2012-06-15
+// -----------------------------------------------------------------------------
+void Proxy::Restart()
+{
+    T_Process next = MakeProcess();
+    if( !next )
+        return;
+    boost::lock_guard< boost::mutex > lock( access_ );
+    process_ = next;
+    std::set< std::string > cemetery;
+    BOOST_FOREACH( T_Links::value_type& value, links_ )
+        if( KeepLink( value.second.state ) )
+            value.second.state = PROXY_STATE_DISABLED;
+        else
+            cemetery.insert( value.first );
+    BOOST_FOREACH( const std::string prefix, cemetery )
+        links_.erase( prefix );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Proxy::RegisterMissingLinks
+// Created: BAX 2012-06-15
+// -----------------------------------------------------------------------------
+void Proxy::RegisterMissingLinks()
+{
+    boost::unique_lock< boost::mutex > lock( access_ );
+    const T_Links next = links_;
+    lock.unlock();
+    BOOST_FOREACH( const T_Links::value_type& value, next )
+        if( value.second.state == PROXY_STATE_DISABLED )
+            async_.Post( boost::bind( &Proxy::HttpRegister, this, value.first, value.second ) );
+        else if( value.second.state == PROXY_STATE_ZOMBIE )
+            async_.Post( boost::bind( &Proxy::HttpUnregister, this, value.first ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Proxy::Update
+// Created: BAX 2012-06-15
+// -----------------------------------------------------------------------------
+void Proxy::Update()
+{
+    while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
+        if( process_ && !process_->IsAlive() )
+            Restart();
+        else
+            RegisterMissingLinks();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +182,7 @@ int Proxy::GetPort() const
 // -----------------------------------------------------------------------------
 Path Proxy::GetPath() const
 {
-    Path path = jar_;
-    return path.remove_filename();
+    return Path( jar_ ).remove_filename();
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +214,7 @@ bool Proxy::Reload( const Path& path )
         const boost::optional< std::string > name = tree.get_optional< std::string >( "process.name" );
         if( pid == boost::none || name == boost::none )
             return false;
-        boost::shared_ptr< runtime::Process_ABC > ptr = runtime_.GetProcess( *pid );
+        T_Process ptr = runtime_.GetProcess( *pid );
         if( !ptr || ptr->GetName() != *name )
             return false;
         process_ = ptr;
@@ -140,20 +228,28 @@ bool Proxy::Reload( const Path& path )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Proxy::MakeProcess
+// Created: BAX 2012-04-11
+// -----------------------------------------------------------------------------
+Proxy::T_Process Proxy::MakeProcess() const
+{
+    return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
+            ( "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
+            ( "--port \"" + boost::lexical_cast< std::string >( port_ ) + "\"" ),
+            Utf8Convert( Path( jar_ ).remove_filename() ),
+            Utf8Convert( logs_ / "proxy.log" ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Proxy::Start
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
 void Proxy::Start()
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    if( process_ ) return;
-    const Path path = GetPath();
-    Path jar_path = jar_;
-    process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
-            ( "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
-            ( "--port \"" + boost::lexical_cast< std::string >( port_ ) + "\"" ),
-            Utf8Convert( jar_path.remove_filename() ),
-            Utf8Convert( logs_ / "proxy.log" ) );
+    if( process_ )
+        return;
+    process_ = MakeProcess();
     if( !process_ )
         throw std::runtime_error( "Unable to start proxy process" );
     Save();
@@ -178,31 +274,72 @@ void Proxy::Stop()
 // -----------------------------------------------------------------------------
 void Proxy::Save() const
 {
-    const Path path = GetPath();
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / "proxy.id", ToJson( GetProperties() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, GetPath() / "proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Proxy::Register
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
+void Proxy::Register( const std::string& prefix, const std::string& host, int port )
 {
-    async_.Post( boost::bind( &web::Client_ABC::Get, &client_,
-        "localhost", port_, "/register_proxy", boost::assign::map_list_of
-        ( "prefix", prefix )
-        ( "host", host )
-        ( "port", boost::lexical_cast< std::string >( port ) ) ) );
+    boost::lock_guard< boost::mutex > lock( access_ );
+    std::pair< T_Links::iterator, bool > pair = links_.insert( std::make_pair( prefix, ProxyLink( host, port ) ) );
+    pair.first->second.state = PROXY_STATE_DISABLED;
+    async_.Post( boost::bind( &Proxy::HttpRegister, this, prefix, pair.first->second ) );
     LOG_INFO( log_ ) << "[proxy] Added link from /" << prefix << " to " << host << ":" << port;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Proxy::HttpRegister
+// Created: BAX 2012-06-18
+// -----------------------------------------------------------------------------
+void Proxy::HttpRegister( const std::string& prefix, const ProxyLink& link )
+{
+    web::Client_ABC::T_Response response = client_.Get( "localhost", port_, "/register_proxy",
+        boost::assign::map_list_of
+        ( "prefix", prefix )
+        ( "host", link.host )
+        ( "port", boost::lexical_cast< std::string >( link.port ) ) );
+    if( response->GetStatus() != 200 )
+        return;
+
+    boost::lock_guard< boost::mutex > lock( access_ );
+    T_Links::iterator it = links_.find( prefix );
+    if( it == links_.end() )
+        return;
+    it->second.state = PROXY_STATE_ENABLED;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Proxy::Unregister
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-void Proxy::Unregister( const std::string& prefix ) const
+void Proxy::Unregister( const std::string& prefix )
 {
-    async_.Post( boost::bind( &web::Client_ABC::Get, &client_,
-        "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
+    boost::lock_guard< boost::mutex > lock( access_ );
+    T_Links::iterator it = links_.find( prefix );
+    if( it == links_.end() )
+        return;
+    it->second.state = PROXY_STATE_ZOMBIE;
+    async_.Post( boost::bind( &Proxy::HttpUnregister, this, prefix ) );
     LOG_INFO( log_ ) << "[proxy] Removed link to /" << prefix;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Proxy::HttpUnregister
+// Created: BAX 2012-06-18
+// -----------------------------------------------------------------------------
+void Proxy::HttpUnregister( const std::string& prefix )
+{
+    web::Client_ABC::T_Response response = client_.Get( "localhost", port_, "/unregister_proxy",
+        boost::assign::map_list_of( "prefix", prefix ) );
+    if( response->GetStatus() != 200 )
+        return;
+
+    boost::lock_guard< boost::mutex > lock( access_ );
+    T_Links::iterator it = links_.find( prefix );
+    if( it == links_.end() || it->second.state != PROXY_STATE_ZOMBIE )
+        return;
+    links_.erase( it );
 }
