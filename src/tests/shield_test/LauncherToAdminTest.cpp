@@ -9,6 +9,7 @@
 
 #include "shield_test_pch.h"
 #include "SimTools.h"
+#include "protocol/proto/launcher_admin.pb.h"
 
 using namespace shield;
 
@@ -120,7 +121,7 @@ BOOST_FIXTURE_TEST_CASE( session_command_execution_response_from_launcher_is_con
     content.mutable_session_command_execution_response()->set_session("session") ;
     content.mutable_session_command_execution_response()->set_saved_checkpoint("checkpoint") ;
     content.mutable_session_command_execution_response()->set_running(true) ;
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { session_command_execution_response { error_code: invalid_session_name exercise: \"name\" session: \"session\" saved_checkpoint: \"checkpoint\" running: true } }" ) );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { session_command_execution_response { error_code: invalid_session_name exercise: \"name\" session: \"session\" saved_checkpoint: \"checkpoint\" status: running } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }
 
@@ -129,9 +130,18 @@ BOOST_FIXTURE_TEST_CASE( checkpoint_list_response_from_launcher_is_converted, Co
     content.mutable_checkpoint_list_response()->set_error_code( sword::CheckpointListResponse::invalid_exercise_name );
     content.mutable_checkpoint_list_response()->set_exercise("name") ;
     content.mutable_checkpoint_list_response()->set_session("session") ;
-    content.mutable_checkpoint_list_response()->add_checkpoint("checkpoint1") ;
-    content.mutable_checkpoint_list_response()->add_checkpoint("checkpoint2") ;
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { checkpoint_list_response { error_code: invalid_exercise_name exercise: \"name\" session: \"session\" checkpoint: \"checkpoint1\" checkpoint: \"checkpoint2\" } }" ) );
+    
+    content.mutable_checkpoint_list_response()->add_checkpoint();
+    sword::CheckpointListResponse_CheckPoint* checkpoint1 = content.mutable_checkpoint_list_response()->mutable_checkpoint( 0 );
+    checkpoint1->set_name( "checkpoint1" );
+    checkpoint1->set_type( sword::CheckpointListResponse_CheckPoint::automatic );
+
+    content.mutable_checkpoint_list_response()->add_checkpoint() ;
+    sword::CheckpointListResponse_CheckPoint* checkpoint2 = content.mutable_checkpoint_list_response()->mutable_checkpoint( 1 );
+    checkpoint2->set_name( "checkpoint2" );
+    checkpoint2->set_type( sword::CheckpointListResponse_CheckPoint::manual );
+
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { checkpoint_list_response { error_code: invalid_exercise_name exercise: \"name\" session: \"session\" checkpoint { name: \"checkpoint1\" type: automatic } checkpoint { name: \"checkpoint2\" type: manual } } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }
 

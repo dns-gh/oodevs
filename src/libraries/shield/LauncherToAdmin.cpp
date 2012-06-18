@@ -9,6 +9,7 @@
 
 #include "LauncherToAdmin.h"
 #include "SimulationTools.h"
+#include "protocol/proto/launcher_admin.pb.h"
 
 using namespace shield;
 
@@ -181,7 +182,8 @@ void LauncherToAdmin::Convert( const sword::SessionCommandExecutionResponse& fro
     CONVERT( exercise );
     CONVERT( session );
     CONVERT( saved_checkpoint );
-    CONVERT( running );
+    if( from.has_running() )
+        to->set_status( from.running() ? MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::running : MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::paused );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +197,17 @@ void LauncherToAdmin::Convert( const sword::CheckpointListResponse& from, MsgsLa
                               ( sword::CheckpointListResponse::invalid_session_name, MsgsLauncherToAdmin::MsgCheckpointListResponse::invalid_session_name ) );
     CONVERT( exercise );
     CONVERT( session );
-    CONVERT_SIMPLE_LIST( checkpoint, ConvertSimple );
+    for ( int i = 0; i < from.checkpoint_size(); ++i )
+    {
+        sword::CheckpointListResponse::CheckPoint checkpointFrom = from.checkpoint(i);
+        to->add_checkpoint();
+        MsgsLauncherToAdmin::MsgCheckpointListResponse::CheckPoint* checkpointTo = to->mutable_checkpoint(i);
+        checkpointTo->set_name( checkpointFrom.name() );
+        if( checkpointFrom.type() == sword::CheckpointListResponse_CheckPoint::automatic )
+            checkpointTo->set_type( MsgsLauncherToAdmin::MsgCheckpointListResponse_CheckPoint::automatic );
+        else
+            checkpointTo->set_type( MsgsLauncherToAdmin::MsgCheckpointListResponse_CheckPoint::manual );
+    }
 }
 
 // -----------------------------------------------------------------------------

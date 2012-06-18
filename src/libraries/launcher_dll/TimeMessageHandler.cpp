@@ -9,6 +9,7 @@
 
 #include "launcher_dll_pch.h"
 #include "TimeMessageHandler.h"
+#include "ProcessService.h"
 
 using namespace launcher;
 
@@ -16,8 +17,9 @@ using namespace launcher;
 // Name: TimeMessageHandler constructor
 // Created: LGY 2011-06-22
 // -----------------------------------------------------------------------------
-TimeMessageHandler::TimeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
+TimeMessageHandler::TimeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session, ProcessService* service )
     : ClientMessageHandlerBase( publisher, exercise, session )
+    , service_( service )
 {
     // NOTHING
 }
@@ -43,6 +45,7 @@ bool TimeMessageHandler::OnReceiveMessage( const sword::SimToClient& message )
         response().set_error_code( message.message().control_pause_ack().error_code() == sword::ControlAck::error_invalid_date_time ?
                                    sword::SessionCommandExecutionResponse::invalid_date_time :
                                    sword::SessionCommandExecutionResponse::success );
+        response().set_running( service_->IsRunning( exercise_ ) );
         Send( response );
     }
     return true;

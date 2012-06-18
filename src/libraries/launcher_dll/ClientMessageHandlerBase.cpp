@@ -17,8 +17,8 @@ using namespace launcher;
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
 ClientMessageHandlerBase::ClientMessageHandlerBase( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session )
-    : publisher_( publisher )
-    , exercise_ ( exercise )
+    : exercise_ ( exercise )
+    , publisher_( publisher )
     , session_  ( session )
 {
     // NOTHING

@@ -114,7 +114,10 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionCommandExecu
     CONVERT( exercise );
     CONVERT( session );
     CONVERT( save_checkpoint );
-    CONVERT( set_running );
+    if( from.set_running() == MsgsAdminToLauncher::MsgSessionCommandExecutionRequest::pause )
+        to->set_set_running( false );
+    else if( from.set_running() == MsgsAdminToLauncher::MsgSessionCommandExecutionRequest::run )
+        to->set_set_running( true );
     CONVERT_DATE( time_change );
 }
 

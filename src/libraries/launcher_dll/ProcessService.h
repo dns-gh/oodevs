@@ -18,6 +18,7 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
+#include <set>
 
 namespace tools
 {
@@ -70,6 +71,8 @@ public:
     void Update();
     void SendRunningExercices( const std::string& endpoint ) const;
     void SendSessionNotification( const sword::SessionNotificationRequest& message ) const;
+
+    bool IsRunning( const std::string& exercise ) const;
     //@}
 
 private:
@@ -97,6 +100,7 @@ private:
     const LauncherService& server_;
     ProcessContainer processes_;
     boost::recursive_mutex mutex_;
+    std::set< std::string > runningExercises_;
     //@}
 };
 

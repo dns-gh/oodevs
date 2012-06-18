@@ -15,6 +15,7 @@
 
 namespace launcher
 {
+    class ProcessService;
 // =============================================================================
 /** @class  TimeMessageHandler
     @brief  Time message handler
@@ -26,7 +27,7 @@ class TimeMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             TimeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session );
+             TimeMessageHandler( boost::shared_ptr< LauncherPublisher > publisher, const std::string& exercise, const std::string& session, ProcessService* service );
     virtual ~TimeMessageHandler();
     //@}
 
@@ -34,6 +35,8 @@ public:
     //@{
     virtual bool OnReceiveMessage( const sword::SimToClient& message );
     //@}
+private:
+    ProcessService* service_;
 };
 
 }

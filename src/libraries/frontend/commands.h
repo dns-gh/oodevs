@@ -35,6 +35,11 @@ namespace frontend
 
     namespace commands
     {
+        struct CheckpointStatus
+        {
+            std::string name_;
+            bool auto_;
+        };
         QStringList ListTerrains        ( const tools::GeneralConfig& config );
         QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = "" );
         QStringList ListSessions        ( const tools::GeneralConfig& config, const std::string& exercise );
@@ -47,6 +52,7 @@ namespace frontend
         QStringList ListOrders          ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListPackageFiles    ( const std::string& filename );
+        std::vector< CheckpointStatus > ListCheckpointsStatus( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
 
         void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
         void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );

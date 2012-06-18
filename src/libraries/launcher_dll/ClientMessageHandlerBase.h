@@ -63,12 +63,14 @@ protected:
             message.Send( *publisher_ );
     }
     //@}
+    
+protected:
+    const std::string exercise_;
 
 private:
     //! @name Member data
     //@{
     boost::shared_ptr< LauncherPublisher > publisher_;
-    const std::string exercise_;
     const std::string session_;
     //@}
 };

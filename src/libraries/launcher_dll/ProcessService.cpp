@@ -421,9 +421,14 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
     else
     {
         message.set_error_code( sword::CheckpointListResponse::success );
-        const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
-        for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
-            message.add_checkpoint( ( *it ).ascii() );
+        std::vector< frontend::commands::CheckpointStatus > checkpoints = frontend::commands::ListCheckpointsStatus( config_, exercice, session );
+        for( int i = 0; i < checkpoints.size(); ++i )
+        {
+            message.add_checkpoint();
+            sword::CheckpointListResponse::CheckPoint* next = message.mutable_checkpoint(i);
+            next->set_name( checkpoints[i].name_ );
+            next->set_type( checkpoints[i].auto_ ? sword::CheckpointListResponse_CheckPoint::automatic : sword::CheckpointListResponse_CheckPoint::manual );
+        }
     }
 }
 
@@ -486,7 +491,13 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         return SendErrorMessage< SessionCommandExecutionResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_set_running() )
+    {
+        if( message.set_running() )
+            runningExercises_.insert( message.exercise() );
+        else
+            runningExercises_.erase( message.exercise() );
         ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), *client );
+    }
     if( message.has_save_checkpoint() )
     {
         SaveCheckpoint( message.save_checkpoint(), *client );
@@ -495,6 +506,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         response().set_session( message.session() );
         response().set_error_code( sword::SessionCommandExecutionResponse::success );
         response().set_saved_checkpoint( message.save_checkpoint() );
+        response().set_running( IsRunning( message.exercise() ) );
         response.Send( *server_.ResolveClient( endpoint ) );
     }
     if( message.has_time_change() )
@@ -599,7 +611,7 @@ void ProcessService::ExecuteChangeTime( const std::string& endpoint, const std::
                                         const std::string& date, int context, SwordFacade& facade )
 {
     facade.RegisterMessageHandler( context,
-        std::auto_ptr< MessageHandler_ABC >( new TimeMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+        std::auto_ptr< MessageHandler_ABC >( new TimeMessageHandler( server_.ResolveClient( endpoint ), exercise, session, this ) ) );
     simulation::ControlDateTimeChange request;
     request().mutable_date_time()->set_data( date );
     request.Send( facade, context );
@@ -722,4 +734,13 @@ void ProcessService::SendSessionNotification( const sword::SessionNotificationRe
         message().set_persistent( false );
         message.Send( *client );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::IsRunning
+// Created: JSR 2012-06-18
+// -----------------------------------------------------------------------------
+bool ProcessService::IsRunning( const std::string& exercise ) const
+{
+    return runningExercises_.find( exercise ) != runningExercises_.end();
 }

@@ -158,6 +158,41 @@ namespace frontend
         {
             return ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
         }
+        
+        // -----------------------------------------------------------------------------
+        // Name: std::vector< QString, bool > commands::ListCheckpointsStatus
+        // Created: LDC 2012-06-18
+        // -----------------------------------------------------------------------------
+        std::vector< CheckpointStatus > commands::ListCheckpointsStatus( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+        {
+            std::vector< CheckpointStatus > result;
+
+            const bfs::path root = bfs::path( config.GetCheckpointsDir( exercise, session ), bfs::native );
+            if( ! bfs::exists( root ) )
+                return result;
+
+            bfs::recursive_directory_iterator end;
+            for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
+            {
+                const bfs::path child = *it;
+                if( IsValidCheckpoint( child ) )
+                {
+                    QStringList entry;
+                    bfs::path p( child );
+                    for( int i = it.level(); i >= 0; --i )
+                    {
+                        entry.push_front( p.leaf().c_str() );
+                        p = p.parent_path();
+                    }
+                    CheckpointStatus item;
+                    item.name_ = entry.join( "/" ).toStdString();
+                    item.auto_ = bfs::exists( p / "auto" );
+                    result.push_back( item );
+                    it.no_push();
+                }
+            }
+            return result;
+        }
 
         std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
                                                      const std::string& session, const std::vector< std::string >& checkpoints )
