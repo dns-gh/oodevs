@@ -11,7 +11,14 @@
 #define UUID_FACTORY_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/uuid/uuid.hpp>
+
+namespace boost
+{
+namespace uuids
+{
+    struct uuid;
+}
+}
 
 namespace host
 {

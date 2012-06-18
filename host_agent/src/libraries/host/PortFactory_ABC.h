@@ -11,7 +11,11 @@
 #define PORT_FACTORY_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+
+namespace boost
+{
+    template< typename T > class shared_ptr;
+}
 
 namespace host
 {

@@ -17,6 +17,7 @@
 #include "SessionController_ABC.h"
 
 #include <boost/foreach.hpp>
+#include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -298,7 +299,10 @@ Reply Agent::ListSessions( const Uuid& node, int offset, int limit ) const
 // -----------------------------------------------------------------------------
 Reply Agent::CountSessions( const Uuid& node ) const
 {
-    return Count( node.is_nil() ? sessions_.Count() : sessions_.Count( boost::bind( &IsNode, _1, node ) ) );
+    if( node.is_nil() )
+        return Count( sessions_.Count( SessionController_ABC::T_Predicate() ) );
+    else
+        return Count( sessions_.Count( boost::bind( &IsNode, _1, node ) ) );
 }
 
 // -----------------------------------------------------------------------------

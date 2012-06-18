@@ -10,11 +10,18 @@
 #ifndef SESSION_CONTROLLER_ABC_H
 #define SESSION_CONTROLLER_ABC_H
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/uuid/uuid.hpp>
 #include <vector>
+
+namespace boost
+{
+    template< typename T > class function;
+    template< typename T > class shared_ptr;
+    namespace uuids
+    {
+        struct uuid;
+    }
+}
 
 namespace host
 {
@@ -47,8 +54,8 @@ struct SessionController_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual void        Reload( T_Predicate predicate ) = 0;
-    virtual T_Sessions  List( T_Predicate predicate = T_Predicate(), int offset = 0, int limit = INT_MAX ) const = 0;
-    virtual size_t      Count( T_Predicate predicate = T_Predicate() ) const = 0;
+    virtual T_Sessions  List( T_Predicate predicate, int offset = 0, int limit = INT_MAX ) const = 0;
+    virtual size_t      Count( T_Predicate predicate ) const = 0;
     virtual bool        Has( const Uuid& id ) const = 0;
     virtual T_Session   Get( const Uuid& id ) const = 0;
     virtual T_Session   Create( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;

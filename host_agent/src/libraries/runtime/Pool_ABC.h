@@ -11,8 +11,12 @@
 #define POOL_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/thread/future.hpp>
+
+namespace boost
+{
+    template< typename T > class function;
+    template< typename T > class shared_future;
+}
 
 namespace runtime
 {

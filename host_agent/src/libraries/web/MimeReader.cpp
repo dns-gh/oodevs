@@ -19,6 +19,7 @@
 #include <boost/iostreams/stream_buffer.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/thread/future.hpp>
 #include <map>
 
 using namespace web;

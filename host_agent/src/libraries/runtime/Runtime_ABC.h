@@ -8,13 +8,14 @@
 // *****************************************************************************
 #ifndef RUNTIME_ABC_H
 #define RUNTIME_ABC_H
+
+#include <boost/noncopyable.hpp>
 #include <string>
 #include <vector>
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 
 namespace boost
 {
+    template< typename T > class shared_ptr;
 namespace filesystem3
 {
     class path;

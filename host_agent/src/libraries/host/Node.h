@@ -16,6 +16,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/shared_mutex.hpp>
+#include <boost/uuid/uuid.hpp>
 
 namespace boost
 {

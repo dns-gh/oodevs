@@ -10,17 +10,20 @@
 #ifndef SESSION_ABC_H
 #define SESSION_ABC_H
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/uuid/uuid.hpp>
 
 namespace boost
 {
+    template< typename T > class function;
+    template< typename T > class shared_ptr;
 namespace filesystem3
 {
     class path;
+}
+namespace uuids
+{
+    struct uuid;
 }
 }
 

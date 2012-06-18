@@ -12,15 +12,18 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/uuid/uuid.hpp>
 #include <vector>
 
 namespace boost
 {
+    template< typename T > class shared_ptr;
 namespace filesystem3
 {
     class path;
+}
+namespace uuids
+{
+    struct uuid;
 }
 }
 

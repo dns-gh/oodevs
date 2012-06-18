@@ -12,6 +12,9 @@
 
 #include "Pool_ABC.h"
 
+#include <boost/thread/mutex.hpp>
+#include <vector>
+
 namespace runtime
 {
 // =============================================================================

@@ -10,17 +10,20 @@
 #ifndef NODE_ABC_H
 #define NODE_ABC_H
 
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
-#include <boost/uuid/uuid.hpp>
 #include <vector>
 
 namespace boost
 {
+    template< typename T > class function;
 namespace filesystem3
 {
     class path;
+}
+namespace uuids
+{
+    struct uuid;
 }
 }
 

@@ -26,6 +26,8 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/thread/future.hpp>
+#include <boost/uuid/uuid.hpp>
 #include <cpplog/cpplog.hpp>
 
 namespace mocks

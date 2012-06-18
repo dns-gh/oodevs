@@ -9,6 +9,8 @@
 
 #include "Async.h"
 
+#include <boost/thread/future.hpp>
+
 using namespace runtime;
 
 // -----------------------------------------------------------------------------
