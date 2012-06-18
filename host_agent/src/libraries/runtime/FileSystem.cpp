@@ -6,7 +6,7 @@
 // Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
-
+#define  __STDC_LIMIT_MACROS
 #include "FileSystem.h"
 
 #include "cpplog/cpplog.hpp"
@@ -17,6 +17,8 @@
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+
+#include <stdint.h>
 
 #define  LIBARCHIVE_STATIC
 #include <libarchive/archive.h>

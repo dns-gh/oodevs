@@ -31,7 +31,7 @@ file( GLOB files
     "${root_dir}/src/libraries/runtime/*.h"
     "${root_dir}/src/libraries/runtime/*.cpp"
 )
-if( WIN32 )
+if( MSVC )
     file( GLOB win32_files
         "${root_dir}/src/libraries/runtime/win32/*.cpp"
         "${root_dir}/src/libraries/runtime/win32/*.h"

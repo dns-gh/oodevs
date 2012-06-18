@@ -53,6 +53,8 @@ struct host::ProxyLink
     const std::string host;
     const int port;
     ProxyState state;
+private:
+    ProxyLink& operator=( const ProxyLink& );
 };
 
 // -----------------------------------------------------------------------------

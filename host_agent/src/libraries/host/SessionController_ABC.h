@@ -11,6 +11,8 @@
 #define SESSION_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <climits>
+#include <string>
 #include <vector>
 
 namespace boost
