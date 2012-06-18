@@ -16,8 +16,7 @@
 #include <string>
 #include <vector>
 
-
-namespace host
+namespace web
 {
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;

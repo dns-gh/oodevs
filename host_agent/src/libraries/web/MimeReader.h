@@ -14,7 +14,7 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-namespace host
+namespace runtime
 {
     struct Pool_ABC;
 }
@@ -32,7 +32,7 @@ public:
     void PutHeader( const std::string& name, const std::string& value );
     bool IsValid() const;
     void Register( const std::string& name, const Handler& handler );
-    void Parse( host::Pool_ABC& pool, std::istream& src );
+    void Parse( runtime::Pool_ABC& pool, std::istream& src );
 
 private:
     struct Part;

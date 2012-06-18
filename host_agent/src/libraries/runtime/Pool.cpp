@@ -11,7 +11,7 @@
 
 #include <boost/make_shared.hpp>
 
-using namespace host;
+using namespace runtime;
 
 namespace
 {

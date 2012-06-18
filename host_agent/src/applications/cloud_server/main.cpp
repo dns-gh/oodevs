@@ -9,11 +9,9 @@
 
 #include <runtime/Factory.h>
 #include <host/Agent.h>
-#include <host/FileSystem.h>
 #include <host/Node.h>
 #include <host/NodeController.h>
 #include <host/Package.h>
-#include <host/Pool.h>
 #include <host/PortFactory.h>
 #include <host/PropertyTree.h>
 #include <host/Proxy.h>
@@ -21,6 +19,8 @@
 #include <host/SessionController.h>
 #include <host/UuidFactory.h>
 #include <runtime/Daemon.h>
+#include <runtime/FileSystem.h>
+#include <runtime/Pool.h>
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Utf8.h>
 #include <web/Client.h>
@@ -36,7 +36,7 @@
 #include <boost/uuid/string_generator.hpp>
 
 using namespace host;
-using runtime::Utf8Convert;
+using namespace runtime;
 typedef runtime::Daemon::T_Waiter Waiter;
 
 namespace

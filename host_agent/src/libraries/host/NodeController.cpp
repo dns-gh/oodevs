@@ -9,14 +9,14 @@
 
 #include "NodeController.h"
 
-#include "Async.h"
 #include "Container.h"
 #include "cpplog/cpplog.hpp"
-#include "FileSystem_ABC.h"
 #include "Node_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "Proxy_ABC.h"
+#include "runtime/Async.h"
+#include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
@@ -32,6 +32,9 @@
 
 using namespace host;
 using runtime::Utf8Convert;
+using runtime::Async;
+using runtime::FileSystem_ABC;
+using runtime::Pool_ABC;
 
 namespace
 {

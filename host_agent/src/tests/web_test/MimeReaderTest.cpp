@@ -10,7 +10,7 @@
 #include "web_test.h"
 
 #include <web/MimeReader.h>
-#include <host/Pool.h>
+#include <runtime/Pool.h>
 
 #include <boost/assign/list_of.hpp>
 #include <boost/assign/std/vector.hpp>
@@ -18,7 +18,7 @@
 #include <sstream>
 
 using namespace web;
-using host::Pool;
+using runtime::Pool;
 
 namespace
 {

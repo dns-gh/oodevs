@@ -14,10 +14,14 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace host
+namespace runtime
 {
     struct FileSystem_ABC;
     struct Pool_ABC;
+}
+
+namespace host
+{
     typedef boost::filesystem3::path Path;
 
 // =============================================================================
@@ -31,7 +35,7 @@ class Package : public Package_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Package( Pool_ABC& pool, const FileSystem_ABC& system, const Path& path, bool reference );
+             Package( runtime::Pool_ABC& pool, const runtime::FileSystem_ABC& system, const Path& path, bool reference );
     virtual ~Package();
     //@}
 
@@ -46,11 +50,11 @@ public:
     virtual size_t CountExercises() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
-    virtual void Install( Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
-    virtual void Uninstall( Async& async, const Path& root, const std::vector< size_t >& ids );
+    virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
+    virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids );
     virtual Tree LinkExercise( const std::string& name );
     virtual Tree LinkItem( const Tree& tree );
-    virtual void UnlinkItem( Async& async, const Tree& tree );
+    virtual void UnlinkItem( runtime::Async& async, const Tree& tree );
     //@}
 
 public:
@@ -63,8 +67,8 @@ private:
 
     //! @name Private members
     //@{
-    Pool_ABC& pool_;
-    const FileSystem_ABC& system_;
+    runtime::Pool_ABC& pool_;
+    const runtime::FileSystem_ABC& system_;
     const Path path_;
     const bool reference_;
     std::string name_;

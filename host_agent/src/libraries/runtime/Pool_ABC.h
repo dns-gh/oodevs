@@ -14,7 +14,7 @@
 #include <boost/function.hpp>
 #include <boost/thread/future.hpp>
 
-namespace host
+namespace runtime
 {
 // =============================================================================
 /** @class  Pool_ABC

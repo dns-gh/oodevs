@@ -18,7 +18,7 @@ namespace cpplog
     class BaseLogger;
 }
 
-namespace host
+namespace runtime
 {
     struct Pool_ABC;
 }
@@ -37,7 +37,7 @@ class Server : public boost::noncopyable
 {
 public:
     //! @name Destructor
-             Server( cpplog::BaseLogger& logger, host::Pool_ABC& pool, Observer_ABC& observer, int port );
+             Server( cpplog::BaseLogger& logger, runtime::Pool_ABC& pool, Observer_ABC& observer, int port );
     virtual ~Server();
     //@}
 

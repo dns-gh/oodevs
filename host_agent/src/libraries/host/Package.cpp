@@ -9,8 +9,8 @@
 
 #include "Package.h"
 
-#include "Async.h"
-#include "FileSystem_ABC.h"
+#include "runtime/Async.h"
+#include "runtime/FileSystem_ABC.h"
 #include "PropertyTree.h"
 #include "runtime/Utf8.h"
 
@@ -22,6 +22,9 @@
 #include <boost/property_tree/ptree.hpp>
 
 using namespace host;
+using runtime::Async;
+using runtime::FileSystem_ABC;
+using runtime::Pool_ABC;
 using runtime::Utf8Convert;
 
 typedef boost::function< void( const Path& ) > PathOperand;

@@ -11,11 +11,11 @@
 
 #include "AsyncStream.h"
 #include "cpplog/cpplog.hpp"
-#include "host/Async.h"
-#include "host/Pool_ABC.h"
 #include "MimeReader.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
+#include "runtime/Async.h"
+#include "runtime/Pool_ABC.h"
 
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -33,7 +33,8 @@
 #endif
 
 using namespace web;
-using host::Pool_ABC;
+using runtime::Async;
+using runtime::Pool_ABC;
 
 namespace
 {
@@ -202,7 +203,7 @@ void SetError( HttpServer::connection_ptr link, T error, const std::string& mess
 
 struct Context : public boost::noncopyable
 {
-    Context( host::Async& async, Observer_ABC& observer )
+    Context( Async& async, Observer_ABC& observer )
         : async_   ( async )
         , observer_( observer )
         , server_  ( 0 )
@@ -251,7 +252,7 @@ private:
     }
 
 private:
-    host::Async& async_;
+    Async& async_;
     Observer_ABC& observer_;
     HttpServer* server_;
 };
@@ -297,7 +298,7 @@ struct Server::Private : public boost::noncopyable
     }
 
     boost::network::utils::thread_pool threads_;
-    host::Async async_;
+    Async async_;
     Context context_;
     Handler handler_;
     HttpServer server_;

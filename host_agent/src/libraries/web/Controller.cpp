@@ -10,7 +10,7 @@
 #include "Controller.h"
 
 #include "cpplog/cpplog.hpp"
-#include "host/Agent_ABC.h"
+#include "Agent_ABC.h"
 #include "Request_ABC.h"
 
 #include <boost/algorithm/string.hpp>
@@ -23,7 +23,6 @@
 #include <boost/uuid/uuid_generators.hpp>
 
 using namespace web;
-using namespace host;
 
 // -----------------------------------------------------------------------------
 // Name: Controller::Controller
@@ -149,7 +148,7 @@ std::string WriteHttpReply( HttpStatusCode code, const std::string& content = st
 // Name: WriteHttpReply
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( const host::Reply& reply )
+std::string WriteHttpReply( const Reply& reply )
 {
     return WriteHttpReply( reply.valid ? Ok : InternalServerError, reply.data );
 }
@@ -539,7 +538,7 @@ std::string Controller::CountExercises( const Request_ABC& request )
 
 namespace
 {
-void OnUploadCache( host::Reply& reply, host::Agent_ABC& agent, const Uuid& id, std::istream& stream )
+void OnUploadCache( Reply& reply, Agent_ABC& agent, const Uuid& id, std::istream& stream )
 {
     reply = agent.UploadCache( id, stream );
 }
@@ -553,7 +552,7 @@ std::string Controller::UploadCache( Request_ABC& request )
 {
     const std::string id = RequireParameter< std::string >( "id", request );
     LOG_INFO( log_ ) << "[web] /upload_cache id: " << id;
-    host::Reply reply( "Unable to find mime part 'cache'", false );
+    Reply reply( "Unable to find mime part 'cache'", false );
     request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
     request.ParseMime();
     return WriteHttpReply( reply );

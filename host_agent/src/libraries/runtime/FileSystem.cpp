@@ -10,7 +10,7 @@
 #include "FileSystem.h"
 
 #include "cpplog/cpplog.hpp"
-#include "runtime/Utf8.h"
+#include "Utf8.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -31,7 +31,7 @@
 #   pragma warning( pop )
 #endif
 
-using namespace host;
+using namespace runtime;
 using runtime::Utf8Convert;
 
 // -----------------------------------------------------------------------------

@@ -10,16 +10,16 @@
 #ifndef MOCKS_H
 #define MOCKS_H
 
-#include <host/FileSystem_ABC.h>
 #include <host/Node_ABC.h>
 #include <host/NodeController_ABC.h>
 #include <host/Package_ABC.h>
-#include <host/Pool_ABC.h>
 #include <host/PortFactory_ABC.h>
 #include <host/Proxy_ABC.h>
 #include <host/Session_ABC.h>
 #include <host/SessionController_ABC.h>
 #include <host/UuidFactory_ABC.h>
+#include <runtime/FileSystem_ABC.h>
+#include <runtime/Pool_ABC.h>
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
 #include <web/Client_ABC.h>
@@ -188,7 +188,7 @@ namespace mocks
         MOCK_METHOD( GetModuleFilename, 0 );
     };
 
-    MOCK_BASE_CLASS( MockFileSystem, host::FileSystem_ABC )
+    MOCK_BASE_CLASS( MockFileSystem, runtime::FileSystem_ABC )
     {
         MOCK_METHOD( IsFile, 1 );
         MOCK_METHOD( IsDirectory, 1 );
@@ -209,7 +209,7 @@ namespace mocks
         MOCK_METHOD( GetLastWrite, 1 );
     };
 
-    MOCK_BASE_CLASS( MockUnpack, host::Unpacker_ABC )
+    MOCK_BASE_CLASS( MockUnpack, runtime::Unpacker_ABC )
     {
         MOCK_METHOD( Unpack, 0 );
     };
@@ -219,7 +219,7 @@ namespace mocks
         MOCK_METHOD( Get, 4 );
     };
 
-    MOCK_BASE_CLASS( MockPool, host::Pool_ABC )
+    MOCK_BASE_CLASS( MockPool, runtime::Pool_ABC )
     {
         MockPool()
         {

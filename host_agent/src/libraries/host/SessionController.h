@@ -21,16 +21,16 @@ namespace cpplog
 
 namespace runtime
 {
-    struct Runtime_ABC;
+    struct Async;
+    struct FileSystem_ABC;
+    struct Pool_ABC;
     struct Process_ABC;
+    struct Runtime_ABC;
 }
 
 namespace host
 {
-    struct Async;
-    struct FileSystem_ABC;
     struct NodeController_ABC;
-    struct Pool_ABC;
     struct PortFactory_ABC;
     struct SessionFactory_ABC;
     struct UuidFactory_ABC;
@@ -50,12 +50,12 @@ public:
     //@{
              SessionController( cpplog::BaseLogger& log,
                                 const runtime::Runtime_ABC& runtime,
-                                const FileSystem_ABC& system,
+                                const runtime::FileSystem_ABC& system,
                                 const SessionFactory_ABC& sessions,
                                 const NodeController_ABC& nodes,
                                 const Path& root,
                                 const Path& apps,
-                                Pool_ABC& pool );
+                                runtime::Pool_ABC& pool );
     virtual ~SessionController();
     //@}
 
@@ -88,14 +88,14 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
-    const FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& system_;
     const SessionFactory_ABC& factory_;
     const NodeController_ABC& nodes_;
     const Path root_;
     const Path apps_;
     const std::auto_ptr< Container< Session_ABC > > sessions_;
     runtime::Event end_;
-    const std::auto_ptr< Async > async_;
+    const std::auto_ptr< runtime::Async > async_;
     //@}
 };
 

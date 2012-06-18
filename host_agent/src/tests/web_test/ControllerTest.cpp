@@ -11,7 +11,7 @@
 
 #include <cpplog/cpplog.hpp>
 
-#include <host/Agent_ABC.h>
+#include <web/Agent_ABC.h>
 
 #include <web/Controller.h>
 #include <web/Observer_ABC.h>
@@ -26,7 +26,6 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/xpressive/xpressive.hpp>
 
-using namespace host;
 using namespace web;
 
 namespace
@@ -43,7 +42,7 @@ namespace
         }
     };
 
-    MOCK_BASE_CLASS( MockAgent, host::Agent_ABC )
+    MOCK_BASE_CLASS( MockAgent, web::Agent_ABC )
     {
         // cluster
         MOCK_METHOD( GetCluster, 0 );

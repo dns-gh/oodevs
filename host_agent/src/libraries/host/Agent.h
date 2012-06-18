@@ -10,7 +10,7 @@
 #ifndef AGENT_H
 #define AGENT_H
 
-#include "Agent_ABC.h"
+#include "web/Agent_ABC.h"
 #include <boost/shared_ptr.hpp>
 
 namespace boost
@@ -27,6 +27,9 @@ namespace host
 {
     struct NodeController_ABC;
     struct SessionController_ABC;
+    typedef web::Reply Reply;
+    typedef boost::property_tree::ptree Tree;
+    typedef boost::uuids::uuid Uuid;
 
 // =============================================================================
 /** @class  Agent
@@ -34,7 +37,7 @@ namespace host
 */
 // Created: BAX 2012-03-07
 // =============================================================================
-class Agent : public Agent_ABC
+class Agent : public web::Agent_ABC
 {
 public:
     //! @name Constructors/Destructor

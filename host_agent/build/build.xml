@@ -62,7 +62,7 @@
     </target>
 
     <target name="web_test" depends="host,web" description="build web tests">
-        <build-test name="web" depends="boost" libs="host@{suffix},web@{suffix}">
+        <build-test name="web" depends="boost" libs="runtime@{suffix},web@{suffix}">
             <defineset define="${win.defines}"/>
         </build-test>
     </target>

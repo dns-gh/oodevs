@@ -21,16 +21,16 @@ namespace cpplog
 
 namespace runtime
 {
-    struct Runtime_ABC;
+    struct Async;
+    struct FileSystem_ABC;
+    struct Pool_ABC;
     struct Process_ABC;
+    struct Runtime_ABC;
 };
 
 namespace host
 {
-    struct Async;
-    struct FileSystem_ABC;
     struct NodeFactory_ABC;
-    struct Pool_ABC;
     struct Proxy_ABC;
     template< typename T > class Container;
     typedef boost::filesystem::path Path;
@@ -48,7 +48,7 @@ public:
     //@{
              NodeController( cpplog::BaseLogger& log,
                              const runtime::Runtime_ABC& runtime,
-                             const FileSystem_ABC& system,
+                             const runtime::FileSystem_ABC& system,
                              const Proxy_ABC& proxy,
                              const NodeFactory_ABC& nodes,
                              const Path& root,
@@ -56,7 +56,7 @@ public:
                              const Path& jar,
                              const Path& web,
                              const std::string& type,
-                             Pool_ABC& pool );
+                             runtime::Pool_ABC& pool );
     virtual ~NodeController();
     //@}
 
@@ -109,7 +109,7 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
-    const FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& system_;
     const Proxy_ABC& proxy_;
     const NodeFactory_ABC& factory_;
     const Path root_;
@@ -119,7 +119,7 @@ private:
     const std::string type_;
     const std::auto_ptr< Container< Node_ABC > > nodes_;
     runtime::Event end_;
-    const std::auto_ptr< Async > async_;
+    const std::auto_ptr< runtime::Async > async_;
     //@}
 };
 

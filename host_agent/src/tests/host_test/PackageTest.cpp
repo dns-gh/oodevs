@@ -10,9 +10,9 @@
 #include "host_test.h"
 
 #include "Mocks.h"
-#include <host/Async.h>
 #include <host/Package.h>
 #include <host/PropertyTree.h>
+#include <runtime/Async.h>
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -21,6 +21,7 @@
 #include <set>
 
 using namespace host;
+using runtime::Async;
 using mocks::MockFileSystem;
 using mocks::MockPool;
 

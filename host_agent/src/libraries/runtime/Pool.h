@@ -15,7 +15,7 @@
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 
-namespace host
+namespace runtime
 {
 // =============================================================================
 /** @class  Pool

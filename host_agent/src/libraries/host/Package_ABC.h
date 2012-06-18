@@ -22,10 +22,13 @@ namespace filesystem3
 }
 }
 
-namespace host
+namespace runtime
 {
     struct Async;
-    struct FileSystem_ABC;
+}
+
+namespace host
+{
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
 
@@ -60,11 +63,11 @@ struct Package_ABC : public boost::noncopyable
     virtual size_t CountExercises() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
-    virtual void Install( Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
-    virtual void Uninstall( Async& async, const Path& root, const std::vector< size_t >& ids ) = 0;
+    virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
+    virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids ) = 0;
     virtual Tree LinkExercise( const std::string& name ) = 0;
     virtual Tree LinkItem( const Tree& tree ) = 0;
-    virtual void UnlinkItem( Async& async, const Tree& tree ) = 0;
+    virtual void UnlinkItem( runtime::Async& async, const Tree& tree ) = 0;
     //@}
 };
 

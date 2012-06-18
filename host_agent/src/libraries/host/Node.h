@@ -23,17 +23,17 @@ namespace boost
 
 namespace runtime
 {
-    struct Runtime_ABC;
+    struct Async;
+    struct FileSystem_ABC;
+    struct Pool_ABC;
     struct Process_ABC;
+    struct Runtime_ABC;
 }
 
 namespace host
 {
-    struct Async;
-    struct FileSystem_ABC;
     struct Package_ABC;
     struct PackageFactory_ABC;
-    struct Pool_ABC;
     struct Port_ABC;
     struct PortFactory_ABC;
     struct UuidFactory_ABC;
@@ -49,11 +49,11 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
+             Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
+                   const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
                    const std::string& name, PortFactory_ABC& ports );
-             Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
+             Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
+                   const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
                    const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
@@ -108,7 +108,7 @@ private:
 private:
     //! @name Private members
     //@{
-    const FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
     const PackageFactory_ABC& packages_;
     const Uuid id_;
@@ -120,7 +120,7 @@ private:
     boost::shared_ptr< Package_ABC > cache_;
     T_Process process_;
     bool stopped_;
-    const std::auto_ptr< Async > async_;
+    const std::auto_ptr< runtime::Async > async_;
     //@}
 };
 }

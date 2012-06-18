@@ -9,7 +9,7 @@
 
 #include "Async.h"
 
-using namespace host;
+using namespace runtime;
 
 // -----------------------------------------------------------------------------
 // Name: Async::Async

@@ -12,7 +12,7 @@
 
 #include "Pool_ABC.h"
 
-namespace host
+namespace runtime
 {
 // =============================================================================
 /** @class  Async

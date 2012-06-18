@@ -10,12 +10,13 @@
 #include "web_test.h"
 
 #include <web/AsyncStream.h>
-#include <host/Pool.h>
+#include <runtime/Pool.h>
 
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 
 using namespace web;
+using runtime::Pool_ABC;
 
 namespace
 {
@@ -26,7 +27,7 @@ namespace
             // NOTHING
         }
         AsyncStream async;
-        host::Pool pool;
+        runtime::Pool pool;
     };
 
     void ReadLine( std::string& dst, std::istream& src )
@@ -106,7 +107,7 @@ BOOST_FIXTURE_TEST_CASE( async_write_peek_get, Fixture )
 BOOST_FIXTURE_TEST_CASE( async_not_enough_reads, Fixture )
 {
     std::vector< char > buffer( UINT16_MAX * 2 );
-    host::Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Write, &async, &buffer[0], buffer.size() ) );
+    Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Write, &async, &buffer[0], buffer.size() ) );
     async.Read( boost::bind( &NullRead, _1, 256 ) );
     ft.timed_wait( boost::posix_time::milliseconds( 500 ) );
     async.CloseWrite();
@@ -117,7 +118,7 @@ BOOST_FIXTURE_TEST_CASE( async_not_enough_writes, Fixture )
 {
     std::vector< char > buffer( UINT16_MAX * 2 );
     AsyncStream::Handler handler = boost::bind( &NullRead, _1, buffer.size() );
-    host::Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Read, &async, handler ) );
+    Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Read, &async, handler ) );
     ft.timed_wait( boost::posix_time::milliseconds( 500 ) );
     async.CloseWrite();
     ft.wait();

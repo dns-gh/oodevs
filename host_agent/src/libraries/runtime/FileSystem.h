@@ -17,7 +17,7 @@ namespace cpplog
     class BaseLogger;
 }
 
-namespace host
+namespace runtime
 {
 
 // =============================================================================

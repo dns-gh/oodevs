@@ -26,8 +26,11 @@ namespace cpplog
 
 namespace runtime
 {
-    struct Runtime_ABC;
+    struct Async;
+    struct FileSystem_ABC;
+    struct Pool_ABC;
     struct Process_ABC;
+    struct Runtime_ABC;
 }
 
 namespace web
@@ -37,9 +40,6 @@ namespace web
 
 namespace host
 {
-    struct Async;
-    struct FileSystem_ABC;
-    struct Pool_ABC;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
 
@@ -55,9 +55,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-                    const FileSystem_ABC& system, const Path& logs,
+                    const runtime::FileSystem_ABC& system, const Path& logs,
                     const Path& java, const Path& jar,
-                    int port, web::Client_ABC& client, Pool_ABC& pool );
+                    int port, web::Client_ABC& client, runtime::Pool_ABC& pool );
     virtual ~Proxy();
     //@}
 
@@ -82,12 +82,12 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
-    const FileSystem_ABC& system_;
+    const runtime::FileSystem_ABC& system_;
     const Path logs_;
     const Path java_;
     const Path jar_;
     const int port_;
-    const std::auto_ptr< Async > async_;
+    const std::auto_ptr< runtime::Async > async_;
     const std::auto_ptr< boost::mutex > access_;
     web::Client_ABC& client_;
     boost::shared_ptr< runtime::Process_ABC > process_;

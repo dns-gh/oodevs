@@ -26,12 +26,12 @@ namespace filesystem3
 
 namespace runtime
 {
+    struct FileSystem_ABC;
     struct Process_ABC;
 }
 
 namespace host
 {
-    struct FileSystem_ABC;
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
@@ -71,7 +71,7 @@ struct Session_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const FileSystem_ABC& system, const T_Starter& starter ) = 0;
+    virtual bool Start( const runtime::FileSystem_ABC& system, const T_Starter& starter ) = 0;
     virtual bool Stop() = 0;
     virtual void Unlink() = 0;
     virtual void Update() = 0;

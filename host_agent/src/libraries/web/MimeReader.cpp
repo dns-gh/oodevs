@@ -10,7 +10,7 @@
 #include "MimeReader.h"
 
 #include "AsyncStream.h"
-#include "host/Pool_ABC.h"
+#include "runtime/Pool_ABC.h"
 #include "StreamBuffer.h"
 
 #include <boost/algorithm/string.hpp>
@@ -22,13 +22,14 @@
 #include <map>
 
 using namespace web;
+using runtime::Pool_ABC;
 
 namespace
 {
 template< typename T >
 struct PartReader : boost::noncopyable
 {
-    PartReader( T part, host::Pool_ABC& pool )
+    PartReader( T part, Pool_ABC& pool )
         : async_ ( part->async_ )
         , future_( pool.Go( boost::bind( &AsyncStream::Read, &async_, part->handler_ ) ) )
     {
@@ -40,7 +41,7 @@ struct PartReader : boost::noncopyable
         future_.wait();
     }
     AsyncStream& async_;
-    host::Pool_ABC::Future future_;
+    Pool_ABC::Future future_;
 };
 }
 
@@ -234,7 +235,7 @@ void ParseData( StreamBuffer& buf, const std::string boundary, T part = T() )
 }
 
 template< typename T >
-void ParsePart( StreamBuffer& buf, const std::string boundary, T part, host::Pool_ABC& pool )
+void ParsePart( StreamBuffer& buf, const std::string boundary, T part, Pool_ABC& pool )
 {
     PartReader< T > reader( part, pool );
     ParseData( buf, boundary, part );
@@ -280,7 +281,7 @@ void MimeReader::Register( const std::string& name, const Handler& handler )
     parts_.push_back( boost::make_shared< Part >( name, handler ) );
 }
 
-void MimeReader::Parse( host::Pool_ABC& pool, std::istream& src )
+void MimeReader::Parse( Pool_ABC& pool, std::istream& src )
 {
     StreamBuffer buf( src );
     const std::string end = "--" + boundary_;
