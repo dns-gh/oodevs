@@ -10,7 +10,7 @@
 #ifndef PROPERTY_TREE_H
 #define PROPERTY_TREE_H
 
-#include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace host
 {
