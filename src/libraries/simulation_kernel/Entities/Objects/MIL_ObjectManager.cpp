@@ -412,6 +412,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
     }
     client::ObjectMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
+    asnReplyMsg().set_type( msg.type() );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
@@ -431,6 +432,7 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
         nErrorCode = object->OnUpdateResourceLinks( params.elem( 1 ).value() );
     client::MagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
+    asnReplyMsg().set_type( message.type() );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 

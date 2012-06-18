@@ -906,11 +906,13 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
+        ack().set_type( message.type() );
         return;
     }
 
     ack().mutable_unit()->set_id( id );
     ack().set_error_code( UnitActionAck::no_error );
+    ack().set_type( message.type() );
     try
     {
         switch( message.type() )
@@ -998,6 +1000,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     catch( NET_AsnException< UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+        ack().set_type( message.type() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
@@ -1059,6 +1062,7 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 {
     client::MagicActionAck ack;
     ack().set_error_code( MagicActionAck::no_error );
+    ack().set_type( message.type() );
     if( !army )
     {
         if( !formation )
@@ -1090,6 +1094,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 {
     client::MagicActionAck ack;
     ack().set_error_code( MagicActionAck::no_error );
+    ack().set_type( message.type() );
     if( !message.has_parameters() || message.parameters().elem_size() != 4
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
@@ -1128,6 +1133,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
     client::KnowledgeGroupMagicActionAck ack;
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
     ack().set_error_code( KnowledgeGroupAck::no_error );
+    ack().set_type( message.type() );
     try
     {
         switch( message.type() )
