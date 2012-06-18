@@ -22,7 +22,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeBaseLOG.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
 #include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
-#include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
@@ -149,18 +148,16 @@ void MIL_AutomateType::Terminate()
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& xis )
-    : nID_                            ( 0 )
-    , strName_                        ( strName )
-    , pTypePC_                        ( 0 )
-    , pModel_                         ( 0 )
-    , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
+    : nID_    ( 0 )
+    , strName_( strName )
+    , pTypePC_( 0 )
+    , pModel_ ( 0 )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
         xis.error( "No command-post defined for automat type: " + strName_ );
 
-    InitializeRapFor      ( xis );
     InitializeModel       ( xis );
     InitializeDiaFunctions();
 }
@@ -225,20 +222,6 @@ void MIL_AutomateType::InitializeModel( xml::xistream& xis )
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( strModel );
     if( !pModel_ )
         xis.error( "Unknown automata model" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::InitializeRapFor
-// Created: NLD 2004-11-25
-// -----------------------------------------------------------------------------
-void MIL_AutomateType::InitializeRapFor( xml::xistream& xis )
-{
-    double rTimeTmp;
-    if( tools::ReadTimeAttribute( xis, "force-ratio-feedback-time", rTimeTmp ) )
-    {
-        rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
-        rRapForIncreasePerTimeStepValue_ = DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( rTimeTmp );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -333,15 +316,6 @@ const MIL_AutomateType* MIL_AutomateType::FindAutomateType( unsigned int nID )
 {
     CIT_AutomateTypeMap it = std::find_if( automateTypes_.begin(), automateTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_AutomateType::GetID ), std::select2nd< T_AutomateTypeMap::value_type >() ) ) );
     return it == automateTypes_.end() ? 0 : it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::GetRapForIncreasePerTimeStepValue
-// Created: NLD 2004-11-25
-// -----------------------------------------------------------------------------
-double MIL_AutomateType::GetRapForIncreasePerTimeStepValue() const
-{
-    return rRapForIncreasePerTimeStepValue_;
 }
 
 // -----------------------------------------------------------------------------

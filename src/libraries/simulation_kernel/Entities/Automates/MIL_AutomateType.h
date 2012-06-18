@@ -66,7 +66,6 @@ public:
     const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
-          double                           GetRapForIncreasePerTimeStepValue() const;
     //@}
 
     //! @name Operations
@@ -115,7 +114,6 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeRapFor      ( xml::xistream& xis );
     void InitializeModel       ( xml::xistream& xis );
     void InitializeDiaFunctions();
     //@}
@@ -132,7 +130,6 @@ private:
     const DEC_Model_ABC*      pModel_;
           T_CompositionMap    composition_;
     const MIL_AgentType_ABC*  pTypePC_;
-          double            rRapForIncreasePerTimeStepValue_;
 
 private:
     static T_AutomateTypeAllocatorMap  automateTypeAllocators_;
