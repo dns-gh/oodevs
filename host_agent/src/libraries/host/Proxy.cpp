@@ -94,7 +94,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     }
     if( !hasProcess )
         Start();
-    async_.Go( boost::bind( &Proxy::Update, this ) );
+    timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &Proxy::Update, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,8 +103,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
 // -----------------------------------------------------------------------------
 Proxy::~Proxy()
 {
-    end_.Signal();
-    async_.Join();
+    timer_->Stop();
     if( process_ )
         process_->Kill( 0 );
     async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
@@ -162,11 +161,10 @@ void Proxy::RegisterMissingLinks()
 // -----------------------------------------------------------------------------
 void Proxy::Update()
 {
-    while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
-        if( process_ && !process_->IsAlive() )
-            Restart();
-        else
-            RegisterMissingLinks();
+    if( process_ && !process_->IsAlive() )
+        Restart();
+    else
+        RegisterMissingLinks();
 }
 
 // -----------------------------------------------------------------------------

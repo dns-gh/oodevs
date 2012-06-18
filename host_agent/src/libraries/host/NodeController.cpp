@@ -86,7 +86,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
         throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
     if( !system_.IsDirectory( web_ ) )
         throw std::runtime_error( runtime::Utf8Convert( web_ ) + " is not a directory" );
-    async_.Go( boost::bind( &NodeController::Update, this ) );
+    timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Update, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,8 +95,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 NodeController::~NodeController()
 {
-    end_.Signal();
-    async_.Join();
+    timer_->Stop();
     nodes_.Foreach( boost::bind( &NodeController::Stop, this, _1, false, true ) );
 }
 
@@ -129,8 +128,7 @@ void NodeController::Reload()
 // -----------------------------------------------------------------------------
 void NodeController::Update()
 {
-    while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
-        nodes_.Foreach( boost::bind( &NodeController::Start, this, _1, false, true ) );
+    nodes_.Foreach( boost::bind( &NodeController::Start, this, _1, false, true ) );
 }
 
 // -----------------------------------------------------------------------------

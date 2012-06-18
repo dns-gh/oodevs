@@ -72,7 +72,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
         throw std::runtime_error( Utf8Convert( app ) + " is missing" );
     if( !system_.IsFile( app ) )
         throw std::runtime_error( Utf8Convert( app ) + " is not a file" );
-    async_.Go( boost::bind( &SessionController::Update, this ) );
+    timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Update, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +81,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 SessionController::~SessionController()
 {
-    end_.Signal();
-    async_.Join();
+    timer_->Stop();
     sessions_.Foreach( boost::bind( &SessionController::Stop, this, _1, false ) );
 }
 
@@ -92,8 +91,7 @@ SessionController::~SessionController()
 // -----------------------------------------------------------------------------
 void SessionController::Update()
 {
-    while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
-        sessions_.Foreach( boost::bind( &Session_ABC::Update, _1 ) );
+    sessions_.Foreach( boost::bind( &Session_ABC::Update, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

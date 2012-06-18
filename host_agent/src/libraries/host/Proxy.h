@@ -13,7 +13,7 @@
 #include "Proxy_ABC.h"
 
 #include "runtime/Async.h"
-#include "runtime/Event.h"
+#include "runtime/Timer_ABC.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/thread/mutex.hpp>
@@ -107,7 +107,7 @@ private:
     web::Client_ABC& client_;
     T_Process process_;
     T_Links links_;
-    runtime::Event end_;
+    runtime::Timer timer_;
     mutable runtime::Async async_;
     //@}
 };

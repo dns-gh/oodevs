@@ -14,7 +14,7 @@
 
 #include "Container.h"
 #include "runtime/Async.h"
-#include "runtime/Event.h"
+#include "runtime/Timer_ABC.h"
 #include <boost/filesystem/path.hpp>
 
 namespace cpplog
@@ -119,7 +119,7 @@ private:
     const std::string type_;
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
-    runtime::Event end_;
+    runtime::Timer timer_;
     mutable runtime::Async async_;
     //@}
 };

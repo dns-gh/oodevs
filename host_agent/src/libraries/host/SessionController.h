@@ -14,7 +14,7 @@
 
 #include "Container.h"
 #include "runtime/Async.h"
-#include "runtime/Event.h"
+#include "runtime/Timer_ABC.h"
 #include <boost/filesystem/path.hpp>
 
 namespace cpplog
@@ -96,7 +96,7 @@ private:
     const Path root_;
     const Path apps_;
     Container< Session_ABC > sessions_;
-    runtime::Event end_;
+    runtime::Timer timer_;
     mutable runtime::Async async_;
     //@}
 };
