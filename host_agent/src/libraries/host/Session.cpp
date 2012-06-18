@@ -24,16 +24,6 @@
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 using namespace host;
 using runtime::Utf8Convert;
 using runtime::FileSystem_ABC;
@@ -117,7 +107,6 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
     , name_   ( name )
     , links_  ( node.LinkExercise( exercise ) )
     , port_   ( port )
-    , access_ ( new boost::shared_mutex )
     , process_()
     , status_ ( Session::STATUS_STOPPED )
 {
@@ -135,7 +124,6 @@ Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, cons
     , name_   ( Get< std::string >( tree, "name" ) )
     , links_  ( node.LinkExercise( tree.get_child( "links" ) ) )
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , access_ ( new boost::shared_mutex )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
 {
@@ -244,7 +232,7 @@ Tree Session::GetProperties() const
 Tree Session::Save() const
 {
     Tree tree = GetProperties( true );
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );
@@ -258,7 +246,7 @@ Tree Session::Save() const
 // -----------------------------------------------------------------------------
 bool Session::Stop()
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( !process_ )
         return true;
 
@@ -327,7 +315,7 @@ void WriteSettings( const FileSystem_ABC& system, const Path& file, const std::s
 // -----------------------------------------------------------------------------
 bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( process_ )
         return true;
 
@@ -372,7 +360,7 @@ void Session::Unlink()
 // -----------------------------------------------------------------------------
 void Session::Update()
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( !process_ || process_->IsAlive() )
         return;
     process_.reset();

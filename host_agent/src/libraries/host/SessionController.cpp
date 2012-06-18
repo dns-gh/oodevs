@@ -9,12 +9,10 @@
 
 #include "SessionController.h"
 
-#include "Container.h"
 #include "cpplog/cpplog.hpp"
 #include "NodeController_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
-#include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Pool_ABC.h"
 #include "runtime/Process_ABC.h"
@@ -64,8 +62,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , nodes_   ( nodes )
     , root_    ( root / "sessions" )
     , apps_    ( apps )
-    , sessions_( new Container< Session_ABC >() )
-    , async_   ( new Async( pool ) )
+    , async_   ( pool )
 {
     system_.MakePaths( root_ );
     if( !system_.IsDirectory( apps_ ) )
@@ -75,7 +72,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
         throw std::runtime_error( Utf8Convert( app ) + " is missing" );
     if( !system_.IsFile( app ) )
         throw std::runtime_error( Utf8Convert( app ) + " is not a file" );
-    async_->Go( boost::bind( &SessionController::Update, this ) );
+    async_.Go( boost::bind( &SessionController::Update, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,8 +82,8 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 SessionController::~SessionController()
 {
     end_.Signal();
-    async_->Join();
-    sessions_->Foreach( boost::bind( &SessionController::Stop, this, _1, false ) );
+    async_.Join();
+    sessions_.Foreach( boost::bind( &SessionController::Stop, this, _1, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +93,7 @@ SessionController::~SessionController()
 void SessionController::Update()
 {
     while( !end_.Wait( boost::posix_time::seconds( 5 ) ) )
-        sessions_->Foreach( boost::bind( &Session_ABC::Update, _1 ) );
+        sessions_.Foreach( boost::bind( &Session_ABC::Update, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +108,7 @@ void SessionController::Reload( T_Predicate predicate )
             boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );
             if( !ptr || !predicate( *ptr ) )
                 continue;
-            sessions_->Attach( ptr );
+            sessions_.Attach( ptr );
             Create( *ptr, true );
         }
         catch( const std::exception& err )
@@ -128,7 +125,7 @@ void SessionController::Reload( T_Predicate predicate )
 // -----------------------------------------------------------------------------
 SessionController::T_Sessions SessionController::List( T_Predicate predicate, int offset, int limit ) const
 {
-    return sessions_->List< Session_ABC >( predicate, offset, limit );
+    return sessions_.List< Session_ABC >( predicate, offset, limit );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +134,7 @@ SessionController::T_Sessions SessionController::List( T_Predicate predicate, in
 // -----------------------------------------------------------------------------
 size_t SessionController::Count( T_Predicate predicate ) const
 {
-    return predicate ? sessions_->Count( predicate ) : sessions_->Count();
+    return predicate ? sessions_.Count( predicate ) : sessions_.Count();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +143,7 @@ size_t SessionController::Count( T_Predicate predicate ) const
 // -----------------------------------------------------------------------------
 bool SessionController::Has( const Uuid& id ) const
 {
-    return sessions_->Has( id );
+    return sessions_.Has( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +152,7 @@ bool SessionController::Has( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Get( const Uuid& id ) const
 {
-    return sessions_->Get( id );
+    return sessions_.Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +178,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
 {
     const Path output = system_.MakeAnyPath( root_ );
     boost::shared_ptr< Session_ABC > session = factory_.Make( output, node, name, exercise );
-    sessions_->Attach( session );
+    sessions_.Attach( session );
     Create( *session, false );
     return session;
 }
@@ -193,7 +190,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
 void SessionController::Save( const Session_ABC& session ) const
 {
     const Path path = session.GetRoot() / "session.id";
-    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path, ToJson( session.Save() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,13 +199,13 @@ void SessionController::Save( const Session_ABC& session ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Delete( const Uuid& id )
 {
-    boost::shared_ptr< Session_ABC > session = sessions_->Detach( id );
+    boost::shared_ptr< Session_ABC > session = sessions_.Detach( id );
     if( !session )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     Stop( *session, true );
     session->Unlink();
-    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
     return session;
 }
 
@@ -234,7 +231,7 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& id ) const
 {
-    boost::shared_ptr< Session_ABC > session = sessions_->Get( id );
+    boost::shared_ptr< Session_ABC > session = sessions_.Get( id );
     if( !session )
         return T_Session();
     Start( *session, false );
@@ -247,7 +244,7 @@ SessionController::T_Session SessionController::Start( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 {
-    boost::shared_ptr< Session_ABC > session = sessions_->Get( id );
+    boost::shared_ptr< Session_ABC > session = sessions_.Get( id );
     if( !session )
         return T_Session();
     Stop( *session, false );

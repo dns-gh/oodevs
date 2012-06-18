@@ -11,6 +11,8 @@
 #define PORT_FACTORY_H
 
 #include "PortFactory_ABC.h"
+
+#include <boost/thread/mutex.hpp>
 #include <set>
 
 namespace boost
@@ -56,7 +58,7 @@ private:
 
     //! @name Private members
     //@{
-    const std::auto_ptr< boost::shared_mutex > access_;
+    boost::mutex access_;
     const int period_;
     const int min_;
     const int max_;

@@ -12,6 +12,7 @@
 
 #include "web/Agent_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace boost
 {
@@ -99,7 +100,7 @@ private:
     //! @name Member data
     //@{
     cpplog::BaseLogger& log_;
-    const std::auto_ptr< boost::mutex > access_;
+    boost::mutex access_;
     NodeController_ABC* cluster_;
     Uuid clusterId_;
     NodeController_ABC& nodes_;

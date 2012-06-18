@@ -10,7 +10,6 @@
 
 #include "cpplog/cpplog.hpp"
 #include "PropertyTree.h"
-#include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
@@ -21,16 +20,6 @@
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -53,9 +42,8 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , java_   ( java )
     , jar_    ( jar )
     , port_   ( port )
-    , async_  ( new Async( pool ) )
     , client_ ( client )
-    , access_ ( new boost::mutex() )
+    , async_  ( pool )
 {
     if( !system_.Exists( java_ ) )
         throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
@@ -86,7 +74,7 @@ Proxy::~Proxy()
 {
     if( process_ )
         process_->Kill( 0 );
-    async_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +144,7 @@ bool Proxy::Reload( const Path& path )
 // -----------------------------------------------------------------------------
 void Proxy::Start()
 {
-    boost::lock_guard< boost::mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( process_ ) return;
     const Path path = GetPath();
     Path jar_path = jar_;
@@ -176,7 +164,7 @@ void Proxy::Start()
 // -----------------------------------------------------------------------------
 void Proxy::Stop()
 {
-    boost::lock_guard< boost::mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( process_ )
         process_->Kill( 0 );
     process_.reset();
@@ -190,7 +178,7 @@ void Proxy::Stop()
 void Proxy::Save() const
 {
     const Path path = GetPath();
-    async_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / "proxy.id", ToJson( GetProperties() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / "proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +187,7 @@ void Proxy::Save() const
 // -----------------------------------------------------------------------------
 void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
 {
-    async_->Post( boost::bind( &web::Client_ABC::Get, &client_,
+    async_.Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/register_proxy", boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", host )
@@ -213,7 +201,7 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // -----------------------------------------------------------------------------
 void Proxy::Unregister( const std::string& prefix ) const
 {
-    async_->Post( boost::bind( &web::Client_ABC::Get, &client_,
+    async_.Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
     LOG_INFO( log_ ) << "[proxy] Removed link to /" << prefix;
 }

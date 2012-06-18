@@ -21,16 +21,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 using namespace host;
 
 Reply::Reply( const Tree& tree )
@@ -112,7 +102,6 @@ Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeControll
     , cluster_ ( cluster )
     , nodes_   ( nodes )
     , sessions_( sessions )
-    , access_  ( new boost::mutex() )
 {
     if( cluster_ )
     {
@@ -196,7 +185,7 @@ Reply Agent::GetNode( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::CreateNode( const std::string& name )
 {
-    boost::lock_guard< boost::mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     return Create( nodes_.Create( name ), "node" );
 }
 
@@ -209,7 +198,7 @@ Reply Agent::DeleteNode( const Uuid& id )
     NodeController_ABC::T_Node ptr;
     SessionController_ABC::T_Sessions invalid;
     {
-        boost::lock_guard< boost::mutex > lock( *access_ );
+        boost::lock_guard< boost::mutex > lock( access_ );
         ptr = nodes_.Delete( id );
         if( !ptr )
             return Reply( "unable to find node " + boost::lexical_cast< std::string >( id ), false );
@@ -329,7 +318,7 @@ Reply Agent::GetSession( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::CreateSession( const Uuid& node, const std::string& name, const std::string& exercise )
 {
-    boost::lock_guard< boost::mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     return Create( sessions_.Create( node, name, exercise ), "session" );
 }
 

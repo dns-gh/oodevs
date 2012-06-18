@@ -13,7 +13,6 @@
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "UuidFactory_ABC.h"
-#include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
@@ -26,17 +25,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#include <boost/thread/mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -91,9 +79,8 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , name_     ( name )
     , root_     ( root )
     , port_     ( ports.Create() )
-    , access_   ( new boost::shared_mutex() )
     , stopped_  ( false )
-    , async_    ( new Async( pool ) )
+    , async_    ( pool )
 {
     install_ = packages_.Make( root_ / "install", true );
 }
@@ -112,10 +99,9 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , name_     ( Get< std::string >( tree, "name" ) )
     , root_     ( root )
     , port_     ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , access_   ( new boost::shared_mutex() )
     , process_  ( AcquireProcess( tree, runtime, port_->Get() ) )
     , stopped_  ( Get< bool >( tree, "stopped" ) )
-    , async_    ( new Async( pool ) )
+    , async_    ( pool )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
     ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
@@ -198,7 +184,7 @@ Tree Node::Save() const
 {
     Tree tree = GetCommonProperties();
 
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     if( cache_ )
         tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
     tree.put( "stopped", stopped_ );
@@ -215,7 +201,7 @@ Tree Node::Save() const
 // -----------------------------------------------------------------------------
 bool Node::Start( const T_Starter& starter, bool weak )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( stopped_ && weak )
         return false;
 
@@ -238,7 +224,7 @@ bool Node::Start( const T_Starter& starter, bool weak )
 // -----------------------------------------------------------------------------
 bool Node::Stop( bool weak )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     bool modified = !stopped_ && !weak;
     stopped_ |= !weak;
     if( !process_ )
@@ -280,15 +266,15 @@ void Node::UploadCache( std::istream& src )
     }
     catch( ... )
     {
-        async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+        async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
         throw;
     }
 
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     next->Identify( *install_ );
     next.swap( cache_ );
     if( next )
-        async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
+        async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +283,7 @@ void Node::UploadCache( std::istream& src )
 // -----------------------------------------------------------------------------
 void Node::ParsePackages( const Path& cache )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     ParseInline( packages_, install_, root_ / "install" );
     if( !cache.empty() )
         ParseInline( packages_, cache_,   root_ / cache, install_ );
@@ -309,7 +295,7 @@ void Node::ParsePackages( const Path& cache )
 // -----------------------------------------------------------------------------
 Tree Node::GetInstall() const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     return install_ ? install_->GetProperties() : Tree();
 }
 
@@ -319,7 +305,7 @@ Tree Node::GetInstall() const
 // -----------------------------------------------------------------------------
 Tree Node::GetCache() const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     return cache_ ? cache_->GetProperties() : Tree();
 }
 
@@ -329,8 +315,8 @@ Tree Node::GetCache() const
 // -----------------------------------------------------------------------------
 Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    install_->Uninstall( *async_, root_, ids );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    install_->Uninstall( async_, root_, ids );
     if( cache_ )
         cache_->Identify( *install_ );
     return install_->GetProperties();
@@ -343,11 +329,11 @@ Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 Tree Node::DeleteCache()
 {
     boost::shared_ptr< Package_ABC > next;
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( !cache_ )
         return Tree();
     next.swap( cache_ );
-    async_->Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
+    async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
     return next->GetProperties();
 }
 
@@ -357,10 +343,10 @@ Tree Node::DeleteCache()
 // -----------------------------------------------------------------------------
 Tree Node::InstallFromCache( const std::vector< size_t >& list )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( !cache_ )
         return Tree();
-    install_->Install( *async_, root_, *cache_, list );
+    install_->Install( async_, root_, *cache_, list );
     cache_->Identify( *install_ );
     return cache_->GetProperties();
 }
@@ -371,7 +357,7 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
 // -----------------------------------------------------------------------------
 Node::T_Exercises Node::GetExercises( int offset, int limit ) const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     return install_->GetExercises( offset, limit );
 }
 
@@ -381,7 +367,7 @@ Node::T_Exercises Node::GetExercises( int offset, int limit ) const
 // -----------------------------------------------------------------------------
 size_t Node::CountExercises() const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     return install_->CountExercises();
 }
 
@@ -391,7 +377,7 @@ size_t Node::CountExercises() const
 // -----------------------------------------------------------------------------
 Tree Node::LinkExercise( const std::string& name ) const
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     return install_->LinkExercise( name );
 }
 
@@ -401,7 +387,7 @@ Tree Node::LinkExercise( const std::string& name ) const
 // -----------------------------------------------------------------------------
 Tree Node::LinkExercise( const Tree& tree ) const
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
     return install_->LinkItem( tree );
 }
 
@@ -411,6 +397,6 @@ Tree Node::LinkExercise( const Tree& tree ) const
 // -----------------------------------------------------------------------------
 void Node::UnlinkExercise( const Tree& tree ) const
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    install_->UnlinkItem( *async_, tree );
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    install_->UnlinkItem( async_, tree );
 }

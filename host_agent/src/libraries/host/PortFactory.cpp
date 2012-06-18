@@ -13,16 +13,6 @@
 #include <boost/format.hpp>
 #include <boost/function.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 using namespace host;
 
 namespace
@@ -54,8 +44,7 @@ public:
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
 PortFactory::PortFactory( int period, int min, int max )
-    : access_( new boost::shared_mutex() )
-    , period_( period )
+    : period_( period )
     , min_   ( min )
     , max_   ( max )
 {
@@ -88,7 +77,7 @@ std::auto_ptr< Port_ABC > PortFactory::Acquire( int port )
 // -----------------------------------------------------------------------------
 std::auto_ptr< Port_ABC > PortFactory::Create()
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     // fast-check last value
     if( !ports_.empty() )
         for( const int last = *ports_.rbegin() + period_; last < max_; /**/ )
@@ -112,7 +101,7 @@ std::auto_ptr< Port_ABC > PortFactory::Create( int port )
     if( port < min_ || max_ <= port || ( ( port - min_ ) % period_ ) )
         throw std::runtime_error( ( boost::format( "invalid port value %1%" ) % port ).str() );
 
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     if( ports_.count( port ) )
         throw std::runtime_error( ( boost::format( "unable to acquire port %1%" ) % port ).str() );
     return Acquire( port );
@@ -124,6 +113,6 @@ std::auto_ptr< Port_ABC > PortFactory::Create( int port )
 // -----------------------------------------------------------------------------
 void PortFactory::Release( int port )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    boost::lock_guard< boost::mutex > lock( access_ );
     ports_.erase( port );
 }

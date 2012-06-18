@@ -11,6 +11,9 @@
 #define SESSION_CONTROLLER_H
 
 #include "SessionController_ABC.h"
+
+#include "Container.h"
+#include "runtime/Async.h"
 #include "runtime/Event.h"
 #include <boost/filesystem/path.hpp>
 
@@ -21,7 +24,6 @@ namespace cpplog
 
 namespace runtime
 {
-    struct Async;
     struct FileSystem_ABC;
     struct Pool_ABC;
     struct Process_ABC;
@@ -93,9 +95,9 @@ private:
     const NodeController_ABC& nodes_;
     const Path root_;
     const Path apps_;
-    const std::auto_ptr< Container< Session_ABC > > sessions_;
+    Container< Session_ABC > sessions_;
     runtime::Event end_;
-    const std::auto_ptr< runtime::Async > async_;
+    mutable runtime::Async async_;
     //@}
 };
 

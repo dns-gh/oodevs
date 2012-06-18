@@ -66,7 +66,7 @@ public:
     }
 
     template< typename U >
-    void Foreach( const U& operand, const T_Predicate& predicate = T_Predicate(), int offset = 0, int limit = INT_MAX )
+    void Foreach( const U& operand, const T_Predicate& predicate = T_Predicate(), int offset = 0, int limit = INT_MAX ) const
     {
         T_Objects copy;
         boost::shared_lock< boost::shared_mutex > lock( access_ );
@@ -82,7 +82,7 @@ public:
     }
 
     template< typename U >
-    std::vector< boost::shared_ptr< U > > List( const T_Predicate& predicate, int offset, int limit )
+    std::vector< boost::shared_ptr< U > > List( const T_Predicate& predicate, int offset, int limit ) const
     {
         std::vector< boost::shared_ptr< U > > reply;
         boost::shared_lock< boost::shared_mutex > lock( access_ );
@@ -101,7 +101,7 @@ public:
         return objects_.size();
     }
 
-    size_t Count( const T_Predicate& predicate )
+    size_t Count( const T_Predicate& predicate ) const
     {
         size_t reply = 0;
         boost::shared_lock< boost::shared_mutex > lock( access_ );

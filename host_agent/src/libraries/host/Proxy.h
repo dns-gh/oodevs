@@ -11,8 +11,11 @@
 #define PROXY_H
 
 #include "Proxy_ABC.h"
+
+#include "runtime/Async.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace boost
 {
@@ -26,7 +29,6 @@ namespace cpplog
 
 namespace runtime
 {
-    struct Async;
     struct FileSystem_ABC;
     struct Pool_ABC;
     struct Process_ABC;
@@ -87,10 +89,10 @@ private:
     const Path java_;
     const Path jar_;
     const int port_;
-    const std::auto_ptr< runtime::Async > async_;
-    const std::auto_ptr< boost::mutex > access_;
+    boost::mutex access_;
     web::Client_ABC& client_;
     boost::shared_ptr< runtime::Process_ABC > process_;
+    mutable runtime::Async async_;
     //@}
 };
 

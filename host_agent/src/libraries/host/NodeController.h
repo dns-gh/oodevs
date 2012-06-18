@@ -11,6 +11,9 @@
 #define NODE_CONTROLLER_H
 
 #include "NodeController_ABC.h"
+
+#include "Container.h"
+#include "runtime/Async.h"
 #include "runtime/Event.h"
 #include <boost/filesystem/path.hpp>
 
@@ -21,7 +24,6 @@ namespace cpplog
 
 namespace runtime
 {
-    struct Async;
     struct FileSystem_ABC;
     struct Pool_ABC;
     struct Process_ABC;
@@ -32,7 +34,6 @@ namespace host
 {
     struct NodeFactory_ABC;
     struct Proxy_ABC;
-    template< typename T > class Container;
     typedef boost::filesystem::path Path;
 
 // =============================================================================
@@ -117,9 +118,9 @@ private:
     const Path jar_;
     const Path web_;
     const std::string type_;
-    const std::auto_ptr< Container< Node_ABC > > nodes_;
+    Container< Node_ABC > nodes_;
     runtime::Event end_;
-    const std::auto_ptr< runtime::Async > async_;
+    mutable runtime::Async async_;
     //@}
 };
 

@@ -14,6 +14,7 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace boost
 {
@@ -94,8 +95,8 @@ private:
     const Node_ABC& node_;
     const std::string name_;
     const Tree links_;
-    const std::auto_ptr< boost::shared_mutex > access_;
     const std::auto_ptr< Port_ABC > port_;
+    mutable boost::mutex access_;
     T_Process process_;
     Status status_;
     //@}

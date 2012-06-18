@@ -12,8 +12,10 @@
 
 #include "Node_ABC.h"
 
+#include "runtime/Async.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/shared_mutex.hpp>
 
 namespace boost
 {
@@ -23,7 +25,6 @@ namespace boost
 
 namespace runtime
 {
-    struct Async;
     struct FileSystem_ABC;
     struct Pool_ABC;
     struct Process_ABC;
@@ -106,7 +107,7 @@ private:
     //@}
 
 private:
-    //! @name Private members
+    //! @name Private constant members
     //@{
     const runtime::FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
@@ -114,13 +115,17 @@ private:
     const Uuid id_;
     const std::string name_;
     const Path root_;
-    const std::auto_ptr< boost::shared_mutex > access_;
     const std::auto_ptr< Port_ABC > port_;
+    //@}
+
+    //! @name Private members
+    //@{
+    mutable boost::shared_mutex access_;
     boost::shared_ptr< Package_ABC > install_;
     boost::shared_ptr< Package_ABC > cache_;
     T_Process process_;
     bool stopped_;
-    const std::auto_ptr< runtime::Async > async_;
+    mutable runtime::Async async_;
     //@}
 };
 }
