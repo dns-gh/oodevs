@@ -32,74 +32,18 @@ message MsgSetAutomatMode {
 
 // Magic Action
 message MsgUnitMagicAction {
-   enum Type {
-        move_to                           = 0;
-        surrender_to                      = 1;
-        cancel_surrender                  = 2;
-        recover_transporters              = 3;
-        destroy_component                 = 4;
-        recover_all                       = 5;
-        recover_troops                    = 6;
-        recover_equipments                = 7;
-        recover_resources                 = 8;
-        destroy_all                       = 9;
-        change_human_factors              = 10;
-        partial_recovery                  = 11;
-        unit_creation                     = 12;
-        create_fire_order                 = 13;
-        crowd_total_destruction           = 14;
-        crowd_change_health_state         = 15;
-        crowd_change_attitude             = 16;
-        crowd_change_affinities           = 17;
-        crowd_change_armed_individuals    = 18;
-        change_knowledge_group            = 19;
-        change_logistic_links             = 20;
-        unit_change_superior              = 21;
-        change_automat_superior           = 22;
-        change_formation_superior         = 23;
-        knowledge_group_update            = 24;
-        log_supply_push_flow              = 25;
-        log_supply_change_quotas          = 26;
-        automat_creation                  = 27;
-        formation_creation                = 28;
-        crowd_creation                    = 29;
-        log_supply_pull_flow              = 30;
-        inhabitant_change_health_state    = 31;
-        inhabitant_change_affinities      = 32;
-        unit_change_affinities            = 33;
-        change_extension                  = 34;
-        change_critical_intelligence      = 35;
-        transfer_equipment                = 36;
-        knowledge_creation                = 37;
-        change_equipment_human_size       = 38;
-        create_breakdowns                 = 39;
-        create_wounds                     = 40;
-        log_finish_handlings              = 41;
-    }
    required Common.Tasker               tasker     = 1;
-   required Type                        type       = 2;
+   required Common.UnitMagicActionType  type       = 2;
    required Common.MsgMissionParameters parameters = 3;
 }
 
 message MsgKnowledgeMagicAction {
-   enum Type {
-        enable                 = 0;
-        update_party           = 1;
-        update_party_parent    = 2;
-        update_type            = 3;
-    }
-   required Common.KnowledgeGroupId     knowledge_group = 1;
-   required Type                        type            = 2;
-   required Common.MsgMissionParameters parameters      = 3;
+   required Common.KnowledgeGroupId         knowledge_group = 1;
+   required Common.KnowledgeMagicActionType type            = 2;
+   required Common.MsgMissionParameters     parameters      = 3;
 }
 
 message MsgObjectMagicAction {
-   enum Type {
-        create  = 0;
-        update  = 1;
-        destroy = 2;
-   }
-   
    enum Attribute {
         construction          = 0;
         obstacle              = 1;
@@ -127,22 +71,14 @@ message MsgObjectMagicAction {
         underground           = 23;
    }
    
-   required Common.ObjectId             object     = 1;
-   required Type                        type       = 2;
-   required Common.MsgMissionParameters parameters = 3;
+   required Common.ObjectId              object     = 1;
+   required Common.ObjectMagicActionType type       = 2;
+   required Common.MsgMissionParameters  parameters = 3;
 }
 
 message MsgMagicAction {
-   enum Type {
-        global_weather                      = 0;
-        local_weather                       = 1;
-        local_weather_destruction           = 2;
-        change_diplomacy                    = 3;
-        create_knowledge_group              = 4;
-        change_resource_network_properties  = 5;
-        create_fire_order_on_location       = 6;
-    }
-   required Type                        type       = 1;
+   
+   required Common.MagicActionType      type       = 1;
    required Common.MsgMissionParameters parameters = 2;
 }
 

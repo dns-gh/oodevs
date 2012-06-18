@@ -177,24 +177,36 @@ message MsgSessionCommandExecutionResponse {
         session_already_paused  = 5; //!< trying to pause an already paused session
         session_already_running = 6; //!< trying to resume an already running session
     }
+    enum Status {
+        running   = 0;
+        paused    = 1;
+    }
     required ErrorCode  error_code       = 1 [ default = success ];   //!< operation return code
     required string     exercise         = 2;                         //!< exercise the command was sent to
     required string     session          = 3;                         //!< session the command was sent to
     optional string     saved_checkpoint = 4;                         //!< if set, contains the name of the saved checkpoint
-    optional bool       running          = 5;                         //!< paused/running status
+    required Status     status           = 5;
 }
 
 // reponse to checkpoint list request
 message MsgCheckpointListResponse {
+	message CheckPoint {
+		enum Type {
+			automatic   = 0;
+			manual		= 1;
+		}
+		required string  name	= 1;
+		required Type    type	= 2;
+	}
     enum ErrorCode {
         success                 = 0; //!< checkpoints successfully listed
         invalid_exercise_name   = 1; //!< the specified exercise name could not be found
         invalid_session_name    = 2; //!< the kspecified session name could not be found
     }
-    required ErrorCode error_code = 1 [ default = success ];   //!< operation return code
-    required string    exercise   = 2;                         //!< exercise for which checkpoints are listed
-    required string    session    = 3 [ default = "default" ]; //!< session for which checkpoints are listed
-    repeated string    checkpoint = 4;                         //!< list of checkpoints for specified session
+    required ErrorCode 	error_code = 1 [ default = success ];   //!< operation return code
+    required string    	exercise   = 2;                         //!< exercise for which checkpoints are listed
+    required string    	session    = 3 [ default = "default" ]; //!< session for which checkpoints are listed
+    repeated CheckPoint	checkpoint = 4;                         //!< list of checkpoints for specified session
 }
 
 // delete checkpoint for a given exercise/session

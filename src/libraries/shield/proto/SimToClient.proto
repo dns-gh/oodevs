@@ -89,11 +89,13 @@ message MsgMagicActionAck {
         error_invalid_attribute = 1;
     }
    required ErrorCode error_code = 1;
+   required Common.MagicActionType type = 2;
 }
 
 message MsgUnitMagicActionAck {
-   required Common.UnitId           unit       = 1;
-   required UnitActionAck.ErrorCode error_code = 2;
+   required Common.UnitId              unit       = 1;
+   required UnitActionAck.ErrorCode    error_code = 2;
+   required Common.UnitMagicActionType type = 3;
 }
 
 message MsgObjectMagicActionAck {
@@ -107,6 +109,7 @@ message MsgObjectMagicActionAck {
         error_invalid_specific_attributes = 6;
     }
     required ErrorCode error_code = 1;
+    required Common.ObjectMagicActionType type = 2;
 }
 
 message MsgCrowdMagicActionAck {
@@ -115,8 +118,9 @@ message MsgCrowdMagicActionAck {
         error_invalid_unit      = 1;
         error_invalid_attribute = 2;
     }
-    required Common.CrowdId crowd     = 1;
-    required ErrorCode           error_code     = 2;
+    required Common.CrowdId             crowd = 1;
+    required ErrorCode                  error_code = 2;
+    required Common.UnitMagicActionType type = 3;
 }
 
 message MsgChangeDiplomacyAck {
@@ -299,8 +303,9 @@ message MsgFormationCreation {
 }
 
 message MsgFormationUpdate {
-    required Common.FormationId       formation = 1; // Valeur 0 non possible [06/12/2011 FT45246]
-    optional Common.Extension         extension = 2;
+    required Common.FormationId       formation  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.Extension         extension  = 2;
+    optional string                   app6symbol = 3;
 }
 
 message MsgFormationDestruction {
@@ -317,6 +322,7 @@ message MsgAutomatCreation {
     required string                        app6symbol      = 7;
     required Common.EnumLogisticLevel      logistic_level  = 8;
     optional Common.RgbColor               color           = 9;
+    optional Common.EnumNatureLevel        level           = 10; // FT45350              
 }
 
 message RulesOfEngagement {
@@ -345,6 +351,7 @@ message MsgAutomatAttributes {
    optional Common.EnumOperationalStatus       etat_operationnel     = 5;
    optional RulesOfEngagement.Value            roe                   = 6;
    optional Common.Extension                   extension             = 7;
+   optional string                             app6symbol            = 8;
 }
 
 message MsgAutomatDestruction {
@@ -360,6 +367,8 @@ message MsgUnitCreation {
     required bool                    pc          = 5;
     optional Common.RgbColor         color       = 6;
     optional Common.HumanRepartition repartition = 7;
+    optional Common.EnumNatureLevel  level       = 8; // FT 45350
+    optional string                  app6symbol  = 9; // FT 45350            
 }
 
 message EquipmentUpdate {  // A supprimer de l'ICD car pas dans SCIPIO [29/11/2011]
@@ -519,6 +528,7 @@ message MsgUnitAttributes {
     optional Common.PartyAdhesions              adhesions                     = 49; // Valeur 0 non possible [06/12/2011 FT45246]
     optional EquipmentUpdate                    equipment_update              = 50; // A supprimer de SCIPIO
     optional Common.Extension                   extension                     = 51;
+    optional bool                               headquarters                  = 52;
 }
 
 message MsgUnitPathFind {
@@ -587,7 +597,7 @@ message MsgUnitKnowledgeDestruction {
 
 message UnitFireTarget {
     optional Common.UnitId          unit       = 1; // Valeur 0 non possible [06/12/2011 FT45246]
-    optional Common.CrowdId    crowd = 2; // Valeur 0 non possible [06/12/2011 FT45246]
+    optional Common.CrowdElementId    crowd = 2; // Valeur 0 non possible [06/12/2011 FT45246]
     optional Common.MsgCoordLatLong position   = 3;
 }
 message MsgStartUnitFire {
@@ -1235,6 +1245,7 @@ message KnowledgeGroupAck {
 message MsgKnowledgeGroupMagicActionAck {
     required Common.KnowledgeGroupId     knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
+    required Common.KnowledgeMagicActionType             = 3;
 }
 
 message MsgKnowledgeGroupCreationAck {
