@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <nbc model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/NBC.xsd">
-  <propagation contamination-distance="300" contamination-quantity-given="0.5" wind-speed-limit="5"/>
+  <propagation contamination-distance="100" contamination-quantity-given="0.5" wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
   <agents>
     <agent category="biological" id="1" name="Biological">
@@ -51,4 +51,4 @@
     </agent>
   </agents>
 </nbc>
-<!-- signature="2788099274" -->
+<!-- signature="1958551213" -->

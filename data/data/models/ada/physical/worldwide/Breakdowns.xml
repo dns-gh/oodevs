@@ -122,7 +122,9 @@
     <breakdown average-repairing-time="4h" id="40" name="AAC Breakdown 4" type="EA" variance="30m">
       <part quantity="1" resource="UR AAC"/>
     </breakdown>
-    <breakdown average-repairing-time="30m" id="41" name="Tire flat" type="M" variance="5m"/>
+    <breakdown average-repairing-time="30m" id="41" name="Flat Tire" type="M" variance="5m">
+      <part quantity="1" resource="Tire"/>
+    </breakdown>
     <breakdown average-repairing-time="15m" id="42" name="Oil leak" type="M" variance="1m"/>
   </category>
   <category name="NTI2">
@@ -308,4 +310,4 @@
     <breakdown average-repairing-time="24h" id="106" name="Radar failure" type="EA" variance="4h"/>
   </category>
 </breakdowns>
-<!-- signature="0206109166" -->
+<!-- signature="0834983683" -->

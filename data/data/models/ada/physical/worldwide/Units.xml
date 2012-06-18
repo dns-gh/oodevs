@@ -113,7 +113,7 @@
   <unit decisional-model="Short Range Surface To Air Defense Troop" id="4" name="AAA.Surface To Air Defense Troop" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized avenger"/>
     <equipments>
-      <equipment count="6" crew="3" type="Very AAA.Short Range Surface To Air System"/>
+      <equipment count="6" crew="3" type="AAA.Short Range Surface To Air System"/>
       <equipment convoyer="true" count="2" crew="4" type="LOG.Light Medium Tactical Vehicle"/>
       <equipment count="2" crew="2" type="AAA.Theater Low Altitude Radar Vehicle"/>
       <equipment count="2" crew="2" type="AAA.Theater High Altitude Radar Vehicle"/>
@@ -3140,10 +3140,10 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="ML_SecurityAgent" id="99" name="ML_Security - Civil Protection - Safety" type="Pion Emergency">
-    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/public safety"/>
+  <unit decisional-model="Safety_Militia" id="99" name="SAFETY.Militia" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/police/law enforcement"/>
     <equipments>
-      <equipment count="2" crew="2" major="true" type="SECURITY.Police Car"/>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Police Car"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3152,41 +3152,40 @@
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
     <postures>
-      <posture name="PosteReflexe" setup-time="0s"/>
-      <posture name="Poste" setup-time="0s"/>
-      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="ML_SecurityAgent" id="100" name="ML_Security - Crowd transporter" type="Pion Emergency">
-    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/medical/evacuation/ambulance"/>
-    <equipments>
-      <equipment count="1" crew="2" type="SECURITY.Police Car"/>
-      <equipment count="2" crew="2" major="true" type="SECURITY.Bus"/>
-    </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="0" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="0s"/>
-      <posture name="Poste" setup-time="0s"/>
-      <posture name="PosteAmenage" setup-time="0s"/>
-      <posture name="PostePrepareGenie" setup-time="0s"/>
-    </postures>
-    <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="1m"/>
-  </unit>
-  <unit decisional-model="ML_SecurityAgent" id="101" name="ML_Security FireFigthers" type="Pion Emergency">
+  <unit decisional-model="Safety_Transport" id="100" name="SAFETY.Buses" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/firefighter"/>
     <equipments>
-      <equipment count="2" crew="8" major="true" type="SECURITY.FireFighter Truck"/>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Bus"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="1m"/>
+  </unit>
+  <unit decisional-model="Safety_Firefighter" id="101" name="SAFETY.Firefigthers" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/firefighter/operation/fire suppression"/>
+    <equipments>
+      <equipment count="2" crew="8" major="true" type="SAFETY.FireFighter Truck"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3200,11 +3199,11 @@
       <posture name="PosteAmenage" setup-time="05m"/>
       <posture name="PostePrepareGenie" setup-time="5m"/>
     </postures>
-    <nbc decontamination-delay="3600s"/>
+    <nbc decontamination-delay="20m"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height=">1m"/>
   </unit>
-  <unit decisional-model="ML_SecurityAgent" id="102" name="ML_Security NBC Decontamination" type="Pion NBC">
+  <unit decisional-model="Safety_NBC" id="102" name="SAFETY.Decontamination Team" type="Pion NBC">
     <nature atlas-nature="None" level="oo" nature-app6="emergency/nbc/biological/recon equipped"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="NBC.RSV decontamination"/>
@@ -3221,7 +3220,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
-    <nbc decontamination-delay="300s"/>
+    <nbc decontamination-delay="10m"/>
     <distance-before-points>
       <distance-before-point type="forest" value="300"/>
       <distance-before-point type="urban area" value="400"/>
@@ -3229,12 +3228,12 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
+    <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="ML_SecurityAgent" id="103" name="ML_Security - Public Works Vehicles" type="Pion Emergency">
+  <unit decisional-model="Satefy_Public Work" id="103" name="SAFETY.Public Works Vehicles" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/public safety"/>
     <equipments>
-      <equipment count="2" crew="4" major="true" type="SECURITY.Public works vehicles"/>
+      <equipment count="2" crew="4" major="true" type="SAFETY.Public Works Vehicle"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3250,12 +3249,33 @@
     </postures>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="1m"/>
+  </unit>
+  <unit decisional-model="Safety_Transport" id="104" name="SAFETY.Rescue Boats" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="combat service support/transportation/spod spoe"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Rescue Boat"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="60m"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height=">1m"/>
   </unit>
-  <unit decisional-model="ML_Terrorist" id="104" name="ML_Security - Agressor" type="Pion ASY">
-    <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
+  <unit can-fly="true" decisional-model="Safety_FlyingAgent" id="105" name="SAFETY.Rescue Helicopters" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/medical/evacuation/helicopter"/>
     <equipments>
-      <equipment count="4" crew="4" major="true" type="SECURITY.Terrorist"/>
+      <equipment count="2" crew="4" major="true" type="SAFETY.Rescue Helicopter"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3265,13 +3285,173 @@
     </crew-ranks>
     <postures>
       <posture name="PosteReflexe" setup-time="20s"/>
-      <posture name="Poste" setup-time="2m"/>
-      <posture name="PosteAmenage" setup-time="10m"/>
-      <posture name="PostePrepareGenie" setup-time="10m"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height=">1m"/>
+  </unit>
+  <unit decisional-model="Safety_Police" id="106" name="SAFETY.Police Unit" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/police/operation/police"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Police Car"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="3600s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
+  <unit decisional-model="Safety_Ambulance" id="107" name="SAFETY.Ambulance" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/medical/evacuation/ambulance"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Ambulance"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="1m"/>
+  </unit>
+  <unit decisional-model="Safety_Ambulance" id="108" name="SAFETY.Medical advanced post" type="Pion Emergency">
+    <nature atlas-nature="Log" level="none" nature-app6="emergency/medical/operation"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="SAFETY.Ambulance"/>
+      <equipment count="10" crew="1" major="true" type="SAFETY.Medical Doctor"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Psy Section" id="109" name="LOG.NBC section" type="Pion LOG BLD Sante">
+    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
+    <equipments/>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="3600s"/>
+      <posture name="PostePrepareGenie" setup-time="5400s"/>
+    </postures>
+    <setup installation-time="60s" uninstallation-time="60s"/>
+    <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Logistic unit" id="110" name="SAFETY.Medical station (log)" type="Pion LOG TC2">
+    <nature atlas-nature="Log" level="none" nature-app6="emergency/medical/hospital"/>
+    <equipments>
+      <equipment count="20" crew="2" major="true" type="SAFETY.Ambulance"/>
+      <equipment count="30" crew="1" major="true" type="SAFETY.Medical Doctor"/>
+      <equipment count="10" crew="1" major="true" type="SAFETY.Surgeon"/>
+      <equipment count="2" crew="1" type="LOG.Medical and Psychological Staff"/>
+      <equipment count="2" crew="1" type="LOG.Decontamination team"/>
+      <equipment count="2" crew="2" type="SAFETY.Rescue Helicopter"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Safety_Terrorist" id="111" name="SAFETY.Terrorists" type="Pion ASY">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/nbc/radiological"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="SAFETY.Terrorist"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="1m"/>
+  </unit>
+  <unit decisional-model="Logistic unit" id="112" name="SAFETY.Operation Center" type="Pion LOG TC2">
+    <nature atlas-nature="Log" level="none" nature-app6="emergency/public safety/operation/operation center"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Load Carrying Vehicle"/>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Repair Team"/>
+      <equipment count="2" crew="2" major="true" type="SAFETY.Tow Truck"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="funeraire">
+        <resource capacity="100" logistic-threshold="0" name="Body Bag" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="0" name="Coffin" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="20s"/>
+      <posture name="Poste" setup-time="5m"/>
+      <posture name="PosteAmenage" setup-time="0m"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="1886288001" -->
+<!-- signature="3920516855" -->

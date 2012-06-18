@@ -936,7 +936,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -946,7 +945,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -1018,7 +1016,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -1028,7 +1025,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -1100,7 +1096,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -1110,7 +1105,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -1182,7 +1176,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -1192,7 +1185,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -2816,7 +2808,6 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
           <parameter type="Distribution point"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Firebreak"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Main road"/>
@@ -2875,7 +2866,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Bomb location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Terrorist Bomb"/>
+          <parameter type="Destruction Bomb"/>
         </objects>
       </parameter>
       <parameter dia-name="position" name="Position of bomb activation" optional="false" type="LocationComposite">
@@ -3377,7 +3368,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" name="Dike location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Dyke"/>
+          <parameter type="Dike"/>
         </objects>
       </parameter>
     </mission>
@@ -4108,7 +4099,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -4118,7 +4108,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4194,7 +4183,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -4204,7 +4192,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4276,7 +4263,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -4286,7 +4272,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4375,7 +4360,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -4385,7 +4369,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -5246,7 +5229,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Dirty bomb"/>
           <parameter type="Hospital"/>
           <parameter type="Weapons Cache"/>
-          <parameter type="Leaflet"/>
           <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
           <parameter type="Victims Discovery"/>
@@ -5256,7 +5238,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
-          <parameter type="Dyke"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -5314,4 +5295,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2913420498" -->
+<!-- signature="1382417817" -->

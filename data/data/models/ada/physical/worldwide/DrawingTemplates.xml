@@ -1,156 +1,97 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <templates model-version="4.8.2">
-	<category name='Lines'>
-		<description>Tactical lines</description>
-        <template name='-- o --' type="line">
-			<description>Team level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g fill='none' stroke='currentColor' stroke-width='2px'>
-					<circle cy='0' r='4'/>
-				</g>
-			</marker-mid>
-		</template>
-		<template name='-- oo --' type="line">
-			<description>Section level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g fill='none' stroke='currentColor' stroke-width='2px'>
-					<circle cy='-6' r='4'/>
-					<circle cy=' 6' r='4'/>
-				</g>
-			</marker-mid>
-		</template>
-		<template name='-- ooo --' type="line">
-			<description>Platoon level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g fill='none' stroke='currentColor' stroke-width='2px'>
-					<circle cy='-12' r='4'/>
-					<circle cy=' 0' r='4'/>
-					<circle cy=' 12' r='4'/>
-				</g>
-			</marker-mid>
-		</template>
-		<template name='-- i --' type="line">
-			<description>Company level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<line stroke='currentColor' stroke-width='2px' x1='5' x2='-5'/>
-			</marker-mid>
-		</template>
-		<template name='-- ii --' type="line">
-			<description>Bataillon level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g stroke='currentColor' stroke-width='2px'>
-					<line y1='-4' y2='-4' x1='5' x2='-5'/>
-					<line y1=' 4' y2=' 4' x1='5' x2='-5'/>
-				</g>
-			</marker-mid>
-		</template>
-		<template name='-- iii --' type="line">
-			<description>Regiment level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g stroke='currentColor' stroke-width='2px'>
-					<line y1='-6' y2='-6' x1='5' x2='-5'/>
-					<line y1=' 0' y2=' 0' x1='5' x2='-5'/>
-					<line y1=' 6' y2=' 6' x1='5' x2='-5'/>
-				</g>
-			</marker-mid>
-		</template>
-		<template name='-- x --' type="line">
-			<description>Brigade level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g stroke-width='2px'>
-					<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-					<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-				</g>
-			</marker-mid>
-		</template>
-		<template name='-- xx --' type="line">
-			<description>Division level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g stroke-width='2px'>
-					<g transform='translate(0,-8)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-					<g transform='translate(0,8)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-				</g>
-			</marker-mid>
-		</template>
-                <template name='-- xxx --' type="line">
-			<description>Army corps level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g stroke-width='2px'>
-					<g transform='translate(0,-16)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-					<g transform='translate(0,0)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-					<g transform='translate(0,16)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-				</g>
-			</marker-mid>
-                </template>
-                <template name='-- xxxx --' type="line">
-			<description>Army level line</description>
-			<segment>
-				<line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
-			</segment>
-			<marker-mid unit='px'>
-				<g stroke-width='2px'>
-					<g transform='translate(0,-24)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-					<g transform='translate(0,-8)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-					<g transform='translate(0,8)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-					<g transform='translate(0,24)'>
-						<line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
-						<line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
-					</g>
-				</g>
-			</marker-mid>
-		</template>
-	</category>
+    <category name='Lines'>
+        <description>Tactical lines</description>
+        <template name='-- oo --' type="line">
+            <description>Section level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+                <g fill='currentColor' stroke='none'>
+                    <circle cy='-4' r='3'/>
+                    <circle cy=' 4' r='3'/>
+                </g>
+            </marker-mid>
+        </template>
+        <template name='-- ooo --' type="line">
+            <description>Platoon level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+                <g fill='currentColor' stroke='none'>
+                    <circle cy='-6' r='3'/>
+                    <circle cy=' 0' r='3'/>
+                    <circle cy=' 6' r='3'/>
+                </g>
+            </marker-mid>
+        </template>
+        <template name='-- i --' type="line">
+            <description>Company level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+                <line stroke='currentColor' stroke-width='2px' x1='5' x2='-5'/>
+            </marker-mid>
+        </template>
+        <template name='-- ii --' type="line">
+            <description>Bataillon level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+                <g stroke='currentColor' stroke-width='2px'>
+                    <line  y1='-4' y2='-4' x1='5' x2='-5'/>
+                    <line  y1=' 4' y2=' 4' x1='5' x2='-5'/>
+                </g>
+            </marker-mid>
+        </template>
+        <template name='-- iii --' type="line">
+            <description>Regiment level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+              <g stroke='currentColor' stroke-width='2px'>
+                  <line  y1='-6' y2='-6' x1='5' x2='-5'/>
+                  <line  y1=' 0' y2=' 0' x1='5' x2='-5'/>
+                  <line  y1=' 6' y2=' 6' x1='5' x2='-5'/>
+              </g>
+            </marker-mid>
+        </template>
+        <template name='-- x --' type="line">
+            <description>Brigade level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+                <g stroke-width='2px'>
+                    <line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
+                    <line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
+                </g>
+            </marker-mid>
+        </template>
+        <template name='-- xx --' type="line">
+            <description>Division level line</description>
+            <segment>
+                <line stroke='currentColor' x1='0.02' x2='0.98' stroke-width='3px'/>
+            </segment>
+            <marker-mid unit='px'>
+                <g stroke-width='2px'>
+                    <g transform='translate(0,-6)'>
+                        <line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
+                        <line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
+                    </g>
+                    <g transform='translate(0,6)'>
+                        <line stroke='currentColor' x1='-5' y1=' 5' x2='5' y2='-5'/>
+                        <line stroke='currentColor' x1='-5' y1='-5' x2='5' y2=' 5'/>
+                    </g>
+                </g>
+            </marker-mid>
+        </template>
+    </category>
     <category name='Tasks' id="tasks">
         <template name='Reckon' type="line">
             <segment unit='%'>
@@ -710,7 +651,7 @@
         <template code="O*VPA-----*****" name="Arson/Fire" type="point">
             <segment/>
             <marker-start unit="m">
-                <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.8)">
+                <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.7)">
                     <path d="M0,0 L-300,300 L0,600 L300,300 z" fill="#ffffff" fill-opacity="0.5"/>
                     <g font-family="Arial" font-size="200" fill="currentColor">
                         <g transform="matrix( 1 0 0 -1 0 0 )">
@@ -723,7 +664,7 @@
 		<template code="O*VPF-----*****" name="Flood" type="point">
             <segment/>
             <marker-start unit="m">
-                <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.2)">
+                <g fill="none" stroke="currentColor" stroke-width="4px" transform="scale(0.5)">
 					<path d="M 0,0 -300,300 0,600 300,300 z" fill="#ffffff" fill-opacity="0.5" />
                     <g font-family="Arial" font-size="150" fill="currentColor">
                         <g transform="matrix( 1 0 0 -1 0 0 )">
@@ -832,7 +773,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*DYKE*********" name="Dyke" type="polygon">
+        <template code="G*DIKE********P" name="Dike-P" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
@@ -843,6 +784,36 @@
                     </g>
                 </g>
             </marker>
+        </template>
+        <template code="G*DIKE********L" name="Dike-L" type="line">
+             <marker-start unit='%'>
+                <g stroke='currentColor' stroke-width='4px'>
+                    <line y1='-0.05' y2='0.05' x1='-0.05' x2='0.05'/>
+                    <line y1='0.05' y2='-0.05' x1='-0.05' x2='0.05'/>
+                </g>
+            </marker-start>
+            <segment unit="%">
+                <g stroke="currentColor" stroke-width="3px">
+                    <line x2="1"/>
+                    <g font-family="Arial" font-size="0.08" fill="currentColor">
+                        <g transform="matrix( 1 0 0 -1 0 0 )">
+                            <text x="0.4" y="-0.02">DIKE</text>
+                        </g>
+                    </g>
+                </g>
+            </segment>
+            <marker-mid unit='%'>
+                <g stroke='currentColor' stroke-width='4px'>
+                    <line y1='-0.05' y2='0.05' x1='-0.05' x2='0.05'/>
+                    <line y1='0.05' y2='-0.05' x1='-0.05' x2='0.05'/>
+                </g>
+            </marker-mid>
+            <marker-end unit='%'>
+                <g stroke='currentColor' stroke-width='4px'>
+                    <line y1='-0.05' y2='0.05' x1='-0.05' x2='0.05'/>
+                    <line y1='0.05' y2='-0.05' x1='-0.05' x2='0.05'/>
+                </g>
+            </marker-end>
         </template>
         <template code="G*EXIT*********" name="Underground exit" type="point">
             <segment/>
@@ -867,4 +838,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="2410481135" -->
+<!-- signature="1056336591" -->

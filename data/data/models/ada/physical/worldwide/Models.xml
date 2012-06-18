@@ -35,6 +35,105 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Militia">
+      <missions>
+        <mission name="SAFETY - Alert urban blocks within area"/>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Patrol"/>
+        <mission name="SAFETY - Patrol within area"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Transport">
+      <missions>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="behaviors.roles.FlyingAgent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_FlyingAgent">
+      <missions/>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Police">
+      <missions/>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Ambulance">
+      <missions>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Heal victims within crowds"/>
+        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Patrol within area"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Satefy_Public Work">
+      <missions>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Increase resource node production"/>
+        <mission name="SAFETY - Enable resource nodes"/>
+        <mission name="SAFETY - Disable resource nodes"/>
+        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Reinforce"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_NBC">
+      <missions>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Decontaminate"/>
+        <mission name="SAFETY - Patrol"/>
+        <mission name="SAFETY - Patrol within area"/>
+        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Reinforce"/>
+        <mission name="SAFETY - Resume public works"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Firefighter">
+      <missions>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Extinguish a fire"/>
+        <mission name="SAFETY - Extinguish fires within area"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Confine urban blocks within area"/>
+        <mission name="SAFETY - Enable resource nodes"/>
+        <mission name="SAFETY - Ensure victims evacuation"/>
+        <mission name="SAFETY - Evacuate urban blocks within area "/>
+        <mission name="SAFETY - Extract victims from crowds"/>
+        <mission name="SAFETY - Patrol"/>
+        <mission name="SAFETY - Patrol within area"/>
+        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Reinforce"/>
+        <mission name="SAFETY - Resume public works"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Terrorist">
+      <missions>
+        <mission name="SAFETY - Go get decontaminated"/>
+        <mission name="SAFETY - Follow"/>
+        <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Attack urban blocks within area (with projectiles)"/>
+        <mission name="SAFETY - Disable resource nodes"/>
+        <mission name="SAFETY - Patrol"/>
+        <mission name="SAFETY - Patrol within area"/>
+      </missions>
+      <fragorders/>
+    </unit>
     <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Landing Craft">
       <missions>
         <mission name="COMMON - withdraw"/>
@@ -3845,7 +3944,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="behaviors.roles.Leader" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="ML_SecurityLeader">
+    <automat dia-type="roles.Leader" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="Safety_Automat">
       <missions/>
       <fragorders/>
     </automat>
@@ -3882,4 +3981,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2221753415" -->
+<!-- signature="1572689190" -->
