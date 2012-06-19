@@ -30,6 +30,11 @@ namespace runtime
     struct Runtime_ABC;
 }
 
+namespace web
+{
+    struct Client_ABC;
+}
+
 namespace host
 {
     struct NodeController_ABC;
@@ -57,6 +62,7 @@ public:
                                 const NodeController_ABC& nodes,
                                 const Path& root,
                                 const Path& apps,
+                                web::Client_ABC& client,
                                 runtime::Pool_ABC& pool );
     virtual ~SessionController();
     //@}
@@ -78,6 +84,7 @@ private:
     //! @name Private methods
     //@{
     void Update();
+    void UpdateSession( T_Session session );
     void Save( const Session_ABC& session ) const;
     void Create( Session_ABC& session, bool isReload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Session_ABC& session ) const;
@@ -95,6 +102,7 @@ private:
     const NodeController_ABC& nodes_;
     const Path root_;
     const Path apps_;
+    web::Client_ABC& client_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;
     mutable runtime::Async async_;

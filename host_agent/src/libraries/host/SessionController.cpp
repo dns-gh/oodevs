@@ -54,6 +54,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const NodeController_ABC& nodes,
                                       const Path& root,
                                       const Path& apps,
+                                      web::Client_ABC& client,
                                       Pool_ABC& pool )
     : log_     ( log )
     , runtime_ ( runtime )
@@ -62,6 +63,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , nodes_   ( nodes )
     , root_    ( root / "sessions" )
     , apps_    ( apps )
+    , client_  ( client )
     , async_   ( pool )
 {
     system_.MakePaths( root_ );
@@ -82,7 +84,18 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 SessionController::~SessionController()
 {
     timer_->Stop();
+    async_.Join();
     sessions_.ForeachRef( boost::bind( &SessionController::Stop, this, _1, false ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::UpdateSession
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+void SessionController::UpdateSession( T_Session session )
+{
+    session->Update();
+    async_.Go( boost::bind( &Session_ABC::Poll, session, boost::ref( client_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +104,7 @@ SessionController::~SessionController()
 // -----------------------------------------------------------------------------
 void SessionController::Update()
 {
-    sessions_.ForeachRef( boost::bind( &Session_ABC::Update, _1 ) );
+    sessions_.Foreach( boost::bind( &SessionController::UpdateSession, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
