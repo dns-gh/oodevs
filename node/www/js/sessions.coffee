@@ -82,6 +82,7 @@ class SessionItemView extends Backbone.View
         "click .delete" : "delete"
         "click .stop" : "stop"
         "click .play" : "play"
+        "click .pause" : "pause"
 
     is_search: =>
         targets = ["name", "exercise"]
@@ -125,6 +126,16 @@ class SessionItemView extends Backbone.View
                 @model.set item
             () =>
                 print_error "Unable to start session " + @model.get "name"
+                @toggle_load()
+
+    pause: =>
+        @toggle_load()
+        ajax "/api/pause_session", id: @model.id,
+            (item) =>
+                @toggle_load()
+                @model.set item
+            () =>
+                print_error "Unable to pause session " + @model.get "name"
                 @toggle_load()
 
     set_filter: (list) =>

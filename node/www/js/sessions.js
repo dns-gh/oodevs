@@ -290,6 +290,8 @@
 
       this.set_filter = __bind(this.set_filter, this);
 
+      this.pause = __bind(this.pause, this);
+
       this.play = __bind(this.play, this);
 
       this.stop = __bind(this.stop, this);
@@ -320,7 +322,8 @@
     SessionItemView.prototype.events = {
       "click .delete": "delete",
       "click .stop": "stop",
-      "click .play": "play"
+      "click .play": "play",
+      "click .pause": "pause"
     };
 
     SessionItemView.prototype.is_search = function() {
@@ -392,6 +395,20 @@
         return _this.model.set(item);
       }, function() {
         print_error("Unable to start session " + _this.model.get("name"));
+        return _this.toggle_load();
+      });
+    };
+
+    SessionItemView.prototype.pause = function() {
+      var _this = this;
+      this.toggle_load();
+      return ajax("/api/pause_session", {
+        id: this.model.id
+      }, function(item) {
+        _this.toggle_load();
+        return _this.model.set(item);
+      }, function() {
+        print_error("Unable to pause session " + _this.model.get("name"));
         return _this.toggle_load();
       });
     };
