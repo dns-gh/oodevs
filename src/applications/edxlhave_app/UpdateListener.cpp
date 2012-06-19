@@ -168,7 +168,7 @@ void UpdateListener::SendHospital( xml::xistream& xis )
         sword::ObjectMagicAction& magic = *message.mutable_message()->mutable_object_magic_action();
 
         magic.mutable_object()->set_id( hospital->GetId() );
-        magic.set_type( sword::ObjectMagicAction::update );
+        magic.set_type( sword::update );
         magic.mutable_parameters()->add_elem()->mutable_value()->Add()->set_identifier( sword::ObjectMagicAction::medical_treatment );
         sword::MissionParameter_Value* parameters = magic.mutable_parameters()->add_elem()->mutable_value()->Add()->add_list();
         xis >> xml::optional >> xml::start( "HospitalBedCapacityStatus" )
