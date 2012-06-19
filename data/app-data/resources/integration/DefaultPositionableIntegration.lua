@@ -43,3 +43,15 @@ integration.isPosted = function( self )
     end
     return false
 end
+
+--- Indicate if the unit is parked
+-- @param the unit
+-- @return bool
+-- @author LMT
+-- @created 2012-02-18
+integration.isParked = function( self )
+    if DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteAmenage then
+        return true
+    end
+    return false
+end

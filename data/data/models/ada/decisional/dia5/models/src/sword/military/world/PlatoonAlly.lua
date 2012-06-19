@@ -309,6 +309,9 @@ return
     isPosted = function( self )
         return integration.isPosted( self )
     end,
+    isParked = function( self )
+        return integration.isParked( self )
+    end,
     isContaminated = function( self )
         return integration.isContaminated( self )
     end,
@@ -829,6 +832,7 @@ return
     sendEndOfMission= function( self, receiver, sender, bCancel )
         integration.SendMessage( "EndOfMission", receiver, { cancel = bCancel, me = sender.source }, { type = "dynamic" } )
     end,
+
     getAutomat = function ( self )
         return CreateKnowledge( sword.military.world.Company, DEC_GetAutomate(self.source) )
     end,
@@ -896,5 +900,8 @@ return
     end,
     getUnitPC = function( self )
         return integration.getUnitPC( self ) 
+    end,
+    isUnderIndirectFire = function( self )
+        return integration.isUnderIndirectFire
     end
 }

@@ -105,6 +105,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
     , bIsSurrender_               ( false )
+    , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
 }
@@ -242,8 +243,9 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
          & nNeutralizationEndTimeStep_
          & maintenanceComposanteStates_
          & nTickRcMaintenanceQuerySent_
-         & bIsLoaded_;
-         & bIsSurrender_;
+         & bIsLoaded_
+         & bIsSurrender_
+         & bNeutralized_;
 }
 
 //-----------------------------------------------------------------------------
@@ -952,6 +954,7 @@ void PHY_RolePion_Composantes::Neutralize()
     const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + ( **it ).GetNeutralizationTime() );
+    bNeutralized_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1985,4 +1988,22 @@ bool PHY_RolePion_Composantes::CanEvacuateCasualties() const
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::IsUnderIndirectFire
+// Created: LMT 2012-06-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::IsUnderIndirectFire()
+{
+    return bNeutralized_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ResetUnderIndirectFire
+// Created: LMT 2012-06-13
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ResetUnderIndirectFire()
+{
+    bNeutralized_ = false;
 }

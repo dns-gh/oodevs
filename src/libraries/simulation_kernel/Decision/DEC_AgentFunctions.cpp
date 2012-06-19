@@ -69,6 +69,15 @@ bool DEC_AgentFunctions::IsNeutralized( const MIL_Agent_ABC& callerAgent )
     return callerAgent.IsNeutralized();
 }
 
+//-----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsUnderIndirectFire
+// Created: LMT 2012-06-13
+//-----------------------------------------------------------------------------
+bool DEC_AgentFunctions::UpdateUnderIndirectFire( MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.UpdateUnderIndirectFire();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::WearNbcProtectionSuit
 // Created: NLD 2004-05-03

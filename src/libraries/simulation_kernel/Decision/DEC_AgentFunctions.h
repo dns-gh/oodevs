@@ -39,6 +39,7 @@ public:
     static bool IsAutomateEngaged( const MIL_Agent_ABC& callerAgent );
     static bool IsTransported( const MIL_Agent_ABC& callerAgent );
     static bool IsNeutralized( const MIL_Agent_ABC& callerAgent );
+    static bool UpdateUnderIndirectFire( MIL_Agent_ABC& callerAgent );
     static double GetOperationalState( const MIL_Agent_ABC& callerAgent );
     static double GetMajorOperationalState( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetPosition( const MIL_Agent_ABC& callerAgent );
