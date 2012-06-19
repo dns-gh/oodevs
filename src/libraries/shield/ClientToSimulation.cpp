@@ -140,46 +140,46 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgSetAutomatMode& from
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& from, sword::UnitMagicAction* to )
 {
     CONVERT_CB( tasker, ConvertTasker );
-    CONVERT_ENUM( type, ( MsgsClientToSim::MsgUnitMagicAction::move_to, sword::UnitMagicAction::move_to )
-                        ( MsgsClientToSim::MsgUnitMagicAction::surrender_to, sword::UnitMagicAction::surrender_to )
-                        ( MsgsClientToSim::MsgUnitMagicAction::cancel_surrender, sword::UnitMagicAction::cancel_surrender )
-                        ( MsgsClientToSim::MsgUnitMagicAction::recover_transporters, sword::UnitMagicAction::recover_transporters )
-                        ( MsgsClientToSim::MsgUnitMagicAction::destroy_component, sword::UnitMagicAction::destroy_component )
-                        ( MsgsClientToSim::MsgUnitMagicAction::recover_all, sword::UnitMagicAction::recover_all )
-                        ( MsgsClientToSim::MsgUnitMagicAction::recover_troops, sword::UnitMagicAction::recover_troops )
-                        ( MsgsClientToSim::MsgUnitMagicAction::recover_equipments, sword::UnitMagicAction::recover_equipments )
-                        ( MsgsClientToSim::MsgUnitMagicAction::recover_resources, sword::UnitMagicAction::recover_resources )
-                        ( MsgsClientToSim::MsgUnitMagicAction::destroy_all, sword::UnitMagicAction::destroy_all )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_human_factors, sword::UnitMagicAction::change_human_factors )
-                        ( MsgsClientToSim::MsgUnitMagicAction::partial_recovery, sword::UnitMagicAction::partial_recovery )
-                        ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation )
-                        ( MsgsClientToSim::MsgUnitMagicAction::create_fire_order, sword::UnitMagicAction::create_fire_order )
-                        ( MsgsClientToSim::MsgUnitMagicAction::crowd_total_destruction, sword::UnitMagicAction::crowd_total_destruction )
-                        ( MsgsClientToSim::MsgUnitMagicAction::crowd_change_health_state, sword::UnitMagicAction::crowd_change_health_state )
-                        ( MsgsClientToSim::MsgUnitMagicAction::crowd_change_attitude, sword::UnitMagicAction::crowd_change_attitude )
-                        ( MsgsClientToSim::MsgUnitMagicAction::crowd_change_affinities, sword::UnitMagicAction::crowd_change_affinities )
-                        ( MsgsClientToSim::MsgUnitMagicAction::crowd_change_armed_individuals, sword::UnitMagicAction::crowd_change_armed_individuals )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_knowledge_group, sword::UnitMagicAction::change_knowledge_group )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_logistic_links, sword::UnitMagicAction::change_logistic_links )
-                        ( MsgsClientToSim::MsgUnitMagicAction::unit_change_superior, sword::UnitMagicAction::unit_change_superior )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_automat_superior, sword::UnitMagicAction::change_automat_superior )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_formation_superior, sword::UnitMagicAction::change_formation_superior )
-                        ( MsgsClientToSim::MsgUnitMagicAction::knowledge_group_update, sword::UnitMagicAction::knowledge_group_update )
-                        ( MsgsClientToSim::MsgUnitMagicAction::log_supply_push_flow, sword::UnitMagicAction::log_supply_push_flow )
-                        ( MsgsClientToSim::MsgUnitMagicAction::log_supply_change_quotas, sword::UnitMagicAction::log_supply_change_quotas )
-                        ( MsgsClientToSim::MsgUnitMagicAction::automat_creation, sword::UnitMagicAction::automat_creation )
-                        ( MsgsClientToSim::MsgUnitMagicAction::formation_creation, sword::UnitMagicAction::formation_creation )
-                        ( MsgsClientToSim::MsgUnitMagicAction::crowd_creation, sword::UnitMagicAction::crowd_creation )
-                        ( MsgsClientToSim::MsgUnitMagicAction::log_supply_pull_flow, sword::UnitMagicAction::log_supply_pull_flow )
-                        ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_health_state, sword::UnitMagicAction::inhabitant_change_health_state )
-                        ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_affinities, sword::UnitMagicAction::inhabitant_change_affinities )
-                        ( MsgsClientToSim::MsgUnitMagicAction::unit_change_affinities, sword::UnitMagicAction::unit_change_affinities )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_extension, sword::UnitMagicAction::change_extension )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_critical_intelligence, sword::UnitMagicAction::change_critical_intelligence )
-                        ( MsgsClientToSim::MsgUnitMagicAction::transfer_equipment, sword::UnitMagicAction::transfer_equipment )
-                        ( MsgsClientToSim::MsgUnitMagicAction::change_equipment_human_size, sword::UnitMagicAction::change_equipment_human_size )
-                        ( MsgsClientToSim::MsgUnitMagicAction::create_breakdowns, sword::UnitMagicAction::create_breakdowns )
-                        ( MsgsClientToSim::MsgUnitMagicAction::create_wounds, sword::UnitMagicAction::create_wounds ) );
+    CONVERT_ENUM( type, ( Common::move_to, sword::move_to )
+                        ( Common::surrender_to, sword::surrender_to )
+                        ( Common::cancel_surrender, sword::cancel_surrender )
+                        ( Common::recover_transporters, sword::recover_transporters )
+                        ( Common::destroy_component, sword::destroy_component )
+                        ( Common::recover_all, sword::recover_all )
+                        ( Common::recover_troops, sword::recover_troops )
+                        ( Common::recover_equipments, sword::recover_equipments )
+                        ( Common::recover_resources, sword::recover_resources )
+                        ( Common::destroy_all, sword::destroy_all )
+                        ( Common::change_human_factors, sword::change_human_factors )
+                        ( Common::partial_recovery, sword::partial_recovery )
+                        ( Common::unit_creation, sword::unit_creation )
+                        ( Common::create_fire_order, sword::create_fire_order )
+                        ( Common::crowd_total_destruction, sword::crowd_total_destruction )
+                        ( Common::crowd_change_health_state, sword::crowd_change_health_state )
+                        ( Common::crowd_change_attitude, sword::crowd_change_attitude )
+                        ( Common::crowd_change_affinities, sword::crowd_change_affinities )
+                        ( Common::crowd_change_armed_individuals, sword::crowd_change_armed_individuals )
+                        ( Common::change_knowledge_group, sword::change_knowledge_group )
+                        ( Common::change_logistic_links, sword::change_logistic_links )
+                        ( Common::unit_change_superior, sword::unit_change_superior )
+                        ( Common::change_automat_superior, sword::change_automat_superior )
+                        ( Common::change_formation_superior, sword::change_formation_superior )
+                        ( Common::knowledge_group_update, sword::knowledge_group_update )
+                        ( Common::log_supply_push_flow, sword::log_supply_push_flow )
+                        ( Common::log_supply_change_quotas, sword::log_supply_change_quotas )
+                        ( Common::automat_creation, sword::automat_creation )
+                        ( Common::formation_creation, sword::formation_creation )
+                        ( Common::crowd_creation, sword::crowd_creation )
+                        ( Common::log_supply_pull_flow, sword::log_supply_pull_flow )
+                        ( Common::inhabitant_change_health_state, sword::inhabitant_change_health_state )
+                        ( Common::inhabitant_change_affinities, sword::inhabitant_change_affinities )
+                        ( Common::unit_change_affinities, sword::unit_change_affinities )
+                        ( Common::change_extension, sword::change_extension )
+                        ( Common::change_critical_intelligence, sword::change_critical_intelligence )
+                        ( Common::transfer_equipment, sword::transfer_equipment )
+                        ( Common::change_equipment_human_size, sword::change_equipment_human_size )
+                        ( Common::create_breakdowns, sword::create_breakdowns )
+                        ( Common::create_wounds, sword::create_wounds ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
@@ -190,9 +190,9 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgObjectMagicAction& from, sword::ObjectMagicAction* to )
 {
     CONVERT_ID( object );
-    CONVERT_ENUM( type, ( MsgsClientToSim::MsgObjectMagicAction::create, sword::ObjectMagicAction::create )
-                        ( MsgsClientToSim::MsgObjectMagicAction::update, sword::ObjectMagicAction::update )
-                                  ( MsgsClientToSim::MsgObjectMagicAction::destroy, sword::ObjectMagicAction::destroy ) );
+    CONVERT_ENUM( type, ( Common::create, sword::create )
+                        ( Common::update, sword::update )
+                        ( Common::destroy, sword::destroy ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
@@ -203,10 +203,10 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgObjectMagicAction& f
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgKnowledgeMagicAction& from, sword::KnowledgeMagicAction* to )
 {
     CONVERT_ID( knowledge_group );
-    CONVERT_ENUM( type, ( MsgsClientToSim::MsgKnowledgeMagicAction::enable, sword::KnowledgeMagicAction::enable )
-                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party, sword::KnowledgeMagicAction::update_party )
-                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent, sword::KnowledgeMagicAction::update_party_parent )
-                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type ) );
+    CONVERT_ENUM( type, ( Common::enable, sword::enable )
+                        ( Common::update_party, sword::update_party )
+                        ( Common::update_party_parent, sword::update_party_parent )
+                        ( Common::update_type, sword::update_type ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
@@ -216,13 +216,13 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgKnowledgeMagicAction
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgMagicAction& from, sword::MagicAction* to )
 {
-    CONVERT_ENUM( type, ( MsgsClientToSim::MsgMagicAction::global_weather, sword::MagicAction::global_weather )
-                        ( MsgsClientToSim::MsgMagicAction::local_weather, sword::MagicAction::local_weather )
-                        ( MsgsClientToSim::MsgMagicAction::local_weather_destruction, sword::MagicAction::local_weather_destruction )
-                        ( MsgsClientToSim::MsgMagicAction::change_diplomacy, sword::MagicAction::change_diplomacy )
-                        ( MsgsClientToSim::MsgMagicAction::create_knowledge_group, sword::MagicAction::create_knowledge_group )
-                        ( MsgsClientToSim::MsgMagicAction::change_resource_network_properties, sword::MagicAction::change_resource_network_properties )
-                        ( MsgsClientToSim::MsgMagicAction::create_fire_order_on_location, sword::MagicAction::create_fire_order_on_location ) );
+    CONVERT_ENUM( type, ( Common::global_weather_type, sword::global_weather_type )
+                        ( Common::local_weather, sword::local_weather )
+                        ( Common::local_weather_destruction, sword::local_weather_destruction )
+                        ( Common::change_diplomacy, sword::change_diplomacy )
+                        ( Common::create_knowledge_group, sword::create_knowledge_group )
+                        ( Common::change_resource_network_properties, sword::change_resource_network_properties )
+                        ( Common::create_fire_order_on_location, sword::create_fire_order_on_location ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 

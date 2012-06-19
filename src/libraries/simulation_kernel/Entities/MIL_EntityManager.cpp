@@ -917,41 +917,41 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     {
         switch( message.type() )
         {
-        case UnitMagicAction::move_to :
+        case move_to :
             ProcessMagicActionMoveTo( message, nCtx );
             break;
-        case UnitMagicAction::unit_creation :
+        case unit_creation :
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::create_fire_order:
+        case create_fire_order:
             ProcessMagicActionCreateFireOrder( message, nCtx );
             break;
-        case UnitMagicAction::change_knowledge_group:
+        case change_knowledge_group:
             ProcessAutomateChangeKnowledgeGroup( message, nCtx );
             break;
-        case UnitMagicAction::change_logistic_links:
+        case change_logistic_links:
             ProcessChangeLogisticLinks( message, nCtx );
             break;
-        case UnitMagicAction::unit_change_superior:
+        case unit_change_superior:
             ProcessUnitChangeSuperior( message, nCtx );
             break;
-        case UnitMagicAction::change_automat_superior:
-        case UnitMagicAction::change_formation_superior:
+        case change_automat_superior:
+        case change_formation_superior:
             ProcessAutomateChangeSuperior( message, nCtx );
             break;
-        case UnitMagicAction::log_supply_push_flow:
+        case log_supply_push_flow:
             ProcessLogSupplyPushFlow( message, nCtx );
             break;
-        case UnitMagicAction::log_supply_pull_flow:
+        case log_supply_pull_flow:
             ProcessLogSupplyPullFlow( message, nCtx );
             break;
-        case UnitMagicAction::log_supply_change_quotas:
+        case log_supply_change_quotas:
             ProcessLogSupplyChangeQuotas( message, nCtx );
             break;
-        case UnitMagicAction::automat_creation:
+        case automat_creation:
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
                 ProcessAutomatCreationRequest( message, *pAutomate, nCtx );
             else if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -959,7 +959,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::formation_creation :
+        case formation_creation :
             if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
                 ProcessFormationCreationRequest( message, pArmy, 0, nCtx );
             else if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -967,7 +967,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::crowd_creation:
+        case crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessCrowdCreationRequest( message, pFormation->GetArmy(), nCtx );
             else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
@@ -975,7 +975,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::transfer_equipment:
+        case transfer_equipment:
             if( MIL_AgentPion* pPion = FindAgentPion( id ) )
                 ProcessTransferEquipmentRequest( message, *pPion );
             else
@@ -1013,7 +1013,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 {
     try
     {
-        if( msg.type() != UnitMagicAction::automat_creation )
+        if( msg.type() != automat_creation )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         if( !msg.has_parameters() || msg.parameters().elem_size() < 2 )
@@ -1060,21 +1060,21 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
+    client::UnitMagicActionAck ack;
+    ack().set_error_code( UnitActionAck::no_error );
     ack().set_type( message.type() );
     if( !army )
     {
         if( !formation )
         {
-            ack().set_error_code( MagicActionAck::error_invalid_parameter );
+            ack().set_error_code( UnitActionAck::error_invalid_parameter );
             return;
         }
         army = &(formation->GetArmy());
     }
     if( !message.has_parameters() || message.parameters().elem_size() != 3 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( UnitActionAck::error_invalid_parameter );
         return;
     }
     const ::MissionParameters& parameters = message.parameters();
@@ -1092,15 +1092,15 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army, unsigned int context )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
+    client::UnitMagicActionAck ack;
+    ack().set_error_code( UnitActionAck::no_error );
     ack().set_type( message.type() );
     if( !message.has_parameters() || message.parameters().elem_size() != 4
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
         || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity() )
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( UnitActionAck::error_invalid_parameter );
         return;
     }
     const ::MissionParameters& parameters = message.parameters();
@@ -1108,7 +1108,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     ::Location location = parameters.elem( 1 ).value().Get( 0 ).point().location();
     if( !location.has_coordinates() )
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( UnitActionAck::error_invalid_parameter );
         return;
     }
     ack.Send( NET_Publisher_ABC::Publisher(), context );
@@ -1117,7 +1117,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     int number = parameters.elem( 2 ).value().Get( 0 ).quantity();
     if( number == 0 )
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( UnitActionAck::error_invalid_parameter );
         return;
     }
     std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
@@ -1138,11 +1138,11 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
     {
         switch( message.type() )
         {
-        case KnowledgeMagicAction::enable :
-        case KnowledgeMagicAction::update_party :
-        case KnowledgeMagicAction::update_party_parent :
-        case KnowledgeMagicAction::update_type :
-        case KnowledgeMagicAction::add_knowledge :
+        case sword::enable :
+        case sword::update_party :
+        case sword::update_party_parent :
+        case sword::update_type :
+        case sword::add_knowledge :
             ProcessKnowledgeGroupUpdate( message, nCtx );
             break;
         default:
@@ -1442,9 +1442,9 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
     {
         client::AutomatChangeSuperior resendMessage;
         resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-        if( message.type() == UnitMagicAction::change_formation_superior )
+        if( message.type() == change_formation_superior )
             resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
-        else if( message.type() == UnitMagicAction::change_automat_superior )
+        else if( message.type() == change_automat_superior )
             resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
         resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
@@ -1620,11 +1620,12 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
     client::KnowledgeGroupUpdateAck ack;
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
     ack().set_error_code( KnowledgeGroupAck::no_error );
+    ack().set_type( message.type() );
     try
     {
         MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
         if ( pReceiver && ( !pReceiver->IsJammed()
-                            || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
+                            || message.type() == sword::add_knowledge ) )
             pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
         else
             throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );

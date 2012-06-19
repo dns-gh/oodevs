@@ -149,7 +149,7 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
 {
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
-    message().set_type( sword::UnitMagicAction_Type_move_to );
+    message().set_type( sword::move_to );
     sword::Point point;
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
@@ -167,7 +167,7 @@ void AgentManipulator::RecoverAll()
 {
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
-    message().set_type( sword::UnitMagicAction_Type_recover_all );
+    message().set_type( sword::recover_all );
     message().mutable_parameters();
     message.Send( publisher_ );
 }
@@ -180,7 +180,7 @@ void AgentManipulator::Wound( int injury, int type )
 {
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
-    message().set_type( sword::UnitMagicAction_Type_create_wound );
+    message().set_type( sword::create_wound );
 
     sword::MissionParameter& paramInjury = *message().mutable_parameters()->add_elem();
     paramInjury.set_null_value( false );

@@ -81,7 +81,7 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
-    sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType().GetId();
+    sword::ObjectMagicActionType type = ( sword::ObjectMagicActionType ) GetType().GetId();
     simulation::ObjectMagicAction message;
     message().mutable_object()->set_id( objectId_ );
     message().set_type( type );

@@ -111,7 +111,7 @@ void MIL_DictionaryExtensions::save( MIL_CheckPointOutArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void MIL_DictionaryExtensions::OnReceiveMsgChangeExtensions( const sword::UnitMagicAction& msg )
 {
-    if( msg.type() != sword::UnitMagicAction::change_extension || !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+    if( msg.type() != sword::change_extension || !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
     if( list.size() != 1 || !list.Get( 0 ).has_extensionlist() )

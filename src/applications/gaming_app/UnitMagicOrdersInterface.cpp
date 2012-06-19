@@ -198,27 +198,27 @@ namespace
             QString name;
             switch( id_ )
             {
-            case sword::UnitMagicAction_Type_recover_all:
+            case sword::recover_all:
                 strType = "recover_all";
                 name = tools::translate( "MagicAction", "Recover - All" );
                 break;
-            case sword::UnitMagicAction_Type_recover_troops:
+            case sword::recover_troops:
                 strType = "recover_troops";
                 name = tools::translate( "MagicAction", "Recover - Troops" );
                 break;
-            case sword::UnitMagicAction_Type_recover_equipments:
+            case sword::recover_equipments:
                 strType = "recover_equipments";
                 name = tools::translate( "MagicAction", "Recover - Equipments" );
                 break;
-            case sword::UnitMagicAction_Type_recover_resources:
+            case sword::recover_resources:
                 strType = "recover_resources";
                 name = tools::translate( "MagicAction", "Recover - Resources" );
                 break;
-            case sword::UnitMagicAction_Type_destroy_all:
+            case sword::destroy_all:
                 strType = "destroy_all";
                 name = tools::translate( "MagicAction", "Destroy - All" );
                 break;
-            case sword::UnitMagicAction_Type_cancel_surrender:
+            case sword::cancel_surrender:
                 strType = "cancel_surrender";
                 name = tools::translate( "MagicAction", "Cancel - Surrender" );
                 break;
@@ -400,11 +400,11 @@ void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entit
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::FillCommonOrders( kernel::ContextMenu* magicMenu )
 {
-    AddMagic( tr( "Recover - All" ),        sword::UnitMagicAction_Type_recover_all,      magicMenu );
-    AddMagic( tr( "Recover - Troops" ),     sword::UnitMagicAction_Type_recover_troops,  magicMenu );
-    AddMagic( tr( "Recover - Equipments" ), sword::UnitMagicAction_Type_recover_equipments, magicMenu );
-    AddMagic( tr( "Recover - Resources" ),  sword::UnitMagicAction_Type_recover_resources, magicMenu );
-    AddMagic( tr( "Destroy - All" ),        sword::UnitMagicAction_Type_destroy_all,        magicMenu );
+    AddMagic( tr( "Recover - All" ),        sword::recover_all,      magicMenu );
+    AddMagic( tr( "Recover - Troops" ),     sword::recover_troops,  magicMenu );
+    AddMagic( tr( "Recover - Equipments" ), sword::recover_equipments, magicMenu );
+    AddMagic( tr( "Recover - Resources" ),  sword::recover_resources, magicMenu );
+    AddMagic( tr( "Destroy - All" ),        sword::destroy_all,        magicMenu );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,7 +447,7 @@ namespace
 void UnitMagicOrdersInterface::AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity )
 {
     if( IsSurrendered( entity ) )
-        AddMagic( tr( "Cancel surrender" ), sword::UnitMagicAction_Type_cancel_surrender, parent );
+        AddMagic( tr( "Cancel surrender" ), sword::cancel_surrender, parent );
     else
     {
         const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();

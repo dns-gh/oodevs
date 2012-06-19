@@ -177,21 +177,19 @@ void NET_AgentServer::OnReceiveClient( const std::string& /*from*/, const sword:
         workspace.GetEntityManager().OnReceiveBurningCellRequest( wrapper.message().burning_cell_request(), nCtx );
     else if( wrapper.message().has_magic_action() )
     {
-        if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather ||
-            wrapper.message().magic_action().type() == sword::MagicAction::local_weather ||
-            wrapper.message().magic_action().type() == sword::MagicAction::local_weather_destruction )
+        if( wrapper.message().magic_action().type() == sword::global_weather_type ||
+            wrapper.message().magic_action().type() == sword::local_weather ||
+            wrapper.message().magic_action().type() == sword::local_weather_destruction )
             workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action(), nCtx );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
+        else if( wrapper.message().magic_action().type() == sword::change_diplomacy )
             workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action(), nCtx );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )
+        else if( wrapper.message().magic_action().type() == sword::change_resource_network_properties )
             workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action(), nCtx );
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::create_fire_order_on_location )
+        else if( wrapper.message().magic_action().type() == sword::create_fire_order_on_location )
             workspace.GetEntityManager        ().OnReceiveCreateFireOrderOnLocation  ( wrapper.message().magic_action(), nCtx );
     }
-    // LTO BEGIN
-        else if( wrapper.message().magic_action().type() == sword::MagicAction::create_knowledge_group )
-            workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action(), nCtx );
-    // LTO END
+    else if( wrapper.message().magic_action().type() == sword::create_knowledge_group )
+        workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

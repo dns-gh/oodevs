@@ -101,7 +101,7 @@ void SupplyCapacity::ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC
         if( pion )
         {
             sword::UnitMagicAction msg;
-            msg.set_type( sword::UnitMagicAction_Type_recover_resources );
+            msg.set_type( sword::recover_resources );
             //@TODO MGD replace msg by action in general, temp hack with an empty resolver because this magic action dont't use armies
             pion->OnReceiveUnitMagicAction( msg, tools::Resolver< MIL_Army_ABC >() );
         }

@@ -342,7 +342,7 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
 {
     switch( msg.type() )
     {
-    case sword::UnitMagicAction::change_extension:
+    case sword::change_extension:
         {
             const std::string oldNationality = pExtensions_->GetExtension( "Nationalite" );
             pExtensions_->OnReceiveMsgChangeExtensions( msg );

@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 
     sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( group2.GetId() );
-    msg.set_type( sword::KnowledgeMagicAction::update_party_parent );
+    msg.set_type( sword::update_party_parent );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( army.GetID() );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_knowledgegroup()->set_id( group1.GetId() );
 
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 
     sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( group2.GetId() );
-    msg.set_type( sword::KnowledgeMagicAction::update_party );
+    msg.set_type( sword::update_party );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( army.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
 
     sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( group2.GetId() );
-    msg.set_type( sword::KnowledgeMagicAction::update_party_parent );
+    msg.set_type( sword::update_party_parent );
 
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( army.GetID() );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_knowledgegroup()->set_id( group1.GetId() );
@@ -231,7 +231,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     // prepare message
     sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( groupArmy.GetId() );
-    msg.set_type( sword::KnowledgeMagicAction::update_type );
+    msg.set_type( sword::update_type );
     const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType( "TOTO" );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->set_acharstr( kgType_new.GetName().c_str() );
 

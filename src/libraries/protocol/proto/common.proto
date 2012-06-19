@@ -1470,7 +1470,7 @@ enum ObjectMagicActionType
 
 enum MagicActionType
 {
-    global_weather                     = 0; //!< A global weather magic action
+    global_weather_type                = 0; //!< A global weather magic action
     local_weather                      = 1; //!< A local weather magic action
     local_weather_destruction          = 2; //!< A local weather destruction magic action
     change_diplomacy                   = 3; //!< A change diplomacy magic action

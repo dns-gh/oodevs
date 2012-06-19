@@ -112,6 +112,7 @@ message UnitCreationRequestAck {
 message UnitMagicActionAck {
     required UnitId                  unit       = 1; //!< Identifier of the agent on which the magic action was requested to be executed @todo rename to agent
     required UnitActionAck.ErrorCode error_code = 2; //!< Reason for the failure of the agent magic action execution operation. @see UnitActionAck.ErrorCode
+    required UnitMagicActionType type    = 3; //!< The magic action type acknowledged
 }
 
 /** @struct MagicActionAck
@@ -128,6 +129,7 @@ message MagicActionAck {
         error_invalid_parameter = 1; //!< Operation failed because the provided action parameters were invalid
     }
     required ErrorCode error_code = 1; //!< Reason for the failure of the magic action execution operation @see ErrorCode
+    required MagicActionType type = 2; //!< The magic action type acknowledged
 }
 
 /** @struct ObjectMagicActionAck
@@ -147,6 +149,7 @@ message ObjectMagicActionAck {
         error_invalid_specific_attributes = 6; //!< Operation failed because object specific attributes are invalid : they must meet the requirements associated with the object type
     }
     required ErrorCode error_code = 1; //!< Reason for the failure of the object magic action execution operation @see ErrorCode
+    required ObjectMagicActionType type = 2; //!< The magic action type acknowledged
 }
 
 /** @struct CrowdMagicActionAck
@@ -165,6 +168,7 @@ message CrowdMagicActionAck {
     }
     required CrowdId   crowd      = 1; //!< Identifier of the crowd on which the magic action was requested to be executed
     required ErrorCode error_code = 2; //!< Reason for the failure of the crowd magic action execution operation @see ErrorCode
+    required UnitMagicActionType type = 3; //!< The magic action type acknowledged
 }
 
 /** @struct ChangeDiplomacy
@@ -2273,6 +2277,7 @@ message KnowledgeGroupAck {
 message KnowledgeGroupMagicActionAck {
     required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
     required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
+    required KnowledgeMagicActionType type               = 3; //!< The magic action type acknowledged
 }
 
 /** @struct KnowledgeGroupCreationAck
@@ -2291,6 +2296,7 @@ message KnowledgeGroupCreationAck {
 message KnowledgeGroupUpdateAck {
     required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
     required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
+    required KnowledgeMagicActionType type               = 3; //!< The magic action type acknowledged
 }
 
 /** @struct ControlGlobalWeatherAck

@@ -116,7 +116,11 @@ namespace shield
         friend bool operator==( const Actual& actual, const constraint& c )
         {
             if( ! actual.IsInitialized() )
+            {
+                BOOST_ERROR( "The message has not been fully initialized, probably some fields are missing : "
+                    + actual.InitializationErrorString() );
                 return false;
+            }
             BOOST_REQUIRE_EQUAL( c.fields_, actual.descriptor()->field_count() );
             const std::string s = actual.ShortDebugString();
             for( std::size_t pos = 0; pos != std::min( s.size(), c.expected_.size() ); ++pos )

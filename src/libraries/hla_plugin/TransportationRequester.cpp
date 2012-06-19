@@ -397,7 +397,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
         const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() );
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( transporterId );
-        message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
+        message().set_type( static_cast< sword::UnitMagicActionType >( actionType ) );
         message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
         message.Send( publisher_ );
         if( teleport )

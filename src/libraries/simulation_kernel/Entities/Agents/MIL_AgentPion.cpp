@@ -777,7 +777,7 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
-    if( asn.type() != sword::UnitMagicAction::move_to )
+    if( asn.type() != sword::move_to )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( pAutomate_->IsEngaged() )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_automat_engaged );
@@ -1032,82 +1032,82 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
 {
     switch( msg.type() )
     {
-    case sword::UnitMagicAction::surrender_to:
+    case sword::surrender_to:
         pAutomate_->OnReceiveUnitMagicAction( msg, armies );
         return;
-    case sword::UnitMagicAction::cancel_surrender:
+    case sword::cancel_surrender:
         pAutomate_->OnReceiveUnitMagicAction( msg, armies );
         return;
-    case sword::UnitMagicAction::recover_transporters:
+    case sword::recover_transporters:
         OnReceiveRecoverHumansTransporters();
         break;
-    case sword::UnitMagicAction::destroy_component:
+    case sword::destroy_component:
         OnReceiveDestroyComponent();
         break;
-    case sword::UnitMagicAction::recover_all:
+    case sword::recover_all:
         OnReceiveResupplyAll();
         break;
-    case sword::UnitMagicAction::recover_troops:
+    case sword::recover_troops:
         OnReceiveResupplyHumans();
         break;
-    case sword::UnitMagicAction::recover_equipments:
+    case sword::recover_equipments:
         OnReceiveResupplyEquipement();
         break;
-    case sword::UnitMagicAction::recover_resources:
+    case sword::recover_resources:
         OnReceiveResupplyResources();
         break;
-    case sword::UnitMagicAction::destroy_all:
+    case sword::destroy_all:
         OnReceiveDestroyAll();
         break;
-    case sword::UnitMagicAction::change_human_factors:
+    case sword::change_human_factors:
         OnReceiveChangeHumanFactors( msg.parameters() );
         break;
-    case sword::UnitMagicAction::partial_recovery:
+    case sword::partial_recovery:
         OnReceiveResupply( msg.parameters() );
         break;
-    case sword::UnitMagicAction::create_wound:
+    case sword::create_wound:
         OnReceiveCreateWound( msg.parameters() );
         break;
-    case sword::UnitMagicAction::unit_change_affinities:
+    case sword::unit_change_affinities:
         OnReceiveMsgChangeAffinities( msg );
         break;
-    case sword::UnitMagicAction::change_extension:
+    case sword::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
-    case sword::UnitMagicAction::change_critical_intelligence:
+    case sword::change_critical_intelligence:
         OnReceiveCriticalIntelligence( msg );
         break;
-    case sword::UnitMagicAction::reload_brain:
+    case sword::reload_brain:
         CancelAllActions();
         GetDecision().Reload(); 
         pOrderManager_->CancelMission();
         break;
-    case sword::UnitMagicAction::create_breakdowns:
+    case sword::create_breakdowns:
         OnReceiveCreateBreakdowns( msg.parameters() );
         break;
-    case sword::UnitMagicAction::create_wounds:
+    case sword::create_wounds:
         OnReceiveCreateWounds( msg.parameters() );
         break;
-    case sword::UnitMagicAction::change_equipment_state:
+    case sword::change_equipment_state:
         OnReceiveChangeEquipmentState( msg.parameters() );
         break;
-    case sword::UnitMagicAction::change_human_state:
+    case sword::change_human_state:
         OnReceiveChangeHumanState( msg.parameters() );
         break;
-    case sword::UnitMagicAction::change_dotation:
+    case sword::change_dotation:
         OnReceiveChangeDotation( msg.parameters() );
         break;
-    case sword::UnitMagicAction::create_direct_fire_order:
+    case sword::create_direct_fire_order:
         OnReceiveCreateDirectFireOrder( msg.parameters() );
         break;
-    case sword::UnitMagicAction::change_equipment_human_size:
+    case sword::change_equipment_human_size:
         OnReceiveChangeEquipmentHumanSize( msg.parameters() );
-    case sword::UnitMagicAction::load_unit:
+    case sword::load_unit:
         OnReceiveLoadUnit( msg.parameters() );
         break;
-    case sword::UnitMagicAction::log_finish_handlings:
+    case sword::log_finish_handlings:
         OnReceiveFinishLogisticHandlings(); 
-    case sword::UnitMagicAction::unload_unit:
+    case sword::unload_unit:
         OnReceiveUnloadUnit( msg.parameters() );
         break;
     default:

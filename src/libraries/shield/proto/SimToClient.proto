@@ -1245,7 +1245,7 @@ message KnowledgeGroupAck {
 message MsgKnowledgeGroupMagicActionAck {
     required Common.KnowledgeGroupId     knowledge_group = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
-    required Common.KnowledgeMagicActionType             = 3;
+    required Common.KnowledgeMagicActionType type        = 3;
 }
 
 message MsgKnowledgeGroupCreationAck {

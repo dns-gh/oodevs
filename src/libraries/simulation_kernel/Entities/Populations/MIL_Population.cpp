@@ -1090,28 +1090,28 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 {
     switch( msg.type() )
     {
-    case sword::UnitMagicAction::crowd_total_destruction:
+    case sword::crowd_total_destruction:
         OnReceiveMsgDestroyAll();
         break;
-    case sword::UnitMagicAction::crowd_change_health_state:
+    case sword::crowd_change_health_state:
         OnReceiveMsgChangeHealthState( msg );
         break;
-    case sword::UnitMagicAction::crowd_change_armed_individuals:
+    case sword::crowd_change_armed_individuals:
         OnReceiveMsgChangeArmedIndividuals( msg);
         break;
-    case sword::UnitMagicAction::crowd_change_attitude:
+    case sword::crowd_change_attitude:
         OnReceiveMsgChangeAttitude( msg );
         break;
-    case sword::UnitMagicAction::crowd_change_affinities:
+    case sword::crowd_change_affinities:
         pAffinities_->OnReceiveMsgChangeAffinities( msg );
         break;
-    case sword::UnitMagicAction::change_extension:
+    case sword::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
-    case sword::UnitMagicAction::change_critical_intelligence:
+    case sword::change_critical_intelligence:
         OnReceiveCriticalIntelligence( msg );
         break;
-    case sword::UnitMagicAction::reload_brain:
+    case sword::reload_brain:
         CancelAllActions();
         GetDecision().Reload(); 
         orderManager_.CancelMission();
@@ -1127,7 +1127,7 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
-    if( asn.type() != sword::UnitMagicAction::move_to )
+    if( asn.type() != sword::move_to )
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );

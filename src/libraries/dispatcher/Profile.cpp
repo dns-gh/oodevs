@@ -224,17 +224,17 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return true;
     if( message.has_unit_magic_action() )
     {
-        if( message.unit_magic_action().type()== sword::UnitMagicAction::create_fire_order )
+        if( message.unit_magic_action().type()== sword::create_fire_order )
             return bSupervision_;
         return true;
     }
     if( message.has_magic_action() )
     {
-        if( message.magic_action().type()== sword::MagicAction::global_weather
-            || message.magic_action().type()== sword::MagicAction::local_weather
-            || message.magic_action().type()== sword::MagicAction::create_knowledge_group
-            || message.magic_action().type()== sword::MagicAction::change_resource_network_properties
-            || message.magic_action().type()== sword::MagicAction::create_fire_order_on_location )
+        if( message.magic_action().type()== sword::global_weather_type
+            || message.magic_action().type()== sword::local_weather
+            || message.magic_action().type()== sword::create_knowledge_group
+            || message.magic_action().type()== sword::change_resource_network_properties
+            || message.magic_action().type()== sword::create_fire_order_on_location )
             return bSupervision_;
         return true;
     }

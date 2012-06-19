@@ -124,14 +124,14 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned int context )
 {
-    if( msg.type() == sword::MagicAction::global_weather )
+    if( msg.type() == sword::global_weather_type )
     {
         assert( pGlobalMeteo_ );
         pGlobalMeteo_->Update( msg.parameters() );
         client::ControlGlobalWeatherAck reply;
         reply.Send( NET_Publisher_ABC::Publisher(), context );
     }
-    else if( msg.type() == sword::MagicAction::local_weather )
+    else if( msg.type() == sword::local_weather )
     {
         unsigned int id = 0;
         if( msg.parameters().elem_size() == 11 )
@@ -154,7 +154,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
     }
-    else if( msg.type() == sword::MagicAction::local_weather_destruction )
+    else if( msg.type() == sword::local_weather_destruction )
     {
         if( msg.parameters().elem_size() != 1 || msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
             throw std::exception( "Local meteo destruction: bad ID parameter." );

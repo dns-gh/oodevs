@@ -12,6 +12,15 @@
 
 using namespace shield;
 
+BOOST_FIXTURE_TEST_CASE( crowd_magic_action_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_crowd_magic_action_ack()->mutable_crowd()->set_id( 7 );
+    content.mutable_crowd_magic_action_ack()->set_error_code( sword::CrowdMagicActionAck::error_invalid_unit );
+    content.mutable_crowd_magic_action_ack()->set_type( sword::crowd_change_armed_individuals );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_magic_action_ack { crowd { id: 7 } error_code: error_invalid_unit type: crowd_change_armed_individuals } }" ) );
+    converter.ReceiveSimToClient( msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( unit_order_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_order_ack()->mutable_tasker()->mutable_unit()->set_id( 7 );
@@ -62,7 +71,8 @@ BOOST_FIXTURE_TEST_CASE( unit_creation_request_ack_to_client_is_converted, Conte
 BOOST_FIXTURE_TEST_CASE( magic_action_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_magic_action_ack()->set_error_code( sword::MagicActionAck::error_invalid_parameter );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { magic_action_ack { error_code: error_invalid_attribute } }" ) );
+    content.mutable_magic_action_ack()->set_type( sword::local_weather );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { magic_action_ack { error_code: error_invalid_attribute type: local_weather } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -70,22 +80,16 @@ BOOST_FIXTURE_TEST_CASE( unit_magic_action_ack_to_client_is_converted, ContextFi
 {
     content.mutable_unit_magic_action_ack()->mutable_unit()->set_id( 7 );
     content.mutable_unit_magic_action_ack()->set_error_code( sword::UnitActionAck::error_invalid_unit );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_magic_action_ack { unit { id: 7 } error_code: error_invalid_unit } }" ) );
+    content.mutable_unit_magic_action_ack()->set_type( sword::surrender_to );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_magic_action_ack { unit { id: 7 } error_code: error_invalid_unit type: surrender_to } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( object_magic_action_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_object_magic_action_ack()->set_error_code( sword::ObjectMagicActionAck::error_invalid_object );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { object_magic_action_ack { error_code: error_invalid_object } }" ) );
-    converter.ReceiveSimToClient( msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( crowd_magic_action_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_crowd_magic_action_ack()->mutable_crowd()->set_id( 7 );
-    content.mutable_crowd_magic_action_ack()->set_error_code( sword::CrowdMagicActionAck::error_invalid_unit );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_magic_action_ack { crowd { id: 7 } error_code: error_invalid_unit } }" ) );
+    content.mutable_object_magic_action_ack()->set_type( sword::create );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { object_magic_action_ack { error_code: error_invalid_object type: create } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1591,7 +1595,8 @@ BOOST_FIXTURE_TEST_CASE( knowledge_group_magic_action_ack_to_client_is_converted
 {
     content.mutable_knowledge_group_magic_action_ack()->mutable_knowledge_group()->set_id( 7 );
     content.mutable_knowledge_group_magic_action_ack()->set_error_code( sword::KnowledgeGroupAck::error_invalid_unit );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_magic_action_ack { knowledge_group { id: 7 } error_code: error_invalid_unit } }" ) );
+    content.mutable_knowledge_group_magic_action_ack()->set_type( sword::update_party );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_magic_action_ack { knowledge_group { id: 7 } error_code: error_invalid_unit type: update_party } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -1622,7 +1627,8 @@ BOOST_FIXTURE_TEST_CASE( knowledge_group_update_ack_to_client_is_converted, Cont
 {
     content.mutable_knowledge_group_update_ack()->mutable_knowledge_group()->set_id( 7 );
     content.mutable_knowledge_group_update_ack()->set_error_code( sword::KnowledgeGroupAck::error_invalid_perception );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_magic_action_ack { knowledge_group { id: 7 } error_code: error_invalid_type } }" ) );
+    content.mutable_knowledge_group_update_ack()->set_type( sword::update_party_parent );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_magic_action_ack { knowledge_group { id: 7 } error_code: error_invalid_type type: update_party_parent } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

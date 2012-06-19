@@ -130,6 +130,13 @@ void SimulationToClient::Convert( const sword::MagicActionAck& from, MsgsSimToCl
 {
     CONVERT_ENUM( error_code, ( sword::MagicActionAck::no_error, MsgsSimToClient::MsgMagicActionAck::no_error )
                               ( sword::MagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute ) );
+    CONVERT_NON_INJECTIVE_ENUM( type, type, ( sword::global_weather_type, Common::global_weather_type )
+                              ( sword::local_weather, Common::local_weather )
+                              ( sword::local_weather_destruction, Common::local_weather_destruction )
+                              ( sword::change_diplomacy, Common::change_diplomacy )
+                              ( sword::create_knowledge_group, Common::create_knowledge_group )
+                              ( sword::change_resource_network_properties, Common::change_resource_network_properties )
+                              ( sword::create_fire_order_on_location, Common::create_fire_order_on_location ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,6 +147,46 @@ void SimulationToClient::Convert( const sword::UnitMagicActionAck& from, MsgsSim
 {
     CONVERT_ID( unit );
     CONVERT_UNIT_ACTION_ACK( error_code, error_code );
+    CONVERT_NON_INJECTIVE_ENUM( type, type, ( sword::move_to, Common::move_to )
+                        ( sword::surrender_to, Common::surrender_to )
+                        ( sword::cancel_surrender, Common::cancel_surrender )
+                        ( sword::recover_transporters, Common::recover_transporters )
+                        ( sword::destroy_component, Common::destroy_component )
+                        ( sword::recover_all, Common::recover_all )
+                        ( sword::recover_troops, Common::recover_troops )
+                        ( sword::recover_equipments, Common::recover_equipments )
+                        ( sword::recover_resources, Common::recover_resources )
+                        ( sword::destroy_all, Common::destroy_all )
+                        ( sword::change_human_factors, Common::change_human_factors )
+                        ( sword::partial_recovery, Common::partial_recovery )
+                        ( sword::unit_creation, Common::unit_creation )
+                        ( sword::create_fire_order, Common::create_fire_order )
+                        ( sword::crowd_total_destruction, Common::crowd_total_destruction )
+                        ( sword::crowd_change_health_state, Common::crowd_change_health_state )
+                        ( sword::crowd_change_attitude, Common::crowd_change_attitude )
+                        ( sword::crowd_change_affinities, Common::crowd_change_affinities )
+                        ( sword::crowd_change_armed_individuals, Common::crowd_change_armed_individuals )
+                        ( sword::change_knowledge_group, Common::change_knowledge_group )
+                        ( sword::change_logistic_links, Common::change_logistic_links )
+                        ( sword::unit_change_superior, Common::unit_change_superior )
+                        ( sword::change_automat_superior, Common::change_automat_superior )
+                        ( sword::change_formation_superior, Common::change_formation_superior )
+                        ( sword::knowledge_group_update, Common::knowledge_group_update )
+                        ( sword::log_supply_push_flow, Common::log_supply_push_flow )
+                        ( sword::log_supply_change_quotas, Common::log_supply_change_quotas )
+                        ( sword::automat_creation, Common::automat_creation )
+                        ( sword::formation_creation, Common::formation_creation )
+                        ( sword::crowd_creation, Common::crowd_creation )
+                        ( sword::log_supply_pull_flow, Common::log_supply_pull_flow )
+                        ( sword::inhabitant_change_health_state, Common::inhabitant_change_health_state )
+                        ( sword::inhabitant_change_affinities, Common::inhabitant_change_affinities )
+                        ( sword::unit_change_affinities, Common::unit_change_affinities )
+                        ( sword::change_extension, Common::change_extension )
+                        ( sword::change_critical_intelligence, Common::change_critical_intelligence )
+                        ( sword::transfer_equipment, Common::transfer_equipment )
+                        ( sword::change_equipment_human_size, Common::change_equipment_human_size )
+                        ( sword::create_breakdowns, Common::create_breakdowns )
+                        ( sword::create_wounds, Common::create_wounds ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +200,9 @@ void SimulationToClient::Convert( const sword::ObjectMagicActionAck& from, MsgsS
                               ( sword::ObjectMagicActionAck::error_invalid_party, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_camp )
                               ( sword::ObjectMagicActionAck::error_missing_specific_attributes, MsgsSimToClient::MsgObjectMagicActionAck::error_missing_specific_attributes )
                               ( sword::ObjectMagicActionAck::error_invalid_specific_attributes, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_specific_attributes ) );
+    CONVERT_NON_INJECTIVE_ENUM( type, type, ( sword::create, Common::create )
+                        ( sword::update, Common::update )
+                        ( sword::destroy, Common::destroy ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,6 +215,46 @@ void SimulationToClient::Convert( const sword::CrowdMagicActionAck& from, MsgsSi
     CONVERT_ENUM( error_code, ( sword::CrowdMagicActionAck::no_error, MsgsSimToClient::MsgCrowdMagicActionAck::no_error )
                               ( sword::CrowdMagicActionAck::error_invalid_unit, MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_unit )
                               ( sword::CrowdMagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute ) );
+    CONVERT_NON_INJECTIVE_ENUM( type, type, ( sword::move_to, Common::move_to )
+                        ( sword::surrender_to, Common::surrender_to )
+                        ( sword::cancel_surrender, Common::cancel_surrender )
+                        ( sword::recover_transporters, Common::recover_transporters )
+                        ( sword::destroy_component, Common::destroy_component )
+                        ( sword::recover_all, Common::recover_all )
+                        ( sword::recover_troops, Common::recover_troops )
+                        ( sword::recover_equipments, Common::recover_equipments )
+                        ( sword::recover_resources, Common::recover_resources )
+                        ( sword::destroy_all, Common::destroy_all )
+                        ( sword::change_human_factors, Common::change_human_factors )
+                        ( sword::partial_recovery, Common::partial_recovery )
+                        ( sword::unit_creation, Common::unit_creation )
+                        ( sword::create_fire_order, Common::create_fire_order )
+                        ( sword::crowd_total_destruction, Common::crowd_total_destruction )
+                        ( sword::crowd_change_health_state, Common::crowd_change_health_state )
+                        ( sword::crowd_change_attitude, Common::crowd_change_attitude )
+                        ( sword::crowd_change_affinities, Common::crowd_change_affinities )
+                        ( sword::crowd_change_armed_individuals, Common::crowd_change_armed_individuals )
+                        ( sword::change_knowledge_group, Common::change_knowledge_group )
+                        ( sword::change_logistic_links, Common::change_logistic_links )
+                        ( sword::unit_change_superior, Common::unit_change_superior )
+                        ( sword::change_automat_superior, Common::change_automat_superior )
+                        ( sword::change_formation_superior, Common::change_formation_superior )
+                        ( sword::knowledge_group_update, Common::knowledge_group_update )
+                        ( sword::log_supply_push_flow, Common::log_supply_push_flow )
+                        ( sword::log_supply_change_quotas, Common::log_supply_change_quotas )
+                        ( sword::automat_creation, Common::automat_creation )
+                        ( sword::formation_creation, Common::formation_creation )
+                        ( sword::crowd_creation, Common::crowd_creation )
+                        ( sword::log_supply_pull_flow, Common::log_supply_pull_flow )
+                        ( sword::inhabitant_change_health_state, Common::inhabitant_change_health_state )
+                        ( sword::inhabitant_change_affinities, Common::inhabitant_change_affinities )
+                        ( sword::unit_change_affinities, Common::unit_change_affinities )
+                        ( sword::change_extension, Common::change_extension )
+                        ( sword::change_critical_intelligence, Common::change_critical_intelligence )
+                        ( sword::transfer_equipment, Common::transfer_equipment )
+                        ( sword::change_equipment_human_size, Common::change_equipment_human_size )
+                        ( sword::create_breakdowns, Common::create_breakdowns )
+                        ( sword::create_wounds, Common::create_wounds ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -2142,6 +2232,10 @@ namespace
                                   ( sword::KnowledgeGroupAck::error_invalid_knowledgegroup, MsgsSimToClient::KnowledgeGroupAck::error_invalid_knowledgegroup )
                                   ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type )
                                   ( sword::KnowledgeGroupAck::error_invalid_perception, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type ) );
+        CONVERT_NON_INJECTIVE_ENUM( type, type, ( sword::enable, Common::enable )
+                                  ( sword::update_party, Common::update_party )
+                                  ( sword::update_party_parent, Common::update_party_parent )
+                                  ( sword::update_type, Common::update_type ) );
     }
 }
 
@@ -2196,7 +2290,14 @@ void SimulationToClient::Convert( const sword::KnowledgeGroupUpdate& from, MsgsS
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::KnowledgeGroupCreationAck& from, MsgsSimToClient::MsgKnowledgeGroupCreationAck* to )
 {
-    ConvertKnowledgeGroupAck( from, to );
+    CONVERT_ID( knowledge_group );
+    CONVERT_NON_INJECTIVE_ENUM( error_code, error_code, ( sword::KnowledgeGroupAck::no_error, MsgsSimToClient::KnowledgeGroupAck::no_error )
+                                ( sword::KnowledgeGroupAck::error_invalid_unit, MsgsSimToClient::KnowledgeGroupAck::error_invalid_unit )
+                                ( sword::KnowledgeGroupAck::error_invalid_superior, MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior )
+                                ( sword::KnowledgeGroupAck::error_invalid_party, MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp )
+                                ( sword::KnowledgeGroupAck::error_invalid_knowledgegroup, MsgsSimToClient::KnowledgeGroupAck::error_invalid_knowledgegroup )
+                                ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type )
+                                ( sword::KnowledgeGroupAck::error_invalid_perception, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type ) );
 }
 
 // -----------------------------------------------------------------------------

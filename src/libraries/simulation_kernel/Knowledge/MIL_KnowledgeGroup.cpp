@@ -781,19 +781,19 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMa
 {
     switch( message.type() )
     {
-    case sword::KnowledgeMagicAction::enable:
+    case sword::enable:
         hasBeenUpdated_ = OnReceiveKnowledgeGroupEnable( message.parameters() ) || hasBeenUpdated_;
         break;
-    case sword::KnowledgeMagicAction::update_party:
+    case sword::update_party:
         hasBeenUpdated_ = OnReceiveKnowledgeGroupChangeSuperior( message.parameters(), armies, false ) || hasBeenUpdated_;
         break;
-    case sword::KnowledgeMagicAction::update_party_parent:
+    case sword::update_party_parent:
         hasBeenUpdated_ = OnReceiveKnowledgeGroupChangeSuperior( message.parameters(), armies, true ) || hasBeenUpdated_;
         break;
-    case sword::KnowledgeMagicAction::update_type:
+    case sword::update_type:
         hasBeenUpdated_ = OnReceiveKnowledgeGroupSetType( message.parameters() ) || hasBeenUpdated_;
         break;
-    case sword::KnowledgeMagicAction::add_knowledge:
+    case sword::add_knowledge:
         hasBeenUpdated_ = OnReceiveKnowledgeGroupAddKnowledge( message.parameters() ) || hasBeenUpdated_;
         break;
     default:

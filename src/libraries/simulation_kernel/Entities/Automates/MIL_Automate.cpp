@@ -940,7 +940,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx )
 {
-    if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
+    if( msg.type() != sword::unit_creation )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() < 2 || msg.parameters().elem_size() > 4 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
@@ -1022,7 +1022,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
 {
     switch( msg.type() )
     {
-    case sword::UnitMagicAction::surrender_to:
+    case sword::surrender_to:
         {
             const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parameters().elem( 0 ).value().Get(0).party().id() );
             if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
@@ -1037,12 +1037,12 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             }
         }
         break;
-    case sword::UnitMagicAction::cancel_surrender:
+    case sword::cancel_surrender:
         CancelSurrender();
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             ( **itPion ).OnReceiveMagicCancelSurrender();
         break;
-    case sword::UnitMagicAction::change_extension:
+    case sword::change_extension:
         {
             const std::string oldNationality = pExtensions_->GetExtension( "Nationalite" );
             pExtensions_->OnReceiveMsgChangeExtensions( msg );
@@ -1056,12 +1056,12 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             }
         }
         break;
-    case sword::UnitMagicAction::reload_brain:
+    case sword::reload_brain:
         CancelAllActions();
         GetDecision().Reload(); 
         pOrderManager_->CancelMission();
         break;
-    case sword::UnitMagicAction::unit_change_affinities:
+    case sword::unit_change_affinities:
         for( IT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
             (*it)->OnReceiveMsgChangeAffinities( msg );
         break;
@@ -1081,7 +1081,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg )
 {
-    if( msg.type() != sword::UnitMagicAction::move_to )
+    if( msg.type() != sword::move_to )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
@@ -1110,7 +1110,7 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
-    if( msg.type() != sword::UnitMagicAction::change_knowledge_group )
+    if( msg.type() != sword::change_knowledge_group )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
@@ -1157,7 +1157,7 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations )
 {
-    if( msg.type() == sword::UnitMagicAction::change_formation_superior )
+    if( msg.type() == sword::change_formation_superior )
     {
         MIL_Formation* pNewFormation = formations.Find( msg.parameters().elem( 0 ).value().Get(0).formation().id() );
         if( !pNewFormation )
@@ -1172,7 +1172,7 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
         pParentFormation_ = pNewFormation;
         pNewFormation->RegisterAutomate( *this );
     }
-    else if( msg.type() == sword::UnitMagicAction::change_automat_superior )
+    else if( msg.type() == sword::change_automat_superior )
     {
         MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.parameters().elem( 0 ).value().Get(0).automat().id() );
         if( !pNewAutomate )

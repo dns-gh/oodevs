@@ -381,9 +381,9 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 {
     sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
 
-    if( msg.type() == sword::ObjectMagicAction::create )
+    if( msg.type() == sword::create )
         nErrorCode = CreateObject( msg.parameters(), armies );
-    else if( msg.type() == sword::ObjectMagicAction::destroy )
+    else if( msg.type() == sword::destroy )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
         if( !pObject || pObject->Retrieve< CrowdCapacity >() )
@@ -396,7 +396,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             ( *pObject )().Destroy();
         }
     }
-    else if( msg.type() == sword::ObjectMagicAction::update )
+    else if( msg.type() == sword::update )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
         if( !pObject )
