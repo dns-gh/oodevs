@@ -262,5 +262,14 @@
     <unit type="SAFETY.Police Unit"/>
     <unit type="SAFETY.Medical advanced post"/>
   </automat>
+  <automat decisional-model="TC2" id="171" name="SAFETY.Medical station (log)" type="Automate LOG TC2">
+    <unit min-occurs="1" type="SAFETY.Medical station (log)"/>
+  </automat>
+  <automat decisional-model="TC2" id="172" name="SAFETY.Operation center" type="Automate LOG TC2">
+    <unit command-post="true" min-occurs="1" type="SAFETY.Operation Center"/>
+  </automat>
+  <automat decisional-model="Safety_Automat" id="173" name="SAFETY.Terrorists" type="Automate Emergency">
+    <unit type="SAFETY.Terrorists"/>
+  </automat>
 </automats>
-<!-- signature="0152472851" -->
+<!-- signature="4212327273" -->
