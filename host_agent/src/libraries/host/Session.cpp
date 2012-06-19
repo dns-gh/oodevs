@@ -120,7 +120,7 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
     , links_  ( node.LinkExercise( exercise ) )
     , port_   ( port )
     , process_()
-    , status_ ( Session::STATUS_STOPPED )
+    , status_ ( STATUS_STOPPED )
     , polling_( false )
 {
     // NOTHING
@@ -260,8 +260,7 @@ Tree Session::Save() const
 // -----------------------------------------------------------------------------
 bool Session::Stop()
 {
-    boost::lock_guard< boost::mutex > lock( access_ );
-    return process_ && UpdateStatusUnlocked( STATUS_STOPPED );
+    return UpdateStatus( STATUS_STOPPED );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,11 +279,11 @@ bool Session::Pause( web::Client_ABC& client )
 // -----------------------------------------------------------------------------
 bool Session::UpdateStatusUnlocked( Status status )
 {
-    if( process_ && !process_->IsAlive() )
-        status = Session::STATUS_STOPPED;
+    if( status != STATUS_STOPPED && process_ && !process_->IsAlive() )
+        status = STATUS_STOPPED;
     const bool reply = status_ != status;
     status_ = status;
-    if( status != Session::STATUS_STOPPED )
+    if( status != STATUS_STOPPED )
         return reply;
     if( process_ )
         process_->Kill( 0 );
@@ -372,7 +371,7 @@ bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
         return false;
 
     process_ = ptr;
-    return UpdateStatusUnlocked( Session::STATUS_PLAYING );
+    return UpdateStatusUnlocked( STATUS_PLAYING );
 }
 
 // -----------------------------------------------------------------------------
@@ -439,7 +438,7 @@ void Session::Poll( web::Client_ABC& client )
 
     const Tree data = FromJson( response->GetBody() );
     Session::Status next = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
-    if( next == Session::STATUS_COUNT )
+    if( next == STATUS_COUNT )
         return;
 
     lock.lock();
