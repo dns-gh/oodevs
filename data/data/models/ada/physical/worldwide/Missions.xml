@@ -3344,7 +3344,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_dyke" id="4499" name="SAFETY - Build a dike">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_dike" id="4499" name="SAFETY - Build a dike">
       <description>
         <doctrine><![CDATA[<P><DFN>To construct a dike to protect sites from floods</DFN></P>
 <P>In SWORD, to know how to create and build an object that may prevent areas or sites from floods. As  the flood can't cover an <BR>
@@ -5310,4 +5310,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0720656772" -->
+<!-- signature="1998856860" -->
