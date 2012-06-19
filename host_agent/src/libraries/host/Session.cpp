@@ -269,6 +269,17 @@ bool Session::Stop()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::Pause
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+void Session::Pause( web::Client_ABC& client )
+{
+    web::Client_ABC::T_Response response = client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/pause", web::Client_ABC::T_Parameters() );
+    if( response->GetStatus() == 200 )
+        UpdateStatus( Session::STATUS_PAUSED );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::UpdateStatusUnlocked
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------

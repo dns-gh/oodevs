@@ -70,6 +70,7 @@ public:
     virtual void Unlink();
     virtual void Update();
     virtual void Poll( web::Client_ABC& );
+    virtual void Pause( web::Client_ABC& );
     //@}
 
     //! @name Status enumeration

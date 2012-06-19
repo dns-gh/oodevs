@@ -145,6 +145,7 @@ namespace mocks
         MOCK_METHOD( Unlink, 0 );
         MOCK_METHOD( Update, 0 );
         MOCK_METHOD( Poll, 1 );
+        MOCK_METHOD( Pause, 1 );
     };
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
