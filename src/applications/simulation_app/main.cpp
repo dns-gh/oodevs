@@ -70,9 +70,6 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     int maxConnections = 0;
     try
     {
-        // Silent mode
-        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
-
         // Check license
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         std::auto_ptr< FlexLmLicense > license_runtime( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f, "license.dat;.", FlexLmLicense::eCheckModeSilent ) );
