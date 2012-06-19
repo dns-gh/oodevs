@@ -572,7 +572,7 @@
   <report category="operational" id="400" message="Etat désengagé"/>
   <report category="operational" id="401" message="Unité déjà engagée"/>
   <report category="operational" id="402" message="Unité déjà désengagée"/>
-  <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
+  <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale ou un des pions de l'automate est brouillé"/>
   <report category="operational" id="404" message="Section repliée"/>
   <report category="operational" id="405" message="Début de repliement"/>
   <report category="operational" id="406" message="Progression difficile en raison de %1">
@@ -618,5 +618,7 @@
   <report category="operational" id="423" message="Ordre de conduite %1 reçu">
     <parameter type="String"/>
   </report>
+  <report category="operational" id="424" message="En mode furtif"/>
+  <report category="operational" id="425" message="Fin du mode furtif"/>
 </reports>
-<!-- signature="2100186535" -->
+<!-- signature="1443215137" -->

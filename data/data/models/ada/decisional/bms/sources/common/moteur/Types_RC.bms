@@ -438,7 +438,10 @@ eRC_TerroristDropped = 419
 eRC_Questionning = 420
 eRC_criticalIntelligenceImpossible = 421
 eRC_InvalidTarget = 422
-eNbr = 423
+eRC_FragOrderReceived = 423
+eRC_FurtifModeOn = 424
+eRC_FurtifModeOff = 425
+eNbr = 426
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion
