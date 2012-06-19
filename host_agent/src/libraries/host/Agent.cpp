@@ -352,6 +352,15 @@ Reply Agent::StopSession( const Uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::PauseSession
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+Reply Agent::PauseSession( const Uuid& id ) const
+{
+    return Dispatch( sessions_, &SessionController_ABC::Pause, id, "pause session" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------

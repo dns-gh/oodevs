@@ -93,6 +93,7 @@ struct Agent_ABC : public boost::noncopyable
     virtual Reply DeleteSession( const Uuid& id ) = 0;
     virtual Reply StartSession ( const Uuid& id ) const = 0;
     virtual Reply StopSession  ( const Uuid& id ) const = 0;
+    virtual Reply PauseSession ( const Uuid& id ) const = 0;
     //@}
 
     //! @name Other Methods

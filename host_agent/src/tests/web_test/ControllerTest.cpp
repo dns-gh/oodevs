@@ -72,6 +72,7 @@ namespace
         MOCK_METHOD( DeleteSession, 1 );
         MOCK_METHOD( StartSession, 1 );
         MOCK_METHOD( StopSession, 1 );
+        MOCK_METHOD( PauseSession, 1 );
         // exercises
         MOCK_METHOD( ListExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );

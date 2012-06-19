@@ -88,6 +88,7 @@ public:
     virtual Reply DeleteSession( const Uuid& id );
     virtual Reply StartSession ( const Uuid& id ) const;
     virtual Reply StopSession  ( const Uuid& id ) const;
+    virtual Reply PauseSession ( const Uuid& id ) const;
     //@}
 
     //! @name Other Methods
