@@ -2760,6 +2760,10 @@
       </missions>
       <fragorders/>
     </unit>
+    <unit dia-type="behaviors.roles.FlyingAgent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_FlyingAgent">
+      <missions/>
+      <fragorders/>
+    </unit>
   </units>
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Strategic Bomber Squadron">
@@ -4000,4 +4004,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0812649390" -->
+<!-- signature="0216058796" -->
