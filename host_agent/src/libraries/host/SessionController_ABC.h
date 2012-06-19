@@ -63,6 +63,7 @@ struct SessionController_ABC : public boost::noncopyable
     virtual T_Session   Delete( const Uuid& id ) = 0;
     virtual T_Session   Start( const Uuid& id ) const = 0;
     virtual T_Session   Stop( const Uuid& id ) const = 0;
+    virtual T_Session   Pause( const Uuid& id ) const = 0;
     //@}
 };
 

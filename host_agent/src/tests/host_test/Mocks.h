@@ -113,6 +113,7 @@ namespace mocks
         MOCK_METHOD( Delete, 1 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 1 );
+        MOCK_METHOD( Pause, 1 );
     };
 
     MOCK_BASE_CLASS( MockSession, host::Session_ABC )

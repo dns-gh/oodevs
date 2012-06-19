@@ -78,6 +78,7 @@ public:
     virtual T_Session   Delete( const Uuid& id );
     virtual T_Session   Start( const Uuid& id ) const;
     virtual T_Session   Stop( const Uuid& id ) const;
+    virtual T_Session   Pause( const Uuid& id ) const;
     //@}
 
 private:

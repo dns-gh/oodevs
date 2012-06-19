@@ -276,3 +276,12 @@ SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 {
     return Dispatch( id, boost::bind( &Session_ABC::Stop, _1 ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Pause
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+SessionController::T_Session SessionController::Pause( const Uuid& id ) const
+{
+    return Dispatch( id, boost::bind( &Session_ABC::Pause, _1, boost::ref( client_ ) ) );
+}
