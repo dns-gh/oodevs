@@ -243,7 +243,7 @@ namespace mocks
             boost::shared_ptr< LazyPromise > ptr( new LazyPromise() );
             ptr->set_wait_callback( boost::bind( &LazyCall, _1, task ) );
             promises.push_back( ptr );
-            return ptr->get_future();
+            return Future( ptr->get_future() );
         }
         std::vector< boost::shared_ptr< LazyPromise > > promises;
     };
