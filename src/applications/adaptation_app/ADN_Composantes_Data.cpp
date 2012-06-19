@@ -2136,7 +2136,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase() const
 {
     if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
-        if( ptrArmor_.GetData()->nType_.GetData() != eProtectionType_Human )
+        if( ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
             return ADN_GuiTools::MissingBreakdownWarning( strName_.GetData() );
     return true;
 }
@@ -2244,6 +2244,9 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     output << xml::end;
 
     logInfos_.WriteArchive( output );
+
+    if( strName_.GetData() == "toto" )
+        std::string tptp;
 
     if( ! attritionBreakdowns_.vBreakdowns_.empty() && !randomBreakdowns_.vBreakdowns_.empty() )
     {
