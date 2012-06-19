@@ -33,7 +33,7 @@
     <entry name="ENG.Bridge Vehicle" dis="1 1 225 18 1 0 2"/>
     <entry name="ENG.Engineer CP" dis="3 1 225 1 1 0 5"/>
     <!--entry name="Fire Engine" dis="1 1 225 18 1 0 3"/-->
-    <entry name="SECURITY.FireFighter Truck" dis="1 1 225 18 1 0 4"/>
+    <entry name="SAFETY.FireFighter Truck" dis="1 1 225 18 1 0 4"/>
     <entry name="LOG.Firing mobility repairs team (corps)" dis="3 1 225 1 1 0 6"/>
     <entry name="LOG.Firing mobility repairs team (division)" dis="3 1 225 1 1 0 7"/>
     <entry name="TRANS.Heavy Equipment Transporter System" dis="1 1 225 19 1 0 0"/>
@@ -81,7 +81,7 @@
     <entry name="LOG.MTV12,7" dis="1 1 225 20 1 0 9"/>
     <entry name="ART.Multiple Launch Rocket System" dis="1 1 225 4 1 0 3"/>
     <entry name="LOG.MVT 700 100" dis="1 1 225 20 1 0 10"/>
-    <entry name="SECURITY.Police Car" dis="1 1 225 18 1 0 7"/>
+    <entry name="SAFETY.Police Car" dis="1 1 225 18 1 0 7"/>
     <entry name="INT.Radar Detection Vehicle" dis="1 1 225 18 1 0 8"/>
     <entry name="INT.Real Time Drone" dis="1 2 225 50 1 0 0"/>
     <entry name="OOTW.Refugee" dis="3 1 225 3 1 0 0"/>
