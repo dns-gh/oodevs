@@ -69,6 +69,7 @@ public:
     virtual bool Stop();
     virtual void Unlink();
     virtual void Update();
+    virtual void Poll( web::Client_ABC& );
     //@}
 
     //! @name Status enumeration
@@ -101,6 +102,7 @@ private:
     mutable boost::mutex access_;
     T_Process process_;
     Status status_;
+    bool polling_;
     //@}
 };
 

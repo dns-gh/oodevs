@@ -33,6 +33,11 @@ namespace runtime
     struct Process_ABC;
 }
 
+namespace web
+{
+    struct Client_ABC;
+}
+
 namespace host
 {
     typedef boost::filesystem3::path Path;
@@ -78,6 +83,7 @@ struct Session_ABC : public boost::noncopyable
     virtual bool Stop() = 0;
     virtual void Unlink() = 0;
     virtual void Update() = 0;
+    virtual void Poll( web::Client_ABC& client ) = 0;
     //@}
 };
 

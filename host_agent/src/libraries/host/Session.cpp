@@ -15,7 +15,9 @@
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
+#include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
+#include "web/Client_ABC.h"
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
@@ -59,6 +61,15 @@ Session::Status ConvertStatus( const std::string& status )
     if( status == "replaying" ) return Session::STATUS_REPLAYING;
     if( status == "paused" )    return Session::STATUS_PAUSED;
     return Session::STATUS_STOPPED;
+}
+
+Session::Status ConvertRemoteStatus( const std::string& status )
+{
+    if( status == "running" )   return Session::STATUS_PLAYING;
+    if( status == "paused" )    return Session::STATUS_PAUSED;
+    if( status == "loading" )   return Session::STATUS_PLAYING;
+    //"stopped" is ignored as the session should quit anyway
+    return Session::STATUS_COUNT;
 }
 
 Port AcquirePort( int wanted, PortFactory_ABC& ports )
@@ -110,6 +121,7 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
     , port_   ( port )
     , process_()
     , status_ ( Session::STATUS_STOPPED )
+    , polling_( false )
 {
     // NOTHING
 }
@@ -127,6 +139,7 @@ Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, cons
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
+    , polling_( false )
 {
     // NOTHING
 }
@@ -366,4 +379,42 @@ void Session::Update()
         return;
     process_.reset();
     status_ = Session::STATUS_STOPPED;
+}
+
+namespace
+{
+void ResetBool( boost::unique_lock< boost::mutex >& lock, bool& value, bool next )
+{
+    if( !lock.owns_lock() )
+        lock.lock();
+    value = next;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Poll
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+void Session::Poll( web::Client_ABC& client )
+{
+    boost::unique_lock< boost::mutex > lock( access_ );
+    if( polling_ || !process_ || !process_->IsAlive() )
+        return;
+
+    polling_ = true;
+    runtime::Scoper unpoll( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( polling_ ), false ) );
+    lock.unlock();
+
+    web::Client_ABC::T_Response response = client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", web::Client_ABC::T_Parameters() );
+    if( response->GetStatus() != 200 )
+        return;
+
+    const Tree data = FromJson( response->GetBody() );
+    Session::Status next = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
+    if( next == Session::STATUS_COUNT )
+        return;
+
+    lock.lock();
+    if( process_ && process_->IsAlive() )
+        status_ = next;
 }
