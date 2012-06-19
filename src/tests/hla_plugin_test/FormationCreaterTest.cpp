@@ -60,7 +60,7 @@ BOOST_FIXTURE_TEST_CASE( formation_creater_creates_formation_for_each_party, Fix
     FormationCreater formationCreater( teamResolver, formationCreation );
     mock::verify();
     const sword::UnitMagicAction& action = actual();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::formation_creation );
+    BOOST_CHECK_EQUAL( action.type(), sword::formation_creation );
     BOOST_CHECK_EQUAL( action.tasker().party().id(), party );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).areal(), 6 );

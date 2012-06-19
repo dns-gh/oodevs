@@ -59,7 +59,7 @@ void DirectFireReceiver::Receive( interactions::MunitionDetonation& interaction 
         return;
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( sourceIdentifier );
-    message().set_type( sword::UnitMagicAction::create_direct_fire_order );
+    message().set_type( sword::create_direct_fire_order );
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     parameter.add_value()->mutable_agent()->set_id( targetIdentifier );

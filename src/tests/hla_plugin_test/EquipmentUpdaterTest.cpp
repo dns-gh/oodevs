@@ -79,7 +79,7 @@ namespace
         {
             BOOST_CHECK( message.message().has_unit_magic_action() );
             const sword::UnitMagicAction& action = message.message().unit_magic_action();
-            BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::change_equipment_state );
+            BOOST_CHECK_EQUAL( action.type(), sword::change_equipment_state );
             BOOST_CHECK_EQUAL( action.tasker().unit().id(), unitId );
             BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
             BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value_size(), 1 );

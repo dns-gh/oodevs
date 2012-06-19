@@ -57,7 +57,7 @@ BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_sends_create_fire_order_on_locat
     mock::verify();
     BOOST_CHECK( message.message().has_magic_action() );
     const sword::MagicAction& action = message.message().magic_action();
-    BOOST_CHECK_EQUAL( action.type(), sword::MagicAction::create_fire_order_on_location );
+    BOOST_CHECK_EQUAL( action.type(), sword::create_fire_order_on_location );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
     const sword::Location& location = action.parameters().elem( 0 ).value( 0 ).point().location();
     BOOST_CHECK_EQUAL( location.type(), sword::Location::point );

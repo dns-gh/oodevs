@@ -72,7 +72,7 @@ void AutomatCreater::Notify( const sword::FormationCreation& message, const std:
 {
     simulation::UnitMagicAction automatCreationMessage;
     automatCreationMessage().mutable_tasker()->mutable_formation()->set_id( message.formation().id() );            // parent
-    automatCreationMessage().set_type( sword::UnitMagicAction::automat_creation );
+    automatCreationMessage().set_type( sword::automat_creation );
     automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
     automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_identifier( identifiers_[ message.party().id() ] );      // knowledge group
     automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name

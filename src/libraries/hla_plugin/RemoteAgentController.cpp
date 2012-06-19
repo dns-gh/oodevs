@@ -97,7 +97,7 @@ void RemoteAgentController::Created( const std::string& identifier )
 {
     unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-    message().set_type( sword::UnitMagicAction::unit_creation );
+    message().set_type( sword::unit_creation );
     message().mutable_parameters()->add_elem(); // type
     message().mutable_parameters()->add_elem(); // position
     message().mutable_parameters()->add_elem(); // name

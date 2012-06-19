@@ -45,7 +45,7 @@ void UnitModelReloader::Notify( const sword::UnitCreation& message, const std::s
 {
     simulation::UnitMagicAction reloadMessage;
     reloadMessage().mutable_tasker()->mutable_unit()->set_id( message.unit().id() );
-    reloadMessage().set_type( sword::UnitMagicAction::reload_brain );
+    reloadMessage().set_type( sword::reload_brain );
     sword::MissionParameter& parameter = *reloadMessage().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     parameter.add_value()->set_acharstr( "Strategic Bomber Patrol" );

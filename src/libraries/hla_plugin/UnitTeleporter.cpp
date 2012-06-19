@@ -70,7 +70,7 @@ void UnitTeleporter::Moved( const std::string& identifier, double latitude, doub
         return;
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( identifiers_[ identifier ] );
-    message().set_type( sword::UnitMagicAction::move_to );
+    message().set_type( sword::move_to );
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();

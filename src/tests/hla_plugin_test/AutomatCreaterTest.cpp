@@ -102,7 +102,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_rec
     MOCK_EXPECT( automatCreation, Send ).once().with( mock::retrieve( actual ), mock::any );
     formationCreationHandler->Notify( MakeFormationCreationMessage(), "formation" );
     const sword::UnitMagicAction& action = actual();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );
+    BOOST_CHECK_EQUAL( action.type(), sword::automat_creation );
     BOOST_CHECK_EQUAL( action.tasker().formation().id(), formation );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 42u );

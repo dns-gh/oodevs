@@ -30,7 +30,7 @@ FormationCreater::FormationCreater( const tools::Resolver_ABC< dispatcher::Team_
         {
             simulation::UnitMagicAction message;
             message().mutable_tasker()->mutable_party()->set_id( side );
-            message().set_type( sword::UnitMagicAction::formation_creation );
+            message().set_type( sword::formation_creation );
             message().mutable_parameters()->add_elem()->add_value()->set_areal( 6 );                          // hierarchy level
             message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant formation" ); // name
             message().mutable_parameters()->add_elem()->set_null_value( true );                               // logistic level

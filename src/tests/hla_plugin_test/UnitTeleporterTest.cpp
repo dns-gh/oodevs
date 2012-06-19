@@ -61,7 +61,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     BOOST_CHECK( teleportMessage.message().has_unit_magic_action() );
     const sword::UnitMagicAction& action = teleportMessage.message().unit_magic_action();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::move_to );
+    BOOST_CHECK_EQUAL( action.type(), sword::move_to );
     BOOST_CHECK_EQUAL( action.tasker().unit().id(), unitId );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
     const sword::Location& location = action.parameters().elem( 0 ).value( 0 ).point().location();

@@ -120,7 +120,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
     const sword::UnitMagicAction& action = actual();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::unit_creation );
+    BOOST_CHECK_EQUAL( action.type(), sword::unit_creation );
     BOOST_CHECK_EQUAL( action.tasker().automat().id(), automat );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), agentTypeId );

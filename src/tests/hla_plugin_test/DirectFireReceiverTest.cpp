@@ -54,7 +54,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_receiver_sends_create_direct_fire_order_whe
     mock::verify();
     BOOST_CHECK( message.message().has_unit_magic_action() );
     const sword::UnitMagicAction& action = message.message().unit_magic_action();
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::create_direct_fire_order );
+    BOOST_CHECK_EQUAL( action.type(), sword::create_direct_fire_order );
     BOOST_CHECK_EQUAL( action.tasker().unit().id(), sourceIdentifier );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
     BOOST_CHECK_EQUAL( targetIdentifier, action.parameters().elem( 0 ).value( 0 ).agent().id() );

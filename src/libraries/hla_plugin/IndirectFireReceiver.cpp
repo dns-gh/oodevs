@@ -48,7 +48,7 @@ void IndirectFireReceiver::Receive( interactions::MunitionDetonation& interactio
     if( !target.empty() )
         return;
     simulation::MagicAction message;
-    message().set_type( sword::MagicAction::create_fire_order_on_location );
+    message().set_type( sword::create_fire_order_on_location );
     sword::MissionParameter& locationParameter = *message().mutable_parameters()->add_elem();
     locationParameter.set_null_value( false );
     sword::Location& location = *locationParameter.add_value()->mutable_point()->mutable_location();

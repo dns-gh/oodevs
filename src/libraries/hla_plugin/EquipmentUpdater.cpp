@@ -214,7 +214,7 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     const unsigned int agentIdentifier = identifiers_.left.at( identifier );
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agentIdentifier );
-    message().set_type( sword::UnitMagicAction::change_equipment_state );
+    message().set_type( sword::change_equipment_state );
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     BOOST_FOREACH( const T_Components::value_type& component, agentType->second )

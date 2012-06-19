@@ -368,7 +368,7 @@ namespace
     {
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( identifier );
-        message().set_type( sword::UnitMagicAction::move_to );
+        message().set_type( sword::move_to );
         sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
         parameter.set_null_value( false );
         sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
@@ -415,7 +415,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus&
     if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
-    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::UnitMagicAction::load_unit, false );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::load_unit, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -427,7 +427,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStat
     if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
-    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::UnitMagicAction::unload_unit, true );
+    SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::unload_unit, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -463,7 +463,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
         const unsigned int entityIdentifier = callsignResolver_.ResolveSimulationIdentifier( entity.uniqueId.str() );
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( entityIdentifier );
-        message().set_type( sword::UnitMagicAction::destroy_all );
+        message().set_type( sword::destroy_all );
         message().mutable_parameters();
         message.Send( publisher_ );
     }
