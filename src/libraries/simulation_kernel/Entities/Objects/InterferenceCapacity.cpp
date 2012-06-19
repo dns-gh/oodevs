@@ -93,7 +93,7 @@ void InterferenceCapacity::Instanciate( MIL_Object_ABC& object ) const
 void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     const InteractWithSideCapacity* pSideInteraction = object.Retrieve< InteractWithSideCapacity >();
-    if( !pSideInteraction || pSideInteraction->IsPossible( *object.GetArmy(), agent.GetArmy() ) )
+    if( !pSideInteraction || !object.GetArmy() || pSideInteraction->IsPossible( *object.GetArmy(), agent.GetArmy() ) )
         agent.GetRole< PHY_RoleInterface_Communications >().Jam( object );
 }
 
@@ -104,6 +104,6 @@ void InterferenceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent
 void InterferenceCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     const InteractWithSideCapacity* pSideInteraction = object.Retrieve< InteractWithSideCapacity >();
-    if( !pSideInteraction || pSideInteraction->IsPossible( *object.GetArmy(), agent.GetArmy() ) )
+    if( !pSideInteraction || !object.GetArmy() || pSideInteraction->IsPossible( *object.GetArmy(), agent.GetArmy() ) )
         agent.GetRole< PHY_RoleInterface_Communications >().Unjam( object );
 }

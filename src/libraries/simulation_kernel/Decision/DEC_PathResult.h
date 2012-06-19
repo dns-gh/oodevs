@@ -44,7 +44,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathResult( const DEC_PathType& pathType );
+    explicit DEC_PathResult( const DEC_PathType& pathType );
     virtual ~DEC_PathResult();
     //@}
 
