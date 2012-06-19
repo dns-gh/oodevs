@@ -22,6 +22,7 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
+#include <boost/bind/protect.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -96,7 +97,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 NodeController::~NodeController()
 {
     timer_->Stop();
-    nodes_.Foreach( boost::bind( &NodeController::Stop, this, _1, false, true ) );
+    nodes_.ForeachRef( boost::bind( &NodeController::Stop, this, _1, false, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +129,7 @@ void NodeController::Reload()
 // -----------------------------------------------------------------------------
 void NodeController::Update()
 {
-    nodes_.Foreach( boost::bind( &NodeController::Start, this, _1, false, true ) );
+    nodes_.ForeachRef( boost::bind( &NodeController::Start, this, _1, false, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +138,7 @@ void NodeController::Update()
 // -----------------------------------------------------------------------------
 NodeController::T_Nodes NodeController::List( int offset, int limit ) const
 {
-    return nodes_.List< Node_ABC >( boost::function< bool( const Node_ABC& ) >(), offset, limit );
+    return nodes_.List< Node_ABC >( offset, limit );
 }
 
 // -----------------------------------------------------------------------------

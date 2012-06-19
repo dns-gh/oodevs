@@ -82,7 +82,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 SessionController::~SessionController()
 {
     timer_->Stop();
-    sessions_.Foreach( boost::bind( &SessionController::Stop, this, _1, false ) );
+    sessions_.ForeachRef( boost::bind( &SessionController::Stop, this, _1, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ SessionController::~SessionController()
 // -----------------------------------------------------------------------------
 void SessionController::Update()
 {
-    sessions_.Foreach( boost::bind( &Session_ABC::Update, _1 ) );
+    sessions_.ForeachRef( boost::bind( &Session_ABC::Update, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void SessionController::Reload( T_Predicate predicate )
 // -----------------------------------------------------------------------------
 SessionController::T_Sessions SessionController::List( T_Predicate predicate, int offset, int limit ) const
 {
-    return sessions_.List< Session_ABC >( predicate, offset, limit );
+    return sessions_.List< Session_ABC >( offset, limit, predicate );
 }
 
 // -----------------------------------------------------------------------------
