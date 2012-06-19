@@ -201,7 +201,7 @@ Reply Agent::DeleteNode( const Uuid& id )
         ptr = nodes_.Delete( id );
         if( !ptr )
             return Reply( "unable to find node " + boost::lexical_cast< std::string >( id ), false );
-        invalid = sessions_.List( boost::bind( &IsNode, _1, id ) );
+        invalid = sessions_.List( boost::bind( &IsNode, _1, id ), 0, INT_MAX );
     }
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )

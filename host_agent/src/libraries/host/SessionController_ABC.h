@@ -11,7 +11,6 @@
 #define SESSION_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <climits>
 #include <string>
 #include <vector>
 
@@ -56,7 +55,7 @@ struct SessionController_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual void        Reload( T_Predicate predicate ) = 0;
-    virtual T_Sessions  List( T_Predicate predicate, int offset = 0, int limit = INT_MAX ) const = 0;
+    virtual T_Sessions  List( T_Predicate predicate, int offset, int limit ) const = 0;
     virtual size_t      Count( T_Predicate predicate ) const = 0;
     virtual bool        Has( const Uuid& id ) const = 0;
     virtual T_Session   Get( const Uuid& id ) const = 0;
