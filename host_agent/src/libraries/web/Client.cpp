@@ -36,6 +36,14 @@ Client::~Client()
 
 namespace
 {
+template< typename T, typename U >
+typename T::value_type CacheValue( T& dst, const U& operand )
+{
+    if( dst == boost::none )
+        dst = operand();
+    return *dst;
+}
+
 struct Response : public Response_ABC
 {
     Response( const boost::network::http::client::response& response )
@@ -51,21 +59,18 @@ struct Response : public Response_ABC
 
     virtual int GetStatus() const
     {
-        return response_.status();
+        return CacheValue( status_, boost::bind( &boost::network::http::client::response::status, &response_ ) );
     }
 
     virtual std::string GetBody() const
     {
-        return response_.body();
-    }
-
-    virtual boost::optional< std::string > GetHeader( const std::string& /*name*/ ) const
-    {
-        throw std::runtime_error( "not implemented" );
+        return CacheValue( body_, boost::bind( &boost::network::http::client::response::body, &response_ ) );
     }
 
 private:
     const boost::network::http::client::response response_;
+    mutable boost::optional< std::string > body_;
+    mutable boost::optional< int > status_;
 };
 }
 

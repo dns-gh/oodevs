@@ -40,7 +40,6 @@ struct Response_ABC : public boost::noncopyable
     //@{
     virtual int GetStatus() const = 0;
     virtual std::string GetBody() const = 0;
-    virtual boost::optional< std::string > GetHeader( const std::string& key ) const = 0;
     //@}
 };
 

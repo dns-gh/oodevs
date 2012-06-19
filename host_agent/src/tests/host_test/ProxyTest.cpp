@@ -30,7 +30,6 @@ namespace
     {
         MOCK_METHOD( GetStatus, 0 );
         MOCK_METHOD( GetBody, 0 );
-        MOCK_METHOD( GetHeader, 1 );
     };
 
     bool Contains( const web::Client_ABC::T_Parameters& actual, const web::Client_ABC::T_Parameters& expected )
