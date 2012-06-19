@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "AsyncStream.h"
+#include "runtime/Scoper.h"
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -34,6 +35,7 @@
 #endif
 
 using namespace web;
+using runtime::Scoper;
 
 namespace
 {
@@ -66,21 +68,6 @@ struct Device : public boost::iostreams::source
 
 private:
     T* ref_;
-};
-
-struct Scoper
-{
-    typedef boost::function< void( void ) > Task;
-    Scoper( const Task& task ) : task_( task )
-    {
-        // NOTHING
-    }
-    ~Scoper()
-    {
-        task_();
-    }
-private:
-    Task task_;
 };
 }
 

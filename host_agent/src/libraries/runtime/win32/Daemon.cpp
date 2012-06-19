@@ -14,6 +14,7 @@
 #include "runtime/Event.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
+#include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
 
 #include <boost/bind.hpp>
@@ -23,9 +24,6 @@
 #include <windows.h>
 
 using namespace runtime;
-using runtime::Utf8Convert;
-
-
 
 #ifdef _MSC_VER
 #   pragma warning( disable : 4127 )
@@ -44,22 +42,6 @@ using runtime::Utf8Convert;
 namespace
 {
 const size_t maxRetries = 10;
-
-struct Scoper
-{
-    typedef boost::function< void() > Task;
-    Scoper( const Task& task )
-        : task_( task )
-    {
-        // NOTHING
-    }
-    ~Scoper()
-    {
-        task_();
-    }
-private:
-    Task task_;
-};
 
 // avoid stdcall incompatibility with boost::bind
 void CloseScHandle( SC_HANDLE handle )

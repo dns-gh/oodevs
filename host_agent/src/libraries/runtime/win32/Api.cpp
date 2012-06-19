@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 #include "Api.h"
+#include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
 #include <cpplog/cpplog.hpp>
 
@@ -187,22 +188,6 @@ std::wstring Api::GetModuleFilename() const
 namespace
 {
 #define COUNT_OF(X) (sizeof(X)/sizeof*(X))
-
-struct Scoper
-{
-    typedef boost::function< void() > Task;
-    Scoper( const Task& task )
-        : task_( task )
-    {
-        // NOTHING
-    }
-    ~Scoper()
-    {
-        task_();
-    }
-private:
-    Task task_;
-};
 
 void TryCloseHandle( HANDLE handle )
 {
