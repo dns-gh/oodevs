@@ -779,7 +779,7 @@
         <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
     
-    <target name="generate-database" depends="deploy-application-data,generate-decisional-file,generate-common-database" description="compile behavior model database">
+    <target name="generate-database" depends="deploy-application-data,generate-decisional-files,generate-common-database" description="compile behavior model database">
         <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
@@ -809,8 +809,16 @@
         </exec>
     </target>
 
-    <target name="generate-decisional-file">
+    <target name="generate-decisional-files">
         <echoxml file="${data.dir}/data/models/ada/decisional/decisional.xml">
+            <decisional model-version="${version.project.major}">
+                <RepertoiresSources>
+                    <RepertoireSources namespace="none" directory="bms/sources"/>
+                    <RepertoireSources namespace="net.masagroup" directory="dia5"/>
+                </RepertoiresSources>
+            </decisional>
+        </echoxml>
+        <echoxml file="${data.dir}/data/models/training/decisional/decisional.xml">
             <decisional model-version="${version.project.major}">
                 <RepertoiresSources>
                     <RepertoireSources namespace="none" directory="bms/sources"/>
