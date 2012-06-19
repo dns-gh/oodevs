@@ -1537,18 +1537,18 @@
                 <include name="data/terrains/Paris_Est/**"/>
                 <include name="data/terrains/Angers_x9_en/**"/>
                 <include name="data/terrains/Sw_terrain2/**"/>
-                <include name="data/terrains/lehavre_4.2.0/**"/>
                 <include name="data/terrains/afghan_kabuldist/**"/>
                 <include name="data/terrains/Nord egypt/**"/>
                 <include name="data/terrains/Paris_Est/**"/>
+                <include name="data/terrains/Portoshima/**"/>
             </zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
                 <include name="Logistic_example/**"/>
-                <include name="Paris/**"/>
                 <include name="9_cases/**"/>
                 <include name="Musoria Border Defense/**"/>
                 <include name="Tuto_sw/**"/>
+                <include name="Portoshima/**"/>
                 <include name="LOSSC Scenario 1/**"/>
                 <include name="LOSSC Scenario 2/**"/>
                 <include name="LOSSC Scenario 3/**"/>
@@ -1635,6 +1635,8 @@
             <zipfileset dir="${data.dir}">
                 <include name="data/models/ada/decisional/bms/**"/>
                 <include name="data/models/ada/decisional/dia5/**"/>
+                <exclude name="data/models/ada/decisional/dia5/models/src/france/**"/>
+                <exclude name="data/models/ada/decisional/dia5/models/security_test/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
         </pack>
