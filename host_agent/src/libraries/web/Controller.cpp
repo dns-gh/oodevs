@@ -255,6 +255,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/delete_session" )     return DeleteSession( request );
         if( uri == "/start_session" )      return StartSession( request );
         if( uri == "/stop_session" )       return StopSession( request );
+        if( uri == "/pause_session" )      return PauseSession( request );
         // exercises
         if( uri == "/list_exercises")      return ListExercises( request );
         if( uri == "/count_exercises" )    return CountExercises( request );
@@ -512,6 +513,15 @@ std::string Controller::StartSession( const Request_ABC& request )
 std::string Controller::StopSession( const Request_ABC& request )
 {
     return UuidDispatch( request, "id", agent_, &Agent_ABC::StopSession );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::PauseSession
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+std::string Controller::PauseSession( const Request_ABC& request )
+{
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::PauseSession );
 }
 
 // -----------------------------------------------------------------------------
