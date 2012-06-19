@@ -455,6 +455,17 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::DrawingCategory</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; : category already defined in drawings file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::EditorFactory</name>
     <message>
         <source>True</source>

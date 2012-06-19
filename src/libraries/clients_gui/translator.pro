@@ -22,6 +22,7 @@ DiffusionListDialog.cpp \
 DiffusionListEditor.cpp \
 DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
+DrawingCategory.cpp \
 DrawerLayer.cpp \
 DrawerPanel.cpp \
 EditorFactory.cpp \

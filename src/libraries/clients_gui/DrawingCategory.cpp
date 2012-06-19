@@ -12,6 +12,7 @@
 #include "DrawingTemplate.h"
 #include "clients_kernel/Controller.h"
 #include <xeumeuleu/xml.hpp>
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 
@@ -62,7 +63,13 @@ QString DrawingCategory::GetDescription() const
 void DrawingCategory::ReadTemplate( xml::xistream& xis, svg::TextRenderer& renderer )
 {
     DrawingTemplate* style = new DrawingTemplate( xis, name_, renderer );
-    Register( style->GetName(), style->GetCode().ascii(), *style );
+
+    if( !Find( style->GetName() ) && !Find( style->GetCode().toStdString() ) )
+        Register( style->GetName(), style->GetCode().ascii(), *style );
+    else
+        QMessageBox::critical( 0,   tools::translate( "gui::DrawingCategory", "Error" ),
+                                    tools::translate( "gui::DrawingCategory", "'%1' : category already defined in drawings file." ).arg( style->GetName() ),
+                                    QMessageBox::Ok, QMessageBox::NoButton );
 }
 
 // -----------------------------------------------------------------------------
