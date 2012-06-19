@@ -16,7 +16,7 @@
 
 const double DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
 const double DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
-      double DEC_Knowledge_RapFor_ABC::rRapForIncreasePerTimeStepDefaultValue_ = 0.;
+      double DEC_Knowledge_RapFor_ABC::rRapForTimeStepDefaultValue_ = std::numeric_limits< double >::infinity();
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC::Initialize
@@ -28,8 +28,7 @@ void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
     xis >> xml::start( "force-ratio" );
     double rTmp;
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
-    rTmp = MIL_Tools::ConvertSecondsToSim( rTmp );
-    rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp );
+    rRapForTimeStepDefaultValue_ = MIL_Tools::ConvertSecondsToSim( rTmp );
     xis >> xml::end;
 }
 
@@ -88,20 +87,13 @@ double DEC_Knowledge_RapFor_ABC::GetValue()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue
-// Created: NLD 2004-11-25
-// -----------------------------------------------------------------------------
-double DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue()
-{
-    return rRapForIncreasePerTimeStepDefaultValue_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( double rBaseTimeValue )
 {
+    if( rBaseTimeValue == std::numeric_limits< double >::infinity() )
+        rBaseTimeValue = rRapForTimeStepDefaultValue_;
     if( rBaseTimeValue <= 0. )
         return rRapForBoundMax_ - rRapForBoundMin_;
     return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;

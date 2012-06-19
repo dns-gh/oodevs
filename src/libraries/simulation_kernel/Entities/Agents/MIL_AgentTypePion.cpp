@@ -71,8 +71,6 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
-#include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
@@ -197,7 +195,7 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
     : MIL_AgentType_ABC               ( strName, strType, xis )
     , pUnitType_                      ( new PHY_UnitType( xis ) )
     , rDistanceAvantLimas_            ( 0. )
-    , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )
+    , rFeedbackTime_                  ( std::numeric_limits< double >::infinity() )
     , pHumanRepartition_              ( new MIL_HumanRepartition( xis ) )
 {
     InitializeRapFor              ( xis );
@@ -301,8 +299,7 @@ void MIL_AgentTypePion::ReadFeedback( xml::xistream& xis )
 {
     double rTimeTmp;
     tools::ReadTimeAttribute( xis, "feedback-time", rTimeTmp );
-    rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
-    rRapForIncreasePerTimeStepValue_ = DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( rTimeTmp );
+    rFeedbackTime_ = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
 }
 
 // -----------------------------------------------------------------------------

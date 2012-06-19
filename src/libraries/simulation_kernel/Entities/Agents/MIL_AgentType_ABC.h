@@ -54,7 +54,7 @@ public:
     virtual bool IsRefugee() const;
     virtual bool IsTerrorist() const;
     virtual const PHY_UnitType& GetUnitType() const = 0;
-    virtual double GetRapForIncreasePerTimeStepValue() const = 0;
+    virtual double GetFeedbackTime() const = 0;
     virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
     virtual const DEC_Model_ABC& GetModel() const = 0;
     virtual double GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;

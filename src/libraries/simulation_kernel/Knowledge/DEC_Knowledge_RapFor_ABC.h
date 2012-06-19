@@ -44,13 +44,12 @@ public:
     //! @name Tools
     //@{
     static void Initialize( xml::xistream& xis );
-    static double ComputeRapForIncreasePerTimeStepValue( double rBaseTimeValue );
-    static double GetRapForIncreasePerTimeStepDefaultValue();
     //@}
 
 protected:
     //! @name Tools
     //@{
+    static double ComputeRapForIncreasePerTimeStepValue( double rBaseTimeValue );
     void ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, const double rRapForIncreasePerTimeStepValue );
     bool NeedUpdate() const;
     virtual void Update() = 0;
@@ -68,7 +67,7 @@ private:
     //@{
     static const double rRapForBoundMin_;
     static const double rRapForBoundMax_;
-    static double rRapForIncreasePerTimeStepDefaultValue_;
+    static double rRapForTimeStepDefaultValue_;
     //@}
 };
 

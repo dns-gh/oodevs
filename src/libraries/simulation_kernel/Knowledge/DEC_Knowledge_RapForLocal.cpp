@@ -105,7 +105,8 @@ void DEC_Knowledge_RapForLocal::Update()
         }
     }
 
-    ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy, pPion_->GetType().GetRapForIncreasePerTimeStepValue() );
+    ApplyValue( rTotalFightScoreFriend, rTotalFightScoreEnemy,
+        ComputeRapForIncreasePerTimeStepValue( pPion_->GetType().GetFeedbackTime() ) );
 }
 
 // -----------------------------------------------------------------------------

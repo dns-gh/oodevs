@@ -71,7 +71,7 @@ public:
     const DEC_Model_ABC&                      GetModel                         () const;
           double                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
           double                            GetDistanceAvantLima             () const;
-          double                            GetRapForIncreasePerTimeStepValue() const;
+          double                            GetFeedbackTime() const;
           const MIL_HumanRepartition&       GetHumanRepartition              () const;
     //@}
 
@@ -129,7 +129,7 @@ private:
     const PHY_UnitType*     pUnitType_;
     T_DistanceAvantPointMap distancesAvantPoints_;
     double                  rDistanceAvantLimas_;
-    double                  rRapForIncreasePerTimeStepValue_;
+    double                  rFeedbackTime_;
     MIL_HumanRepartition*   pHumanRepartition_;
 
 private:

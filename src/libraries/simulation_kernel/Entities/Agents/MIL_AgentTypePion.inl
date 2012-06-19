@@ -73,13 +73,13 @@ double MIL_AgentTypePion::GetDistanceAvantLima() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::GetRapForIncreasePerTimeStepValue
+// Name: MIL_AgentTypePion::GetFeedbackTime
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
 inline
-double MIL_AgentTypePion::GetRapForIncreasePerTimeStepValue() const
+double MIL_AgentTypePion::GetFeedbackTime() const
 {
-    return rRapForIncreasePerTimeStepValue_;
+    return rFeedbackTime_;
 }
 
 // -----------------------------------------------------------------------------
