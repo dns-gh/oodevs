@@ -116,6 +116,11 @@ integration.setROE = function( etatROE )
    integration.CR_ROE ( etatROE )
 end
 
+integration.updateCompanyROE = function( self )
+  DEC_Agent_ChangeEtatROE(self.source:GetorderConduiteChangerReglesEngagement_())
+  integration.CR_ROE ( DEC_Agent_GetEtatROE() )
+end
+
 integration.setCompanyROE = function( etatROE )
    DEC_Automate_ChangeEtatROE( etatROE )
    integration.CR_ROE ( etatROE )
@@ -241,6 +246,9 @@ integration.startFragOrderTask = function( self )
     DEC_Agent_ChangeEtatROEPopulation(self.source:GetorderConduiteChangerReglesEngagementPopulation_())
     integration.CR_ROE_Foules ( DEC_Agent_RoePopulation() )
     integration.cleanFragOrder( self )
+    return
+  elseif orderType == "Rep_OrderConduite_ChangerReglesEngagement" then
+    integration.updateROE( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_Engager" then
     orderType = "france.military.platoon.combat.support.art.tasks.Engager"
