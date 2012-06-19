@@ -299,7 +299,7 @@ namespace
             if( !knowledge->CanCollideWith( agent_ ) )
                 return;
             const InteractWithSideCapacity* pSideInteraction = knowledge->GetType().GetCapacity< InteractWithSideCapacity >();
-            if( pSideInteraction )
+            if( pSideInteraction && knowledge->GetArmy() )
             {
                 if( pSideInteraction->IsPossible( *knowledge->GetArmy(), *army_ ) )
                     pContainer_->push_back( knowledge );

@@ -1009,7 +1009,7 @@ double DEC_Knowledge_Object::GetMaxTrafficability() const
     {
         const InteractWithSideCapacity* pSideInteraction = pObjectType_->GetCapacity< InteractWithSideCapacity >();
         bool interact = pObjectType_ && pSideInteraction;
-        if( !interact || pSideInteraction->IsPossible( *pArmyKnowing_, *pOwnerArmy_ ) )
+        if( !interact || !pArmyKnowing_ || !pOwnerArmy_ || pSideInteraction->IsPossible( *pArmyKnowing_, *pOwnerArmy_ ) )
             return pTrafficability->GetMaxValue();
     }
     return 0.;
