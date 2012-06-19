@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp 1" type="friend">
       <objects>
@@ -14,14 +14,7 @@
           </shape>
           <attributes>
             <construction completion="1"/>
-            <resources>
-              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Electricity" stock="4000">
-                <link capacity="-1" kind="terrain-object" target="20"/>
-                <link capacity="-1" kind="urban-object" target="199"/>
-              </node>
-              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Natural Gas" stock="0"/>
-              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Running Water" stock="0"/>
-            </resources>
+            <resources/>
           </attributes>
         </object>
         <object id="20" name="Ressource node [20]" type="ressource node">
@@ -34,17 +27,7 @@
           </shape>
           <attributes>
             <construction completion="1"/>
-            <resources>
-              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="10" resource-type="Electricity" stock="50000">
-                <link capacity="-1" kind="urban-object" target="83"/>
-              </node>
-              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="5000" resource-type="Natural Gas" stock="0">
-                <link capacity="-1" kind="urban-object" target="107"/>
-              </node>
-              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="0">
-                <link capacity="-1" kind="urban-object" target="107"/>
-              </node>
-            </resources>
+            <resources/>
           </attributes>
         </object>
         <object id="106" name="Arson/Fire [106]" type="fire">
@@ -94,30 +77,31 @@
         </object>
       </objects>
       <tactical>
-        <formation id="3" level="iii" name="Formation [3]">
-          <automat engaged="false" id="7" knowledge-group="8" name="ML_Security - Civil Protection [7]" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="9" name="ML_Security - Civil Protection - Safety" position="29TNF3543155261" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="10" name="ML_Security - Civil Protection - Safety" position="29TNF3532755408" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="11" name="ML_Security - Civil Protection - Safety" position="29TNF3521955431" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="12" name="ML_Security - Civil Protection - Safety" position="29TNF3544655404" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="64" name="ML_Security - Crowd transporter" position="29TNF3532755697" type="ML_Security - Crowd transporter"/>
-            <unit command-post="false" id="65" name="ML_Security - Crowd transporter" position="29TNF3525555777" type="ML_Security - Crowd transporter"/>
-            <unit command-post="false" id="87" name="ML_Security - Crowd transporter" position="29TNF3077755210" type="ML_Security - Crowd transporter"/>
-            <unit command-post="false" id="88" name="ML_Security - Crowd transporter" position="29TNF3064055293" type="ML_Security - Crowd transporter"/>
-            <unit command-post="false" id="89" name="ML_Security - Crowd transporter" position="29TNF3089755119" type="ML_Security - Crowd transporter"/>
-            <unit command-post="false" id="90" name="ML_Security - Civil Protection - Safety" position="29TNF3124654958" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="91" name="ML_Security - Civil Protection - Safety" position="29TNF3106655023" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="195" name="ML_Security - helicopters" position="29TNF3771255800" type="ML_Security - helicopters"/>
-            <unit command-post="false" id="196" name="ML_Security - helicopters" position="29TNF3830455707" type="ML_Security - helicopters"/>
-            <unit command-post="false" id="197" name="ML_Security - helicopters" position="29TNF3824355677" type="ML_Security - helicopters"/>
-          </automat>
-          <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="LOG.Logistic combat train">
+        <formation id="3" level="iii" name="Formation [3]" symbol="symbols/sfgpuepe">
+          <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
             <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="LOG.Logistic CT"/>
           </automat>
-          <automat engaged="false" id="32" knowledge-group="8" name="Victims without TC2" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="33" name="ML_Security - Civil Protection - Safety" position="29TNF3563954814" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="34" name="ML_Security - Civil Protection - Safety" position="29TNF3571754775" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="35" name="ML_Security - Civil Protection - Safety" position="29TNF3568554823" type="ML_Security - Civil Protection - Safety"/>
+          <automat engaged="true" id="346" knowledge-group="8" name="SAFETY.Civil Protection" symbol="symbols/sfgpuepe" type="SAFETY.Civil Protection">
+            <unit command-post="true" id="347" name="SAFETY.Militia" position="29TNF3750155037" type="SAFETY.Militia"/>
+            <unit command-post="false" id="348" name="SAFETY.Buses" position="29TNF3800454540" type="SAFETY.Buses"/>
+            <unit command-post="false" id="349" name="SAFETY.Firefigthers" position="29TNF3750554040" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="350" name="SAFETY.Public Works Vehicles" position="29TNF3700354536" type="SAFETY.Public Works Vehicles"/>
+            <unit command-post="false" id="351" name="SAFETY.Rescue Boats" position="29TNF3800155039" type="SAFETY.Rescue Boats"/>
+            <unit command-post="false" id="352" name="SAFETY.Decontamination Team" position="29TNF3821154541" type="SAFETY.Decontamination Team"/>
+            <unit command-post="false" id="353" name="SAFETY.Ambulance" position="29TNF3800654042" type="SAFETY.Ambulance"/>
+            <unit command-post="false" id="354" name="SAFETY.Police Unit" position="29TNF3750653833" type="SAFETY.Police Unit"/>
+            <unit command-post="false" id="355" name="SAFETY.Medical advanced post" position="29TNF3700554037" type="SAFETY.Medical advanced post"/>
+          </automat>
+          <automat engaged="true" id="356" knowledge-group="8" name="SAFETY.Civil Protection" symbol="symbols/sfgpuepe" type="SAFETY.Civil Protection">
+            <unit command-post="true" id="357" name="SAFETY.Militia" position="29TNF3528051769" type="SAFETY.Militia"/>
+            <unit command-post="false" id="358" name="SAFETY.Buses" position="29TNF3578251273" type="SAFETY.Buses"/>
+            <unit command-post="false" id="359" name="SAFETY.Firefigthers" position="29TNF3528450772" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="360" name="SAFETY.Public Works Vehicles" position="29TNF3478151268" type="SAFETY.Public Works Vehicles"/>
+            <unit command-post="false" id="361" name="SAFETY.Rescue Boats" position="29TNF3578051771" type="SAFETY.Rescue Boats"/>
+            <unit command-post="false" id="362" name="SAFETY.Decontamination Team" position="29TNF3599051274" type="SAFETY.Decontamination Team"/>
+            <unit command-post="false" id="363" name="SAFETY.Ambulance" position="29TNF3578550774" type="SAFETY.Ambulance"/>
+            <unit command-post="false" id="364" name="SAFETY.Police Unit" position="29TNF3528550565" type="SAFETY.Police Unit"/>
+            <unit command-post="false" id="365" name="SAFETY.Medical advanced post" position="29TNF3478450770" type="SAFETY.Medical advanced post"/>
           </automat>
         </formation>
       </tactical>
@@ -309,11 +293,7 @@
           </adhesions>
         </inhabitant>
       </inhabitants>
-      <logistics>
-        <logistic-base id="28">
-          <subordinate id="7"/>
-        </logistic-base>
-      </logistics>
+      <logistics/>
     </party>
     <party id="2" name="Camp 2" type="neutral">
       <objects>
@@ -436,16 +416,8 @@
         </object>
       </objects>
       <tactical>
-        <formation id="4" level="iii" name="Formation [4]">
-          <automat engaged="false" id="13" knowledge-group="14" name="ML_Security - Civil Protection [13]" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="15" name="ML_Security - Civil Protection - Safety" position="29TNF3606855478" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="16" name="ML_Security - Civil Protection - Safety" position="29TNF3613455316" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="17" name="ML_Security - Civil Protection - Safety" position="29TNF3610255241" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="18" name="ML_Security - Civil Protection - Safety" position="29TNF3604755324" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="85" name="ML_Security - Crowd transporter" position="29TNF3113455441" type="ML_Security - Crowd transporter"/>
-            <unit command-post="false" id="86" name="ML_Security - Crowd transporter" position="29TNF3112355340" type="ML_Security - Crowd transporter"/>
-          </automat>
-          <automat engaged="false" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="LOG.Logistic combat train">
+        <formation id="4" level="iii" name="Formation [4]" symbol="symbols/sngpuss">
+          <automat engaged="false" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" symbol="symbols/sngpuss" type="LOG.Logistic combat train">
             <unit command-post="true" id="31" name="Logistic CT" position="29TNF3641355745" type="LOG.Logistic CT">
               <stocks>
                 <resource name="12,7-mm Bullet" quantity="3410"/>
@@ -459,20 +431,33 @@
               </stocks>
             </unit>
           </automat>
-          <automat engaged="false" id="39" knowledge-group="14" name="ML_Security - Civil Protection [39]" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="40" name="ML_Security - Civil Protection - Safety" position="29TNF3660754960" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="41" name="ML_Security - Civil Protection - Safety" position="29TNF3640154976" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="42" name="ML_Security - Civil Protection - Safety" position="29TNF3648154918" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="43" name="ML_Security - Civil Protection - Safety" position="29TNF3635455026" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="63" name="ML_Security - Crowd transporter" position="29TNF3500855300" type="ML_Security - Crowd transporter"/>
+          <automat engaged="true" id="326" knowledge-group="14" name="SAFETY.Civil Protection" symbol="symbols/sngpuefos" type="SAFETY.Civil Protection">
+            <unit command-post="true" id="327" name="SAFETY.Militia" position="29TNF3097359636" type="SAFETY.Militia"/>
+            <unit command-post="false" id="328" name="SAFETY.Buses" position="29TNF3147659139" type="SAFETY.Buses"/>
+            <unit command-post="false" id="329" name="SAFETY.Firefigthers" position="29TNF3097858638" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="330" name="SAFETY.Public Works Vehicles" position="29TNF3047559135" type="SAFETY.Public Works Vehicles"/>
+            <unit command-post="false" id="331" name="SAFETY.Rescue Boats" position="29TNF3147459638" type="SAFETY.Rescue Boats"/>
+            <unit command-post="false" id="332" name="SAFETY.Decontamination Team" position="29TNF3168359140" type="SAFETY.Decontamination Team"/>
+            <unit command-post="false" id="333" name="SAFETY.Ambulance" position="29TNF3147858641" type="SAFETY.Ambulance"/>
+            <unit command-post="false" id="334" name="SAFETY.Police Unit" position="29TNF3097958432" type="SAFETY.Police Unit"/>
+            <unit command-post="false" id="335" name="SAFETY.Medical advanced post" position="29TNF3047758636" type="SAFETY.Medical advanced post"/>
+            <unit command-post="false" id="366" name="SAFETY.Firefigthers" position="29TNF3322852147" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="367" name="SAFETY.Firefigthers" position="29TNF3363452173" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="368" name="SAFETY.Firefigthers" position="29TNF3408152288" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="369" name="SAFETY.Firefigthers" position="29TNF3399252245" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="370" name="SAFETY.Firefigthers" position="29TNF3359352000" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="371" name="SAFETY.Firefigthers" position="29TNF3319852093" type="SAFETY.Firefigthers"/>
           </automat>
-          <automat engaged="false" id="92" knowledge-group="14" name="ML_Security - Civil Protection [92]" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="93" name="ML_Security - Civil Protection - Safety" position="29TNF3378353522" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="99" name="ML_Security FireFigthers" position="29TNF3374152710" type="ML_Security FireFigthers"/>
-            <unit command-post="false" id="100" name="ML_Security FireFigthers" position="29TNF3380952719" type="ML_Security FireFigthers"/>
-            <unit command-post="false" id="101" name="ML_Security FireFigthers" position="29TNF3376453005" type="ML_Security FireFigthers"/>
-            <unit command-post="false" id="102" name="ML_Security FireFigthers" position="29TNF3380752949" type="ML_Security FireFigthers"/>
-            <unit command-post="false" id="103" name="ML_Security FireFigthers" position="29TNF3375052849" type="ML_Security FireFigthers"/>
+          <automat engaged="true" id="336" knowledge-group="14" name="SAFETY.Civil Protection" symbol="symbols/sngpuepe" type="SAFETY.Civil Protection">
+            <unit command-post="true" id="337" name="SAFETY.Militia" position="29TNF3714955750" type="SAFETY.Militia"/>
+            <unit command-post="false" id="338" name="SAFETY.Buses" position="29TNF3765255254" type="SAFETY.Buses"/>
+            <unit command-post="false" id="339" name="SAFETY.Firefigthers" position="29TNF3715354753" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="340" name="SAFETY.Public Works Vehicles" position="29TNF3665055249" type="SAFETY.Public Works Vehicles"/>
+            <unit command-post="false" id="341" name="SAFETY.Rescue Boats" position="29TNF3764955752" type="SAFETY.Rescue Boats"/>
+            <unit command-post="false" id="342" name="SAFETY.Decontamination Team" position="29TNF3785955255" type="SAFETY.Decontamination Team"/>
+            <unit command-post="false" id="343" name="SAFETY.Ambulance" position="29TNF3765454755" type="SAFETY.Ambulance"/>
+            <unit command-post="false" id="344" name="SAFETY.Police Unit" position="29TNF3715454546" type="SAFETY.Police Unit"/>
+            <unit command-post="false" id="345" name="SAFETY.Medical advanced post" position="29TNF3665354751" type="SAFETY.Medical advanced post"/>
           </automat>
         </formation>
       </tactical>
@@ -743,11 +728,7 @@
           </adhesions>
         </inhabitant>
       </inhabitants>
-      <logistics>
-        <logistic-base id="30">
-          <subordinate id="13"/>
-        </logistic-base>
-      </logistics>
+      <logistics/>
     </party>
     <party id="113" name="Camp 113" type="friend">
       <objects>
@@ -805,13 +786,17 @@
         </object>
       </objects>
       <tactical>
-        <formation id="114" level="iii" name="Formation [114]">
-          <automat engaged="false" id="115" knowledge-group="116" name="ML_Security - Civil Protection [115]" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="117" name="ML_Security - Civil Protection - Safety" position="29TNF2973952040" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="124" name="ML_Security NBC Decontamination" position="29TNF2976552150" type="ML_Security NBC Decontamination"/>
-            <unit command-post="false" id="125" name="ML_Security NBC Decontamination" position="29TNF2968852228" type="ML_Security NBC Decontamination"/>
-            <unit command-post="false" id="126" name="ML_Security NBC Decontamination" position="29TNF3013651938" type="ML_Security NBC Decontamination"/>
-            <unit command-post="false" id="127" name="ML_Security NBC Decontamination" position="29TNF3007251847" type="ML_Security NBC Decontamination"/>
+        <formation id="114" level="iii" name="Formation [114]" symbol="symbols/sfgpuepe">
+          <automat engaged="true" id="316" knowledge-group="116" name="SAFETY.Civil Protection" symbol="symbols/sfgpuepe" type="SAFETY.Civil Protection">
+            <unit command-post="true" id="317" name="SAFETY.Militia" position="29TNF2906657834" type="SAFETY.Militia"/>
+            <unit command-post="false" id="318" name="SAFETY.Buses" position="29TNF2956957338" type="SAFETY.Buses"/>
+            <unit command-post="false" id="319" name="SAFETY.Firefigthers" position="29TNF2907156837" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="320" name="SAFETY.Public Works Vehicles" position="29TNF2856857334" type="SAFETY.Public Works Vehicles"/>
+            <unit command-post="false" id="321" name="SAFETY.Rescue Boats" position="29TNF2956757837" type="SAFETY.Rescue Boats"/>
+            <unit command-post="false" id="322" name="SAFETY.Decontamination Team" position="29TNF2977657339" type="SAFETY.Decontamination Team"/>
+            <unit command-post="false" id="323" name="SAFETY.Ambulance" position="29TNF2957156840" type="SAFETY.Ambulance"/>
+            <unit command-post="false" id="324" name="SAFETY.Police Unit" position="29TNF2907256631" type="SAFETY.Police Unit"/>
+            <unit command-post="false" id="325" name="SAFETY.Medical advanced post" position="29TNF2857056835" type="SAFETY.Medical advanced post"/>
           </automat>
         </formation>
       </tactical>
@@ -904,20 +889,7 @@
         </object>
       </objects>
       <tactical>
-        <formation id="139" level="iii" name="Formation [139]">
-          <automat engaged="false" id="165" knowledge-group="141" name="ML_Security - Civil Protection [165]" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="166" name="ML_Security - Civil Protection - Safety" position="29TNF2902357333" type="ML_Security - Civil Protection - Safety"/>
-            <unit command-post="false" id="173" name="ML_Security NBC Decontamination" position="29TNF2902856129" type="ML_Security NBC Decontamination"/>
-            <unit command-post="false" id="174" name="ML_Security - Public Works Vehicles" position="29TNF3028457768" type="ML_Security - Public Works Vehicles"/>
-            <unit command-post="false" id="175" name="ML_Security - Agressor" position="29TNF2935756737" type="ML_Security - Agressor"/>
-            <unit command-post="false" id="176" name="ML_Security - Public Works Vehicles" position="29TNF3030757628" type="ML_Security - Public Works Vehicles"/>
-            <unit command-post="false" id="177" name="ML_Security - Public Works Vehicles" position="29TNF3040857711" type="ML_Security - Public Works Vehicles"/>
-            <unit command-post="false" id="178" name="ML_Security - Public Works Vehicles" position="29TNF3006257395" type="ML_Security - Public Works Vehicles"/>
-            <unit command-post="false" id="179" name="ML_Security - Public Works Vehicles" position="29TNF3062457845" type="ML_Security - Public Works Vehicles"/>
-            <unit command-post="false" id="180" name="ML_Security - Agressor" position="29TNF2944656728" type="ML_Security - Agressor"/>
-            <unit command-post="false" id="181" name="ML_Security - Agressor" position="29TNF2942256411" type="ML_Security - Agressor"/>
-          </automat>
-        </formation>
+        <formation id="139" level="iii" name="Formation [139]" symbol=""/>
       </tactical>
       <communication>
         <knowledge-group id="141" name="Groupe de connaissance [141]" type="Standard"/>
@@ -1066,4 +1038,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1114530980" -->
+<!-- signature="0293370982" -->
