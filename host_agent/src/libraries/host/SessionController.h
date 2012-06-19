@@ -88,8 +88,13 @@ private:
     void Save( const Session_ABC& session ) const;
     void Create( Session_ABC& session, bool isReload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Session_ABC& session ) const;
-    void Start( Session_ABC& session, bool mustSave ) const;
-    void Stop( Session_ABC& session, bool skipSave ) const;
+    bool StartSession( Session_ABC& session ) const;
+    //@}
+
+    //! @name Private template helpers
+    //@{
+    template< typename T >
+    T_Session Dispatch( const Uuid& id, const T& operand ) const;
     //@}
 
 private:

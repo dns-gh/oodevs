@@ -85,7 +85,7 @@ SessionController::~SessionController()
 {
     timer_->Stop();
     async_.Join();
-    sessions_.ForeachRef( boost::bind( &SessionController::Stop, this, _1, false ) );
+    sessions_.ForeachRef( boost::bind( &Session_ABC::Stop, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,8 @@ void SessionController::Create( Session_ABC& session, bool isReload )
                      << Utf8Convert( session.GetExercise() ) << " :" << session.GetPort();
     if( isReload )
         return Save( session );
-    Start( session, true );
+    StartSession( session );
+    Save( session );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +215,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
     if( !session )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
-    Stop( *session, true );
+    session->Stop();
     session->Unlink();
     async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
     return session;
@@ -237,16 +238,34 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionController::Dispatch
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+template< typename T >
+SessionController::T_Session SessionController::Dispatch( const Uuid& id, const T& operand ) const
+{
+    SessionController::T_Session ptr = sessions_.Get( id );
+    if( ptr && operand( *ptr ) )
+        Save( *ptr );
+    return ptr;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& id ) const
 {
-    boost::shared_ptr< Session_ABC > session = sessions_.Get( id );
-    if( !session )
-        return T_Session();
-    Start( *session, false );
-    return session;
+    return Dispatch( id, boost::bind( &SessionController::StartSession, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::StartSession
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+bool SessionController::StartSession( Session_ABC& session ) const
+{
+    return session.Start( system_, boost::bind( &SessionController::StartWith, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,31 +274,5 @@ SessionController::T_Session SessionController::Start( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 {
-    boost::shared_ptr< Session_ABC > session = sessions_.Get( id );
-    if( !session )
-        return T_Session();
-    Stop( *session, false );
-    return session;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SessionController::Start
-// Created: BAX 2012-04-20
-// -----------------------------------------------------------------------------
-void SessionController::Start( Session_ABC& session, bool mustSave ) const
-{
-    bool valid = session.Start( system_, boost::bind( &SessionController::StartWith, this, _1 ) );
-    if( valid || mustSave )
-        Save( session );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SessionController::Stop
-// Created: BAX 2012-04-20
-// -----------------------------------------------------------------------------
-void SessionController::Stop( Session_ABC& session, bool skipSave ) const
-{
-    bool valid = session.Stop();
-    if( valid && !skipSave )
-        Save( session );
+    return Dispatch( id, boost::bind( &Session_ABC::Stop, _1 ) );
 }
