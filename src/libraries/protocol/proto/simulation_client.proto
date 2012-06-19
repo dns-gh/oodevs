@@ -1013,7 +1013,7 @@ message StartUnitFire {
     */
     message UnitFireTarget {
         optional UnitId       unit     = 1; //!< The target unit
-        optional CrowdId      crowd    = 2; //!< The target crowd
+        optional CrowdElementId      crowd    = 2; //!< The target crowd
         optional CoordLatLong position = 3; //!< The target position
     }
     /** @enum UnitFireType

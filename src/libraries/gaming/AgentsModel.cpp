@@ -12,6 +12,8 @@
 #include "AgentFactory_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/PopulationConcentration_ABC.h"
+#include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "protocol/Protocol.h"
@@ -219,4 +221,54 @@ Inhabitant_ABC& AgentsModel::GetInhabitant( unsigned long id )
 Inhabitant_ABC* AgentsModel::FindInhabitant( unsigned long id )
 {
     return tools::Resolver< Inhabitant_ABC>::Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPartResolver::Find
+// Created: LDC 2012-06-19
+// -----------------------------------------------------------------------------
+kernel::PopulationPart_ABC* PopulationPartResolver::Find( const unsigned long& id ) const
+{
+    return FindPopulationPart( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::FindPopulationPart
+// Created: LDC 2012-06-19
+// -----------------------------------------------------------------------------
+kernel::PopulationPart_ABC* AgentsModel::FindPopulationPart( const unsigned long& id ) const
+{
+    tools::Iterator< const kernel::Population_ABC& > populations = this->tools::Resolver< kernel::Population_ABC >::CreateIterator();
+    while( populations.HasMoreElements() )
+    {
+        const kernel::Population_ABC& next = populations.NextElement();
+        const kernel::PopulationFlow_ABC* flow = next.FindFlow( id );
+        if( flow )
+            return const_cast< kernel::PopulationFlow_ABC* >( flow );
+        const kernel::PopulationConcentration_ABC* concentration = next.FindConcentration( id );
+        if( concentration )
+            return const_cast< kernel::PopulationConcentration_ABC* >( concentration );
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPartResolver::Get
+// Created: LDC 2012-06-19
+// -----------------------------------------------------------------------------
+kernel::PopulationPart_ABC& PopulationPartResolver::Get( const unsigned long& id ) const
+{
+    kernel::PopulationPart_ABC* element = Find( id );
+    if( !element )
+        throw std::runtime_error( "Element does not exist" );
+    return *element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Iterator< const kernel::PopulationPart_ABC& > PopulationPartResolver::CreateIterator
+// Created: LDC 2012-06-19
+// -----------------------------------------------------------------------------
+tools::Iterator< const kernel::PopulationPart_ABC& > PopulationPartResolver::CreateIterator() const
+{
+    throw std::runtime_error( "PopulationPart_ABC CreateIterator Not implemented" );
 }

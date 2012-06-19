@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "DirectFire.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/PopulationPart_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -22,18 +23,18 @@ using namespace kernel;
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver, unsigned long entityId )
+DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< PopulationPart_ABC >& populationResolver, unsigned long entityId )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
     , id_( message.fire().id() )
     , isTarget_( false )
 {
-    const kernel::Entity_ABC* target;
+    const kernel::Entity_ABC* target = 0;
 
     if( message.target().has_unit() )
-        target = & agentResolver.Get( message.target().unit().id() );
+        target = agentResolver.Find( message.target().unit().id() );
     else if( message.target().has_crowd() )
-        target = & populationResolver.Get( message.target().crowd().id() );
-    else
+        target = populationResolver.Find( message.target().crowd().id() );
+    if( !target )
         throw std::runtime_error( "DirectFire on position..." );
 
     isTarget_ = target->GetId() == entityId;

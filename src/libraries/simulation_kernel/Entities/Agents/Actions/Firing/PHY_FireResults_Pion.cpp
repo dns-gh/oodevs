@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -43,7 +44,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 // Name: PHY_FireResults_Pion constructor
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Population& target )
+PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_PopulationElement_ABC& target )
     : firer_ ( firer )
     , nID_   ( idManager_.GetFreeId() )
     , direct_( true )

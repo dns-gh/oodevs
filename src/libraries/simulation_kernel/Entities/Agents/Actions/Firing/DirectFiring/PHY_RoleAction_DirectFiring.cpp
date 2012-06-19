@@ -301,7 +301,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID
     pion_.NotifyAttacking ( *pTarget );
     pTarget->NotifyAttackedBy( pion_  );
     if( !pFireResult )
-        pFireResult = new PHY_FireResults_Pion( pion_, *pTarget );
+        pFireResult = new PHY_FireResults_Pion( pion_, *pPopulationElement );
     // Tir
     const PHY_ComposantePion* pFirer = 0;
     PHY_Weapon* pFirerWeapon = 0;

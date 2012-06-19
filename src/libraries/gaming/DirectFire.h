@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Entity_ABC;
-    class Population_ABC;
+    class PopulationPart_ABC;
     class Agent_ABC;
     class Positions;
 }
@@ -39,7 +39,7 @@ public:
     //@{
              DirectFire( const sword::StartUnitFire& message,
                          const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
-                         const tools::Resolver_ABC< kernel::Population_ABC >& populationResolver,
+                         const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populationResolver,
                          unsigned long entityId );
     virtual ~DirectFire();
     //@}
