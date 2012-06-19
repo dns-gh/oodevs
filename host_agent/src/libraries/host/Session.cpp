@@ -264,10 +264,34 @@ bool Session::Stop()
     if( !process_ )
         return true;
 
-    process_->Kill( 0 );
-    process_.reset();
-    status_ = Session::STATUS_STOPPED;
+    UpdateStatusUnlocked( Session::STATUS_STOPPED );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::UpdateStatusUnlocked
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+void Session::UpdateStatusUnlocked( Status status )
+{
+    if( process_ && !process_->IsAlive() )
+        status = Session::STATUS_STOPPED;
+    status_ = status;
+    if( status != Session::STATUS_STOPPED )
+        return;
+    if( process_ )
+        process_->Kill( 0 );
+    process_.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::UpdateStatus
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+void Session::UpdateStatus( Status status )
+{
+    boost::lock_guard< boost::mutex > lock( access_ );
+    UpdateStatusUnlocked( status );
 }
 
 namespace
@@ -340,7 +364,7 @@ bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
         return false;
 
     process_ = ptr;
-    status_  = Session::STATUS_PLAYING;
+    UpdateStatusUnlocked( Session::STATUS_PLAYING );
     return true;
 }
 
@@ -375,10 +399,7 @@ void Session::Unlink()
 void Session::Update()
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    if( !process_ || process_->IsAlive() )
-        return;
-    process_.reset();
-    status_ = Session::STATUS_STOPPED;
+    UpdateStatusUnlocked( status_ );
 }
 
 namespace
@@ -415,6 +436,5 @@ void Session::Poll( web::Client_ABC& client )
         return;
 
     lock.lock();
-    if( process_ && process_->IsAlive() )
-        status_ = next;
+    UpdateStatusUnlocked( next );
 }

@@ -87,7 +87,9 @@ public:
 private:
     //! @name Private methods
     //@{
-    virtual Tree GetProperties( bool save ) const;
+    Tree GetProperties( bool save ) const;
+    void UpdateStatusUnlocked( Status next );
+    void UpdateStatus( Status next );
     //@}
 
 private:
