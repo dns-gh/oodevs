@@ -116,11 +116,6 @@ integration.setROE = function( etatROE )
    integration.CR_ROE ( etatROE )
 end
 
-integration.updateCompanyROE = function( self )
-  DEC_Agent_ChangeEtatROE(self.source:GetorderConduiteChangerReglesEngagement_())
-  integration.CR_ROE ( DEC_Agent_GetEtatROE() )
-end
-
 integration.setCompanyROE = function( etatROE )
    DEC_Automate_ChangeEtatROE( etatROE )
    integration.CR_ROE ( etatROE )
