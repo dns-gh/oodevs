@@ -3,15 +3,10 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.links.reconnoitre, skill.links.moveToward, skill.links.dismount, skill.nodes.Deploy },
+    connections = { skill.links.moveToward, skill.links.dismount, skill.nodes.Deploy },
 
-    done = function( self, additionnalParams )
-        self.reconnoitered = true
-        if self.params.meetingPoint ~= NIL then
-          if self.isDeployed then
-              Feedback( self.feedbacks.done)
-          end
-        end
+    done = function( self )-- from moveAndTakePosition
+        self.movementDone = true
     end,
     
     deployed = function( self )
@@ -42,17 +37,22 @@ rootnode
                                                  positions = { self.params.meetingPoint } } )
           return
         else        
-          if objective:isReconnoitred() then
-            if objective:isReached() then
-              Activate( skill.links.dismount, 1 )
+          if objective:isReached() then
+            Activate( skill.links.dismount, 1 )
+            if self.reconnoitered then
               Activate( skill.nodes.Deploy, 1, { area = objective }  )
-            else -- Objective not reached, don't build object
-              meKnowledge:RC( eRC_ImpossibleAtteindreObjectif )
-              Feedback( self.feedbacks.failed )
-            end
+            elseif waitInMin( self, 60 ) then -- Waiting for 1h
+                self.reconnoitered = true
+                if self.params.meetingPoint ~= NIL then
+                  if self.isDeployed then
+                      Feedback( self.feedbacks.done)
+                  end
+                end
+             end          
+          else
+             Activate( skill.links.moveToward, 1 , { entities = { objective:getMyPosition() }, 
+                                                   positions = { objective:getMyPosition() } } )
           end
-          Activate( skill.links.reconnoitre, 1, { entities  = { objective },
-                                                  positions = { objective:getMyPosition() } } )
         end
         self.isDeployed = false
     end,

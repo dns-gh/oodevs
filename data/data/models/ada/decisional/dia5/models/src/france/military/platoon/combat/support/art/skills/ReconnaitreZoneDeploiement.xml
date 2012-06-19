@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.skills.ReconnaitreZoneDeploiement" source-version="1.0.0">
-    <description>Reconnaitre la zone de déploiement en construisant une zone d'implantation canon  </description>
-    <parameters>
-        <parameter name="objectives">
-            <type>
-                <list>
-                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-                </list>
-            </type>
-        </parameter>
-        <parameter name="meetingPoint" nullable="true">
-            <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
-            </type>
-            <default>
-                <nil/>
-            </default>
-        </parameter>
-    </parameters>
-    <links>
-        <link name="reconnoitre" skill="sword.military.platoon.coercition.skills.primitives.Reconnoitre"/>
-        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
-        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
-    </links>
+	<description>Reconnaitre la zone de déploiement en construisant une zone d'implantation canon  </description>
+	<parameters>
+		<parameter name="objectives">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="meetingPoint" nullable="true">
+			<type>
+				<class name="sword.military.knowledge.decisional.Reachable"/>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
+	</parameters>
+	<links>
+		<link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+		<link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+	</links>
 </skill>
