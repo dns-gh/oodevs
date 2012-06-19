@@ -84,7 +84,7 @@ struct Session_ABC : public boost::noncopyable
     virtual void Unlink() = 0;
     virtual void Update() = 0;
     virtual void Poll( web::Client_ABC& client ) = 0;
-    virtual void Pause( web::Client_ABC& Client ) = 0;
+    virtual bool Pause( web::Client_ABC& Client ) = 0;
     //@}
 };
 

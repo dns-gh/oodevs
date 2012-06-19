@@ -261,48 +261,45 @@ Tree Session::Save() const
 bool Session::Stop()
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    if( !process_ )
-        return true;
-
-    UpdateStatusUnlocked( Session::STATUS_STOPPED );
-    return true;
+    return process_ && UpdateStatusUnlocked( STATUS_STOPPED );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::Pause
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-void Session::Pause( web::Client_ABC& client )
+bool Session::Pause( web::Client_ABC& client )
 {
     web::Client_ABC::T_Response response = client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/pause", web::Client_ABC::T_Parameters() );
-    if( response->GetStatus() == 200 )
-        UpdateStatus( Session::STATUS_PAUSED );
+    return response->GetStatus() == 200 && UpdateStatus( STATUS_PAUSED );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::UpdateStatusUnlocked
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-void Session::UpdateStatusUnlocked( Status status )
+bool Session::UpdateStatusUnlocked( Status status )
 {
     if( process_ && !process_->IsAlive() )
         status = Session::STATUS_STOPPED;
+    const bool reply = status_ != status;
     status_ = status;
     if( status != Session::STATUS_STOPPED )
-        return;
+        return reply;
     if( process_ )
         process_->Kill( 0 );
     process_.reset();
+    return reply;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::UpdateStatus
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-void Session::UpdateStatus( Status status )
+bool Session::UpdateStatus( Status status )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    UpdateStatusUnlocked( status );
+    return UpdateStatusUnlocked( status );
 }
 
 namespace
@@ -375,8 +372,7 @@ bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
         return false;
 
     process_ = ptr;
-    UpdateStatusUnlocked( Session::STATUS_PLAYING );
-    return true;
+    return UpdateStatusUnlocked( Session::STATUS_PLAYING );
 }
 
 // -----------------------------------------------------------------------------

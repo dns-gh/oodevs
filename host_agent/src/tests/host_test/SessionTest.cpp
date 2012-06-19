@@ -168,7 +168,7 @@ BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )
     StartSession( *session, processPid, processName );
     const Tree save = session->Save();
     session = ReloadSession( save, boost::make_shared< MockProcess >( processPid, processName + "_" ) );
-    BOOST_CHECK( session->Stop() );
+    BOOST_CHECK( !session->Stop() );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )

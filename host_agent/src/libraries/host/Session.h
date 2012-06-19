@@ -70,7 +70,7 @@ public:
     virtual void Unlink();
     virtual void Update();
     virtual void Poll( web::Client_ABC& );
-    virtual void Pause( web::Client_ABC& );
+    virtual bool Pause( web::Client_ABC& );
     //@}
 
     //! @name Status enumeration
@@ -89,8 +89,8 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    void UpdateStatusUnlocked( Status next );
-    void UpdateStatus( Status next );
+    bool UpdateStatusUnlocked( Status next );
+    bool UpdateStatus( Status next );
     //@}
 
 private:
