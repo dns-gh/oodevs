@@ -336,7 +336,7 @@
     };
 
     SessionItemView.prototype.render = function() {
-      var filter, _i, _len, _ref;
+      var filter, it, _i, _j, _len, _len1, _ref, _ref1;
       $(this.el).empty();
       _ref = this.filters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -349,7 +349,12 @@
         return;
       }
       $(this.el).html(session_template(this.model.attributes));
-      return set_spinner($(this.el).find(".session_top_right .spin_btn"));
+      set_spinner($(this.el).find(".session_top_right .spin_btn"));
+      _ref1 = $(this.el).find(".link");
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        it = _ref1[_j];
+        $(it).attr("href", "sword://" + window.location.hostname + ":" + this.model.get("port") + "/");
+      }
     };
 
     SessionItemView.prototype["delete"] = function() {

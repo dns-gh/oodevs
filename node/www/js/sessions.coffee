@@ -98,7 +98,10 @@ class SessionItemView extends Backbone.View
         if @search and !@is_search()
             return
         $(@el).html session_template @model.attributes
-        set_spinner $(@el).find(".session_top_right .spin_btn")
+        set_spinner $(@el).find ".session_top_right .spin_btn"
+        for it in $(@el).find ".link"
+            $(it).attr "href", "sword://" + window.location.hostname + ":" + @model.get("port") + "/"
+        return
 
     delete: =>
         @toggle_load()
