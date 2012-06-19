@@ -90,6 +90,13 @@ message CrowdId {
     required uint32 id = 1; //!< The identifier
 }
 
+/** @struct CrowdElementId
+    @brief Defines a crowd element (flow or concentration) identifier
+*/
+message CrowdElementId {
+    required uint32 id = 1; //!< The identifier
+}
+
 /** @struct CrowdIdList
     @brief Defines a list of crowd identifiers
 */

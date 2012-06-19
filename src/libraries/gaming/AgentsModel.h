@@ -29,10 +29,20 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class Population_ABC;
+    class PopulationPart_ABC;
     class Inhabitant_ABC;
 }
 
 class AgentFactory_ABC;
+
+class PopulationPartResolver : public tools::Resolver_ABC< kernel::PopulationPart_ABC >
+{
+public:
+    virtual kernel::PopulationPart_ABC* Find( const unsigned long& id ) const;
+    virtual kernel::PopulationPart_ABC& Get ( const unsigned long& id ) const;
+    virtual tools::Iterator< const kernel::PopulationPart_ABC& > CreateIterator() const;
+    virtual kernel::PopulationPart_ABC* FindPopulationPart( const unsigned long& id ) const = 0;
+};
 
 // =============================================================================
 /** @class  AgentsModel
@@ -44,6 +54,7 @@ class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::Resolver< kernel::Automat_ABC >
                   , public tools::Resolver< kernel::Population_ABC >
                   , public tools::Resolver< kernel::Inhabitant_ABC >
+                  , public PopulationPartResolver
 {
 public:
     //! @name Constructors/Destructor
@@ -70,6 +81,8 @@ public:
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
     void DestroyCrowd( const sword::CrowdDestruction& message );
+    
+    virtual kernel::PopulationPart_ABC* FindPopulationPart( const unsigned long& id ) const;
 
     void CreateInhabitant( const sword::PopulationCreation& message );
     kernel::Inhabitant_ABC& GetInhabitant( unsigned long id );

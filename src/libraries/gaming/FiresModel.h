@@ -22,7 +22,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Entity_ABC;
-    class Population_ABC;
+    class PopulationPart_ABC;
 }
 
 // =============================================================================
@@ -36,7 +36,7 @@ class FiresModel : public tools::Resolver< kernel::Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::Population_ABC >& populations );
+             FiresModel( const tools::Resolver_ABC< kernel::Agent_ABC >& agents, const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations );
     virtual ~FiresModel();
     //@}
 
@@ -70,7 +70,7 @@ private:
     //@{
     tools::Resolver< kernel::Entity_ABC > targets_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
-    const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
+    const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations_;
     //@}
 };
 

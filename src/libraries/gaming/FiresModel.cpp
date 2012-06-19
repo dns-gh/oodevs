@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "FiresModel.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/PopulationPart_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: FiresModel constructor
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< Population_ABC >& populations )
+FiresModel::FiresModel( const tools::Resolver_ABC< Agent_ABC >& agents, const tools::Resolver_ABC< PopulationPart_ABC >& populations )
     : agents_( agents )
     , populations_( populations )
 {
