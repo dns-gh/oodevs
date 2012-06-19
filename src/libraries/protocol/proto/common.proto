@@ -1406,7 +1406,7 @@ message HumanRepartition {
     required float     children  = 3; //!< Children proportion between 0 and 1
 }
 
-/** @enum Type
+/** @enum UnitMagicActionType
     @brief The type of magic action.
 
     Specific parameters are expected for each type.

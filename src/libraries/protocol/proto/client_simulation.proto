@@ -129,13 +129,6 @@ message ObjectMagicAction {
     @see MagicActionAck
 */
 message MagicAction {
-    /** @enum Type
-        @brief The type of magic action.
-
-        Specific parameters are expected for each type.
-
-        @todo Explain what parameters are expected for each type
-    */
     required MagicActionType   type       = 1; //!< The type of magic action
     required MissionParameters parameters = 2; //!< The parameters of the magic action
 }
