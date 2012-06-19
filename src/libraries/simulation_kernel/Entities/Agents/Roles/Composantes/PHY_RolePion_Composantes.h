@@ -174,6 +174,8 @@ public:
     //! @name Fire / Dangerosity
     //@{
     virtual bool IsNeutralized                    () const;
+    virtual bool IsUnderIndirectFire              ();
+    virtual void ResetUnderIndirectFire           ();
     virtual void GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void Neutralize                       ();
@@ -332,6 +334,7 @@ private:
     bool bTransportHasChanged_;
     bool bIsLoaded_;
     bool bIsSurrender_;
+    bool bNeutralized_;
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;

@@ -431,6 +431,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_ActiverModeDiscret" ] = boost::bind( &DEC_AgentFunctions::EnableDiscreteMode, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_DesactiverModeDiscret" ] = boost::bind( &DEC_AgentFunctions::DisableDiscreteMode, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_EstNeutralise" ] = boost::bind( &DEC_AgentFunctions::IsNeutralized, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_EstCibleTirIndirect" ] = boost::bind( &DEC_AgentFunctions::UpdateUnderIndirectFire, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_AutomateEstEmbraye" ] = boost::bind( &DEC_AgentFunctions::IsAutomateEngaged, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_Position" ] = boost::bind( &DEC_AgentFunctions::GetPosition, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_Direction" ] = boost::bind( &DEC_AgentFunctions::GetDirection, boost::cref( GetPion() ) );

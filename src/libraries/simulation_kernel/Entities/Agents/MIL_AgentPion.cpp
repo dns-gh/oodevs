@@ -391,6 +391,17 @@ bool MIL_AgentPion::IsNeutralized() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::UpdateUnderIndirectFire
+// Created: LMT 2012-06-13
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::UpdateUnderIndirectFire()
+{
+    bool returnValue = GetRole< PHY_RolePion_Composantes >().IsUnderIndirectFire();
+    GetRole< PHY_RolePion_Composantes >().ResetUnderIndirectFire();
+    return returnValue;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::UpdateKnowledges
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------

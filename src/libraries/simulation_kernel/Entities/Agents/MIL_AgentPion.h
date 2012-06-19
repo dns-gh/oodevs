@@ -96,6 +96,7 @@ public:
     virtual const MIL_AgentType_ABC&  GetType() const;
     virtual bool IsDead() const;
     virtual bool IsNeutralized() const;
+    virtual bool UpdateUnderIndirectFire();
     virtual bool IsPC() const;
     virtual void SetPionAsCommandPost( bool pc );
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;

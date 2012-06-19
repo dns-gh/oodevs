@@ -156,3 +156,7 @@ integration.sendfireAvailable = function( bAvailable )
         DEC_Agent_ChangeDisponibiliteAuTirIndirect( eFireAvailability_Indisponible )
     end
 end
+
+integration.isUnderIndirectFire = function()
+    return DEC_Agent_EstCibleTirIndirect()
+end
