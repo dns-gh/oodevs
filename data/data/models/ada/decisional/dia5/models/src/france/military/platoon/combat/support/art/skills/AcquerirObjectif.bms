@@ -1,6 +1,6 @@
 rootnode {
 
-    connections = { skill.links.moveTo, skill.links.dismount, skill.links.orienterCapteur, skill.nodes.AcquireIntelligence },
+    connections = { skill.links.moveTo, skill.links.dismount, skill.links.orienterCapteur, skill.nodes.RC },
     
     done = function(self) -- frome moveTo
         if not self.arrivedDebarquement and self.params.positionDebarquement ~= NIL and not meKnowledge:isDismounted() and meKnowledge:canDismount() then -- on a atteint la position de débarquement
@@ -28,6 +28,10 @@ rootnode {
                     Activate( skill.links.dismount, 1 )
                 else
                     Activate( skill.links.orienterCapteur, 1, { zone = self.params.zone } )
+                    if meKnowledge:isPosted() then
+                        meKnowledge:becomeStealthy( true )
+                        Activate( skill.nodes.RC, 1, { RC = eRC_FurtifModeOn } )
+                    end
                 end
             else
                 if self.arrivedDebarquement then -- si on a atteint la position de débarquement alors on veut rester débarqué
@@ -37,11 +41,16 @@ rootnode {
             end
         end
     end,
+    
+    destroy = function(self)
+        meKnowledge:becomeStealthy( false )
+        Activate( skill.nodes.RC, 1, { RC = eRC_FurtifModeOff } )
+    end,
 }
 
-node "AcquireIntelligence"
+node "RC"
 {
-    select = function( self )
-        self.params.area:getIntelligence()
-    end,
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end
 }

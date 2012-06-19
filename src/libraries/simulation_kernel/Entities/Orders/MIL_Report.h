@@ -622,6 +622,8 @@ public:
         eRC_criticalIntelligenceImpossible,
         eRC_InvalidTarget,
         eRC_FragOrderReceived,
+        eRC_FurtifModeOn,
+        eRC_FurtifModeOff,
         eLast
     };
     //@}

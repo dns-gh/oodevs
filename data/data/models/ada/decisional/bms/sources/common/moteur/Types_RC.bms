@@ -482,7 +482,10 @@ eRC_ImpossibleToOperateObject = 463
 eRC_Questionning = 464
 eRC_criticalIntelligenceImpossible = 465
 eRC_InvalidTarget = 466
-eNbr = 467
+eRC_FragOrderReceived = 467
+eRC_FurtifModeOn = 468
+eRC_FurtifModeOff = 469
+eNbr = 470
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
