@@ -39,7 +39,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="10" name="mine classique"/>
+          <resource count="200" name="mine classique"/>
         </resources>
       </buildable>
     </constructor>
@@ -60,7 +60,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="10" name="mine classique"/>
+          <resource count="200" name="mine classique"/>
         </resources>
       </buildable>
     </constructor>
@@ -602,4 +602,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1656408392" -->
+<!-- signature="4205179697" -->
