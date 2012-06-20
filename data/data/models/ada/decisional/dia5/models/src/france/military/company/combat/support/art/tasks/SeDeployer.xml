@@ -37,7 +37,7 @@
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>france.military.platoon.tasks.FaireMouvement</string>
+                            <string>france.military.platoon.tasks.Suivre</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
