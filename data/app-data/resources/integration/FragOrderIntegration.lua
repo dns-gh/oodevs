@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 -- FragOrder Implementation :
--- Regroup function to manage platoon equipement
+-- Regroup function to manage fragorder
 -- @author DDA
 -- @created 2010-02-05
 -- @modified MGD 2010-04-27
@@ -15,7 +15,7 @@ integration.cleanFragOrder = function( fragOrder )
           myself.fragOrders[ fragOrder ] = nil
       end
       DEC_RemoveFromOrdersCategory( fragOrder.source)
-      DEC_DeleteRepresentation( fragOrder.source ) 
+      DEC_DeleteRepresentation( fragOrder.source )
 end
 
 integration.isROE = function( self )
@@ -250,51 +250,85 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "Rep_OrderConduite_Pion_Desengager" then
     orderType = "france.military.platoon.combat.support.art.tasks.Desengager"
   elseif orderType == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
-    DEC_Maintenance_ChangerRegimeTravail( self.source:GetorderConduiteModifierRegimeTravailMaintenance_() )
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Maintenance_ChangerRegimeTravail( self.source:GetorderConduiteModifierRegimeTravailMaintenance_() )
+    end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
-    DEC_Sante_ChangerPrioritesTactiques( self.source:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Sante_ChangerPrioritesTactiques( self.source:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
+    end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
-    DEC_Maintenance_ChangerPrioritesTactiques( self.source:GetorderConduiteModifierPrioritesTactiquesReparations_() )
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Maintenance_ChangerPrioritesTactiques( self.source:GetorderConduiteModifierPrioritesTactiquesReparations_() )
+    end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesReparations" then
-    DEC_Maintenance_ChangerPriorites( self.source:GetorderConduiteModifierPrioritesReparations_() )
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Maintenance_ChangerPriorites( self.source:GetorderConduiteModifierPrioritesReparations_() )
+    end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" then
-    DEC_Sante_ChangerPriorites( self.source:GetorderConduiteModifierPrioritesBlesses_() )
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Sante_ChangerPriorites( self.source:GetorderConduiteModifierPrioritesBlesses_() )
+    end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
-    orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnVSRAM" 
-    mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
-    mission.nbrAmbulances = self.source:GetnbrAmbulances_()
+    if integration.isLogisticTypeUnit( ) then
+        orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnVSRAM" 
+        mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
+        mission.nbrAmbulances = self.source:GetnbrAmbulances_()
+    else
+        integration.cleanFragOrder( self )
+    end
   elseif orderType == "Rep_OrderConduite_Pion_TransfererVSRAM" then
-    orderType = "france.military.platoon.combat.support.log.tasks.TransfererVSRAM"
-    mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
-    mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
-    mission.nbrAmbulances = self.source:GetnbrAmbulances_()
+    if integration.isLogisticTypeUnit( ) then
+        orderType = "france.military.platoon.combat.support.log.tasks.TransfererVSRAM"
+        mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
+        mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
+        mission.nbrAmbulances = self.source:GetnbrAmbulances_()
+    else
+        integration.cleanFragOrder( self )
+    end
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
-    orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresVSRAM"
-    mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
-    mission.nbrAmbulances = self.source:GetnbrAmbulances_()
+    if integration.isLogisticTypeUnit( ) then
+        orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresVSRAM"
+        mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
+        mission.nbrAmbulances = self.source:GetnbrAmbulances_()
+    else
+        integration.cleanFragOrder( self )
+    end
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
-    orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnRemorqueurs"
-    mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
-    mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
+    if integration.isLogisticTypeUnit( ) then
+        orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnRemorqueurs"
+        mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
+        mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
+    else
+        integration.cleanFragOrder( self )
+    end
   elseif orderType == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
-    orderType = "france.military.platoon.combat.support.log.tasks.TransfererRemorqueurs"
-    mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
-    mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
-    mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
+    if integration.isLogisticTypeUnit( ) then   
+        orderType = "france.military.platoon.combat.support.log.tasks.TransfererRemorqueurs"
+        mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
+        mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
+        mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
+    else
+        integration.cleanFragOrder( self )
+    end
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
-    orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresRemorqueurs"
-    mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
-    mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
+    if integration.isLogisticTypeUnit( ) then     
+        orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresRemorqueurs"
+        mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
+        mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
+    else
+        integration.cleanFragOrder( self )
+    end
   elseif orderType == "france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" then
     local obstacles = {}
     local obstaclesList = self.source:GetObjectKnowledge_()
@@ -327,7 +361,7 @@ integration.getFireParameters = function( self )
 end
 
 -- CR ROE 
-integration.CR_ROE  = function ( typeROE )
+integration.CR_ROE  = function( typeROE )
     if typeROE == eRoeStateRestrictedFire then
         DEC_RC( eRC_TirRestreint )
     elseif typeROE ==  eRoeStateFireByOrder then
@@ -338,7 +372,7 @@ integration.CR_ROE  = function ( typeROE )
 end
 
 -- CR ROE Foule
-integration.CR_ROE_Foules  = function ( typeROE )
+integration.CR_ROE_Foules  = function( typeROE )
     if typeROE == eEtatROEPopulation_EmploiForceInterdit then
         DEC_RC( eRC_EmploiForceInterdit )
     elseif typeROE ==  eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
@@ -361,6 +395,6 @@ integration.CR_Attitude_Foules  = function ( attitude )
     end
 end
 
-integration.setOrderConduiteChangerAmbiance = function ( fragOrder, value )
+integration.setOrderConduiteChangerAmbiance = function( fragOrder, value )
     fragOrder:SetorderConduiteChangerAmbiance_( value )
 end

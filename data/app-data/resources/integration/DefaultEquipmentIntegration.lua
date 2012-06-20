@@ -419,35 +419,19 @@ integration.desactivateInjuredSorting = function( self )
 end
 
 integration.activateFunctions = function( self )
-	local typePion = DEC_Pion_GetMilPionType( self.source )
-	if typePion == "Pion LOG TC2"
-	or typePion == "Pion LOG BLD Sante"
-	or typePion == "Pion LOG BLD Maintenance"
-	or typePion == "Pion LOG BLD Ravitaillement"
-	or typePion == "Pion LOG BLT Sante"
-	or typePion == "Pion LOG BLT Maintenance"
-	or typePion == "Pion LOG BLT Ravitaillement"
-	or typePion == "Pion Organization" then
-		DEC_Sante_ActiverChaine()
-		DEC_Maintenance_ActiverChaine()
-		DEC_Ravitaillement_ActiverChaine()
-	end
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Sante_ActiverChaine()
+        DEC_Maintenance_ActiverChaine()
+        DEC_Ravitaillement_ActiverChaine()
+    end
 end
 
 integration.desactivateFunctions = function( self )
-	local typePion = DEC_Pion_GetMilPionType( self.source )
-	if typePion == "Pion LOG TC2"
-	or typePion == "Pion LOG BLD Sante"
-	or typePion == "Pion LOG BLD Maintenance"
-	or typePion == "Pion LOG BLD Ravitaillement"
-	or typePion == "Pion LOG BLT Sante"
-	or typePion == "Pion LOG BLT Maintenance"
-	or typePion == "Pion LOG BLT Ravitaillement"
-	or typePion == "Pion Organization" then
-		DEC_Sante_DesactiverChaine()
-		DEC_Maintenance_DesactiverChaine()
-		DEC_Ravitaillement_DesactiverChaine()
-	end
+    if integration.isLogisticTypeUnit( ) then
+        DEC_Sante_DesactiverChaine()
+        DEC_Maintenance_DesactiverChaine()
+        DEC_Ravitaillement_DesactiverChaine()
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -652,4 +636,20 @@ end
 
 integration.getUnitPC = function( self ) 
     return CreateKnowledge( sword.military.world.PlatoonAlly, DEC_Pion_PionPC() )
+end
+
+integration.isLogisticTypeUnit = function( )
+    local typePion = DEC_Pion_GetMilPionType( myself )
+    if typePion == "Pion LOG TC2"
+      or typePion == "Pion LOG BLD Sante"
+      or typePion == "Pion LOG BLD Maintenance"
+      or typePion == "Pion LOG BLD Ravitaillement"
+      or typePion == "Pion LOG BLT Sante"
+      or typePion == "Pion LOG BLT Maintenance"
+      or typePion == "Pion LOG BLT Ravitaillement"
+      or typePion == "Pion Organization" then
+        return true
+    else
+        return false
+    end
 end
