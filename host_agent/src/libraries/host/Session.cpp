@@ -281,7 +281,7 @@ void GetDispatcherConfiguration( Tree& tree, int base )
     tree.put( prefix + "network.<xmlattr>.client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) );
     tree.put( prefix + "network.<xmlattr>.server", base + DISPATCHER_PORT );
     tree.put( prefix + "plugins.web_control.<xmlattr>.server", base + WEB_CONTROL_PORT );
-    tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin-vc100-mt" );
+    tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
 }
 
 void GetSimulationConfiguration( Tree& tree, int base )
