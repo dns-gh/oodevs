@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Admin" password="" supervision="true">
+<profiles model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Admin" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -10,7 +10,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Camp 1" password="" supervision="true">
+  <profile name="Camp 1" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -18,7 +18,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Camp 3" password="" supervision="false">
+  <profile name="Camp 3" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -26,7 +26,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Faire Mouvement" password="" supervision="true">
+  <profile name="Faire Mouvement" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -36,7 +36,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Observer et Reconnaitre" password="" supervision="true">
+  <profile name="Observer et Reconnaitre" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -44,7 +44,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Detruire" password="" supervision="true">
+  <profile name="Detruire" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -52,7 +52,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Auto Faire Mouvement" password="" supervision="true">
+  <profile name="Auto Faire Mouvement" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -63,4 +63,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="3184109027" -->
+<!-- signature="2146870796" -->

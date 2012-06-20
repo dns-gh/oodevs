@@ -1,12 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<shapes>
-  <shape category="Lignes" color="#000000" template="-- x --" type="line">
-    <point x="35800" y="37500"/>
-    <point x="44000" y="37200"/>
-  </shape>
-  <shape category="Lignes" color="#000000" template="-- x --" type="line">
-    <point x="35600" y="33400"/>
-    <point x="43600" y="33400"/>
-  </shape>
-</shapes>
-<!-- signature="0884539977" -->
+<shapes model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/drawings.xsd"/>
+<!-- signature="3421280810" -->
