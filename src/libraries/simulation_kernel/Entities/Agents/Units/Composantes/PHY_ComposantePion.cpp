@@ -669,6 +669,8 @@ bool PHY_ComposantePion::CanBeUsed( bool bWithLoaded ) const
     const surrender::PHY_RoleInterface_Surrender* roleSurrendered = pRole_->GetPion().RetrieveRole< surrender::PHY_RoleInterface_Surrender >();
     if( roleSurrendered && roleSurrendered->IsSurrendered() )
         return false;
+    if( bLoadable_ )
+        return true;
     return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
 }
 

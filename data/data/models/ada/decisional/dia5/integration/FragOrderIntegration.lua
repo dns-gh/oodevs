@@ -307,13 +307,15 @@ integration.startFragOrderTask = function( self )
     DEC_RecupererTransporteursSansDelai()
     integration.cleanFragOrder( self )
     return
+  elseif orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+    return
   end
 
   masalife.brain.core.startTask( orderType, mission )
   integration.cleanFragOrder( self )
 end
 
-integration.getParameters = function( self )
+integration.getFireParameters = function( self )
     local params = {}
     local uggly = function() params.entities = { CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() ) } end
     if not pcall( uggly ) then
