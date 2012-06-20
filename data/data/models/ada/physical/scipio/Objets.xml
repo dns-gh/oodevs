@@ -215,7 +215,7 @@
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
   </object>
-  <object geometry="point" name="poste tir" point-size="10" symbol="G*FPAP----****X" type="firing post">
+  <object geometry="point" name="poste tir" point-size="50" symbol="G*FPAP----****X" type="firing post">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <protection geniePrepared="true" max-size="1"/>
@@ -445,4 +445,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1152052546" -->
+<!-- signature="1703141811" -->
