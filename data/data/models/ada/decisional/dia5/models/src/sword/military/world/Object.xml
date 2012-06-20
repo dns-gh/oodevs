@@ -683,6 +683,13 @@
                 </type>
             </return>
         </method>
+        <method name="isActifManeuverObstacle">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isFullyAnimated">

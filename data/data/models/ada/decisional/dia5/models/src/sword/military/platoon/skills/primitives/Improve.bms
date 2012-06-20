@@ -74,7 +74,7 @@ node "ImproveElement"
         end
 
         if self.params.entity:isImproved() then
-             if self.params.entity:isManeuverObstacle() and not self.params.entity:isActivated() then  --if maneuver obstacle, it need to be activated to consider the mining action is over
+             if self.params.entity:isManeuverObstacle() and not self.params.entity:isActifManeuverObstacle() then  --if maneuver obstacle, it need to be activated to consider the mining action is over
                meKnowledge:sendObstacleToActivate( integration.GetSuperiorKnowledge( meKnowledge), self.params.entity )
                Feedback( self.feedbacks.notActivated, { element = self.params.entity } )
                return   

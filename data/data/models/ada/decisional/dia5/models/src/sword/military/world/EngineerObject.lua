@@ -146,6 +146,13 @@ return
         return false
       end
     end,
+    isActifManeuverObstacle = function( self )
+      if self.knowledge then
+        return self.knowledge:isActifManeuverObstacle()
+      else
+        return false
+      end
+    end,
     canBeImproved = function( self )
         return false
     end,

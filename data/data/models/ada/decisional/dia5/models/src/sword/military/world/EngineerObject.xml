@@ -171,6 +171,13 @@
 				</type>
 			</return>
 		</method>
+		<method name="isActifManeuverObstacle" abstract="false">
+			<return>
+				<type>
+					<simple name="boolean"/>
+				</type>
+			</return>
+		</method>
 	</methods>
 	<predicates>
 		<predicate name="isBuilt">

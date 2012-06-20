@@ -277,6 +277,9 @@ return
     isManeuverObstacle = function( self )
          return integration.isManeuverObstacle( self )
     end,
+    isActifManeuverObstacle = function( self )
+         return integration.isActifManeuverObstacle( self )
+    end,
     canActivateIt = function( self )
         return integration.canActivateIt( self )
     end,
