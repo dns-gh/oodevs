@@ -4,12 +4,11 @@ enable_testing()
 
 include( MasaMacros.cmake )
 
-set( dev_dir  e:/dev )
 set( root_dir ${CMAKE_SOURCE_DIR}/.. )
 set( run_dir  ${root_dir}/run/${platform} )
 
-include_directories( ${dev_dir}/include )
-link_directories( ${dev_dir}/lib/${platform} )
+include_directories( ${MASA_INCLUDE} )
+link_directories( ${MASA_LIB} )
 include_directories( ${root_dir}/src/libraries )
 add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 add_definitions( -D_SCL_SECURE_NO_WARNINGS )
@@ -19,9 +18,9 @@ if( WIN32 )
     add_definitions( -DWINVER=0x0600 )
 endif()
 
-set( BOOST_INCLUDEDIR ${dev_dir}/include )
+set( BOOST_INCLUDEDIR ${MASA_INCLUDE} )
 find_package( Boost REQUIRED )
-set( ZLIB_ROOT ${dev_dir}/include/zlib ${dev_dir}/lib/${platform} )
+set( ZLIB_ROOT ${MASA_INCLUDE}/zlib ${MASA_LIB} )
 find_package( ZLIB REQUIRED )
 
 ################################################################################

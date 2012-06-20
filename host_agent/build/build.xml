@@ -5,95 +5,86 @@
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="applications.dir" value="../src/applications"/>
+    <macrodef name="forward_path">
+        <attribute name="input"/>
+        <attribute name="output"/>
+        <sequential>
+            <pathconvert property="@{output}" dirsep="/">
+                <path location="@{input}"/>
+            </pathconvert>
+        </sequential>
+    </macrodef>
 
-    <condition property="os.platform" value="windows" else="linux">
-        <os family="windows"/>
-    </condition>
+    <forward_path input="${include.dir}" output="cmake.include"/>
+    <forward_path input="${lib.dir}"     output="cmake.lib"/>
 
-    <condition property="win.defines" value="_CRT_SECURE_NO_WARNINGS,_SCL_SECURE_NO_WARNINGS,_WIN32_WINNT=0x0600,WINVER=0x0600">
-        <os family="windows"/>
-    </condition>    
+    <property name="cmake.platform.vc100"      value="Win32"/>
+    <property name="cmake.platform.vc100_x64"  value="X64"/>
+    <property name="cmake.generator.vc100"     value="Visual Studio 10"/>
+    <property name="cmake.generator.vc100_x64" value="Visual Studio 10 Win64"/>
 
-    <!-- Libraries -->
-    <target name="libraries" depends="runtime,host,web" description="build all libraries"/>
+    <macrodef name="cmake_call">
+        <attribute name="generator"/>
+        <sequential>
+            <exec taskname="cmake" executable="cmake" dir="${out.dir}" failonerror="true">
+                <arg value="${root.dir}/build"/>
+                <arg value="-G"/>
+                <arg value="${@{generator}}"/>
+                <arg value="-DMASA_INCLUDE=${cmake.include}"/>
+                <arg value="-DMASA_LIB=${cmake.lib}"/>
+            </exec>
+        </sequential>
+    </macrodef>
 
-    <target name="runtime" description="build runtime library">
-        <build-lib name="runtime">
-            <defineset define="${win.defines}"/>
-        </build-lib>
-    </target>
-
-    <target name="host" description="build host library">
-        <build-lib name="host">
-            <defineset define="${win.defines}"/>
-        </build-lib>
-    </target>
-
-    <target name="web" description="build web library">
-        <build-lib name="web">
-            <defineset define="${win.defines}"/>
-        </build-lib>
-    </target>
-
-    <!-- Applications -->
-    <target name="applications" depends="cloud_server" description="build all applications"/>
-
-    <target name="cloud_server" depends="runtime,host,web" description="build cloud server">
-        <build-app name="cloud_server" subsystem="console" depends="boost,cpp-netlib,libarchive" root="${applications.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix},zlib">
-            <syslibset libs="advapi32,ws2_32"/>
-            <defineset define="${win.defines}"/>
-        </build-app>
-    </target>
-
-    <!-- Tests -->
-    <target name="tests" depends="host_test,runtime_test,web_test" description="build tests"/>
-
-    <target name="runtime_test" depends="runtime" description="build runtime tests">
-        <build-test name="runtime" depends="boost" libs="runtime@{suffix}">
-            <defineset define="${win.defines}"/>
-        </build-test>
-    </target>
-
-    <target name="host_test" depends="host,runtime" description="build host tests">
-        <build-test name="host" depends="boost" libs="host@{suffix},runtime@{suffix}">
-            <defineset define="${win.defines}"/>
-        </build-test>
-    </target>
-
-    <target name="web_test" depends="host,web" description="build web tests">
-        <build-test name="web" depends="boost" libs="runtime@{suffix},web@{suffix}">
-            <defineset define="${win.defines}"/>
-        </build-test>
-    </target>
-
-    <!-- Reports -->
-    <target name="reports" description="generate reports">
-        <cppcheck-report>
-            <arg line="--suppress=useAutoPointerCopy"/>
-            <arg line="--suppress=unusedFunction"/>
-            <arg line="--suppress=variableHidingTypedef"/>
-        </cppcheck-report>
-        <headers name="host"/>
-        <headers name="runtime"/>
-        <headers name="web"/>
-    </target>
-
-    <!-- Configure -->
     <target name="configure" description="retrieve dependencies">
         <update name="boost" version="1.48"/>
         <update name="cpp-netlib"/>
         <update name="libarchive"/>
         <update name="turtle"/>
         <update name="zlib" version="1.2.6"/>
+        <mkdir dir="${out.dir}"/>
+        <cmake_call generator="cmake.generator.${platform}"/>
     </target>
 
-    <!-- Clean -->
-    <target name="clean" description="clean intermediate build artifacts">
-        <delete dir="${reports.dir}"/>
-        <delete dir="${out.dir}"/>
+    <macrodef name="msbuild_call">
+        <attribute name="echo"/>
+        <attribute name="configuration"/>
+        <attribute name="platform"/>
+        <attribute name="project"/>
+        <sequential>
+            <exec taskname="@{echo}" executable="msbuild" dir="${out.dir}" failonerror="true">
+                <arg value="/nologo"/>
+                <arg value="/verbosity:minimal"/>
+                <arg value="@{project}.sln"/>
+                <arg value="/p:Configuration=@{configuration}"/>
+                <arg value="/p:Platform=${@{platform}}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="build">
+        <msbuild_call echo="debug" configuration="Debug"
+            project="host_agent" platform="cmake.platform.${platform}" />
+        <msbuild_call echo="release" configuration="RelWithDebInfo"
+            project="host_agent" platform="cmake.platform.${platform}" />
     </target>
 
-    <!-- All -->
-    <target name="all" depends="configure,libraries,applications,tests,reports"/>
+    <macrodef name="ctest_call">
+        <attribute name="echo"/>
+        <attribute name="configuration"/>
+        <sequential>
+            <exec taskname="@{echo}" executable="ctest" dir="${out.dir}" failonerror="true">
+                <arg value="--output-on-failure"/>
+                <arg value="-C"/>
+                <arg value="@{configuration}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="test">
+        <ctest_call echo="debug" configuration="Debug"/>
+        <ctest_call echo="release" configuration="RelWithDebInfo"/>
+    </target>
+
+    <target name="all" depends="configure,build,test"/>
 </project>

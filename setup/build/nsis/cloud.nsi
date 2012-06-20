@@ -41,7 +41,7 @@ Section $(^Name)
     SetOutPath "$INSTDIR\bin"
 
     ; cloud applications
-    File "${HOST_AGENT}\out\${PLATFORM}\release\applications\cloud_server\cloud_server.exe"
+    File "${HOST_AGENT}\out\${PLATFORM}\RelWithDebInfo\cloud_server.exe"
     File "${NODE}\out\jar\node.jar"
     File "${PROXY}\out\jar\log4j.properties"
     File "${PROXY}\out\jar\proxy.jar"
