@@ -21,6 +21,7 @@ namespace kernel
 {
     class ObjectTypes;
     class PropertiesDictionary;
+    class UrbanObject_ABC;
 }
 
 // =============================================================================
@@ -34,7 +35,7 @@ class Architecture : public kernel::Architecture
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+             Architecture( const sword::UrbanAttributes& message, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
 
     virtual void SetMaterial( kernel::MaterialCompositionType& material );

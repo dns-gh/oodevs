@@ -222,7 +222,7 @@ void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructur
     {
         type_ = infrastructure;
         UpdateDictionnary();
-        controllers_.controller_.Update( *this );
+        controllers_.controller_.Update( object_ );
         controllers_.controller_.Update( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );
     }
 }
@@ -247,9 +247,9 @@ void InfrastructureAttribute::UpdateDictionnary()
     {
         if( type_ )
         {
-            dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), static_cast< const InfrastructureAttribute& >( *this ).type_ );
-            dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
-            dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
+            dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), static_cast< const InfrastructureAttribute& >( *this ).type_ );
+            dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
+            dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
         }
         else
         {
@@ -260,6 +260,6 @@ void InfrastructureAttribute::UpdateDictionnary()
     {
         dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ) );
         dico_.Remove( tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ) );
-        dico_.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_ );
+        dico_.Register( object_, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_ );
     }
 }

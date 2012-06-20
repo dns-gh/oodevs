@@ -73,11 +73,11 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
-    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis, controllers_, dictionary ) );
+    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis, controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
     if( hierarchies->GetLevel() == eUrbanLevelBlock )
     {
-        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, dictionary ) );
+        pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, *pTerrainObject, dictionary ) );
         pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, controllers_, *pTerrainObject, dictionary, staticModel_.objectTypes_ ) );
         pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( staticModel_.objectTypes_, dictionary, &controllers_, pTerrainObject ) );
         pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_, false ) );
@@ -98,7 +98,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( kernel::Entity_ABC* parent ) cons
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     assert( hierarchies->GetLevel() == eUrbanLevelCity || hierarchies->GetLevel() == eUrbanLevelDistrict );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
-    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, controllers_, dictionary ) );
+    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( parent, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
     return pTerrainObject;
@@ -116,10 +116,10 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& locati
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     assert( hierarchies->GetLevel() == eUrbanLevelBlock );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( location, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
-    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, controllers_, dictionary ) );
+    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( parent, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
 
-    pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, dictionary ) );
+    pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( staticModel_.objectTypes_, dictionary, &controllers_, pTerrainObject ) );
     pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_, false ) );

@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class PropertiesDictionary;
+    class UrbanObject_ABC;
 }
 
 namespace xml
@@ -42,7 +43,7 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
+             StructuralStateAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico );
     virtual ~StructuralStateAttribute();
     //@}
 
@@ -63,15 +64,10 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void CreateDictionary();
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers&          controllers_;
+    kernel::UrbanObject_ABC&      object_;
     unsigned int                  structuralState_;
     kernel::PropertiesDictionary& dico_;
     //@}

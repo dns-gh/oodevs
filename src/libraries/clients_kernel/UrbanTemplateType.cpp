@@ -84,6 +84,12 @@ void UrbanTemplateType::Fill( kernel::UrbanObject_ABC& urbanObject, const Object
 {
     kernel::PhysicalAttribute_ABC& physical = urbanObject.Get< kernel::PhysicalAttribute_ABC >();
 
+    // usages
+    kernel::Usages_ABC& usages = physical.GetUsages();
+    usages.ClearAll();
+    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+        usages.Add( it->first, static_cast< unsigned int >( 100.f * it->second + 0.5f ) );
+
     // architecture
     kernel::Architecture_ABC& architecture = physical.GetArchitecture();
     MaterialCompositionType* material = objectTypes.tools::StringResolver< MaterialCompositionType >::Find( material_ );
@@ -97,12 +103,6 @@ void UrbanTemplateType::Fill( kernel::UrbanObject_ABC& urbanObject, const Object
     architecture.SetOccupation( static_cast< unsigned int >( 100.f * occupation_ + 0.5f ) );
     architecture.SetHeight( height_ );
     architecture.SetTrafficability( trafficability_ );
-
-    // usages
-    kernel::Usages_ABC& usages = physical.GetUsages();
-    usages.ClearAll();
-    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
-        usages.Add( it->first, static_cast< unsigned int >( 100.f * it->second + 0.5f ) );
 
     // Color
     kernel::UrbanColor_ABC& color = urbanObject.Get< kernel::UrbanColor_ABC >();

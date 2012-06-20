@@ -298,7 +298,6 @@ void UrbanMenuManager::OnApplyTemplate( const QString& name )
         type->Fill( *element_, staticModel_.objectTypes_ );
         controllers_.controller_.Update( *element_ );
         controllers_.controller_.Update( kernel::DictionaryUpdated( *element_, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
-        controllers_.controller_.Update( kernel::DictionaryUpdated( *element_, tools::translate( "UrbanColor", "Info/Color" ) ) );
     }
     else
         for( IT_Elements it = selected_.begin(); it != selected_.end(); ++it )
@@ -307,7 +306,6 @@ void UrbanMenuManager::OnApplyTemplate( const QString& name )
             type->Fill( object, staticModel_.objectTypes_ );
             controllers_.controller_.Update( object );
             controllers_.controller_.Update( kernel::DictionaryUpdated( object, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
-            controllers_.controller_.Update( kernel::DictionaryUpdated( object, tools::translate( "UrbanColor", "Info/Color" ) ) );
         }
 }
 
