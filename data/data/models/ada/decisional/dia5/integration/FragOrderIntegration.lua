@@ -158,6 +158,15 @@ integration.startFragOrderTask = function( self )
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
   elseif orderType == "france.military.platoon.tasks.Orienter" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+  elseif orderType == "Rep_OrderConduite_SauvegardeContreBatterie" then
+    orderType = "france.military.platoon.combat.support.art.tasks.AssurerMiseEnOeuvre"
+    mission.firePositions = {CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )}
+  elseif orderType == "Rep_OrderConduite_MiseEnBatterieInopinee" then
+    orderType = "sword.military.platoon.tasks.frago.RapidDeploiement"
+    mission.entity = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+    mission.interventionType = self.source:GetnbIT_()
+    mission.munition = self.source:Getmunitions_()
+    mission.firePositions = {CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )}
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objectives = { point }

@@ -3785,6 +3785,7 @@
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Pion Engager"/>
           <fragorder name="Pion Desengager"/>
+          <fragorder name="Sauvegarde Contre Batterie"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
@@ -3814,6 +3815,7 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
+        <fragorder name="ASS Mise En Batterie Inopinee"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.Equipe Reco">
@@ -7434,4 +7436,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3475053437" -->
+<!-- signature="3949492315" -->
