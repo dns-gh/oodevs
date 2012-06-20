@@ -3295,7 +3295,6 @@
   <fragorders>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="337" name="Passer En Silence Radio Total"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
@@ -3449,7 +3448,7 @@
       <parameter dia-name="nbIT_" min-value="1" name="Intervention Type" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio"/>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
@@ -3483,4 +3482,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="1574277318" -->
+<!-- signature="1095557031" -->
