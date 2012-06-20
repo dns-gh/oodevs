@@ -580,6 +580,7 @@ public:
         eRC_FragOrderReceived,
         eRC_FurtifModeOn,
         eRC_FurtifModeOff,
+        eRC_ObstacleNonActivable,
         eLast
     };
     //@}

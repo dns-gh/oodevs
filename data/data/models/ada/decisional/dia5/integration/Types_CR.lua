@@ -437,4 +437,5 @@ eRC_InvalidTarget = 422
 eRC_FragOrderReceived = 423
 eRC_FurtifModeOn = 424
 eRC_FurtifModeOff = 425
-eNbr = 426
+eRC_ObstacleNonActivable = 426
+eNbr = 427
