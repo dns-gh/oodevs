@@ -242,7 +242,6 @@
           </urbanBlock-material-modifiers>
         </distance-modifiers>
       </unit-detection>
-      <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="Oeil">
       <unit-detection angle="120" firer-detection-distance="0" scanning="true">
@@ -439,18 +438,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="400" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1009,7 +996,6 @@
           </urbanBlock-material-modifiers>
         </distance-modifiers>
       </unit-detection>
-      <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="Viseur VIVIANE">
       <unit-detection angle="120" firer-detection-distance="0" scanning="true">
@@ -1084,7 +1070,6 @@
           </urbanBlock-material-modifiers>
         </distance-modifiers>
       </unit-detection>
-      <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="Camera Infrarouge Tigre">
       <unit-detection angle="120" firer-detection-distance="0" scanning="true">
@@ -1233,7 +1218,6 @@
           </urbanBlock-material-modifiers>
         </distance-modifiers>
       </unit-detection>
-      <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="I.L Vehicule">
       <unit-detection angle="20" firer-detection-distance="0" scanning="true">
@@ -1454,18 +1438,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="100" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="100" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -1806,18 +1778,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -2391,18 +2351,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="100" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -2791,18 +2739,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="500" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -3022,7 +2958,6 @@
           </urbanBlock-material-modifiers>
         </distance-modifiers>
       </unit-detection>
-      <object-detection/>
     </sensor>
     <sensor detection-delay="0h" name="Detecteur NBC">
       <object-detection>
@@ -3271,18 +3206,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -3598,18 +3521,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="150" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="150" type="rota area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -3843,18 +3754,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="2000" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="2000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -4330,18 +4229,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="100" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="100" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -4671,18 +4558,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="1000" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -5070,18 +4945,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="400" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -5411,18 +5274,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="2500" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="2500" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -6096,18 +5947,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1000" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="400" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -6511,18 +6350,6 @@
           </source-posture-modifiers>
         </object>
         <object detection-distance="150" type="bridge destruction">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="150" type="crossing site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
@@ -7228,18 +7055,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="100" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -7604,18 +7419,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="500" type="crossing site">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="100" type="logistic support area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -7776,4 +7579,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="1826795819" -->
+<!-- signature="3853632083" -->
