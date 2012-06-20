@@ -997,7 +997,7 @@ do
                         end
 
                         directionBuffer = DEC_UserTypeList_GetAt( directionsFlancGardeDroite, iterateur )
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, } )
+                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionCouvrirA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.plotsRavitaillements, self._namedParams.ciblesPrioritaires, self._namedParams.uniteACouvrir, directionBuffer, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
                                                 iterateur = iterateur + 1
                     end
 
@@ -1203,7 +1203,7 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionIMEXA"
         self._namedParams.listePionsAAppuyer = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.plotsRavitaillement = self.params[5]
-        self._namedParams.porteeAction_ = self.params[9]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     activate = function( self )

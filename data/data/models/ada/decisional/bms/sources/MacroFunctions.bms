@@ -543,7 +543,7 @@ function S_Misc_Copie_MissionPion_Mission( misSrc, misDst )
 end
 
 local AssignMissionBoolParameter = function( missionPion, parameter, value )
-    DEC_AssignMissionBoolParameter( missionPion, parameter, valur or false )
+    DEC_AssignMissionBoolParameter( missionPion, parameter, value or false )
 end
 local assignMission = {}
 local assignMissionListParameter = {}
