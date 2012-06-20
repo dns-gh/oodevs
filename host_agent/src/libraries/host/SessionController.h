@@ -30,11 +30,6 @@ namespace runtime
     struct Runtime_ABC;
 }
 
-namespace web
-{
-    struct Client_ABC;
-}
-
 namespace host
 {
     struct NodeController_ABC;
@@ -62,7 +57,6 @@ public:
                                 const NodeController_ABC& nodes,
                                 const Path& root,
                                 const Path& apps,
-                                web::Client_ABC& client,
                                 runtime::Pool_ABC& pool );
     virtual ~SessionController();
     //@}
@@ -108,7 +102,6 @@ private:
     const NodeController_ABC& nodes_;
     const Path root_;
     const Path apps_;
-    web::Client_ABC& client_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;
     mutable runtime::Async async_;

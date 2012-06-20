@@ -201,12 +201,14 @@ struct PackageFactory : public PackageFactory_ABC
 
 struct SessionFactory : public SessionFactory_ABC
 {
-    SessionFactory( const FileSystem_ABC& system, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const NodeController_ABC& nodes, PortFactory_ABC& ports )
+    SessionFactory( const FileSystem_ABC& system, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+                    const NodeController_ABC& nodes, PortFactory_ABC& ports, web::Client_ABC& client )
         : system ( system )
         , runtime( runtime )
         , uuids  ( uuids )
         , nodes  ( nodes )
         , ports  ( ports )
+        , client ( client )
     {
         // NOTHING
     }
@@ -216,7 +218,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, ports.Create() );
+        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, ports.Create(), client );
     }
 
     Ptr Make( const Path& tag ) const
@@ -228,7 +230,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
-        return boost::make_shared< Session >( Path( tag ).remove_filename(), tree, *node, runtime, boost::ref( ports ) );
+        return boost::make_shared< Session >( Path( tag ).remove_filename(), tree, *node, runtime, boost::ref( ports ), client );
     }
 
     const FileSystem_ABC& system;
@@ -236,6 +238,7 @@ struct SessionFactory : public SessionFactory_ABC
     const UuidFactory_ABC& uuids;
     const NodeController_ABC& nodes;
     PortFactory_ABC& ports;
+    web::Client_ABC& client;
 };
 
 int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )
@@ -249,8 +252,8 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
     NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, proxy );
     NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, proxy );
-    SessionFactory fsessions( system, runtime, uuids, nodes, ports );
-    SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, client, pool );
+    SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
+    SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     web::Controller controller( log, agent );
     const Port host = ports.Create();

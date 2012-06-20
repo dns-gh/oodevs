@@ -54,7 +54,6 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const NodeController_ABC& nodes,
                                       const Path& root,
                                       const Path& apps,
-                                      web::Client_ABC& client,
                                       Pool_ABC& pool )
     : log_     ( log )
     , runtime_ ( runtime )
@@ -63,7 +62,6 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , nodes_   ( nodes )
     , root_    ( root / "sessions" )
     , apps_    ( apps )
-    , client_  ( client )
     , async_   ( pool )
 {
     system_.MakePaths( root_ );
@@ -95,7 +93,7 @@ SessionController::~SessionController()
 void SessionController::UpdateSession( T_Session session )
 {
     session->Update();
-    async_.Go( boost::bind( &Session_ABC::Poll, session, boost::ref( client_ ) ) );
+    async_.Go( boost::bind( &Session_ABC::Poll, session ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,5 +281,5 @@ SessionController::T_Session SessionController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Pause( const Uuid& id ) const
 {
-    return Dispatch( id, boost::bind( &Session_ABC::Pause, _1, boost::ref( client_ ) ) );
+    return Dispatch( id, boost::bind( &Session_ABC::Pause, _1 ) );
 }

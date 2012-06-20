@@ -23,7 +23,6 @@
 
 using namespace host;
 using runtime::Utf8Convert;
-using mocks::MockClient;
 using mocks::MockFileSystem;
 using mocks::MockLog;
 using mocks::MockNodeController;
@@ -64,7 +63,6 @@ namespace
         size_t idx;
         MockLog log;
         MockRuntime runtime;
-        MockClient client;
         MockFileSystem system;
         MockPool pool;
         MockSessionFactory factory;
@@ -108,7 +106,7 @@ namespace
             : root   ( "e:/root" )
             , apps   ( "e:/apps" )
             , sub    ( root, apps )
-            , control( sub.log, sub.runtime, sub.system, sub.factory, sub.nodes, root, apps, sub.client, sub.pool )
+            , control( sub.log, sub.runtime, sub.system, sub.factory, sub.nodes, root, apps, sub.pool )
         {
             // NOTHING
         }

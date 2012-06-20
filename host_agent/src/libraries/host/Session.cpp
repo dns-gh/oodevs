@@ -72,6 +72,15 @@ Session::Status ConvertRemoteStatus( const std::string& status )
     return Session::STATUS_COUNT;
 }
 
+std::string GetUrl( Session::Status status )
+{
+    if( status == Session::STATUS_PLAYING )
+        return "/play";
+    if( status == Session::STATUS_PAUSED )
+        return "/pause";
+    return std::string();
+}
+
 Port AcquirePort( int wanted, PortFactory_ABC& ports )
 {
     try
@@ -106,22 +115,30 @@ Path GetPath( const Tree& src, const std::string& key )
 {
     return Utf8Convert( Get< std::string >( src, key ) );
 }
+
+template< typename T >
+int GetPid( T& process )
+{
+    return process ? process->GetPid() : -1;
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port )
+Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port, web::Client_ABC& client )
     : id_     ( id )
     , root_   ( root )
     , node_   ( node )
     , name_   ( name )
     , links_  ( node.LinkExercise( exercise ) )
     , port_   ( port )
+    , client_ ( client )
     , process_()
     , status_ ( STATUS_STOPPED )
     , polling_( false )
+    , counter_( 0 )
 {
     // NOTHING
 }
@@ -130,16 +147,18 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports, web::Client_ABC& client )
     : id_     ( Get< Uuid >( tree, "id" ) )
     , root_   ( root )
     , node_   ( node )
     , name_   ( Get< std::string >( tree, "name" ) )
     , links_  ( node.LinkExercise( tree.get_child( "links" ) ) )
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
+    , client_ ( client )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
     , polling_( false )
+    , counter_( 0 )
 {
     // NOTHING
 }
@@ -254,53 +273,6 @@ Tree Session::Save() const
     return tree;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Session::Stop
-// Created: BAX 2012-04-19
-// -----------------------------------------------------------------------------
-bool Session::Stop()
-{
-    return UpdateStatus( STATUS_STOPPED );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::Pause
-// Created: BAX 2012-06-19
-// -----------------------------------------------------------------------------
-bool Session::Pause( web::Client_ABC& client )
-{
-    web::Client_ABC::T_Response response = client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/pause", web::Client_ABC::T_Parameters() );
-    return response->GetStatus() == 200 && UpdateStatus( STATUS_PAUSED );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::UpdateStatusUnlocked
-// Created: BAX 2012-04-19
-// -----------------------------------------------------------------------------
-bool Session::UpdateStatusUnlocked( Status status )
-{
-    if( status != STATUS_STOPPED && process_ && !process_->IsAlive() )
-        status = STATUS_STOPPED;
-    const bool reply = status_ != status;
-    status_ = status;
-    if( status != STATUS_STOPPED )
-        return reply;
-    if( process_ )
-        process_->Kill( 0 );
-    process_.reset();
-    return reply;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::UpdateStatus
-// Created: BAX 2012-04-19
-// -----------------------------------------------------------------------------
-bool Session::UpdateStatus( Status status )
-{
-    boost::lock_guard< boost::mutex > lock( access_ );
-    return UpdateStatusUnlocked( status );
-}
-
 namespace
 {
 void GetDispatcherConfiguration( Tree& tree, int base )
@@ -355,14 +327,89 @@ void WriteSettings( const FileSystem_ABC& system, const Path& file, const std::s
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::StopProcess
+// Created: BAX 2012-06-20
+// -----------------------------------------------------------------------------
+template< typename T >
+bool Session::StopProcess( T& lock )
+{
+    status_ = STATUS_STOPPED;
+    T_Process copy;
+    copy.swap( process_ );
+    lock.unlock();
+
+    if( !copy || !copy->IsAlive() )
+        return true;
+    client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", web::Client_ABC::T_Parameters() );
+    copy->Join( 3000 );
+    copy->Kill( 0 );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::ModifyStatus
+// Created: BAX 2012-06-20
+// -----------------------------------------------------------------------------
+template< typename T >
+bool Session::ModifyStatus( T& lock, Session::Status next )
+{
+    if( process_ && !process_->IsAlive() )
+        next = STATUS_STOPPED;
+
+    if( next == status_ )
+        return false;
+
+    if( next == STATUS_STOPPED )
+        return StopProcess( lock );
+
+    const size_t counter = counter_++;
+    const int pid = GetPid( process_ );
+    lock.unlock();
+
+    const std::string url = GetUrl( next );
+    if( url.empty() )
+        return false;
+
+    web::Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, web::Client_ABC::T_Parameters() );
+    if( response->GetStatus() != 200 )
+        return false;
+
+    lock.lock();
+    if( counter + 1 != counter_ || GetPid( process_ ) != pid )
+        return false;
+    std::swap( status_, next );
+    return status_ != next;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Stop
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+bool Session::Stop()
+{
+    boost::unique_lock< boost::mutex > lock( access_ );
+    return ModifyStatus( lock, STATUS_STOPPED );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Pause
+// Created: BAX 2012-06-19
+// -----------------------------------------------------------------------------
+bool Session::Pause()
+{
+    boost::unique_lock< boost::mutex > lock( access_ );
+    return ModifyStatus( lock, STATUS_PAUSED );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
 {
-    boost::lock_guard< boost::mutex > lock( access_ );
+    boost::unique_lock< boost::mutex > lock( access_ );
     if( process_ )
-        return true;
+        return ModifyStatus( lock, STATUS_PLAYING );
 
     const Path output = GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id_ ) / "session.xml";
     WriteSettings( system, output, GetConfiguration( name_, port_->Get() ) );
@@ -371,7 +418,8 @@ bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
         return false;
 
     process_ = ptr;
-    return UpdateStatusUnlocked( STATUS_PLAYING );
+    status_  = STATUS_PLAYING;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -404,8 +452,8 @@ void Session::Unlink()
 // -----------------------------------------------------------------------------
 void Session::Update()
 {
-    boost::lock_guard< boost::mutex > lock( access_ );
-    UpdateStatusUnlocked( status_ );
+    boost::unique_lock< boost::mutex > lock( access_ );
+    ModifyStatus( lock, status_ );
 }
 
 namespace
@@ -422,17 +470,19 @@ void ResetBool( boost::unique_lock< boost::mutex >& lock, bool& value, bool next
 // Name: Session::Poll
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-void Session::Poll( web::Client_ABC& client )
+void Session::Poll()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
     if( polling_ || !process_ || !process_->IsAlive() )
         return;
 
     polling_ = true;
+    const size_t counter = counter_++;
+    const int pid = GetPid( process_ );
     runtime::Scoper unpoll( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( polling_ ), false ) );
     lock.unlock();
 
-    web::Client_ABC::T_Response response = client.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", web::Client_ABC::T_Parameters() );
+    web::Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", web::Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
         return;
 
@@ -442,5 +492,7 @@ void Session::Poll( web::Client_ABC& client )
         return;
 
     lock.lock();
-    UpdateStatusUnlocked( next );
+    if( counter + 1 != counter_ || GetPid( process_ ) != pid )
+        return;
+    ModifyStatus( lock, next );
 }

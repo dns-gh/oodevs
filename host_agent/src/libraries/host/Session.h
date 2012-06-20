@@ -27,6 +27,11 @@ namespace runtime
     struct Runtime_ABC;
 }
 
+namespace web
+{
+    struct Client_ABC;
+}
+
 namespace host
 {
     struct Node_ABC;
@@ -45,8 +50,8 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port );
-             Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+             Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port, web::Client_ABC& client );
+             Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports, web::Client_ABC& client );
     virtual ~Session();
     //@}
 
@@ -69,8 +74,8 @@ public:
     virtual bool Stop();
     virtual void Unlink();
     virtual void Update();
-    virtual void Poll( web::Client_ABC& );
-    virtual bool Pause( web::Client_ABC& );
+    virtual void Poll();
+    virtual bool Pause();
     //@}
 
     //! @name Status enumeration
@@ -89,8 +94,8 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    bool UpdateStatusUnlocked( Status next );
-    bool UpdateStatus( Status next );
+    template< typename T > bool StopProcess( T& lock );
+    template< typename T > bool ModifyStatus( T& lock, Status next );
     //@}
 
 private:
@@ -102,10 +107,12 @@ private:
     const std::string name_;
     const Tree links_;
     const Port port_;
+    web::Client_ABC& client_;
     mutable boost::mutex access_;
     T_Process process_;
     Status status_;
     bool polling_;
+    size_t counter_;
     //@}
 };
 

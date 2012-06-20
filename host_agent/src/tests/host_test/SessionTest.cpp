@@ -11,17 +11,22 @@
 #include "Mocks.h"
 #include <host/PropertyTree.h>
 #include <host/Session.h>
+#include <runtime/Event.h>
+#include <runtime/Pool.h>
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid//uuid_io.hpp>
 
 using namespace host;
+using namespace runtime;
+using mocks::MockClient;
 using mocks::MockFileSystem;
 using mocks::MockNode;
 using mocks::MockPort;
 using mocks::MockPortFactory;
 using mocks::MockProcess;
+using mocks::MockResponse;
 using mocks::MockRuntime;
 
 namespace
@@ -45,10 +50,24 @@ namespace
         "\"terrain\":{\"name\":\"a\",\"checksum\":\"c\"},"
         "\"model\":{\"name\":\"a\",\"checksum\":\"c\"}";
 
+    int BlockUntil( Event& start, Event& end, int code )
+    {
+        start.Signal();
+        end.Wait();
+        return code;
+    }
+
+    std::string GetState( Session_ABC& session )
+    {
+        const Tree data = session.GetProperties();
+        return data.get< std::string >( "status" );
+    }
+
     struct Fixture
     {
         typedef boost::shared_ptr< Session > SessionPtr;
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
+        MockClient client;
         MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
@@ -63,7 +82,7 @@ namespace
         SessionPtr MakeSession()
         {
             MOCK_EXPECT( node.LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
-            return boost::make_shared< Session >( "", defaultId, node, defaultName, defaultExercise, Port( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Session >( "", defaultId, node, defaultName, defaultExercise, Port( new MockPort( defaultPort ) ), client );
         }
 
         SessionPtr ReloadSession( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -73,7 +92,7 @@ namespace
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             const Tree data = FromJson( links );
             MOCK_EXPECT( node.LinkExerciseTree ).once().with( data ).returns( data );
-            return boost::make_shared< Session >( "", tree, node, runtime, ports );
+            return boost::make_shared< Session >( "", tree, node, runtime, ports, client );
         }
 
         ProcessPtr StartSession( Session& session, int pid, const std::string& name )
@@ -86,10 +105,29 @@ namespace
             return process;
         }
 
+        void ExpectWebRequest( const std::string& url, int code )
+        {
+            boost::shared_ptr< MockResponse > rpy = boost::make_shared< MockResponse >();
+            MOCK_EXPECT( rpy->GetStatus ).returns( code );
+            MOCK_EXPECT( client.Get ).once().with( "localhost", mock::any, url, mock::any ).returns( rpy );
+        }
+
+        boost::shared_ptr< MockResponse > ExpectBlockingWebRequest( const std::string& url, int code, Event& start, Event& end )
+        {
+            boost::shared_ptr< MockResponse > rpy = boost::make_shared< MockResponse >();
+            MOCK_EXPECT( client.Get ).once().with( "localhost", mock::any, url, mock::any ).returns( rpy );
+            MOCK_EXPECT( rpy->GetStatus ).calls( boost::bind( &BlockUntil, boost::ref( start ), boost::ref( end ), code ) );
+            return rpy;
+        }
+
         void StopSession( Session& session, ProcessPtr process = ProcessPtr() )
         {
             if( process )
+            {
+                ExpectWebRequest( "/stop", 200 );
+                MOCK_EXPECT( process->Join ).once().returns( true );
                 MOCK_EXPECT( process->Kill ).once().returns( true );
+            }
             BOOST_CHECK( session.Stop() );
         }
     };
@@ -106,6 +144,7 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
     SessionPtr session = MakeSession();
     ProcessPtr process = StartSession( *session, processPid, processName );
     StopSession( *session, process );
+    BOOST_CHECK( !session->Stop() );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
@@ -175,5 +214,67 @@ BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )
 {
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
+    BOOST_CHECK( !session->Start( system, Starter ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
+{
+    SessionPtr session = MakeSession();
+    StartSession( *session, processPid, processName );
+    ExpectWebRequest( "/pause", 200 );
+    BOOST_CHECK( session->Pause() );
+    BOOST_CHECK( !session->Pause() );
+    ExpectWebRequest( "/play", 200 );
     BOOST_CHECK( session->Start( system, Starter ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_process, Fixture )
+{
+    SessionPtr session = MakeSession();
+    ProcessPtr process = StartSession( *session, processPid, processName );
+    Pool pool( 2 );
+
+    Event waitPause, endPause;
+    ExpectBlockingWebRequest( "/pause", 200, waitPause, endPause );
+    Pool_ABC::Future pause = pool.Go( boost::bind( &Session_ABC::Pause, session ) );
+    waitPause.Wait();
+
+    Event waitPoll, endPoll;
+    boost::shared_ptr< MockResponse > rpy = ExpectBlockingWebRequest( "/get", 200, waitPoll, endPoll );
+    MOCK_EXPECT( rpy->GetBody ).once().returns( "{\"state\":\"paused\"}" );
+    Pool_ABC::Future poll = pool.Go( boost::bind( &Session_ABC::Poll, session ) );
+    waitPoll.Wait();
+
+    StopSession( *session, process );
+    BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
+
+    endPause.Signal();
+    pause.wait();
+    BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
+
+    endPoll.Signal();
+    poll.wait();
+    BOOST_CHECK_EQUAL( GetState( *session ), "stopped" );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_counter, Fixture )
+{
+    SessionPtr session = MakeSession();
+    ProcessPtr process = StartSession( *session, processPid, processName );
+    Pool pool( 1 );
+
+    Event waitPause, endPause;
+    ExpectBlockingWebRequest( "/pause", 200, waitPause, endPause );
+    Pool_ABC::Future pause = pool.Go( boost::bind( &Session_ABC::Pause, session ) );
+    waitPause.Wait();
+
+    ExpectWebRequest( "/pause", 200 );
+    session->Pause();
+    ExpectWebRequest( "/play", 200 );
+    session->Start( system, Starter );
+    BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
+
+    endPause.Signal();
+    pause.wait();
+    BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
 }
