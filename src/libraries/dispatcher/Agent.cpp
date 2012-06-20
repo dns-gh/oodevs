@@ -408,6 +408,35 @@ void Agent::DoUpdate( const sword::UnitEnvironmentType& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: SBO 2011-01-31
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::UnitDetection& message )
+{
+    if( message.current_visibility() == sword::UnitVisibility_Level_invisible )
+        unitDetections_.erase( message.detected_unit().id() );
+    else
+    {
+        UnitDetectionData data;
+        data.currentLevel_ = message.current_visibility();
+        data.maxLevel_ = message.max_visibility();
+        unitDetections_[ message.detected_unit().id() ] = data;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: SBO 2011-01-31
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::ObjectDetection&	message )
+{
+    if( message.visibility() == sword::UnitVisibility_Level_invisible )
+        objectDetections_.erase( message.detected_object().id() );
+    else
+        objectDetections_[ message.detected_object().id() ] = message.visibility();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -575,6 +604,24 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         client::UnitPathFind msg;
         msg().mutable_unit()->set_id( GetId() );
         currentPath_.Send( *msg().mutable_path()->mutable_location() );
+        msg.Send( publisher );
+    }
+
+    for( CIT_UnitDetection it = unitDetections_.begin(); it != unitDetections_.end(); ++it )
+    {
+        client::UnitDetection msg;
+        msg().mutable_observer()->set_id( GetId() );
+        msg().mutable_detected_unit()->set_id( it->first );
+        msg().set_current_visibility( it->second.currentLevel_ );
+        msg().set_max_visibility( it->second.maxLevel_ );
+        msg.Send( publisher );
+    }
+    for( CIT_ObjectDetection it = objectDetections_.begin(); it != objectDetections_.end(); ++it )
+    {
+        client::ObjectDetection msg;
+        msg().mutable_observer()->set_id( GetId() );
+        msg().mutable_detected_object()->set_id( it->first );
+        msg().set_visibility( it->second );
         msg.Send( publisher );
     }
 }
