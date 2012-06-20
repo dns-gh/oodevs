@@ -17,36 +17,22 @@ rootnode
     feedbacks = { "done" };
    
     done = function( self, params, additionnalParams )
-        if additionnalParams.state == "hasFire" then
-            self.hasFire = true
-            self.order = nil
-            self.nextTargetIndex = self.nextTargetIndex + 1
-            if self.nextTargetIndex > #self.params.firePositions and self.params.retreatPosition == NIL then
-                self.nextTargetIndex = 1
-            elseif self.nextTargetIndex > #self.params.firePositions + 1 and self.params.retreatPosition ~= NIL then
-                self.nextTargetIndex = #self.params.firePositions + 1
-            end
-            if self.nextTargetIndex <= #self.params.firePositions and #self.params.firePositions >= 2 then
-                meKnowledge:RC( eRC_ChangementDePosition )
-            end
-        elseif additionnalParams.state == "no ammo" or
-               additionnalParams.state == "forbidden ammo" or
-               additionnalParams.state == "out of range" or
-               additionnalParams.state == "impossible to fire" or
-               additionnalParams.state == "no Launcher" or
-               additionnalParams.state == "target not illuminated" then
-            self.order = nil
-        else
-            if self.params.retreatPosition ~= NIL then
-                if additionnalParams.element == self.params.retreatPosition then
-                    Feedback( self.feedbacks.done)
-                end
-            end
+        if additionnalParams.state == "hasFire" or
+           additionnalParams.state == "no ammo" or
+           additionnalParams.state == "forbidden ammo" or
+           additionnalParams.state == "out of range" or
+           additionnalParams.state == "impossible to fire" or
+           additionnalParams.state == "no Launcher" or
+           additionnalParams.state == "target not illuminated" then
+              self.order = nil
+              self.nextTargetIndex = self.nextTargetIndex + 1
+              if self.nextTargetIndex > #self.params.firePositions then
+                 self.nextTargetIndex = 1
+              end
         end
     end,
     
     create = function( self )
-        self.hasFire = false
         self.order = nil
         self.positions = {}
         self.nextTargetIndex = 1
@@ -59,9 +45,7 @@ rootnode
         if self.params.firePositions == NIL then
             self.waitOrder = true
         end
-        if self.hasFire and self.nextTargetIndex > #self.params.firePositions and self.params.retreatPosition ~= NIL then
-            Activate( skill.links.deploy, 1, { objective = self.params.retreatPosition } )
-        else
+        if self.nextTargetIndex <= #self.params.firePositions then
             self.waitOrder = true
             Activate( skill.links.deploy, 1, { objective = self.params.firePositions[ self.nextTargetIndex ] } )
         end        
@@ -73,6 +57,9 @@ rootnode
             if meKnowledge:isDeployed() then --or self.params.canReceiveUnexpectedOrder then
                 integration.sendfireAvailable(true)
                 Activate( skill.nodes.CR_ReadyToFire, 1 )
+                if self.params.callByFragOrder then
+                      Feedback( self.feedbacks.done )
+                end
                 if self.order then
                     Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
                     Activate( skill.links.indirectFire, 1, self.order )

@@ -1,7 +1,7 @@
 local result = 
 {
     fillParameters = function( self, companyTask, params )
-        return { firePositions = companyTask:getFirePositions( params ), retreatPosition = companyTask:getMeetingPoint( params ) }
+        return { firePositions = companyTask:getFirePositions( params ) }
     end
 }
 

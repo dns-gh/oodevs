@@ -1181,7 +1181,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="retreatPosition" name="Position de sauvegarde" optional="true" type="Point"/>
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de tir" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -4635,6 +4634,14 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_SauvegardeContreBatterie" id="28797" max-occurs="1642223808" max-value="32" min-occurs="338821125" min-value="359780576" name="Sauvegarde Contre Batterie">
+      <parameter dia-name="pointCible_" name="Position de sauvegarde" optional="false" type="Point"/>
+    </fragorder>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MiseEnBatterieInopinee" id="28798" max-occurs="1415207104" max-value="32" min-occurs="298778629" min-value="440588272" name="ASS Mise En Batterie Inopinee">
+      <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
+      <parameter dia-name="nbIT_" min-value="1" name="Nb IT" optional="false" type="Integer"/>
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
+    </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2203493717" -->
+<!-- signature="4006098567" -->
