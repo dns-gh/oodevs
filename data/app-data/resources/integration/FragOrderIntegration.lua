@@ -352,6 +352,14 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
     return
+  elseif orderType == "Rep_OrderConduite_Decrocher" then
+    return
+  elseif orderType == "Rep_OrderConduite_PoursuivreConvoi" then
+    return
+  elseif orderType == "Rep_OrderConduite_Pion_AbandonnerTravaux" then
+    return
+  elseif orderType == "Rep_OrderConduite_RejoindrePointLancement" then
+    return
   end
 
   masalife.brain.core.startTask( orderType, mission )
