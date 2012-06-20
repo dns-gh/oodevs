@@ -135,7 +135,7 @@ void Proxy::Restart()
             value.second.state = PROXY_STATE_DISABLED;
         else
             cemetery.insert( value.first );
-    BOOST_FOREACH( const std::string prefix, cemetery )
+    BOOST_FOREACH( const std::string& prefix, cemetery )
         links_.erase( prefix );
     Save();
 }
