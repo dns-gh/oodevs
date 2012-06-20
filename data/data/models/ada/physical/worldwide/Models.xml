@@ -51,6 +51,8 @@
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
+        <mission name="SAFETY - Transport a crowd"/>
+        <mission name="SAFETY - Transport units"/>
       </missions>
       <fragorders/>
     </unit>
@@ -4004,4 +4006,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0216058796" -->
+<!-- signature="2067976647" -->

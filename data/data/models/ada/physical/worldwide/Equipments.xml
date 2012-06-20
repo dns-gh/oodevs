@@ -10616,7 +10616,7 @@
     </sensors>
     <radars/>
     <transports>
-      <crowd capacity="200" man-boarding-time="50m" man-unloading-time="50m"/>
+      <crowd capacity="100" man-boarding-time="2s" man-unloading-time="2s"/>
     </transports>
     <consumptions>
       <consumption status="ArretMoteurAllume">
@@ -11397,4 +11397,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2023091396" -->
+<!-- signature="2182047872" -->
