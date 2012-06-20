@@ -246,7 +246,7 @@
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
   </object>
-  <object name="poste tir" point-size="10" type="firing post">
+  <object name="poste tir" point-size="50" type="firing post">
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
@@ -441,6 +441,7 @@
       <geometry symbol="G*MPOGZ---****X" type="polygon"/>
     </geometries>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interact-with-enemy friend="true"/>
     <interaction-height height="6000"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -602,4 +603,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="4205179697" -->
+<!-- signature="1515203651" -->

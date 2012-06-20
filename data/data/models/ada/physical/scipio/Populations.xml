@@ -778,7 +778,7 @@
     <repartition children="0" female="0" male="1"/>
     <nbc decontaminationDelay="300s"/>
   </population>
-  <population armed-individuals="0" concentration-density="0.5" decisional-model="Masalife.Foule" id="4" moving-base-density="0.5" moving-speed="3" name="Manifestants armes">
+  <population armed-individuals="0.5" concentration-density="0.5" decisional-model="Masalife.Foule" id="4" moving-base-density="0.5" moving-speed="3" name="Manifestants armes">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="5" population-density="0.5" unit-size="Gros"/>
@@ -1749,4 +1749,4 @@
     <nbc decontaminationDelay="300s"/>
   </population>
 </populations>
-<!-- signature="2411337128" -->
+<!-- signature="3210144128" -->

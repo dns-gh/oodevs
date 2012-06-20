@@ -2084,7 +2084,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
-      <parameter dia-name="entity" name="Element a suivre" optional="false" type="LocationComposite">
+      <parameter dia-name="entity" name="Elément à suivre" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
           <parameter type="Agent"/>
@@ -2108,6 +2108,60 @@
       <parameter dia-name="objective" name="Zone de deploiement" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="jammingTime" max-value="240" min-value="0" name="Délais de brouillage" optional="false" type="Integer"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLADemandeTransport" id="28789" name="AUTOMATE HLA Faire Une Requete de Transport">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
+      <parameter dia-name="heureEmbarquement" name="Heure d'embarquement" optional="false" type="DateTime"/>
+      <parameter dia-name="pointDebarquement" name="Point debarquement" optional="false" type="Point"/>
+      <parameter dia-name="heureDebaquement" name="Heure debarquement" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLAAtterrir" id="28790" name="AUTOMATE HLA Atterrir">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
+      <parameter dia-name="heureEmbarquement" name="Heure embarquement" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.HLAEmbarquer" id="28791" name="AUTOMATE HLA Embarquer">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
+      <parameter dia-name="heureEmbarquement" name="Heure embarquement" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.HLADebarquer" id="28792" name="AUTOMATE HLA Debarquer">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="heureDebarquement" name="Heure debarquement" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.HLADecoller" id="28793" name="AUTOMATE HLA Decoller">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="heureDebarquement" name="Heure debarquement" optional="false" type="DateTime"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.art.tasks.COBRAAcquerirObjectif" dia-type="france.military.platoon.combat.support.art.tasks.COBRAAcquerirObjectif" id="28795" name="PION ASS COBRA Acquerir Objectifs">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4353,14 +4407,6 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.batallion.tasks.FaireMouvement" dia-type="france.military.batallion.tasks.FaireMouvement" id="99999" mrt-dia-behavior="france.military.batallion.tasks.FaireMouvement" name="ADA Faire Mouvement">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
-      <parameter dia-name="objectives" name="Itinéraire" optional="false" type="Path"/>
-    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -4404,7 +4450,6 @@
   <fragorders>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="337" name="Passer En Silence Radio Total"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
@@ -4438,10 +4483,9 @@
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="348" name="Changer Regles Engagement Civils">
       <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement civils" optional="false" type="Enumeration">
-        <value id="0" name="none"/>
-        <value id="1" name="emploi_force_interdit"/>
-        <value id="2" name="armes_non_letales_autorisees"/>
-        <value id="3" name="armes_letales_autorisees"/>
+        <value id="0" name="emploi_force_interdit"/>
+        <value id="1" name="emploi_armes_non_letales_autorisees"/>
+        <value id="2" name="emploi_armes_letales_autorisees"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="349" name="Deboucher"/>
@@ -4538,10 +4582,9 @@
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les regles d'engagement">
       <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les regles d'engagement" optional="false" type="Enumeration">
-        <value id="0" name="none"/>
-        <value id="1" name="tir_libre"/>
-        <value id="2" name="tir_sur_riposte"/>
-        <value id="3" name="tir_interdit"/>
+        <value id="0" name="tir_libre"/>
+        <value id="1" name="tir_sur_riposte"/>
+        <value id="2" name="tir_interdit"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Illuminer" id="382" name="Illuminer">
@@ -4560,7 +4603,7 @@
       <parameter dia-name="nbIT_" min-value="1" name="Intervention Type" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio"/>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
@@ -4594,4 +4637,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="3913093094" -->
+<!-- signature="2203493717" -->

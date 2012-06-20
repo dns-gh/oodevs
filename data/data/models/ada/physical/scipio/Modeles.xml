@@ -68,7 +68,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -78,7 +77,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -117,7 +116,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -127,7 +125,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -189,7 +187,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -199,7 +196,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -239,7 +236,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -249,7 +245,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -278,7 +274,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -288,7 +283,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -318,7 +313,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -328,7 +322,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -359,7 +353,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -369,7 +362,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -401,7 +394,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -411,7 +403,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -446,7 +438,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -456,7 +447,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -527,7 +518,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -537,7 +527,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -567,7 +557,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -577,7 +566,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -629,7 +618,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -639,7 +627,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -671,7 +659,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -681,7 +668,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -712,7 +699,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -722,7 +708,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -755,7 +741,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -765,7 +750,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -803,7 +788,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -813,7 +797,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -849,7 +833,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -859,7 +842,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -900,7 +883,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -910,7 +892,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -944,7 +926,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -954,7 +935,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -988,7 +969,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -998,7 +978,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1043,7 +1023,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1053,7 +1032,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1088,14 +1067,13 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1121,7 +1099,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1131,7 +1108,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1168,7 +1145,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1178,7 +1154,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1205,7 +1181,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1215,7 +1190,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1241,13 +1216,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1290,14 +1264,13 @@
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1320,7 +1293,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1330,7 +1302,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1367,7 +1339,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1377,7 +1348,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1414,7 +1385,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1424,7 +1394,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1459,7 +1429,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1469,7 +1438,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1503,7 +1472,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1513,7 +1481,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1546,7 +1514,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1556,7 +1523,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1594,7 +1561,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1604,7 +1570,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1629,7 +1595,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1639,7 +1604,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1660,7 +1625,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1670,7 +1634,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1700,7 +1664,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1710,7 +1673,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1744,7 +1707,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1754,7 +1716,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1790,7 +1752,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1800,7 +1761,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1831,7 +1792,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1841,7 +1801,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1864,7 +1824,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1874,7 +1833,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1907,7 +1866,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1917,7 +1875,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -1956,7 +1914,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1966,7 +1923,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2007,7 +1964,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2017,7 +1973,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2061,7 +2017,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2071,7 +2026,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2125,7 +2080,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2135,7 +2089,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2190,7 +2144,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2200,7 +2153,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2251,7 +2204,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2261,7 +2213,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2327,7 +2279,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2337,7 +2288,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2401,7 +2352,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2411,7 +2361,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2449,7 +2399,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2459,7 +2408,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2504,7 +2453,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2514,7 +2462,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2565,7 +2513,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2575,7 +2522,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2612,7 +2559,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2622,7 +2568,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2651,7 +2597,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2661,7 +2606,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2691,7 +2636,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2701,7 +2645,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2733,7 +2677,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2743,7 +2686,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2785,7 +2728,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2795,7 +2737,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2828,7 +2770,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2838,7 +2779,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2882,7 +2823,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2892,7 +2832,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2922,7 +2862,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2932,7 +2871,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -2964,7 +2903,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2974,7 +2912,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3000,7 +2938,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3010,7 +2947,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3050,7 +2987,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3060,7 +2996,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3094,7 +3030,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3104,7 +3039,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3134,7 +3069,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3144,7 +3078,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3174,7 +3108,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3184,7 +3117,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3214,7 +3147,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3224,7 +3156,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3254,7 +3186,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3264,7 +3195,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3296,7 +3227,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3306,7 +3236,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3339,7 +3269,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3349,7 +3278,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3397,7 +3326,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3407,7 +3335,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3440,7 +3368,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3450,7 +3377,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3478,7 +3405,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3488,7 +3414,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3512,7 +3438,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3522,7 +3447,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3543,7 +3468,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3553,7 +3477,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3575,7 +3499,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3585,7 +3508,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3606,7 +3529,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3616,7 +3538,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3642,7 +3564,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3652,7 +3573,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3675,7 +3596,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3685,7 +3605,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3710,7 +3630,6 @@
         <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3720,7 +3639,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3749,7 +3668,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3759,7 +3677,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3791,7 +3709,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3801,7 +3718,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3831,7 +3748,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3841,7 +3757,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3879,7 +3795,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3889,7 +3804,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3923,7 +3838,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3933,7 +3847,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3958,7 +3872,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3968,7 +3881,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -3997,7 +3910,6 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4016,7 +3928,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4026,7 +3937,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4062,7 +3973,6 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4096,7 +4006,6 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -4118,7 +4027,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4128,7 +4036,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4160,7 +4068,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4170,7 +4077,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4197,7 +4104,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4207,7 +4113,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4233,7 +4139,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4243,7 +4148,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4268,7 +4173,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4278,7 +4182,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4308,7 +4212,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4318,7 +4221,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4348,7 +4251,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4358,7 +4260,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4390,7 +4292,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4400,7 +4301,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4429,7 +4330,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4439,7 +4339,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4463,7 +4363,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4473,7 +4372,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4496,7 +4395,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4506,7 +4404,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4531,7 +4429,6 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4541,7 +4438,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4571,7 +4468,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4581,7 +4477,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4613,7 +4509,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4623,7 +4518,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4657,7 +4552,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4667,7 +4561,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4701,7 +4595,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4711,7 +4604,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4741,7 +4634,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4751,7 +4643,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4775,14 +4667,13 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4802,13 +4693,12 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4837,7 +4727,6 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4847,7 +4736,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4882,7 +4771,6 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4892,7 +4780,7 @@
         <fragorder name="Pion Interdire Munition"/>
         <fragorder name="Pion Autoriser Munition"/>
         <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
@@ -4979,14 +4867,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5034,14 +4921,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5108,14 +4994,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5147,14 +5032,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5199,14 +5083,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5251,14 +5134,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5306,14 +5188,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5363,14 +5244,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5429,14 +5309,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5465,14 +5344,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5548,14 +5426,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5608,14 +5485,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5688,14 +5564,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5742,14 +5617,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5781,14 +5655,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5817,14 +5690,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5880,14 +5752,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5937,14 +5808,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -5992,14 +5862,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6056,14 +5925,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6096,14 +5964,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6144,14 +6011,13 @@
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
       </missions>
       <fragorders>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
@@ -6177,14 +6043,13 @@
         <mission name="AUTOMATE GENIE Se Deployer"/>
       </missions>
       <fragorders>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
@@ -6214,14 +6079,13 @@
         <mission name="AUTOMATE GENIE Realiser Travaux"/>
       </missions>
       <fragorders>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
@@ -6250,14 +6114,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6275,14 +6138,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6313,14 +6175,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
@@ -6350,14 +6211,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6394,14 +6254,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6426,14 +6285,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6459,14 +6317,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6492,14 +6349,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6541,14 +6397,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6586,14 +6441,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6624,14 +6478,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6656,14 +6509,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6692,14 +6544,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6736,14 +6587,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6784,11 +6634,10 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6869,14 +6718,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6899,14 +6747,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6925,14 +6772,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6950,14 +6796,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -6977,14 +6822,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7003,14 +6847,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7025,18 +6868,18 @@
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
+        <mission name="AUTOMATE LOGISTIQUE Transporter Unites"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7051,14 +6894,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7080,14 +6922,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7116,14 +6957,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7153,14 +6993,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7187,14 +7026,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7222,14 +7060,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7254,14 +7091,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7283,14 +7119,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7312,14 +7147,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7341,14 +7175,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7366,14 +7199,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7397,14 +7229,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7424,14 +7255,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7454,14 +7284,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7488,14 +7317,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7524,14 +7352,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7558,14 +7385,13 @@
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
@@ -7608,4 +7434,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3696312653" -->
+<!-- signature="2378023348" -->
