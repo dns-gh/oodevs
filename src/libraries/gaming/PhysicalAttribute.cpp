@@ -22,7 +22,7 @@
 PhysicalAttribute::PhysicalAttribute( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                       kernel::UrbanObject& urbanObject, const kernel::ObjectTypes& objectTypes, kernel::Controller& controller )
 {
-    architecture_.reset( new Architecture( message, dictionary, objectTypes ) );
+    architecture_.reset( new Architecture( message, urbanObject, dictionary, objectTypes ) );
     usages_.reset( new Usages( message, dictionary, accommodationTypes, ( architecture_.get() ) ? urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ) : urbanObject.GetLivingSpace( 0, 0 ), urbanObject, controller ) );
 }
 

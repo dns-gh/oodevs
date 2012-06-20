@@ -21,14 +21,15 @@
 // Name: UrbanColor constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::PropertiesDictionary& dico )
+UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
-    , dico_   ( dico )
+    , object_     ( object )
+    , dico_       ( dico )
 {
     if( parent )
     {
         const kernel::UrbanColor_ABC& parentColor = parent->Get< kernel::UrbanColor_ABC >();
-        SetColor( parentColor.Red(), parentColor.Green(), parentColor.Blue(), parentColor.Alpha() * 255 );
+        SetColor( parentColor.Red(), parentColor.Green(), parentColor.Blue(), static_cast< int >( parentColor.Alpha() * 255 + 0.5 ) );
         initial_ = current_;
     }
     assert( controllers_.modes_ );
@@ -40,9 +41,10 @@ UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::Controllers& c
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::PropertiesDictionary& dico )
+UrbanColor::UrbanColor( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
-    , dico_   ( dico )
+    , object_     ( object )
+    , dico_       ( dico )
 {
     if( xis.has_child( "color" ) )
     {
@@ -100,7 +102,7 @@ void UrbanColor::NotifyModeChanged( int newMode )
 void UrbanColor::CreateDictionnary( bool readOnly )
 {
     if( readOnly )
-        dico_.Register( *this, tools::translate( "UrbanColor", "Info/Color" ), static_cast< const UrbanColor& >( *this ).current_ );
+        dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), static_cast< const UrbanColor& >( *this ).current_ );
     else
-        dico_.Register( *this, tools::translate( "UrbanColor", "Info/Color" ), current_ );
+        dico_.Register( object_, tools::translate( "UrbanColor", "Info/Color" ), current_ );
 }

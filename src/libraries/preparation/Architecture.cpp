@@ -22,8 +22,8 @@
 // Name: Architecture constructor
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
-    : kernel::Architecture( dictionary )
+Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
+    : kernel::Architecture( object, dictionary )
     , controllers_( controllers )
 {
     if( parent )
@@ -51,8 +51,8 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
 // Name: Architecture constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
-    : kernel::Architecture( dictionary )
+Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
+    : kernel::Architecture( object, dictionary )
     , controllers_( controllers )
 {
     unsigned int height = 0;

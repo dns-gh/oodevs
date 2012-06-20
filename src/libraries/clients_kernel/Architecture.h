@@ -19,6 +19,7 @@ namespace kernel
     class PropertiesDictionary;
     class RoofShapeType;
     class ObjectTypes;
+    class UrbanObject_ABC;
 
 // =============================================================================
 /** @class  Architecture
@@ -31,7 +32,7 @@ class Architecture : public Architecture_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Architecture( PropertiesDictionary& dictionary );
+    explicit Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary );
     virtual ~Architecture();
     //@}
 
@@ -57,6 +58,7 @@ protected:
 protected:
     //! @name Member Data
     //@{
+    kernel::UrbanObject_ABC&    object_;
     PropertiesDictionary&       dictionary_;
     MaterialCompositionType*    material_;
     RoofShapeType*              roofShape_;
