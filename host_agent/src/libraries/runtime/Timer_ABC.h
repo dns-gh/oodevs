@@ -40,7 +40,7 @@ struct Timer_ABC : public boost::noncopyable
      virtual ~Timer_ABC() {}
      //@}
 
-     //! @name Constructors/Destructors
+     //! @name Methods
     //@{
      virtual void Stop() = 0;
      //@}

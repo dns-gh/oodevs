@@ -14,21 +14,24 @@
 
 namespace runtime
 {
+// =============================================================================
+/** @class  Scoper
+    @brief  Scoper class definition
+*/
+// Created: BAX 2012-06-18
+// =============================================================================
 struct Scoper : public boost::noncopyable
 {
     typedef boost::function< void( void ) > Task;
- 
     Scoper( const Task& task )
         : task_( task )
     {
         // NOTHING
     }
- 
     ~Scoper()
     {
         task_();
     }
-
 private:
     const Task task_;
 };
