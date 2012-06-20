@@ -10,9 +10,6 @@ rootnode
     end;
 
     failed = function( self, params, additionnalParams )
-        if additionnalParams.state == "Can't be activated" then
-            meKnowledge:RC( eRC_ObstacleNonActivable )
-        end
         Feedback( self.feedbacks.failed )
     end;
 

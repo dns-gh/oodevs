@@ -8,10 +8,10 @@ rootnode
     connections = { skill.nodes.activateElement };
     
     -- -------------------------------------------------------------------------------- 
-    -- Feedback when position reached and when occupied
+    -- Feedback when obstacle activated
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionnalParams )
-        self.targets[ additionnalParams.entity ] = nil
+        self.targets[ params.entity ] = nil
         if not next( self.targets ) then
             Feedback( self.feedbacks.done )
             return
@@ -53,13 +53,10 @@ node "activateElement"
     -- Feedback when position reached and when occupied
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionnalParams )
-        if additionnalParams.reason == "arrived" then
-            self.arrived = true  
-        end
         if additionnalParams.reason == "activated" then
-            Feedback( self.feedbacks.done, { entity = additionnalParams.entity } )
+            Feedback( self.feedbacks.done, { entity = params.entity } )
         end
-    end;
+    end,
     
     create = function( self )
         if self.params.positions or self.params.positions == NIL then
@@ -76,9 +73,10 @@ node "activateElement"
     -- --------------------------------------------------------------------------------
     activate = function( self )
         -- when the entity is activated send a feedback
-        if self.params.entity:isActivated() then -- never called because isfullyactivated is a part of activationPriority
-            Feedback( self.feedbacks.done, { entity = self.params.entity, reason = "activated"  } )
-            return
+        if not self.params.entity:isManeuverObstacle() then
+               meKnowledge:RC( eRC_ObstacleNonActivable, self.params.entity.source )
+               Feedback( self.feedbacks.done, { entity = self.params.entity, reason = "activated"  } )
+               return
         end
 
         -- current observation toward the element to reconnoiter

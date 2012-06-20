@@ -54,7 +54,7 @@ rootnode
     nextElement = function( self, params, additionalParams )
         self.nextTargetIndex = self.nextTargetIndex + 1
         if self.nextTargetIndex > #self.params.entities then
-            Feedback( self.feedbacks.done )
+            self.alltry = true
         end
         meKnowledge:sendStopNeededReinforcement( integration.GetSuperiorKnowledge( meKnowledge ), meKnowledge)
     end,
@@ -96,7 +96,7 @@ rootnode
 
         if self.alltry then
             for _, objective in pairs( self.objectsToActivate ) do -- Obstacles should be activated to consider action over
-                if not objective:isActivated() then
+                if not objective:isActifManeuverObstacle() then
                     return
                 end
             end

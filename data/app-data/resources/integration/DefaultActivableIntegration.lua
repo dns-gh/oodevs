@@ -20,7 +20,7 @@ end
 
 integration.activateIt = function( object )
     if DEC_ActiverObjet( object.source ) then
-        meKnowledge:RC( eRC_ActivationObstacleDeManoeuvre )
+        meKnowledge:RC( eRC_ActivationObstacleDeManoeuvre, object.source )
         return true
     end
     return false
@@ -33,4 +33,8 @@ end
 
 integration.isManeuverObstacle = function ( object )
     return DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( object.source )
+end
+
+integration.isActifManeuverObstacle = function ( object )
+    return DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif( object.source )
 end

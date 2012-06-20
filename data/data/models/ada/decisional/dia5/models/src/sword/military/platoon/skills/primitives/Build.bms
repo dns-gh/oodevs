@@ -95,7 +95,7 @@ node "BuildElement"
         end
         -- when the entity is built send a feedback
         if toBuild:isBuilt() or self.alreadyBuiltNeedActivate then
-            if toBuild:isManeuverObstacle() and not toBuild:isActivated() then  --if maneuver obstacle, it need to be activated to consider the building action is over
+            if toBuild:isManeuverObstacle() and not toBuild:isActifManeuverObstacle() then  --if maneuver obstacle, it need to be activated to consider building action is over
                meKnowledge:sendObstacleToActivate( integration.GetSuperiorKnowledge( meKnowledge), toBuild )
                Feedback( self.feedbacks.notActivated, { element = toBuild } )
                return   
