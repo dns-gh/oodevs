@@ -16,6 +16,6 @@ return
        integration.startFragOrderTask( self )
     end,
     getParameters = function( self )
-        return integration.getParameters( self )
+        return integration.getFireParameters( self )
     end
 }
