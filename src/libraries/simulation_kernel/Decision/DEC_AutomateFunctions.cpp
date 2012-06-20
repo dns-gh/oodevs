@@ -63,6 +63,15 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomates( const MIL_
     return result;
 }
 
+namespace
+{
+    bool CanPCEmit( const MIL_Automate& callerAutomate )
+    {
+        MIL_AgentPion* pionPC = callerAutomate.GetPionPC();
+        return pionPC && pionPC->GetRole< PHY_RolePion_Communications >().CanEmit();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetPionsWithoutPC
 // Created: NLD 2004-10-18
@@ -70,6 +79,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomates( const MIL_
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const MIL_Automate& callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
+    if( !CanPCEmit( callerAutomate ) )
+        return result;
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
     if( pions.size() > 0 )
     {
@@ -78,8 +89,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
         {
             if( !( *it ) )
                 throw std::runtime_error( "Invalid pion in GetPionsWithoutPC" );
-            MIL_AgentPion* pion = callerAutomate.GetPionPC();
-            if( pion && *pion != (**it) )
+            MIL_AgentPion* pionPC = callerAutomate.GetPionPC();
+            if( pionPC && *pionPC != (**it) )
             {
                 const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >();
                 if( role.CanReceive() )
@@ -121,6 +132,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MI
 {
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
     std::vector< DEC_Decision_ABC* > result;
+    if( !CanPCEmit( callerAutomate ) )
+        return result;
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
     {
         if( !( *it ) )
