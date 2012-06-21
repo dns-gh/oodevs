@@ -69,21 +69,10 @@
             project="host_agent" platform="cmake.platform.${platform}" />
     </target>
 
-    <macrodef name="ctest_call">
-        <attribute name="echo"/>
-        <attribute name="configuration"/>
-        <sequential>
-            <exec taskname="@{echo}" executable="ctest" dir="${out.dir}" failonerror="true">
-                <arg value="--output-on-failure"/>
-                <arg value="-C"/>
-                <arg value="@{configuration}"/>
-            </exec>
-        </sequential>
-    </macrodef>
-
     <target name="test">
-        <ctest_call echo="debug" configuration="Debug"/>
-        <ctest_call echo="release" configuration="RelWithDebInfo"/>
+        <poney-test name="runtime_test_d.exe" dir="${out.dir}" data="" />
+        <poney-test name="host_test_d.exe" dir="${out.dir}" data="" />
+        <poney-test name="web_test_d.exe" dir="${out.dir}" data="" />
     </target>
 
     <target name="all" depends="configure,build,test"/>
