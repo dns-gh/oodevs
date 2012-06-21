@@ -54,6 +54,7 @@ public:
     //@}
 
     virtual unsigned int GetNbrUsableHumans() const = 0;
+    virtual unsigned int GetNumber() const = 0;
     //@}
 
     //! @name Medical

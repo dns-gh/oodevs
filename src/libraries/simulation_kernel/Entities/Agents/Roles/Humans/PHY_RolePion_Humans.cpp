@@ -613,4 +613,19 @@ unsigned int PHY_RolePion_Humans::GetNbrUsableHumans() const
     return nNbrUsableHumans_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::GetNumber
+// Created: LDC 2012-06-21
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Humans::GetNumber() const
+{
+    unsigned int result = 0;
+    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    {
+        const HumanState& state = **it;
+        result += state.number_;
+    }
+    return result;
+}
+
 } // namespace human

@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
@@ -399,6 +400,8 @@ double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 
     // Population
     const double rPopulationDensity = target.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
+    if( target.IsCivilian() && ( target.Get< human::PHY_RoleInterface_Humans >().GetNumber() == 1 ) && rPopulationDensity > 0. )
+        return 0;
     return rModifier * GetPopulationFactor( rPopulationDensity );
 }
 

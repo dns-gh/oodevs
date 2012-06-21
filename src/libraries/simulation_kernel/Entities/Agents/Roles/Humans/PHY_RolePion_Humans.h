@@ -54,6 +54,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int GetNbrUsableHumans() const;
+    virtual unsigned int GetNumber() const;
     //@}
 
     //! @name Notifications
