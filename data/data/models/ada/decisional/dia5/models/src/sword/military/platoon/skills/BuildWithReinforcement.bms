@@ -15,18 +15,16 @@ rootnode
     done = function( self ) end,
 
     elementFailed = function( self, params, additionalParams )
+        self.report = additionalParams.reason
         if additionalParams.reason == eRC_BUNonTraficable then
-            self.report = additionalParams.reason
             self.nextTargetIndex = self.nextTargetIndex + 1
             if self.nextTargetIndex > #self.params.entities then
                 self.alltry = true
             end
         elseif additionalParams.reason == eRC_PasDotationConstructionObjet then
             integration.setNeedReinforcement( meKnowledge, additionalParams.action, additionalParams.element, true )
-            self.report = eRC_AttenteRenforcement
         else
             integration.setNeedReinforcement( meKnowledge, additionalParams.action, additionalParams.element, false )
-            self.report = eRC_AttenteRenforcement
         end
     end,
 
