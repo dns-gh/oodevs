@@ -24,10 +24,11 @@
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/FloodCapacity.h"
@@ -592,7 +593,13 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     DEC_Path::Execute( pathfind );
     DEC_PathResult::E_State nPathState = GetState();
     if( nPathState == DEC_Path_ABC::eImpossible )
-        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+    {
+        const PHY_RoleAction_MovingUnderground* roleUnderground = queryMaker_.RetrieveRole< PHY_RoleAction_MovingUnderground >();
+        if( roleUnderground && roleUnderground->IsUnderground() )
+            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_NotActivatedUndergroundNetwork );
+        else
+            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+    }
 
 #ifndef NDEBUG
     for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )
