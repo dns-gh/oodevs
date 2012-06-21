@@ -70,9 +70,9 @@
     </target>
 
     <target name="test">
-        <poney-test name="runtime_test.exe" dir="${out.dir}/RelWithDebInfo" data="" />
-        <poney-test name="host_test.exe" dir="${out.dir}/RelWithDebInfo" data="" />
-        <poney-test name="web_test.exe" dir="${out.dir}/RelWithDebInfo" data="" />
+        <poney-test name="runtime_test" dir="${out.dir}/RelWithDebInfo" data="" />
+        <poney-test name="host_test" dir="${out.dir}/RelWithDebInfo" data="" />
+        <poney-test name="web_test" dir="${out.dir}/RelWithDebInfo" data="" />
     </target>
 
     <target name="all" depends="configure,build,test"/>
