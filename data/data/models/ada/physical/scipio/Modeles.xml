@@ -1451,10 +1451,7 @@
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
       <missions>
-        <mission name="PION ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="PION ALAT Heliporter">
+        <mission name="PION ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="PION ALAT Heliporter Helitransporter Plot Ravitaillement"/>
@@ -1494,10 +1491,7 @@
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
       <missions>
-        <mission name="PION ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="PION ALAT Heliporter">
+        <mission name="PION ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="PION ALAT Heliporter Helitransporter Plot Ravitaillement"/>
@@ -1686,10 +1680,7 @@
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
       <missions>
-        <mission name="PION ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="PION ALAT Heliporter">
+        <mission name="PION ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="PION ALAT Heliporter Helitransporter Plot Ravitaillement"/>
@@ -6463,9 +6454,6 @@
         <mission name="AUTOMATE ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
-        <mission name="AUTOMATE ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
         <mission name="AUTOMATE Faire Mouvement"/>
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
@@ -6528,9 +6516,6 @@
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" masalife="false" name="GLAISE ALFT esc UH et UM">
       <missions>
         <mission name="AUTOMATE ALAT Heliporter Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="AUTOMATE ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="AUTOMATE Faire Mouvement"/>
@@ -7436,4 +7421,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3949492315" -->
+<!-- signature="0356168415" -->
