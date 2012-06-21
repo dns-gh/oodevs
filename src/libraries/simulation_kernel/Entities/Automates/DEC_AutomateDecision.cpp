@@ -28,6 +28,7 @@
 #include "Decision/DEC_FireFunctions.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
+#include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
@@ -204,6 +205,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
 
     // State
     brain[ "DEC_Automate_EstEmbraye" ] = boost::bind( &DEC_AutomateFunctions::IsEngaged, this );
+    brain[ "DEC_Automate_ROE" ] =
+        boost::function< int() >( boost::lambda::constant( nRulesOfEngagementState_ ) );
     brain[ "DEC_Automate_ChangeEtatROE" ] =
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Automate_ChangeEtatROEPopulation" ] =
