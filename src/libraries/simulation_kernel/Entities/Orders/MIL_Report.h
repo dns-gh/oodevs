@@ -149,6 +149,7 @@ public:
         eReport_Questionning,
         eReport_UnderIEDFire,
         eReport_FragOrderReceived,
+        eReport_NotActivatedUndergroundNetwork,
         eNbrReport
     };
 

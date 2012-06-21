@@ -144,6 +144,8 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_Questionning ] = eRC_Questionning;
 
     diaEvents_[ eReport_FragOrderReceived ] = eRC_FragOrderReceived;
+
+    diaEvents_[ eReport_NotActivatedUndergroundNetwork ] = eRC_NotActivatedUndergroundNetwork;
 }
 
 // -----------------------------------------------------------------------------
