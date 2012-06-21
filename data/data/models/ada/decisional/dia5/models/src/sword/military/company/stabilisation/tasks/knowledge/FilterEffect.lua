@@ -7,7 +7,7 @@ return
     end,
 
     getBodySearchStrength = function( self, params )
-        return params.bodySearchStrength or 0
+        return params.bodySearchStrength
     end,
 
     getBlockingStrength = function( self, params )
