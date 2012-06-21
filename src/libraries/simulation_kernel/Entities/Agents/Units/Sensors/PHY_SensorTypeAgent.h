@@ -108,7 +108,7 @@ private:
     double GetTargetFactor    ( const MIL_Agent_ABC&       target ) const;
     double GetTargetFactor    ( const DEC_Knowledge_Agent& target ) const;
 
-    bool ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const; // LTO
+    bool IsLimitedToSensors( const MIL_Agent_ABC& target ) const;
 
     double GetPopulationFactor( double rDensity ) const;
     //@}

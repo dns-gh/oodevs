@@ -385,10 +385,8 @@ double PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) const
 // -----------------------------------------------------------------------------
 double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 {
-    // LTO begin
-    if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target ) == false )
+    if( IsLimitedToSensors( target ) )
         return 0;
-    // LTO end
 
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
@@ -410,10 +408,8 @@ double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 // -----------------------------------------------------------------------------
 double PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
 {
-    // LTO begin
-    if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target.GetAgentKnown() ) == false )
+    if( IsLimitedToSensors( target.GetAgentKnown() ) )
         return 0;
-    // LTO end
 
     const unsigned int nOldPostureIdx = target.GetLastPosture   ().GetID();
     const unsigned int nCurPostureIdx = target.GetCurrentPosture().GetID();
@@ -426,12 +422,14 @@ double PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ContainsSensorFromLimitedList
-// Created: JSR 2010-03-16
-// LTO
+// Name: PHY_SensorTypeAgent::IsLimitedToSensors
+// Created: LDC 2012-06-21
 // -----------------------------------------------------------------------------
-bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const
+bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) const
 {
+    if( !isLimitedToSensors_ )
+        return false;
+
     const PHY_RoleInterface_Perceiver& targetPerceiver = target.GetRole< PHY_RoleInterface_Perceiver >();
 
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = targetPerceiver.GetSurfacesAgent();
@@ -442,7 +440,7 @@ bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& ta
 
         for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
             if( *it == sensorName )
-                return true;
+                return false;
     }
 
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
@@ -458,11 +456,11 @@ bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& ta
 
             for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
             if( *it == radarName )
-                return true;
+                return false;
         }
     }
 
-    return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
