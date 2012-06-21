@@ -21,7 +21,7 @@ rootnode
 
     elementFailed = function( self, params, additionalParams )
         integration.setNeedReinforcement( meKnowledge, "destroy", additionalParams.element )
-        self.report = eRC_AttenteRenforcement
+        self.report = eRC_ObjetNonSupprimable
     end,
 
     -- -------------------------------------------------------------------------------- 

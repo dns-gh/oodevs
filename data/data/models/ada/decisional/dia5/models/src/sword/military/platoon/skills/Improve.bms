@@ -15,12 +15,12 @@ rootnode
     end,
 
     elementFailed = function( self, params, additionalParams )
+        self.report = additionalParams.reason
         if additionalParams.reason == eRC_PasDotationConstructionObjet then
             integration.setNeedReinforcement( meKnowledge, "mine", additionalParams.element, true )
         else
             integration.setNeedReinforcement( meKnowledge, "mine", additionalParams.element, false )
         end
-        self.report = eRC_AttenteRenforcement
     end,
 
     elementNotImprovable = function( self, params, additionalParams )
