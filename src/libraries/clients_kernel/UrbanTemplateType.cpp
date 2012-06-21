@@ -23,8 +23,9 @@ using namespace kernel;
 // Name: UrbanTemplateType constructor
 // Created: JSR 2012-06-11
 // -----------------------------------------------------------------------------
-UrbanTemplateType::UrbanTemplateType( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ) )
+UrbanTemplateType::UrbanTemplateType( xml::xistream& xis, const ObjectTypes& types )
+    : types_( types )
+    , name_ ( xis.attribute< std::string >( "name" ) )
     , color_( 0, 0, 0, 0 )
 {
     float alpha;
@@ -80,7 +81,7 @@ void UrbanTemplateType::ReadUsage( xml::xistream& xis )
 // Name: UrbanTemplateType::Fill
 // Created: JSR 2012-06-11
 // -----------------------------------------------------------------------------
-void UrbanTemplateType::Fill( kernel::UrbanObject_ABC& urbanObject, const ObjectTypes& objectTypes ) const
+void UrbanTemplateType::Fill( kernel::UrbanObject_ABC& urbanObject ) const
 {
     kernel::PhysicalAttribute_ABC& physical = urbanObject.Get< kernel::PhysicalAttribute_ABC >();
 
@@ -92,10 +93,10 @@ void UrbanTemplateType::Fill( kernel::UrbanObject_ABC& urbanObject, const Object
 
     // architecture
     kernel::Architecture_ABC& architecture = physical.GetArchitecture();
-    MaterialCompositionType* material = objectTypes.tools::StringResolver< MaterialCompositionType >::Find( material_ );
+    MaterialCompositionType* material = types_.tools::StringResolver< MaterialCompositionType >::Find( material_ );
     if( material )
         architecture.SetMaterial( *material );
-    RoofShapeType* roof = objectTypes.tools::StringResolver< RoofShapeType >::Find( roofShape_ );
+    RoofShapeType* roof = types_.tools::StringResolver< RoofShapeType >::Find( roofShape_ );
     if( roof )
         architecture.SetRoofShape( *roof );
     architecture.SetFloorNumber( floorNumber_ );

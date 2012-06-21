@@ -76,13 +76,6 @@
     </message>
 </context>
 <context>
-    <name>Block</name>
-    <message>
-        <source>PhysicalFeatures/Architecture</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>

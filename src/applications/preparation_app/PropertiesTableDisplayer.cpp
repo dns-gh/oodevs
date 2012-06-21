@@ -17,6 +17,7 @@
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/UrbanTemplateType.h"
 #include "clients_gui/Tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/DotationsItem.h"
@@ -125,6 +126,15 @@ void PropertiesTableDisplayer::Call( const PopulationRepartition& /*value*/ )
 // Created: ABR 2012-05-30
 // -----------------------------------------------------------------------------
 void PropertiesTableDisplayer::Call( const kernel::InfrastructureType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: JSR 2012-06-20
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::UrbanTemplateType& value )
 {
     AddToDisplay( value.GetName() );
 }

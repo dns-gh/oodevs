@@ -210,3 +210,30 @@ void UrbanObject::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::ApplyTemplate
+// Created: JSR 2012-06-20
+// -----------------------------------------------------------------------------
+void UrbanObject::ApplyTemplate( const UrbanTemplateTypePtr& /*urbanTemplate*/ )
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::UpdateTemplate
+// Created: JSR 2012-06-20
+// -----------------------------------------------------------------------------
+void UrbanObject::UpdateTemplate( const kernel::ObjectTypes& objectTypes )
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::IsUpdatingTemplate
+// Created: JSR 2012-06-21
+// -----------------------------------------------------------------------------
+bool UrbanObject::IsUpdatingTemplate() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}

@@ -29,6 +29,7 @@ namespace kernel
     class NBCAgent;
     class LogisticLevel;
     class RoofShapeType;
+    class UrbanTemplateType;
     struct UrbanBlockColor;
 }
 
@@ -60,6 +61,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::Moveable_ABC** >
                     , public tools::Caller< PopulationRepartition** >
                     , public tools::Caller< kernel::InfrastructureType** >
+                    , public tools::Caller< kernel::UrbanTemplateType** >
                     , public tools::Caller< kernel::MaterialCompositionType** >
                     , public tools::Caller< kernel::RoofShapeType** >
                     , public tools::Caller< kernel::UrbanBlockColor* >
@@ -87,6 +89,7 @@ public:
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( PopulationRepartition** const& value );
     virtual void Call( kernel::InfrastructureType** const& value );
+    virtual void Call( kernel::UrbanTemplateType** const& value );
     virtual void Call( kernel::MaterialCompositionType** const& value );
     virtual void Call( kernel::RoofShapeType** const& value );
     virtual void Call( kernel::UrbanBlockColor* const& value );

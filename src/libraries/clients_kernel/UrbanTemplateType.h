@@ -35,14 +35,14 @@ class UrbanTemplateType : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanTemplateType( xml::xistream& xis );
+    explicit UrbanTemplateType( xml::xistream& xis, const ObjectTypes& types );
     virtual ~UrbanTemplateType();
     //@}
 
     //! @name Operations
     //@{
     const std::string& GetName() const;
-    void Fill( kernel::UrbanObject_ABC& urbanObject, const ObjectTypes& objectTypes ) const;
+    void Fill( kernel::UrbanObject_ABC& urbanObject ) const;
     bool Matches( const kernel::UrbanObject_ABC& urbanObject ) const;
     //@}
 
@@ -62,6 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const ObjectTypes& types_;
     std::string name_;
     std::string roofShape_;
     std::string material_;

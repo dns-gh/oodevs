@@ -76,9 +76,9 @@ UrbanColor::~UrbanColor()
 void UrbanColor::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "color" )
-            << xml::attribute< int >( "red", initial_.red_ )
-            << xml::attribute< int >( "green", initial_.green_ )
-            << xml::attribute< int >( "blue", initial_.blue_ )
+            << xml::attribute< int >( "red", current_.red_ )
+            << xml::attribute< int >( "green", current_.green_ )
+            << xml::attribute< int >( "blue", current_.blue_ )
             << xml::attribute< float >( "alpha", Alpha() )
         << xml::end;
 }
