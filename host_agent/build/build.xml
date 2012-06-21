@@ -47,12 +47,11 @@
     </target>
 
     <macrodef name="msbuild_call">
-        <attribute name="echo"/>
         <attribute name="configuration"/>
         <attribute name="platform"/>
         <attribute name="project"/>
         <sequential>
-            <exec taskname="@{echo}" executable="msbuild" dir="${out.dir}" failonerror="true">
+            <exec taskname="build" executable="msbuild" dir="${out.dir}" failonerror="true">
                 <arg value="/nologo"/>
                 <arg value="/verbosity:minimal"/>
                 <arg value="@{project}.sln"/>
@@ -63,9 +62,9 @@
     </macrodef>
 
     <target name="build">
-        <msbuild_call echo="debug" configuration="Debug"
+        <msbuild_call configuration="Debug"
             project="host_agent" platform="cmake.platform.${platform}" />
-        <msbuild_call echo="release" configuration="RelWithDebInfo"
+        <msbuild_call configuration="RelWithDebInfo"
             project="host_agent" platform="cmake.platform.${platform}" />
     </target>
 
