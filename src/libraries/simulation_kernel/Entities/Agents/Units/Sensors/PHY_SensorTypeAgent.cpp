@@ -689,32 +689,6 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputePerception
-// Created: NLD 2004-09-07
-// Modified: JVT 2004-09-28
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const DEC_Knowledge_Agent& target, double rSensorHeight ) const
-{
-    const MT_Vector2D& vTargetPos = target.GetPosition();
-
-    if( target.IsDead() )
-        return ComputePerception( source, vTargetPos, rSensorHeight );
-
-    const PHY_Volume* pSignificantVolume = target.GetSignificantVolume( *this );
-    if( !pSignificantVolume )
-        return PHY_PerceptionLevel::notSeen_;
-
-    double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
-             rDistanceMaxModificator *= GetTargetFactor( target );
-             rDistanceMaxModificator *= GetSourceFactor( source );
-
-    const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const double     rTargetAltitude = target.GetAltitude() + 2;
-
-    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputePerception
