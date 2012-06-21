@@ -227,6 +227,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
 boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Session_ABC& session ) const
 {
     return runtime_.Start( Utf8Convert( apps_ / "simulation_app.exe" ), boost::assign::list_of
+        ( MakeOption( "debug-dir", Utf8Convert( session.GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( session.GetPath( "exercise" ) ) ) )
         ( MakeOption( "terrains-dir", Utf8Convert( session.GetPath( "terrain" ) ) ) )
         ( MakeOption( "models-dir", Utf8Convert( session.GetPath( "model" ) ) ) )
