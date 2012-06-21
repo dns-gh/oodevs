@@ -231,7 +231,8 @@ boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Se
         ( MakeOption( "terrains-dir", Utf8Convert( session.GetPath( "terrain" ) ) ) )
         ( MakeOption( "models-dir", Utf8Convert( session.GetPath( "model" ) ) ) )
         ( MakeOption( "exercise", Utf8Convert( session.GetExercise() ) ) )
-        ( MakeOption( "session",  session.GetId() ) ),
+        ( MakeOption( "session",  session.GetId() ) )
+        ( "--silent" ),
         Utf8Convert( apps_ ),
         Utf8Convert( session.GetRoot() / "session.log" ) );
 }
