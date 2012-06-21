@@ -116,6 +116,8 @@ end
     create = function( self )
         self._namedParams = {}
         self._namedParams.pointAReconnaitre = self.params[1]
+        self.pPt = -1
+        self.pPtObj = -1
     end,
 
     select = function( self )
@@ -125,8 +127,6 @@ end
         self.bRecoMaxObj = self.bRecoMaxObj or false
         self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
         self.loc = self.loc or DEC_Geometrie_ConvertirPointEnLocalisation( self.ptRecoCopie )
-        self.pPt = self.pPt or -1
-        self.pPtObj = self.pPtObj or nil
 
         if( ModuleBegins() ) then
             DEC_Trace( ">> Begin Recon" )
@@ -190,6 +190,8 @@ end
         self._namedParams = {}
         self._namedParams.pointAReconnaitre = self.params[1]
         self._namedParams.rCapacite = self.params[2]
+        self.perceptionPoint = -1
+        self.pPtObj = -1
     end,
 
     select = function( self )
@@ -197,8 +199,6 @@ end
         self.bRecoMaxObj = self.bRecoMaxObj or false
         self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
         self.loc = self.loc or DEC_Geometrie_ConvertirPointEnLocalisation( self.ptRecoCopie )
-        self.perceptionPoint = self.perceptionPoint or -1
-        self.pPtObj = self.pPtObj or nil
         if( ModuleBegins() ) then
                 DEC_Copie_Point( self._namedParams.pointAReconnaitre, self.ptRecoCopie )
 
@@ -284,6 +284,8 @@ end
     create = function( self )
         self._namedParams = {}
         self._namedParams.pointAObserver = self.params[1]
+        self.perceptionPoint = -1
+        self.pPtObj = -1
     end,
 
     select = function( self )
@@ -291,8 +293,6 @@ end
         self.bRecoMaxObj = self.bRecoMaxObj or false
         self.ptRecoCopie = self.ptRecoCopie or DEC_Geometrie_CreerPoint()
         self.loc = self.loc or DEC_Geometrie_ConvertirPointEnLocalisation( self.ptRecoCopie )
-            self.perceptionPoint = self.perceptionPoint or -1
-        self.pPtObj = self.pPtObj or nil
             if( ModuleBegins() ) then
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
                         DEC_RC( eRC_DebutSurveillance )
