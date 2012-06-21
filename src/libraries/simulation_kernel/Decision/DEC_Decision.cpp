@@ -630,42 +630,56 @@ void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife
     MIL_FragOrder::Register( brain );
 }
 
-typedef void (*T_Function)( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
+typedef bool (*T_Function)( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
 typedef bool (*T_FunctionBM)( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element );
 
-void BoolFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool BoolFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     bool value;
     if( element.ToBool( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool BoolFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    BoolFunction( refMission, name, element );
-    return true;
+    return BoolFunction( refMission, name, element );
 }
-void EnumerationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool EnumerationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int value;
     if( element.ToId( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool EnumerationFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    EnumerationFunction( refMission, name, element );
-    return true;
+    return EnumerationFunction( refMission, name, element );
 }
-void PointFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PointFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
-void PointListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PointListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool PointFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -688,17 +702,25 @@ bool PointListFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     }
     return false;
 }
-void PolygonFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PolygonFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
-void PolygonListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PolygonListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AreaFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -720,29 +742,45 @@ bool AreaListFunctionBM( directia::brain::Brain& brain, directia::tools::binders
     }
     return false;
 }
-void LocationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool LocationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToLocation( value ) && value.get() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
-void LocationListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool LocationListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToLocationList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
-void PathFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PathFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPath( value ) && !value.empty() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
-void PathListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PathListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > value;
     if( element.ToPathList( value ) && !value.empty() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool PathFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -754,9 +792,10 @@ bool PathFunctionBM( directia::brain::Brain& brain, directia::tools::binders::Sc
     }
     return false;
 }
-void DirectionFunction( const directia::tools::binders::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
+bool DirectionFunction( const directia::tools::binders::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
 {
     // $$$$ LDC: FIXME The only existing Direction argument is dangerDirection_ which is never used by the brains.
+    return false;
 }
 bool DirectionFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -768,22 +807,29 @@ bool DirectionFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     }
     return false;
 }
-void NatureAtlasFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool NatureAtlasFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int value = 0;
     if( element.ToNatureAtlas( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool NatureAtlasFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    NatureAtlasFunction( refMission, name, element );
-    return true;
+    return NatureAtlasFunction( refMission, name, element );
 }
-void AutomatFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AutomatFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AutomatFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -795,11 +841,15 @@ bool AutomatFunctionBM( directia::brain::Brain& brain, directia::tools::binders:
     }
     return false;
 }
-void AutomatListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AutomatListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AutomatListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -811,11 +861,15 @@ bool AutomatListFunctionBM( directia::brain::Brain& brain, directia::tools::bind
     }
     return false;
 }
-void AgentFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AgentFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -827,11 +881,15 @@ bool AgentFunctionBM( directia::brain::Brain& brain, directia::tools::binders::S
     }
     return false;
 }
-void AgentListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AgentListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -843,11 +901,15 @@ bool AgentListFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     }
     return false;
 }
-void AgentKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > value;
     if( element.ToAgentKnowledge( value ) && value.get() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AgentKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -859,11 +921,15 @@ bool AgentKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::b
     }
     return false;
 }
-void AgentKnowledgeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool AgentKnowledgeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool AgentKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -875,11 +941,15 @@ bool AgentKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tool
     }
     return false;
 }
-void ObjectKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ObjectKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Knowledge_Object > value;
     if( element.ToObjectKnowledge( value ) && value && value->IsValid() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool ObjectKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -891,11 +961,15 @@ bool ObjectKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::
     }
     return false;
 }
-void ObjectKnowledgeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ObjectKnowledgeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool ObjectKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -907,11 +981,15 @@ bool ObjectKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::too
     }
     return false;
 }
-void PopulationKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool PopulationKnowledgeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     DEC_Knowledge_Population* value = 0;//@TODO MGD why not shared_ptr
     if( element.ToPopulationKnowledge( value ) && value )
+    {
         refMission[ name ] = value->GetID();
+        return true;
+    }
+    return false;
 }
 bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -935,17 +1013,20 @@ bool UrbanBlockFunctionBM( directia::brain::Brain& brain, directia::tools::binde
     return false;
 }
 
-void DotationTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool DotationTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_DotationCategory* value = 0;
     if( element.ToDotationType( value ) && value )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 
 bool DotationTypeFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DotationTypeFunction( refMission, name, element );
-    return true;
+    return DotationTypeFunction( refMission, name, element );
 }
 
 bool DotationTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -1003,50 +1084,68 @@ bool ResourceNetworkTypeListFunctionBM( directia::brain::Brain& /*brain*/, direc
     return false;
 }
 
-void EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_ComposanteTypePion* value = 0;
     if( element.ToEquipmentType( value ) && value )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
-void GDHFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool GDHFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     float value = 0;
     if( element.ToGDH( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool GDHFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    GDHFunction( refMission, name, element );
-    return true;
+    return GDHFunction( refMission, name, element );
 }
-void NumericFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool NumericFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     float value = 0;
     if( element.ToNumeric( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool NumericFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    NumericFunction( refMission, name, element );
-    return true;
+    return NumericFunction( refMission, name, element );
 }
-void NumericListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool NumericListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
      std::vector< float > value;
      if( element.ToNumericList( value ) )
+     {
          refMission[ name ] = value;
+         return true;
+     }
+     return false;
 }
 bool NumericListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     NumericListFunction( refMission, name, element );
     return true;
 }
-void GenObjectFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool GenObjectFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Gen_Object > value;
     if( element.ToGenObject( value ) && value.get() )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool GenObjectFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1058,11 +1157,15 @@ bool GenObjectFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     }
     return false;
 }
-void GenObjectListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool GenObjectListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Gen_Object > > value;
     if( element.ToGenObjectList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool GenObjectListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1084,11 +1187,15 @@ bool MaintenancePrioritiesFunctionBM( directia::brain::Brain& brain, directia::t
     }
     return false;
 }
-void MaintenancePrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool MaintenancePrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< const PHY_ComposanteTypePion* > value;
     if( element.ToMaintenancePriorities( value ) )
+    {
         refMission[ name ] = value ;
+        return true;
+    }
+    return false;
 }
 bool MedicalPrioritiesFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1100,35 +1207,86 @@ bool MedicalPrioritiesFunctionBM( directia::brain::Brain& brain, directia::tools
     }
     return false;
 }
-void MedicalPrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool MedicalPrioritiesFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< const PHY_HumanWound* > value;
     if( element.ToMedicalPriorities( value ) )
+    {
         refMission[ name ] = value ;
+        return true;
+    }
+    return false;
 }
-void IndirectFireFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool IndirectFireFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int idIndirectFire;
     if( element.ToId( idIndirectFire ) )
+    {
         refMission[ name ] = idIndirectFire;
+        return true;
+    }
+    return false;
 }
-void StringFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool StringFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::string value;
     if( element.ToString( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
 bool StringFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    StringFunction( refMission, name, element );
-    return true;
+    return StringFunction( refMission, name, element );
 }
-void ObjectiveListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ObjectiveListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_Objective > > value;
     if( element.ToObjectiveList( value ) )
+    {
         refMission[ name ] = value;
+        return true;
+    }
+    return false;
 }
+bool LocationCompositeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    return PointFunction( refMission, name, element )
+        || PathFunction( refMission, name, element )
+        || PolygonFunction( refMission, name, element )
+        || AutomatFunction( refMission, name, element )
+        || AgentFunction( refMission, name, element )
+        || AgentKnowledgeFunction( refMission, name, element )
+        || ObjectKnowledgeFunction( refMission, name, element )
+        || PopulationKnowledgeFunction( refMission, name, element );
+}
+
+bool LocationCompositeListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > list;
+    if( element.ToList( list ) )
+    {
+        std::vector< DEC_Decision_ABC* > result;
+        for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = list.begin(); it != list.end(); ++it )
+        {
+            DEC_Decision_ABC* value = 0;
+            if( (*it)->ToAgent( value ) )
+                result.push_back( value );
+            else
+            {
+                boost::shared_ptr< DEC_Knowledge_Agent > knowledge;
+                if( (*it)->ToAgentKnowledge( knowledge ) && knowledge.get() )
+                    result.push_back( &knowledge->GetAgentKnown().GetDecision() );
+            }
+        }
+        refMission[ name ] = result;
+        return true;
+    }
+    return false;
+}
+
 bool LocationCompositeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     return PointFunctionBM( brain, knowledgeCreateFunction, refMission, name, element )
@@ -1235,6 +1393,8 @@ void InitFunctions()
         functors[ "MedicalPriorities" ] = MedicalPrioritiesFunction;
         functors[ "IndirectFire" ] = IndirectFireFunction;
         functors[ "ObjectiveList" ] = ObjectiveListFunction;
+        functors[ "LocationComposite" ] = LocationCompositeFunction;
+        functors[ "LocationCompositeList" ] = LocationCompositeListFunction;
 
         functorsBM[ "Boolean" ] = BoolFunctionBM;
         functorsBM[ "String" ] = StringFunctionBM;

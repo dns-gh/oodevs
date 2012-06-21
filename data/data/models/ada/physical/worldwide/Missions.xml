@@ -197,7 +197,12 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="Agent"/>
+      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
@@ -3567,7 +3572,12 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="Agent"/>
+      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Units to helitransport" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
@@ -5310,4 +5320,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1998856860" -->
+<!-- signature="1549173354" -->

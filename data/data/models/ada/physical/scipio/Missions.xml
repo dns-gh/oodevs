@@ -168,7 +168,12 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="unitesAHeliporter_" max-occurs="unbounded" min-occurs="1" name="Unites a heliporter" optional="false" type="Agent"/>
+      <parameter dia-name="unitesAHeliporter_" max-occurs="unbounded" min-occurs="1" name="Unites a heliporter" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
@@ -2303,7 +2308,12 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="unitesAHeliporter_" max-occurs="unbounded" min-occurs="1" name="Unites a heliporter" optional="false" type="Agent"/>
+      <parameter dia-name="unitesAHeliporter_" max-occurs="unbounded" min-occurs="1" name="Unites a heliporter" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
@@ -2329,29 +2339,6 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
-      <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
-        <value id="0" name="courte_portee"/>
-        <value id="1" name="moyenne_portee"/>
-        <value id="2" name="longue_portee"/>
-        <value id="3" name="sans_munitions"/>
-      </parameter>
-      <parameter dia-name="ambianceMission_" name="Ambiance Mission" optional="false" type="Enumeration">
-        <value id="0" name="aa"/>
-        <value id="1" name="as"/>
-        <value id="2" name="polyvalent"/>
-      </parameter>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_Helitransporter" dia-type="T_Mission_Automate_ALAT_Helitransporter" id="185" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Helitransporter" name="AUTOMATE ALAT Helitransporter" package="move">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="unitesAHelitransporter_" max-occurs="unbounded" min-occurs="1" name="Unites a helitransporter" optional="false" type="Agent"/>
-      <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
-      <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
-      <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
-      <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -4644,4 +4631,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4006098567" -->
+<!-- signature="0780223884" -->

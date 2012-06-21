@@ -6463,9 +6463,6 @@
         <mission name="AUTOMATE ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
-        <mission name="AUTOMATE ALAT Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
         <mission name="AUTOMATE Faire Mouvement"/>
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
@@ -6528,9 +6525,6 @@
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" masalife="false" name="GLAISE ALFT esc UH et UM">
       <missions>
         <mission name="AUTOMATE ALAT Heliporter Helitransporter">
-          <fragorder name="Changer Position Debarquement"/>
-        </mission>
-        <mission name="AUTOMATE ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="AUTOMATE Faire Mouvement"/>
@@ -7436,4 +7430,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3243022929" -->
+<!-- signature="0216356609" -->
