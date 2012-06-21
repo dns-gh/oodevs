@@ -561,7 +561,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_load_unit_magic_action_f
     BOOST_CHECK( message.message().has_unit_magic_action() );
     const sword::UnitMagicAction& action = message.message().unit_magic_action();
     BOOST_CHECK_EQUAL( action.tasker().unit().id(), vesselId );
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::load_unit );
+    BOOST_CHECK_EQUAL( action.type(), sword::load_unit );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
     BOOST_CHECK( action.parameters().elem( 0 ).value( 0 ).has_agent() );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).agent().id(), surbordinateId );
@@ -603,7 +603,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_destroy_all_magic_action
     BOOST_CHECK( message.message().has_unit_magic_action() );
     const sword::UnitMagicAction& action = message.message().unit_magic_action();
     BOOST_CHECK_EQUAL( action.tasker().unit().id(), surbordinateId );
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::destroy_all );
+    BOOST_CHECK_EQUAL( action.type(), sword::destroy_all );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_unload_unit_magic_action_for_every_disembarked_unit_and_teleport_to_disembarking_point, EmbarkedFixture )
@@ -623,12 +623,12 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_unload_unit_magic_action
     BOOST_CHECK( message.message().has_unit_magic_action() );
     const sword::UnitMagicAction& action = message.message().unit_magic_action();
     BOOST_CHECK_EQUAL( action.tasker().unit().id(), vesselId );
-    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::unload_unit );
+    BOOST_CHECK_EQUAL( action.type(), sword::unload_unit );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 1 );
     BOOST_CHECK( action.parameters().elem( 0 ).value( 0 ).has_agent() );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).agent().id(), surbordinateId );
     BOOST_CHECK( teleport.message().has_unit_magic_action() );
-    BOOST_CHECK_EQUAL( teleport.message().unit_magic_action().type(), sword::UnitMagicAction::move_to );
+    BOOST_CHECK_EQUAL( teleport.message().unit_magic_action().type(), sword::move_to );
 }
 
 namespace
