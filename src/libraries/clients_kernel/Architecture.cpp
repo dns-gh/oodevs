@@ -12,6 +12,7 @@
 #include "PropertiesDictionary.h"
 #include "Tools.h"
 #include "ObjectTypes.h"
+#include "UrbanObject_ABC.h"
 #include "MaterialCompositionType.h"
 #include "RoofShapeType.h"
 
@@ -21,9 +22,10 @@ using namespace kernel;
 // Name: Architecture constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-Architecture::Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary )
+Architecture::Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary, const ObjectTypes& objectTypes )
     : object_        ( object )
     , dictionary_    ( dictionary )
+    , objectTypes_   ( objectTypes )
     , height_        ( 0, Units::meters )
     , floorNumber_   ( 0 )
     , parkingFloors_ ( 0 )
@@ -48,7 +50,7 @@ Architecture::~Architecture()
 // Name: Architecture::Initialize
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( const ObjectTypes& objectTypes, unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
+void Architecture::Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                                float trafficability, const std::string& material /* = "" */, const std::string& roofShape /* = "" */ )
 {
     height_.value_ = height;
@@ -59,22 +61,37 @@ void Architecture::Initialize( const ObjectTypes& objectTypes, unsigned int heig
 
     if( material.empty() || material == "default" )
     {
-        tools::Iterator< const MaterialCompositionType& > it = objectTypes.StringResolver< MaterialCompositionType >::CreateIterator();
+        tools::Iterator< const MaterialCompositionType& > it = objectTypes_.StringResolver< MaterialCompositionType >::CreateIterator();
         assert( it.HasMoreElements() );
         material_ = const_cast< MaterialCompositionType* >( &it.NextElement() );
     }
     else
-        material_ = &objectTypes.StringResolver< MaterialCompositionType >::Get( material );
+        material_ = &objectTypes_.StringResolver< MaterialCompositionType >::Get( material );
 
     if( roofShape.empty() || roofShape == "default" ) 
     {
-        tools::Iterator< const RoofShapeType& > it = objectTypes.StringResolver< RoofShapeType >::CreateIterator();
+        tools::Iterator< const RoofShapeType& > it = objectTypes_.StringResolver< RoofShapeType >::CreateIterator();
         assert( it.HasMoreElements() );
         roofShape_ = const_cast< RoofShapeType* >( &it.NextElement() );
     }
     else
-        roofShape_ = &objectTypes.StringResolver< RoofShapeType >::Get( roofShape );
+        roofShape_ = &objectTypes_.StringResolver< RoofShapeType >::Get( roofShape );
 }
+
+template< typename T >
+struct Setter
+{
+    Setter( UrbanObject_ABC& object, const ObjectTypes& objectTypes ) : object_( object ), objectTypes_( objectTypes ) {}
+    void operator()( T* data, const T& value )
+    {
+        *data = value;
+        object_.UpdateTemplate( objectTypes_ );
+    }
+    Setter& operator=( const Setter& rhs ) { object_ = rhs.object_; objectTypes_ = rhs.objectTypes_; }
+
+    UrbanObject_ABC& object_;
+    const ObjectTypes& objectTypes_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: Architecture::CreateDictionnary
@@ -95,13 +112,13 @@ void Architecture::CreateDictionnary( bool readOnly )
     }
     else
     {
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_ );
-        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_, Setter< UnitedValue< float > >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_, Setter< unsigned int >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), parkingFloors_, Setter< unsigned int >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_, Setter< RoofShapeType* >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_, Setter< MaterialCompositionType* >( object_, objectTypes_ ) );
+        dictionary_.Register( object_, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_, Setter< UnitedValue< unsigned int > >( object_, objectTypes_ ) );
     }
 }
 

@@ -38,6 +38,7 @@ namespace kernel
     class Displayer_ABC;
     class ObjectType;
     class PropertiesDictionary;
+    class UrbanTemplateType;
 
 // =============================================================================
 /** @class  UrbanObject
@@ -86,6 +87,9 @@ public:
     virtual void NotifyUpdated( const UrbanDisplayOptions& );
     virtual void NotifyUpdated( const StructuralStateAttribute_ABC& );
     void CreateDictionary( bool readOnly );
+    virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
+    virtual void UpdateTemplate( const ObjectTypes& objectTypes );
+    virtual bool IsUpdatingTemplate() const;
     //@}
 
 private:
@@ -108,9 +112,12 @@ private:
     T_Humans humans_;
     T_BlockOccupation motivations_;
     const kernel::ObjectType& type_;
+    UrbanTemplateTypePtr templateType_;
     const kernel::AccommodationTypes& accommodations_;
     mutable float livingSpace_;
     mutable double nominalCapacity_;
+    bool updatingTemplate_;
+    bool fillingTemplate_;
     //@}
 
 protected:

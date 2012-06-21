@@ -290,22 +290,16 @@ void UrbanMenuManager::DoApplyInfrastructure( kernel::Entity_ABC& object, kernel
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::OnApplyTemplate( const QString& name )
 {
-    kernel::UrbanTemplateType* type = staticModel_.objectTypes_.tools::StringResolver< kernel::UrbanTemplateType >::Find( name.ascii() );
+    const kernel::UrbanObject_ABC::UrbanTemplateTypePtr type = staticModel_.objectTypes_.tools::StringResolver< kernel::UrbanTemplateType >::Find( name.ascii() );
     if( !type )
         return;
     if( element_ )
-    {
-        type->Fill( *element_, staticModel_.objectTypes_ );
-        controllers_.controller_.Update( *element_ );
-        controllers_.controller_.Update( kernel::DictionaryUpdated( *element_, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
-    }
+        element_->ApplyTemplate( type );
     else
         for( IT_Elements it = selected_.begin(); it != selected_.end(); ++it )
         {
             kernel::UrbanObject_ABC& object = const_cast< kernel::UrbanObject_ABC& >( **it );
-            type->Fill( object, staticModel_.objectTypes_ );
-            controllers_.controller_.Update( object );
-            controllers_.controller_.Update( kernel::DictionaryUpdated( object, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
+            object.ApplyTemplate( type );
         }
 }
 

@@ -98,7 +98,7 @@ void UsagesDockWidget::NotifySelectionChanged( const T_Elements& elements )
 // -----------------------------------------------------------------------------
 void UsagesDockWidget::NotifyUpdated( const kernel::UrbanObject_ABC& element )
 {
-    if( isEditing_ )
+    if( isEditing_ || element.IsUpdatingTemplate() )
         return;
     if( selectedElements_.size() == 1 && selectedElements_.front() == &element )
     {
@@ -161,6 +161,12 @@ void UsagesDockWidget::Validate()
             QSpinBox* pValue = static_cast< QSpinBox* >( pTable_->cellWidget( i, 1 ) );
             if( pValue )
                 pValue->setRange( 0, 100 - total );
+    }
+    if( selectedElements_.size() > 0 )
+    {
+        kernel::UrbanObject_ABC* object = const_cast< kernel::UrbanObject_ABC* >( selectedElements_.front() );
+        if( object && !object->IsUpdatingTemplate() )
+            object->UpdateTemplate( staticModel_.objectTypes_ );
     }
 }
 

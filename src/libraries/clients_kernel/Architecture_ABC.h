@@ -18,7 +18,6 @@
 namespace kernel
 {
     class MaterialCompositionType;
-    class ObjectTypes;
     class RoofShapeType;
 
 // =============================================================================
@@ -41,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( const ObjectTypes& objectTypes, unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation, 
+    virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation, 
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" ) = 0;
     virtual const MaterialCompositionType& GetMaterial() const = 0;
     virtual const RoofShapeType& GetRoofShape() const = 0;

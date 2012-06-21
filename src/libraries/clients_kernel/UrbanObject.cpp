@@ -19,11 +19,14 @@
 #include "AccommodationTypes.h"
 #include "ActionController.h"
 #include "Architecture_ABC.h"
+#include "DictionaryUpdated.h"
 #include "PhysicalAttribute_ABC.h"
 #include "PropertiesDictionary.h"
+#include "ObjectTypes.h"
 #include "UrbanColor_ABC.h"
 #include "StructuralStateAttribute_ABC.h"
 #include "UrbanPositions_ABC.h"
+#include "UrbanTemplateType.h"
 #include "Usages_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/foreach.hpp>
@@ -41,14 +44,17 @@ using namespace kernel;
 UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, unsigned int id, const ObjectType& type
     , const AccommodationTypes& accommodations, UrbanDisplayOptions& options )
     : EntityImplementation< UrbanObject_ABC >( controllers.controller_, id, name.c_str() )
-    , dictionary_     ( *new PropertiesDictionary( controllers.controller_ ) )
-    , density_        ( 0 )
-    , type_           ( type )
-    , accommodations_ ( accommodations )
-    , livingSpace_    ( 0 )
-    , nominalCapacity_( 0 )
-    , controllers_( controllers )
-    , options_    ( options )
+    , dictionary_      ( *new PropertiesDictionary( controllers.controller_ ) )
+    , density_         ( 0 )
+    , type_            ( type )
+    , templateType_    ( 0 )
+    , accommodations_  ( accommodations )
+    , livingSpace_     ( 0 )
+    , nominalCapacity_ ( 0 )
+    , updatingTemplate_( false )
+    , fillingTemplate_ ( false )
+    , controllers_     ( controllers )
+    , options_        ( options )
 {
     RegisterSelf( *this );
     EntityImplementation< UrbanObject_ABC >::Attach( dictionary_ );
@@ -68,14 +74,17 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
                                                ( xis.attribute< std::string >( "name" ).empty() )
                                                ? tools::translate( "Urban", "Urban block[%L1]" ).arg( xis.attribute< unsigned int >( "id" ) )
                                                : xis.attribute< std::string >( "name" ).c_str() )
-    , dictionary_     ( *new PropertiesDictionary( controllers.controller_ ) )
-    , density_        ( 0 )
-    , type_           ( type )
-    , accommodations_ ( accommodations )
-    , livingSpace_    ( 0 )
-    , nominalCapacity_( 0 )
-    , controllers_( controllers )
-    , options_    ( options )
+    , dictionary_      ( *new PropertiesDictionary( controllers.controller_ ) )
+    , density_         ( 0 )
+    , type_            ( type )
+    , templateType_    ( 0 )
+    , accommodations_  ( accommodations )
+    , livingSpace_     ( 0 )
+    , nominalCapacity_ ( 0 )
+    , updatingTemplate_( false )
+    , fillingTemplate_ ( false )
+    , controllers_     ( controllers )
+    , options_         ( options )
 {
     RegisterSelf( *this );
     EntityImplementation< UrbanObject_ABC >::Attach( dictionary_ );
@@ -123,10 +132,71 @@ QString UrbanObject::GetName() const
 void UrbanObject::CreateDictionary( bool readOnly )
 {
     if( readOnly )
-        dictionary_.Register( *this, tools::translate( "Block", "Info/Name" ), static_cast< const UrbanObject& >( *this ).name_ );
+    {
+        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), static_cast< const UrbanObject& >( *this ).name_ );
+        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), static_cast< const UrbanObject& >( *this ).templateType_ );
+    }
     else
-        dictionary_.Register( *this, tools::translate( "Block", "Info/Name" ), name_ );
-    dictionary_.Register( *this, tools::translate( "Block", "Info/Identifier" ), static_cast< const UrbanObject& >( *this ).id_ );
+    {
+        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Name" ), name_ );
+        dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate );
+    }
+    dictionary_.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Identifier" ), static_cast< const UrbanObject& >( *this ).id_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::ApplyTemplate
+// Created: JSR 2012-06-20
+// -----------------------------------------------------------------------------
+void UrbanObject::ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate )
+{
+    if( urbanTemplate )
+    {
+        fillingTemplate_ = true;
+        templateType_ = urbanTemplate;
+        urbanTemplate->Fill( *this );
+        controllers_.controller_.Update( static_cast< const UrbanObject_ABC& >( *this ) );
+        controllers_.controller_.Update( kernel::DictionaryUpdated( *this, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
+        fillingTemplate_ = false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::UpdateTemplate
+// Created: JSR 2012-06-20
+// -----------------------------------------------------------------------------
+void UrbanObject::UpdateTemplate( const ObjectTypes& objectTypes )
+{
+    if( fillingTemplate_ )
+        return;
+    updatingTemplate_ = true;
+    UrbanTemplateTypePtr old = templateType_;
+    templateType_ = 0;
+    tools::Iterator< const UrbanTemplateType& > it = objectTypes.tools::StringResolver< UrbanTemplateType >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const UrbanTemplateType& type = it.NextElement();
+        if( type.Matches( *this ) )
+        {
+            templateType_ = const_cast< UrbanTemplateTypePtr >( &type );
+            break;
+        }
+    }
+    if( templateType_ != old )
+    {
+        controllers_.controller_.Update( static_cast< const UrbanObject_ABC& >( *this ) );
+        controllers_.controller_.Update( DictionaryUpdated( *this, tools::translate( "Block", "Info" ) ) );
+    }
+    updatingTemplate_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::IsUpdatingTemplate
+// Created: JSR 2012-06-21
+// -----------------------------------------------------------------------------
+bool UrbanObject::IsUpdatingTemplate() const
+{
+    return updatingTemplate_;
 }
 
 // -----------------------------------------------------------------------------

@@ -405,6 +405,6 @@ void ObjectTypes::ReadUrbanTemplateTypes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadUrbanTemplateType( xml::xistream& xis )
 {
-    UrbanTemplateType* urbanTemplate = new UrbanTemplateType( xis );
+    UrbanTemplateType* urbanTemplate = new UrbanTemplateType( xis, *this );
     StringResolver< UrbanTemplateType >::Register( urbanTemplate->GetName(), *urbanTemplate );
 }

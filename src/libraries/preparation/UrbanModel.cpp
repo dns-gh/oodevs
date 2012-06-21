@@ -194,6 +194,12 @@ void UrbanModel::Purge()
 void UrbanModel::Load()
 {
     menuManager_->Register();
+    tools::Iterator< const kernel::UrbanObject_ABC& > it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        kernel::UrbanObject_ABC& block = const_cast< kernel::UrbanObject_ABC& >( it.NextElement() );
+        block.UpdateTemplate( staticModel_.objectTypes_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

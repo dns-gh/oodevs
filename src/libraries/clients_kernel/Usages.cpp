@@ -67,6 +67,7 @@ void Usages::UpdateDefault()
         dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ defaultStr_ ] ) );
         dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].first ) );
         dictionary_.Register( owner_, defaultString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ defaultStr_ ].second ) );
+        controller_.Update( DictionaryUpdated( owner_, defaultString ) );
     }
     else
     {
@@ -75,6 +76,7 @@ void Usages::UpdateDefault()
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Percentage" ) );
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Nominal capacity" ) );
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Maximal capacity" ) );
+            controller_.Update( DictionaryUpdated( owner_, defaultString ) );
         }
     }
 }

@@ -21,6 +21,7 @@
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/ValueEditor.h"
@@ -34,7 +35,9 @@
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/UrbanTemplateType.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
 
@@ -323,6 +326,19 @@ void EditorFactory::Call( kernel::InfrastructureType** const& value )
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
+// Created: JSR 2012-06-20
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::UrbanTemplateType** const& value )
+{
+    typedef tools::Resolver_ABC< kernel::UrbanTemplateType, std::string > T_Resolver;
+    SimpleResolverEditor< kernel::UrbanTemplateType, T_Resolver >* editor =
+        new SimpleResolverEditor< kernel::UrbanTemplateType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ), true, tools::translate( "EditorFactory", "<Select a type>" ) );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::MaterialCompositionType** const& value )
@@ -345,15 +361,15 @@ void EditorFactory::Call( kernel::RoofShapeType** const& value )
     result_ = editor;
 }
 
-
-#include "clients_kernel/Controller.h"
-
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
 {
+    kernel::UrbanObject_ABC* object = dynamic_cast< kernel::UrbanObject_ABC* >( selected_.ConstCast() );
+    if( object && object->IsUpdatingTemplate() )
+        return;
     QColor current( value->red_, value->green_, value->blue_ );
     current.setAlpha( value->alpha_ );
     QColor newColor = QColorDialog::getColor( current, 0, tools::translate( "ColorEditor", "Select color" ), QColorDialog::ShowAlphaChannel );
@@ -363,6 +379,8 @@ void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
         value->green_ = newColor.green();
         value->blue_  = newColor.blue();
         value->alpha_ = newColor.alpha();
+        if( object )
+            object->UpdateTemplate( staticModel_.objectTypes_ );
         controllers_.controller_.Update( *value );
     }
 }

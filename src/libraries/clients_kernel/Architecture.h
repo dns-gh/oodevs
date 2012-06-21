@@ -32,13 +32,13 @@ class Architecture : public Architecture_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary );
+    explicit Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary, const ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Initialize( const ObjectTypes& objectTypes, unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
+    virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" );
     virtual const MaterialCompositionType& GetMaterial() const;
     virtual const RoofShapeType& GetRoofShape() const;
@@ -60,6 +60,7 @@ protected:
     //@{
     kernel::UrbanObject_ABC&    object_;
     PropertiesDictionary&       dictionary_;
+    const ObjectTypes&          objectTypes_;
     MaterialCompositionType*    material_;
     RoofShapeType*              roofShape_;
     UnitedValue< unsigned int > height_;

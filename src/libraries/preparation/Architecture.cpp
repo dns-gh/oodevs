@@ -23,15 +23,14 @@
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
 Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
-    : kernel::Architecture( object, dictionary )
+    : kernel::Architecture( object, dictionary, objectTypes )
     , controllers_( controllers )
 {
     if( parent )
     {
         const kernel::PhysicalAttribute_ABC& parentPhysicalAttribute = parent->Get< kernel::PhysicalAttribute_ABC >();
         const kernel::Architecture_ABC& parentArchitecture = parentPhysicalAttribute.GetArchitecture();
-        Initialize( objectTypes,
-                    parentArchitecture.GetHeight(),
+        Initialize( parentArchitecture.GetHeight(),
                     parentArchitecture.GetFloorNumber(),
                     parentArchitecture.GetParkingFloors(),
                     static_cast< float >( parentArchitecture.GetOccupation() ) / 100.f,
@@ -40,7 +39,7 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
                     parentArchitecture.GetRoofShape().GetName() );
     }
     else
-        Initialize( objectTypes, 20, 6, 0, 0.5f, 0.5f );
+        Initialize( 20, 6, 0, 0.5f, 0.5f );
 
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
@@ -52,7 +51,7 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
 Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
-    : kernel::Architecture( object, dictionary )
+    : kernel::Architecture( object, dictionary, objectTypes )
     , controllers_( controllers )
 {
     unsigned int height = 0;
@@ -72,7 +71,7 @@ Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis
             >> xml::optional >> xml::attribute( "trafficability", trafficability )
             >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
         >> xml::end;
-    Initialize( objectTypes, height, floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
+    Initialize( height, floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
     NotifyModeChanged( controllers_.modes_->GetCurrentMode() );

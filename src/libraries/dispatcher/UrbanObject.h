@@ -61,6 +61,9 @@ public:
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void DoUpdate( const sword::ObjectUpdate& msg );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate );
+    virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes );
+    virtual bool IsUpdatingTemplate() const;
     //@}
 
 private:

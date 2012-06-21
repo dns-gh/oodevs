@@ -14,6 +14,8 @@
 
 namespace kernel
 {
+class ObjectTypes;
+class UrbanTemplateType;
 
 // =============================================================================
 /** @class  UrbanObject_ABC
@@ -43,6 +45,10 @@ public:
     virtual void MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    typedef UrbanTemplateType* UrbanTemplateTypePtr;
+    virtual void ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate ) = 0;
+    virtual void UpdateTemplate( const kernel::ObjectTypes& objectTypes ) = 0;
+    virtual bool IsUpdatingTemplate() const = 0;
     //@}
 };
 
