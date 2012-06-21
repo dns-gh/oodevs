@@ -217,9 +217,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\EfficientRangeDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LivingAreaDialog.cpp">
-      <Filter>Source Files\Dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LoginDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
@@ -778,9 +775,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp">
       <Filter>Source Files\Panels\Preferences</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
-      <Filter>Source Files\Panels\Profiles</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ConnectLoginDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
@@ -788,6 +782,12 @@
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\InhabitantPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PlanificationModePanel.cpp">
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1137,6 +1137,9 @@
     <ClInclude Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1432,14 +1435,12 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h">
-      <Filter>Source Files\Panels\Profiles</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\OrbatPanel.h">
       <Filter>Source Files\Panels\Preferences</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantPanel.h">
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h" />
   </ItemGroup>
 </Project>

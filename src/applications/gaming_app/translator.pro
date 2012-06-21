@@ -93,6 +93,7 @@ ObjectPrototype.cpp \
 ObjectsLayer.cpp \
 OrbatPanel.cpp \
 OrbatToolbar.cpp \
+PlanificationModePanel.cpp \
 PopulationChangeAffinitiesDialog.cpp \
 PopulationChangeHealthStateDialog.cpp \
 PopulationKnowledgePanel.cpp \

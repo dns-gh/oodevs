@@ -92,7 +92,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     setWidget( box );
     // Toolbar
     toolbar_ = new ActionsToolbar( this, model, config, controllers );
-    connect( toolbar_, SIGNAL( PlanificationModeChange() ), this, SIGNAL( PlanificationModeChange() ) );
+    connect( toolbar_, SIGNAL( PlanificationModeChange() ), parent, SLOT( OnPlanifStateChange() ) );
     // Radio buttons
     QGroupBox* groupBox = new QGroupBox();
     {

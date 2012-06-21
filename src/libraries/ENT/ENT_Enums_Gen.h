@@ -419,4 +419,15 @@ enum E_PreparationMode
     ePreparationMode_All        = 0x0F  // Filter
 };
 
+enum E_GamingMode
+{
+    eGamingMode_None          = 0x00, // Filter
+
+    eGamingMode_Default       = 0x01,
+    eGamingMode_Exercise      = 0x02,
+    eGamingMode_Planification = 0x04,
+
+    eGamingMode_All           = 0x0F  // Filter
+};
+
 #endif // __ENT_Enums_Gen_h_

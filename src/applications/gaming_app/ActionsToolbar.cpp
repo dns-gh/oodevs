@@ -14,7 +14,6 @@
 #include "actions/ActionsFilter_ABC.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
-#include "clients_gui/BooleanOptionButton.h"
 #include "clients_kernel/Controllers.h"
 #include "Config.h"
 #include "gaming/Services.h"
@@ -83,12 +82,9 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Co
     CreateToolButton( tr( "Save actions in active timeline to file" ), MAKE_PIXMAP( save ), SLOT( Save() ) );
 
     // Planning
-    QToolButton* planningBtn = new gui::BooleanOptionButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), this, controllers.options_, "DesignMode" );
+    QToolButton* planningBtn = new QToolButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), "", this, SIGNAL( PlanificationModeChange() ), this );
     planningBtn->setAutoRaise( true );
-    QAction* action = new QAction( this );
-    planningBtn->addAction( action );
-    action->setCheckable( true );
-    connect( action, SIGNAL( triggered() ), this, SIGNAL( PlanificationModeChange() ) );
+    planningBtn->setCheckable( true );
 
     // Purge
     CreateToolButton( tr( "Delete recorded actions" ), MAKE_PIXMAP( trash2 ), SLOT( Purge() ) );

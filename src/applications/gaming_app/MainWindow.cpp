@@ -63,12 +63,15 @@
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "OrbatPanel.h"
+#include "PlanificationModePanel.h"
+#include "clients_kernel/ActionController.h"
 #include "actions_gui/InterfaceBuilder.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/AgentsModel.h"
+#include "gaming/ModeController.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
@@ -160,6 +163,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , onPlanif_        ( false )
     , pProfile_        ( new ProfileFilter( controllers, p ) )
 {
+    // Mode controllers
+    controllers_.SetModeController( new ::ModeController( this ) );
+
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
@@ -353,8 +359,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     {
         TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, *pProfile_ );
         addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
-        connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnPlanifStateChange() ) );
-        connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnNameChanged() ) );
         timelinePanel->hide();
     }
     // Profiles panel
@@ -398,6 +402,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
     }
+    // Planification mode panel
+    {
+        pPlanificationModePanel_ = new PlanificationModePanel( this, controllers );
+        pPlanificationModePanel_->SetModes( eGamingMode_Exercise | eGamingMode_Default, eGamingMode_Planification );
+        addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel_ );
+        pPlanificationModePanel_->hide();
+    }
 
     help_ = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, *factory, license, *help_, *interpreter, network_, logger ) );
@@ -416,6 +427,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     aar->SetStartup();
 
     restoreState( settings.value( "mainWindowState" ).toByteArray() );
+
+    controllers_.ChangeMode( eGamingMode_Default );
 
     // Raster_app process
     process_.reset( new QProcess( this ) );
@@ -544,6 +557,11 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
 void MainWindow::OnPlanifStateChange()
 {
     pMissionPanel_->ActivatePlanification();
+    onPlanif_ = !onPlanif_;
+    if( onPlanif_ )
+        setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
+    else
+        setCaption( planifName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,6 +582,7 @@ void MainWindow::Load()
         staticModel_.Load( config_ );
         pExtensionsPanel_->hide();
         ReadOptions();
+        controllers_.ChangeMode( eGamingMode_Exercise );
     }
     catch( xml::exception& e )
     {
@@ -588,6 +607,7 @@ void MainWindow::ShowHelp()
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
+    controllers_.ChangeMode( eGamingMode_Default );
     network_.Disconnect();
     parameters_->Reset();
     selector_->Close();
@@ -733,20 +753,6 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
     const char drive = path.at( 0 );
     path = path.substr( 2 );
     return "\\\\" + server + "\\" + drive + '$' + path;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OnNameChanged
-// Created: HBD 2010-09-23
-// -----------------------------------------------------------------------------
-void MainWindow::OnNameChanged()
-{
-    onPlanif_ = !onPlanif_;
-    if( onPlanif_ )
-        setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
-    else
-        setCaption( planifName_ );
-
 }
 
 // -----------------------------------------------------------------------------
