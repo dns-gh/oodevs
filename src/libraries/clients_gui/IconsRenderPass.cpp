@@ -88,8 +88,14 @@ void IconsRenderPass::RenderIcon( const T_IconTask& task )
     tools_.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
     const float thickness = viewport_.Width() * 1.5f / iconSide_;
     const geometry::Point2f center( 300, 100 );
+    const geometry::Point2f infraSymbolCenter( 220, 310 );
     if( ! symbol.symbol_.empty() )
-        tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
+    {
+        if( symbol.symbol_.find( "infrastructures" ) == std::string::npos )
+            tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
+        else
+            tools_.DrawApp6Symbol( symbol.symbol_, infraSymbolCenter, 0.5f, thickness );
+    }
     if( ! symbol.level_.empty() )
         tools_.DrawApp6Symbol( symbol.level_, center, 1.f, thickness );
 

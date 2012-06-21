@@ -70,7 +70,7 @@ private:
 private:
     //! @name Statics
     //@{
-    static const unsigned int iconSide_ = 128;
+    static const unsigned int iconSide_ = 256;
     //@}
 
     //! @name Member data

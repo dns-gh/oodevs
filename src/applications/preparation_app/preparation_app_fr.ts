@@ -2602,6 +2602,34 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Create city</source>
         <translation>Créer une ville</translation>
     </message>
+    <message>
+        <source>Material</source>
+        <translation>Matériau</translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
+    </message>
+    <message>
+        <source>RoofShape</source>
+        <translation>Toit</translation>
+    </message>
+    <message>
+        <source>Area</source>
+        <translation>Surface</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Usages</source>
+        <translation>Usages</translation>
+    </message>
+    <message>
+        <source>Resource network</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
 </context>
 <context>
     <name>UsagesDockWidget</name>

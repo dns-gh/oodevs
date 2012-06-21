@@ -24,9 +24,13 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+    class SymbolIcon;
+    class SymbolIcons;
+    class SearchListView_ABC;
 }
 
 class ModelBuilder;
+class StaticModel;
 
 // =============================================================================
 /** @class  UrbanListView
@@ -42,7 +46,7 @@ class UrbanListView : public gui::EntityListView
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder );
+             UrbanListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, gui::SymbolIcons& symbols, const StaticModel& staticModel );
     virtual ~UrbanListView();
     //@}
 
@@ -52,6 +56,7 @@ protected:
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
+    virtual void NotifyUpdated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyModeChanged( int newMode );
@@ -61,26 +66,43 @@ protected:
     virtual void viewportDropEvent( QDropEvent* pEvent );
     virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
+    virtual void viewportResizeEvent( QResizeEvent* pEvent );
+    virtual void setColumnWidth( int column, int w );
+    virtual void CreateFilters( gui::SearchListView_ABC& searchListView );
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnCreateCity();
+    void Update();
     //@}
 
 private:
     //! @name Helpers
     //@{
     kernel::Entity_ABC* Drop( QDropEvent* pEvent ) const;
+    void UpdatePixmap( const kernel::UrbanObject_ABC& object, gui::ValuedListItem* item );
+    void UpdateItems( gui::ValuedListItem* root );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< std::string, gui::SymbolIcon >    T_InfrastructurePixmaps;
+    typedef T_InfrastructurePixmaps::iterator          IT_InfrastructurePixmaps;
+    typedef T_InfrastructurePixmaps::const_iterator   CIT_InfrastructurePixmaps;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    ModelBuilder& modelBuilder_;
-    std::vector< kernel::Entity_ABC* > dragged_;
+    kernel::Controllers&                controllers_;
+    ModelBuilder&                       modelBuilder_;
+    gui::SymbolIcons&                   symbols_;
+    const StaticModel&                  staticModel_;
+    std::vector< kernel::Entity_ABC* >  dragged_;
+    T_InfrastructurePixmaps             infrastructures_;
+    QTimer*                             timer_;
     //@}
 };
 

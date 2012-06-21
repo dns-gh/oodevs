@@ -72,21 +72,21 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
             // Tactical
             {
                 searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_ );
-                listViews_.push_back( searchListView->GetRichListView() );
+                listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Tactical" ) );
             }
             // Communication
             {
                 searchListView = new gui::SearchListView< CommunicationListView >( pListsTabWidget, controllers, factory, icons, modelBuilder );
-                listViews_.push_back( searchListView->GetRichListView() );
+                listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Communication" ) );
             }
             // Logistic
             {
                 searchListView = new gui::SearchListView< LogisticListView >( pListsTabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
-                listViews_.push_back( searchListView->GetRichListView() );
+                listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer", "Logistic" ) );
             }
@@ -94,27 +94,27 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         // Objects
         {
             searchListView = new gui::SearchListView< ObjectListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            listViews_.push_back( searchListView->GetRichListView() );
+            listViews_.push_back( searchListView );
             searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Objects" ) );
         }
         // Urban
         {
-            searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            listViews_.push_back( searchListView->GetRichListView() );
+            searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder, symbols, staticModel );
+            listViews_.push_back( searchListView );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Urban" ) );
         }
         // Crowds
         {
             searchListView = new gui::SearchListView< PopulationListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            listViews_.push_back( searchListView->GetRichListView() );
+            listViews_.push_back( searchListView );
             searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Crowds" ) );
         }
         // Populations
         {
             searchListView = new gui::SearchListView< InhabitantListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            listViews_.push_back( searchListView->GetRichListView() );
+            listViews_.push_back( searchListView );
             searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Populations" ) );
         }
@@ -189,7 +189,7 @@ DockContainer::~DockContainer()
 // -----------------------------------------------------------------------------
 void DockContainer::Purge()
 {
-    for( std::vector< gui::RichListView* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
+    for( std::vector< gui::SearchListView_ABC* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
         if( *it )
             ( *it )->Purge();
     pCreationPanel_->Purge();
@@ -201,9 +201,9 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::BlockCreationOnListViews( bool enable )
 {
-    for( std::vector< gui::RichListView* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
-        if( *it )
-            ( *it )->SetCreationBlocked( enable );
+    for( std::vector< gui::SearchListView_ABC* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
+        if( *it && ( *it )->GetRichListView() )
+            ( *it )->GetRichListView()->SetCreationBlocked( enable );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,6 +212,9 @@ void DockContainer::BlockCreationOnListViews( bool enable )
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
+    for( std::vector< gui::SearchListView_ABC* >::iterator it = listViews_.begin(); it != listViews_.end(); ++it )
+        if( *it )
+            ( *it )->Load();
     pCreationPanel_->Load();
     pUsagesPanel_->Initialize();
 }
