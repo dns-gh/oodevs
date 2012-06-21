@@ -114,7 +114,7 @@ void FilterDialog::OnAccept()
     {
         Filter_ABC& filter = filterManager_->GetFilter( list_->currentItem() );
         assert( filter.IsValid() );
-        if( filter.NeedToReloadExercise() && !static_cast< MainWindow* >( parent() )->CheckSaving() )
+        if( filter.NeedToReloadExercise() && static_cast< MainWindow* >( parent() )->CheckSaving() == QMessageBox::Cancel )
             return;
         setEnabled( false );
         filter.Execute();
