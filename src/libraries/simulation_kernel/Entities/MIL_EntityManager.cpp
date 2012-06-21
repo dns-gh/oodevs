@@ -1063,6 +1063,7 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
     client::UnitMagicActionAck ack;
     ack().set_error_code( UnitActionAck::no_error );
     ack().set_type( message.type() );
+    ack().mutable_unit()->set_id( 0 );
     if( !army )
     {
         if( !formation )
@@ -1095,6 +1096,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     client::UnitMagicActionAck ack;
     ack().set_error_code( UnitActionAck::no_error );
     ack().set_type( message.type() );
+    ack().mutable_unit()->set_id( 0 );
     if( !message.has_parameters() || message.parameters().elem_size() != 4
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
