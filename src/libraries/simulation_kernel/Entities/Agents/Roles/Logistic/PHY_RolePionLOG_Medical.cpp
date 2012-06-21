@@ -472,6 +472,15 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_AutomateVector& prioriti
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetAutomatePriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Medical::T_AutomateVector PHY_RolePionLOG_Medical::GetAutomatePriorities() const
+{
+    return tacticalPriorities_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::ChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -483,6 +492,15 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_MedicalPriorityVector& p
     priorities_ = priorities;
     bHasChanged_ = true;
     InsertConsigns( oldConsigns );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetMedicalPriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Medical::T_MedicalPriorityVector PHY_RolePionLOG_Medical::GetMedicalPriorities() const
+{
+    return priorities_;
 }
 
 struct sIsPriorityEqual
