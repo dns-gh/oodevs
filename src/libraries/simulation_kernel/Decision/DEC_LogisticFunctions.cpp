@@ -126,6 +126,19 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangePriorities( MIL_Automate& c
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::GetAutomateMaintenancePriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+std::vector< const PHY_ComposanteTypePion* > DEC_LogisticFunctions::GetAutomateMaintenancePriorities( MIL_Automate& callerAutomate )
+{
+    std::vector< const PHY_ComposanteTypePion* > result;
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        if( PHY_RoleInterface_Maintenance* role = pionPc->RetrieveRole< PHY_RoleInterface_Maintenance >() )
+            result = role->GetMaintenancePriorities();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -136,6 +149,23 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( MIL_Aut
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::GetAutomateMaintenanceTacticalPriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+std::vector< const DEC_Decision_ABC* > DEC_LogisticFunctions::GetAutomateMaintenanceTacticalPriorities( MIL_Automate& callerAutomate )
+{
+    std::vector< const DEC_Decision_ABC* > result;
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        if( PHY_RoleInterface_Maintenance* role = pionPc->RetrieveRole< PHY_RoleInterface_Maintenance >() )
+        {
+            T_AutomateVector priorities = role->GetAutomatePriorities();
+            for( T_AutomateVector::const_iterator it = priorities.begin(); it != priorities.end(); ++it )
+                result.push_back( &(*it)->GetDecision() );
+        }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -143,6 +173,18 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& cal
 {
     if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
         PionMaintenanceChangeWorkRate( *pionPc, workRate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::GetAutomateMaintenanceWorkRate
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+int DEC_LogisticFunctions::GetAutomateMaintenanceWorkRate( MIL_Automate& callerAutomate )
+{
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        if( PHY_RoleInterface_Maintenance* role = pionPc->RetrieveRole< PHY_RoleInterface_Maintenance >() )
+            return role->GetWorkRate();
+    return -1;
 }
 
 // -----------------------------------------------------------------------------
@@ -361,6 +403,19 @@ void DEC_LogisticFunctions::AutomateMedicalChangePriorities( MIL_Automate& calle
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::GetAutomateMedicalPriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+std::vector< const PHY_HumanWound* > DEC_LogisticFunctions::GetAutomateMedicalPriorities( MIL_Automate& callerAutomate )
+{
+    std::vector< const PHY_HumanWound* > result;
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        if( PHY_RoleInterface_Medical* role = pionPc->RetrieveRole< PHY_RoleInterface_Medical >() )
+            result = role->GetMedicalPriorities();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
@@ -368,6 +423,23 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automat
 {
     if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
         PionMedicalChangeTacticalPriorities( *pionPc, priorities );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::GetAutomateMedicalTacticalPriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+std::vector< const DEC_Decision_ABC* > DEC_LogisticFunctions::GetAutomateMedicalTacticalPriorities( MIL_Automate& callerAutomate )
+{
+    std::vector< const DEC_Decision_ABC* > result;
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        if( PHY_RoleInterface_Medical* role = pionPc->RetrieveRole< PHY_RoleInterface_Medical >() )
+        {
+            T_AutomateVector priorities = role->GetAutomatePriorities();
+            for( T_AutomateVector::const_iterator it = priorities.begin(); it != priorities.end(); ++it )
+                result.push_back( &(*it)->GetDecision() );
+        }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

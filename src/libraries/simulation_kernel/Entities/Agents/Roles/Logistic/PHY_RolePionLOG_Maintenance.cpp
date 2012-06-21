@@ -411,6 +411,15 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetWorkRate
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOG_Maintenance::GetWorkRate() const
+{
+    return static_cast< int >( pWorkRate_->GetAsnID() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::ChangeWorkRate
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
@@ -437,6 +446,18 @@ void PHY_RolePionLOG_Maintenance::InsertConsigns( const T_MaintenanceConsigns& o
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetautomatePriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Maintenance::T_AutomateVector PHY_RolePionLOG_Maintenance::GetAutomatePriorities() const
+{
+    T_AutomateVector result;
+    for( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
+        result.push_back( (*it).first );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::ChangePriorities
 // Created: NLD 2005-04-27
 // -----------------------------------------------------------------------------
@@ -450,6 +471,15 @@ void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& prio
     tacticalPriorities_ = priorities;
     bHasChanged_ = true;
     InsertConsigns( oldConsigns );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::GetMaintenancePriorities
+// Created: LGY 2012-06-21
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Maintenance::T_MaintenancePriorityVector PHY_RolePionLOG_Maintenance::GetMaintenancePriorities() const
+{
+    return priorities_;
 }
 
 // -----------------------------------------------------------------------------

@@ -40,8 +40,11 @@ public:
     static void AutomateMaintenanceEnableSystem( MIL_Automate& callerAutomate );
     static void AutomateMaintenanceDisableSystem( MIL_Automate& callerAutomate );
     static void AutomateMaintenanceChangePriorities( MIL_Automate& callerAutomate, const std::vector< const PHY_ComposanteTypePion* >& priorities );
+    static std::vector< const PHY_ComposanteTypePion* > GetAutomateMaintenancePriorities( MIL_Automate& callerAutomate );
     static void AutomateMaintenanceChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities );
+    static std::vector< const DEC_Decision_ABC* > GetAutomateMaintenanceTacticalPriorities( MIL_Automate& callerAutomate );
     static void AutomateMaintenanceChangeWorkRate( MIL_Automate& callerAutomate, int workRate );
+    static int GetAutomateMaintenanceWorkRate( MIL_Automate& callerAutomate );
     //@}
 
     //! @name Medical
@@ -62,7 +65,9 @@ public:
     static void AutomateMedicalEnableHealingFunction( MIL_Automate& callerAutomate );
     static void AutomateMedicalDisableHealingFunction( MIL_Automate& callerAutomate );
     static void AutomateMedicalChangePriorities( MIL_Automate& callerAutomate, const std::vector< const PHY_HumanWound* >& priorities );
+    static std::vector< const PHY_HumanWound* > GetAutomateMedicalPriorities( MIL_Automate& callerAutomate );
     static void AutomateMedicalChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities );
+    static std::vector< const DEC_Decision_ABC* > GetAutomateMedicalTacticalPriorities( MIL_Automate& callerAutomate );
 
     static void EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionWounded, DEC_Decision_ABC* pDecTC2 );
     static bool HasWoundedHumansToEvacuate( DEC_Decision_ABC* pPion );

@@ -66,7 +66,9 @@ public:
     virtual void DisableSortingFunction() = 0;
 
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities ) = 0;
+    virtual T_MedicalPriorityVector GetMedicalPriorities() const = 0;
     virtual void ChangePriorities( const T_AutomateVector& priorities ) = 0;
+    virtual T_AutomateVector GetAutomatePriorities() const = 0;
 
     virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Imex
     virtual PHY_MedicalHumanState* HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Releve

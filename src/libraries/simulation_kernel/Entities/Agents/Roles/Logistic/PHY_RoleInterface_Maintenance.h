@@ -57,8 +57,11 @@ public:
     virtual void EnableSystem() = 0;
     virtual void DisableSystem() = 0;
 
+    virtual T_MaintenancePriorityVector GetMaintenancePriorities() const = 0;
     virtual void ChangePriorities( const T_MaintenancePriorityVector& priorities ) = 0;
+    virtual T_AutomateVector GetAutomatePriorities() const = 0;
     virtual void ChangePriorities( const T_AutomateVector& priorities ) = 0;
+    virtual int GetWorkRate() const = 0;
     virtual void ChangeWorkRate( const PHY_MaintenanceWorkRate& workRate ) = 0;
 
     virtual PHY_MaintenanceComposanteState* HandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante ) = 0;
