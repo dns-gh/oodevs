@@ -341,8 +341,8 @@ bool Session::StopProcess( T& lock )
     if( !copy || !copy->IsAlive() )
         return true;
     client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", web::Client_ABC::T_Parameters() );
-    copy->Join( 3000 );
-    copy->Kill( 0 );
+    if( !copy->Join( 10*1000 ) )
+        copy->Kill( 0 );
     return true;
 }
 
