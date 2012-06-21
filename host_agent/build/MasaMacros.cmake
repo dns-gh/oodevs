@@ -2,9 +2,9 @@
 #
 #  This file is part of a MASA library or program.
 #  Refer to the included end-user license agreement for restrictions.
-# 
+#
 #  Copyright (c) 2012 MASA Group
-# 
+#
 #*****************************************************************************
 
 if( MSVC )
@@ -17,6 +17,15 @@ if( MSVC )
     endif()
     set( platform vc${msvc_platform}${msvc_suffix} )
 endif()
+
+if(NOT MASA_INCLUDE)
+    set( MASA_INCLUDE $ENV{MASA_HOME}/include )
+endif()
+if(NOT MASA_LIB)
+    set( MASA_LIB $ENV{MASA_HOME}/lib/${platform} )
+endif()
+include_directories( ${MASA_INCLUDE} )
+link_directories( ${MASA_LIB} )
 
 # Hack around protobuf output directory limitations
 macro( protobuf_make srcs hdrs output_dir )
