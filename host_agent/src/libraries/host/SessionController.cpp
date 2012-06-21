@@ -216,6 +216,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
     session->Stop();
     session->Unlink();
     async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetOutput() ) );
     return session;
 }
 

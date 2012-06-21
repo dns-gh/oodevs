@@ -65,6 +65,7 @@ public:
     virtual int GetPort() const;
     virtual Tree GetProperties() const;
     virtual Path GetPath( const std::string& type ) const;
+    virtual Path GetOutput() const;
     //@}
 
     //! @name Public methods

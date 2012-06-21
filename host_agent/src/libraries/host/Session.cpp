@@ -411,8 +411,7 @@ bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
     if( process_ )
         return ModifyStatus( lock, STATUS_PLAYING );
 
-    const Path output = GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id_ ) / "session.xml";
-    WriteSettings( system, output, GetConfiguration( name_, port_->Get() ) );
+    WriteSettings( system, GetOutput() / "session.xml", GetConfiguration( name_, port_->Get() ) );
     T_Process ptr = starter( *this );
     if( !ptr )
         return false;
@@ -435,6 +434,15 @@ Path Session::GetPath( const std::string& type ) const
     if( type == "terrain" )
         return ::GetPath( links_, "terrain.root" ) / "data" / "terrains";
     return Path();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::GetOutput
+// Created: BAX 2012-06-21
+// -----------------------------------------------------------------------------
+Path Session::GetOutput() const
+{
+    return GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id_ );
 }
 
 // -----------------------------------------------------------------------------

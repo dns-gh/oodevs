@@ -126,6 +126,7 @@ namespace mocks
         {
             MOCK_EXPECT( GetId ).returns( id );
             MOCK_EXPECT( GetRoot ).returns( "" );
+            MOCK_EXPECT( GetOutput ).returns( "" );
             MOCK_EXPECT( GetExercise ).returns( tree.get< std::string >( "exercise" ) );
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
             MOCK_EXPECT( GetNode ).returns( node );
@@ -135,6 +136,7 @@ namespace mocks
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetRoot, 0 );
         MOCK_METHOD( GetPath, 1 );
+        MOCK_METHOD( GetOutput, 0 );
         MOCK_METHOD( GetNode, 0 );
         MOCK_METHOD( GetExercise, 0 );
         MOCK_METHOD( GetName, 0 );

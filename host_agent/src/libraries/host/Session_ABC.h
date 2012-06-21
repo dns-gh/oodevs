@@ -69,6 +69,7 @@ struct Session_ABC : public boost::noncopyable
     virtual int GetPort() const = 0;
     virtual Tree GetProperties() const = 0;
     virtual Path GetPath( const std::string& type ) const = 0;
+    virtual Path GetOutput() const = 0;
     //@}
 
     //! @name Public methods
