@@ -1,6 +1,6 @@
 rootnode
 {
-    connections = { skill.links.moveToward, skill.nodes.Report, skill.nodes.WaitTransport },
+    connections = { skill.links.moveToward, skill.nodes.Report },
     
     done = function( self )
         self.arrived = true
@@ -27,8 +27,16 @@ rootnode
         
         if self.arrived then
             Activate( skill.nodes.Report, 1, { RC = eRC_EnAttenteTransporteurs } )
-            Activate( skill.nodes.WaitTransport, 1, emptyTable )
         end
+        if meKnowledge:isLoaded() then
+            self.hasBeenLoaded = true
+            return
+        end
+       if self.hasBeenLoaded and not meKnowledge:isLoaded() then
+           Feedback( self.feedbacks.done )
+           return
+        end
+        
         Activate( skill.links.moveToward, 1, { entities = { self.params.position } } )
     end,
 }
@@ -37,18 +45,5 @@ node "Report"
 {
     create = function( self )
         meKnowledge:RC( self.params.RC )
-    end,
-}
-
-node "WaitTransport"
-{
-    feedbacks = { "loaded", "unloaded" },
-    
-    activate = function( self )
-        if meKnowledge:isLoaded() then
-            Feedback( self.feedbacks.loaded )
-        else
-            Feedback( self.feedbacks.unloaded )
-        end
     end,
 }
