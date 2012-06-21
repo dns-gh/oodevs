@@ -394,7 +394,7 @@ void MainWindow::New()
 // Name: MainWindow::DoLoad
 // Created: LDC 2010-12-01
 // -----------------------------------------------------------------------------
-void MainWindow::DoLoad( QString filename )
+void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
 {
     if( filename.isEmpty() )
         return;
@@ -405,7 +405,7 @@ void MainWindow::DoLoad( QString filename )
     if( Load() )
     {
         SetWindowTitle( true );
-        LoadExercise();
+        LoadExercise( checkConsistency );
     }
     SetProgression( 100, tr( "Loading complete" ) );
 }
@@ -501,8 +501,19 @@ bool MainWindow::Load()
 // -----------------------------------------------------------------------------
 bool MainWindow::Close()
 {
-    if( model_.IsLoaded() && !CheckSaving() )
+    if( model_.IsLoaded() && CheckSaving() == QMessageBox::Cancel )
         return false;
+    DoClose();
+    controllers_.ChangeMode( ePreparationMode_Default );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::PrepareClosing
+// Created: JSR 2012-06-21
+// -----------------------------------------------------------------------------
+void MainWindow::DoClose()
+{
     dockContainer_->Purge();
     dockContainer_->BlockCreationOnListViews( true );
     model_.Purge();
@@ -511,15 +522,13 @@ bool MainWindow::Close()
     selector_->Close();
     dialogContainer_->Purge();
     SetWindowTitle( false );
-    controllers_.ChangeMode( ePreparationMode_Default );
-    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::LoadExercise
 // Created: SBO 2008-08-21
 // -----------------------------------------------------------------------------
-void MainWindow::LoadExercise()
+void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
 {
     try
     {
@@ -541,7 +550,8 @@ void MainWindow::LoadExercise()
         loading_ = false;
         controllers_.ChangeMode( ePreparationMode_Exercise );
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() );
-        emit CheckConsistency();
+        if( checkConsistency )
+            emit CheckConsistency();
     }
     catch( std::exception& e )
     {
@@ -560,6 +570,16 @@ void MainWindow::ReloadExercise()
 {
     if( Close() )
         DoLoad( config_.GetExerciseFile().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ExternalReload
+// Created: JSR 2012-06-21
+// -----------------------------------------------------------------------------
+void MainWindow::ExternalReload()
+{
+    DoClose();
+    DoLoad( config_.GetExerciseFile().c_str(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -660,7 +680,7 @@ void MainWindow::SaveAs()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    if( !CheckSaving() )
+    if( CheckSaving() == QMessageBox::Cancel )
     {
         pEvent->ignore();
         return;
@@ -797,22 +817,21 @@ void MainWindow::SetNeedsSaving( bool status )
 // Name: MainWindow::CheckSaving
 // Created: RPD 2010-02-01
 // -----------------------------------------------------------------------------
-bool MainWindow::CheckSaving( bool switchingMode /* = false */ )
+QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = false */ )
 {
+    QMessageBox::StandardButton result = QMessageBox::Yes;
     if( needsSaving_ )
     {
         assert( controllers_.modes_ != 0 );
-        int result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
+        result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
                                                 , controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise
                                                 ? tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() )
                                                 : tr( "Unsaved modification detected.\nDo you want to save the terrain \'%1\'?" ).arg( config_.GetTerrainName().c_str() )
-                                                , QMessageBox::Yes, ( !switchingMode ) ? QMessageBox::No : 0, QMessageBox::Cancel );
-        if( result == QMessageBox::Cancel )
-            return false;
-        else if( result == QMessageBox::Yes )
-            Save( !switchingMode );
+                                                , QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
+        if( result == QMessageBox::Yes )
+            Save( !checkConsistency );
     }
-    return true;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

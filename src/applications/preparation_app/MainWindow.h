@@ -77,7 +77,8 @@ public:
 
     //! @name Operations
     //@{
-    bool CheckSaving( bool switchingMode = false );
+    QMessageBox::StandardButton CheckSaving( bool checkConsistency = false );
+    void ExternalReload();
     //@}
 
 public slots:
@@ -108,13 +109,14 @@ private:
     //! @name Helpers
     //@{
     bool Load();
-    void LoadExercise();
+    void LoadExercise( bool checkConsistency = true );
     void CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
                        const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();
     void ReadOptions();
-    void DoLoad( QString filename );
+    void DoClose();
+    void DoLoad( QString filename, bool checkConsistency = true );
     void MigrateExercises();
 
     virtual void NotifyCreated();
