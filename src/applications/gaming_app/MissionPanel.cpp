@@ -472,6 +472,7 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
 void MissionPanel::ActivatePlanification()
 {
     isPlanifMode_ = !isPlanifMode_;
+    controllers_.ChangeMode( isPlanifMode_ ? eGamingMode_Planification : eGamingMode_Exercise );
     if( pMissionInterface_ )
         pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
 }

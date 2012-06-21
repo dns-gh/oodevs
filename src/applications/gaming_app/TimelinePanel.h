@@ -59,12 +59,6 @@ private slots:
     void OnViewChanged();
     //@}
 
-signals:
-    //! @name Signal
-    //@{
-    void PlanificationModeChange();
-    //@}
-
 private:
     //! @name Types
     //@{

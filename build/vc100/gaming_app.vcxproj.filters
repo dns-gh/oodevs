@@ -778,6 +778,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp">
       <Filter>Source Files\Panels\Preferences</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PlanificationModePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1118,6 +1121,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h">
+      <Filter>Source Files\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

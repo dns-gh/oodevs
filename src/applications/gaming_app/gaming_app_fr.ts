@@ -2558,6 +2558,13 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
+    <name>PlanificationModePanel</name>
+    <message>
+        <source>Planification mode</source>
+        <translation>Mode planification</translation>
+    </message>
+</context>
+<context>
     <name>PopulationChangeAffinitiesDialog</name>
     <message>
         <source>Magic orders</source>

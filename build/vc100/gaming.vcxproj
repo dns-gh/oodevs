@@ -322,6 +322,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />
     <ClInclude Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.h" />

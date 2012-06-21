@@ -71,6 +71,7 @@ class LoggerProxy;
 class Simulation;
 class RcEntityResolver_ABC;
 class ColorController;
+class PlanificationModePanel;
 
 // =============================================================================
 /** @class  MainWindow
@@ -107,7 +108,6 @@ public slots:
     void ShowHelp();
     void Close();
     void OnPlanifStateChange();
-    void OnNameChanged();
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
@@ -166,6 +166,7 @@ private:
     bool onPlanif_;
     MissionPanel* pMissionPanel_;
     QDockWidget* pExtensionsPanel_;
+    PlanificationModePanel* pPlanificationModePanel_;
     QString planifName_;
     QString savedState_;
     gui::HelpSystem* help_;
