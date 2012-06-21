@@ -53,6 +53,7 @@
         <sequential>
             <exec taskname="build" executable="msbuild" dir="${out.dir}" failonerror="true">
                 <arg value="/nologo"/>
+                <arg value="/m:2"/>
                 <arg value="/verbosity:minimal"/>
                 <arg value="@{project}.sln"/>
                 <arg value="/p:Configuration=@{configuration}"/>
