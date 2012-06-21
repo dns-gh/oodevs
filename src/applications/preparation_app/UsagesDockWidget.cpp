@@ -48,6 +48,8 @@ UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& contro
     pTable_->setHorizontalHeaderLabels( labels );
     pTable_->setAlternatingRowColors( true );
     pTable_->setSelectionBehavior( QAbstractItemView::SelectRows );
+    pTable_->horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
+    pTable_->horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
 
     QWidget* content = new QWidget( this );
     QVBoxLayout* hLayout = new QVBoxLayout( content);

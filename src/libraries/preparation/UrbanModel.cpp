@@ -231,7 +231,6 @@ void UrbanModel::ReadCity( xml::xistream& xis )
     {
         kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
-        ptr->Polish();
         xis >> xml::optional
                 >> xml::start( "urban-objects" )
                     >> xml::list( "urban-object", *this, &UrbanModel::ReadDistrict, ptr )
@@ -250,7 +249,6 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
     {
         kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
-        ptr->Polish();
         xis >> xml::optional
             >> xml::start( "urban-objects" )
                 >> xml::list( "urban-object", *this, &UrbanModel::ReadBlock, ptr )
@@ -269,7 +267,6 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
     {
         kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
-        ptr->Polish();
     }
 }
 
@@ -405,7 +402,6 @@ void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
     {
         kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
-        ptr->Polish();
     }
 }
 

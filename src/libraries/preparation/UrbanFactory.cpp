@@ -83,6 +83,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
         pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_, false ) );
     }
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
+    pTerrainObject->Polish();
     return pTerrainObject;
 }
 
@@ -101,6 +102,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( kernel::Entity_ABC* parent ) cons
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( parent, controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( parent, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
+    pTerrainObject->Polish();
     return pTerrainObject;
 }
 
@@ -125,9 +127,10 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& locati
     pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_, false ) );
 
     pTerrainObject->Attach< kernel::Hierarchies >( *hierarchies );
+    pTerrainObject->Polish();
 
     parent->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
-
     controllers_.actions_.SetSelected( *parent, false );
+
     return pTerrainObject;
 }

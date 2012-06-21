@@ -29,6 +29,7 @@ ConsistencyDialog_ABC::ConsistencyDialog_ABC( QWidget* parent, kernel::Consisten
     , pMapper_( new QSignalMapper( this ) )
 {
     setCaption( tr( "Consistency analysis" ) );
+    connect( pMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnFilterChanged( int ) ) );
 
     // Model
     dataModel_ = new QStandardItemModel( this );
@@ -155,7 +156,6 @@ void ConsistencyDialog_ABC::OnClose()
 // -----------------------------------------------------------------------------
 void ConsistencyDialog_ABC::CreateCheckbox( const T_Types& names )
 {
-    connect( pMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnFilterChanged( int ) ) );
     int index = 0;
     BOOST_FOREACH( const T_Types::value_type& name, names )
     {
