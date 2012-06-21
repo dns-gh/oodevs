@@ -23,6 +23,8 @@
 
 namespace gui
 {
+    class SearchListView_ABC;
+
 class RichListView : public Q3ListView
                    , public kernel::ModesObserver_ABC
 {
@@ -51,6 +53,11 @@ public:
             delete item;
             item = next;
         }
+    }
+
+    virtual void CreateFilters( SearchListView_ABC& /* searchListView */ )
+    {
+        // NOTHING
     }
 
     void Purge()
@@ -153,7 +160,7 @@ private:
         return text.contains( searchedText_, Qt::CaseInsensitive ) != 0;
     }
 
-protected:
+public:
     void ApplyFilter( boost::function< bool ( ValuedListItem* ) > func )
     {
         for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )

@@ -7,17 +7,18 @@
 //
 // *****************************************************************************
 
-#ifndef __SearchListView_h_
-#define __SearchListView_h_
+#ifndef __gui_SearchListView_h_
+#define __gui_SearchListView_h_
 
 #include <boost/noncopyable.hpp>
 #include "SearchLineEdit.h"
 #include "resources.h"
+#include "CheckComboBox.h"
+#include "NumericLimitsEditor.h"
 
 namespace gui
 {
-
-class RichListView;
+    class RichListView;
 
 // =============================================================================
 /** @class  SearchListView
@@ -28,11 +29,66 @@ class RichListView;
 class SearchListView_ABC : public QWidget
                          , private boost::noncopyable
 {
-public:
-    explicit SearchListView_ABC( QWidget* parent ) : QWidget( parent ) {}
-    virtual ~SearchListView_ABC() {}
+    Q_OBJECT
 
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit SearchListView_ABC( QWidget* parent );
+    virtual ~SearchListView_ABC();
+    //@}
+
+    //! @name Abstract operation
+    //@{
     virtual RichListView* GetRichListView() const = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    void Load();
+    void Purge();
+    //@}
+
+    //! @name Filters operations
+    //@{
+    template< typename EnumType >
+    void AddEnumFilter( const QString& text, EnumType maxValue, CheckComboBox::T_Extractor extractor,
+                        const std::string& (*converter)( EnumType, ENT_Tr_ABC::E_Conversion ), const QString& noneText = "" );
+
+    template< typename KernelType, typename Identifier >
+    void AddResolverFilter( const QString& text, const tools::Resolver_ABC< KernelType, Identifier >& resolver,
+                            CheckComboBox::T_Extractor extractor, const std::string& ( KernelType::* converter )() const, const QString& noneText = "" );
+
+    template< typename NumericType, typename SpinBox >
+    void AddNumericFilter( const QString& text, typename NumericLimitsEditor< NumericType, SpinBox >::T_Extractor extractor, NumericType min, NumericType max );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    bool ApplyAllFilter( ValuedListItem* item ) const;
+    //@}
+
+protected slots:
+    //! @name Slots
+    //@{
+    void OnFiltersChanged( QWidget* widget );
+    void OnLinkActivated( const QString& link );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QSignalMapper*                          signalMapper_;
+    QWidget*                                filtersWidget_;
+    QLabel*                                 filterLabel_;
+    QLabel*                                 clearLabel_;
+    QWidget*                                filtersContainer_;
+    QGridLayout*                            filtersLayout_;
+    int                                     currentFilterRow_;
+    std::vector< CheckComboBox* >           combos_;
+    std::vector< NumericLimitsEditor_ABC* > numericLimits_;
+    //@}
 };
 
 // =============================================================================
@@ -85,189 +141,8 @@ private:
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-SearchListView< BaseListView >::SearchListView( QWidget* parent )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1, typename _2 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first, second );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1, typename _2, typename _3 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first, second, third );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1, typename _2, typename _3, typename _4 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first, second, third, fourth );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1, typename _2, typename _3, typename _4, typename _5 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first, second, third, fourth, fifth );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first, second, third, fourth, fifth, sixth );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView constructor
-// Created: ABR 2012-03-28
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7 >
-SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
-    : SearchListView_ABC( parent )
-    , searchLine_( 0 )
-    , listView_  ( 0 )
-{
-    listView_ = new BaseListView( this, first, second, third, fourth, fifth, sixth, seventh );
-    CreateGUI();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView destructor
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-SearchListView< BaseListView >::~SearchListView()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView::GetListView
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-inline
-BaseListView* SearchListView< BaseListView >::GetListView() const
-{
-    return listView_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView::GetRichListView
-// Created: ABR 2012-03-29
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-inline
-RichListView* SearchListView< BaseListView >::GetRichListView() const
-{
-    return listView_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SearchListView::CreateGUI
-// Created: ABR 2012-03-27
-// -----------------------------------------------------------------------------
-template< typename BaseListView >
-inline
-void SearchListView< BaseListView >::CreateGUI()
-{
-    assert( listView_ != 0 );
-
-    // Search box
-    searchLine_ = new SearchLineEdit( this );
-
-    // Next Button
-    QPushButton* next = new QPushButton( QIcon( MAKE_ICON( search ) ), "", this );
-    next->setAccel( Qt::Key_F3 );
-    next->setMaximumWidth( searchLine_->height() );
-    next->setMaximumHeight( searchLine_->height() );
-
-    // Connection
-    connect( searchLine_, SIGNAL( textChanged( const QString& ) ), listView_, SLOT( SearchAndSelect( const QString& ) ) );
-    connect( searchLine_, SIGNAL( returnPressed() ),               listView_, SLOT( SearchAndSelectNext() ) );
-    connect( next,      SIGNAL( pressed() ),                     listView_, SLOT( SearchAndSelectNext() ) );
-
-    // Layout
-    QGridLayout* layout = new QGridLayout( this, 2, 2, 5 );
-    layout->setMargin( 2 );
-    layout->addWidget( searchLine_, 0, 0 );
-    layout->addWidget( next, 0, 1 );
-    layout->addWidget( listView_, 1, 0, 1, 2 );
-}
-
 } //! namespace gui
 
-#endif // __SearchListView_h_
+#include "SearchListView.inl"
+
+#endif // __gui_SearchListView_h_

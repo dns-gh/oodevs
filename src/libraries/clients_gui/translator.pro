@@ -57,6 +57,7 @@ MetricsLayer.cpp \
 MinePrototype_ABC.cpp \
 MiniViews.cpp \
 NBCPrototype_ABC.cpp \
+NumericLimitsEditor.cpp \
 ObjectListView.cpp \
 ObjectPanel.cpp \
 ObjectPrototype_ABC.cpp \
@@ -73,6 +74,8 @@ PropertiesPanel.cpp \
 ResourceLinksDialog_ABC.cpp \
 ResourceNetworkPrototype_ABC.cpp \
 SearchLineEdit.cpp \
+SearchListView.cpp \
+SearchListView.inl \
 StatusBar.cpp \
 StockPrototype_ABC.cpp \
 SupplyRoutePrototype_ABC.cpp \

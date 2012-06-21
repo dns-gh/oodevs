@@ -2656,6 +2656,34 @@ This data can&apos;t be projected.</source>
         <source>Create city</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UsagesDockWidget</name>

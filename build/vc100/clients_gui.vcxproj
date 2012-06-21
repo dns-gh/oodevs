@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\AddRasterDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\AggregateToolbar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\CheckComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ClearButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -113,6 +114,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichAction.cpp" />
@@ -123,6 +125,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SearchListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
@@ -397,6 +400,20 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\CheckComboBox.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -564,6 +581,20 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\resources.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\StatusBar.h">
@@ -823,7 +854,20 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\SearchListView.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\SearchListView.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.h">
@@ -2353,6 +2397,8 @@
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
+    <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />
+    <None Include="..\..\src\libraries\clients_gui\SearchListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl" />

@@ -23,7 +23,7 @@ namespace gui
     class FormationLayer;
     class EntitySymbols;
     class ItemFactory_ABC;
-    class RichListView;
+    class SearchListView_ABC;
     class SymbolIcons;
     class ColorStrategy_ABC;
     class ParametersLayer;
@@ -87,11 +87,11 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< gui::RichListView* >   listViews_;
-    CreationPanels*                     pCreationPanel_;
-    LivingAreaPanel*                    pLivingAreaPanel_;
-    gui::TerrainProfiler*               terrainProfiler_;
-    UsagesDockWidget*                   pUsagesPanel_;
+    std::vector< gui::SearchListView_ABC* > listViews_;
+    CreationPanels*                         pCreationPanel_;
+    LivingAreaPanel*                        pLivingAreaPanel_;
+    gui::TerrainProfiler*                   terrainProfiler_;
+    UsagesDockWidget*                       pUsagesPanel_;
     //@}
 };
 
