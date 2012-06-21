@@ -76,7 +76,7 @@ Section $(^Name)
     File /r /x ".svn" /x "*.qm" "${SWORD}\resources"
 
     ; plugins
-    File "${SWORD}\plugins\web_control\web_control_plugin-${PLATFORM}-mt.dll"
+    File "${SWORD}\plugins\web_control\web_control_plugin.dll"
 
     ; modules
     File "${SWORD}\*_module.dll"
