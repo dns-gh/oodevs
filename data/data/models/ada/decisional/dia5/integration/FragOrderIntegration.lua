@@ -116,6 +116,10 @@ integration.setROE = function( etatROE )
    integration.CR_ROE ( etatROE )
 end
 
+integration.getROE = function()
+    return DEC_Agent_GetEtatROE()
+end
+
 integration.setCompanyROE = function( etatROE )
    DEC_Automate_ChangeEtatROE( etatROE )
    integration.CR_ROE ( etatROE )
