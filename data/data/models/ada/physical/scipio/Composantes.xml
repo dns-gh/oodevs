@@ -29869,9 +29869,11 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object construction-time-factor="3m" destruction-time-factor="3m" initial-construction-time="90m" initial-destruction-time="90m" type="mines"/>
+      <object construction-time-factor="3m" destruction-time-factor="3m" initial-construction-time="90m" initial-destruction-time="60m" type="mines"/>
       <object devalorization-time="15m" initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
       <object devalorization-time="15m" initial-construction-time="6h" initial-destruction-time="6h" type="road destruction" valorization-time="15m"/>
+      <object bypass-gain-factor="0.5" destruction-time-factor="0s" initial-destruction-time="180m" type="mined area (linear)"/>
+      <object bypass-gain-factor="0.5" destruction-time-factor="0s" initial-destruction-time="180m" type="mined area (scattered)"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -35627,4 +35629,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3393468419" -->
+<!-- signature="1438791939" -->
