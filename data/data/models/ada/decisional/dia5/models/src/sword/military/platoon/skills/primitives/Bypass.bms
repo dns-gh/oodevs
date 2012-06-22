@@ -58,7 +58,7 @@ rootnode
 -- ****************************************************************************
 node "bypassElement"
 {
-    connections = { skill.links.moveAndTakePosition, skill.nodes.bypass, skill.links.observe },
+    connections = { skill.links.moveAndTakePosition, skill.nodes.bypass, skill.links.observe, skill.links.dismount },
 
     feedbacks = { "cancelled", "notBypassable" },
 
@@ -102,10 +102,14 @@ node "bypassElement"
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
         if self.arrived then
-            if self.params.entity:canBypassIt() then
-                Activate( skill.nodes.bypass, 1, { entity = self.params.entity } )
+            if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
+                Activate( skill.links.dismount, 1 )
             else
-                Feedback( self.feedbacks.failed,{ element = self.params.entity } )
+                if self.params.entity:canBypassIt() then
+                    Activate( skill.nodes.bypass, 1, { entity = self.params.entity } )
+                else
+                    Feedback( self.feedbacks.failed,{ element = self.params.entity } )
+                end
             end
         end
 
