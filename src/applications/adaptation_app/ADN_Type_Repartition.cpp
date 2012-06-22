@@ -83,7 +83,7 @@ void ADN_Type_Repartition::CheckNoError( const std::string& filename, const QStr
 {
     double total = male_.GetData() + female_.GetData() + children_.GetData();
     if( total!= 100 )
-        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", 
+        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition",
                                                              "Invalid repartition on tab \'%1\' -"
                                                              " Males/Females/Children repartition must be 100%."
                                                              " Current value for \'%2\': %3%." ).arg( parentGuiName_ )

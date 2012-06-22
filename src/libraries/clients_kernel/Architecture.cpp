@@ -68,7 +68,7 @@ void Architecture::Initialize( unsigned int height, unsigned int floorNumber, un
     else
         material_ = &objectTypes_.StringResolver< MaterialCompositionType >::Get( material );
 
-    if( roofShape.empty() || roofShape == "default" ) 
+    if( roofShape.empty() || roofShape == "default" )
     {
         tools::Iterator< const RoofShapeType& > it = objectTypes_.StringResolver< RoofShapeType >::CreateIterator();
         assert( it.HasMoreElements() );

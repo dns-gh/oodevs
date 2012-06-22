@@ -281,7 +281,7 @@ void RichLineEdit::UpdateSideWidgetLocations()
     int left = TextMargin( RichLineEdit::LeftSide );
     int midHeight = textRect.center().y() + 1;
 
-    if ( leftLayout_->count() > 0 )
+    if( leftLayout_->count() > 0 )
     {
         int leftHeight = midHeight - leftWidget_->height() / 2;
         int leftWidth = leftWidget_->width();

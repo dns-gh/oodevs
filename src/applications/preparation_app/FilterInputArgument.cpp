@@ -15,7 +15,6 @@
 #include "clients_kernel/XmlDescription.h"
 #include "tools/ExerciseConfig.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: FilterInputArgument constructor
 // Created: ABR 2011-09-28

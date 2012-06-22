@@ -36,7 +36,6 @@ protected:
     bool event( QEvent *event );
 };
 
-
 // =============================================================================
 /** @class  RichLineEdit
     @brief  RichLineEdit

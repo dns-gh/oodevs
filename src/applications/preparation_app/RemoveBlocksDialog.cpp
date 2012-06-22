@@ -214,7 +214,7 @@ void RemoveBlocksDialog::OnValueChanged( int value )
                     }
                 }
     }
-    controllers_.actions_.SetMultipleSelection( selectables_ ); 
+    controllers_.actions_.SetMultipleSelection( selectables_ );
     deleteButton_->setEnabled( !selectables_.empty() );
 }
 
@@ -242,7 +242,7 @@ void RemoveBlocksDialog::OnItemChanged( QStandardItem* item )
             assert( it != selectables_.end() );
             selectables_.erase( it );
         }
-        controllers_.actions_.SetMultipleSelection( selectables_ ); 
+        controllers_.actions_.SetMultipleSelection( selectables_ );
         deleteButton_->setEnabled( !selectables_.empty() );
     }
 }
@@ -271,7 +271,7 @@ void RemoveBlocksDialog::OnLinkActivated( const QString& link )
         }
     }
     processing_ = false;
-    controllers_.actions_.SetMultipleSelection( selectables_ ); 
+    controllers_.actions_.SetMultipleSelection( selectables_ );
     deleteButton_->setEnabled( !selectables_.empty() );
 }
 

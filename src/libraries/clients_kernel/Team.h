@@ -49,7 +49,7 @@ private:
     Team( const Team& );            //!< Copy constructor
     Team& operator=( const Team& ); //!< Assignment operator
     //@}
-    
+
 protected:
     //! @name Attributes
     //@{

@@ -119,7 +119,7 @@ void UserRights::SetWriteable( const kernel::Entity_ABC& entity, bool writeable 
 // -----------------------------------------------------------------------------
 bool UserRights::FindSide( unsigned long id ) const
 {
-    return( std::find( readSides_.begin(), readSides_.end(), id ) != readSides_.end() 
+    return( std::find( readSides_.begin(), readSides_.end(), id ) != readSides_.end()
           || std::find( writeSides_.begin(), writeSides_.end(), id ) != writeSides_.end() );
 }
 
@@ -204,7 +204,6 @@ void UserRights::Serialize( xml::xostream& xos ) const
     SerializeRights( xos, "crowd", writePopulations_ );
     xos << xml::end;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UserRights::NotifyTeamDeleted

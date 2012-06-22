@@ -59,5 +59,4 @@ private:
 
 } //! namespace gui
 
-
 #endif // __gui_RichAction_h_

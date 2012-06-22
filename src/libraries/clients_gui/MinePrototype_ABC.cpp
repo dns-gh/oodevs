@@ -25,7 +25,6 @@ using namespace gui;
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Improvable" ) )
 {
-    
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Value:" ) );
     layout->addWidget( densityLabel_ );

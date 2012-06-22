@@ -218,7 +218,7 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
         else if( keyName == "altitude_modifier" && type == "quantity" )
             static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
         else if( keyName == "obstacle_mining" && type == "boolean" )
-            static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );        
+            static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );
         else if( keyName == "time_limit" && type == "time" )
             static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_time_limit, boost::ref( message ), _1 )  );
     }

@@ -24,7 +24,6 @@ using namespace gui;
 TrafficabilityPrototype_ABC::TrafficabilityPrototype_ABC( QWidget* parent, double maxWeight )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::TrafficabilityPrototype_ABC", "Trafficability" ) )
 {
-    
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     layout->addWidget( new QLabel( tools::translate( "gui::TrafficabilityPrototype_ABC", "Max weight:" ) ) );
     Q3HBox* box = new Q3HBox();

@@ -848,7 +848,7 @@ void MainWindow::OnAddRaster()
     catch( geodata::ProjectionException& )
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
-        // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI   
+        // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
     }
     catch( geodata::ExtentException& )
     {

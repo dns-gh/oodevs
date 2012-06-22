@@ -920,7 +920,7 @@ ADN_Equipement_Data::ResourceInfos& ADN_Equipement_Data::GetDotation( E_Dotation
 QStringList ADN_Equipement_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object )
 {
     QStringList result;
-    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )

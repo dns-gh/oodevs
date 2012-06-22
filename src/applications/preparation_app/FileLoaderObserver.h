@@ -23,7 +23,7 @@ class FileLoaderObserver : public tools::RealFileLoaderObserver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    		 FileLoaderObserver();
+             FileLoaderObserver();
     virtual ~FileLoaderObserver();
     //@}
 

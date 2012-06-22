@@ -39,5 +39,4 @@ private:
     //@}
 };
 
-
 #endif // PlanificationModePanel_h

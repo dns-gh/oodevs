@@ -138,7 +138,7 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
     if( !urbanObject )
         return;
     const kernel::Hierarchies* hierarchies = urbanObject->Retrieve< kernel::Hierarchies >();
-    
+
     // TODO hack for gaming before UrbanHierarchies are implemented
     if( !hierarchies )
     {

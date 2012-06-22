@@ -142,7 +142,6 @@ void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Fo
     selected_ = elements.size() == 1 ? elements.front() : 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: FormationLayer::IsAggregated
 // Created: LGY 2011-03-07

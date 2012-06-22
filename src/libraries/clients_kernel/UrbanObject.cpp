@@ -32,7 +32,6 @@
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
-
 using namespace kernel;
 
 #pragma warning( disable : 4355 )

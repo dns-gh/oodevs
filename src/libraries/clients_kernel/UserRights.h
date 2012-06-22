@@ -81,7 +81,7 @@ public:
     void InsertWriteSides( T_Ids& elements ) const;
     void InsertWriteAutomats( T_Ids& elements ) const;
     void InsertWritePopulations( T_Ids& elements ) const;
-    
+
     const T_Ids& GetWriteSides() const;
     const T_Ids& GetWriteAutomats() const;
     const T_Ids& GetWritePopulations() const;

@@ -303,7 +303,6 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     gui::Layer_ABC& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
     gui::Layer_ABC& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 
-
     // Drawing order
     AddLayer( *glProxy_, preferences, defaultLayer );
     AddLayer( *glProxy_, preferences, elevation2d,              "main",                         tr( "Elevation" ) );
@@ -926,7 +925,7 @@ void MainWindow::OnAddRaster()
     catch( geodata::ProjectionException& )
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
-        // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI   
+        // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
     }
     catch( geodata::ExtentException& )
     {

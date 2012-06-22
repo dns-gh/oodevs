@@ -77,7 +77,6 @@ bool CheckComboModel::setData( const QModelIndex& index, const QVariant& value, 
     return ok;
 }
 
-
 // =============================================================================
 // CheckComboLineEdit
 // =============================================================================
@@ -111,7 +110,6 @@ void CheckComboBox::CheckComboLineEdit::mousePressEvent( QMouseEvent* event )
     if( parent() )
         parent()->event( event );
 }
-
 
 // =============================================================================
 // CheckComboBox

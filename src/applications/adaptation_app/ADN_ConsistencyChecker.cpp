@@ -111,7 +111,7 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
         elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eComposantes ) );
     }
 
-    ADN_Equipement_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations(); 
+    ADN_Equipement_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
     for( ADN_Equipement_Data::CIT_ResourceInfos_Vector itCategory = ressourceCategories.begin(); itCategory != ressourceCategories.end(); ++itCategory )
     {
         ADN_Equipement_Data::T_CategoryInfos_Vector ressources = ( *itCategory )->categories_;

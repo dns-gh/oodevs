@@ -31,7 +31,6 @@ Drawing_ABC::~Drawing_ABC()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Drawing_ABC::Select
 // Created: SBO 2008-05-29

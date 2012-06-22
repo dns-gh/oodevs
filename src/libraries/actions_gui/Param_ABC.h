@@ -66,7 +66,7 @@ class Param_ABC : public QObject
                 , private boost::noncopyable
 {
     Q_OBJECT
-    
+
 public:
     //! @name Constructors/Destructor
     //@{

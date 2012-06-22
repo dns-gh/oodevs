@@ -31,7 +31,7 @@ protected:
     virtual ~TacticalLineHierarchies_ABC();
     //@}
 
-public:    
+public:
     //! @name Operations
     //@{
     virtual std::string GetSymbol() const;

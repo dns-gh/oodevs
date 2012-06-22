@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #include "clients_kernel_pch.h"
 #include "Team.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -28,7 +27,7 @@ Team::Team( Controllers& controllers, unsigned long id, const QString& name )
 {
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team::~Team
 // Created: LDC 2012-05-07
@@ -52,7 +51,7 @@ void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& 
             controllers_.controller_.Update( *pCommunication );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Team::CreateDictionary
 // Created: LDC 2012-05-07

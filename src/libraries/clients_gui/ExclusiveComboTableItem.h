@@ -49,7 +49,7 @@ public:
             if( r != row() && !text.isEmpty() )
                 list.remove( text );
         }
-        
+
         QString current = text();
         const_cast< ExclusiveComboTableItem* >( this )->SetTexts( list );
         if( list.contains( current ) )

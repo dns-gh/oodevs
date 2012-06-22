@@ -70,7 +70,7 @@ public:
             throw std::exception( __FUNCTION__ " This component tries to always be visible and hidden in the same time." );
 #endif
         if( currentMode_ != -1 && IsOptional( currentMode_ ) )  // was optional
-            visible_ = IsVisible();             
+            visible_ = IsVisible();
 
         if( newMode & hiddenModes_ )                            // becoming forbidden
         {

@@ -23,7 +23,6 @@ NumericLimitsEditor< NumericType, SpinBox >::NumericLimitsEditor( QWidget* paren
     CreateInterface();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NumericLimitsEditor destructor
 // Created: ABR 2012-06-20

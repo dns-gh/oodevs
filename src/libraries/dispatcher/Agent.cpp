@@ -428,7 +428,7 @@ void Agent::DoUpdate( const sword::UnitDetection& message )
 // Name: Agent::DoUpdate
 // Created: SBO 2011-01-31
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::ObjectDetection&	message )
+void Agent::DoUpdate( const sword::ObjectDetection& message )
 {
     if( message.visibility() == sword::UnitVisibility_Level_invisible )
         objectDetections_.erase( message.detected_object().id() );

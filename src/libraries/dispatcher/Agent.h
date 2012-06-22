@@ -77,8 +77,8 @@ public:
     virtual void DoUpdate( const sword::UnitOrder&           asnMsg );
     virtual void DoUpdate( const sword::UnitPathFind&        asnMsg );
     virtual void DoUpdate( const sword::UnitEnvironmentType& message );
-    virtual void DoUpdate( const sword::UnitDetection&		 message );
-    virtual void DoUpdate( const sword::ObjectDetection&	 message );
+    virtual void DoUpdate( const sword::UnitDetection&       message );
+    virtual void DoUpdate( const sword::ObjectDetection&     message );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -138,10 +138,10 @@ private:
         sword::UnitVisibility_Level maxLevel_;
     };
     typedef std::map< unsigned long, UnitDetectionData > T_UnitDetection;
-    typedef T_UnitDetection::const_iterator			     CIT_UnitDetection;
-    
+    typedef T_UnitDetection::const_iterator                 CIT_UnitDetection;
+
     typedef std::map< unsigned long, sword::UnitVisibility_Level > T_ObjectDetection;
-    typedef T_ObjectDetection::const_iterator			           CIT_ObjectDetection;
+    typedef T_ObjectDetection::const_iterator                       CIT_ObjectDetection;
     //@}
 
 private:
@@ -212,7 +212,7 @@ private:
     std::auto_ptr< Satisfaction >              statisfaction_;
     std::auto_ptr< HumanRepartition >          humanRepartition_;
     std::string                                decisionalModel_;
-    T_UnitDetection	     					   unitDetections_;
+    T_UnitDetection                                unitDetections_;
     T_ObjectDetection                          objectDetections_;
 };
 

@@ -50,7 +50,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     tc2_                = static_cast< ParamAutomat* >  ( AddElement( "automat",    tr( "TC2" ).ascii() ) );
     timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).ascii() ) );
     mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).ascii() ) );
-    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).ascii() ) );    
+    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).ascii() ) );
 
     density_            ->SetKeyName( "density" );
     altitudeModifier_   ->SetKeyName( "altitude_modifier" );

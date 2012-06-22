@@ -604,7 +604,7 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
     if( nCol != 0 && nCol != 1 )
         return;
 
-    ComboTableItem* pComboTableItem = dynamic_cast< ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );    
+    ComboTableItem* pComboTableItem = dynamic_cast< ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
     assert( pComboTableItem );
 
     // update quantity colum to bound it to max value

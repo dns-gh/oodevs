@@ -49,7 +49,7 @@ const Color_ABC::T_Color& Color::GetColor() const
         throw std::runtime_error( "Accessing invalid color" );
     return *color_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Color::ChangeColor
 // Created: LDC 2012-05-04
@@ -58,7 +58,7 @@ void Color::ChangeColor( const T_Color& color )
 {
     color_ = color;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Color::Clear
 // Created: LDC 2012-05-04

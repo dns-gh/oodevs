@@ -48,7 +48,7 @@ namespace actions
 class ParamObstacle : public ParamLocationComposite
 {
     Q_OBJECT
-    
+
 public:
     //! @name Constructors/Destructor
     //@{

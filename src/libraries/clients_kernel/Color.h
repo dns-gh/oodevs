@@ -45,7 +45,7 @@ private:
     Color( const Color& );            //!< Copy constructor
     Color& operator=( const Color& ); //!< Assignment operator
     //@}
-    
+
 protected:
     //! @name Member data
     //@{

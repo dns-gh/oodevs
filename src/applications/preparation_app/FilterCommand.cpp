@@ -176,7 +176,7 @@ void FilterCommand::ComputeArgument()
             if( !arguments_[ i ].value_.empty() )
                 argumentsLine_ += " " + arguments_[ i ].name_ + "=\"" + arguments_[ i ].value_ + "\"";
         }
-        else 
+        else
             argumentsLine_ += ( arguments_[ i ].value_.empty() ) ? " " + arguments_[ i ].name_ : " " + arguments_[ i ].name_+ "=" + arguments_[ i ].value_;
     }
     if( commandLabel_ )
