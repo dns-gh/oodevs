@@ -69,7 +69,6 @@ public:
     void EndDrag() const;
     //@}
 
-
 private:
     //! @name Copy/Assignment
     //@{

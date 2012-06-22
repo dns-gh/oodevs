@@ -272,7 +272,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
 kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::PopulationType& type )
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();    
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );

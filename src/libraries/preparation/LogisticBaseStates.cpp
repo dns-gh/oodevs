@@ -104,7 +104,7 @@ void LogisticBaseStates::SetDotation( const kernel::DotationType& type, unsigned
 
     Dotation* dotation = tools::Resolver< Dotation >::Find( type.GetId() );
     if( !dotation )
-    {   
+    {
         if( quantity > 0 )
         {
             dotation = new Dotation( type, quantity );
@@ -215,7 +215,7 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
         const Dotation& dotation = it.NextElement();
         if( dotation.quantity_ > 0 )
         {
-            xos << xml::start( "resource" );                        
+            xos << xml::start( "resource" );
             dotation.SerializeAttributes( xos );
             xos << xml::end;
         }

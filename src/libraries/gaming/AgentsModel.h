@@ -81,7 +81,7 @@ public:
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
     void DestroyCrowd( const sword::CrowdDestruction& message );
-    
+
     virtual kernel::PopulationPart_ABC* FindPopulationPart( const unsigned long& id ) const;
 
     void CreateInhabitant( const sword::PopulationCreation& message );

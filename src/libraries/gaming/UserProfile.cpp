@@ -154,7 +154,7 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_password() )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
-    
+
     RightsResolver::Update( profile );
 
     if( registered_ )

@@ -78,7 +78,7 @@ void AutomatTacticalHierarchies::UpdateSymbolUpward()
             const std::string childLevel = hierarchies->GetLevel();
             if( level_.empty() && !childLevel.empty() )
                 level_ = childLevel;
-		    else if( !childLevel.empty() )
+            else if( !childLevel.empty() )
                 level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
         }
     }
@@ -99,7 +99,7 @@ void AutomatTacticalHierarchies::UpdateLevel()
             const std::string childLevel = hierarchies->GetLevel();
             if( level_.empty() && !childLevel.empty() )
                 level_ = childLevel;
-		    else if( !childLevel.empty() )
+            else if( !childLevel.empty() )
                 level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
         }
     }

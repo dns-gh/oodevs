@@ -121,7 +121,7 @@ kernel::Team_ABC* TeamModelResolver::Find( const unsigned long& identifier ) con
         return &GetNoSideTeam();
     return tools::Resolver< Team_ABC >::Find( identifier );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TeamModelResolver::Get
 // Created: LDC 2012-03-23

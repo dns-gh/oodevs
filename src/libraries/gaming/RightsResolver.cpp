@@ -114,7 +114,7 @@ void RightsResolver::Update( const Model& model )
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
 void RightsResolver::Update( const sword::Profile& profile )
-{    
+{
     if( profile.has_read_only_parties() )
         rights_.SetReadSides( profile.read_only_parties() );
     if( profile.has_read_only_formations() )

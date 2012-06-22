@@ -177,11 +177,11 @@ float PerformanceIndicator::ComputeFormulaIndicator( Values& values )
     float objects = static_cast< float >( values.objects_ );
     float terrain = values.terrainLoad_;
     float knowledges = static_cast< float >( values.knowledgeGroups_ );
-    if ( knowledges < 1.f )
+    if( knowledges < 1.f )
         knowledges = 1.f;
     float load  = units * ( unit_ + blocs * urban_ ) + objects * object_ + terrain * terrain_ + knowledge_ * ( knowledges + unitknowledge_ * units / knowledges );
     load *= globalFactor_;
-    if ( load < 0.0f )
+    if( load < 0.0f )
         return 0.0f;
     return load;
 }

@@ -90,11 +90,11 @@ public:
     typedef std::map< unsigned int, TeamData > T_TeamsDatas;
     typedef T_TeamsDatas::const_iterator     CIT_TeamsDatas;
 
-    struct Values 
+    struct Values
     {
         Values(): limit_( 0 ), profiles_( 0 )
                          , units_( 0 ), automats_( 0 ), blocs_( 0 ), objects_( 0 ), crowds_( 0 ), populations_( 0 )
-                         , terrainWidth_( 0 ), terrainHeight_( 0 )   
+                         , terrainWidth_( 0 ), terrainHeight_( 0 )
                          , terrainLoad_( 0.f ), teams_( 0 ), knowledgeGroups_( 0 )
                          , maxAutomatsKG_( 0 ), maxUnitsKG_( 0 )
                          , avgAutomatsKG_( 0 ), avgUnitsKG_( 0 )

@@ -106,11 +106,11 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDi
     else
     {
         unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
-        QDateTime endDate = QDateTime::	fromTime_t( endSeconds );
+        QDateTime endDate = QDateTime::fromTime_t( endSeconds );
         QDateTime curDate = simulation_.GetDateTime();
 
         QString dateDisplay;
-        if ( endDate.date() != curDate.date() )
+        if( endDate.date() != curDate.date() )
             dateDisplay += endDate.date().toString() + " ";
         dateDisplay += endDate.time().toString();
 

@@ -24,7 +24,7 @@ UrbanHierarchies::UrbanHierarchies( Controller& controller, Entity_ABC& entity, 
         const kernel::Hierarchies* superiorHierarchies = RetrieveHierarchies( *superior );
         level_ = ( superiorHierarchies && superiorHierarchies->GetSuperior() ) ? eUrbanLevelBlock : eUrbanLevelDistrict;
     }
-    else 
+    else
         level_ = eUrbanLevelCity;
 }
 

@@ -22,7 +22,7 @@ namespace xml
 
 inline std::ostream& operator<<( std::ostream& os, const QString& value )
 {
-	return os << value.toStdString();
+    return os << value.toStdString();
 }
 
 namespace frontend
@@ -98,7 +98,7 @@ private:
 template< typename T >
 void XmlNode::SetValue( const std::string& path, const T& value )
 {
-	SetStringValue( path, boost::lexical_cast< std::string >( value ) );
+    SetStringValue( path, boost::lexical_cast< std::string >( value ) );
 }
 
 // -----------------------------------------------------------------------------

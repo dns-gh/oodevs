@@ -53,7 +53,7 @@ private:
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
     void ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor );
     //@}
-    
+
 private:
     //! @name Member data
     //@{

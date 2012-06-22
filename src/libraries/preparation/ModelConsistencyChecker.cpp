@@ -159,7 +159,6 @@ bool ModelConsistencyChecker::CheckConsistency()
     return !errors_.empty();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::FillEntitiesCopy
 // Created: ABR 2011-09-22

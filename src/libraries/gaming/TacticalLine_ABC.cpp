@@ -16,7 +16,6 @@
 #include "protocol/Protocol.h"
 #include <geometry/Types.h>
 
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14

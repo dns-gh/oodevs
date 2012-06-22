@@ -104,7 +104,7 @@ void Inhabitant::CreateDictionary()
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), self.children_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );    
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );
     UpdateUrbanObjectsDictionnary();
 }
 
