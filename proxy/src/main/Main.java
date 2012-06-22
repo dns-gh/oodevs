@@ -1,8 +1,9 @@
 package main;
 
+import java.io.File;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 
 class Main {
 
@@ -13,11 +14,17 @@ class Main {
         config.isDebug = false;
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
-            if (it.equals("--port") || it.equals("-p")) {
+            if (it.equals("--port")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --port parameter");
                 config.port = Integer.parseInt(args[++i]);
-            } else if (it.equals("--debug") || it.equals("-d")) {
+            } else if (it.equals("--ssl")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --ssl parameter");
+                config.ssl = args[++i];
+                if (!new File(config.ssl).isFile())
+                    throw new Exception("Missing SSL configuration file");
+            } else if (it.equals("--debug")) {
                 config.isDebug = true;
             } else {
                 throw new Exception("Unrecognized parameter " + it);
@@ -28,6 +35,8 @@ class Main {
     private static void printParameters(final Agent.Configuration config) {
         log_.info("port:  " + config.port);
         log_.info("debug: " + (config.isDebug ? "true" : "false"));
+        if (!config.ssl.isEmpty())
+            log_.info("ssl: " + config.ssl);
     }
 
     public static void main(final String[] args) {

@@ -1,15 +1,24 @@
 package main;
 
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 import javax.servlet.DispatcherType;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlets.GzipFilter;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class Agent {
 
@@ -19,6 +28,7 @@ public class Agent {
     public static class Configuration {
         public int port;
         public boolean isDebug;
+        public String ssl;
     };
 
     public Agent(final Configuration config) throws Exception {
@@ -33,8 +43,33 @@ public class Agent {
         final FilterHolder zipper = new FilterHolder(new GzipFilter());
         ctx.addFilter(zipper, "*", all);
 
-        server_ = new Server(config.port);
+        server_ = new Server();
         server_.setHandler(ctx);
+
+        final List<Connector> links = new ArrayList<Connector>();
+
+        final SelectChannelConnector plain = new SelectChannelConnector();
+        plain.setPort(config.port);
+        links.add(plain);
+
+        final File sslFile = new File(config.ssl);
+        if (sslFile.isFile()) {
+            final JSONParser parser = new JSONParser();
+            final JSONObject cfg = (JSONObject) parser.parse(new FileReader(sslFile));
+            final SslSelectChannelConnector ssl = new SslSelectChannelConnector();
+            ssl.setPort(Integer.parseInt((String) cfg.get("port")));
+            final org.eclipse.jetty.util.ssl.SslContextFactory scf = ssl.getSslContextFactory();
+            scf.setExcludeProtocols("SSLv2Hello");
+            scf.setKeyStoreType((String) cfg.get("type"));
+            String path = (String) cfg.get("path");
+            if (!new File(path).isAbsolute())
+                path = sslFile.getParentFile() + File.separator + path;
+            scf.setKeyStorePath(path);
+            scf.setKeyStorePassword((String) cfg.get("password"));
+            links.add(ssl);
+        }
+
+        server_.setConnectors(links.toArray(new Connector[] {}));
     }
 
     public void exec() {
