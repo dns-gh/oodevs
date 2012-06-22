@@ -97,6 +97,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 NodeController::~NodeController()
 {
     timer_->Stop();
+    async_.Join();
     nodes_.ForeachRef( boost::bind( &NodeController::Stop, this, _1, false, true ) );
 }
 
