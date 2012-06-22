@@ -68,7 +68,7 @@ node "BuildElement"
        self.arrived = true
     end,
     failed = function( self, params, additionalParams )
-       Feedback( self.feedbacks.failed, { element = additionalParams.element } )
+       Feedback( self.feedbacks.failed, { element = additionalParams.element, reason = additionalParams.reason } )
     end,
 
     create = function( self )
@@ -144,7 +144,7 @@ node "Build"
 
     select = function( self )
         if not self.params.entity:buildIt() then
-           Feedback( self.feedbacks.failed, { element = self.params.entity } )
+           Feedback( self.feedbacks.failed, { element = self.params.entity, reason = eRC_PasDotationConstructionObjet } )
         end
     end
 }

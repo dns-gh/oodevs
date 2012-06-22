@@ -785,6 +785,13 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
         number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
     else
         number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+    MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
+    if( object )
+    {
+        ConstructionAttribute* att = object->RetrieveAttribute< ConstructionAttribute >();
+        if( att )
+            number = att->GetDotationNeededForConstruction( 1. );
+    }
     return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, number );
 }
 
@@ -814,6 +821,13 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
         number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
     else
         number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+    MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
+    if( object )
+    {
+        MineAttribute* att = object->RetrieveAttribute< MineAttribute >();
+        if( att )
+            number = att->GetDotationNeededForConstruction( 1. );
+    }
     return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, number );
 }
 

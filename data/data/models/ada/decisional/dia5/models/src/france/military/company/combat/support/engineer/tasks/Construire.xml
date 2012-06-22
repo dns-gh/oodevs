@@ -41,7 +41,7 @@
 					</parameter>
 					<parameter name="supportTasks">
 						<value>
-							<string>france.military.platoon.tasks.Renforcer</string>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
 						</value>
 					</parameter>
 					<parameter name="taskForSupporting">
@@ -51,7 +51,7 @@
 					</parameter>
 					<parameter name="defaultTask">
 						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
 						</value>
 					</parameter>
 					<parameter name="disableWhenDone">
