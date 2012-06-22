@@ -290,7 +290,7 @@ void LicenseDialog::InstallLicense( HWND hWnd )
 {
     OPENFILENAME ofn;
     TCHAR szFileName[ MAX_PATH ];
-    strcpy_s( szFileName, ( feature_ + ".lic" ).c_str() );
+    strcpy_s( szFileName, "*.lic" );
     ZeroMemory( &ofn, sizeof( ofn ) );
     ofn.lStructSize = sizeof( ofn );
     ofn.hwndOwner = hWnd;
@@ -298,7 +298,8 @@ void LicenseDialog::InstallLicense( HWND hWnd )
     ofn.lpstrFilter = licenseFiles.c_str();
     ofn.lpstrFile = szFileName;
     ofn.nMaxFile = MAX_PATH;
-    ofn.lpstrTitle = tr( "Please select license file..." ).c_str();
+    static const std::string title = tr( "Please select license file..." );
+    ofn.lpstrTitle = title.c_str();
     ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
     ofn.lpstrDefExt = "lic";
     if( GetOpenFileName( &ofn ) )
