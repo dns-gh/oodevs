@@ -306,7 +306,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.RATAC" id="11" name="ASS . Groupe RATAC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/radar"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VAB RATAC"/>
       <equipment count="2" crew="2" type="TRM 2000"/>
@@ -457,7 +457,7 @@
   <unit decisional-model="Masalife.ASS.COBRA" id="16" name="ASS . Station COBRA" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/radar"/>
     <equipments>
-      <equipment count="1" crew="5" major="true" type="Radar COBRA"/>
+      <equipment count="2" crew="5" major="true" type="Radar COBRA"/>
       <equipment count="1" crew="2" type="TRM 2000"/>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" type="TRM 10000"/>
@@ -9236,7 +9236,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="308" name="ASS . Equipe de Reco LRU" type="Pion ASS">
-    <nature atlas-nature="None" level="o" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="None" level="o" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VTC P4 REC LRU"/>
     </equipments>
@@ -9265,7 +9265,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="309" name="ASS . PC Batterie LRU" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/air defense/theater missile defense unit"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/rocket/single rocket launcher/self-propelled"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
@@ -9577,7 +9577,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASA.PC" id="319" name="ASA . PC Batterie MISTRAL" type="Pion ASA">
-    <nature atlas-nature="ASA" level="i" nature-app6="combat/air defense"/>
+    <nature atlas-nature="ASA" level="i" nature-app6="combat/air defense/missile"/>
     <equipments>
       <equipment count="2" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" major="true" type="TRM 2000 PC"/>
@@ -9609,7 +9609,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASA.SATCP MISTRAL" id="320" name="ASA . Section MISTRAL" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense"/>
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile"/>
     <equipments>
       <equipment count="6" crew="2" major="true" type="VLRA + PLATE FORME DE TIR MISTRAL"/>
       <equipment count="2" crew="2" type="VTC P4"/>
@@ -19347,4 +19347,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1373349552" -->
+<!-- signature="1137046984" -->
