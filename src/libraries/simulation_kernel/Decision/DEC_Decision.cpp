@@ -625,7 +625,8 @@ bool BoolFunction( const directia::tools::binders::ScriptRef& refMission, const 
 }
 bool BoolFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    return BoolFunction( refMission, name, element );
+    BoolFunction( refMission, name, element );
+    return true;
 }
 bool EnumerationFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -639,7 +640,8 @@ bool EnumerationFunction( const directia::tools::binders::ScriptRef& refMission,
 }
 bool EnumerationFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    return EnumerationFunction( refMission, name, element );
+    EnumerationFunction( refMission, name, element );
+    return true;
 }
 bool PointFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1006,7 +1008,8 @@ bool DotationTypeFunction( const directia::tools::binders::ScriptRef& refMission
 
 bool DotationTypeFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    return DotationTypeFunction( refMission, name, element );
+    DotationTypeFunction( refMission, name, element );
+    return true;
 }
 
 bool DotationTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
@@ -1064,7 +1067,8 @@ bool GDHFunction( const directia::tools::binders::ScriptRef& refMission, const s
 }
 bool GDHFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    return GDHFunction( refMission, name, element );
+    GDHFunction( refMission, name, element );
+    return true;
 }
 bool NumericFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1078,7 +1082,8 @@ bool NumericFunction( const directia::tools::binders::ScriptRef& refMission, con
 }
 bool NumericFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    return NumericFunction( refMission, name, element );
+    NumericFunction( refMission, name, element );
+    return true;
 }
 bool NumericListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -1197,7 +1202,8 @@ bool StringFunction( const directia::tools::binders::ScriptRef& refMission, cons
 }
 bool StringFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    return StringFunction( refMission, name, element );
+    StringFunction( refMission, name, element );
+    return true;
 }
 bool ObjectiveListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
