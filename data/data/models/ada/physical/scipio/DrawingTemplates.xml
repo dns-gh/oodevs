@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<templates model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/DrawingTemplates.xsd">
+<templates model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/DrawingTemplates.xsd">
 	<category name="Lignes">
 		<description>Lignes tactiques</description>
         <template name="-- o --" type="line">
@@ -941,3 +941,4 @@
 </templates>
 <!-- signature="1253111117" -->
 <!-- signature="0476431959" -->
+<!-- signature="2162626926" -->
