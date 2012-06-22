@@ -48,7 +48,7 @@ struct PartReader : boost::noncopyable
 
 struct MimeReader::Part : boost::noncopyable
 {
-    explicit Part( const std::string& name, const MimeReader::Handler handler )
+    explicit Part( const std::string& name, const MimeReader::Handler& handler )
         : name_   ( name )
         , handler_( handler )
     {
@@ -210,7 +210,7 @@ size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_
 }
 
 template< typename T >
-void ParseData( StreamBuffer& buf, const std::string boundary, T part = T() )
+void ParseData( StreamBuffer& buf, const std::string& boundary, const T& part = T() )
 {
     const std::string end = "\r\n--" + boundary;
     while( !buf.Eof() )
@@ -236,7 +236,7 @@ void ParseData( StreamBuffer& buf, const std::string boundary, T part = T() )
 }
 
 template< typename T >
-void ParsePart( StreamBuffer& buf, const std::string boundary, T part, Pool_ABC& pool )
+void ParsePart( StreamBuffer& buf, const std::string& boundary, const T& part, Pool_ABC& pool )
 {
     PartReader< T > reader( part, pool );
     ParseData( buf, boundary, part );
