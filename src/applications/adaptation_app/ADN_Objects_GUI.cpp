@@ -184,7 +184,7 @@ void ADN_Objects_GUI::Build()
         // Buildable
         ADN_GroupBox* buildable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Buildable" ), constructor );
         vInfosConnectors[ eBuildableCapacityPresent ] = & buildable->GetConnector();
-        ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false, false );
+        ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false );
         pDotations->SetGoToOnDoubleClick( ::eEquipement );
         vInfosConnectors[ eBuildableCapacity_Dotation ] = &pDotations->GetConnector();
 
@@ -192,7 +192,7 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* improvable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Improvable" ), constructor );
         vInfosConnectors[ eImprovableCapacityPresent ] = & improvable->GetConnector();
         {
-            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, improvable, false, false );
+            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, improvable, false );
             pDotations->SetGoToOnDoubleClick( ::eEquipement );
             vInfosConnectors[ eImprovableCapacity_Dotation ] = &pDotations->GetConnector();
         }
