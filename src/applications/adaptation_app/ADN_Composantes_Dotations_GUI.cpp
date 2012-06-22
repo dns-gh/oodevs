@@ -77,7 +77,6 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
     , bIncludeThreshold_( bIncludeThreshold )
-    , bQtyDecimal_( bQtyDecimal )
 {
     // Selection and sorting.
     setSorting( true );
