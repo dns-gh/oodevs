@@ -662,6 +662,9 @@ return
     setROE = function(self, roeState )
       integration.setROE( roeState )
     end,
+    getROE = function(self)
+      return integration.getROE()
+    end,
     canIlluminate = function( self )
         return integration.canIlluminate()
     end,

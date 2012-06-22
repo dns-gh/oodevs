@@ -15,6 +15,7 @@ rootnode
         skill.nodes.ChangeEtatOperationnel,
         skill.links.dismount,
         skill.links.moveTo,
+        skill.links.engage,
         skill.nodes.RC
     },
 
@@ -29,7 +30,12 @@ rootnode
         if integration.shouldDismount() then
             Activate( skill.links.dismount, 1 )
         end
-
+        
+        if meKnowledge:getROE() == eRoeStateFreeFire then -- engage ennemies if the Rules Of Engagement is free fire
+            self.ennemis = sword.military.queries.enemies.getEnemiesInRange[ "execute" ]( {probabilityToHit = 0,8})
+            self.positionForEngaging = sword.military.queries.tactical.getPositionsToDestroy[ "execute" ]( {elementsToDestroy = self.ennemis} )
+            Activate( skill.links.engage, 1, { entities = self.ennemis, positions = self.positionForEngaging } )
+        end
         -- Alert NBC
         if meKnowledge:isContaminated() or meKnowledge:isPoisoned() then
             meKnowledge:alertNBC()

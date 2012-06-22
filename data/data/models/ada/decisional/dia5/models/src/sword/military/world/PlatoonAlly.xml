@@ -1361,6 +1361,9 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
 		<method name="setROE" abstract="false">
 			<description>Change l'état courant du ROE du pion </description>
 		</method>
+        <method name="getROE" abstract="false">
+            <description>Renvoi l'état courant du ROE du pion </description>
+        </method>
 		<method name="getAutomat">
 			<description>Retourne l'automate de l'unité</description>
 			<return>
