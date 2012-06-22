@@ -217,7 +217,7 @@ namespace gui
     inline
     BaseListView* SearchListView< BaseListView >::GetListView() const
     {
-        return static_cast< BaseListView >( listView_ );
+        return static_cast< BaseListView* >( listView_ );
     }
 
     // -----------------------------------------------------------------------------
