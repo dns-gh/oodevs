@@ -24,8 +24,7 @@ class ModeController : public kernel::ModeController< E_GamingMode >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModeController( QMainWindow* parent )
-        : kernel::ModeController< E_GamingMode >( parent, eGamingMode_Exercise, "Gaming" ) {}
+             ModeController() : kernel::ModeController< E_GamingMode >( eGamingMode_Exercise, "Gaming" ) {}
     virtual ~ModeController() {}
     //@}
 };

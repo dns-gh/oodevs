@@ -33,7 +33,7 @@ class ModeController : public ModeController_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ModeController( QMainWindow* parent, EnumType savedMode, const QString& registeryEntry );
+             ModeController( EnumType savedMode, const QString& registeryEntry );
     virtual ~ModeController();
     //@}
 
@@ -41,6 +41,7 @@ public:
     //@{
     virtual int GetCurrentMode() const;
     virtual const QString& GetRegisteryEntry() const;
+    virtual void SetMainWindow( QMainWindow* parent );
     //@}
 
 private:

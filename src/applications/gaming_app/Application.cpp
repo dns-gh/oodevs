@@ -23,6 +23,7 @@
 #include "gaming/CommandHandler.h"
 #include "gaming/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include "gaming/ModeController.h"
 #include "clients_gui/VerticalHeaderTableView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
@@ -121,6 +122,7 @@ void Application::Initialize( int /*argc*/, char** /*argv*/ )
     observer_.reset( new tools::NullFileLoaderObserver() );
     config_.reset( new Config( argc(), argv(), *observer_ ) );
     controllers_.reset( new Controllers() );
+    controllers_->SetModeController( new ::ModeController() );
     logger_.reset( new LoggerProxy() );
     services_.reset( new Services( controllers_->controller_, *logger_ ) );
     simulation_.reset( new Simulation( controllers_->controller_ ) );

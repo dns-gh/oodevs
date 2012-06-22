@@ -87,6 +87,7 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/FormationLevels.h"
+#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
@@ -103,7 +104,6 @@
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
-#include "preparation/ModeController.h"
 #include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
@@ -146,9 +146,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , progressDialog_   ( 0 )
     , menu_             ( 0 )
 {
-    // Mode controllers
-    controllers_.SetModeController( new ::ModeController( this ) );
-    assert( controllers_.modes_ );
+    controllers_.modes_->SetMainWindow( this );
 
     // Migration
     if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().empty() )

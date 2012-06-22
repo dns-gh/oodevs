@@ -24,8 +24,7 @@ class ModeController : public kernel::ModeController< E_PreparationMode >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModeController( QMainWindow* parent )
-        : kernel::ModeController< E_PreparationMode >( parent, ePreparationMode_Exercise, "Preparation" ) {}
+             ModeController() : kernel::ModeController< E_PreparationMode >( ePreparationMode_Exercise, "Preparation" ) {}
     virtual ~ModeController() {}
     //@}
 };
