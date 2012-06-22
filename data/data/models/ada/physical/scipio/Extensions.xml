@@ -5082,7 +5082,7 @@
         <label language="fr" text="Indicatif radio"/>
       </labels>
     </attribute>
-    <attribute dictionary="T_SIC_IdCDB" dictionary-kind="short" extends="unit;formation" name="IdCDB" type="loosy-dictionary">
+    <attribute extends="unit;formation" name="IdCDB" type="string">
       <labels>
         <label language="fr" text="Identifiant Champ de Bataille"/>
       </labels>
