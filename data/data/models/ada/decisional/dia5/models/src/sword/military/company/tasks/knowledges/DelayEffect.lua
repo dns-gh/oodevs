@@ -20,7 +20,7 @@ return
        end
       end
       self.numberEchelons = myself.taskParams.echelonNumber or 0
-      if self.numberEchelons == 0 then
+      if self.numberEchelons == NIL or self.numberEchelons == 0 then
         self.numberEchelons = 1 -- par défaut les pions décrochent sur 1 échelon
       end
 

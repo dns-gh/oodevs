@@ -164,7 +164,7 @@ end
 -- @release 2010-10-01
 -- --------------------------------------------------------------------------------
 integration.query.getNbrFront = function( nbrEchelon )
-    if nbrEchelon == 0 then
+    if nbrEchelon == NIL or nbrEchelon == 0 then
         return #( DEC_Automate_PionsAvecPC() ) -- all
     end
     local pions = DEC_Automate_PionsMelee()
