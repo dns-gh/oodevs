@@ -734,6 +734,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Brecher obstacles"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -826,6 +827,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Reconnaitre Site de franchissement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1896,6 +1898,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Freiner"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1946,6 +1949,7 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Freiner"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -3772,7 +3776,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION ASS Assurer Mise En Oeuvre">
+        <mission name="PION ASS Mise En Batterie">
           <fragorder name="Pion Appliquer Feux"/>
           <fragorder name="Pion Engager"/>
           <fragorder name="Pion Desengager"/>
@@ -4757,6 +4761,7 @@
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION GENIE Appui Mobilite"/>
         <mission name="PION GENIE Ouvrir Itineraire"/>
+        <mission name="PION GENIE Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6936,7 +6941,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS TIR Se Deployer"/>
+        <mission name="AUTOMATE ASS Mise En Batterie"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
@@ -6972,7 +6977,7 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Reco Et Deploiement"/>
-        <mission name="AUTOMATE ASS TIR Se Deployer"/>
+        <mission name="AUTOMATE ASS Mise En Batterie"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
@@ -7386,6 +7391,41 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.GEN.CCM">
+      <missions>
+        <mission name="AUTOMATE COMMUNES Decrocher"/>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
+        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
+        <mission name="AUTOMATE COMMUNES Stationner"/>
+        <mission name="AUTOMATE GENIE Se Deployer"/>
+        <mission name="AUTOMATE GENIE Ouvrir Itineraire"/>
+        <mission name="AUTOMATE GENIE Reconnaitre"/>
+        <mission name="AUTOMATE GENIE Brecher Obstacles"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="S'arreter"/>
+        <fragorder name="Passer En Silence Radio"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
   </automats>
   <crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
@@ -7421,4 +7461,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0356168415" -->
+<!-- signature="3162548771" -->

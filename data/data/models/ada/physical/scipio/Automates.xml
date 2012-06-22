@@ -756,7 +756,7 @@
     <unit max-occurs="1" min-occurs="1" type="GEN . Groupe Chantier"/>
     <unit max-occurs="1" type="GEN . Section Equipt Montagne"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.GEN.Appui" id="822" name="GEN . Compagnie Contre Minage" type="Automate GEN">
+  <automat decisional-model="Masalife.Automate.GEN.CCM" id="822" name="GEN . Compagnie Contre Minage" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC Cie APP"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Section SOUVIM"/>
     <unit max-occurs="2" min-occurs="2" type="GEN . Section Deminage Lourd D9"/>
@@ -1526,4 +1526,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="3673865215" -->
+<!-- signature="2670555785" -->
