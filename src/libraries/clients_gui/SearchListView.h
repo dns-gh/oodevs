@@ -87,15 +87,15 @@ protected:
     //! @name Member data
     //@{
     SearchLineEdit*                         searchLine_;
-    QSignalMapper*                          signalMapper_;
     ExpandableGroupBox*                     filtersWidget_;
+    RichListView*                           listView_;
+    QSignalMapper*                          signalMapper_;
     QPushButton*                            clearButton_;
     QWidget*                                filtersContainer_;
     QGridLayout*                            filtersLayout_;
     int                                     currentFilterRow_;
     std::vector< CheckComboBox* >           combos_;
     std::vector< NumericLimitsEditor_ABC* > numericLimits_;
-    RichListView*                           listView_;
     //@}
 };
 
