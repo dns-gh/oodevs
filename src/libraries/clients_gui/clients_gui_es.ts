@@ -1408,11 +1408,11 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::SearchListView_ABC</name>
     <message>
-        <source>Hide filters</source>
+        <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display filters</source>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

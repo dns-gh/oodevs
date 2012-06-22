@@ -44,6 +44,51 @@ SearchListView_ABC::~SearchListView_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SearchListView_ABC::CreateGUI
+// Created: ABR 2012-03-27
+// -----------------------------------------------------------------------------
+void SearchListView_ABC::CreateGUI()
+{
+    assert( listView_ != 0 );
+
+    // Search box
+    searchLine_ = new SearchLineEdit( this );
+
+    // Next Button
+    QPushButton* next = new QPushButton( QIcon( MAKE_ICON( search ) ), "", this );
+    next->setAccel( Qt::Key_F3 );
+    next->setMaximumWidth( searchLine_->height() );
+    next->setMaximumHeight( searchLine_->height() );
+
+    // Filters
+    clearButton_ = new QPushButton( tr( "Clear" ) );
+    filtersContainer_ = new QWidget();
+    filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
+    filtersLayout_->setSpacing( 5 );
+    filtersLayout_->setContentsMargins( 5, 2, 5, 2 );
+    filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
+
+    filtersWidget_ = new ExpandableGroupBox( 0, tr( "Filters" ) );
+    filtersWidget_->setVisible( false ); // $$$$ ABR 2012-06-22: Visible after the first AddFilter
+    filtersWidget_->AddComponent( filtersContainer_ );
+
+    // Connection
+    connect( clearButton_, SIGNAL( clicked() ),                     this,      SLOT( OnClearFilters() ) );
+    connect( searchLine_,  SIGNAL( textChanged( const QString& ) ), listView_, SLOT( SearchAndSelect( const QString& ) ) );
+    connect( searchLine_,  SIGNAL( returnPressed() ),               listView_, SLOT( SearchAndSelectNext() ) );
+    connect( next,         SIGNAL( pressed() ),                     listView_, SLOT( SearchAndSelectNext() ) );
+
+    // Layout
+    QGridLayout* layout = new QGridLayout( this, 3, 2, 5 );
+    layout->setMargin( 2 );
+    layout->setSpacing( 2 );
+    layout->addWidget( searchLine_, 0, 0 );
+    layout->addWidget( next, 0, 1 );
+    layout->addWidget( filtersWidget_, 1, 0, 1, 2 );
+    layout->addWidget( listView_, 2, 0, 1, 2 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SearchListView_ABC::Load
 // Created: ABR 2012-06-19
 // -----------------------------------------------------------------------------
@@ -66,38 +111,24 @@ void SearchListView_ABC::Purge()
     // Clear ComboBoxs
     delete filtersLayout_;
     filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
+    filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
     combos_.clear();
     numericLimits_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SearchListView_ABC::OnLinkActivated
+// Name: SearchListView_ABC::OnClearFilters
 // Created: ABR 2012-06-19
 // -----------------------------------------------------------------------------
-void SearchListView_ABC::OnLinkActivated( const QString& link )
+void SearchListView_ABC::OnClearFilters()
 {
-    if( link == "display" )
-    {
-        filterLabel_->setText( "<a href='hide'>" + tr( "Hide filters" ) + "</a>" );
-        clearLabel_->setVisible( true );
-        filtersContainer_->setVisible( true );
-    }
-    else if( link == "hide" )
-    {
-        filterLabel_->setText( "<a href='display'>" + tr( "Display filters" ) + "</a>" );
-        clearLabel_->setVisible( false );
-        filtersContainer_->setVisible( false );
-    }
-    else if( link == "clear" )
-    {
-        QStringList list;
-        for( std::vector< CheckComboBox* >::iterator it = combos_.begin(); it != combos_.end(); ++it )
-            if( *it )
-                ( *it )->SetItemsCheckState( Qt::Unchecked );
-        for( std::vector< NumericLimitsEditor_ABC* >::iterator it = numericLimits_.begin(); it != numericLimits_.end(); ++it )
-            if( *it )
-                ( *it )->Clear();
-    }
+    QStringList list;
+    for( std::vector< CheckComboBox* >::iterator it = combos_.begin(); it != combos_.end(); ++it )
+        if( *it )
+            ( *it )->SetItemsCheckState( Qt::Unchecked );
+    for( std::vector< NumericLimitsEditor_ABC* >::iterator it = numericLimits_.begin(); it != numericLimits_.end(); ++it )
+        if( *it )
+            ( *it )->Clear();
 }
 
 // -----------------------------------------------------------------------------
