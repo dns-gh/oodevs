@@ -64,10 +64,6 @@ signals:
 class CheckComboBox : public QComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( QString AllText READ AllText WRITE SetAllText )
-    Q_PROPERTY( QString NoneText READ NoneText WRITE SetNoneText )
-    Q_PROPERTY( QString Separator READ Separator WRITE SetSeparator )
-    Q_PROPERTY( QStringList CheckedItems READ CheckedItems WRITE SetCheckedItems )
 
 public:
     //! @name Types

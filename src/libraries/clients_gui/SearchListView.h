@@ -15,6 +15,7 @@
 #include "resources.h"
 #include "CheckComboBox.h"
 #include "NumericLimitsEditor.h"
+#include "ExpandableGroupBox.h"
 
 namespace gui
 {
@@ -63,6 +64,12 @@ public:
     void AddNumericFilter( const QString& text, typename NumericLimitsEditor< NumericType, SpinBox >::T_Extractor extractor, NumericType min, NumericType max );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    void CreateGUI();
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -72,22 +79,23 @@ private:
 protected slots:
     //! @name Slots
     //@{
-    void OnFiltersChanged( QWidget* widget );
-    void OnLinkActivated( const QString& link );
+    void OnFiltersChanged( QWidget* );
+    void OnClearFilters();
     //@}
 
 protected:
     //! @name Member data
     //@{
+    SearchLineEdit*                         searchLine_;
     QSignalMapper*                          signalMapper_;
-    QWidget*                                filtersWidget_;
-    QLabel*                                 filterLabel_;
-    QLabel*                                 clearLabel_;
+    ExpandableGroupBox*                     filtersWidget_;
+    QPushButton*                            clearButton_;
     QWidget*                                filtersContainer_;
     QGridLayout*                            filtersLayout_;
     int                                     currentFilterRow_;
     std::vector< CheckComboBox* >           combos_;
     std::vector< NumericLimitsEditor_ABC* > numericLimits_;
+    RichListView*                           listView_;
     //@}
 };
 
@@ -125,19 +133,6 @@ public:
     //@{
     ListView* GetListView() const;
     virtual RichListView* GetRichListView() const;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void CreateGUI();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    SearchLineEdit* searchLine_;
-    ListView*       listView_;
     //@}
 };
 
