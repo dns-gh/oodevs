@@ -111,7 +111,8 @@ public:
 
     virtual const std::string& GetDIAType() const;
     void NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState state );
-    void NotifyRulesOfEngagementPopulationStateChanged( int state );
+    void NotifyRulesOfEngagementPopulationStateChanged( const PHY_RoePopulation& roe );
+    const PHY_RoePopulation& GetRoePopulation() const;
     //@}
 
 protected:

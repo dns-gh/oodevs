@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
@@ -43,6 +44,15 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC
 bool DEC_AutomateFunctions::IsParentAutomateEngaged( const MIL_Automate& callerAutomate )
 {
     return callerAutomate.GetParentAutomate() ? callerAutomate.GetParentAutomate()->IsEngaged() : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetRoePopulation
+// Created: LGY 2012-06-22
+// -----------------------------------------------------------------------------
+int DEC_AutomateFunctions::GetRoePopulation( MIL_Automate& callerAutomate )
+{
+    return static_cast< int >( dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).GetRoePopulation().GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -498,8 +508,9 @@ void DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged( MIL_Automate& c
 // Name: DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged
 // Created: LDC 2011-08-05
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& /*callerAutomate*/, int /*state*/ )
+void DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& callerAutomate, int state )
 {
-    // $$$$ LDC This function could be implemented when/if the .proto includes a message for pop roe on automats
-    //          It's actually only useful for gui, the sim doesn't care about it.
+    const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( state );
+    assert( pRoe );
+    dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).NotifyRulesOfEngagementPopulationStateChanged( *pRoe );
 }
