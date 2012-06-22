@@ -76,7 +76,6 @@ ResourceLinksDialog_ABC.cpp \
 ResourceNetworkPrototype_ABC.cpp \
 SearchLineEdit.cpp \
 SearchListView.cpp \
-SearchListView.inl \
 StatusBar.cpp \
 StockPrototype_ABC.cpp \
 SupplyRoutePrototype_ABC.cpp \
