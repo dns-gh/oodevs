@@ -160,9 +160,9 @@ unsigned int ImprovableCapacity::GetDotationNumber( const TER_Localisation& loca
         if( location.GetType() == TER_Localisation::ePoint )
             return std::max( 1u, nFullNbrDotation_ );
         else if( unitType_ == ConstructionCapacity::eRaw )
-            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetLength() ) / 1000.f ) );
+            return std::max( 1u, static_cast< unsigned int >( nFullNbrDotation_ * MIL_Tools::ConvertSimToMeter( location.GetLength() ) / 1000.f ) );
         else if( unitType_ == ConstructionCapacity::eDensity )
-            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetArea() ) * nFullNbrDotation_ / 1000000.f ) );
+            return std::max( 1u, static_cast< unsigned int >(nFullNbrDotation_ * MIL_Tools::ConvertSimToMeter( location.GetArea() ) * nFullNbrDotation_ / 1000000.f ) );
     }
     return nFullNbrDotation_;
 }
