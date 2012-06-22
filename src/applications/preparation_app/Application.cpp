@@ -15,6 +15,7 @@
 #include "MainWindow.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
+#include "preparation/ModeController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/VerticalHeaderTableView.h"
@@ -118,6 +119,7 @@ bool Application::Initialize( int argc, char** argv )
     observer_.reset( new FileLoaderObserver() );
     config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new kernel::Controllers() );
+    controllers_->SetModeController( new ::ModeController() );
     staticModel_.reset( new StaticModel( *controllers_ ) );
     model_.reset( new Model( *controllers_, *staticModel_ ) );
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );

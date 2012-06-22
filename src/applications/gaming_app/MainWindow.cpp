@@ -163,9 +163,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , onPlanif_        ( false )
     , pProfile_        ( new ProfileFilter( controllers, p ) )
 {
-    // Mode controllers
-    controllers_.SetModeController( new ::ModeController( this ) );
-
+    controllers_.modes_->SetMainWindow( this );
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
@@ -562,7 +560,6 @@ void MainWindow::OnPlanifStateChange()
         setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
     else
         setCaption( planifName_ );
-    controllers_.options_.Change( "DesignMode", onPlanif_ );
 }
 
 // -----------------------------------------------------------------------------

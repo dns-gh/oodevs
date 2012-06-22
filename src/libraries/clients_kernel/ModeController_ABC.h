@@ -38,6 +38,7 @@ public:
     //@{
     virtual int GetCurrentMode() const = 0;
     virtual const QString& GetRegisteryEntry() const = 0;
+    virtual void SetMainWindow( QMainWindow* parent ) = 0;
     //@}
 
     //! @name SortedInterfaceContainer implementation

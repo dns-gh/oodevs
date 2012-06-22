@@ -12,8 +12,8 @@
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
 template< typename EnumType >
-ModeController< EnumType >::ModeController( QMainWindow* parent, EnumType savedMode, const QString& registeryEntry )
-    : parent_                ( parent )
+ModeController< EnumType >::ModeController( EnumType savedMode, const QString& registeryEntry )
+    : parent_                ( 0 )
     , currentMode_           ( static_cast< EnumType >( 0 ) )
     , savedMode_             ( savedMode )
     , registeryEntry_        ( registeryEntry )
@@ -67,6 +67,7 @@ void ModeController< EnumType >::LoadGeometry()
     settings.beginGroup( "/" + registeryEntry_ );
     if( !settings.contains( "mainWindowState" ) )
         return;
+    assert( parent_ );
     parent_->restoreState( settings.value("mainWindowState").toByteArray() );
     useDefault_ = false;
 }
@@ -80,6 +81,7 @@ void ModeController< EnumType >::SaveGeometry()
 {
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/" + registeryEntry_ );
+    assert( parent_ );
     settings.setValue( "mainWindowState", parent_->saveState() );
     useDefault_ = false;
 }
@@ -102,4 +104,14 @@ template< typename EnumType >
 const QString& ModeController< EnumType >::GetRegisteryEntry() const
 {
     return registeryEntry_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModeController::SetMainWindow
+// Created: LGY 2012-06-22
+// -----------------------------------------------------------------------------
+template< typename EnumType >
+void ModeController< EnumType >::SetMainWindow( QMainWindow* parent )
+{
+    parent_ = parent;
 }

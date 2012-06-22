@@ -11,7 +11,7 @@
 #define __ActionPublisher_h_
 
 #include "protocol/ServerPublisher_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 
 // =============================================================================
 /** @class  ActionPublisher
@@ -21,7 +21,7 @@
 // =============================================================================
 class ActionPublisher : public Publisher_ABC
                       , public tools::Observer_ABC
-                      , public kernel::OptionsObserver_ABC
+                      , public kernel::ModesObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -37,7 +37,6 @@ public:
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
     virtual void Send( const sword::ClientToMessenger& message );
-
     //@}
 
 private:
@@ -49,7 +48,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void NotifyModeChanged( int newMode );
     //@}
 
 private:

@@ -81,11 +81,11 @@ void ActionPublisher::Send( const sword::ClientToMessenger& /*message*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionPublisher::OptionChanged
-// Created: SBO 2010-03-17
+// Name: ActionPublisher::NotifyModeChanged
+// Created: LGY 2012-06-22
 // -----------------------------------------------------------------------------
-void ActionPublisher::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+void ActionPublisher::NotifyModeChanged( int newMode )
 {
-    if( name == "DesignMode" )
-        design_ = value.To< bool >();
+    design_ = newMode == eGamingMode_Planification;
 }
+
