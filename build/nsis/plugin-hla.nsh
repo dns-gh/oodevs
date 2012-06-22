@@ -35,5 +35,15 @@
     ${File} "${RUNDIR}\plugins\hla\" "SWORD_CS.txt"
     ${File} "${RUNDIR}\plugins\hla\" "protocols.xml"
     ${File} "${RUNDIR}\plugins\hla\" "configuration.xml"
+!if ${PLATFORM} == "vc80"
+    ${File} "${RUNDIR}\plugins\hla\" "libFedTime.dll"
+    ${File} "${RUNDIR}\plugins\hla\" "RPR2-D7.fed"
+    ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516.dll"
+    ${FileRename} "${RUNDIR}\plugins\hla\" "plugin_vc80.xml" "plugin.xml"
+!else if ${PLATFORM} == "vc100"
+    ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516.dll"
+    ${FileRename} "${RUNDIR}\plugins\hla\" "plugin_vc100.xml" "plugin.xml"
+!else 
     ${File} "${RUNDIR}\plugins\hla\" "plugin.xml"
+!endif
 !macroend

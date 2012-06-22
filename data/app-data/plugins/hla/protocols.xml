@@ -7,6 +7,10 @@
         <release>hla_1516.dll</release>
         <debug>hla_1516_d.dll</debug>
     </hla-1516>
+    <hla-1516-mak>
+        <release>libFedTime1516.dll</release>
+        <debug>libFedTime1516d.dll</debug>
+    </hla-1516-mak>
     <hla-1516e>
         <release>libFedTime1516e.dll</release>
         <debug>libFedTime1516ed.dll</debug>

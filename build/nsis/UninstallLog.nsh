@@ -10,6 +10,13 @@
     File "${FilePath}${FileName}"
 !macroend
 
+;File macro
+!macro FileRename FilePath FileName NewName
+    IfFileExists "$OUTDIR\${NewName}" +2
+    FileWrite $UninstLog "$OUTDIR\${NewName}$\r$\n"
+    File /oname=${NewName} "${FilePath}${FileName}"
+!macroend
+
 ;CreateShortcut macro
 !macro CreateShortcut FilePath FilePointer Pamameters Icon IconIndex
     FileWrite $UninstLog "${FilePath}$\r$\n"
@@ -74,6 +81,7 @@ LangString UninstLogMissing ${LANG_ENGLISH} "${UninstLog} not found!$\r$\nUninst
 
 !define AddItem "!insertmacro AddItem"
 !define File "!insertmacro File"
+!define FileRename "!insertmacro FileRename"
 !define CreateShortcut "!insertmacro CreateShortcut"
 !define CopyFiles "!insertmacro CopyFiles"
 !define Rename "!insertmacro Rename"

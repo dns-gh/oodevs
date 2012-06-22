@@ -5831,6 +5831,7 @@
    <dimensions>
       <dimension dataType="HLAfederateHandle" name="Federate"
                  normalization="Normalize Federate Handle service"
+                 upperBound="2147483647"
                  upperBoundNotes="MOM1"
                  value="Excluded"/>
       <dimension dataType="HLAserviceGroupName" name="ServiceGroup"
