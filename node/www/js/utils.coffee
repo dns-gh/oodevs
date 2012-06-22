@@ -8,7 +8,7 @@
 # *****************************************************************************
 
 get_url = (url) ->
-    return window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
+    return window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + url
 
 ajax = (url, data, success, error) ->
     $.ajax

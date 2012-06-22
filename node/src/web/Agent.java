@@ -23,7 +23,6 @@ public class Agent {
         public String type;
         public String name;
         public int port;
-        public int proxy;
         public boolean isDebug;
     };
 

@@ -16,7 +16,6 @@ class Main {
         config.type = "cluster";
         config.name = "";
         config.port = 8081;
-        config.proxy = 8080;
         config.isDebug = false;
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
@@ -28,10 +27,6 @@ class Main {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --port parameter");
                 config.port = Integer.parseInt(args[++i]);
-            } else if (it.equals("--proxy")) {
-                if (i + 1 == args.length)
-                    throw new Exception("Missing --proxy parameter");
-                config.proxy = Integer.parseInt(args[++i]);
             } else if (it.equals("--name")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --name parameter");
@@ -62,7 +57,6 @@ class Main {
         log_.info("uuid:  " + config.uuid);
         log_.info("root:  " + config.root);
         log_.info("port:  " + config.port);
-        log_.info("proxy: " + config.proxy);
         log_.info("type:  " + config.type);
         log_.info("debug: " + (config.isDebug ? "true" : "false"));
     }
