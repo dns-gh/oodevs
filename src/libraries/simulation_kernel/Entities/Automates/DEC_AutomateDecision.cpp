@@ -15,6 +15,7 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Decision/DEC_AutomateFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
@@ -40,6 +41,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult )
     : DEC_Decision            ( automate, gcMult, gcPause )
     , nRulesOfEngagementState_( eRoeStateNone )
+    , pRoePopulation_         ( PHY_RoePopulation::Find( 0 ) ) // eEmploiForceInterdit
     , nCloseCombatState_      ( eCloseCombatStateNone )
     , nOperationalState_      ( eOpStateOperational )
     , fuseau_                 ( 0 )
@@ -83,11 +85,15 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    unsigned int nRoePopulationID;
     file >> boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
          >> pEntity_
          >> nRulesOfEngagementState_
          >> nCloseCombatState_
-         >> nOperationalState_;
+         >> nOperationalState_
+         >> nRoePopulationID;
+    pRoePopulation_ = PHY_RoePopulation::Find( nRoePopulationID );
+
     unsigned int nID;
     file >> nID;
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( nID );
@@ -111,12 +117,14 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned i
 void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pEntity_ );
+    unsigned int nRoePopulationID = pRoePopulation_->GetID();
     unsigned id = pEntity_->GetType().GetID();
     file << boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
          << pEntity_
          << nRulesOfEngagementState_
          << nCloseCombatState_
          << nOperationalState_
+         << nRoePopulationID
          << id;
 }
 
@@ -211,6 +219,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Automate_ChangeEtatROEPopulation" ] =
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged, boost::ref( GetAutomate() ), _1 ) );
+    brain[ "DEC_Automate_ROEPopulation" ] = boost::bind( &DEC_AutomateFunctions::GetRoePopulation, boost::ref( GetAutomate() ) );
 
     // Debug
     brain[ "DEC_DecisionalState" ] =
@@ -809,6 +818,28 @@ void DEC_AutomateDecision::NotifyRulesOfEngagementStateChanged( E_RulesOfEngagem
         nRulesOfEngagementState_ = state;
         bStateHasChanged_  = true;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyRulesOfEngagementPopulationStateChanged
+// Created: LGY 2012-06-22
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::NotifyRulesOfEngagementPopulationStateChanged( const PHY_RoePopulation& roe )
+{
+    if( roe != *pRoePopulation_ )
+    {
+        pRoePopulation_   = &roe;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::GetRoePopulation
+// Created: LGY 2012-06-22
+// -----------------------------------------------------------------------------
+const PHY_RoePopulation& DEC_AutomateDecision::GetRoePopulation() const
+{
+    return *pRoePopulation_;
 }
 
 // -----------------------------------------------------------------------------
