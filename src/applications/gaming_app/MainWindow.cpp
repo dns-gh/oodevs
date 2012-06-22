@@ -562,6 +562,7 @@ void MainWindow::OnPlanifStateChange()
         setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
     else
         setCaption( planifName_ );
+    controllers_.options_.Change( "DesignMode", onPlanif_ );
 }
 
 // -----------------------------------------------------------------------------
