@@ -235,7 +235,6 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node_
     return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
         ( "-jar \"" + Utf8Convert( jar_.filename() ) + "\"" )
         ( MakeOption( "root",  Utf8Convert( web_ ) ) )
-        ( MakeOption( "proxy", proxy_.GetPort() ) )
         ( MakeOption( "uuid", node.GetId() ) )
         ( MakeOption( "type", type_ ) )
         ( MakeOption( "name", node.GetName() ) )
