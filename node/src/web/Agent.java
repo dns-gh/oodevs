@@ -6,6 +6,7 @@ import javax.servlet.DispatcherType;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -33,6 +34,9 @@ public class Agent {
 
         final ServletHolder files = new ServletHolder(new DefaultServlet());
         files.setInitParameter("dirAllowed", "false");
+        files.setInitParameter("cacheControl", "public");
+        files.setInitParameter("acceptRanges", "true");
+        files.setInitParameter("useFileMappedBuffer", "true");
         ctx.addServlet(files, "/css/*");
         ctx.addServlet(files, "/img/*");
         ctx.addServlet(files, "/js/*");
@@ -46,8 +50,12 @@ public class Agent {
         final FilterHolder zipper = new FilterHolder(new GzipFilter());
         ctx.addFilter(zipper, "*", all);
 
-        server_ = new Server(config.port);
+        server_ = new Server();
         server_.setHandler(ctx);
+
+        final SelectChannelConnector connector = new SelectChannelConnector();
+        connector.setPort(config.port);
+        server_.addConnector(connector);
     }
 
     public void exec() {
