@@ -69,11 +69,18 @@
             project="host_agent" platform="cmake.platform.${platform}" />
     </target>
 
-    <target name="test">
+    <target name="tests">
         <poney-test name="runtime_test" dir="${out.dir}/RelWithDebInfo" data="" />
         <poney-test name="host_test" dir="${out.dir}/RelWithDebInfo" data="" />
         <poney-test name="web_test" dir="${out.dir}/RelWithDebInfo" data="" />
     </target>
 
-    <target name="all" depends="configure,build,test"/>
+    <target name="reports" description="generate reports">
+        <cppcheck-report>
+            <arg line="--suppress=useAutoPointerCopy"/>
+            <arg line="--suppress=variableHidingTypedef"/>
+        </cppcheck-report>
+    </target>
+
+    <target name="all" depends="configure,build,tests,reports"/>
 </project>
