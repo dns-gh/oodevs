@@ -1464,7 +1464,7 @@
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="15"/>
       <speed terrain="orchard" value="15"/>
-      <speed construction-speed="0" terrain="swamp" value="0"/>
+      <speed construction-speed="5" terrain="swamp" value="0"/>
       <speed construction-speed="30" terrain="dune" value="19"/>
       <speed terrain="urban area" value="25"/>
       <speed construction-speed="0" terrain="lake" value="0"/>
@@ -1482,13 +1482,13 @@
       <speed terrain="secondary road" value="40"/>
       <speed construction-speed="25" terrain="stream" value="5"/>
       <speed construction-speed="25" terrain="river" value="10"/>
-      <speed construction-speed="0" terrain="main river" value="0"/>
+      <speed construction-speed="5" terrain="main river" value="0"/>
       <speed terrain="bridge" value="50"/>
-      <speed construction-speed="0" terrain="cliff" value="0"/>
+      <speed construction-speed="5" terrain="cliff" value="0"/>
       <speed terrain="railroad" value="10"/>
       <speed terrain="crossroad" value="50"/>
-      <speed construction-speed="0" terrain="mountain" value="0"/>
-      <speed construction-speed="0" terrain="mountain edge" value="0"/>
+      <speed construction-speed="5" terrain="mountain" value="0"/>
+      <speed construction-speed="5" terrain="mountain edge" value="0"/>
     </speeds>
     <composition>
       <category name="munition">
@@ -1532,9 +1532,9 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object destruction-time-factor="1.1s" initial-destruction-time="20m" type="mines"/>
-      <object destruction-time-factor="1.1s" initial-destruction-time="20m" type="mined area (linear)"/>
-      <object destruction-time-factor="1.1s" initial-destruction-time="20m" type="mined area (scattered)"/>
+      <object destruction-time-factor="0s" initial-destruction-time="20m" type="mines"/>
+      <object bypass-gain-factor="0.5" destruction-time-factor="0s" devalorization-time="1s" initial-destruction-time="40m" non-bypassed-speed="10" type="mined area (linear)"/>
+      <object bypass-gain-factor="0.5" destruction-time-factor="0s" devalorization-time="1s" initial-destruction-time="40m" non-bypassed-speed="10" type="mined area (scattered)"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
@@ -28355,7 +28355,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320145317656" comment="" id="291" max-slope="0.6" name="Bus Renault" protection="VehiculeNonProtege" size="Moyen" weight="12">
+  <equipment codeEMAT6="" codeEMAT8="00010288" codeLFRIL="" codeNNO="2320145317656" comment="" id="291" max-slope="0.6" name="Bus Renault" protection="VehiculeNonProtege" size="Moyen" weight="12">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -28459,7 +28459,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2310145299271" comment="" id="292" max-slope="0.6" name="Bus Mercedes" protection="VehiculeNonProtege" size="Gros" weight="12">
+  <equipment codeEMAT6="" codeEMAT8="00010287" codeLFRIL="" codeNNO="2310145299271" comment="" id="292" max-slope="0.6" name="Bus Mercedes" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -28563,7 +28563,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2310142912368" comment="" id="293" max-slope="0.6" name="Bus Volvo" protection="VehiculeNonProtege" size="Gros" weight="12">
+  <equipment codeEMAT6="" codeEMAT8="00010289" codeLFRIL="" codeNNO="2310142912368" comment="" id="293" max-slope="0.6" name="Bus Volvo" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -28667,7 +28667,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320144902611" comment="" id="294" max-slope="0.6" name="Bus MAN" protection="VehiculeNonProtege" size="Gros" weight="12">
+  <equipment codeEMAT6="" codeEMAT8="00010286" codeLFRIL="" codeNNO="2320144902611" comment="" id="294" max-slope="0.6" name="Bus MAN" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -28771,7 +28771,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2310145529031" comment="" id="295" max-slope="0.6" name="Bus IVECO" protection="VehiculeNonProtege" size="Gros" weight="12">
+  <equipment codeEMAT6="" codeEMAT8="00010285" codeLFRIL="" codeNNO="2310145529031" comment="" id="295" max-slope="0.6" name="Bus IVECO" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -29827,13 +29827,13 @@
       <speed terrain="secondary road" value="6"/>
       <speed construction-speed="25" terrain="stream" value="1"/>
       <speed construction-speed="25" terrain="river" value="1"/>
-      <speed construction-speed="0" terrain="main river" value="0"/>
+      <speed construction-speed="5" terrain="main river" value="0"/>
       <speed terrain="bridge" value="6"/>
-      <speed construction-speed="0" terrain="cliff" value="0"/>
+      <speed construction-speed="5" terrain="cliff" value="0"/>
       <speed terrain="railroad" value="5"/>
       <speed terrain="crossroad" value="6"/>
-      <speed construction-speed="0" terrain="mountain" value="0"/>
-      <speed construction-speed="0" terrain="mountain edge" value="0"/>
+      <speed construction-speed="5" terrain="mountain" value="0"/>
+      <speed construction-speed="5" terrain="mountain edge" value="0"/>
     </speeds>
     <composition>
       <category name="munition">
@@ -30176,7 +30176,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320144902693" comment="" id="314" name="VBL 7,62 ROEM" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="00010284" codeLFRIL="" codeNNO="2320144902693" comment="" id="314" name="VBL 7,62 ROEM" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -35629,4 +35629,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="4196287457" -->
+<!-- signature="0276946459" -->
