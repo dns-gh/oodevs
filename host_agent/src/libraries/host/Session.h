@@ -25,6 +25,7 @@ namespace boost
 namespace runtime
 {
     struct Runtime_ABC;
+    struct Process_ABC;
 }
 
 namespace web
@@ -64,19 +65,24 @@ public:
     virtual std::string GetName() const;
     virtual int GetPort() const;
     virtual Tree GetProperties() const;
-    virtual Path GetPath( const std::string& type ) const;
-    virtual Path GetOutput() const;
     //@}
 
     //! @name Public methods
     //@{
+    virtual Path GetPath( const std::string& type ) const;
+    virtual Path GetOutput() const;
     virtual Tree Save() const;
-    virtual bool Start( const runtime::FileSystem_ABC& system, const T_Starter& starter );
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const runtime::FileSystem_ABC& system, const Path& apps );
     virtual bool Stop();
-    virtual void Unlink();
     virtual void Update();
     virtual void Poll();
     virtual bool Pause();
+    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) const;
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     //@}
 
     //! @name Status enumeration

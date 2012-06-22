@@ -26,7 +26,6 @@ namespace runtime
 {
     struct FileSystem_ABC;
     struct Pool_ABC;
-    struct Process_ABC;
     struct Runtime_ABC;
 }
 
@@ -82,8 +81,6 @@ private:
     void UpdateSession( T_Session session );
     void Save( const Session_ABC& session ) const;
     void Create( Session_ABC& session, bool isReload );
-    boost::shared_ptr< runtime::Process_ABC > StartWith( const Session_ABC& session ) const;
-    bool StartSession( Session_ABC& session ) const;
     //@}
 
     //! @name Private template helpers

@@ -16,7 +16,6 @@
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Pool_ABC.h"
 #include "runtime/Process_ABC.h"
-#include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
 #include "Session_ABC.h"
 #include "UuidFactory_ABC.h"
@@ -33,15 +32,6 @@ using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
-
-namespace
-{
-template< typename T >
-std::string MakeOption( const std::string& option, const T& value )
-{
-    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
-}
-}
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::SessionController
@@ -174,9 +164,8 @@ void SessionController::Create( Session_ABC& session, bool isReload )
                      << session.GetId() << " "
                      << session.GetName() << " "
                      << Utf8Convert( session.GetExercise() ) << " :" << session.GetPort();
-    if( isReload )
-        return Save( session );
-    StartSession( session );
+    if( !isReload )
+        session.Start( runtime_, system_, apps_ );
     Save( session );
 }
 
@@ -214,28 +203,8 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     session->Stop();
-    session->Unlink();
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetRoot() ) );
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, session->GetOutput() ) );
+    session->Remove( system_, async_ );
     return session;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SessionController::StartWith
-// Created: BAX 2012-04-20
-// -----------------------------------------------------------------------------
-boost::shared_ptr< runtime::Process_ABC > SessionController::StartWith( const Session_ABC& session ) const
-{
-    return runtime_.Start( Utf8Convert( apps_ / "simulation_app.exe" ), boost::assign::list_of
-        ( MakeOption( "debug-dir", Utf8Convert( session.GetRoot() / "debug" ) ) )
-        ( MakeOption( "exercises-dir", Utf8Convert( session.GetPath( "exercise" ) ) ) )
-        ( MakeOption( "terrains-dir", Utf8Convert( session.GetPath( "terrain" ) ) ) )
-        ( MakeOption( "models-dir", Utf8Convert( session.GetPath( "model" ) ) ) )
-        ( MakeOption( "exercise", Utf8Convert( session.GetExercise() ) ) )
-        ( MakeOption( "session",  session.GetId() ) )
-        ( "--silent" ),
-        Utf8Convert( apps_ ),
-        Utf8Convert( session.GetRoot() / "session.log" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,16 +226,7 @@ SessionController::T_Session SessionController::Dispatch( const Uuid& id, const 
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& id ) const
 {
-    return Dispatch( id, boost::bind( &SessionController::StartSession, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SessionController::StartSession
-// Created: BAX 2012-06-19
-// -----------------------------------------------------------------------------
-bool SessionController::StartSession( Session_ABC& session ) const
-{
-    return session.Start( system_, boost::bind( &SessionController::StartWith, this, _1 ) );
+    return Dispatch( id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( system_ ), boost::cref( apps_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

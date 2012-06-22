@@ -15,7 +15,6 @@
 
 namespace boost
 {
-    template< typename T > class function;
     template< typename T > class shared_ptr;
 namespace filesystem3
 {
@@ -29,8 +28,9 @@ namespace uuids
 
 namespace runtime
 {
+    struct Async;
     struct FileSystem_ABC;
-    struct Process_ABC;
+    struct Runtime_ABC;
 }
 
 namespace host
@@ -53,12 +53,6 @@ struct Session_ABC : public boost::noncopyable
     virtual ~Session_ABC() {}
     //@}
 
-    //! @name Typedef helpers
-    //@{
-    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
-    typedef boost::function< T_Process( const Session_ABC& ) > T_Starter;
-    //@}
-
     //! @name Methods
     //@{
     virtual Uuid GetId() const = 0;
@@ -68,19 +62,17 @@ struct Session_ABC : public boost::noncopyable
     virtual std::string GetName() const = 0;
     virtual int GetPort() const = 0;
     virtual Tree GetProperties() const = 0;
-    virtual Path GetPath( const std::string& type ) const = 0;
-    virtual Path GetOutput() const = 0;
     //@}
 
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const runtime::FileSystem_ABC& system, const T_Starter& starter ) = 0;
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const runtime::FileSystem_ABC& system, const Path& apps ) = 0;
     virtual bool Stop() = 0;
-    virtual void Unlink() = 0;
     virtual void Update() = 0;
     virtual void Poll() = 0;
     virtual bool Pause() = 0;
+    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) const = 0;
     //@}
 };
 

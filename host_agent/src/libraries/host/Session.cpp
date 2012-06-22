@@ -12,6 +12,7 @@
 #include "Node_ABC.h"
 #include "PortFactory_ABC.h"
 #include "PropertyTree.h"
+#include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
@@ -19,6 +20,7 @@
 #include "runtime/Utf8.h"
 #include "web/Client_ABC.h"
 
+#include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
@@ -28,8 +30,10 @@
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
-using runtime::Utf8Convert;
+using runtime::Async;
 using runtime::FileSystem_ABC;
+using runtime::Runtime_ABC;
+using runtime::Utf8Convert;
 
 namespace
 {
@@ -401,18 +405,36 @@ bool Session::Pause()
     return ModifyStatus( lock, STATUS_PAUSED );
 }
 
+namespace
+{
+template< typename T >
+std::string MakeOption( const std::string& option, const T& value )
+{
+    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const FileSystem_ABC& system, const T_Starter& starter )
+bool Session::Start( const Runtime_ABC& runtime, const FileSystem_ABC& system, const Path& apps )
 {
     boost::unique_lock< boost::mutex > lock( access_ );
     if( process_ )
         return ModifyStatus( lock, STATUS_PLAYING );
 
     WriteSettings( system, GetOutput() / "session.xml", GetConfiguration( name_, port_->Get() ) );
-    T_Process ptr = starter( *this );
+    T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ), boost::assign::list_of
+        ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
+        ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )
+        ( MakeOption( "terrains-dir", Utf8Convert( GetPath( "terrain" ) ) ) )
+        ( MakeOption( "models-dir", Utf8Convert( GetPath( "model" ) ) ) )
+        ( MakeOption( "exercise", Utf8Convert( GetExercise() ) ) )
+        ( MakeOption( "session",  id_ ) )
+        ( "--silent" ),
+        Utf8Convert( apps ),
+        Utf8Convert( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;
 
@@ -443,15 +465,6 @@ Path Session::GetPath( const std::string& type ) const
 Path Session::GetOutput() const
 {
     return GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::Unlink
-// Created: BAX 2012-06-06
-// -----------------------------------------------------------------------------
-void Session::Unlink()
-{
-    node_.UnlinkExercise( links_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -503,4 +516,23 @@ void Session::Poll()
     if( counter + 1 != counter_ || GetPid( process_ ) != pid )
         return;
     ModifyStatus( lock, next );
+}
+
+namespace
+{
+void Cleanup( const FileSystem_ABC& system, const std::vector< Path >& paths )
+{
+    BOOST_FOREACH( const Path& path, paths )
+        system.Remove( path );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Remove
+// Created: BAX 2012-06-22
+// -----------------------------------------------------------------------------
+void Session::Remove( const FileSystem_ABC& system, Async& async ) const
+{
+    node_.UnlinkExercise( links_ );
+    async.Go( boost::bind( ::Cleanup, boost::cref( system ), boost::assign::list_of( GetRoot() )( GetOutput() ) ) );
 }

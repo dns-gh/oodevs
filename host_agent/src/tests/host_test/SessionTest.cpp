@@ -72,9 +72,10 @@ namespace
         MockRuntime runtime;
         MockPortFactory ports;
         MockNode node;
-        MOCK_FUNCTOR( Starter, ProcessPtr( const Session_ABC& ) );
+        const host::Path apps;
         Fixture()
             : node( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) )
+            , apps( "apps" )
         {
             // NOTHING
         }
@@ -98,10 +99,10 @@ namespace
         ProcessPtr StartSession( Session& session, int pid, const std::string& name )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
-            MOCK_EXPECT( Starter ).with( mock::same( session ) ).returns( process );
+            MOCK_EXPECT( runtime.Start ).once().returns( process );
             MOCK_EXPECT( system.MakePaths ).once();
             MOCK_EXPECT( system.WriteFile ).once().returns( true );
-            BOOST_REQUIRE( session.Start( system, Starter ) );
+            BOOST_REQUIRE( session.Start( runtime, system, apps ) );
             return process;
         }
 
@@ -213,7 +214,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )
 {
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
-    BOOST_CHECK( !session->Start( system, Starter ) );
+    BOOST_CHECK( !session->Start( runtime, system, apps ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
@@ -224,7 +225,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
     BOOST_CHECK( session->Pause() );
     BOOST_CHECK( !session->Pause() );
     ExpectWebRequest( "/play", 200 );
-    BOOST_CHECK( session->Start( system, Starter ) );
+    BOOST_CHECK( session->Start( runtime, system, apps ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_process, Fixture )
@@ -270,7 +271,7 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
     ExpectWebRequest( "/pause", 200 );
     session->Pause();
     ExpectWebRequest( "/play", 200 );
-    session->Start( system, Starter );
+    session->Start( runtime, system, apps );
     BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
 
     endPause.Signal();
