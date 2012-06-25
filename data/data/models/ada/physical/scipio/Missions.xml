@@ -1571,6 +1571,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" id="2483" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3466,4 +3467,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1948356066" -->
+<!-- signature="3146757948" -->
