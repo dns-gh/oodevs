@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Perceiver.h"
+#include "ConsumptionComputer_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -27,12 +28,13 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -1397,6 +1399,16 @@ void PHY_RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorith
 {
     if( algorithm.GetTarget() != pion_ && pion_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::Execute
+// Created: JSR 2012-06-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::Execute( dotation::ConsumptionComputer_ABC& algorithm ) const
+{
+    if( pPerceptionRecoPoint_ || pPerceptionRecoLocalisation_ || pPerceptionRecoUrbanBlock_ || pPerceptionRecoObjects_ )
+        algorithm.SetConsumptionMode( PHY_ConsumptionType::moving_ );
 }
 
 // -----------------------------------------------------------------------------
