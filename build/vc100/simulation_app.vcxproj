@@ -62,6 +62,7 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -83,6 +84,7 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -104,6 +106,7 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -125,6 +128,7 @@
     <Import Project="Property sheets\link_pathfind.props" />
     <Import Project="Property sheets\link_geodata.props" />
     <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\precompiled_header.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
