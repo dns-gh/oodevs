@@ -219,20 +219,49 @@ bool Node::Start( const T_Starter& starter, bool weak )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Node::StopProcess
+// Created: BAX 2012-06-25
+// -----------------------------------------------------------------------------
+std::pair< Node::T_Process, bool > Node::StopProcess( bool weak )
+{
+    T_Process next;
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    bool modified = !stopped_ && !weak;
+    stopped_ |= !weak;
+    if( !process_ )
+        return std::make_pair( next, modified );
+    next.swap( process_ );
+    next->Kill();
+    return std::make_pair( next, true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Node::Stop
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 bool Node::Stop( bool weak )
 {
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
-    bool modified = !stopped_ && !weak;
-    stopped_ |= !weak;
-    if( !process_ )
-        return modified;
+    return StopProcess( weak ).second;
+}
 
-    process_->Kill( 0 );
-    process_.reset();
-    return true;
+namespace
+{
+void Cleanup( Node::T_Process process, const FileSystem_ABC& system, const Path& path )
+{
+    if( process )
+        process->Join( 10*1000 );
+    system.Remove( path );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::Remove
+// Created: BAX 2012-06-25
+// -----------------------------------------------------------------------------
+void Node::Remove( const FileSystem_ABC& system, Async& async )
+{
+    std::pair< T_Process, bool > pair = StopProcess( true );
+    async.Go( boost::bind( ::Cleanup, pair.first, boost::cref( system ), GetRoot() ) );
 }
 
 namespace

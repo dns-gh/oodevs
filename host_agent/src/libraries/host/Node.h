@@ -76,6 +76,7 @@ public:
     virtual Tree Save() const;
     virtual bool Start( const T_Starter& starter, bool weak );
     virtual bool Stop( bool weak );
+    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
     //@}
 
     //! @name Node_ABC methods
@@ -106,6 +107,7 @@ private:
     //@{
     void ParsePackages( const Path& cache );
     Tree GetCommonProperties() const;
+    std::pair< T_Process, bool > StopProcess( bool weak );
     //@}
 
 private:

@@ -77,7 +77,7 @@ public:
     virtual void Update();
     virtual void Poll();
     virtual bool Pause();
-    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) const;
+    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
     //@}
 
     //! @name Typedef helpers
@@ -101,8 +101,8 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    template< typename T > bool StopProcess( T& lock );
-    template< typename T > bool ModifyStatus( T& lock, Status next );
+    template< typename T > std::pair< T_Process, bool > StopProcess( T& lock );
+    template< typename T > std::pair< T_Process, bool > ModifyStatus( T& lock, Status next );
     //@}
 
 private:

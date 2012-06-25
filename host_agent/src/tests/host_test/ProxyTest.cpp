@@ -81,6 +81,7 @@ namespace
                 "", mock::any ).returns( process );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
+            MOCK_EXPECT( process->Join ).returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
 
@@ -91,6 +92,7 @@ namespace
             MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
+            MOCK_EXPECT( process->Join ).returns( true );
             return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
         }
 

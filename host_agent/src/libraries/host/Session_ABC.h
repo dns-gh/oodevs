@@ -72,7 +72,7 @@ struct Session_ABC : public boost::noncopyable
     virtual void Update() = 0;
     virtual void Poll() = 0;
     virtual bool Pause() = 0;
-    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) const = 0;
+    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
     //@}
 };
 

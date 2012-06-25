@@ -94,13 +94,18 @@ public:
     virtual size_t      CountExercises( const Uuid& id ) const;
     //@}
 
+    //! @name Typedef helpers
+    //@{
+    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
+    //@}
+
 private:
     //! @name Private methods
     //@{
     void Update();
     void Save( const Node_ABC& node ) const;
     void Create( Node_ABC& node, bool reload );
-    boost::shared_ptr< runtime::Process_ABC > StartWith( const Node_ABC& node ) const;
+    T_Process StartWith( const Node_ABC& node ) const;
     void Start( Node_ABC& node, bool force, bool weak ) const;
     void Stop( Node_ABC& node, bool skip, bool weak ) const;
     //@}

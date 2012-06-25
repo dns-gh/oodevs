@@ -40,7 +40,7 @@ public:
     virtual const std::string& GetName() const;
     virtual bool IsAlive() const;
     virtual bool Join( int msTimeout );
-    virtual bool Kill( int msTimeout );
+    virtual bool Kill();
     //@}
 
 private:

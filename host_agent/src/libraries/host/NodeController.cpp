@@ -220,8 +220,7 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
         return node;
     LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
     proxy_.Unregister( GetPrefix( type_, *node ) );
-    Stop( *node, true, false );
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, node->GetRoot() ) );
+    node->Remove( system_, async_ );
     return node;
 }
 
@@ -229,9 +228,8 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node_ABC& node ) const
+NodeController::T_Process NodeController::StartWith( const Node_ABC& node ) const
 {
-    Path jar_path = jar_;
     return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
         ( "-jar \"" + Utf8Convert( jar_.filename() ) + "\"" )
         ( MakeOption( "root",  Utf8Convert( web_ ) ) )
@@ -239,7 +237,7 @@ boost::shared_ptr< runtime::Process_ABC > NodeController::StartWith( const Node_
         ( MakeOption( "type", type_ ) )
         ( MakeOption( "name", node.GetName() ) )
         ( MakeOption( "port", node.GetPort() ) ),
-        Utf8Convert( jar_path.remove_filename() ),
+        Utf8Convert( Path( jar_ ).remove_filename() ),
         Utf8Convert( node.GetRoot() / ( type_ + ".log" ) ) );
 }
 

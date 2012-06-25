@@ -29,6 +29,8 @@ namespace uuids
 
 namespace runtime
 {
+    struct Async;
+    struct FileSystem_ABC;
     struct Process_ABC;
 }
 
@@ -73,6 +75,7 @@ struct Node_ABC : public boost::noncopyable
     virtual Tree Save() const = 0;
     virtual bool Start( const T_Starter& starter, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
+    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
     //@}
 
     //! @name Install methods

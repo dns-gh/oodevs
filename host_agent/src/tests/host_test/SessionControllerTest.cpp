@@ -172,12 +172,14 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
 {
     Reload();
 
+    MOCK_RESET( active->Stop );
     MOCK_EXPECT( active->Remove ).once();
     SessionController::T_Session session = control.Delete( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
+    MOCK_RESET( idle->Stop );
     MOCK_EXPECT( idle->Remove ).once();
     session = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );

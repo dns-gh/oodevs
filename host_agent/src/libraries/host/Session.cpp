@@ -335,7 +335,7 @@ void WriteSettings( const FileSystem_ABC& system, const Path& file, const std::s
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
 template< typename T >
-bool Session::StopProcess( T& lock )
+std::pair< Session::T_Process, bool > Session::StopProcess( T& lock )
 {
     status_ = STATUS_STOPPED;
     T_Process copy;
@@ -343,11 +343,12 @@ bool Session::StopProcess( T& lock )
     lock.unlock();
 
     if( !copy || !copy->IsAlive() )
-        return true;
+        return std::make_pair( copy, true );
+
     client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", web::Client_ABC::T_Parameters() );
-    if( !copy->Join( 10*1000 ) )
-        copy->Kill( 0 );
-    return true;
+    if( !copy->Join( 5000 ) )
+        copy->Kill();
+    return std::make_pair( copy, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,13 +356,13 @@ bool Session::StopProcess( T& lock )
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
 template< typename T >
-bool Session::ModifyStatus( T& lock, Session::Status next )
+std::pair< Session::T_Process, bool > Session::ModifyStatus( T& lock, Session::Status next )
 {
     if( process_ && !process_->IsAlive() )
         next = STATUS_STOPPED;
 
     if( next == status_ )
-        return false;
+        return std::make_pair( T_Process(), false );
 
     if( next == STATUS_STOPPED )
         return StopProcess( lock );
@@ -372,17 +373,17 @@ bool Session::ModifyStatus( T& lock, Session::Status next )
 
     const std::string url = GetUrl( next );
     if( url.empty() )
-        return false;
+        return std::make_pair( T_Process(), false );
 
     web::Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, web::Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
-        return false;
+        return std::make_pair( T_Process(), false );
 
     lock.lock();
     if( counter + 1 != counter_ || GetPid( process_ ) != pid )
-        return false;
+        return std::make_pair( T_Process(), false );
     std::swap( status_, next );
-    return status_ != next;
+    return std::make_pair( T_Process(), status_ != next );
 }
 
 // -----------------------------------------------------------------------------
@@ -392,7 +393,7 @@ bool Session::ModifyStatus( T& lock, Session::Status next )
 bool Session::Stop()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
-    return ModifyStatus( lock, STATUS_STOPPED );
+    return ModifyStatus( lock, STATUS_STOPPED ).second;
 }
 
 // -----------------------------------------------------------------------------
@@ -402,7 +403,7 @@ bool Session::Stop()
 bool Session::Pause()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
-    return ModifyStatus( lock, STATUS_PAUSED );
+    return ModifyStatus( lock, STATUS_PAUSED ).second;
 }
 
 namespace
@@ -422,7 +423,7 @@ bool Session::Start( const Runtime_ABC& runtime, const FileSystem_ABC& system, c
 {
     boost::unique_lock< boost::mutex > lock( access_ );
     if( process_ )
-        return ModifyStatus( lock, STATUS_PLAYING );
+        return ModifyStatus( lock, STATUS_PLAYING ).second;
 
     WriteSettings( system, GetOutput() / "session.xml", GetConfiguration( name_, port_->Get() ) );
     T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ), boost::assign::list_of
@@ -520,8 +521,10 @@ void Session::Poll()
 
 namespace
 {
-void Cleanup( const FileSystem_ABC& system, const std::vector< Path >& paths )
+void Cleanup( Session::T_Process process, const FileSystem_ABC& system, const std::vector< Path >& paths )
 {
+    if( process )
+        process->Join( 10*1000 );
     BOOST_FOREACH( const Path& path, paths )
         system.Remove( path );
 }
@@ -531,8 +534,12 @@ void Cleanup( const FileSystem_ABC& system, const std::vector< Path >& paths )
 // Name: Session::Remove
 // Created: BAX 2012-06-22
 // -----------------------------------------------------------------------------
-void Session::Remove( const FileSystem_ABC& system, Async& async ) const
+void Session::Remove( const FileSystem_ABC& system, Async& async )
 {
+    boost::unique_lock< boost::mutex > lock( access_ );
+    std::pair< T_Process, bool > pair = ModifyStatus( lock, STATUS_STOPPED );
+    if( lock.owns_lock() )
+        lock.unlock();
     node_.UnlinkExercise( links_ );
-    async.Go( boost::bind( ::Cleanup, boost::cref( system ), boost::assign::list_of( GetRoot() )( GetOutput() ) ) );
+    async.Go( boost::bind( ::Cleanup, pair.first, boost::cref( system ), boost::assign::list_of( GetRoot() )( GetOutput() ) ) );
 }

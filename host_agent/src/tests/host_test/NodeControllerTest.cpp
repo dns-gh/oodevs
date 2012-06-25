@@ -161,15 +161,17 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
 {
     Reload();
 
-    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idActiveText );
+    MOCK_RESET( active->Stop );
+    MOCK_EXPECT( active->Remove ).once();
     NodeController::T_Node node = control.Delete( idActive );
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
-    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idIdleText );
+    MOCK_RESET( idle->Stop );
+    MOCK_EXPECT( idle->Remove ).once();
     node = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 0 ) );

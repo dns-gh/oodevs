@@ -202,7 +202,6 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
     if( !session )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
-    session->Stop();
     session->Remove( system_, async_ );
     return session;
 }

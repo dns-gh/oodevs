@@ -105,7 +105,10 @@ Proxy::~Proxy()
 {
     timer_->Stop();
     if( process_ )
-        process_->Kill( 0 );
+    {
+        process_->Kill();
+        process_->Join( 1000 );
+    }
     async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
 }
 
@@ -264,7 +267,10 @@ void Proxy::Stop()
 {
     boost::lock_guard< boost::mutex > lock( access_ );
     if( process_ )
-        process_->Kill( 0 );
+    {
+        process_->Kill();
+        process_->Join( 1000 );
+    }
     process_.reset();
     Save();
 }

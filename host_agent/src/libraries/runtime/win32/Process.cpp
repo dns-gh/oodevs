@@ -144,7 +144,7 @@ bool UnsafeTerminate( const Api_ABC& api, HANDLE process )
 // Name: Process::Kill
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-bool Process::Kill( int /*msTimeout*/ )
+bool Process::Kill()
 {
     return UnsafeTerminate( api_, handle_.get() );
 }

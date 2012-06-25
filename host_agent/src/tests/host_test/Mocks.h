@@ -85,6 +85,7 @@ namespace mocks
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 2 );
         MOCK_METHOD( Stop, 1 );
+        MOCK_METHOD( Remove, 2 );
         MOCK_METHOD( GetInstall, 0 );
         MOCK_METHOD( DeleteInstall, 1 );
         MOCK_METHOD( UploadCache, 1 );
@@ -126,9 +127,9 @@ namespace mocks
         {
             MOCK_EXPECT( GetId ).returns( id );
             MOCK_EXPECT( GetRoot ).returns( "" );
+            MOCK_EXPECT( GetNode ).returns( node );
             MOCK_EXPECT( GetExercise ).returns( tree.get< std::string >( "exercise" ) );
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
-            MOCK_EXPECT( GetNode ).returns( node );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
             MOCK_EXPECT( Save ).returns( tree );
         }
@@ -181,7 +182,7 @@ namespace mocks
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( IsAlive, 0 );
         MOCK_METHOD( Join, 1 );
-        MOCK_METHOD( Kill, 1 );
+        MOCK_METHOD( Kill, 0 );
     };
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )

@@ -35,7 +35,7 @@ struct Process_ABC : public boost::noncopyable
     virtual const std::string& GetName() const = 0;
     virtual bool IsAlive() const = 0;
     virtual bool Join( int msTimeout ) = 0;
-    virtual bool Kill( int msTimeout ) = 0;
+    virtual bool Kill() = 0;
     //@}
 };
 

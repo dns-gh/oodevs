@@ -170,9 +170,14 @@ struct Daemon::Private
             }
         boost::shared_ptr< Process_ABC > process = runtime_.GetProcess( pid );
         if( process )
-            process->Kill( 0 );
+        {
+            process->Kill();
+            process->Join( 1000 );
+        }
         else
+        {
             DAEMON_ERROR( "Unable to kill rogue service" );
+        }
     }
 
     // -----------------------------------------------------------------------------
