@@ -8,26 +8,25 @@
 // *****************************************************************************
 
 #include "host_test.h"
-#include "Mocks.h"
-#include <host/Node.h>
-#include <host/PropertyTree.h>
+
+#include "host/Node.h"
+#include "host/PropertyTree.h"
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include "MockLog.h"
+#include "MockFileSystem.h"
+#include "MockPackage.h"
+#include "MockPool.h"
+#include "MockPortFactory.h"
+#include "MockProcess.h"
+#include "MockRuntime.h"
+#include "MockUuidFactory.h"
+
 using namespace host;
-using mocks::MockLog;
-using mocks::MockFileSystem;
-using mocks::MockPackage;
-using mocks::MockPackageFactory;
-using mocks::MockPool;
-using mocks::MockPort;
-using mocks::MockPortFactory;
-using mocks::MockProcess;
-using mocks::MockRuntime;
-using mocks::MockUnpack;
-using mocks::MockUuidFactory;
+using namespace mocks;
 
 namespace
 {

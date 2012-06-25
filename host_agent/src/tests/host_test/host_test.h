@@ -7,18 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef host_test_h__
-#define host_test_h__
+#ifndef HOST_TEST_H__
+#define HOST_TEST_H__
 
 #include <boost/test/auto_unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp>
-
-#define BOOST_LIB_NAME boost_unit_test_framework
-#include <boost/config/auto_link.hpp>
-
-#pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif
+#endif // HOST_TEST_H__

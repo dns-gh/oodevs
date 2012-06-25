@@ -8,26 +8,26 @@
 // *****************************************************************************
 
 #include "host_test.h"
-#include "Mocks.h"
-#include <host/PropertyTree.h>
-#include <host/Session.h>
-#include <runtime/Event.h>
-#include <runtime/Pool.h>
+
+#include "host/PropertyTree.h"
+#include "host/Session.h"
+#include "runtime/Event.h"
+#include "runtime/Pool.h"
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid//uuid_io.hpp>
 
+#include "MockClient.h"
+#include "MockFileSystem.h"
+#include "MockNode.h"
+#include "MockPortFactory.h"
+#include "MockProcess.h"
+#include "MockRuntime.h"
+
 using namespace host;
 using namespace runtime;
-using mocks::MockClient;
-using mocks::MockFileSystem;
-using mocks::MockNode;
-using mocks::MockPort;
-using mocks::MockPortFactory;
-using mocks::MockProcess;
-using mocks::MockResponse;
-using mocks::MockRuntime;
+using namespace mocks;
 
 namespace
 {

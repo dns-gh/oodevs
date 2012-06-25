@@ -9,7 +9,7 @@
 
 #include "host_test.h"
 
-#include <host/UuidFactory.h>
+#include "host/UuidFactory.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>

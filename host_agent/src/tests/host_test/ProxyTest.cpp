@@ -8,21 +8,23 @@
 // *****************************************************************************
 
 #include "host_test.h"
-#include "Mocks.h"
-#include <host/Proxy.h>
+
+#include "host/Proxy.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 
+#include "MockClient.h"
+#include "MockFileSystem.h"
+#include "MockLog.h"
+#include "MockPool.h"
+#include "MockProcess.h"
+#include "MockRuntime.h"
+
 using namespace host;
-using mocks::MockClient;
-using mocks::MockFileSystem;
-using mocks::MockLog;
-using mocks::MockPool;
-using mocks::MockProcess;
-using mocks::MockRuntime;
+using namespace mocks;
 
 namespace
 {

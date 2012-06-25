@@ -8,24 +8,26 @@
 // *****************************************************************************
 
 #include "host_test.h"
-#include "Mocks.h"
 
-#include <host/Agent.h>
-#include <host/PropertyTree.h>
+#include "host/Agent.h"
+#include "host/PropertyTree.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include "MockLog.h"
+#include "MockNode.h"
+#include "MockNodeController.h"
+#include "MockSession.h"
+#include "MockSessionController.h"
+
 using namespace host;
-using mocks::MockLog;
-using mocks::MockNode;
-using mocks::MockNodeController;
-using mocks::MockSession;
-using mocks::MockSessionController;
+using namespace mocks;
 
 namespace
 {

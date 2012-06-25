@@ -7,12 +7,17 @@
 //
 // *****************************************************************************
 
-#ifndef web_test_h__
-#define web_test_h__
+#ifndef MOCK_UUID_FACTORY_H
+#define MOCK_UUID_FACTORY_H
 
-#include <boost/test/auto_unit_test.hpp>
-#include <turtle/mock.hpp>
+#include "host/UuidFactory_ABC.h"
 
-std::string BOOST_RESOLVE( const std::string& filename );
+namespace mocks
+{
+    MOCK_BASE_CLASS( MockUuidFactory, host::UuidFactory_ABC )
+    {
+        MOCK_METHOD( Create, 0 );
+    };
+};
 
-#endif
+#endif // MOCK_UUID_FACTORY_H

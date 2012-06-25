@@ -7,12 +7,21 @@
 //
 // *****************************************************************************
 
-#ifndef web_test_h__
-#define web_test_h__
+#ifndef MOCK_LOG_H
+#define MOCK_LOG_H
 
-#include <boost/test/auto_unit_test.hpp>
-#include <turtle/mock.hpp>
+#include <cpplog/cpplog.hpp>
 
-std::string BOOST_RESOLVE( const std::string& filename );
+namespace mocks
+{
+    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    {
+        MOCK_METHOD( sendLogMessage, 1 );
+        MockLog()
+        {
+            MOCK_EXPECT( sendLogMessage ).returns( true );
+        }
+    };
+};
 
-#endif
+#endif // MOCK_LOG_H

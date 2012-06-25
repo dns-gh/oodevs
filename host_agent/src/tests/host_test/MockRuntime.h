@@ -7,12 +7,20 @@
 //
 // *****************************************************************************
 
-#ifndef web_test_h__
-#define web_test_h__
+#ifndef MOCK_RUNTIME_H
+#define MOCK_RUNTIME_H
 
-#include <boost/test/auto_unit_test.hpp>
-#include <turtle/mock.hpp>
+#include "runtime/Runtime_ABC.h"
 
-std::string BOOST_RESOLVE( const std::string& filename );
+namespace mocks
+{
+    MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
+    {
+        MOCK_METHOD( GetProcesses, 0 );
+        MOCK_METHOD( GetProcess, 1 );
+        MOCK_METHOD( Start, 4 );
+        MOCK_METHOD( GetModuleFilename, 0 );
+    };
+};
 
-#endif
+#endif // MOCK_RUNTIME_H

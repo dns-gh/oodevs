@@ -8,10 +8,10 @@
 // *****************************************************************************
 
 #include "host_test.h"
-#include "Mocks.h"
-#include <host/PropertyTree.h>
-#include <host/SessionController.h>
-#include <runtime/Utf8.h>
+
+#include "host/PropertyTree.h"
+#include "host/SessionController.h"
+#include "runtime/Utf8.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -21,15 +21,16 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_serialize.hpp>
 
+#include "MockFileSystem.h"
+#include "MockLog.h"
+#include "MockNodeController.h"
+#include "MockPool.h"
+#include "MockRuntime.h"
+#include "MockSession.h"
+
 using namespace host;
 using runtime::Utf8Convert;
-using mocks::MockFileSystem;
-using mocks::MockLog;
-using mocks::MockNodeController;
-using mocks::MockPool;
-using mocks::MockRuntime;
-using mocks::MockSession;
-using mocks::MockSessionFactory;
+using namespace mocks;
 
 namespace
 {

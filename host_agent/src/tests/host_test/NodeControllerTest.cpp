@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "host_test.h"
-#include "Mocks.h"
-#include <host/PropertyTree.h>
-#include <host/NodeController.h>
+
+#include "host/PropertyTree.h"
+#include "host/NodeController.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -20,14 +20,15 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_serialize.hpp>
 
+#include "MockFileSystem.h"
+#include "MockLog.h"
+#include "MockNode.h"
+#include "MockPool.h"
+#include "MockProxy.h"
+#include "MockRuntime.h"
+
 using namespace host;
-using mocks::MockFileSystem;
-using mocks::MockLog;
-using mocks::MockNode;
-using mocks::MockNodeFactory;
-using mocks::MockPool;
-using mocks::MockProxy;
-using mocks::MockRuntime;
+using namespace mocks;
 
 namespace
 {

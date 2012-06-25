@@ -9,21 +9,23 @@
 
 #include "host_test.h"
 
-#include "Mocks.h"
-#include <host/Package.h>
-#include <host/PropertyTree.h>
-#include <runtime/Async.h>
+#include "host/Package.h"
+#include "host/PropertyTree.h"
+#include "runtime/Async.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include <set>
 
+#include "MockFileSystem.h"
+#include "MockPool.h"
+
 using namespace host;
 using runtime::Async;
-using mocks::MockFileSystem;
-using mocks::MockPool;
+using namespace mocks;
 
 namespace
 {

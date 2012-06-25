@@ -7,12 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef web_test_h__
-#define web_test_h__
+#ifndef MOCK_PROXY_H
+#define MOCK_PROXY_H
 
-#include <boost/test/auto_unit_test.hpp>
-#include <turtle/mock.hpp>
+#include "host/Proxy_ABC.h"
 
-std::string BOOST_RESOLVE( const std::string& filename );
+namespace mocks
+{
+    MOCK_BASE_CLASS( MockProxy, host::Proxy_ABC )
+    {
+        MOCK_METHOD( GetPort, 0 );
+        MOCK_METHOD( Register, 3 );
+        MOCK_METHOD( Unregister, 1 );
+    };
+};
 
-#endif
+#endif // MOCK_PROXY_H
