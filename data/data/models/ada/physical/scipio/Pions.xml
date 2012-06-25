@@ -5993,7 +5993,7 @@
   <unit decisional-model="Masalife.INF.MILAN" id="198" name="INF . Section MILAN" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/motorized"/>
     <equipments>
-      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
+      <equipment count="4" crew="2" type="VAB 12,7"/>
       <equipment count="8" crew="5" loadable="true" major="true" type="Equipe + POST TIR MILAN"/>
       <equipment count="18" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
     </equipments>
@@ -6024,7 +6024,7 @@
   <unit decisional-model="Masalife.INF.MILAN" id="199" name="INF . Groupe ACMP AMX10P" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/tracked"/>
     <equipments>
-      <equipment count="1" crew="3" major="true" type="AMX10P"/>
+      <equipment count="1" crew="3" type="AMX10P"/>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe + POST TIR MILAN"/>
     </equipments>
     <sensors-range range="3000"/>
@@ -6054,7 +6054,7 @@
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/motorized"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe + POST TIR MILAN"/>
-      <equipment count="1" crew="3" major="true" type="VAB 7,62"/>
+      <equipment count="1" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="3000"/>
     <equipments-range range="2000"/>
@@ -6233,9 +6233,9 @@
   <unit decisional-model="Masalife.INF" id="206" name="INF . Section CBT quaternaire VAB CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="10" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="4" crew="2" type="VAB 12,7"/>
+      <equipment count="10" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin Appui AC"/>
@@ -6268,13 +6268,13 @@
   <unit decisional-model="Masalife.INF" id="207" name="INF . Section CBT quaternaire AMX10P CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="4" crew="2" major="true" type="AMX10P"/>
+      <equipment count="4" crew="2" type="AMX10P"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="10" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="10" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="600"/>
@@ -6303,9 +6303,9 @@
   <unit decisional-model="Masalife.INF" id="208" name="INF . Section CBT quaternaire VAB CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="10" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="4" crew="2" type="VAB 12,7"/>
+      <equipment count="10" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin Appui AC"/>
@@ -6338,13 +6338,13 @@
   <unit decisional-model="Masalife.INF" id="209" name="INF . Section CBT quaternaire AMX10P CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="4" crew="2" major="true" type="AMX10P"/>
+      <equipment count="4" crew="2" type="AMX10P"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="10" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="10" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="600"/>
@@ -6373,9 +6373,9 @@
   <unit decisional-model="Masalife.INF" id="210" name="INF . Section CBT VAB CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="3" crew="2" type="VAB 12,7"/>
+      <equipment count="9" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
@@ -6408,9 +6408,9 @@
   <unit decisional-model="Masalife.INF" id="211" name="INF . Section CBT VAB CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="3" crew="2" type="VAB 12,7"/>
+      <equipment count="9" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
@@ -6443,13 +6443,13 @@
   <unit decisional-model="Masalife.INF" id="212" name="INF . Section CBT AMX10P CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="2" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="3" crew="3" major="true" type="AMX10P"/>
+      <equipment count="3" crew="3" type="AMX10P"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="9" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="600"/>
@@ -6478,13 +6478,13 @@
   <unit decisional-model="Masalife.INF" id="213" name="INF . Section CBT AMX10P CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="2" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="3" crew="3" major="true" type="AMX10P"/>
+      <equipment count="3" crew="3" type="AMX10P"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="9" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="9" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="600"/>
@@ -6513,13 +6513,13 @@
   <unit decisional-model="Masalife.INF" id="214" name="INF . Section CBT quaternaire CDS  X10 OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="10" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="10" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin Appui AC"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="4" crew="2" major="true" type="AMX10P"/>
+      <equipment count="4" crew="2" type="AMX10P"/>
     </equipments>
     <sensors-range range="4000"/>
     <equipments-range range="1000"/>
@@ -6548,13 +6548,13 @@
   <unit decisional-model="Masalife.INF" id="215" name="INF . Section CBT quaternaire CDS X10 SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="10" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="10" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="2" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin Appui AC"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
-      <equipment count="4" crew="2" major="true" type="AMX10P"/>
+      <equipment count="4" crew="2" type="AMX10P"/>
     </equipments>
     <sensors-range range="4000"/>
     <equipments-range range="1000"/>
@@ -7110,7 +7110,7 @@
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="1" crew="2" major="true" type="AMX10P"/>
+      <equipment count="1" crew="2" type="AMX10P"/>
     </equipments>
     <sensors-range range="3000"/>
     <equipments-range range="5600"/>
@@ -7141,8 +7141,8 @@
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="1" crew="2" major="true" type="VAB 7,62"/>
-      <equipment count="1" crew="3" major="true" type="VAB 12,7"/>
+      <equipment count="1" crew="2" type="VAB 7,62"/>
+      <equipment count="1" crew="3" type="VAB 12,7"/>
     </equipments>
     <sensors-range range="3000"/>
     <equipments-range range="5600"/>
@@ -7173,7 +7173,7 @@
       <equipment count="2" crew="3" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="2" crew="2" major="true" type="VAB 12,7"/>
+      <equipment count="2" crew="2" type="VAB 12,7"/>
     </equipments>
     <sensors-range range="3000"/>
     <equipments-range range="5600"/>
@@ -7204,7 +7204,7 @@
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="1" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="1" crew="3" loadable="true" type="Fantassin Appui AC"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
       <equipment count="2" crew="1" type="AMX10P"/>
     </equipments>
     <sensors-range range="3000"/>
@@ -7267,7 +7267,7 @@
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
-      <equipment count="6" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="6" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
       <equipment count="1" crew="1" type="GBC 180 12,7"/>
     </equipments>
     <sensors-range range="5000"/>
@@ -7297,8 +7297,8 @@
   <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="239" name="INF . Groupe PROTERRE 7.62" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
-      <equipment count="7" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="1" crew="1" major="true" type="TRM 2000 7,62"/>
+      <equipment count="7" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="1" crew="1" type="TRM 2000 7,62"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="600"/>
@@ -7327,8 +7327,8 @@
   <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="240" name="INF . Groupe PROTERRE FAMAS" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
-      <equipment count="7" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="1" crew="1" major="true" type="TRM 2000"/>
+      <equipment count="7" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="1" crew="1" type="TRM 2000"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="600"/>
@@ -7357,8 +7357,8 @@
   <unit decisional-model="Masalife.INF.TE" id="241" name="INF . Groupe TE" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
-      <equipment count="2" crew="2" loadable="true" type="Piece TE"/>
-      <equipment count="1" crew="3" major="true" type="VAB T20 APP DIR"/>
+      <equipment count="2" crew="2" loadable="true" major="true" type="Piece TE"/>
+      <equipment count="1" crew="3" type="VAB T20 APP DIR"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="1200"/>
@@ -14083,14 +14083,14 @@
   <unit decisional-model="Masalife.INF" id="472" name="INF . Section CBT VBCI" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="13" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
+      <equipment count="13" crew="1" loadable="true" major="true" type="Fantassin + FAMAS 5.56 INF"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
       <equipment count="2" crew="1" loadable="true" type="Equipe + ARM A C C P ERYX MLE F1"/>
       <equipment count="2" crew="1" loadable="true" type="Tireur Precision + FRF2"/>
       <equipment count="6" crew="1" loadable="true" type="Fantassin Appui AC"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI"/>
       <equipment count="4" crew="2" major="true" type="VBCI"/>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 7,62N F1"/>
+      <equipment count="2" crew="1" loadable="true" major="true" type="Fantassin + AA 7,62N F1"/>
     </equipments>
     <sensors-range range="4000"/>
     <equipments-range range="1000"/>
@@ -14179,7 +14179,7 @@
   <unit decisional-model="Masalife.INF.TE" id="475" name="INF . Groupe TE VBCI" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
-      <equipment count="2" crew="3" loadable="true" type="Piece TE"/>
+      <equipment count="2" crew="3" loadable="true" major="true" type="Piece TE"/>
       <equipment count="1" crew="3" major="true" type="VBCI"/>
     </equipments>
     <sensors-range range="5000"/>
@@ -15921,9 +15921,9 @@
   <unit decisional-model="Masalife.INF" id="541" name="HUMUS - INF . Section BTR60" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" type="BTR 60 PB"/>
       <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -16044,7 +16044,7 @@
     <equipments>
       <equipment count="3" crew="2" loadable="true" major="true" type="Equipe Mortier 82 H"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
+      <equipment count="3" crew="2" type="BTR 60 PB"/>
       <equipment count="1" crew="2" type="ZIL 131"/>
     </equipments>
     <sensors-range range="3000"/>
@@ -16074,9 +16074,9 @@
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="3" crew="3" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
+      <equipment count="3" crew="2" type="BTR 60 PB"/>
       <equipment count="1" crew="2" type="ZIL 131"/>
-      <equipment count="3" crew="2" loadable="true" type="Equipe Mortier 60 H"/>
+      <equipment count="3" crew="2" loadable="true" major="true" type="Equipe Mortier 60 H"/>
     </equipments>
     <sensors-range range="3000"/>
     <equipments-range range="5000"/>
@@ -16104,9 +16104,9 @@
   <unit decisional-model="Masalife.INF" id="547" name="HUMUS - INF . Section BMP1" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="2" major="true" type="BMP 1"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" type="BMP 1"/>
       <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -16137,11 +16137,11 @@
   <unit decisional-model="Masalife.INF" id="548" name="HUMUS - INF . Section GAZ66" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="12" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="2" major="true" type="GAZ 66"/>
-      <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin 12.7 H"/>
+      <equipment count="12" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" type="GAZ 66"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Fantassin RPG7"/>
+      <equipment count="2" crew="1" loadable="true" major="true" type="Fantassin 12.7 H"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -16171,11 +16171,11 @@
   <unit decisional-model="Masalife.INF" id="549" name="HUMUS - INF . Section ZIL 131" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="12" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="2" major="true" type="ZIL 131"/>
-      <equipment count="1" crew="1" loadable="true" type="Fantassin RPG7"/>
-      <equipment count="2" crew="1" loadable="true" type="Fantassin 12.7 H"/>
+      <equipment count="12" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" type="ZIL 131"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Fantassin RPG7"/>
+      <equipment count="2" crew="1" loadable="true" major="true" type="Fantassin 12.7 H"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -16205,11 +16205,11 @@
   <unit decisional-model="Masalife.INF" id="550" name="HUMUS - INF . Section Cdo BTR60" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="6" major="true" type="BTR 60 PB"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPG7"/>
-      <equipment count="1" crew="1" loadable="true" type="Fantassin SA7"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="6" type="BTR 60 PB"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPG7"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Fantassin SA7"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -16239,11 +16239,11 @@
   <unit decisional-model="Masalife.Milice" id="551" name="HUMUS - INF . Section Cdo Toyota" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="6" major="true" type="Toyota Cdo Humus (SA7)"/>
-      <equipment count="1" crew="1" loadable="true" type="Fantassin SA7"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="6" type="Toyota Cdo Humus (SA7)"/>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Fantassin SA7"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPG7"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -16346,11 +16346,11 @@
   <unit decisional-model="Masalife.Milice" id="555" name="HUMUS - INF . Section Cdo BMP1" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="2" major="true" type="BMP 1"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="2" type="BMP 1"/>
       <equipment count="1" crew="1" loadable="true" type="Fantassin SA7"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPG7"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPG7"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -16720,9 +16720,9 @@
   <unit decisional-model="Masalife.INF" id="568" name="GLAISE - INF . Section BMP 1" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="3" crew="3" major="true" type="BMP 1 + AT4"/>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="3" type="BMP 1 + AT4"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -17153,9 +17153,9 @@
   <unit decisional-model="Masalife.INF" id="583" name="GLAISE - INF . Section BMP 2 sans AT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="3" major="true" type="BMP 2"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="3" type="BMP 2"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -17186,9 +17186,9 @@
   <unit decisional-model="Masalife.INF" id="584" name="GLAISE - INF . Section BMP 1 sans AT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="3" major="true" type="BMP 1"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="3" type="BMP 1"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -17248,9 +17248,9 @@
   <unit decisional-model="Masalife.INF" id="586" name="GLAISE - INF . Section BTR70" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
-      <equipment count="3" crew="3" major="true" type="BTR 70"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="3" type="BTR 70"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -17363,9 +17363,9 @@
   <unit decisional-model="Masalife.INF" id="590" name="GLAISE - INF . Section BMP 2" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
-      <equipment count="3" crew="3" major="true" type="BMP 2 + AT5"/>
-      <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Fantassin RPK74"/>
+      <equipment count="3" crew="3" type="BMP 2 + AT5"/>
+      <equipment count="15" crew="1" loadable="true" major="true" type="Fantassin AK47"/>
+      <equipment count="3" crew="1" loadable="true" major="true" type="Fantassin RPK74"/>
       <equipment count="3" crew="1" loadable="true" type="Fantassin LGI glaise"/>
       <equipment count="3" crew="1" loadable="true" type="Tireur Precision glaise"/>
     </equipments>
@@ -19347,4 +19347,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1137046984" -->
+<!-- signature="3912040055" -->
