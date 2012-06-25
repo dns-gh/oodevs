@@ -104,3 +104,12 @@ void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
     if( gui::ValuedListItem* item = FindItem( &entity, firstChild() ) )
         item->SetNamed( entity );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::OnContextMenuRequested
+// Created: JSR 2012-06-22
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+{
+    // NOTHING
+}

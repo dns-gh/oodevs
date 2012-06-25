@@ -89,3 +89,12 @@ bool UserProfilePopulationRights::NeedsCommit() const
 {
     return isVisible();
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationRights::OnContextMenuRequested
+// Created: JSR 2012-06-22
+// -----------------------------------------------------------------------------
+void UserProfilePopulationRights::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+{
+    // NOTHING
+}

@@ -63,6 +63,7 @@ private:
     virtual void showEvent( QShowEvent* event );
     virtual void hideEvent( QHideEvent* event );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 };
 

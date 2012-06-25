@@ -101,3 +101,12 @@ void UserProfileUnitRights::NotifyUpdated( const Entity_ABC& entity )
         LongNameHelper::SetItemLongName( entity, *item );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::OnContextMenuRequested
+// Created: JSR 2012-06-25
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+{
+    // NOTHING
+}

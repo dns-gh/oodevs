@@ -60,6 +60,7 @@ private:
     virtual void setColumnWidth( int column, int w );
     virtual void showEvent( QShowEvent* event );
     virtual void hideEvent( QHideEvent* event );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 };
 

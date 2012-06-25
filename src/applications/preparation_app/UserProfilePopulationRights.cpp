@@ -62,3 +62,12 @@ void UserProfilePopulationRights::OnItemClicked( Q3ListViewItem* item, const QPo
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationRights::OnContextMenuRequested
+// Created: JSR 2012-06-25
+// -----------------------------------------------------------------------------
+void UserProfilePopulationRights::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+{
+    //NOTHING
+}

@@ -62,6 +62,7 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 };
 
