@@ -1822,7 +1822,7 @@
       <speed construction-speed="25" terrain="swamp" value="5"/>
       <speed construction-speed="30" terrain="dune" value="20"/>
       <speed terrain="urban area" value="25"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="20"/>
       <speed terrain="suburb" value="30"/>
@@ -1835,8 +1835,8 @@
       <speed construction-speed="80" terrain="highway" value="60"/>
       <speed terrain="main road" value="60"/>
       <speed terrain="secondary road" value="50"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="25" terrain="river" value="10"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="10"/>
       <speed terrain="main river" value="10"/>
       <speed terrain="bridge" value="60"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
@@ -2402,7 +2402,7 @@
       <speed construction-speed="25" terrain="swamp" value="5"/>
       <speed construction-speed="30" terrain="dune" value="20"/>
       <speed terrain="urban area" value="25"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="20"/>
       <speed terrain="suburb" value="30"/>
@@ -2415,8 +2415,8 @@
       <speed construction-speed="80" terrain="highway" value="60"/>
       <speed terrain="main road" value="60"/>
       <speed terrain="secondary road" value="50"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="25" terrain="river" value="10"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="10"/>
       <speed terrain="main river" value="10"/>
       <speed terrain="bridge" value="60"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
@@ -2749,7 +2749,7 @@
       <speed construction-speed="0" terrain="swamp" value="0"/>
       <speed construction-speed="30" terrain="dune" value="5"/>
       <speed terrain="urban area" value="20"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="18"/>
       <speed terrain="suburb" value="20"/>
@@ -2762,9 +2762,9 @@
       <speed construction-speed="80" terrain="highway" value="40"/>
       <speed terrain="main road" value="40"/>
       <speed terrain="secondary road" value="30"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="0" terrain="river" value="0"/>
-      <speed construction-speed="0" terrain="main river" value="0"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="0"/>
+      <speed terrain="main river" value="0"/>
       <speed terrain="bridge" value="40"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
       <speed terrain="railroad" value="5"/>
@@ -12860,7 +12860,7 @@
       <speed construction-speed="25" terrain="swamp" value="5"/>
       <speed construction-speed="30" terrain="dune" value="5"/>
       <speed terrain="urban area" value="25"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="10"/>
       <speed terrain="suburb" value="25"/>
@@ -12873,9 +12873,9 @@
       <speed construction-speed="80" terrain="highway" value="50"/>
       <speed terrain="main road" value="40"/>
       <speed terrain="secondary road" value="30"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="0" terrain="river" value="0"/>
-      <speed construction-speed="0" terrain="main river" value="0"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="0"/>
+      <speed terrain="main river" value="0"/>
       <speed terrain="bridge" value="25"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
       <speed terrain="railroad" value="5"/>
@@ -12950,7 +12950,7 @@
       <speed construction-speed="25" terrain="swamp" value="5"/>
       <speed construction-speed="30" terrain="dune" value="5"/>
       <speed terrain="urban area" value="35"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="10"/>
       <speed terrain="suburb" value="45"/>
@@ -12963,8 +12963,8 @@
       <speed construction-speed="80" terrain="highway" value="60"/>
       <speed terrain="main road" value="60"/>
       <speed terrain="secondary road" value="40"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="25" terrain="river" value="5"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="5"/>
       <speed terrain="main river" value="1"/>
       <speed terrain="bridge" value="60"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
@@ -14316,7 +14316,7 @@
       <speed construction-speed="25" terrain="swamp" value="5"/>
       <speed construction-speed="30" terrain="dune" value="5"/>
       <speed terrain="urban area" value="35"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="35"/>
       <speed terrain="suburb" value="45"/>
@@ -14329,9 +14329,9 @@
       <speed construction-speed="80" terrain="highway" value="70"/>
       <speed terrain="main road" value="65"/>
       <speed terrain="secondary road" value="65"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="25" terrain="river" value="5"/>
-      <speed construction-speed="0" terrain="main river" value="0"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="5"/>
+      <speed terrain="main river" value="0"/>
       <speed terrain="bridge" value="65"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
       <speed terrain="railroad" value="5"/>
@@ -22398,8 +22398,8 @@
       <speed construction-speed="80" terrain="highway" value="40"/>
       <speed terrain="main road" value="30"/>
       <speed terrain="secondary road" value="20"/>
-      <speed construction-speed="25" terrain="stream" value="10"/>
-      <speed construction-speed="25" terrain="river" value="10"/>
+      <speed terrain="stream" value="10"/>
+      <speed terrain="river" value="10"/>
       <speed terrain="main river" value="10"/>
       <speed terrain="bridge" value="20"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
@@ -26949,7 +26949,7 @@
       <speed construction-speed="25" terrain="swamp" value="5"/>
       <speed construction-speed="30" terrain="dune" value="5"/>
       <speed terrain="urban area" value="35"/>
-      <speed construction-speed="0" terrain="lake" value="0"/>
+      <speed terrain="lake" value="0"/>
       <speed construction-speed="20" terrain="glacier" value="5"/>
       <speed terrain="forest edge" value="10"/>
       <speed terrain="suburb" value="45"/>
@@ -26962,8 +26962,8 @@
       <speed construction-speed="80" terrain="highway" value="60"/>
       <speed terrain="main road" value="60"/>
       <speed terrain="secondary road" value="40"/>
-      <speed construction-speed="25" terrain="stream" value="5"/>
-      <speed construction-speed="25" terrain="river" value="5"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="5"/>
       <speed terrain="main river" value="1"/>
       <speed terrain="bridge" value="60"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
@@ -27136,8 +27136,8 @@
       <speed construction-speed="80" terrain="highway" value="40"/>
       <speed terrain="main road" value="30"/>
       <speed terrain="secondary road" value="20"/>
-      <speed construction-speed="25" terrain="stream" value="10"/>
-      <speed construction-speed="25" terrain="river" value="10"/>
+      <speed terrain="stream" value="10"/>
+      <speed terrain="river" value="10"/>
       <speed terrain="main river" value="10"/>
       <speed terrain="bridge" value="20"/>
       <speed construction-speed="0" terrain="cliff" value="0"/>
@@ -35629,4 +35629,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0276946459" -->
+<!-- signature="0966362606" -->
