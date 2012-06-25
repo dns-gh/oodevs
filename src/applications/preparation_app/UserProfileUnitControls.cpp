@@ -279,6 +279,15 @@ void UserProfileUnitControls::NotifyDeleted( const ProfileHierarchies_ABC& hiera
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::OnContextMenuRequested
+// Created: JSR 2012-06-22
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileUnitControls::Accept
 // Created: JSR 2012-03-01
 // -----------------------------------------------------------------------------

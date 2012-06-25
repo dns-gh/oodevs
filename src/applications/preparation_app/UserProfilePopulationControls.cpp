@@ -72,3 +72,12 @@ bool UserProfilePopulationControls::CanWrite( const kernel::Entity_ABC* entity )
 {
     return ( entity && dynamic_cast< const kernel::Population_ABC* >( entity ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationControls::OnContextMenuRequested
+// Created: JSR 2012-06-22
+// -----------------------------------------------------------------------------
+void UserProfilePopulationControls::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+{
+    // NOTHING
+}
