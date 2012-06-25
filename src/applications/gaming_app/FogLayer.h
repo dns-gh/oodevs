@@ -25,7 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              FogLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                       gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
+                       gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~FogLayer();
     //@}
 

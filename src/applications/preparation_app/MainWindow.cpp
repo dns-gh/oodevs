@@ -65,7 +65,6 @@
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionLayer.h"
 #include "clients_gui/Settings.h"
-#include "clients_gui/SimpleFilter.h"
 #include "clients_gui/StatusBar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
@@ -73,7 +72,6 @@
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TooltipsLayer.h"
-#include "clients_gui/UrbanFilter.h"
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/FormationLayer.h"
 #include "clients_gui/resources.h"
@@ -134,8 +132,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , forward_          ( new gui::CircularEventStrategy() )
     , eventStrategy_    ( new gui::ExclusiveEventStrategy( *forward_ ) )
     , pPainter_         ( new gui::ElevationPainter( staticModel_.detection_ ) )
-    , simpleFilter_     ( new gui::SimpleFilter() )
-    , urbanFilter_      ( new gui::UrbanFilter() )
     , colorController_  ( new ColorController( controllers_ ) )
     , glProxy_          ( new gui::GlProxy() )
     , lighting_         ( new gui::LightingProxy( this ) )
@@ -169,8 +165,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Layer 1
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_ );
-    gui::AutomatsLayer& automats = *new gui::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
-    gui::FormationLayer& formation = *new gui::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    gui::AutomatsLayer& automats = *new gui::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
+    gui::FormationLayer& formation = *new gui::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
@@ -280,7 +276,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     assert( dialogContainer_.get() && dockContainer_.get() );
     gui::PreferencesDialog& preferences     = dialogContainer_->GetPrefDialog();
     gui::Layer_ABC& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
-    ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_, this );
+    ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), this );
     gui::TooltipsLayer_ABC& tooltipLayer    = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer_ABC& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
     gui::Layer_ABC& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
@@ -289,16 +285,16 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     gui::Layer_ABC& raster                  = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer_ABC& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer_ABC& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile, *simpleFilter_ );
+    gui::Layer_ABC& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
     gui::Layer_ABC& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer_ABC& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
-    gui::Layer_ABC& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
-    gui::Layer_ABC& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
-    gui::Layer_ABC& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
+    gui::Layer_ABC& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
+    gui::Layer_ABC& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
+    gui::Layer_ABC& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    gui::Layer_ABC& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
     gui::Layer_ABC& defaultLayer            = *new gui::DefaultLayer( controllers_ );
-    gui::Layer_ABC& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
-    gui::Layer_ABC& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, dockContainer_->GetLivingAreaPanel() );
+    gui::Layer_ABC& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    gui::Layer_ABC& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
     gui::Layer_ABC& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
     gui::Layer_ABC& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 

@@ -32,9 +32,6 @@
     <Filter Include="Source Files\gl\Layers">
       <UniqueIdentifier>{81cec789-8987-4ef0-b47c-15242da3dce7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gl\Layers\Filters">
-      <UniqueIdentifier>{16f3ee8c-a8f4-4e0b-9910-670deb8a6d67}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\gl\Miniview">
       <UniqueIdentifier>{b37743d6-3686-4bda-86cd-481f10d487b6}</UniqueIdentifier>
     </Filter>
@@ -366,12 +363,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\WeatherLayer.cpp">
       <Filter>Source Files\gl\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\SimpleFilter.cpp">
-      <Filter>Source Files\gl\Layers\Filters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanFilter.cpp">
-      <Filter>Source Files\gl\Layers\Filters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\MiniView.cpp">
       <Filter>Source Files\gl\Miniview</Filter>
@@ -1064,15 +1055,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\WeatherLayer.h">
       <Filter>Source Files\gl\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\LayerFilter_ABC.h">
-      <Filter>Source Files\gl\Layers\Filters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\SimpleFilter.h">
-      <Filter>Source Files\gl\Layers\Filters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanFilter.h">
-      <Filter>Source Files\gl\Layers\Filters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\MiniView.h">
       <Filter>Source Files\gl\Miniview</Filter>

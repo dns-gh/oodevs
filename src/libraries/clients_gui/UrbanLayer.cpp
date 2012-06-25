@@ -27,8 +27,8 @@ using namespace gui;
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                        View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, filter )
+                        View_ABC& view, const kernel::Profile_ABC& profile )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile )
     , view_          ( view )
     , controllers_   ( controllers )
 {

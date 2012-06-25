@@ -31,8 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile,
-                          const gui::LayerFilter_ABC& filter );
+                          gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
 

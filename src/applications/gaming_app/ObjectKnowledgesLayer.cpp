@@ -18,8 +18,8 @@ using namespace gui;
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 ObjectKnowledgesLayer::ObjectKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                              View_ABC& view, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : KnowledgeLayer< ObjectKnowledge_ABC >( controllers, tools, strategy, view, profile, filter )
+                                              View_ABC& view, const Profile_ABC& profile )
+    : KnowledgeLayer< ObjectKnowledge_ABC >( controllers, tools, strategy, view, profile )
 {
     // NOTHING
 }

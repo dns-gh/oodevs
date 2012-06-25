@@ -22,8 +22,8 @@ using namespace gui;
 // Name: ObjectsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, TerrainPicker& picker, const LayerFilter_ABC& filter )
-    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile, filter )
+ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, TerrainPicker& picker )
+    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile )
 {
     picker.RegisterLayer( *this );
 }

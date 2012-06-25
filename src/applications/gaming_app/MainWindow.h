@@ -51,7 +51,6 @@ namespace gui
     class Picker;
     class TerrainPicker;
     class Painter_ABC;
-    class LayerFilter_ABC;
     class HelpSystem;
 }
 
@@ -144,8 +143,6 @@ private:
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;
-    std::auto_ptr< gui::LayerFilter_ABC > simpleFilter_;
-    std::auto_ptr< gui::LayerFilter_ABC > urbanFilter_;
     std::auto_ptr< ColorController > pColorController_;
     std::auto_ptr< actions::gui::InterfaceBuilder_ABC > interfaceBuilder_;
     std::auto_ptr< QProcess > process_;

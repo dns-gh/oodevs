@@ -13,11 +13,6 @@
 #include "clients_gui/ObjectsLayer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-namespace gui
-{
-    class LayerFilter_ABC;
-}
-
 // =============================================================================
 /** @class  ObjectsLayer
     @brief  ObjectsLayer
@@ -29,7 +24,7 @@ class ObjectsLayer : public gui::ObjectsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, const gui::LayerFilter_ABC& filter );
+             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
 

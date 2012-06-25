@@ -16,8 +16,8 @@ using namespace gui;
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
 InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
-                                  ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile, filter )
+                                  ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
+    : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile )
 {
     // NOTHING
 }

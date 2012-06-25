@@ -19,8 +19,8 @@
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
 FogLayer::FogLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                    gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, filter )
+                    gui::View_ABC& view, const kernel::Profile_ABC& profile )
+    : gui::EntityLayerBase( controllers, tools, strategy, view, profile )
     , controllers_( controllers )
     , texture_( 0 )
 {

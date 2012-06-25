@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GhostsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
+                          gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile );
     virtual ~GhostsLayer();
     //@}
 

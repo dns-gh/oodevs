@@ -41,8 +41,7 @@ class FormationLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
-                             const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
+             FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~FormationLayer();
     //@}
 

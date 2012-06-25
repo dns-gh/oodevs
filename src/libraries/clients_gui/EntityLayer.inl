@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "ColorStrategy_ABC.h"
-#include "LayerFilter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -24,8 +23,8 @@ namespace gui
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC& filter )
-    : EntityLayerBase( controllers, tools, strategy, view, profile, filter )
+EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
+    : EntityLayerBase( controllers, tools, strategy, view, profile )
     , controllers_( controllers )
     , strategy_( strategy )
 {
@@ -49,8 +48,7 @@ EntityLayer< ConcreteEntity >::~EntityLayer()
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyCreated( const ConcreteEntity& entity )
 {
-    if( filter_.IsAllowed( entity.GetTypeName() ) ) // $$$$ ABR 2012-05-22: Still needed ? (now that urban as been removed)
-        AddEntity( entity );
+    AddEntity( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,8 +68,7 @@ void EntityLayer< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity 
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entity )
 {
-    if( filter_.IsAllowed( entity.GetTypeName() ) )
-        ActivateEntity( entity );
+    ActivateEntity( entity );
 }
 
 // -----------------------------------------------------------------------------

@@ -26,8 +26,8 @@
 // -----------------------------------------------------------------------------
 TeamLayer::TeamLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
                      const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
-                     const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, const gui::LayerFilter_ABC& filter )
-: gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile, filter )
+                     const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager )
+: gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile )
 , actionsModel_( actionsModel )
 , static_( staticModel )
 , simulation_( simulation )
