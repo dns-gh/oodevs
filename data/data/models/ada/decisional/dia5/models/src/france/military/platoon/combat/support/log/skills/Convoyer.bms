@@ -58,7 +58,7 @@ end,
          end
     -- Action de déplacement vers le destinataire du convoi
      elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
-        if continueConvoy then
+        if self.fragOrderReceived then
             self.sendCR = false
             Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
             self.destinataireCourant = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getDestinataireCourant() )
