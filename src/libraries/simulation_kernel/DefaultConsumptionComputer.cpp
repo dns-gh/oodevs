@@ -48,7 +48,8 @@ void DefaultConsumptionComputer::Reset()
 // -----------------------------------------------------------------------------
 bool DefaultConsumptionComputer::SetConsumptionMode( const PHY_ConsumptionType& mode )
 {
-    pConsumptionType_ = &mode;
+    if( !pConsumptionType_ || ( *pConsumptionType_ < mode ) )
+        pConsumptionType_ = &mode;
     return true;
 }
 

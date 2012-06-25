@@ -40,6 +40,11 @@ namespace detection
     class DetectionComputer_ABC;
 }
 
+namespace dotation
+{    
+    class ConsumptionComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Perceiver
 // Created: JVT 2004-08-03
@@ -47,6 +52,7 @@ namespace detection
 // =============================================================================
 class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
+                             , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
                              , public component::ComponentsChangedNotificationHandler_ABC
                              , public surrender::SurrenderNotificationHandler_ABC
                              , public network::NetworkUnitAttributesMessageSender_ABC
@@ -109,7 +115,8 @@ public:
     void SetVisionModePoint    ( const MT_Vector2D& vPoint );
     virtual bool IsUsingActiveRadar() const;
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
-
+    
+    virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     virtual void NotifyComponentHasChanged();
     virtual void NotifyCaptured();
