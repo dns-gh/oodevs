@@ -11,13 +11,14 @@ connections = { skill.links.moveToward, skill.nodes.RC },
     end,
 
     activate = function( self )
-        if DEC_Nuit() then
-            Activate( skill.links.moveToward, 1, { entities  = { self.params.entity }, 
-                                               infiltrationMode = true } )
-            Activate( skill.nodes.RC, 1, { RC = eRC_EnExfiltration } )
-        else
+      DEC_Trace("self.params.byNight "..tostring(self.params.byNight))
+      DEC_Trace("integration.isNight() "..tostring(integration.isNight()))
+       if self.params.byNight and not integration.isNight() then
             Activate( skill.nodes.RC, 1, { RC = eRC_AttenteConditionFavorablePourInfiltration } )
-        end
+            return
+       end
+        Activate( skill.links.moveToward, 1, { entities  = { self.params.entity }, infiltrationMode = true } )
+        Activate( skill.nodes.RC, 1, { RC = eRC_EnExfiltration } )
     end,
     
    destroy = function( self )
