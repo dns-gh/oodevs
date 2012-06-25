@@ -426,16 +426,10 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
     if( !isAuto )
     {
         if( geostore_->BlockAutoProcess( polygon ) )
-            if( const kernel::UrbanObject_ABC* block = factory_->Create( polygon, &parent ) )
-                controllers_.controller_.Create< kernel::UrbanObject_ABC >( *block );
+            factory_->Create( polygon, &parent );
     }
     else
-    {
-        std::vector< kernel::UrbanObject_ABC* > newBlocks;
-        geostore_->CreateUrbanBlocksOnCities( polygon, parent, newBlocks ) ;
-        for( int i = 0; i < newBlocks.size(); ++i )
-            controllers_.controller_.Create< kernel::UrbanObject_ABC >( *newBlocks[ i ] );
-    }
+        geostore_->CreateUrbanBlocksOnCities( polygon, parent );
 }
 
 // -----------------------------------------------------------------------------
