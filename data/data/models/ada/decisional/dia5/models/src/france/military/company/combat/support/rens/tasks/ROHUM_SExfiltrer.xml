@@ -7,6 +7,14 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
+        <parameter name="byNight" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Exfiltration" disable-when-done="true">

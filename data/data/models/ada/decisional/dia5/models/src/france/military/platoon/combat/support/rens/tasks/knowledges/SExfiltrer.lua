@@ -2,7 +2,8 @@ local result =
 {
     fillParameters = function( self, companyTask, params )
          local objective = companyTask:getObjective( params )
-         return { entity = objective }
+         local byNight = companyTask:getByNight( params )
+         return { entity = objective, byNight = byNight }
     end
 }
 
