@@ -814,6 +814,15 @@ bool ExerciseConfig::IsTerrainSamePhysicalRef() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::SetTerrainSamePhysicalRef
+// Created: ABR 2012-06-25
+// -----------------------------------------------------------------------------
+void ExerciseConfig::SetTerrainSamePhysicalRef( bool value )
+{
+    pWorldParameters_->terrainSamePhysical_ = value;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::SerializeAndSignTerrainFiles
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
