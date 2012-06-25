@@ -149,6 +149,15 @@ void ParametersLayer::AddPoint( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParametersLayer::IsInsideWorld
+// Created: JSR 2012-06-25
+// -----------------------------------------------------------------------------
+bool ParametersLayer::IsInsideWorld( const geometry::Point2f& point ) const
+{
+    return world_.IsInside( point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParametersLayer::HandleMouseDoubleClick
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------

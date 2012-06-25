@@ -193,7 +193,7 @@ void LocationCreator::NotifyDeleted( const Drawing_ABC& drawing )
 // -----------------------------------------------------------------------------
 void LocationCreator::StartPoint()
 {
-    if( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ || rectangleAllowed_ )
+    if( layer_.IsInsideWorld( popupPoint_ ) && ( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ || rectangleAllowed_ ) )
     {
         Location_ABC* location = new Point();
         location->AddPoint( popupPoint_ );

@@ -66,6 +66,7 @@ protected:
 
     //! @name Helpers
     //@{
+    virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
@@ -108,6 +109,7 @@ protected:
     const kernel::Profile_ABC& profile_;
     const kernel::GlTools_ABC& tools_;
     T_Entities                 entities_;
+    geometry::Rectangle2f      world_;
     //@}
 
 private:

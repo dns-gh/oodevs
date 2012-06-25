@@ -108,16 +108,25 @@ bool ObjectsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::P
         if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
         {
             const geometry::Vector2f translation( draggingPoint_, point );
-            position->Translate( draggingPoint_, translation, 5.f * tools_.Pixels( point ) );
-            draggingPoint_ = point;
+            const geometry::Rectangle2f boundingBox = position->GetBoundingBox() + translation;
+            if( boundingBox.Intersect( world_ ) == boundingBox )
+            {
+                position->Translate( draggingPoint_, translation, 5.f * tools_.Pixels( point ) );
+                draggingPoint_ = point;
+            }
         }
         return true;
     }
-    else if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
+    else if( kernel::Object_ABC* entity = dynamic_cast< kernel::Object_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
     {
         ObjectPositions* position = static_cast< ObjectPositions* >( entity->Retrieve< kernel::Positions >() );
-        position->Move( point );
-        draggingPoint_ = point;
+        const geometry::Point2f translation = point - position->GetBoundingBox().Center().ToVector();
+        const geometry::Rectangle2f boundingBox = position->GetBoundingBox() + translation.ToVector();
+        if( boundingBox.Intersect( world_ ) == boundingBox )
+        {
+            position->Move( point );
+            draggingPoint_ = point;
+        }
         return true;
     }
     return false;
