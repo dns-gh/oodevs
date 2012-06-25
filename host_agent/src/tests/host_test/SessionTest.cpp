@@ -127,7 +127,6 @@ namespace
             {
                 ExpectWebRequest( "/stop", 200 );
                 MOCK_EXPECT( process->Join ).returns( true );
-                MOCK_EXPECT( process->Kill ).returns( true );
             }
             BOOST_CHECK( session.Stop() );
         }

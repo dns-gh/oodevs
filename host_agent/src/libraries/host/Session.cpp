@@ -340,7 +340,9 @@ bool Session::StopProcess()
         return true;
 
     client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
-    copy->Join( 15 * 1000 );
+    if( copy->Join( 15 * 1000 ) )
+        return true;
+
     copy->Kill();
     copy->Join( 5 * 1000 );
     return true;
