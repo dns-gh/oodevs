@@ -28,8 +28,6 @@ namespace uuids
 
 namespace runtime
 {
-    struct Async;
-    struct FileSystem_ABC;
     struct Runtime_ABC;
 }
 
@@ -67,12 +65,12 @@ struct Session_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const runtime::FileSystem_ABC& system, const Path& apps ) = 0;
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps ) = 0;
     virtual bool Stop() = 0;
     virtual void Update() = 0;
     virtual void Poll() = 0;
     virtual bool Pause() = 0;
-    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
+    virtual void Remove() = 0;
     //@}
 };
 

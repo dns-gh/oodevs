@@ -164,7 +164,7 @@ void SessionController::Create( Session_ABC& session, bool isReload )
                      << session.GetName() << " "
                      << Utf8Convert( session.GetExercise() ) << " :" << session.GetPort();
     if( !isReload )
-        session.Start( runtime_, system_, apps_ );
+        session.Start( runtime_, apps_ );
     Save( session );
 }
 
@@ -201,7 +201,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
     if( !session )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
-    session->Remove( system_, async_ );
+    async_.Go( boost::bind( &Session_ABC::Remove, session ) );
     return session;
 }
 
@@ -224,7 +224,7 @@ SessionController::T_Session SessionController::Dispatch( const Uuid& id, const 
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& id ) const
 {
-    return Dispatch( id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( system_ ), boost::cref( apps_ ) ) );
+    return Dispatch( id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( apps_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

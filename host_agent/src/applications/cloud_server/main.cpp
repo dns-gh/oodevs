@@ -218,7 +218,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( id );
         if( !node )
             return Ptr();
-        return boost::make_shared< Session >( root, uuids.Create(), *node, name, exercise, ports.Create(), boost::ref( client ) );
+        return boost::make_shared< Session >( boost::cref( system ), root, *node, boost::ref( client ), uuids.Create(), name, exercise, ports.Create() );
     }
 
     Ptr Make( const Path& tag ) const
@@ -230,7 +230,7 @@ struct SessionFactory : public SessionFactory_ABC
         NodeController_ABC::T_Node node = nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
-        return boost::make_shared< Session >( Path( tag ).remove_filename(), tree, *node, runtime, boost::ref( ports ), boost::ref( client ) );
+        return boost::make_shared< Session >( boost::cref( system ), Path( tag ).remove_filename(), *node, boost::ref( client ), tree, runtime, boost::ref( ports ) );
     }
 
     const FileSystem_ABC& system;

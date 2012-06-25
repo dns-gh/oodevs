@@ -30,6 +30,7 @@ using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
 using runtime::Utf8Convert;
+using web::Client_ABC;
 
 namespace
 {
@@ -127,8 +128,11 @@ int GetPid( T& process )
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port, web::Client_ABC& client )
-    : id_     ( id )
+Session::Session( const FileSystem_ABC& system, const Path& root,
+                  const Node_ABC& node, Client_ABC& client, const Uuid& id,
+                  const std::string& name, const std::string& exercise, const Port& port )
+    : system_ ( system )
+    , id_     ( id )
     , root_   ( root )
     , node_   ( node )
     , name_   ( name )
@@ -147,8 +151,11 @@ Session::Session( const Path& root, const Uuid& id, const Node_ABC& node, const 
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports, web::Client_ABC& client )
-    : id_     ( Get< Uuid >( tree, "id" ) )
+Session::Session( const FileSystem_ABC& system, const Path& root,
+                  const Node_ABC& node, Client_ABC& client, const Tree& tree,
+                  const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+    : system_ ( system )
+    , id_     ( Get< Uuid >( tree, "id" ) )
     , root_   ( root )
     , node_   ( node )
     , name_   ( Get< std::string >( tree, "name" ) )
@@ -318,33 +325,25 @@ std::string GetConfiguration( const std::string& name, int base )
     GetSimulationConfiguration( tree, base );
     return ToXml( tree );
 }
-
-void WriteSettings( const FileSystem_ABC& system, const Path& file, const std::string& data )
-{
-    system.MakePaths( Path( file ).remove_filename() );
-    system.WriteFile( file, data );
-}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::StopProcess
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
-template< typename T >
-std::pair< Session::T_Process, bool > Session::StopProcess( T& lock )
+bool Session::StopProcess()
 {
     status_ = STATUS_STOPPED;
     T_Process copy;
     copy.swap( process_ );
-    lock.unlock();
-
     if( !copy || !copy->IsAlive() )
-        return std::make_pair( copy, true );
+        return true;
 
-    client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", web::Client_ABC::T_Parameters() );
-    if( !copy->Join( 5000 ) )
-        copy->Kill();
-    return std::make_pair( copy, true );
+    client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
+    copy->Join( 15 * 1000 );
+    copy->Kill();
+    copy->Join( 5 * 1000 );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -352,16 +351,16 @@ std::pair< Session::T_Process, bool > Session::StopProcess( T& lock )
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
 template< typename T >
-std::pair< Session::T_Process, bool > Session::ModifyStatus( T& lock, Session::Status next )
+bool Session::ModifyStatus( T& lock, Session::Status next )
 {
     if( process_ && !process_->IsAlive() )
         next = STATUS_STOPPED;
 
     if( next == status_ )
-        return std::make_pair( T_Process(), false );
+        return false;
 
     if( next == STATUS_STOPPED )
-        return StopProcess( lock );
+        return StopProcess();
 
     const size_t counter = counter_++;
     const int pid = GetPid( process_ );
@@ -369,17 +368,18 @@ std::pair< Session::T_Process, bool > Session::ModifyStatus( T& lock, Session::S
 
     const std::string url = GetUrl( next );
     if( url.empty() )
-        return std::make_pair( T_Process(), false );
+        return false;
 
-    web::Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, web::Client_ABC::T_Parameters() );
+    Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, url, Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
-        return std::make_pair( T_Process(), false );
+        return false;
 
     lock.lock();
     if( counter + 1 != counter_ || GetPid( process_ ) != pid )
-        return std::make_pair( T_Process(), false );
+        return false;
+
     std::swap( status_, next );
-    return std::make_pair( T_Process(), status_ != next );
+    return status_ != next;
 }
 
 // -----------------------------------------------------------------------------
@@ -389,7 +389,7 @@ std::pair< Session::T_Process, bool > Session::ModifyStatus( T& lock, Session::S
 bool Session::Stop()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
-    return ModifyStatus( lock, STATUS_STOPPED ).second;
+    return ModifyStatus( lock, STATUS_STOPPED );
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +399,7 @@ bool Session::Stop()
 bool Session::Pause()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
-    return ModifyStatus( lock, STATUS_PAUSED ).second;
+    return ModifyStatus( lock, STATUS_PAUSED );
 }
 
 namespace
@@ -415,20 +415,22 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Runtime_ABC& runtime, const FileSystem_ABC& system, const Path& apps )
+bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
 {
     boost::unique_lock< boost::mutex > lock( access_ );
     if( process_ )
-        return ModifyStatus( lock, STATUS_PLAYING ).second;
+        return ModifyStatus( lock, STATUS_PLAYING );
 
-    WriteSettings( system, GetOutput() / "session.xml", GetConfiguration( name_, port_->Get() ) );
+    const Path output = GetOutput();
+    system_.MakePaths( output );
+    system_.WriteFile( output / "session.xml", GetConfiguration( name_, port_->Get() ) );
     T_Process ptr = runtime.Start( Utf8Convert( apps / "simulation_app.exe" ), boost::assign::list_of
         ( MakeOption( "debug-dir", Utf8Convert( GetRoot() / "debug" ) ) )
         ( MakeOption( "exercises-dir", Utf8Convert( GetPath( "exercise" ) ) ) )
         ( MakeOption( "terrains-dir", Utf8Convert( GetPath( "terrain" ) ) ) )
         ( MakeOption( "models-dir", Utf8Convert( GetPath( "model" ) ) ) )
         ( MakeOption( "exercise", Utf8Convert( GetExercise() ) ) )
-        ( MakeOption( "session",  id_ ) )
+        ( MakeOption( "session",  output.filename() ) )
         ( "--silent" ),
         Utf8Convert( apps ),
         Utf8Convert( GetRoot() / "session.log" ) );
@@ -457,7 +459,7 @@ Path Session::GetPath( const std::string& type ) const
 
 // -----------------------------------------------------------------------------
 // Name: Session::GetOutput
-// Created: BAX 2012-06-21
+// Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
 Path Session::GetOutput() const
 {
@@ -500,7 +502,7 @@ void Session::Poll()
     runtime::Scoper unpoll( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( polling_ ), false ) );
     lock.unlock();
 
-    web::Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", web::Client_ABC::T_Parameters() );
+    Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
         return;
 
@@ -515,27 +517,15 @@ void Session::Poll()
     ModifyStatus( lock, next );
 }
 
-namespace
-{
-void Cleanup( Session::T_Process process, const FileSystem_ABC& system, const std::vector< Path >& paths )
-{
-    if( process )
-        process->Join( 10*1000 );
-    BOOST_FOREACH( const Path& path, paths )
-        system.Remove( path );
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Session::Remove
 // Created: BAX 2012-06-22
 // -----------------------------------------------------------------------------
-void Session::Remove( const FileSystem_ABC& system, Async& async )
+void Session::Remove()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
-    std::pair< T_Process, bool > pair = ModifyStatus( lock, STATUS_STOPPED );
-    if( lock.owns_lock() )
-        lock.unlock();
+    ModifyStatus( lock, STATUS_STOPPED );
     node_.UnlinkExercise( links_ );
-    async.Go( boost::bind( ::Cleanup, pair.first, boost::cref( system ), boost::assign::list_of( GetRoot() )( GetOutput() ) ) );
+    system_.Remove( GetRoot() );
+    system_.Remove( GetOutput() );
 }

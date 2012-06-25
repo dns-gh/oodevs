@@ -24,6 +24,7 @@ namespace boost
 
 namespace runtime
 {
+    struct FileSystem_ABC;
     struct Runtime_ABC;
     struct Process_ABC;
 }
@@ -51,8 +52,23 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const Path& root, const Uuid& id, const Node_ABC& node, const std::string& name, const std::string& exercise, const Port& port, web::Client_ABC& client );
-             Session( const Path& root, const Tree& tree, const Node_ABC& node, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports, web::Client_ABC& client );
+             Session( const runtime::FileSystem_ABC& system,
+                      const Path& root,
+                      const Node_ABC& node,
+                      web::Client_ABC& client,
+                      const Uuid& id,
+                      const std::string& name,
+                      const std::string& exercise,
+                      const Port& port
+                      );
+             Session( const runtime::FileSystem_ABC& system,
+                      const Path& root,
+                      const Node_ABC& node,
+                      web::Client_ABC& client,
+                      const Tree& tree,
+                      const runtime::Runtime_ABC& runtime,
+                      PortFactory_ABC& ports
+                      );
     virtual ~Session();
     //@}
 
@@ -72,12 +88,12 @@ public:
     virtual Path GetPath( const std::string& type ) const;
     virtual Path GetOutput() const;
     virtual Tree Save() const;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const runtime::FileSystem_ABC& system, const Path& apps );
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps );
     virtual bool Stop();
     virtual void Update();
     virtual void Poll();
     virtual bool Pause();
-    virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
+    virtual void Remove();
     //@}
 
     //! @name Typedef helpers
@@ -101,13 +117,14 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    template< typename T > std::pair< T_Process, bool > StopProcess( T& lock );
-    template< typename T > std::pair< T_Process, bool > ModifyStatus( T& lock, Status next );
+    bool StopProcess();
+    template< typename T > bool ModifyStatus( T& lock, Status next );
     //@}
 
 private:
     //! @name Private members
     //@{
+    const runtime::FileSystem_ABC& system_;
     const Uuid id_;
     const Path root_;
     const Node_ABC& node_;
