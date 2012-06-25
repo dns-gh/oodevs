@@ -56,9 +56,6 @@ struct Api_ABC : public boost::noncopyable
     virtual int               GetProcessName       ( void* hProcess, wchar_t* lpImageFileName, int nSize ) const = 0;
     virtual int               WaitForSingleObjectEx( void* hHandle, int dwMilliseconds, bool bAlertable ) const = 0;
     virtual bool              TerminateProcess     ( void* hProcess, unsigned uExitCode ) const = 0;
-    virtual bool              GetExitCodeProcess   ( void* hProcess, unsigned long* lpExitCode ) const = 0;
-    virtual void*             CreateRemoteThreadExt( void* hProcess, size_t dwStackSize, void* lpStartAddress, void* lpParameter, int dwCreationFlags, unsigned long* lpThreadId ) const = 0;
-    virtual void*             GetExitProcessPointer() const = 0;
     virtual std::wstring      GetModuleFilename    () const = 0;
     virtual ProcessDescriptor MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const = 0;
     //@}

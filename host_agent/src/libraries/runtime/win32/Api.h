@@ -42,16 +42,12 @@ public:
     virtual int               GetProcessName       ( void* hProcess, wchar_t* lpImageFileName, int nSize ) const;
     virtual int               WaitForSingleObjectEx( void* hHandle, int dwMilliseconds, bool bAlertable ) const;
     virtual bool              TerminateProcess     ( void* hProcess, unsigned uExitCode ) const;
-    virtual bool              GetExitCodeProcess   ( void* hProcess, unsigned long* lpExitCode ) const;
-    virtual void*             CreateRemoteThreadExt( void* hProcess, size_t dwStackSize, void* lpStartAddress, void* lpParameter, int dwCreationFlags, unsigned long* lpThreadId ) const;
-    virtual void*             GetExitProcessPointer() const;
     virtual std::wstring      GetModuleFilename    () const;
     virtual ProcessDescriptor MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const;
     //@}
 
 private:
     cpplog::BaseLogger& log_;
-    void* exit_;
 };
 
 }

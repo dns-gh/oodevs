@@ -37,17 +37,8 @@ using namespace runtime;
 // -----------------------------------------------------------------------------
 Api::Api( cpplog::BaseLogger& log )
     : log_ ( log )
-    , exit_( 0 )
 {
-    HINSTANCE kernel = 0;
-    BOOL done = GetModuleHandleExW( GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, L"Kernel32", &kernel );
-    if( !done )
-        LOG_AND_THROW( "unable to load kernel32 module" );
-
-    FARPROC exit = GetProcAddress( kernel, "ExitProcess" );
-    if( !exit )
-        LOG_AND_THROW( "unable to get Kernel32::ExitProcess address" );
-    exit_ = reinterpret_cast< LPTHREAD_START_ROUTINE >( &exit );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -134,37 +125,6 @@ bool Api::TerminateProcess( HANDLE hProcess, unsigned uExitCode ) const
     LOG_IF_NOT( ERROR, log_, reply ) << "[win32] " << GetLastError();
     LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to terminate process";
     return reply;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Api::GetExitCodeProcess
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-bool Api::GetExitCodeProcess( void* hProcess, unsigned long* lpExitCode ) const
-{
-    return !!::GetExitCodeProcess( hProcess, lpExitCode );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Api::CreateRemoteThreadExt
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-HANDLE Api::CreateRemoteThreadExt( void* hProcess, size_t dwStackSize, void* lpStartAddress, void* lpParameter, int dwCreationFlags, unsigned long* lpThreadId ) const
-{
-    HANDLE reply = ::CreateRemoteThreadEx( hProcess, 0, dwStackSize, reinterpret_cast< LPTHREAD_START_ROUTINE >( lpStartAddress ),
-                                           lpParameter, dwCreationFlags, 0, lpThreadId );
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] " << GetLastError();
-    LOG_IF_NOT( ERROR, log_, reply ) << "[win32] Unable to create remote thread";
-    return reply;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Api::GetExitProcessPointer
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-void* Api::GetExitProcessPointer() const
-{
-    return exit_;
 }
 
 // -----------------------------------------------------------------------------

@@ -130,37 +130,14 @@ bool Process::Join( int msTimeout )
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: UnsafeTerminate
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    bool UnsafeTerminate( const Api_ABC& api, HANDLE process )
-    {
-        return api.TerminateProcess( process, static_cast< unsigned >( -1 ) );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: SafeTerminate
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    bool SafeTerminate( const Api_ABC& api, HANDLE process, int msTimeout )
-    {
-        // see http://drdobbs.com/184416547 for rationale
-        DWORD code = 0;
-        bool done = api.GetExitCodeProcess( process, &code );
-        if( !done || code != STILL_ACTIVE )
-            return false;
-
-        DWORD threadId;
-        void* exit = api.GetExitProcessPointer();
-        HANDLE thread = api.CreateRemoteThreadExt( process, 0, exit, &code, 0, &threadId );
-        if( !thread )
-            return false;
-
-        Handle dispose = runtime::MakeHandle( api, thread );
-        int reply = api.WaitForSingleObjectEx( process, msTimeout, false );
-        return reply == WAIT_OBJECT_0;
-    }
+// -----------------------------------------------------------------------------
+// Name: UnsafeTerminate
+// Created: BAX 2012-03-07
+// -----------------------------------------------------------------------------
+bool UnsafeTerminate( const Api_ABC& api, HANDLE process )
+{
+    return api.TerminateProcess( process, static_cast< unsigned >( -1 ) );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -169,6 +146,5 @@ namespace
 // -----------------------------------------------------------------------------
 bool Process::Kill( int /*msTimeout*/ )
 {
-    bool done = false;//SafeTerminate( api_, handle_->value_, msTimeout );
-    return done ? true : UnsafeTerminate( api_, handle_.get() );
+    return UnsafeTerminate( api_, handle_.get() );
 }

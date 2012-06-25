@@ -23,9 +23,6 @@ namespace test
         MOCK_METHOD( GetProcessName, 3 );
         MOCK_METHOD( WaitForSingleObjectEx, 3 );
         MOCK_METHOD( TerminateProcess, 2 );
-        MOCK_METHOD( GetExitCodeProcess, 2 );
-        MOCK_METHOD( CreateRemoteThreadExt, 6 );
-        MOCK_METHOD( GetExitProcessPointer, 0 );
         MOCK_METHOD( GetModuleFilename, 0 );
     };
 }
