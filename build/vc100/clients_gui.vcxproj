@@ -209,8 +209,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\WatershedLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\WeatherLayer.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\SimpleFilter.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanFilter.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MiniView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MiniViews.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SmartGridWidget.cpp" />
@@ -1241,9 +1239,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\WatershedLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\WeatherLayer.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\LayerFilter_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\SimpleFilter.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanFilter.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\MiniView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\MiniViews.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>

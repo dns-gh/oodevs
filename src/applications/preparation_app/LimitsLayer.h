@@ -33,7 +33,7 @@ public:
     //@{
              LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
-                          gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
+                          gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
 

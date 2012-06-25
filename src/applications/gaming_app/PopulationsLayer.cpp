@@ -19,8 +19,8 @@ using namespace kernel;
 // Created: SBO 2006-08-21
 // -----------------------------------------------------------------------------
 PopulationsLayer::PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                                    gui::View_ABC& view, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : gui::PopulationsLayer( controllers, tools, strategy, view, profile, filter )
+                                    gui::View_ABC& view, const Profile_ABC& profile )
+    : gui::PopulationsLayer( controllers, tools, strategy, view, profile )
 {
     // NOTHING
 }

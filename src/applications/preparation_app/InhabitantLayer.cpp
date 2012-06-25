@@ -18,8 +18,8 @@
 // -----------------------------------------------------------------------------
 InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
                                   gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
-                                  const gui::LayerFilter_ABC& filter, LivingAreaEditor_ABC& editor )
-    : gui::InhabitantLayer( controllers, tools, strategy, view, profile, filter )
+                                  LivingAreaEditor_ABC& editor )
+    : gui::InhabitantLayer( controllers, tools, strategy, view, profile )
     , editor_( editor )
 {
     // NOTHING

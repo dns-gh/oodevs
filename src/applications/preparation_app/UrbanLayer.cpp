@@ -18,8 +18,8 @@
 // Created: LGY 2012-01-06
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                        gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter)
-    : gui::UrbanLayer( controllers, tools, strategy, view, profile, filter )
+                        gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile )
+    : gui::UrbanLayer( controllers, tools, strategy, view, profile )
     , model_( model )
 {
     // NOTHING

@@ -25,8 +25,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
-                          gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, filter )
+                          gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile )
+    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
     , modelBuilder_( modelBuilder )
     , tools_( tools )
     , eventStrategy_( eventStrategy )

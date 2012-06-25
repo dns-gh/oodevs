@@ -28,9 +28,8 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                             gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker,
-                            const gui::LayerFilter_ABC& filter )
-    : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker, filter )
+                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker )
+    : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker )
     , actionsModel_( actionsModel )
     , static_      ( staticModel )
     , simulation_  ( simulation )

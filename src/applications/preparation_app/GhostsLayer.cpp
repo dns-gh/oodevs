@@ -29,8 +29,8 @@ using namespace kernel;
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
 GhostsLayer::GhostsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-                          gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, filter )
+                          gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )

@@ -43,8 +43,7 @@ public:
     //@{
              ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                            gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                           const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker,
-                           const gui::LayerFilter_ABC& filter );
+                           const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
 

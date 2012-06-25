@@ -28,11 +28,10 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const LayerFilter_ABC& filter )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
     : controllers_( controllers )
     , profile_    ( profile )
     , tools_      ( tools )
-    , filter_     ( filter )
     , strategy_   ( strategy )
     , view_       ( view )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() )
