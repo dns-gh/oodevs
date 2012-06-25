@@ -55,6 +55,7 @@ public:
     //@{
     virtual unsigned int GetNbrUsableHumans() const;
     virtual unsigned int GetNumber() const;
+    bool HasNoMoreOperationalHumans() const;
     //@}
 
     //! @name Notifications

@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -480,6 +481,9 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         rNewOpState = ( rMajorOpStateValue    / nMajorOpStateNbr    ) * rOpStateWeightMajorComposante_
                     + ( rNonMajorOpStateValue / nNonMajorOpStateNbr ) * rOpStateWeightNonMajorComposante_;
     }
+    PHY_RolePion_Humans* humans = pion_->RetrieveRole< PHY_RolePion_Humans >();
+    if( humans && humans->HasNoMoreOperationalHumans() )
+        rNewOpState = 0;
     if( rNewOpState != rOperationalState_ )
     {
         assert( rNewOpState >= 0. && rNewOpState <= 1. );
