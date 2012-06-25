@@ -17,11 +17,9 @@
 #include "web/Client_ABC.h"
 
 #include <boost/assign/list_of.hpp>
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <set>
 
 using namespace host;

@@ -11,20 +11,11 @@
 
 #include "cpplog/cpplog.hpp"
 #include "NodeController_ABC.h"
-#include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "runtime/FileSystem_ABC.h"
-#include "runtime/Pool_ABC.h"
-#include "runtime/Process_ABC.h"
 #include "runtime/Utf8.h"
 #include "Session_ABC.h"
-#include "UuidFactory_ABC.h"
 
-#include <boost/assign/list_of.hpp>
-#include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;

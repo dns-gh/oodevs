@@ -19,7 +19,6 @@
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;

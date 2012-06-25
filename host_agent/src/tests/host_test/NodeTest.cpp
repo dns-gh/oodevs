@@ -52,7 +52,6 @@ namespace
         MockPackageFactory packages;
         boost::shared_ptr< MockPackage > installed;
         boost::shared_ptr< MockPackage > cache;
-        MOCK_FUNCTOR( Starter, ProcessPtr( const Node_ABC& ) );
 
         Fixture()
             : installed( boost::make_shared< MockPackage >() )
@@ -83,8 +82,8 @@ namespace
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
-            MOCK_EXPECT( Starter ).with( mock::same( node ) ).returns( process );
-            BOOST_REQUIRE( node.Start( Starter, false ) );
+            MOCK_EXPECT( runtime.Start ).once().returns( process );
+            BOOST_REQUIRE( node.Start( runtime, "java", "jar", "web", "node", false ) );
             return process;
         }
 
@@ -170,7 +169,7 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
 {
     NodePtr node = MakeNode();
     StartNode( *node, processPid, processName );
-    BOOST_CHECK( !node->Start( Starter, false ) );
+    BOOST_CHECK( !node->Start( runtime, "java", "jar", "web", "node", false ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )

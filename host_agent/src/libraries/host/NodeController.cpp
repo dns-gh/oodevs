@@ -11,22 +11,12 @@
 
 #include "cpplog/cpplog.hpp"
 #include "Node_ABC.h"
-#include "PortFactory_ABC.h"
 #include "PropertyTree.h"
 #include "Proxy_ABC.h"
 #include "runtime/FileSystem_ABC.h"
-#include "runtime/Process_ABC.h"
-#include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
-#include "UuidFactory_ABC.h"
 
-#include <boost/assign/list_of.hpp>
-#include <boost/bind.hpp>
-#include <boost/bind/protect.hpp>
-#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -37,12 +27,6 @@ using runtime::Pool_ABC;
 
 namespace
 {
-template< typename T >
-std::string MakeOption( const std::string& option, const T& value )
-{
-    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
-}
-
 std::string GetPrefix( const std::string& type, const Node_ABC& node )
 {
     return type == "cluster" ? type : boost::lexical_cast< std::string >( node.GetId() );
@@ -228,23 +212,6 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
 // Name: NodeController::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Process NodeController::StartWith( const Node_ABC& node ) const
-{
-    return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
-        ( "-jar \"" + Utf8Convert( jar_.filename() ) + "\"" )
-        ( MakeOption( "root",  Utf8Convert( web_ ) ) )
-        ( MakeOption( "uuid", node.GetId() ) )
-        ( MakeOption( "type", type_ ) )
-        ( MakeOption( "name", node.GetName() ) )
-        ( MakeOption( "port", node.GetPort() ) ),
-        Utf8Convert( Path( jar_ ).remove_filename() ),
-        Utf8Convert( node.GetRoot() / ( type_ + ".log" ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeController::Start
-// Created: BAX 2012-04-17
-// -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Start( const Uuid& id ) const
 {
     T_Node node = nodes_.Get( id );
@@ -273,7 +240,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void NodeController::Start( Node_ABC& node, bool force, bool weak ) const
 {
-    bool modified = node.Start( boost::bind( &NodeController::StartWith, this, _1 ), weak );
+    bool modified = node.Start( runtime_, java_, jar_, web_, type_, weak );
     if( modified || force )
         Save( node );
 }

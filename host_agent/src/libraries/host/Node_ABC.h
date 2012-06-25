@@ -16,7 +16,6 @@
 
 namespace boost
 {
-    template< typename T > class function;
 namespace filesystem3
 {
     class path;
@@ -31,7 +30,7 @@ namespace runtime
 {
     struct Async;
     struct FileSystem_ABC;
-    struct Process_ABC;
+    struct Runtime_ABC;
 }
 
 namespace host
@@ -39,7 +38,10 @@ namespace host
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  Node_ABC
     @brief  Node_ABC interface
@@ -54,13 +56,6 @@ struct Node_ABC : public boost::noncopyable
     virtual ~Node_ABC() {}
     //@}
 
-    //! @name Typedef helpers
-    //@{
-    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
-    typedef boost::function< T_Process( const Node_ABC& ) > T_Starter;
-    typedef std::vector< std::string > T_Exercises;
-    //@}
-
     //! @name Accessors
     //@{
     virtual Uuid GetId() const = 0;
@@ -73,7 +68,8 @@ struct Node_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const T_Starter& starter, bool weak ) = 0;
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& java, const Path& jar,
+                        const Path& web, const std::string& type, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
     //@}
@@ -90,6 +86,11 @@ struct Node_ABC : public boost::noncopyable
     virtual Tree GetCache() const = 0;
     virtual Tree DeleteCache() = 0;
     virtual Tree InstallFromCache( const std::vector< size_t >& list ) = 0;
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef std::vector< std::string > T_Exercises;
     //@}
 
     //! @name Exercise methods

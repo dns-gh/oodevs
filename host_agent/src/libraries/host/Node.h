@@ -26,10 +26,8 @@ namespace boost
 
 namespace runtime
 {
-    struct FileSystem_ABC;
     struct Pool_ABC;
     struct Process_ABC;
-    struct Runtime_ABC;
 }
 
 namespace host
@@ -68,13 +66,13 @@ public:
     virtual int  GetPort() const;
     virtual std::string GetName() const;
     virtual Tree GetProperties() const;
-
     //@}
 
     //! @name Public methods
     //@{
     virtual Tree Save() const;
-    virtual bool Start( const T_Starter& starter, bool weak );
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& java, const Path& jar,
+                        const Path& web, const std::string& type, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
     //@}
@@ -100,6 +98,11 @@ public:
     virtual Tree        LinkExercise( const std::string& name ) const;
     virtual Tree        LinkExercise( const Tree& tree ) const;
     virtual void        UnlinkExercise( const Tree& tree ) const;
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     //@}
 
 private:

@@ -19,11 +19,8 @@
 #include "runtime/Utf8.h"
 
 #include <boost/assign/list_of.hpp>
-#include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -31,6 +28,7 @@ using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
+using runtime::Runtime_ABC;
 
 namespace
 {
@@ -195,11 +193,20 @@ Tree Node::Save() const
     return tree;
 }
 
+namespace
+{
+template< typename T >
+std::string MakeOption( const std::string& option, const T& value )
+{
+    return "--" + option + " \"" + boost::lexical_cast< std::string >( value ) + "\"";
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const T_Starter& starter, bool weak )
+bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar, const Path& web, const std::string& type, bool weak )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( stopped_ && weak )
@@ -210,7 +217,15 @@ bool Node::Start( const T_Starter& starter, bool weak )
     if( process_  && process_->IsAlive() )
         return modified;
 
-    T_Process ptr = starter( *this );
+    T_Process ptr = runtime.Start( Utf8Convert( java ), boost::assign::list_of
+        ( "-jar \"" + Utf8Convert( jar.filename() ) + "\"" )
+        ( MakeOption( "root",  Utf8Convert( web ) ) )
+        ( MakeOption( "uuid", id_ ) )
+        ( MakeOption( "type", type ) )
+        ( MakeOption( "name", name_ ) )
+        ( MakeOption( "port", port_->Get() ) ),
+        Utf8Convert( Path( jar ).remove_filename() ),
+        Utf8Convert( root_ / ( type + ".log" ) ) );
     if( !ptr )
         return modified;
 
