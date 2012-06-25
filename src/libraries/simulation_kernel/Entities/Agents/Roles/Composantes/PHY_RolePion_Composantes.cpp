@@ -481,7 +481,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         rNewOpState = ( rMajorOpStateValue    / nMajorOpStateNbr    ) * rOpStateWeightMajorComposante_
                     + ( rNonMajorOpStateValue / nNonMajorOpStateNbr ) * rOpStateWeightNonMajorComposante_;
     }
-    PHY_RolePion_Humans* humans = pion_->RetrieveRole< PHY_RolePion_Humans >();
+    PHY_RolePion_Humans* humans = owner_->RetrieveRole< PHY_RolePion_Humans >();
     if( humans && humans->HasNoMoreOperationalHumans() )
         rNewOpState = 0;
     if( rNewOpState != rOperationalState_ )
