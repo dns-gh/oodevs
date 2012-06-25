@@ -56,6 +56,14 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Update, this ) );
 }
 
+namespace
+{
+void AsyncStop( Async& async, SessionController::T_Session session )
+{
+    async.Go( boost::bind( &Session_ABC::Stop, session ) );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: SessionController::~SessionController
 // Created: BAX 2012-03-19
@@ -64,7 +72,7 @@ SessionController::~SessionController()
 {
     timer_->Stop();
     async_.Join();
-    sessions_.ForeachRef( boost::bind( &Session_ABC::Stop, _1 ) );
+    sessions_.Foreach( boost::bind( &AsyncStop, boost::ref( async_ ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
