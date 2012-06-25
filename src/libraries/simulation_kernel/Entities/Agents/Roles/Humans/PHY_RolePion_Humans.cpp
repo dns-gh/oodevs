@@ -585,6 +585,23 @@ unsigned int PHY_RolePion_Humans::GetNbrOperational( const PHY_HumanRank& rank )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::HasNoMoreOperationalHumans
+// Created: JSR 2012-06-25
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
+{
+    if( humansStates_.empty() )
+        return false;
+    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    {
+        const HumanState& state = **it;
+        if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
+            return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::GetNbrUsableHumans
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------

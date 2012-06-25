@@ -55,6 +55,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int GetNbrUsableHumans() const;
+    bool HasNoMoreOperationalHumans() const;
     //@}
 
     //! @name Notifications
