@@ -696,50 +696,23 @@ node "BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterAListe"
         assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         assert( #( self._namedParams.listePions ) <= #( self._namedParams.listeUnitesAHeliporter ), "Trop de Pions Pour Transporter" )
         if( ModuleBegins() ) then
-            do
-                --[[//copie de la liste des pions a héliporter
-]]local listeCopiePionsATraiter = self._namedParams.listeUnitesAHeliporter
-                local nbPionsParPatrouille = Floor( #( self._namedParams.listeUnitesAHeliporter ) / #( self._namedParams.listePions ) )
-                local pionBuffer = nil
-                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
-                local _continue = true
-                    do
-                        --[[//si plus de pion a traiter, ne pas donner de mission pour rien
-]]if( #( listeCopiePionsATraiter ) == nil ) then
-                            do return end
-                        end
-
-                        local listePionsAHeliporterBuffer = {}--[[//liste des unites que devra transporter x
-]]
-                        local i = 0
-                        while i < nbPionsParPatrouille do
-                            local _continue = true
-do
-                                pionBuffer = DIA_GetAt( listeCopiePionsATraiter, 0 )
-                                DIA_PushBack( listePionsAHeliporterBuffer, pionBuffer )
-                                DIA_Remove( listeCopiePionsATraiter, pionBuffer )
-                            end
---[[//si x est le dernier pion de la liste, il embarque tous les pions
-]]--[[//non attribués
-]]                        i = i + 1
-                        end
-
-                        if( DIA_GetAt( self._namedParams.listePions, #( self._namedParams.listePions ) - 1 ) == x ) then
-                            do
-                                for _,y in pairs( listeCopiePionsATraiter or emptyTable ) do
-                                local _continue = true
-                                    DIA_PushBack( listePionsAHeliporterBuffer, y )
-
-                                end
-
-                            end
-                        end
-
-                        StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listePionsAHeliporterBuffer, self._namedParams.avecMateriel, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
-                    end
-
+            if #self._namedParams.listePions == 0 then
+                return
+            end
+            local nbPionsParPatrouille = Floor( #( self._namedParams.listeUnitesAHeliporter ) / #( self._namedParams.listePions ) )
+            local pionBuffer = nil
+            local listeTransporters = {}
+            local transporterIndex = 1
+            for _,transported in pairs( self._namedParams.listeUnitesAHeliporter or emptyTable ) do
+                listeTransporters[transporterIndex] = listeTransporters[transporterIndex] or {}
+                listeTransporters[transporterIndex][#listeTransporters[transporterIndex]+1] = transported
+                transporterIndex = transporterIndex + 1
+                if transporterIndex > #self._namedParams.listePions then
+                    transporterIndex = 1
                 end
-
+            end
+            for i,x in pairs( self._namedParams.listePions or emptyTable ) do
+                StartActivateOverride( self, self.activations.BEH_Medo_Automate_ALAT_AssignerMissionHeliporterA, 1, { self._namedParams.ePhase, x, self._namedParams.pointRegroupement, self._namedParams.pointEmbarquement, self._namedParams.pointDebarquement, self._namedParams.plotsRavitaillement, listeTransporters[i] or emptyTable, self._namedParams.avecMateriel, self._namedParams.porteeAction_, self._namedParams.ambianceMission_ } )
             end
         end
 

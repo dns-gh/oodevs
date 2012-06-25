@@ -50,12 +50,9 @@ include "bit.lua"
         self.listeUnitesPretesPrecedantes = self.listeUnitesPretesPrecedantes or {}
         self.listeUnitesDebarquees = self.listeUnitesDebarquees or {}
         if( ModuleBegins() ) then
-            do
                 if( DEC_Transport_EnCoursDeTransport() ) then
                     self.ePhase = eTransporterAllerDebarquer
                 end
-
-            end
 --[[//on arrete la mission quand on n'a plus d'unité plus proche du point
 ]]--[[//d'embarquement que du point de débarquement et que l'on ne transporte 
 ]]--[[//rien
@@ -63,13 +60,9 @@ include "bit.lua"
 
         local bUnitesEnAttenteSurPtEmbarquement = false
         for _,x in pairs( self._namedParams.unitesAHelitransporter or emptyTable ) do
-        local _continue = true
-do
                 if( DEC_Geometrie_Distance( x:DEC_Agent_Position(), self._namedParams.posEmbarquement ) < DEC_Geometrie_Distance( x:DEC_Agent_Position(), self._namedParams.posDebarquement ) ) then
                     bUnitesEnAttenteSurPtEmbarquement = true
                 end
-
-            end
 --[[//condition d'arret du comportement
 ]]
         end
@@ -80,68 +73,47 @@ do
             do return end
         end
 
-        self.listeUnitesPretesPrecedantes = {}
-        self.listeUnitesPretesPrecedantes = self.listeUnitesPretes
+        self.listeUnitesPretesPrecedantes = DEC_Copie_Liste( self.listeUnitesPretes )
         self.listeUnitesPretes = {}
         self.listeUnitesPretes = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Mission_Pion_SeFaireTransporter" )
         local listelisteUnitesPretesBM = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "france.military.platoon.tasks.SeFaireTransporter" )
         for _,xBM in pairs( listelisteUnitesPretesBM or emptyTable ) do
-            local _continue = true
             DIA_PushBack( self.listeUnitesPretes, xBM )
         end
         for _,x in pairs( --[[//liste des unites qui n'ont plus la mission se faire transporter
 ]]self._namedParams.unitesAHelitransporter or emptyTable ) do
-        local _continue = true
-do
                 if( DIA_Contains( self.listeUnitesPretesPrecedantes, x ) and not DIA_Contains( self.listeUnitesPretes, x ) ) then
-                    do
                         if( not DIA_Contains( self.listeUnitesDebarquees, x ) ) then
                             DIA_PushBack( self.listeUnitesDebarquees, x )
                         end
-
-                    end
                 end
-
-            end
-
         end
 
         self.bAuMoinsUneUniteSurPositionEmbarquement = false
         for _,x in pairs( --[[// Affichage du RC unites pas pretes si des unites non encore debarquées
 ]]--[[// n'ont pas la mission se faire transporter.
 ]]self._namedParams.unitesAHelitransporter or emptyTable ) do
-        local _continue = true
-do
                 --[[// si pas ou plus mission se faire transporter
-]]if( not DIA_Contains( self.listeUnitesDebarquees, x ) and not DIA_Contains( self.listeUnitesPretes, x ) ) then
-                    Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePasPrete, x, } )
-                else
-do
-                        --[[//si trop loin
-]]if( DEC_Geometrie_Distance( self._namedParams.posEmbarquement, x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
-                            do
-                                if( not x:DEC_Agent_EstTransporte() ) then
-                                    Activate( self.activations.ACT_RC_SurPion, 1, { eRC_UniteTropDistante, x, } )
-                                end
-
+]]
+                if( not DIA_Contains( self.listeUnitesDebarquees, x ) ) then
+                    if not DIA_Contains( self.listeUnitesPretes, x ) then
+                       Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePasPrete, x, } )
+                    else
+                        --[[//si trop loin ]]
+                        if( DEC_Geometrie_Distance( self._namedParams.posEmbarquement, x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
+                            if( not x:DEC_Agent_EstTransporte() ) then
+                                Activate( self.activations.ACT_RC_SurPion, 1, { eRC_UniteTropDistante, x, } )
                             end
-                        else
-do
-                                --[[//RC l'unité est prete
-]]Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePrete, x, } )
-                                self.bAuMoinsUneUniteSurPositionEmbarquement = true
-                            end
+                        else 
+                        --[[//RC l'unité est prete ]]
+                            Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePrete, x, } )
+                            self.bAuMoinsUneUniteSurPositionEmbarquement = true
                         end
-
                     end
-                end
-
-            end
-
+               end
         end
 
-         do
-            local _continue = true
+        do
 --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
 ]]--[[//si pas d'unités prete sur position, on ne commence pas à s'organiser
 ]]--[[//des que j'ai des unites pretes et à bonne distance du pion, alors, je
@@ -153,46 +125,24 @@ do
                 if switch_1 == eTransporterAllerEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( self.eEtat == eActionEffectuee ) then
-                        do
                             self.eEtat = eActionEnCours
-                                                        do
-                                if( #( self.listeUnitesPretes ) == 0 ) then
-                                    do
-                                        self.eEtat = eActionEffectuee
-                                                                                do return end
-
-                                    end
-                                end
-
-                                self.ePhase = eTransporterEmbarquer
-                                                                do return end
-
-                            end
-
+                        if( #( self.listeUnitesPretes ) == 0 ) then
+                            self.eEtat = eActionEffectuee
                         end
+                        self.ePhase = eTransporterEmbarquer
+                        do return end
                     end
 
                     if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Transport_Annuler()
-                                                                self:SendFeedback( eActionImpossible )
-                                Halt( self )
-                                do return end
-
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
+                        DEC_Transport_Annuler()
+                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
                 elseif switch_1 == eAttendre then
                     if( myself.bEnPhaseRavitaillement_ ) then
                         self.ePhase = eTransporterAllerEmbarquer
@@ -201,14 +151,9 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     for _,x in pairs( self.listeUnitesPretes or emptyTable ) do
-                    local _continue = true
-do
-                            if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
-                                do return end
-                            end
-
+                        if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
+                           do return end
                         end
-
                     end
 
                     if( not self.bAuMoinsUneUniteSurPositionEmbarquement ) then
@@ -216,48 +161,26 @@ do
                     end
 
                     self.ePhase = eTransporterEmbarquer
-                    _continue = false
                 elseif switch_1 == eTransporterEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
                     for _,x in pairs( self.listeUnitesPretes or emptyTable ) do
-                    local _continue = true
-do
                             if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) <= M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
                                 DEC_Transport_AjouterPion( x, not self._namedParams.avecMateriel )
                             end
-
-                        end
-
                     end
 
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eTransporterAllerDebarquer
-                                                                do return end
-
-                            end
-
-                        end
+                        self.eEtat = eActionEnCours
+                        self.ePhase = eTransporterAllerDebarquer
+                        do return end
                     end
 
                     if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Transport_Annuler()
-                                                                self:SendFeedback( eActionImpossible )
-                                Halt( self )
-                                do return end
-
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
+                        DEC_Transport_Annuler()
+                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
                     end
 
                     if( not self.bAuMoinsUneUniteSurPositionEmbarquement ) then
@@ -266,78 +189,43 @@ do
 
                     Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
                 elseif switch_1 == eTransporterAllerDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
                     if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eTransporterDebarquer
-                                                                do return end
-
-                            end
-
-                        end
+                        self.eEtat = eActionEnCours
+                        self.ePhase = eTransporterDebarquer
+                        do return end
                     end
 
                     if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Transport_Annuler()
-                                                                self:SendFeedback( eActionImpossible )
-                                Halt( self )
-                                do return end
-
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
+                        DEC_Transport_Annuler()
+                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
                 elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eTransporterAllerEmbarquer
-                                                                do return end
-
-                            end
-
-                        end
+                        self.eEtat = eActionEnCours
+                        self.ePhase = eTransporterAllerEmbarquer
+                        do return end
                     end
 
                     if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Transport_Annuler()
-                                                                self:SendFeedback( eActionImpossible )
-                                Halt( self )
-                                do return end
-
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
+                        DEC_Transport_Annuler()
+                        self:SendFeedback( eActionImpossible )
+                        Halt( self )
+                        do return end
                     end
 
                     Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
-                                end
+                end
             end
 
     end,
@@ -390,7 +278,6 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
         end
 
          do
-            local _continue = true
 --[[//rejoindre le pion
 ]]--[[//aller au tc2 et y déposer les humains blessés
 ]]            local switch_1 = self.ePhase
@@ -420,7 +307,6 @@ node "BEH_Transport_Pion_ALAT_HM_Extraire"
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointEmbarquement, } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self.pointEmbarquement, eProgressionDefaut, self._namedParams.ePathType, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
                 elseif switch_1 == eExtraire then
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -441,7 +327,6 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.TC2:DEC_Agent_Position(), } )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, { self._namedParams.TC2, eProgressionDefaut, self._namedParams.ePathType, 6000, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePion = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
                                 end
             end
 

@@ -105,27 +105,22 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         self.listePionsEnCoursRavitaillement = {}
         self.listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
         self.listePourHeliportage = {}
-        --[[//il ne doit pas y avoir plus de HM que de pions à transporter
-]]if( #( self.listeHM ) > #( self.listePionsAHeliporter ) ) then
-            do
-                --[[//on met autant de HM que de pions
-]]local i = 0
-                while i < #( self.listePionsAHeliporter ) do
-                    local _continue = true
-                    DIA_PushBack( self.listePourHeliportage, DIA_GetAt( self.listeHM, i ) )
+        --[[//il ne doit pas y avoir plus de HM que de pions à transporter ]]
+        if( #( self.listeHM ) > #( self.listePionsAHeliporter ) ) then
+            --[[//on met autant de HM que de pions ]]
+            local i = 0
+            while i < #( self.listePionsAHeliporter ) do
+                DIA_PushBack( self.listePourHeliportage, DIA_GetAt( self.listeHM, i ) )
                 i = i + 1
-                end
-
             end
         else
             self.listePourHeliportage = self.listeHM
         end
 
-        --[[// liste des pions en cours de transport
-]]self.listeHeliporter = {}
+        --[[// liste des pions en cours de transport ]]
         self.listeHeliporter = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_Heliporter" )
-        --[[// liste des pions qui peuvent Escorter ou couvrir
-]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
+        --[[// liste des pions qui peuvent Escorter ou couvrir ]]
+        local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         self.listePionsPeuventCouvrirOuEscorter = {}
