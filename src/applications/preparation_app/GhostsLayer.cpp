@@ -76,8 +76,12 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
             return false;
         if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
         {
-            position->Move( point + draggingOffset_.ToVector() );
-            draggingPoint_ = point;
+            const geometry::Point2f newPosition =  point + draggingOffset_.ToVector();
+            if( world_.IsInside( newPosition) )
+            {
+                position->Move( newPosition );
+                draggingPoint_ = point;
+            }
         }
         return true;
     }

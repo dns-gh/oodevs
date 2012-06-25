@@ -54,6 +54,8 @@ public:
 
     void AddPoint( const geometry::Point2f& point );
 
+    bool IsInsideWorld( const geometry::Point2f& point ) const;
+
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( kernel::Viewport_ABC& viewport );
     virtual void Paint( const geometry::Rectangle2f& viewport );

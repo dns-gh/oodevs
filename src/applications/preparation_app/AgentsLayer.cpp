@@ -139,20 +139,6 @@ bool AgentsLayer::IsValidTemplate( QDragMoveEvent* event ) const
         return droppedItem->IsCompatible( *selectedAutomat_ );
 }
 
-namespace
-{
-    bool Move( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
-    {
-        const kernel::Positions& positions = entity.Get< Positions >();
-        if( const kernel::Moveable_ABC* moveable = dynamic_cast< const kernel::Moveable_ABC* >( &positions ) )
-        {
-            const_cast< kernel::Moveable_ABC* >( moveable )->Move( point );
-            return true;
-        }
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::HandleMoveDragEvent
 // Created: JSR 2011-12-22
@@ -163,12 +149,25 @@ bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
     {
         if( !selectedAgent_ )
             return false;
-        if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
+        if( world_.IsInside( point ) && draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
         {
             position->Move( point + draggingOffset_.ToVector() );
             draggingPoint_ = point;
         }
         return true;
+    }
+    else if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
+    {
+        if( ( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) ) && world_.IsInside( point ) )
+        {
+            kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() );
+            if( position )
+            {
+                position->Move( point );
+                draggingPoint_ = point;
+            }
+            return true;
+        }
     }
     return gui::AgentsLayer::HandleMoveDragEvent( event, point );
 }
@@ -215,15 +214,6 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         else
             droppedItem->Instanciate( *selectedAutomat_.ConstCast(), point );
         return true;
-    }
-    if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
-    {
-        if( selectedAutomat_ )
-            return Move( *selectedAutomat_, point );
-        if( selectedAgent_ )
-            return Move( *selectedAgent_, point );
-        if( selectedFormation_ )
-            return Move( *selectedFormation_, point );
     }
     return false;
 }

@@ -100,9 +100,17 @@ bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mous
     if( mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
     {
         const geometry::Vector2f translation( dragPoint_, point );
-        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->Translate( dragPoint_, translation, Precision( point ) );
-        dragPoint_ = point;
-        controllers_.controller_.Update( entity );
+        TacticalLinePositions* positions = dynamic_cast< TacticalLinePositions* >( &entity.Get< Positions >() );
+        if( positions )
+        {
+            const geometry::Rectangle2f newBoundingBox = positions->GetBoundingBox() + translation;
+            if( newBoundingBox.Intersect( world_ ) == newBoundingBox )
+            {
+                positions->Translate( dragPoint_, translation, Precision( point ) );
+                dragPoint_ = point;
+                controllers_.controller_.Update( entity );
+            }
+        }
         return true;
     }
     return false;
