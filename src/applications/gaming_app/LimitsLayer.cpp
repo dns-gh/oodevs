@@ -104,25 +104,24 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 void LimitsLayer::BeforeSelection()
 {
     selectedEntity_ = 0;
-    gui::TacticalLinesLayer::BeforeSelection();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsLayer::MultipleSelect
+// Name: LimitsLayer::Select
 // Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void LimitsLayer::MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements )
+void LimitsLayer::Select( const kernel::Automat_ABC& element )
 {
-    selectedEntity_ = elements.size() == 1 ? elements.front() : 0;
+    selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsLayer::MultipleSelect
+// Name: LimitsLayer::Select
 // Created: JSR 2012-05-31
 // -----------------------------------------------------------------------------
-void LimitsLayer::MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements )
+void LimitsLayer::Select( const kernel::Formation_ABC& element )
 {
-    selectedEntity_ = elements.size() == 1 ? elements.front() : 0;
+    selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------

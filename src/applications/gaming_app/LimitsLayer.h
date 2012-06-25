@@ -23,8 +23,9 @@ class TacticalLineFactory;
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
-                  , public kernel::MultipleSelectionObserver_Base< kernel::Automat_ABC >
-                  , public kernel::MultipleSelectionObserver_Base< kernel::Formation_ABC >
+                  , public tools::SelectionObserver_ABC
+                  , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,10 +46,10 @@ private:
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
 
-    virtual void BeforeSelection();
-    virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
-    virtual void MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements );
-    virtual void AfterSelection();
+    virtual void tools::SelectionObserver_ABC::BeforeSelection();
+    virtual void Select( const kernel::Automat_ABC& element );
+    virtual void Select( const kernel::Formation_ABC& element );
+    virtual void tools::SelectionObserver_ABC::AfterSelection();
     //@}
 
 private:
