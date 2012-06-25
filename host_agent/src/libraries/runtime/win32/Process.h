@@ -52,7 +52,6 @@ private:
     const std::string name_;
     //@}
 };
-
 }
 
 #endif

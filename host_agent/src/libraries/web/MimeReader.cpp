@@ -63,7 +63,6 @@ struct MimeReader::Part : boost::noncopyable
     AsyncStream async_;
 };
 
-
 MimeReader::MimeReader()
 {
     // NOTHING

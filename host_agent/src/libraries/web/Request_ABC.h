@@ -45,7 +45,6 @@ struct Request_ABC : public boost::noncopyable
     virtual void ParseMime() = 0;
     //@}
 };
-
 }
 
 #endif // REQUEST_ABC_H

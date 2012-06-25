@@ -89,7 +89,6 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual std::time_t GetLastWrite( const Path& file ) const = 0;
     //@}
 };
-
 }
 
 #endif // FILE_SYSTEM_ABC_H

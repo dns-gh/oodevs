@@ -19,7 +19,6 @@ namespace cpplog
 
 namespace runtime
 {
-
 // =============================================================================
 /** @class  FileSystem
     @brief  FileSystem interface
@@ -59,7 +58,6 @@ public:
 private:
     cpplog::BaseLogger& log_;
 };
-
 }
 
 #endif // FILE_SYSTEM_H

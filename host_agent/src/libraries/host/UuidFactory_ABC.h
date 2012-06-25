@@ -43,7 +43,6 @@ struct UuidFactory_ABC : public boost::noncopyable
     virtual Uuid Create() const = 0;
     //@}
 };
-
 }
 
 #endif // UUID_FACTORY_ABC_H

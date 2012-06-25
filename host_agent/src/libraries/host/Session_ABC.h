@@ -101,8 +101,6 @@ struct SessionFactory_ABC : public boost::noncopyable
     virtual Ptr Make( const Path& tag ) const = 0;
     //@}
 };
-
-
 }
 
 #endif // SESSION_ABC_H

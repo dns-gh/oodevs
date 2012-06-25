@@ -37,7 +37,6 @@ std::string  Utf8Convert( const std::wstring& text );
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 std::string  Utf8Convert( const boost::filesystem3::path& path );
-
 }
 
 #endif

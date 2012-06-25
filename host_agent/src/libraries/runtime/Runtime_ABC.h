@@ -56,7 +56,6 @@ struct Runtime_ABC : public boost::noncopyable
     virtual boost::filesystem3::path GetModuleFilename() const = 0;
     //@}
 };
-
 }
 
 #endif

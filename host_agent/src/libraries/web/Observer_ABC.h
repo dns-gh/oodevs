@@ -37,7 +37,6 @@ struct Observer_ABC : public boost::noncopyable
     virtual std::string DoPost( Request_ABC& request ) = 0;
     //@}
 };
-
 }
 
 #endif // OBSERVER_ABC_H

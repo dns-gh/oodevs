@@ -108,7 +108,6 @@ private:
     SessionController_ABC& sessions_;
     //@}
 };
-
 }
 
 #endif // AGENT_H

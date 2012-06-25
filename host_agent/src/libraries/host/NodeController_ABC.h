@@ -89,7 +89,6 @@ struct NodeController_ABC : public boost::noncopyable
     virtual size_t      CountExercises( const Uuid& id ) const = 0;
     //@}
 };
-
 }
 
 #endif // NODE_CONTROLLER_ABC_H

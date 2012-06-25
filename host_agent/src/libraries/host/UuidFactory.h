@@ -14,7 +14,6 @@
 
 namespace host
 {
-
 // =============================================================================
 /** @class  UuidFactory
     @brief  UuidFactory interface
@@ -35,7 +34,6 @@ public:
     virtual Uuid Create() const;
     //@}
 };
-
 }
 
 #endif // SESSION_H

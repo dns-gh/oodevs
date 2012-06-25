@@ -68,7 +68,6 @@ struct Client_ABC : public boost::noncopyable
     virtual T_Response Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters ) = 0;
     //@}
 };
-
 }
 
 #endif // CLIENT_ABC_H

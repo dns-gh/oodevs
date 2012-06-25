@@ -49,7 +49,6 @@ private:
     cpplog::BaseLogger& log_;
     const Api_ABC& api_;
 };
-
 }
 
 #endif

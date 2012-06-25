@@ -61,7 +61,6 @@ struct PortFactory_ABC : public boost::noncopyable
     virtual Port Create( int port ) = 0;
     //@}
 };
-
 }
 
 #endif // PORT_FACTORY_ABC_H

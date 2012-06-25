@@ -49,7 +49,6 @@ struct Timer_ABC : public boost::noncopyable
 typedef boost::shared_ptr< Timer_ABC > Timer;
 
 Timer MakeTimer( Pool_ABC& pool, const boost::posix_time::time_duration& timeout, const Task& task );
-
 }
 
 #endif // TIMER_ABC_H__

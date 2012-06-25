@@ -150,7 +150,6 @@ namespace
             return false;
         MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( true );
         return predicate( *session );
-
     }
 }
 

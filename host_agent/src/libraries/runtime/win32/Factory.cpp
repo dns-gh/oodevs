@@ -12,7 +12,6 @@
 
 namespace runtime
 {
-
 // =============================================================================
 /** @class  Private
     @brief  Factory private data definition
@@ -58,5 +57,4 @@ const Runtime_ABC& Factory::GetRuntime() const
 {
     return private_->runtime;
 }
-
 }

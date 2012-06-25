@@ -22,7 +22,6 @@ namespace boost
 
 namespace host
 {
-
 // =============================================================================
 /** @class  PortFactory
     @brief  PortFactory interface
@@ -65,7 +64,6 @@ private:
     T_Ports ports_;
     //@}
 };
-
 }
 
 #endif // PORT_FACTORY_H

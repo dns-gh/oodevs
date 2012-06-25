@@ -66,7 +66,6 @@ struct SessionController_ABC : public boost::noncopyable
     virtual T_Session   Pause( const Uuid& id ) const = 0;
     //@}
 };
-
 }
 
 #endif // SESSION_CONTROLLER_ABC_H

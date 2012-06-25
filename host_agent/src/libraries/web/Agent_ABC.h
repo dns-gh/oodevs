@@ -102,7 +102,6 @@ struct Agent_ABC : public boost::noncopyable
     virtual Reply CountExercises( const Uuid& id ) const = 0;
     //@}
 };
-
 }
 
 #endif // AGENT_ABC_H

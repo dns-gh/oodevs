@@ -47,7 +47,6 @@ public:
 private:
     boost::network::http::client client_;
 };
-
 }
 
 #endif // CLIENT_H

@@ -77,7 +77,6 @@ private:
     T_Items items_;
     //@}
 };
-
 }
 
 #endif // PACKAGE_H

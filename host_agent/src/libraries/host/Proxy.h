@@ -114,7 +114,6 @@ private:
     mutable runtime::Async async_;
     //@}
 };
-
 }
 
 #endif // PROXY_H

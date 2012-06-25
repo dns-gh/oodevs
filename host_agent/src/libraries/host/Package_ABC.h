@@ -90,7 +90,6 @@ struct PackageFactory_ABC : public boost::noncopyable
     virtual boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const = 0;
     //@}
 };
-
 }
 
 #endif // PACKAGE_ABC_H

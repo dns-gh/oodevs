@@ -122,7 +122,6 @@ private:
     size_t counter_;
     //@}
 };
-
 }
 
 #endif // SESSION_H

@@ -21,7 +21,6 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
-
 using namespace runtime;
 
 namespace

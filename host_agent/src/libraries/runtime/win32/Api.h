@@ -17,7 +17,6 @@ namespace cpplog
 
 namespace runtime
 {
-
 // =============================================================================
 /** @class  Api
     @brief  Win32 API definition
@@ -49,7 +48,6 @@ public:
 private:
     cpplog::BaseLogger& log_;
 };
-
 }
 
 #endif

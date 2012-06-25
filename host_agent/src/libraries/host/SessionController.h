@@ -104,7 +104,6 @@ private:
     mutable runtime::Async async_;
     //@}
 };
-
 }
 
 #endif // SESSION_CONTROLLER_H

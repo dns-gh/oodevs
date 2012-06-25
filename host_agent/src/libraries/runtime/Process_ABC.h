@@ -14,7 +14,6 @@
 
 namespace runtime
 {
-
 // =============================================================================
 /** @class  Process_ABC
     @brief  Process_ABC interface definition
@@ -38,7 +37,6 @@ struct Process_ABC : public boost::noncopyable
     virtual bool Kill() = 0;
     //@}
 };
-
 }
 
 #endif

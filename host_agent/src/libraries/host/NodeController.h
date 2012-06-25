@@ -128,7 +128,6 @@ private:
     mutable runtime::Async async_;
     //@}
 };
-
 }
 
 #endif // NODE_CONTROLLER_H

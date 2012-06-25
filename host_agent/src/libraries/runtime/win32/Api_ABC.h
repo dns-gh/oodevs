@@ -60,7 +60,6 @@ struct Api_ABC : public boost::noncopyable
     virtual ProcessDescriptor MakeProcess          ( const wchar_t* app, wchar_t* args, const wchar_t* run, const wchar_t* log ) const = 0;
     //@}
 };
-
 }
 
 #endif

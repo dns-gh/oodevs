@@ -15,7 +15,6 @@
 
 namespace host
 {
-
 // =============================================================================
 /** @class  Proxy_ABC
     @brief  Proxy_ABC interface
@@ -37,7 +36,6 @@ struct Proxy_ABC : public boost::noncopyable
     virtual void Unregister( const std::string& prefix ) = 0;
     //@}
 };
-
 }
 
 #endif // PROXY_ABC_H

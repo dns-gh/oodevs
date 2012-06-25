@@ -48,7 +48,6 @@ private:
     const  std::auto_ptr< Private > private_;
     //@}
 };
-
 }
 
 #endif

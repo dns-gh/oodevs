@@ -53,7 +53,6 @@ private:
     const std::auto_ptr< Private > private_;
     //@}
 };
-
 }
 
 #endif // MONGOOSE_SERVER_H

@@ -102,7 +102,6 @@ private:
     Agent_ABC& agent_;
     //@}
 };
-
 }
 
 #endif // CONTROLLER_H
