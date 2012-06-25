@@ -3146,6 +3146,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3467,4 +3468,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3146757948" -->
+<!-- signature="0698326016" -->

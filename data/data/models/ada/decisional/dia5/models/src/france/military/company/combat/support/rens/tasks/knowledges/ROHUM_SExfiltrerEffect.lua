@@ -23,4 +23,8 @@ return
           return myself.taskParams.objective
       end
     end,
+    
+    getByNight = function( self, params )
+        return myself.taskParams.byNight
+    end,
 }
