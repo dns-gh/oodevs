@@ -103,13 +103,13 @@ void GeoStoreManager::LoadTerrainFiles()
 // Name: GeoStoreManager::CreateUrbanBlocksOnCities
 // Created: AME 2010-07-21
 // -----------------------------------------------------------------------------
-SpatialRequestStatus* GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent, std::vector< kernel::UrbanObject_ABC* >& newBlocks )
+SpatialRequestStatus* GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent )
 {
     SpatialRequestStatus* processStatus = new SpatialRequestStatus();
     try
     {
         std::auto_ptr< CreateBlockAutoProcess > process( new CreateBlockAutoProcess( *spatialDb_, *processStatus ) );
-        process->Run( footprint, urbanModel_, parent, *trans_, newBlocks );
+        process->Run( footprint, urbanModel_, parent, *trans_ );
         return processStatus;
     }
     catch( ... ) // Created: AME 2010-08-02 Improve exception catching

@@ -41,13 +41,13 @@ public:
 
     //! @name Operations
     //@{
-    void Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, std::vector< kernel::UrbanObject_ABC* >& newBlocks );
+    void Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void UpdateUrbanModel( UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, const geometry::Polygon2f& footprint, std::vector< kernel::UrbanObject_ABC* >& newBlocks );
+    void UpdateUrbanModel( UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, const geometry::Polygon2f& footprint );
     gaiaGeomCollPtr GetUrbanBlockInArea( const UrbanModel& model, PointProjector_ABC& projector, const geometry::Polygon2f& footprint );
     void UpdateBuildingTable( gaiaGeomCollPtr buildings );
     void ClippingUrbanAreaWithTerrainComponent( gaiaGeomCollPtr buffers, gaiaGeomCollPtr areas, gaiaGeomCollPtr urbans );

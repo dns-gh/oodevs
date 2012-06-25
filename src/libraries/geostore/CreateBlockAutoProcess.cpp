@@ -47,7 +47,7 @@ CreateBlockAutoProcess::~CreateBlockAutoProcess()
 // Name: CreateBlockAutoProcess::Run
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, std::vector< kernel::UrbanObject_ABC* >& newBlocks )
+void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector )
 {
     blocks_ = geometryFactory_->InitGeometryCollection();
     gaiaGeomCollPtr poly( geometryFactory_->CreatePolygonGeometry( footprint , projector ) );
@@ -70,7 +70,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanMod
     gaiaFreeGeomColl( poly );    
     ClippingUrbanAreaWithTerrainComponent( buffers, areas, urbans );
     UpdateBuildingTable( buildings ); //Update building tables
-    UpdateUrbanModel( model, parent, projector, footprint, newBlocks ); //Update urban blocks
+    UpdateUrbanModel( model, parent, projector, footprint ); //Update urban blocks
 }
 
 // -----------------------------------------------------------------------------
@@ -158,12 +158,12 @@ void CreateBlockAutoProcess::ClippingUrbanAreaWithTerrainComponent( gaiaGeomColl
 // Name: CreateBlockAutoProcess::UpdateUrbanModel
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-void CreateBlockAutoProcess::UpdateUrbanModel( UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, const geometry::Polygon2f& footprint, std::vector< kernel::UrbanObject_ABC* >& newBlocks )
+void CreateBlockAutoProcess::UpdateUrbanModel( UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, const geometry::Polygon2f& footprint )
 {
     //Cas particuliers des polygones à trous. Pas encore traité; créer une médiane pour couper le batiment...
     if( !geometryFactory_->CheckValidity( blocks_ ) )
         return;
-    gaiaGeomCollPtr getBlocksFromFiles = GetUrbanBlockInArea( model, projector, footprint );    
+    gaiaGeomCollPtr getBlocksFromFiles = GetUrbanBlockInArea( model, projector, footprint );
     gaiaPolygonPtr block = blocks_->FirstPolygon;
     gaiaGeomCollPtr blockIntersect; 
     bool existingBlocks = geometryFactory_->CheckValidity( getBlocksFromFiles );
@@ -196,10 +196,7 @@ void CreateBlockAutoProcess::UpdateUrbanModel( UrbanModel& model, kernel::UrbanO
             const geometry::Polygon2f polygon( points );
             kernel::UrbanObject_ABC* newBlock = model.GetFactory().Create( polygon, &parent );
             if( newBlock )
-            {
-                newBlocks.push_back( newBlock );
                 ++count;
-            }
         }
         block = block->Next;
     }

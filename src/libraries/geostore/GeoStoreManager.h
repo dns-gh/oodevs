@@ -44,7 +44,7 @@ public:
     //! @name Operations
     //@{
     void LoadTerrainFiles();
-    SpatialRequestStatus* CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent, std::vector< kernel::UrbanObject_ABC* >& newBlocks );
+    SpatialRequestStatus* CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent );
     bool BlockAutoProcess( const geometry::Polygon2f& footprint );
     void Initialize( const std::string& path );
     bool IsInitialized() const;
