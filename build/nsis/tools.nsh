@@ -553,13 +553,16 @@ FunctionEnd
         
     !ifndef EXO_PACK
         ${GetOptions} $R0 "/INSTALLDIRECTORY=" $R1 ; Check INSTALLDIRECTORY option
-        IfErrors +2 0
+        IfErrors 0 +3
+        StrCpy $INSTDIR "D:\MASA\SWORD" ; Scipio only, remove if needed.
+        Goto ReadDataDirectory
         StrCpy $INSTDIR $R1
     !endif
 
+    ReadDataDirectory:
     ${GetOptions} $R0 "/DATADIRECTORY=" $R1 ; Check DATADIRECTORY option
     IfErrors 0 +3
-    StrCpy $INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
+    StrCpy $INSTDATADIR "D:\MASA\SWORDROOT" ; Scipio only, was : $DOCUMENTS\${PRODUCT_NAME}
     Goto CommandLineExit
     StrCpy $INSTDATADIR $R1
 
@@ -570,7 +573,8 @@ FunctionEnd
 ; Init data directory for installer
 ;------------------------------------------------------------------------------
 Function OT.InitDataDirectory
-    StrCpy $INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
+    StrCpy $INSTDIR "D:\MASA\SWORD" ; Scipio only, remove if needed.
+    StrCpy $INSTDATADIR "D:\MASA\SWORDROOT" ; Scipio only, was : $DOCUMENTS\${PRODUCT_NAME}
 FunctionEnd
 
 ;------------------------------------------------------------------------------

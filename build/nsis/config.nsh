@@ -47,7 +47,7 @@ Var /GLOBAL INSTDATADIR
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME    "InstallLocation"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY          "Software\${COMPANY_NAME}\${PRODUCT_NAME}"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME    "InstallLocation"
-!define MULTIUSER_INSTALLMODE_INSTDIR                       "${COMPANY_NAME}\${PRODUCT_NAME}"
+!define MULTIUSER_INSTALLMODE_INSTDIR                       "${COMPANY_NAME}\${PRODUCT_NAME}" ;not used initialized by OT.InitDataDirectory or OT.ParseCommandLine
 !define MULTIUSER_INSTALLMODE_FUNCTION                      OT.InitDataDirectory
 !define MULTIUSER_INSTALLMODE_UNFUNCTION                    un.OT.InitRegister
 ;........................................
