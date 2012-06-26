@@ -138,7 +138,7 @@ std::wstring Api::GetModuleFilename() const
     for(;;)
     {
         ret = ::GetModuleFileNameW( 0, &buffer[0], static_cast< DWORD >( buffer.size() ) );
-        if( ret < buffer.size() || ::GetLastError() != ERROR_INSUFFICIENT_BUFFER )
+        if( ret < static_cast< DWORD >( buffer.size() ) || ::GetLastError() != ERROR_INSUFFICIENT_BUFFER )
             break;
         buffer.resize( buffer.size() * 2 );
     }

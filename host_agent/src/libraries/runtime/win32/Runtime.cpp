@@ -32,9 +32,9 @@ bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processe
     bool done = api.EnumProcesses( &pids[0], static_cast< int >( pids.size() * sizeof(T) ), &size );
     if( !done )
         return true;
-    if( size == pids.size() * sizeof(T) )
+    if( static_cast< size_t >( size ) == pids.size() * sizeof(T) )
         return false;
-    pids.resize( size / sizeof size );
+    pids.resize( static_cast< size_t >( size ) / sizeof size );
     BOOST_FOREACH( const T& id, pids )
         try
         {
