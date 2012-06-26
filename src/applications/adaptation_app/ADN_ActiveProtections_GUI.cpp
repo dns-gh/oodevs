@@ -44,12 +44,12 @@ void ADN_ActiveProtections_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, (ADN_Connector_ABC*)0 );
 
     // Properties
     Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Properties" ) );
-    builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
+    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
     ADN_EditLine_Double* pEdit = builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
     pEdit->GetValidator().setTop( 1 );
     builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
@@ -66,6 +66,7 @@ void ADN_ActiveProtections_GUI::Build()
     // Weapons
     Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );
     ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).ascii(), pWeaponsGroup_ );
+    pWeapons->setObjectName( strClassName_ + tr( "Ammunitions" ) );
     pWeapons->SetGoToOnDoubleClick( ::eEquipement );
     vConnectors[eActiveProtectionWeapons] = &pWeapons->GetConnector();
 
@@ -88,4 +89,5 @@ void ADN_ActiveProtections_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
+    pMainWidget_->setObjectName( strClassName_ );
 }

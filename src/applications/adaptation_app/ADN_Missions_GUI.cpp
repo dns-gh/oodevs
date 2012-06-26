@@ -22,6 +22,7 @@
 #include "ADN_MissionParameter_GroupBox.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_SearchListView.h"
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -60,6 +61,7 @@ void ADN_Missions_GUI::Build()
 
     // Main widget
     pMainWidget_ = new QWidget();
+    pMainWidget_->setObjectName( strClassName_ );
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
@@ -75,7 +77,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Info holder
@@ -191,7 +193,7 @@ QWidget* ADN_Missions_GUI::BuildPopulationMissions()
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildFragOrders()
 {
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ + "_Fragorders" );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Content

@@ -55,7 +55,7 @@ class ADN_GuiBuilder : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_GuiBuilder();
+             ADN_GuiBuilder( const QString& name = "" );
     virtual ~ADN_GuiBuilder();
     //@}
 
@@ -123,6 +123,7 @@ private:
     QWidget* pCurrentFieldWidget2_;  //!< Same object as below
     ADN_Gfx_ABC* pCurrentFieldGfx2_; //!< Same object as above
     QWidget* pCurrentFieldWidget3_;
+    QString name_;
     //@}
 };
 
@@ -137,6 +138,7 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     T* pField = new T( pParent );
+    pField->setObjectName( name_ + szName );
     QWidget* thirdWidget = 0;
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
@@ -171,6 +173,7 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     T* pField = new T( pParent );
+    pField->setObjectName( name_ + szName );
     QWidget* thirdWidget = 0;
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
@@ -206,6 +209,7 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
     // Create the field and labels.
     ADN_CheckBox* pCheckbox = new ADN_CheckBox( szName, pParent );
     T* pField = new T( pParent );
+    pField->setObjectName( name_ + szName );
     pField->SetAutoEnabled( false );
     QLabel* pUnitLabel = 0;
     if( szUnit != 0 )
@@ -238,6 +242,7 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
     ADN_CheckBox* pCheckbox = new ADN_CheckBox( szName, pParent );
     T* pField = new T( pParent );
     pField->SetAutoEnabled( false );
+    pField->setObjectName( name_ + szName );
     QLabel* pUnitLabel = 0;
     if( szUnit != 0 )
         pUnitLabel = new QLabel( szUnit, pParent );
@@ -268,6 +273,7 @@ ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     ADN_ComboBox_Enum<T>* pField = new ADN_ComboBox_Enum<T>( converter, pParent );
+    pField->setObjectName( name_ + szName );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
@@ -290,6 +296,7 @@ ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     ADN_ComboBox_Enum<T>* pField = new ADN_ComboBox_Enum<T>( converter, pParent );
+    pField->setObjectName( name_ + szName );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;

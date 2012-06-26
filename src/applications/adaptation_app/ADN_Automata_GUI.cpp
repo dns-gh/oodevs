@@ -71,7 +71,7 @@ void ADN_Automata_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Info holder
@@ -117,6 +117,7 @@ void ADN_Automata_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
+    pMainWidget_->setObjectName( strClassName_ );
 }
 
 // -----------------------------------------------------------------------------

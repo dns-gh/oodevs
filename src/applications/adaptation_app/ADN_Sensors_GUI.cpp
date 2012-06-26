@@ -72,6 +72,7 @@ void ADN_Sensors_GUI::Build()
     // Main widget
     pMainWidget_ = new QWidget();
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
+    pMainWidget_->setObjectName( strClassName_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
     pMainLayout->addWidget( pTabWidget_ );
@@ -86,7 +87,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Info holder
@@ -292,7 +293,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ + "Specific" );
 
     // Alat parameters
     Q3GroupBox* pAlatGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Survey durations for army aviation" ) );

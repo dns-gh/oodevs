@@ -30,12 +30,14 @@
 // Name: ADN_GuiBuilder constructor
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-ADN_GuiBuilder::ADN_GuiBuilder()
-: pCurrentFieldWidget1_ ( 0 )
-, pCurrentFieldWidget2_ ( 0 )
-, pCurrentFieldGfx2_    ( 0 )
-, pCurrentFieldWidget3_ ( 0 )
+ADN_GuiBuilder::ADN_GuiBuilder( const QString& name /*= ""*/ )
+    : pCurrentFieldWidget1_ ( 0 )
+    , pCurrentFieldWidget2_ ( 0 )
+    , pCurrentFieldGfx2_    ( 0 )
+    , pCurrentFieldWidget3_ ( 0 )
+    , name_                 ( name + "_" )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +46,7 @@ ADN_GuiBuilder::ADN_GuiBuilder()
 // -----------------------------------------------------------------------------
 ADN_GuiBuilder::~ADN_GuiBuilder()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

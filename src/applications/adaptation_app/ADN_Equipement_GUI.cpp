@@ -90,6 +90,7 @@ void ADN_Equipement_GUI::Build()
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
     pMainLayout->addWidget( pTabWidget_ );
+    pMainWidget_->setObjectName( strClassName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +102,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ + ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
@@ -165,7 +166,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ + "Ammunition" );
     T_ConnectorVector vConnectors( eNbrAmmoGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder

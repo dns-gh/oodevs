@@ -22,8 +22,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_SearchListView.h"
-
-#define HAL_FILTER "Script files (*.hal)"
+#include <boost/lexical_cast.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Models_GUI constructor
@@ -61,6 +60,7 @@ void ADN_Models_GUI::Build()
 
     // Main widget
     pMainWidget_ = new QWidget();
+    pMainWidget_->setObjectName( strClassName_ );
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
@@ -75,7 +75,7 @@ QWidget* ADN_Models_GUI::BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityTy
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements,(ADN_Connector_ABC*)0 );
 
     // Info holder

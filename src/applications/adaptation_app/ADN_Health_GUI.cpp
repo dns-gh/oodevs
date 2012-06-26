@@ -69,7 +69,7 @@ void ADN_Health_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
 
     // Health
     QWidget* pHolder = builder.AddFieldHolder( 0 );
@@ -123,6 +123,7 @@ void ADN_Health_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_->setObjectName( strClassName_ );
 }
 
 // -----------------------------------------------------------------------------

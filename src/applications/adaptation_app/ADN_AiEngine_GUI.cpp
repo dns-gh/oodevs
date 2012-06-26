@@ -58,7 +58,7 @@ void ADN_AiEngine_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
 
     // Danger
     Q3GroupBox* pDangerBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Threat management" ) );
@@ -108,4 +108,5 @@ void ADN_AiEngine_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_->setObjectName( strClassName_ );
 }

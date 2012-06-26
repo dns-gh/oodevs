@@ -57,7 +57,7 @@ void ADN_Urban_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     T_ConnectorVector vMaterialInfosConnectors( eNbrUrbanMaterialGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     T_ConnectorVector vFacadeInfosConnectors( eNbrUrbanGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     T_ConnectorVector vRoofShapeInfosConnectors( eNbrUrbanGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
@@ -226,4 +226,5 @@ void ADN_Urban_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_->setObjectName( strClassName_ );
 }

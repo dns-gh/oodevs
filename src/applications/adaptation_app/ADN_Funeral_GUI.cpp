@@ -51,7 +51,7 @@ void ADN_Funeral_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     static const int maxSize = 500;
 
     // Funeral
@@ -97,6 +97,7 @@ void ADN_Funeral_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_->setObjectName( strClassName_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,7 +53,7 @@ void ADN_HumanFactors_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
 
     // Experience
     Q3GroupBox* pExperienceBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
@@ -113,6 +113,7 @@ void ADN_HumanFactors_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_->setObjectName( strClassName_ );
 }
 
 // -----------------------------------------------------------------------------

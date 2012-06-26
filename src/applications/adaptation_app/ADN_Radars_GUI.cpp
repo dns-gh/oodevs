@@ -50,7 +50,7 @@ void ADN_Radars_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Info holder
@@ -105,4 +105,5 @@ void ADN_Radars_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView, false, false, true, 0, 0 );
+    pMainWidget_->setObjectName( strClassName_ );
 }

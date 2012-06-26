@@ -58,7 +58,7 @@ void ADN_Categories_GUI::Build()
     // Creations
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     ADN_EditLine_ABC* pEdit = 0;
 
     /////////////////
@@ -169,6 +169,7 @@ void ADN_Categories_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_->setObjectName( strClassName_ );
 }
 
 // -----------------------------------------------------------------------------
