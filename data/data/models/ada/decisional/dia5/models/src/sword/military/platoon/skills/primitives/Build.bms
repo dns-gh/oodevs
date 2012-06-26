@@ -129,7 +129,7 @@ node "BuildElement"
         end
 
         for _, position in pairs( self.positions ) do
-            Activate( skill.links.moveAndTakePosition, position:buildEfficiency( toBuild ), { entity = position, pathType = eTypeItiDeminage } )
+            Activate( skill.links.moveAndTakePosition, position:buildEfficiency( toBuild ), { entity = position } )
         end
 
         self.arrived = false
