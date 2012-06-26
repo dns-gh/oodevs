@@ -74,7 +74,7 @@ struct Fixture
         return boost::lexical_cast< std::string >( idx++ );
     }
 
-    std::string MakeExerciseData( const std::string& model, const std::string& terrain )
+    std::string MakeExerciseData( const std::string& model, const std::string& terrain ) const
     {
         return "<exercise><model dataset=\"" + model + "\"/><terrain name=\"" + terrain + "\"/></exercise>";
     }

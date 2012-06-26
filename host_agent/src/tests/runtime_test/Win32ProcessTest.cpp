@@ -90,7 +90,6 @@ BOOST_AUTO_TEST_CASE( corrupted_process_terminates_unsafely )
 {
     MockApi api;
     std::auto_ptr< Process > process = MakeProcess( api, 42, wname );
-    int msTimeout = 3*1000;
     MOCK_EXPECT( api.TerminateProcess ).once().with( dummy, mock::any ).returns( true );
     process->Kill();
 }
