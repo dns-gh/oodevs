@@ -39,10 +39,8 @@ Displayer_ABC& Displayer_ABC::Display( const QString& name, const T& element )
     {
         SubItem( name ).Display( element );
     }
-    catch( std::runtime_error& e )
+    catch( std::runtime_error& )
     {
-        assert( !e.what() );
-        (void)e;
     }
     return *this;
 }
