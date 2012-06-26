@@ -11,7 +11,9 @@
 
 #include "cpplog/cpplog.hpp"
 #include "Utf8.h"
+#include "Scoper.h"
 
+#include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/function.hpp>
@@ -19,6 +21,8 @@
 #include <boost/make_shared.hpp>
 
 #include <stdint.h>
+#include <fcntl.h>
+#include <io.h>
 
 #define  LIBARCHIVE_STATIC
 #include <libarchive/archive.h>
@@ -194,6 +198,44 @@ bool FileSystem::Rename( const Path& src, const Path& dst ) const
     return false;
 }
 
+namespace
+{
+void RemoveFile( const FileSystem_ABC& system, const Path& tmp )
+{
+    if( !tmp.empty() )
+        system.Remove( tmp );
+}
+
+int OpenDescriptor( const Path& path )
+{
+#ifdef _MSC_VER
+    int fd;
+    errno_t err = _wsopen_s( &fd, path.wstring().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY, _SH_DENYRW, _S_IREAD | _S_IWRITE );
+    return fd;
+#else
+    return open( Utf8Convert( path ).c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY );
+#endif
+}
+
+#ifdef _MSC_VER
+#define write _write
+#define close _close
+#endif
+
+size_t WriteToFile( int fd, const char* data, size_t size )
+{
+    size_t fill = 0;
+    while( fill < size )
+    {
+        int next = write( fd, data + fill, static_cast< unsigned int >( size - fill ) );
+        if( next == -1 )
+            return fill;
+        fill += next;
+    }
+    return size;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: FileSystem::WriteFile
 // Created: BAX 2012-03-20
@@ -202,8 +244,27 @@ bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
 {
     try
     {
-        boost::filesystem::ofstream ofs( path );
-        ofs << content;
+        int fd = -1;
+        Path tmp;
+        for( size_t retry = 0; retry < 3 && fd == -1; ++retry )
+        {
+            boost::system::error_code ec;
+            tmp = boost::filesystem::unique_path( Path( path ).remove_filename() / "%%%%%%%%.%%%", ec );
+            if( ec )
+                continue;
+            fd = OpenDescriptor( tmp );
+        }
+        if( fd == -1 )
+            throw std::runtime_error( "Unable to create temporary file" );
+        Scoper removeTmp( boost::bind( &RemoveFile, boost::cref( *this ), boost::cref( tmp ) ) );
+        const size_t fill = WriteToFile( fd, content.c_str(), content.size() );
+        close( fd );
+        if( fill != content.size() )
+            throw std::runtime_error( "Unable to write temporary file contents" );
+        if( !Rename( tmp, path ) )
+            throw std::runtime_error( "Unable to rename " + tmp.string() + " to " + path.string() );
+        tmp.clear();
+        return true;
     }
     catch( const std::exception& err )
     {
