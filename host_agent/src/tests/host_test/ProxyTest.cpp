@@ -73,10 +73,7 @@ namespace
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
             MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
-            MOCK_EXPECT( runtime.Start ).once().with( config.java, boost::assign::list_of
-                ( "-jar \"" + config.jar.string() + "\"" )
-                ( "--port \"" + boost::lexical_cast< std::string >( config.port ) + "\"" ),
-                "", mock::any ).returns( process );
+            MOCK_EXPECT( runtime.Start ).once().with( config.java, mock::any, "", mock::any ).returns( process );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );
