@@ -83,7 +83,7 @@ node "RepairElement"
         end
 
         for _, position in pairs( self.params.positions ) do
-            Activate( skill.links.moveAndTakePosition, position:reachEfficiency( self.params.entity ), { entity = position, pathType = eTypeItiDeminage } )
+            Activate( skill.links.moveAndTakePosition, position:reachEfficiency( self.params.entity ), { entity = position } )
         end
 
         self.arrived = false

@@ -98,7 +98,7 @@ node "ImproveElement"
 
         -- Moving toward improvement positions, same as build
         for _, position in pairs ( self.positions ) do
-            Activate( skill.links.moveAndTakePosition, position:buildEfficiency( self.params.entity ), { entity = position, pathType = eTypeItiDeminage } )
+            Activate( skill.links.moveAndTakePosition, position:buildEfficiency( self.params.entity ), { entity = position } )
         end
         self.arrived = false
     end,
