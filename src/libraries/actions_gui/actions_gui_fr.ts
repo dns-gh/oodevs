@@ -143,12 +143,12 @@
         <translation>Position de l&apos;obstacle</translation>
     </message>
     <message>
-        <source>Density</source>
-        <translation>Densité</translation>
-    </message>
-    <message>
         <source>TC2</source>
         <translation>TC2</translation>
+    </message>
+    <message>
+        <source>Density per 100 square meter</source>
+        <translation>Densité par 100 mètres carrés</translation>
     </message>
 </context>
 </TS>

@@ -143,11 +143,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Density</source>
+        <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TC2</source>
+        <source>Density per 100 square meter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
