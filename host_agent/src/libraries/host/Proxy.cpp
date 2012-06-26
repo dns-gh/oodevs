@@ -23,6 +23,7 @@
 #include <set>
 
 using namespace host;
+using namespace host::proxy;
 using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;
@@ -30,29 +31,29 @@ using runtime::Pool_ABC;
 
 namespace
 {
-enum ProxyState
+enum State
 {
-    PROXY_STATE_DISABLED,
-    PROXY_STATE_ENABLED,
-    PROXY_STATE_ZOMBIE,
-    PROXY_STATE_COUNT,
+    STATE_DISABLED,
+    STATE_ENABLED,
+    STATE_ZOMBIE,
+    STATE_COUNT,
 };
 }
 
-struct host::ProxyLink
+struct proxy::Link
 {
-    ProxyLink( const std::string& host, int port )
+    Link( const std::string& host, int port )
         : host ( host )
         , port ( port )
-        , state( PROXY_STATE_DISABLED )
+        , state( STATE_DISABLED )
     {
         // NOTHING
     }
     const std::string host;
     const int port;
-    ProxyState state;
+    State state;
 private:
-    ProxyLink& operator=( const ProxyLink& );
+    Link& operator=( const Link& );
 };
 
 // -----------------------------------------------------------------------------
@@ -60,29 +61,25 @@ private:
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
 Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-              const FileSystem_ABC& system, const Path& logs,
-              const Path& java, const Path& jar,
-              int port, web::Client_ABC& client, Pool_ABC& pool )
+              const FileSystem_ABC& system, const Config& config,
+              web::Client_ABC& client, Pool_ABC& pool )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
-    , logs_   ( logs )
-    , java_   ( java )
-    , jar_    ( jar )
-    , port_   ( port )
+    , config_ ( config )
     , client_ ( client )
     , async_  ( pool )
 {
-    if( !system_.Exists( java_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
-    if( !system_.IsFile( java_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is not a file" );
-    if( !system_.Exists( jar_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is missing" );
-    if( !system_.IsFile( jar_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
+    if( !system_.Exists( config_.java ) )
+        throw std::runtime_error( runtime::Utf8Convert( config_.java ) + " is missing" );
+    if( !system_.IsFile( config_.java ) )
+        throw std::runtime_error( runtime::Utf8Convert( config_.java ) + " is not a file" );
+    if( !system_.Exists( config_.jar ) )
+        throw std::runtime_error( runtime::Utf8Convert( config_.jar ) + " is missing" );
+    if( !system_.IsFile( config_.jar ) )
+        throw std::runtime_error( runtime::Utf8Convert( config_.jar ) + " is not a file" );
     const Path tag = GetPath() / "proxy.id";
-    LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << port;
+    LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.port;
     bool hasProcess = system_.IsFile( tag );
     if( hasProcess )
     {
@@ -112,10 +109,10 @@ Proxy::~Proxy()
 
 namespace
 {
-bool KeepLink( ProxyState state )
+bool KeepLink( State state )
 {
-    return state == PROXY_STATE_DISABLED
-        || state == PROXY_STATE_ENABLED;
+    return state == STATE_DISABLED
+        || state == STATE_ENABLED;
 }
 }
 
@@ -133,7 +130,7 @@ void Proxy::Restart()
     std::set< std::string > cemetery;
     BOOST_FOREACH( T_Links::value_type& value, links_ )
         if( KeepLink( value.second.state ) )
-            value.second.state = PROXY_STATE_DISABLED;
+            value.second.state = STATE_DISABLED;
         else
             cemetery.insert( value.first );
     BOOST_FOREACH( const std::string& prefix, cemetery )
@@ -151,9 +148,9 @@ void Proxy::RegisterMissingLinks()
     const T_Links next = links_;
     lock.unlock();
     BOOST_FOREACH( const T_Links::value_type& value, next )
-        if( value.second.state == PROXY_STATE_DISABLED )
+        if( value.second.state == STATE_DISABLED )
             async_.Post( boost::bind( &Proxy::HttpRegister, this, value.first, value.second ) );
-        else if( value.second.state == PROXY_STATE_ZOMBIE )
+        else if( value.second.state == STATE_ZOMBIE )
             async_.Post( boost::bind( &Proxy::HttpUnregister, this, value.first ) );
 }
 
@@ -175,7 +172,16 @@ void Proxy::Update()
 // -----------------------------------------------------------------------------
 int Proxy::GetPort() const
 {
-    return port_;
+    return config_.port;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Proxy::GetSsl
+// Created: BAX 2012-06-26
+// -----------------------------------------------------------------------------
+int Proxy::GetSsl() const
+{
+    return config_.ssl.port;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +190,7 @@ int Proxy::GetPort() const
 // -----------------------------------------------------------------------------
 Path Proxy::GetPath() const
 {
-    return Path( jar_ ).remove_filename();
+    return Path( config_.jar ).remove_filename();
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +200,7 @@ Path Proxy::GetPath() const
 Tree Proxy::GetProperties() const
 {
     Tree tree;
-    tree.put( "port", port_ );
+    tree.put( "port", config_.port );
     tree.put( "process.pid", process_->GetPid() );
     tree.put( "process.name", process_->GetName() );
     return tree;
@@ -210,7 +216,7 @@ bool Proxy::Reload( const Path& path )
     {
         const Tree tree = FromJson( system_.ReadFile( path ) );
         const boost::optional< int > port = tree.get_optional< int >( "port" );
-        if( port == boost::none || *port != port_ )
+        if( port == boost::none || *port != config_.port )
             return false;
         const boost::optional< int > pid  = tree.get_optional< int >( "process.pid" );
         const boost::optional< std::string > name = tree.get_optional< std::string >( "process.name" );
@@ -235,11 +241,11 @@ bool Proxy::Reload( const Path& path )
 // -----------------------------------------------------------------------------
 Proxy::T_Process Proxy::MakeProcess() const
 {
-    return runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
-            ( "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
-            ( "--port \"" + boost::lexical_cast< std::string >( port_ ) + "\"" ),
-            Utf8Convert( Path( jar_ ).remove_filename() ),
-            Utf8Convert( logs_ / "proxy.log" ) );
+    return runtime_.Start( Utf8Convert( config_.java ), boost::assign::list_of
+            ( "-jar \""  + Utf8Convert( config_.jar.filename() ) + "\"" )
+            ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" ),
+            Utf8Convert( Path( config_.jar ).remove_filename() ),
+            Utf8Convert( config_.log / "proxy.log" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,8 +295,8 @@ void Proxy::Save() const
 void Proxy::Register( const std::string& prefix, const std::string& host, int port )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    std::pair< T_Links::iterator, bool > pair = links_.insert( std::make_pair( prefix, ProxyLink( host, port ) ) );
-    pair.first->second.state = PROXY_STATE_DISABLED;
+    std::pair< T_Links::iterator, bool > pair = links_.insert( std::make_pair( prefix, Link( host, port ) ) );
+    pair.first->second.state = STATE_DISABLED;
     async_.Post( boost::bind( &Proxy::HttpRegister, this, prefix, pair.first->second ) );
     LOG_INFO( log_ ) << "[proxy] Added link from /" << prefix << " to " << host << ":" << port;
 }
@@ -299,9 +305,9 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // Name: Proxy::HttpRegister
 // Created: BAX 2012-06-18
 // -----------------------------------------------------------------------------
-void Proxy::HttpRegister( const std::string& prefix, const ProxyLink& link )
+void Proxy::HttpRegister( const std::string& prefix, const Link& link )
 {
-    web::Client_ABC::T_Response response = client_.Get( "localhost", port_, "/register_proxy",
+    web::Client_ABC::T_Response response = client_.Get( "localhost", config_.port, "/register_proxy",
         boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", link.host )
@@ -313,7 +319,7 @@ void Proxy::HttpRegister( const std::string& prefix, const ProxyLink& link )
     T_Links::iterator it = links_.find( prefix );
     if( it == links_.end() )
         return;
-    it->second.state = PROXY_STATE_ENABLED;
+    it->second.state = STATE_ENABLED;
 }
 
 // -----------------------------------------------------------------------------
@@ -326,7 +332,7 @@ void Proxy::Unregister( const std::string& prefix )
     T_Links::iterator it = links_.find( prefix );
     if( it == links_.end() )
         return;
-    it->second.state = PROXY_STATE_ZOMBIE;
+    it->second.state = STATE_ZOMBIE;
     async_.Post( boost::bind( &Proxy::HttpUnregister, this, prefix ) );
     LOG_INFO( log_ ) << "[proxy] Removed link to /" << prefix;
 }
@@ -337,14 +343,14 @@ void Proxy::Unregister( const std::string& prefix )
 // -----------------------------------------------------------------------------
 void Proxy::HttpUnregister( const std::string& prefix )
 {
-    web::Client_ABC::T_Response response = client_.Get( "localhost", port_, "/unregister_proxy",
+    web::Client_ABC::T_Response response = client_.Get( "localhost", config_.port, "/unregister_proxy",
         boost::assign::map_list_of( "prefix", prefix ) );
     if( response->GetStatus() != 200 )
         return;
 
     boost::lock_guard< boost::mutex > lock( access_ );
     T_Links::iterator it = links_.find( prefix );
-    if( it == links_.end() || it->second.state != PROXY_STATE_ZOMBIE )
+    if( it == links_.end() || it->second.state != STATE_ZOMBIE )
         return;
     links_.erase( it );
 }

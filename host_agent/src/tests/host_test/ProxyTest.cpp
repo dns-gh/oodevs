@@ -48,22 +48,18 @@ namespace
     struct Fixture
     {
         Fixture()
-            : logs   ( "logs" )
-            , java   ( "java" )
-            , jar    ( "jar" )
-            , port   ( 1337 )
+            : ssl    ( 8443, "keystore", "PCKS12", "" )
+            , config ( "logs", "java", "jar", 1337, ssl )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
-            MOCK_EXPECT( system.Exists ).with( java ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
-            MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
+            MOCK_EXPECT( system.Exists ).with( config.java ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( config.java ).returns( true );
+            MOCK_EXPECT( system.Exists ).with( config.jar ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( config.jar ).returns( true );
         }
 
-        const std::string logs;
-        const std::string java;
-        const std::string jar;
-        const int port;
+        const proxy::Ssl ssl;
+        const proxy::Config config;
         std::string tag;
         MockLog log;
         MockRuntime runtime;
@@ -77,14 +73,14 @@ namespace
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
             MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
-            MOCK_EXPECT( runtime.Start ).once().with( java, boost::assign::list_of
-                ( "-jar \"" + jar + "\"" )
-                ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
+            MOCK_EXPECT( runtime.Start ).once().with( config.java, boost::assign::list_of
+                ( "-jar \"" + config.jar.string() + "\"" )
+                ( "--port \"" + boost::lexical_cast< std::string >( config.port ) + "\"" ),
                 "", mock::any ).returns( process );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );
-            return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
+            return boost::make_shared< Proxy >( log, runtime, system, config, client, pool );
         }
 
         boost::shared_ptr< Proxy > ReloadProxy()
@@ -95,14 +91,14 @@ namespace
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );
-            return boost::make_shared< Proxy >( log, runtime, system, logs, java, jar, port, client, pool );
+            return boost::make_shared< Proxy >( log, runtime, system, config, client, pool );
         }
 
         void Register( boost::shared_ptr< Proxy > proxy, const std::string& prefix, const std::string& host, int next )
         {
             boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
             MOCK_EXPECT( response->GetStatus ).returns( 200 );
-            MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/register_proxy",
+            MOCK_EXPECT( client.Get ).once().with( "localhost", config.port, "/register_proxy",
                 boost::bind( &Contains, _1, boost::assign::map_list_of
                     ( "prefix", prefix )
                     ( "host",   host )
@@ -115,7 +111,7 @@ namespace
         {
             boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
             MOCK_EXPECT( response->GetStatus ).returns( 200 );
-            MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/unregister_proxy",
+            MOCK_EXPECT( client.Get ).once().with( "localhost", config.port, "/unregister_proxy",
                 boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", prefix ) ) )
                 .returns( response );
             proxy->Unregister( prefix );

@@ -45,7 +45,50 @@ namespace host
 {
     typedef boost::filesystem3::path Path;
     typedef boost::property_tree::ptree Tree;
-    struct ProxyLink;
+namespace proxy
+{
+    struct Link;
+}
+}
+
+namespace host
+{
+namespace proxy
+{
+struct Ssl
+{
+    Ssl( int port, const Path& store, const std::string& type, const std::string& password )
+        : port    ( port )
+        , store   ( store )
+        , type    ( type )
+        , password( password )
+    {
+        // NOTHING
+    }
+    const int port;
+    const Path store;
+    const std::string type;
+    const std::string password;
+};
+
+struct Config
+{
+    Config( const Path& log, const Path& java, const Path& jar, int port, const Ssl& ssl )
+        : log ( log )
+        , java( java )
+        , jar ( jar )
+        , port( port )
+        , ssl ( ssl )
+    {
+        // NOTHING
+    }
+    const Path log;
+    const Path java;
+    const Path jar;
+    const int port;
+    const Ssl ssl;
+};
+}
 
 // =============================================================================
 /** @class  Proxy
@@ -59,22 +102,22 @@ public:
     //! @name Constructors/Destructor
     //@{
              Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
-                    const runtime::FileSystem_ABC& system, const Path& logs,
-                    const Path& java, const Path& jar,
-                    int port, web::Client_ABC& client, runtime::Pool_ABC& pool );
+                    const runtime::FileSystem_ABC& system, const proxy::Config& config,
+                    web::Client_ABC& client, runtime::Pool_ABC& pool );
     virtual ~Proxy();
     //@}
 
     //! @name Methods
     //@{
     virtual int GetPort() const;
+    virtual int GetSsl() const;
     virtual void Register( const std::string& prefix, const std::string& host, int port );
     virtual void Unregister( const std::string& prefix );
     //@}
 
     //! @name Typedef helpers
     //@{
-    typedef std::map< const std::string, ProxyLink > T_Links;
+    typedef std::map< const std::string, proxy::Link > T_Links;
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
     //@}
 
@@ -93,7 +136,7 @@ private:
     void Restart();
     void RegisterMissingLinks();
     T_Process MakeProcess() const;
-    void HttpRegister( const std::string& prefix, const ProxyLink& proxy );
+    void HttpRegister( const std::string& prefix, const proxy::Link& proxy );
     void HttpUnregister( const std::string& prefix );
     //@}
 
@@ -102,10 +145,7 @@ private:
     cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const runtime::FileSystem_ABC& system_;
-    const Path logs_;
-    const Path java_;
-    const Path jar_;
-    const int port_;
+    const proxy::Config config_;
     boost::mutex access_;
     web::Client_ABC& client_;
     T_Process process_;

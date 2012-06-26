@@ -32,6 +32,7 @@ struct Proxy_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual int GetPort() const = 0;
+    virtual int GetSsl() const = 0;
     virtual void Register( const std::string& prefix, const std::string& host, int port ) = 0;
     virtual void Unregister( const std::string& prefix ) = 0;
     //@}
