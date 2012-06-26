@@ -36,10 +36,10 @@
     <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
-    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="200" name="mine classique"/>
+          <resource count="1" name="mine classique"/>
         </resources>
       </buildable>
     </constructor>
@@ -60,7 +60,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="200" name="mine classique"/>
+          <resource count="1" name="mine classique"/>
         </resources>
       </buildable>
     </constructor>
@@ -603,4 +603,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1515203651" -->
+<!-- signature="2023926392" -->

@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectLoader.h"
 #include "AttributeFactory.h"
+#include "BuildableCapacity.h"
 #include "CapacityFactory.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "Object.h"
@@ -125,13 +126,19 @@ void MIL_ObjectLoader::ReadCapacity( const std::string& capacity, xml::xistream&
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
-                                                bool reserved, unsigned int externalIdentifier, unsigned int forcedId ) const
+                                                bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
         throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
     Object* object = new Object( *it->second, army, &location, externalIdentifier, name, reserved, forcedId );
     attributes_->Initialize( *object );
+    if( density )
+    {
+        BuildableCapacity* capacity = object->Retrieve< BuildableCapacity >();
+        if( capacity )
+            capacity->SetDensity( density );
+    }
     object->Finalize();
     return object;
 }

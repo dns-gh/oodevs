@@ -46,7 +46,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , obstacleTypeCombo_( 0 )
 {
     location_           = static_cast< ParamLocation* > ( AddElement( "location",   tr( "Obstacle location" ).ascii() ) );
-    density_            = static_cast< ParamFloat* >    ( AddElement( "float",      tr( "Density" ).ascii() ) );
+    density_            = static_cast< ParamFloat* >    ( AddElement( "float",      tr( "Density per 100 square meter" ).ascii() ) );
     tc2_                = static_cast< ParamAutomat* >  ( AddElement( "automat",    tr( "TC2" ).ascii() ) );
     timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).ascii() ) );
     mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).ascii() ) );

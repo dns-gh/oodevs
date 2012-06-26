@@ -211,7 +211,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="10" name="Standard Landmine"/>
+          <resource count="1" name="Standard Landmine"/>
         </resources>
       </buildable>
       <improvable/>
@@ -232,7 +232,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="10" name="Standard Landmine"/>
+          <resource count="1" name="Standard Landmine"/>
         </resources>
       </buildable>
       <improvable/>
@@ -685,7 +685,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="10" name="Standard Landmine"/>
+          <resource count="1" name="Standard Landmine"/>
         </resources>
       </buildable>
       <improvable/>
@@ -858,4 +858,4 @@
     <time-limited/>
   </object>
 </objects>
-<!-- signature="2981985203" -->
+<!-- signature="0245130670" -->

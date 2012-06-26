@@ -35,7 +35,8 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost
                                                                                        &pGenObject->GetLocalisation(),
                                                                                        pGenObject->GetObstacleType(),
                                                                                        pGenObject->GetExternalIdentifier(),
-                                                                                       pGenObject->GetName() ) )
+                                                                                       pGenObject->GetName(),
+                                                                                       pGenObject->GetDensity() ) )
     , instantaneous_( instantaneous )
 {
     role_.SetCreator( *pObject_ );

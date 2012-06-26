@@ -9,10 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Object_ABC.h"
+#include "BuildableCapacity.h"
+#include "FloodAttribute.h"
 #include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
-#include "FloodAttribute.h"
 #include "ObstacleAttribute.h"
 #include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
@@ -133,8 +134,7 @@ void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
         if( logSuperior )
             GetAttribute< LogisticAttribute, LogisticAttribute >() = LogisticAttribute( *logSuperior );
     }
-    // $$$$ ABR 2012-03-23: TODO ?
-    //genObject.GetDensity
+    // $$$$ LDC FIXME genObject.getDensity should be handled here except this happens AFTER Finalize which already changed the capacity that uses density...
 }
 
 // -----------------------------------------------------------------------------

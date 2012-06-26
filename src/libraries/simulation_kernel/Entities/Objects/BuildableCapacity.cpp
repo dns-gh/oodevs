@@ -168,9 +168,18 @@ unsigned int BuildableCapacity::GetDotationNumber( const TER_Localisation& locat
         else if( unitType_ == ConstructionCapacity::eRaw )
             return std::max( 1u, static_cast< unsigned int >( nFullNbrDotation_ * MIL_Tools::ConvertSimToMeter( location.GetLength() ) / 1000.f ) );
         else if( unitType_ == ConstructionCapacity::eDensity )
-            return std::max( 1u, static_cast< unsigned int >( nFullNbrDotation_ * MIL_Tools::ConvertSimToMeter( location.GetArea() ) * nFullNbrDotation_ / 1000000.f ) );
+            return std::max( 1u, static_cast< unsigned int >( nFullNbrDotation_ * MIL_Tools::ConvertSimToMeter( location.GetArea() ) / 1000000.f ) );
     }
     return nFullNbrDotation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BuildableCapacity::SetDensity
+// Created: LDC 2012-06-25
+// -----------------------------------------------------------------------------
+void BuildableCapacity::SetDensity( double density )
+{
+    nFullNbrDotation_ = ( density * 10000 ); // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\install\Masa\simulation\projects\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
 }
 
 // -----------------------------------------------------------------------------
