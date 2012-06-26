@@ -113,6 +113,7 @@ public:
     void NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState state );
     void NotifyRulesOfEngagementPopulationStateChanged( const PHY_RoePopulation& roe );
     const PHY_RoePopulation& GetRoePopulation() const;
+    int GetRulesOfEngagementState() const;
     //@}
 
 protected:

@@ -55,6 +55,16 @@ int DEC_AutomateFunctions::GetRoePopulation( MIL_Automate& callerAutomate )
     return static_cast< int >( dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).GetRoePopulation().GetID() );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetRulesOfEngagementState
+// Created: LGY 2012-06-26
+// -----------------------------------------------------------------------------
+int DEC_AutomateFunctions::GetRulesOfEngagementState( MIL_Automate& callerAutomate )
+{
+    return static_cast< int >( dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).GetRulesOfEngagementState() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetAutomates
 // Created: NLD 2007-04-03
