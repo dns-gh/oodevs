@@ -79,6 +79,7 @@
         <mission name="SAFETY - Patrol within area"/>
         <mission name="SAFETY - Reinforce"/>
         <mission name="SAFETY - Stay/hide within a crowd"/>
+        <mission name="SAFETY - Patrol along urban blocks (within area)"/>
       </missions>
       <fragorders/>
     </unit>
@@ -88,8 +89,8 @@
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
         <mission name="SAFETY - Heal victims within crowds"/>
-        <mission name="SAFETY - Perform public works"/>
-        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Perform construction works"/>
+        <mission name="SAFETY - Resume construction works"/>
         <mission name="SAFETY - Patrol within area"/>
       </missions>
       <fragorders/>
@@ -101,8 +102,8 @@
         <mission name="SAFETY - Increase resource node production"/>
         <mission name="SAFETY - Enable resource nodes"/>
         <mission name="SAFETY - Disable resource nodes"/>
-        <mission name="SAFETY - Perform public works"/>
-        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Perform construction works"/>
+        <mission name="SAFETY - Resume construction works"/>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Reinforce"/>
       </missions>
@@ -116,9 +117,9 @@
         <mission name="SAFETY - Decontaminate"/>
         <mission name="SAFETY - Patrol"/>
         <mission name="SAFETY - Patrol within area"/>
-        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Perform construction works"/>
         <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Resume construction works"/>
       </missions>
       <fragorders/>
     </unit>
@@ -136,9 +137,10 @@
         <mission name="SAFETY - Extract victims from crowds"/>
         <mission name="SAFETY - Patrol"/>
         <mission name="SAFETY - Patrol within area"/>
-        <mission name="SAFETY - Perform public works"/>
+        <mission name="SAFETY - Perform construction works"/>
         <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Resume construction works"/>
+        <mission name="SAFETY - Extract victims from crowds within area"/>
       </missions>
       <fragorders/>
     </unit>
@@ -151,6 +153,8 @@
         <mission name="SAFETY - Disable resource nodes"/>
         <mission name="SAFETY - Patrol"/>
         <mission name="SAFETY - Patrol within area"/>
+        <mission name="SAFETY - Damage urban blocks within area"/>
+        <mission name="SAFETY - Stay/hide within a crowd"/>
       </missions>
       <fragorders/>
     </unit>
@@ -2714,12 +2718,11 @@
         <mission name="SAFETY - Extinguish a fire"/>
         <mission name="SAFETY - Extinguish fires within area"/>
         <mission name="SAFETY - Decontaminate"/>
-        <mission name="SAFETY - Perform public works"/>
-        <mission name="SAFETY - Resume public works"/>
+        <mission name="SAFETY - Perform construction works"/>
+        <mission name="SAFETY - Resume construction works"/>
         <mission name="SAFETY - Create and operate a decontamination site"/>
         <mission name="SAFETY - Create and operate a checkpoint (filter crowds)"/>
         <mission name="SAFETY - Light up fires"/>
-        <mission name="SAFETY - Perform a bomb attack (from a position)"/>
         <mission name="SAFETY - Operate a decontamination site"/>
         <mission name="SAFETY - Operate a checkpoint (filter crowds)"/>
         <mission name="SAFETY - Heal victims within crowds"/>
@@ -2729,7 +2732,7 @@
         <mission name="SAFETY - Stay/hide within a crowd"/>
         <mission name="SAFETY - Order to follow"/>
         <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Deconstruct (and remove) works"/>
+        <mission name="SAFETY - Perform deconstruction works"/>
         <mission name="SAFETY - Patrol within area"/>
         <mission name="SAFETY - Operate a road block (prevent crowds from crossing)"/>
         <mission name="SAFETY - Create and operate a roadblock (filter crowds)"/>
@@ -2747,7 +2750,6 @@
         <mission name="SAFETY - Disable resource nodes"/>
         <mission name="SAFETY - Patrol"/>
         <mission name="SAFETY - Light up fires"/>
-        <mission name="SAFETY - Perform a bomb attack (from a position)"/>
         <mission name="SAFETY - Attack urban blocks within area (with projectiles)"/>
         <mission name="SAFETY - Commit a suicide attack (against units)"/>
         <mission name="SAFETY - Increase resource node production"/>
@@ -2757,7 +2759,7 @@
         <mission name="SAFETY - Stay/hide within a crowd"/>
         <mission name="SAFETY - Order to follow"/>
         <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Deconstruct (and remove) works"/>
+        <mission name="SAFETY - Perform deconstruction works"/>
         <mission name="SAFETY - Damage urban blocks within area"/>
       </missions>
       <fragorders/>
@@ -4006,4 +4008,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2067976647" -->
+<!-- signature="1499046117" -->

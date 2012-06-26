@@ -2166,11 +2166,11 @@ overwhelming force.]]></doctrine>
         <doctrine><![CDATA[<P>To move to an objective in order to reach it.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Waypoints</b> (point, polygon, urban block): the path to move along,<BR>
- - <b>Urgency</b> : defines if the agent needs to go as quick as possible (defaut value is FALSE).</P>
+ - <i>Urgency</i> (default value is FALSE) : defines if the agent needs to go as quick as possible.</P>
 <P>* The agent moves toward each waypoints (the order of traversal is defined by user). If a visited waypoint is not reachable,<BR>
      the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a <BR>
      close position (the closest position from the center). Average speed depends on physical capabilities regarding to terrain<BR>
-      properties. If the 'urgency' parameters is set to TRUE, the agent will try to go as fast as possible.</P>
+      properties. If the 'urgency' parameters is set to TRUE, the agent will try to go as fast as possible (the agent moves faster).</P>
 <P>* Upon reaching a waypoint, the agent moves to the next one and so on, until the final one is reached. For each sub-objective,<BR>
      the trace &quot;moving toward objective&quot; should be displayed. Once it is reached, the trace &quot;movement toward <BR>
      objective terminated&quot; should be displayed.</P>
@@ -2195,11 +2195,12 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="behaviors.tasks.Follow" dia-type="behaviors.tasks.Follow" id="4443" name="SAFETY - Follow">
       <description>
-        <doctrine><![CDATA[<P>To follow a set of motile agents (unit or crowd).</P>]]></doctrine>
+        <doctrine><![CDATA[<P>To follow a set of motile agents (unit or crowd).</P>
+]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Units</b> (agent, knowledge agent and crowds): the set of entities to follow,<BR>
- - <b>Positions</b> (default is empty) : the set of positions from which the agent stays as close as possible from entities.<BR>
- - <b>Minimum distance</b> (default value is 0 meters) : the minimum distance from which the agent must stays from the entities<BR>
+ - <b>Agents</b> (agent, knowledge agent and crowds): the set of entities to follow,<BR>
+ - <i>Positions</i> (default is empty) : the set of positions from which the agent stays as close as possible from entities.<BR>
+ - <i>Minimum distance</i> (default value is 0 meters) : the minimum distance from which the agent must stays from the entities<BR>
   to follow.</P>
 <P>* Agent will follow the nearest target, trying to find position to stay as close as possible from the followed entity.</P>
 <P>* If positions are issued, agent will choose the position allowing to stay as close as possible to the chosen target (the nearest).</P>
@@ -2283,7 +2284,7 @@ In that specific case, the agent decides to act on the next one.</P>
     increases its porduction with the specified quantity.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Resource node</b> : the resource node to increase the production,<BR>
- - <b>Quantity</b> (default value is 100): the quantity to add to the production of the resource node.</P>
+ - <i>Quantity</i> (default value is 100): the quantity to add to the production of the resource node.</P>
 <P> * The agent moves toward the given resource node (a resource node is located within its corresponding urban block). If the<BR>
      urban block containing the resource node is reachable (the agent can move inside it), the agent moves to the center, else <BR>
      it moves to a close position (the closest position from the center).</P>
@@ -2332,7 +2333,7 @@ In that specific case, the agent decides to act on the next one.</P>
     defined). If a visited urban block is reachable (the agents can move inside it), the agent moves to the center, else it <BR>
     moves to a close position (the closest position from the center).</P>
 <P>* Upon reaching a urban block, the agent lifts evacuation on it before moving to the next non-visited urban block.<BR>
- A urban block may not be evacuated if it cannot be populated (the report &quot;urban block cannot be inhabited&quot;<BR>
+ The evacuation status may not be left if it cannot be populated (the report &quot;urban block cannot be inhabited&quot;<BR>
   is displayed) .<BR>
 In that specific case, the agent decides to act on the next one.</P>
 <P>* When there is no more urban block to visit, the agent stays next to the last visited and the mission ends.</P>
@@ -2353,9 +2354,9 @@ In that specific case, the agent decides to act on the next one.</P>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Victim units</b> (agent): the teammate agents inside which victims must be evacuated with the medical unit.<BR>
  - <b>Medical unit</b> (agent): the teammate agent linked to the medical chain</P>
-<P>* The agent moves toward each 'Victim unit' (the agent that has wounded humans) of the list. the order of traversal is defined <BR>
-    by user. If a visited 'Victim unit' is not reachable (the unit is posted in a non-reachable urban block for instance), it moves<BR>
-     to a close position (the closest position from the 'Victim unit').</P>
+<P>* The agent moves toward each 'Victim unit' (the agent that has wounded humans) of the list. The order of the elements into the <BR>
+     'Victim units' list defines the order of visit. If a visited 'Victim unit' is not reachable (the unit is posted in a <BR>
+      non-reachable urban block for instance), it moves to a close position (the closest position from the 'Victim unit').</P>
 <P>* Upon reaching a 'Victim unit', the agent creates a link between the 'Victim unit' and the specified 'Medical Unit' (the report <BR>
     &quot;victims evacuated&quot; should be displayed). Wounded humans status comes from &quot;on the battle field&quot; to &quot;in<BR>
      medical chain&quot;, meaning that wounded have been evacuated through the medical chain of the issued medical unit.</P>
@@ -2368,7 +2369,8 @@ In that specific case, the agent decides to act on the next one.</P>
  - the visited 'Victims unit' has moved or the agent cannot reach it,<BR>
 If those cases are encountered, the agent moves on to the next 'Victim unit', and the report &quot;victims cannot be evacuated&quot;<BR>
  should be displayed.</P>
-<P>* When there is no more 'Victims unit' to visit, the agent stays next to the last visited and the mission ends.</P>]]></usage>
+<P>* When there is no more 'Victims unit' to visit, the agent stays next to the last visited and the mission ends (even if a few <BR>
+    of them haven't been evacuated.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2382,14 +2384,14 @@ If those cases are encountered, the agent moves on to the next 'Victim unit', an
         <doctrine><![CDATA[<P><dfn>To ensure evacuation of crowd victims, with adapted device.</P>
 <P>In SWORD, extracting victims from crowds allow user to prepare the evacuation operation.</dfn></P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
-- <b>Crowds</b> : the set of crowds to extract victims from.</P>
-<P>* The agent moves toward crowd(the order of traversal is defined by user). </P>
-<P>* Upon reaching a crowd, in case it contains victims (wounded humans), the agent acts to extract victims from it (the report<BR>
+- <b>Crowds</b> (polygon): the set of crowds to extract the victims from.</P>
+<P>* The agent moves toward each crowd. The order of the elements into the 'Crowds' list defines the order of visit. </P>
+<P>* Upon reaching a crowd (the agent moves to the center of the crowd's concentration), in case it contains victims (wounded humans), the agent acts to extract victims from it (the report<BR>
      &quot;starting to extract victims&quot; is displayed).  Once it is done (the report &quot;victims extracted&quot; should be<BR>
       displayed),  a new crowd is created next to the initial crowd (with all wounded humans from initial Crowd). Note that the <BR>
       position of the new created crowd is randomly determinated on the edge of the initial crowd. <BR>
 As a consequence, the initial crowd has no more wounded humans.</P>
-<P>* The delay of extraction  do not depends on crowd size or number of victims. Extracting victims takes 2 minutes (defined in <BR>
+<P>* The delay of extraction do not depends on crowd size or number of victims. Extracting victims takes few minutes (defined in <BR>
     decisionnal models)</P>
 <P> * Victims of a visited crowd may not be extracred if:<BR>
  - the visited Crowd do not contain wounded humans ( the report &quot;no wounded victims&quot; and &quot;victims cannot be <BR>
@@ -2397,6 +2399,7 @@ As a consequence, the initial crowd has no more wounded humans.</P>
  - the visited Crowd has moved  (the agent won't follow the crowd) or the agent cannot reach it ( the report &quot;no wounded <BR>
  victims&quot; and &quot;victims cannot be evacuated&quot; should be displayed) .<BR>
 In that specific case, the agent decides to act on the next one.</P>
+<P>* If there is no crowd within the area, the mission ends and the report &quot;no crowd within area&quot; is displayed.</P>
 <P>* If there is no more crowd to visit, the mission ends.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2469,7 +2472,8 @@ In that specific case, the agent decides to act on the next one.</P>
  - <b>Resource nodes</b>: the set of resource nodes to enable.</P>
 <P>* The agent moves toward each of the resource nodes  (a resource node is located within its corresponding urban block). <BR>
     If the urban block containing the resource node to en is reachable (the agent can move inside it), the agent moves to <BR>
-    the center, else it moves to a close position (the closest position from the center). Order of visit is defined by the user.</P>
+    the center, else it moves to a close position (the closest position from the center). The order of the elements into the <BR> 
+    'Resource nodes' list defines the order of visit.</P></P>
 <P>* Upon reaching a  resource node (the urban block containing it), the agent enables it, displaying the report &quot;Resource <BR>
     node enabled&quot;. Then, the agent decides to act on the next one.</P>
 <P>* When there is no more resource node to enable, the agent stays next to the last visited and the mission ends.</P>]]></usage>
@@ -2489,7 +2493,8 @@ In that specific case, the agent decides to act on the next one.</P>
  - <b>Resource nodes</b> : the set of resource nodes to disable.</P>
 <P>* The agent moves toward each of the resource nodes  (a resource node is located within its corresponding urban block). <BR>
     If the urban block containing the resource node to deactivate is reachable (the agent can move inside it), the agent moves <BR>
-    to the center, else it moves to a close position (the closest position from the center). Order of visit is defined by the user.</P>
+    to the center, else it moves to a close position (the closest position from the center). The order of the elements into the <BR> 
+    'Resource nodes' list defines the order of visit.</P>
 <P>* Upon reaching a  resource node (the urban block containing it), the agent deactivates it, displaying the report &quot;Resource<BR>
      node disabled&quot;. Then, the agent decides to act on the next one.</P>
 <P>* When there is no more resource node to disable, the agent stays next to the last visited and the mission ends.</P>]]></usage>
@@ -2508,9 +2513,9 @@ Patrolling could ensure law, order and check crime in a given district.</dfn></P
     informations.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Waypoints</b> (point, polygon, urban block):  the path to move along.</P>
-<P>*  The agent moves toward each waypoints (the order of traversal is defined by user). If a visited waypoint is not reachable,<BR>
-     the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a <BR>
-     close position (the closest position from the center).</P>
+<P>*  The agent moves toward each waypoints. The order of the elements into the 'Waypoints' list defines the order of visit.<BR>
+     If a visited waypoint is not reachable, the agent moves as close as possible (the agents can move within it), the agent <BR>
+     moves to the center, else it moves to a close position (the closest position from the center).</P>
 <P>* Upon reaching the last waypoints, the agent moves back to the first one and starts again. The mission continues until another<BR>
      one is issued.</P>]]></usage>
       </description>
@@ -2576,7 +2581,7 @@ In that specific case, the report &quot;unit cannot be loaded&quot; should be di
     a Crowd could be transported to a given position to receive care.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Crowd</b> :  the crowd to transport,<BR>
- - <b>Crowd's concentration position</b> (point): the loading position, used to designate the conceentration to transport,<BR>
+ - <b>Loading position</b> (point): the loading position, used to designate the concentration to transport,<BR>
  - <b>Target destination</b> (point, polygon, urban block) : the location to unload the transported crowd.</P>
 <P>* The agent moves toward the crowd's concentration position, loads a maximum of human of issued crowd (the concentration <BR>
     position must be located onto of the contration of the issued crowd). The report (&quot;transport:embarking&quot; is <BR>
@@ -2588,7 +2593,7 @@ In that specific case, the report &quot;unit cannot be loaded&quot; should be di
 <P>* The mission continue until no more Crowd's concentration left nearby the loading position. </P>
 <P>* The crowd may not be transported if:<BR>
  - the agent cannot load crowd's concentration due to non-adapted physical capabilities,<BR>
- - the crowd's &quot;concentration position&quot; paramter is not located on the crowd to transport. <BR>
+ - the crowd's &quot;concentration position&quot; parameter is not located on the crowd to transport. <BR>
 In that specific case, the trace &quot;unit cannot load the crowd (no physical capability or no crowd's concentration on loading <BR>
 position )&quot; is displayed, and the mission ends.</P>]]></usage>
       </description>
@@ -2758,17 +2763,16 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
       <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Create" id="4474" name="SAFETY - Perform public works">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Create" id="4474" name="SAFETY - Perform construction works">
       <description>
         <doctrine><![CDATA[<P><dfn>To construct something.</dfn></P>
 <P>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect<BR>
      on the world. Thus, it is usually a mission preliminary to others. </P>]]></doctrine>
-        <usage><![CDATA[
-<P>This mission needs the following parameters: <BR>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Works</b> (planned objects) : the works to perform,<BR>
- - <b>WaitForReinforcement</b> (bool, default value is FALSE): defines if the agent needs to wait for potential reinforcement in case<BR>
+ - <i>WaitForReinforcement</i> (bool, default value is FALSE): defines if the agent needs to wait for potential reinforcement in case<BR>
   it cannot do a work.<BR>
- - <b>Instantaneously</b> (bool, default value is FALSE): define if agent will build issued elements (objects or urban blocks) <BR>
+ - <i>Instantaneously</i> (bool, default value is FALSE): define if agent will build issued elements (objects or urban blocks) <BR>
  instantaneously (magically).</P>
 <P>* The agent moves toward each planned work to create (the order of traversal is defined by user). The positions reached to <BR>
     create each object are automatically determinated by the agent.</P>
@@ -2822,18 +2826,18 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Resume" id="4475" name="SAFETY - Resume public works">
+    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Resume" id="4475" name="SAFETY - Resume construction works">
       <description>
         <doctrine><![CDATA[<P><dfn>To resume construction of something.<dfn></P>
 <P>In SWORD, to know how to build a set of existing objects. This mission can be used to finish the construction of already <BR>
     started works. It could be used to model the repairing of damaged installations or urban blocks.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - Works (knowledge objects) : the objects(works) to construct,<BR>
- - WaitForReinforcement (bool): defines if the agent needs to wait for potential reinforcement in case it cannot construct a work.<BR>
- - Instantaneously (bool, default value is FALSE): define if agent will build issued elements (objects or urban blocks) <BR>
- instantaneously (magically).</P>
-<P>* The agent moves toward each work to construct (the order of traversal is defined by user). The positions reached to <BR>
-    construct each object are automatically determinated by the agent.</P>
+ - <b>Works</b> (knowledge objects) : the objects (works) to construct,<BR>
+ - <i>WaitForReinforcement</i> (bool): defines if the agent needs to wait for potential reinforcement in case it cannot construct a work.<BR>
+ - <i>Instantaneously</i> (bool, default value is FALSE): define if the agent builds issued elements (objects or urban blocks) <BR>
+ instantaneously (magically) or not.</P>
+<P>* The agent moves toward each work to construct. The order of the elements into the 'Works' list defines the order of visit.  <BR>
+    The positions reached to construct each object are automatically determinated by the agent.</P>
 <P>* Upon reaching a construction position, the agent starts to construct the object (the &quot;work just started&quot; report<BR>
      should be displayed). Upon construction termination (the report &quot;work completed for object [object name]&quot; should<BR>
       be displayed), the agent  moves to the next work to do (next construction position for the next objet to construct).</P>
@@ -2860,53 +2864,17 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.BuildAnObjectFromAPosition" dia-type="behaviors.tasks.BuildAnObjectFromAPosition" id="4476" name="SAFETY - Perform a bomb attack (from a position)">
-      <description>
-        <doctrine><![CDATA[To plant and activate a bomb on specific location]]></doctrine>
-        <usage><![CDATA[For the agent to know how to plant and activate a bomb on a sepcified location. The agent will move to the bomb location, then reach the activation position and then activate the bomb. The explosion is here modeled with an "bomb" object]]></usage>
-      </description>
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plannedWork" name="Bomb location" optional="false" type="PlannedWork">
-        <objects>
-          <parameter type="Destruction Bomb"/>
-        </objects>
-      </parameter>
-      <parameter dia-name="position" name="Position of bomb activation" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
-    </mission>
     <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks3" id="4477" name="SAFETY - Light up fires">
       <description>
-        <doctrine><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Fires location</b> (planned fire objects) : the planned fire to create,<BR>
- - <b>Instantaneously</b>(bool, default value is FALSE) : defines if the agent can create fires instantaneously (magically) without
-any physical capabilities consideration</P>
-<P>* The agent moves toward each fire location (the order of traversal is defined by user). The positions reached to <BR>
-    create each fire are automatically determinated by the agent.</P>
-<P>* Upon reaching a position, the agent starts to create the corresponding object ('arson' or 'fire' object). The &quot;work <BR>
-    just started&quot; report should be displayed. Upon creation termination (the report &quot;work completed for <BR>
-    object [object name]&quot; should be displayed), the agent  moves to the next fire to start.</P>
-<P>* A fire may not be created. The possible causes are: <BR>
- - the agent doesn't have the physical capability or if it hasn't enough resources to do it( if the 'Instantaneously' paramteter <BR>
- is set to FALSE). <BR>
- - the planned fire cannot be created because it is not designed for (see object capacities &quot;construction&quot; and <BR>
- &quot;burn&quot; in authoring tool),<BR>
- If that specific case, the report 'Impossible work' is displayed, and the agent moves to the next fire to create;<BR>
-<P>* If needed, the agent dismounts to build an object.</P>
-<P>* The mission is done when all fire have been visited (even if some of the objects couldn't be built).</P>]]></doctrine>
+        <doctrine><![CDATA[<P><dfn>Arsonists or pyromaniac may start fires in order to attack installation or induce terror on population. </dfn></P>
+<P>In SWORD, to know how to create a set of planned fires on diferent locations. Thus, it is usually a mission performed by terrorist,<BR>
+     arsonists or pyromiacs.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Fires location</b> (planned fire objects) : the planned fire to create,<BR>
- - <b>Instantaneously</b>(bool, default value is FALSE) : defines if the agent can create fires instantaneously (magically) without
+ - <b>Fires locations</b> (planned fire objects) : the planned fire to create,<BR>
+ - <i>Instantaneously</i>(bool, default value is FALSE) : defines if the agent can create fires instantaneously (magically) without
 any physical capabilities consideration</P>
-<P>* The agent moves toward each fire location (the order of traversal is defined by user). The positions reached to <BR>
-    create each fire are automatically determinated by the agent.</P>
+<P>* The agent moves toward each fire location. The positions reached to create each fire are automatically determinated by the <BR>
+    agent. The order of the elements into the 'Fires locations' list defines the order of visit.</P>
 <P>* Upon reaching a position, the agent starts to create the corresponding object ('arson' or 'fire' object). The &quot;work <BR>
     just started&quot; report should be displayed. Upon creation termination (the report &quot;work completed for <BR>
     object [object name]&quot; should be displayed), the agent  moves to the next fire to start.</P>
@@ -2936,8 +2904,9 @@ any physical capabilities consideration</P>
 <P>In SWORD, operating a decontamination site allows the agent to complete decontamination missions using that site. It is the <BR>
     only way to decontaminate contaminated units (contaminated units may be issued the &quot;go get decontaminated&quot; mission).</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Decontamination site location</b> : the work location,<BR>
- - <b>Remove installations</b>: defines if the agent should deconstruct the decontamination site when the mission ends.</P>
+ - <b>Decontamination site location</b> : the location upon which the agent creates the decontamination site,<BR>
+ - <i>Remove installations</i> (default is TRUE): defines if the agent should deconstruct the decontamination site when the<BR>
+  mission ends.</P>
 <P>* The agent moves to a position that allows the construction of the decontamination site  (a close position on the edge of <BR>
     the planned object to create) and starts to construct it (&quot;work just started&quot; reports should be displayed). Upon <BR>
     construction termination (the report &quot;work completed for object [object name]&quot; should be displayed), the agent <BR>
@@ -2945,7 +2914,8 @@ any physical capabilities consideration</P>
 <P>* It remains there until mission termination</P>
 <P> * The decontamination site  may not be constructed if:<BR>
  - the agent has not the capability to create the object (no physical capability or no resource to do it),<BR>
- - the decontamination site to create cannot be created (see object capacity &quot;construction&quot; in authoring tool),<BR>
+ - the decontamination site object definition is wrong (the object capacity &quot;construction&quot; for the 'decontamination site' <BR>
+ object is not set in authoring tool).<BR>
 In that specific case, the mission ends with the report &quot;work impossible, no construction capacity&quot; should be displayed.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2965,10 +2935,11 @@ In that specific case, the mission ends with the report &quot;work impossible, n
 <P>In SWORD, creating and operating a Checkpoint allows the agent to filter crowds. Filtering crowds allows to detect hidden units <BR>
     (terrorist or other characters).</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Checkpoint location</b>: the work location,<BR>
- - <b>Intensity</b> (%, default is 100%):  the strenght that is used to filter crowds.  A value of '0' means &quot;no filtration at all&quot;.<BR>
+ - <b>Checkpoint location</b>: the location upon which the agent creates the checkpoint,<BR>
+ - <i>Intensity</i> (%, default is 100%):  the strenght that is used to filter crowds.  A value of '0' means &quot;no filtration <BR> 
+ at all&quot;.<BR>
   A value of '100' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).<BR>
- - Remove installation (default value is TRUE) : defines if the agent should deconstruct the checkpoint when the mission ends.</P>
+ - <i>Remove installation</i> (default value is TRUE) : defines if the agent should deconstruct the checkpoint when the mission ends.</P>
 <P>* The agent moves to a position that allows the construction of the checkpoint (a close position on the edge of the planned object <BR>
     to create) and starts to construct it (&quot;work just started&quot; reports should be displayed). Upon construction termination <BR>
     (the report &quot;work completed for object [object name]&quot; should be displayed), the agent moves toward the center of the <BR>
@@ -2976,7 +2947,8 @@ In that specific case, the mission ends with the report &quot;work impossible, n
 <P>* It remains there until mission termination.</P>
 <P> * The checkpoint may not be constructed if:<BR>
  - the agent has not the capability to create the object (no physical capability or no resource to do it),<BR>
- - the checkpoint to create cannot be created (see object capacity &quot;construction&quot; in authoring tool),<BR>
+ - the checkpoint object definition is wrong (the object capacity &quot;construction&quot; for the 'checkpoint' object is not set in <BR>
+ authoring tool).<BR>
 In that specific case, the mission ends with the report &quot;work impossible, no construction capacity&quot; should be displayed.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2998,12 +2970,15 @@ In that specific case, the mission ends with the report &quot;work impossible, n
      hidden units (terrorist or other characters) and prevents them from going into restricted areas.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Checkpoint</b> (object knowledge): the object to be used to filter crowds,<BR>
- - <b>Intensity</b>(%, default value is 100%): the intensity to apply to filter crowds. </P>
+ - <i>Intensity</i>(%, default value is 100%): the intensity to apply to filter crowds. </P>
 <P>* The agent moves to the center of the object. Then, filtration starts with the given intensity (the trace<BR>
      &quot;check point established&quot; should be displayed). An intensity value of 100% means that agent will filter with<BR>
-      the max intensity regarding to properties defined on the &quot;check point &quot; object (see the &quot;population/density&quot; capacity in ADN) . For instance, a &quot;Density&quot; value of &quot;0 &quot; means that a filtration of 100% will block all crowds trying to go through the checkpoint.  An intensity valueof 50% means that the density of crossing crowds will be devided by two.</P>
+      the max intensity regarding to properties defined on the &quot;check point &quot; object (see the &quot;population/density&quot; <BR>
+      capacity in authoring tool). For instance, a &quot;Density&quot; value of &quot;0 &quot; means that a filtration of 100% will <BR>
+      block all crowds trying to go through the checkpoint.  An intensity value of 50% means that the density of crossing <BR>
+      crowds will be devided by two.</P>
 <P>* The agent remains there until another mission is issued.</P>
-<P> * The object may not filter crowds if its definition is not adapted (see the object capacity &quot;population&quot; in <BR>
+<P> * The object may not filter crowds if its properties are not well defined (see the object capacity &quot;population&quot; in <BR>
     authoring tool),<BR>
 In that specific case, no specific reports is displayed.</P>]]></usage>
       </description>
@@ -3023,7 +2998,7 @@ In that specific case, no specific reports is displayed.</P>]]></usage>
  - <b>Decontamination site</b> (object knowledge): the decontamination site object to be operated.</P>
 <P>* The agent moves to the center of the object and starts to operate it (the report &quot;Element is being operated&quot; should be displayed). </P>
 <P>* The agent remains there until mission termination.</P>
-<P> * The  decontamination site  may not be operated if it cannot be operated (see object capacity &quot;workable&quot; in <BR>
+<P>* The  decontamination site  may not be operated if it cannot be operated (see object capacity &quot;workable&quot; in <BR>
     authoring tool),<BR>
 In that specific case, the report &quot;element cannot be operated&quot; is displayed and the mission ends.<BR>
 Note that no specific capabilities are requeried for the agent to operate a decontamination site.</P>]]></usage>
@@ -3040,8 +3015,8 @@ Note that no specific capabilities are requeried for the agent to operate a deco
 <P>In SWORD, to heal on the spot wounded victims within a set of crowds.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Crowds</b> : the set of crowds to heal.</P>
-<P>* The agent visits each crowd of the list (it moves to the center of the crowds' concentrations), in the order of the list <BR>
-    (the order of visit is defined by the user).</P>
+<P>* The agent visits each crowd of the list (it moves to the center of the crowds' concentrations). The order of the elements <BR>
+    into the 'Crowds' list defines the order of visit.</P>
 <P>* Upon reaching a crowd, in case it contains victims (wounded humans), the agent acts to heal it (the report &quot;Starting <BR>
     to heal the crowd&quot; is displayed).  Once it is done (the report &quot;wounded persons healed&quot; should be displayed). <BR>
 As a consequence, the healed crowd has no more wounded humans.</P>
@@ -3071,11 +3046,11 @@ In that specific case, the agent decides to act on the next one.</P>
 <P>In SWORD, units and crowds can assault urban blocks (or other units and structures). Assaulting a urban block causes <BR>
     damage to its structure and the population within.  Attacking urban blocks can be used to highlight a failure in a <BR>
 safety device that should have been set up.<BR>
-In this mission, the agentdamage urban blocks with projectile (indirect fire).</P>]]></doctrine>
+In this mission, the agent damages urban blocks with projectile (indirect fire).</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Area</b> (polygon): the area inside which urban blocks must be attacked<BR>
- - <b>Quantity</b> (integer) : the quantity of projectiles to use for each shot.<BR>
- - <b>Resource type</b>: the type of resource to use.</P>
+ - <b>Area</b> (polygon): the area inside which urban blocks must be attacked,<BR>
+ - <b>Resource type</b>: the type of resource to use,</P>
+ - <i>Quantity</i> (integer, default value is 100) : the quantity of projectiles to use for each shot.<BR>
 <P>* The agent will try to launch the specified quantity of projectile on each urban block within the area, one by one. <BR>
 It moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined) <BR>
 until it is at a good distance to launch the projectile on it (the firing distance is defined by the distance between the 
@@ -3085,7 +3060,6 @@ current visited urban block,  it launches the projectile on it and decides to ac
  - the agent doesn't have the physical capability (no adapted launcher regarding to dotation type) : the report &quot;No launcher with capacity to use specify munition&quot; is displayed.<BR>
  - the agent does not have enough dotation: the report &quot;no more shells&quot; is displayed.<BR>
  - the selected resource type cannot allow the agent to perform an indirect fire : the report &quot;Impossible indirect fire&quot; is displayed.<BR>
- - the agent self neutralizes</P>
 <P>* The mission ends when the agent has tried to launch projectiles on each urban blocks.</P>
 * If there is no urban blocks within the area, the mission ends and the report &quot;no urban blocks within area&quot; is displayed.</P>]]></usage>
       </description>
@@ -3112,7 +3086,7 @@ current visited urban block,  it launches the projectile on it and decides to ac
  - the agent doesn't have the physical capability (no adapted launcher regarding to dotation type) : the report &quot;No <BR>
  launcher with capacity to use specify munition&quot; is displayed.<BR>
  - the agent does not have enough dotation: the report &quot;no more shells&quot; is displayed.<BR>
- - the selectedresource type cannot allow the agent to perform an indirect fire : the report &quot;Impossible indirect fire&quot; <BR>
+ - the selected resource type cannot allow the agent to perform an indirect fire : the report &quot;Impossible indirect fire&quot; <BR>
  is displayed.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3183,7 +3157,7 @@ to monitor or to escort a crowd (police).</P>]]></doctrine>
         <doctrine><![CDATA[<P>In SWORD, a mission in which one unit augments the capability of another unit.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Target unit</b> (agent): the agent to reinforce.</P>
-<P>* The agent will moves to the target unit. Once it is reached, it reinforces it (no specific report is diplsayed here).</P>
+<P>* The agent will moves to the target unit. Once it is reached, it reinforces it (no specific report is displayed here).</P>
 <P>* The target unit may not be reinforced if cannot be reached (the agent won't follow the target unit). In that case, <BR>
     the reports &quot;Cannot reach objective&quot; will be displayed and the mission ends.</P>
 <P>* The mission continue until another one is issued.</P>]]></usage>
@@ -3214,16 +3188,16 @@ If there is no more agent to visit, subject remains next to the last visited.</P
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="units" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Deconstruct" dia-type="behaviors.tasks.Deconstruct" id="4493" name="SAFETY - Deconstruct (and remove) works">
+    <mission dia-behavior="behaviors.tasks.Deconstruct" dia-type="behaviors.tasks.Deconstruct" id="4493" name="SAFETY - Perform deconstruction works">
       <description>
         <doctrine><![CDATA[<P><dfn>To deconstruct and remove works or installations.<dfn></P>
 <P>In SWORD, elements to remove a set of objects. They can be: building collapses, human constructions,  mines etc. Removing <BR>
     elements is often required to restore access. When an object is totally decontructed, it disappears. </P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Works</b> (knowledge objects) : the objects(works) to deconstruct,<BR>
- - <b>WaitForReinforcement</b> (bool, default value is 'false'): defines if the agent needs to wait for potential reinforcement in case<BR>
+ - <i>WaitForReinforcement</i> (bool, default value is 'false'): defines if the agent needs to wait for potential reinforcement in case<BR>
   it cannot do a work (deconstruct an object).<BR>
- - <b>Instantaneously</b> (bool, default value is 'false') : defines if the agent can remove objects instantaneously (magically) without<BR>
+ - <i>Instantaneously</i> (bool, default value is FALSE) : defines if the agent can remove objects instantaneously (magically) without<BR>
   any physical capabilities consideration.</P>
 <P>* The agent moves toward each element to deconstruct (the order of traversal is defined by user). The positions reached to <BR>
     deconstruct each object are automatically determinated by the agent.</P>
@@ -3231,7 +3205,7 @@ If there is no more agent to visit, subject remains next to the last visited.</P
      [object name]&quot; should be displayed). Upon deconstruction termination (the report &quot;work destruction completed&quot; should be displayed), <BR>
      the agent  moves to the next element to deconstruct.</P>
 <P>* An object may not be deconstructed if the agent doesn't have the physical capability or if it hasn't enough resources to do it. <BR>
- If that specific case, the agent behavess in two ways depending on the 'waitForReinforcement&quot; parameter:  <BR>
+ If that specific case, the agent behaves in two ways depending on the 'waitForReinforcement&quot; parameter:  <BR>
  - if it is set to FALSE, the report 'Impossible work' is displayed, and the agent moves to the next work to deconstruct;<BR>
  - if it is set to TRUE, agent will stay nearby the object and ask for reinforcement. It won't move to the next object until it is totally deconstructed.</P>
 <P>* If &quot;instantaneously&quot; parameter is set to 'true', each visited object are instantaneously and magically deconstructed<BR>
@@ -3307,12 +3281,13 @@ In that specific case, the mission ends with the report &quot;work impossible, n
     <mission dia-behavior="behaviors.tasks.Filter" dia-type="behaviors.tasks.Filter" id="4497" name="SAFETY - Operate a road block (prevent crowds from crossing)">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate a road block in order to control and filter movements of any kinds of entity</dfn>.</P>
-<P>In SWORD, road block are object that can block crowds and units. Using such an object allows the agent to prevents them from going into restricted areas.</P>]]></doctrine>
+<P>In SWORD, road block are object that can block crowds and units. Using such an object allows the agent to prevents them from <BR>
+     going into restricted areas.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Road block</b> (object knowledge): the object to be used to prenvent crowds and units from crossing.</P>
+ - <b>Road block</b> (object knowledge): the object to be used to prevent crowds and units from crossing.</P>
 <P>* The agent moves to the object and starts to act on it  (the trace &quot;check point established&quot; should be displayed).</P>
 <P>* The agent remains there until another mission is issued.</P>
-<P> * The object may not block crowds if its definiation is not adapted (see object capacity &quot;population&quot; in authoring tool),<BR>
+<P> * The object may not block crowds if its properties are not well defined (see object capacity &quot;population&quot; in authoring tool),<BR>
 In that specific case, no specific report is displayed.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3323,10 +3298,21 @@ In that specific case, no specific report is displayed.</P>]]></usage>
     </mission>
     <mission dia-behavior="behaviors.tasks.DamageUrbanBlocksWithinArea" dia-type="behaviors.tasks.DamageUrbanBlocksWithinArea" id="4498" name="SAFETY - Damage urban blocks within area">
       <description>
-        <doctrine><![CDATA[<P><dfn>To damage installations.<dfn></P>
-<P>In SWORD, to damage a set of urban blocks wthin a zone, by decreasing their structural state. Damages are here intended in terms of <BR>
-    minor destruction (deconstruction) of urban blocks. This mission may be used to model terrorist attack, voilent demonstration or riots.<BR>
-    A damaged urban bloc has the effect of making resource nodes less efficient (production decreases for instances).</P>]]></doctrine>
+        <doctrine><![CDATA[<P>This mission needs the following parameters: <BR>
+ - <b>Area</b> (polygon): the area inside which urban blocks must be damaged.</P>
+<P>* The agent moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined).<BR>
+     If a visited urban block is reachable (the agent can move inside it), the agent moves to the center, else it moves to a close <BR>
+     position (the closest position from the center).</P>
+<P>* Upon reaching a urban block, the agent starts to deconstruct it during a limited time. The delay of deconstruction depends on the <BR>
+    delay of the agent installation (see authoring tool in "stances" section, "time to activate" ). The report "deployment in progress" and<BR>
+     "work just started" should be displayed, meaning that the agent is damaging the target. Once the report "deployment complete" is <BR>
+     displayed, time has come for the agent to visit the next urban block.<BR>
+<P>*  A urban block may not be damaged if:<BR>
+- the agent hasn't the physical capacity to deconstruct urban blocks,<BR>
+- the agent's stances defined in authoring tool doesn't let enough time to the agent to damage its target.<BR>
+In that specific case, the agent decides to act on the next one.</P>
+<P>* When there is no more urban block to visit, the agent stays next to the last visited and the mission ends.</P>
+<P>* If there is no urban blocks within the area, the mission ends and the report &quot;no urban blocks within area&quot; is displayed.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Area</b> (polygon): the area inside which urban blocks must be damaged.</P>
 <P>* The agent moves toward each urban block which is totally inside the specified area (the order of traversal is randomly defined).<BR>
@@ -3357,13 +3343,14 @@ In that specific case, the agent decides to act on the next one.</P>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Dike location</b>: the work location to build the dike.</P>
 <P>* The agent moves toward a construction position to create the dike. The position to create the dike is automatically <BR>
-    determinated by the agent.</P>
+    determinated by the agent (on the edge of the work location).</P>
 <P>* Upon reaching the construction position, the agent starts to create and construct the dike (the &quot;work just started&quot; <BR>
     report should be displayed). Upon construction termination (the report &quot;work completed for object [object name]&quot; is <BR>
     displayed) the mission ends.</P>
 <P>* The dike may not be created. The possible causes are: <BR>
  - the agent doesn't have the physical capability or if it hasn't enough resources to do it. <BR>
- - the dike cannot be created because it is not designed for (see object capacity &quot;construction&quot; in authoring tool),<BR>
+ - the dike object definition is wrong (the object capacity &quot;construction&quot; for the 'dike' object is not set <BR>
+ in authoring tool).<BR>
  If that specific case, the report 'Impossible work' is displayed, and the mission ends.</P>
 <P>* If needed, the agent dismounts to build the dike.</P>]]></usage>
       </description>
@@ -3384,13 +3371,14 @@ In that specific case, the agent decides to act on the next one.</P>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Firebreak location</b> : the work location to build the firebreak.</P>
 <P>* The agent moves toward a construction position to create the firebreak. The position to create the firebreak is <BR>
-    automatically determinated by the agent.</P>
+    automatically determinated by the agent(on the edge of the work location).</P>
 <P>* Upon reaching the construction position, the agent starts to create and construct the firebreak (the report <BR>
     &quot;work just started&quot; should be displayed). Upon construction termination (the report<BR>
      &quot;work completed for object [object name]&quot; is displayed) the mission ends.</P>
 <P>* The firebreak may not be created. The possible causes are: <BR>
  - the agent doesn't have the physical capability or if it hasn't enough resources to do it. <BR>
- - the firebreak cannot be created because it is not designed for (see object capacity &quot;construction&quot; in authoring tool),<BR>
+ - the firebreak objet definition is wrong (the object capacity &quot;construction&quot; for the 'firebreak' object is not <BR>
+ set in authoring tool).<BR>
  If that specific case, the report 'Impossible work' is displayed, and the mission ends.</P>
 <P>* If needed, the agent dismounts to build the firebreak.</P>]]></usage>
       </description>
@@ -3405,6 +3393,28 @@ In that specific case, the agent decides to act on the next one.</P>
       </parameter>
     </mission>
     <mission dia-behavior="behaviors.tasks.LaunchProjectileOnACrowd" dia-type="behaviors.tasks.LaunchProjectileOnACrowd" id="4501" name="SAFETY - Disperse crowd (with projectile)">
+      <description>
+        <doctrine><![CDATA[<P><DFN>To control, disperse, and arrest civilians who are involved in a riot, demonstration, or protest. Riot squads have long<BR>
+     used less lethal weapons such as tear gas to disperse crowds and detain rioters.<DFN></P>
+<P>In SWORD, a mission in which the agent launches a dispersion grenade that creates a specific object (a time limited object <BR>
+    such as a crowd dispersion smoke). Such an object is used to decrease number of healthy humans within the given crowd.</P>]]></doctrine>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
+ - <b>Crowd</b>: the crowd that must be dispersed,<BR>
+ - <b>Resource type</b>: the type of resource (grenade) to use,<BR>
+ - <i>Position</i> (empty by default): the position from which the agent launches the grenade.</P>
+<P>* The agent will try to launch the specified quantity of projectile on the given crowd, from the issued position. <BR>
+    If a position is not issued (default value), the agent moves toward the center of the crowd until it is at a good distance to  <BR>
+    launch the given projectile (the launching distance is defined by the distance between the agent's position and the center of <BR>
+     the target crowd). 
+<P>* Upon reaching the position, the agent launches the projectile on the crowd. Once it is done, the mission ends. </P>
+<P>* It is possible that the agent cannot launch the projectile on the target crowd. The causes could be:<BR>
+ - the agent doesn't have the physical capability (no adapted launcher regarding to dotation type) : the report &quot;No launcher<BR>
+  with capacity to use specify munition&quot; is displayed.<BR>
+ - the agent does not have enough dotation: the report &quot;no more shells&quot; is displayed.<BR>
+ - the selected resource type cannot allow the agent to perform an indirect fire : the report &quot;Impossible indirect fire&quot;<BR>
+  is displayed.<BR>
+ </P>]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3418,6 +3428,58 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" dia-type="behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" id="4502" name="SAFETY - Extract victims from crowds within area">
+      <description>
+        <doctrine><![CDATA[<P><dfn>To ensure evacuation of crowd victims, with adapted device.</dfn></P>
+<P>In SWORD, extracting victims from crowds allow user to prepare the evacuation operation. In this mission, the agent extracts <BR>
+    wounded victims from all crowds which are located inside the area.</P>]]></doctrine>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
+- <b>Area</b> (polygon): the area inside which crowds must be visited</P>
+<P>* The agent moves toward each crowd which is totally inside the specified area (the order of traversal is randomly defined). </P>
+<P>* Upon reaching a crowd, in case it contains victims (wounded humans), the agent acts to extract victims from it (the report <BR>
+    &quot;starting to extract victims&quot; is displayed).  Once it is done (the report &quot;victims extracted&quot; should be <BR>
+    displayed),  a new crowd is created next to the initial crowd (with all wounded humans from initial Crowd). Note that the <BR>
+    position of the new created crowd is randomly determinated on the edge of the initial crowd. <BR>
+As a consequence, the initial crowd has no more wounded humans.</P>
+<P>* The delay of extraction  do not depends on crowd size or number of victims. Extracting victims takes a few minutes (defined in <BR>
+    decisionnal models)</P>
+<P> * Victims of a visited crowd may not be extracred if:<BR>
+ - the visited Crowd do not contain wounded humans ( the report &quot;no wounded victims&quot; and &quot;victims cannot be <BR>
+ evacuated&quot; should be displayed), <BR>
+ - the visited Crowd has moved  (the agent won't follow the crowd) or the agent cannot reach it ( the report &quot;no wounded <BR>
+ victims&quot; and &quot;victims cannot be evacuated&quot; should be displayed) .<BR>
+In that specific case, the agent decides to act on the next one.</P>
+<P>* If there is no crowd within the area, the mission ends and the report &quot;no crowd within area&quot; is displayed.</P>
+<P>* If there is no more crowd to visit, the mission ends.</P>]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.PatrolAroundUrbanBlocksWithinAZone" dia-type="behaviors.tasks.PatrolAroundUrbanBlocksWithinAZone" id="4503" name="SAFETY - Patrol along urban blocks (within area)">
+      <description>
+        <doctrine><![CDATA[Patrolling could ensure law, order and check crime in a given district.<dfn></P>
+<P>In SWORD, patrolling consist of moving along a path defined by waypoints, indefinitely, allowing the agent to gather <BR>
+    informations. Here, waypoints are urban blocks inside a given area. </P>]]></doctrine>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
+ -  <b>Area</b> (polygon):  the area inside which the urban blocks are visited.</P>
+<P>*  The agent moves toward each urban block  which is totally inside the specified area (the order of traversal is randomly <BR>
+    defined). If a visited  urban block is not reachable, the agent moves as close as possible (the agents can move within it),<BR>
+     the agent moves to the center, else it moves to a close position (the closest position from the center).</P>
+<P>* Upon reaching a urban block,  the agent get posted on its position (the report ''installation in progress&quot; is displayed).<BR>
+     Once it is done, the agent displays the report &quot;installation completed&quot; and moves to the next one.</P>
+<P>* Upon reaching the last urban block, the agent moves back to the first one and starts again. The mission continues until <BR>
+    another one is issued.</P>
+<P>* If there is no urban blocks within the area, the mission ends and the report &quot;no urban blocks within area&quot; is displayed.</P>]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -5320,4 +5382,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1549173354" -->
+<!-- signature="3006045003" -->
