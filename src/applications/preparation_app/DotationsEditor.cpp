@@ -46,7 +46,7 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const ::Stati
     setMinimumSize( 500, 500 );
 
     // Table
-    table_ = new Q3Table( 0, 2, this );
+    table_ = new KeyPressEditableTable( 0, 2, this );
     table_->setColumnStretchable( 0, true );
     table_->setColumnWidth( 1, 100 );
     table_->horizontalHeader()->setLabel( 0, tr( "Type" ) );
