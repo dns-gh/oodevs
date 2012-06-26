@@ -154,6 +154,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleEnterDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    oldPosition_ = geometry::Point2f();
+    kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event );
+    if( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) )
+        oldPosition_ = entity->Retrieve< kernel::Positions >()->GetPosition();
+    return gui::AgentsLayer::HandleEnterDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::HandleMoveDragEvent
 // Created: JSR 2011-12-22
 // -----------------------------------------------------------------------------
@@ -234,6 +247,39 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         else
             droppedItem->Instanciate( *selectedAutomat_.ConstCast(), point );
         return true;
+    }
+    else if( kernel::Entity_ABC* entity = gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) )
+        if( ( dynamic_cast< kernel::Agent_ABC* >( entity) || dynamic_cast< kernel::Automat_ABC* >( entity) || dynamic_cast< kernel::Formation_ABC* >( entity) ) && world_.IsInside( point ) )
+            oldPosition_ = geometry::Point2f();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleLeaveDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
+{
+    if( oldPosition_.IsZero() )
+        return false;
+    kernel::Entity_ABC* entity = 0;
+    if( selectedAgent_ )
+        entity = selectedAgent_.ConstCast();
+    else if( selectedAutomat_ )
+        entity = selectedAutomat_.ConstCast();
+    else if( selectedFormation_ )
+        entity = selectedFormation_.ConstCast();
+    else if( selectedTeam_ )
+        entity = selectedTeam_.ConstCast();
+    if( entity )
+    {
+        kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() );
+        if( position )
+        {
+            position->Move( oldPosition_ );
+            oldPosition_ = geometry::Point2f();
+            return true;
+        }
     }
     return false;
 }

@@ -171,6 +171,18 @@ void ExclusiveEventStrategy::HandleMoveDragEvent( QDragMoveEvent* event, const g
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::HandleLeaveDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
+{
+    if( layer_ )
+        layer_->HandleLeaveDragEvent( event );
+    else
+        forward_.HandleLeaveDragEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExclusiveEventStrategy::Register
 // Created: AGE 2007-01-15
 // -----------------------------------------------------------------------------

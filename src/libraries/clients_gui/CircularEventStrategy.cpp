@@ -126,6 +126,25 @@ namespace
         bool (MapLayer_ABC::*func_)( Event* button, const geometry::Point2f& point );
         bool testReadOnly_;
     };
+
+    struct DragLeaveFunctor : public ExclusiveFunctor
+    {
+        DragLeaveFunctor( QDragLeaveEvent* button, bool (MapLayer_ABC::*func)( QDragLeaveEvent* button ), bool testReadOnly = true )
+            : button_( button )
+            , func_( func )
+            , testReadOnly_( testReadOnly )
+        {};
+        bool operator()( MapLayer_ABC& layer )
+        {
+            if( testReadOnly_ && layer.IsReadOnly() )
+                return false;
+            return (layer.*func_)( button_ ) && exclusive_;
+        }
+        QDragLeaveEvent* button_;
+        bool (MapLayer_ABC::*func_)( QDragLeaveEvent* button );
+        bool testReadOnly_;
+    };
+
     typedef EventFunctor< QMouseEvent >     MouseFunctor;
     typedef EventFunctor< QDropEvent >      DropFunctor;
     typedef EventFunctor< QDragEnterEvent > DragFunctor;
@@ -269,4 +288,21 @@ void CircularEventStrategy::HandleMoveDragEvent( QDragMoveEvent*  event, const g
     if( !accept && default_ )
         accept = default_->HandleMoveDragEvent( event, point );
     event->accept( accept );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HandleLeaveDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
+{
+    bool accept = false;
+    rlast_ = layers_.rbegin();
+    accept = Apply( DragLeaveFunctor( event, &MapLayer_ABC::HandleLeaveDragEvent ) );
+    if( !accept && default_ )
+        accept = default_->HandleLeaveDragEvent( event );
+    if( accept )
+        event->accept();
+    else
+        event->ignore();
 }

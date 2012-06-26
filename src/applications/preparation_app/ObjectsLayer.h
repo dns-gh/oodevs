@@ -33,7 +33,9 @@ public:
     virtual bool HandleKeyPress( QKeyEvent* key );
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
     //@}
 
 private:
@@ -51,6 +53,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     std::auto_ptr< QWidget > dummy_;
     geometry::Point2f draggingPoint_;
+    geometry::Point2f oldPosition_;
     //@}
 };
 
