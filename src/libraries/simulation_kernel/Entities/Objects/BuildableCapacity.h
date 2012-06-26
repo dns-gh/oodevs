@@ -55,6 +55,7 @@ public:
     virtual void Finalize( MIL_Object_ABC& object );
     virtual void Register( MIL_Object_ABC& object );
     unsigned int GetDotationNumber( const TER_Localisation& location ) const;
+    void SetDensity( double density );
 
     void Construct( MIL_Object_ABC& object );
     void Construct( MIL_Object_ABC& object, float rDeltaPercentage );

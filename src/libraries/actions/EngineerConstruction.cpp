@@ -191,7 +191,7 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
             static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
-        else if( type == "density" )
+        else if( type == "float" )
             static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_density, boost::ref( message ), _1 ) );
         else if( type == "tc2" || type == "automate" || type == "automat" )
             static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &sword::AutomatId::set_id, boost::ref( *message.mutable_combat_train() ), _1 ) );
