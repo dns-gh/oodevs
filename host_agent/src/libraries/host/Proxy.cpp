@@ -241,9 +241,17 @@ bool Proxy::Reload( const Path& path )
 // -----------------------------------------------------------------------------
 Proxy::T_Process Proxy::MakeProcess() const
 {
-    return runtime_.Start( Utf8Convert( config_.java ), boost::assign::list_of
-            ( "-jar \""  + Utf8Convert( config_.jar.filename() ) + "\"" )
-            ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" ),
+    std::vector< std::string > args = boost::assign::list_of
+        ( "-jar \""  + Utf8Convert( config_.jar.filename() ) + "\"" )
+        ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" );
+    if( config_.ssl.port )
+    {
+        args.push_back( "--ssl \"" + boost::lexical_cast< std::string >( config_.ssl.port ) + "\"" );
+        args.push_back( "--ssl_store \"" + Utf8Convert( config_.ssl.store ) + "\"" );
+        args.push_back( "--ssl_type \"" + config_.ssl.type + "\"" );
+        args.push_back( "--ssl_password \"" + config_.ssl.password + "\"" );
+    }
+    return runtime_.Start( Utf8Convert( config_.java ), args,
             Utf8Convert( Path( config_.jar ).remove_filename() ),
             Utf8Convert( config_.log / "proxy.log" ) );
 }
