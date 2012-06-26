@@ -56,6 +56,21 @@ bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationsLayer::HandleEnterDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    oldPosition_ = geometry::Point2f();
+    if( kernel::Population_ABC* entity = dynamic_cast< kernel::Population_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+    {
+        PopulationPositions* position = static_cast< PopulationPositions* >( entity->Retrieve< kernel::Positions >() );
+        oldPosition_ = position->GetPosition( true );
+    }
+    return gui::PopulationsLayer::HandleEnterDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationsLayer::HandleMoveDragEvent
 // Created: JSR 2011-12-22
 // -----------------------------------------------------------------------------
@@ -105,8 +120,11 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
         PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event );
         if( !positions )
         {
-            if( Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( event ) )
+            if( kernel::Population_ABC* entity = dynamic_cast< kernel::Population_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+            {
                 positions = static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< Positions >() );
+                oldPosition_ = geometry::Point2f();
+            }
         }
         if( positions )
         {
@@ -114,6 +132,21 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
             draggingOffset_.Set( 0, 0 );
             return true;
         }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationsLayer::HandleLeaveDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+bool PopulationsLayer::HandleLeaveDragEvent( QDragLeaveEvent* event )
+{
+    if( selectedPopulation_ && !oldPosition_.IsZero() )
+    {
+        static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< kernel::Positions >() )->Move( oldPosition_ );
+        oldPosition_ = geometry::Point2f();
+        return true;
     }
     return false;
 }

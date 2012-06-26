@@ -65,6 +65,21 @@ bool ObjectsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectsLayer::HandleEnterDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+bool ObjectsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    oldPosition_ = geometry::Point2f();
+    if( kernel::Object_ABC* entity = dynamic_cast< kernel::Object_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+    {
+        ObjectPositions* position = static_cast< ObjectPositions* >( entity->Retrieve< kernel::Positions >() );
+        oldPosition_ = position->GetBoundingBox().Center();
+    }
+    return gui::ObjectsLayer::HandleEnterDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectsLayer::HandleMoveDragEvent
 // Created: JSR 2011-12-22
 // -----------------------------------------------------------------------------
@@ -110,6 +125,23 @@ bool ObjectsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& 
     if( selected_ && gui::ValuedDragObject::GetValue< ObjectPositions >( event ) )
     {
         draggingPoint_.Set( 0, 0 );
+        return true;
+    }
+    else if( dynamic_cast< kernel::Object_ABC* >( gui::ValuedDragObject::GetValue< kernel::Entity_ABC >( event ) ) )
+        oldPosition_ = geometry::Point2f();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsLayer::HandleLeaveDragEvent
+// Created: JSR 2012-06-26
+// -----------------------------------------------------------------------------
+bool ObjectsLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
+{
+    if( selected_ && !oldPosition_.IsZero() )
+    {
+        static_cast< ObjectPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() )->Move( oldPosition_ );
+        oldPosition_ = geometry::Point2f();
         return true;
     }
     return false;

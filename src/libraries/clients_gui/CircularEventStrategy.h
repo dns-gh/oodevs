@@ -51,6 +51,7 @@ public:
     virtual void HandleDropEvent       ( QDropEvent*  event,     const geometry::Point2f& point );
     virtual void HandleEnterDragEvent  ( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual void HandleMoveDragEvent   ( QDragMoveEvent*  event, const geometry::Point2f& point );
+    virtual void HandleLeaveDragEvent  ( QDragLeaveEvent*  event                                );
     //@}
 
 private:

@@ -44,8 +44,10 @@ public:
     //@{
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleKeyPress( QKeyEvent* key );
+    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
     //@}
 
 private:
@@ -75,6 +77,7 @@ private:
     kernel::SafePointer< kernel::Team_ABC >      selectedTeam_;
     geometry::Point2f                            draggingPoint_;
     geometry::Point2f                            draggingOffset_;
+    geometry::Point2f                            oldPosition_;
     //@}
 };
 
