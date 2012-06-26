@@ -59,6 +59,8 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -101,14 +103,14 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer">
-          <fragorder name="Pion Appliquer Feux"/>
-        </mission>
         <mission name="PION MELEE Appuyer Sur Position">
           <fragorder name="Pion Appliquer Feux"/>
         </mission>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Appuyer En Mouvement">
+          <fragorder name="Pion Appliquer Feux"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -153,7 +155,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -1891,7 +1893,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Surveiller"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -1899,6 +1900,8 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Interdire"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1950,6 +1953,8 @@
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2045,7 +2050,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Controler">
           <fragorder name="Abandonner travaux"/>
@@ -2066,6 +2070,8 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2109,7 +2115,6 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Escorter"/>
         <mission name="PION MELEE Intercepter">
@@ -2130,6 +2135,8 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2190,6 +2197,8 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2236,7 +2245,7 @@
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Contre Attaquer">
@@ -2310,7 +2319,7 @@
         <mission name="PION MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Boucler"/>
         <mission name="PION MELEE Contre Attaquer">
@@ -2481,7 +2490,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Armer PIA"/>
         <mission name="PION MELEE Controler">
@@ -2543,7 +2552,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
@@ -4805,7 +4814,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -4897,7 +4906,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -4950,7 +4960,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -4988,6 +4999,7 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
         <mission name="AUTOMATE HLA Debarquer"/>
         <mission name="AUTOMATE HLA Embarquer"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5061,7 +5073,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Defendre">
@@ -5077,6 +5089,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
+        <mission name="AUTOMATE MELEE Donner Coup Arret"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5112,7 +5125,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Defendre">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5163,7 +5177,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE COMMUNES Interroger"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5220,7 +5235,8 @@
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Donner Coup Arret">
           <fragorder name="Activer Obstacles"/>
@@ -5371,7 +5387,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -5455,7 +5471,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5513,7 +5530,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -5836,7 +5853,8 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
+        <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Couvrir"/>
         <mission name="AUTOMATE MELEE Controler">
           <fragorder name="Activer Obstacles"/>
@@ -6653,7 +6671,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE MELEE Appuyer"/>
+        <mission name="AUTOMATE MELEE Appuyer En Mouvement"/>
         <mission name="AUTOMATE MELEE Appuyer Sur Position"/>
         <mission name="AUTOMATE MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -7461,4 +7479,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3162548771" -->
+<!-- signature="2986606396" -->

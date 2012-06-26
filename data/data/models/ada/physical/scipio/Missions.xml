@@ -517,7 +517,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Appuyer" dia-type="france.military.platoon.tasks.Appuyer" id="2062" name="PION MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
+    <mission dia-behavior="france.military.platoon.tasks.Appuyer" dia-type="france.military.platoon.tasks.Appuyer" id="2062" name="PION MELEE Appuyer En Mouvement" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2387,7 +2387,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer En Mouvement" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3468,4 +3468,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0698326016" -->
+<!-- signature="3479701925" -->
