@@ -2837,14 +2837,6 @@ This data can&apos;t be projected.</source>
         <translation>Control de simulación</translation>
     </message>
     <message>
-        <source>Connect (C)</source>
-        <translation>Conectar (C)</translation>
-    </message>
-    <message>
-        <source>Pause (P)</source>
-        <translation>Pausa (P)</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -2857,19 +2849,27 @@ This data can&apos;t be projected.</source>
         <translation>Conectando</translation>
     </message>
     <message>
-        <source>Disconnect (C)</source>
-        <translation>Desconectar (C)</translation>
-    </message>
-    <message>
-        <source>Unpause (P)</source>
-        <translation>Continuar (P)</translation>
-    </message>
-    <message>
         <source>Speed factor: </source>
         <translation>Factor de velocidad: </translation>
     </message>
     <message>
-        <source>Step (S)</source>
+        <source>Connect (Alt+C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause (Alt+P)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step (Alt+S)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnect (Alt+C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unpause (Alt+P)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
