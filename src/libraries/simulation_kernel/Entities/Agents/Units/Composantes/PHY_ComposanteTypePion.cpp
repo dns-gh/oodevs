@@ -199,7 +199,7 @@ PHY_ComposanteTypePion::~PHY_ComposanteTypePion()
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeBreakdownTypes( xml::xistream& xis )
 {
-    if( GetProtection().IsHuman() )
+    if( GetProtection().IsHuman() || GetProtection().IsCrowd() )
         return;
     attritionBreakdownTypeProbabilities_.clear();
     randomBreakdownTypeProbabilities_.clear();
