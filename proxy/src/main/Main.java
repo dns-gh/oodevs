@@ -1,7 +1,5 @@
 package main;
 
-import java.io.File;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -12,6 +10,7 @@ class Main {
     private static void parseParameters(final Agent.Configuration config, final String[] args) throws Exception {
         config.port = 8080;
         config.isDebug = false;
+        config.ssl = 0;
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
             if (it.equals("--port")) {
@@ -21,9 +20,19 @@ class Main {
             } else if (it.equals("--ssl")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --ssl parameter");
-                config.ssl = args[++i];
-                if (!new File(config.ssl).isFile())
-                    throw new Exception("Missing SSL configuration file");
+                config.ssl = Integer.parseInt(args[++i]);
+            } else if (it.equals("--ssl_store")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --ssl_store parameter");
+                config.store = args[++i];
+            } else if (it.equals("--ssl_type")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --ssl_type parameter");
+                config.type = args[++i];
+            } else if (it.equals("--ssl_password")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --ssl_password parameter");
+                config.password = args[++i];
             } else if (it.equals("--debug")) {
                 config.isDebug = true;
             } else {
@@ -35,8 +44,11 @@ class Main {
     private static void printParameters(final Agent.Configuration config) {
         log_.info("port:  " + config.port);
         log_.info("debug: " + (config.isDebug ? "true" : "false"));
-        if (!config.ssl.isEmpty())
-            log_.info("ssl: " + config.ssl);
+        if (config.ssl == 0)
+            return;
+        log_.info("ssl: " + config.ssl);
+        log_.info("store: " + config.store);
+        log_.info("type: " + config.type);
     }
 
     public static void main(final String[] args) {

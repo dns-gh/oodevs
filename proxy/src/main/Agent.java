@@ -1,7 +1,6 @@
 package main;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -17,8 +16,6 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlets.GzipFilter;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 public class Agent {
 
@@ -28,7 +25,10 @@ public class Agent {
     public static class Configuration {
         public int port;
         public boolean isDebug;
-        public String ssl;
+        public int ssl;
+        public String store;
+        public String type;
+        public String password;
     };
 
     public Agent(final Configuration config) throws Exception {
@@ -52,20 +52,18 @@ public class Agent {
         plain.setPort(config.port);
         links.add(plain);
 
-        final File sslFile = new File(config.ssl);
+        final File sslFile = new File(config.store);
         if (sslFile.isFile()) {
-            final JSONParser parser = new JSONParser();
-            final JSONObject cfg = (JSONObject) parser.parse(new FileReader(sslFile));
             final SslSelectChannelConnector ssl = new SslSelectChannelConnector();
-            ssl.setPort(Integer.parseInt((String) cfg.get("port")));
+            ssl.setPort(config.ssl);
             final org.eclipse.jetty.util.ssl.SslContextFactory scf = ssl.getSslContextFactory();
             scf.setExcludeProtocols("SSLv2Hello");
-            scf.setKeyStoreType((String) cfg.get("type"));
-            String path = (String) cfg.get("path");
+            scf.setKeyStoreType(config.type);
+            String path = config.store;
             if (!new File(path).isAbsolute())
                 path = sslFile.getParentFile() + File.separator + path;
             scf.setKeyStorePath(path);
-            scf.setKeyStorePassword((String) cfg.get("password"));
+            scf.setKeyStorePassword(config.password);
             links.add(ssl);
         }
 
