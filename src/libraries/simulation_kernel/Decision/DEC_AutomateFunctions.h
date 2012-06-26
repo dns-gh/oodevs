@@ -40,6 +40,7 @@ public:
     static std::vector< DEC_Decision_ABC* > GetAutomates( const MIL_Automate& callerAutomate );
     static bool IsParentAutomateEngaged( const MIL_Automate& callerAutomate );
     static int GetRoePopulation( MIL_Automate& callerAutomate );
+    static int GetRulesOfEngagementState( MIL_Automate& callerAutomate );
 
     static std::vector< DEC_Decision_ABC* > GetPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat );
     static void NotifyRulesOfEngagementStateChanged( MIL_Automate& callerAutomate, int state );

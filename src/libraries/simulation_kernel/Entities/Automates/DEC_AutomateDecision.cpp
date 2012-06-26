@@ -212,7 +212,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
 
     // State
     brain[ "DEC_Automate_EstEmbraye" ] = boost::bind( &DEC_AutomateFunctions::IsEngaged, this );
-    brain[ "DEC_Automate_ROE" ] = boost::bind( &DEC_AutomateFunctions::GetRoePopulation, boost::ref( GetAutomate() ) );
+    brain[ "DEC_Automate_ROE" ] = boost::bind( &DEC_AutomateFunctions::GetRulesOfEngagementState, boost::ref( GetAutomate() ) );
     brain[ "DEC_Automate_ChangeEtatROE" ] =
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Automate_ChangeEtatROEPopulation" ] =
@@ -872,4 +872,13 @@ void DEC_AutomateDecision::Reload()
 {
     DEC_Decision< MIL_Automate >::Reload();
     bStateHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::GetRulesOfEngagementState
+// Created: LGY 2012-06-26
+// -----------------------------------------------------------------------------
+int DEC_AutomateDecision::GetRulesOfEngagementState() const
+{
+    return nRulesOfEngagementState_;
 }
