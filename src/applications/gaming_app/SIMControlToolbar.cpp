@@ -116,21 +116,21 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     setWindowTitle( tr( "Simulation control" ) );
     pConnectButton_ = new QToolButton( this );
     pConnectButton_->setIconSet( disconnectPix_ );
-    pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
-    pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) );
+    pConnectButton_->setTextLabel( tr( "Connect (Alt+C)" ) );
+    pConnectButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_C ) );
 
     pPlayButton_ = new QToolButton( this );
     pPlayButton_->setIconSet( MAKE_ICON( stop ) );
-    pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
-    pPlayButton_->setShortcut( QKeySequence( Qt::Key_P ) );
+    pPlayButton_->setTextLabel( tr( "Pause (Alt+P)" ) );
+    pPlayButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_P ) );
     pPlayButton_->setEnabled( false );
 
     pStepButton_ = new QToolButton( this );
     pStepButton_->setAccel( Qt::Key_S );
     pStepButton_->setIconSet( MAKE_ICON( step ) );
-    pStepButton_->setTextLabel( tr( "Step (S)" ) );
+    pStepButton_->setTextLabel( tr( "Step (Alt+S)" ) );
     pStepButton_->setEnabled( false );
-    pStepButton_->setShortcut( QKeySequence( Qt::Key_S ) );
+    pStepButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_S ) );
 
     pSpeedSpinBox_ = new SpinBox( 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
@@ -210,8 +210,8 @@ void SIMControlToolbar::SlotConnectDisconnect()
         pConnectButton_->setTextLabel( tr( "Connecting" ) );
         pConnectDlg_->exec();
         pConnectButton_->setIconSet( disconnectPix_ );
-        pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
-        pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) ); // bug QT setText() function overwrites the already defined shortcut
+        pConnectButton_->setTextLabel( tr( "Connect (Alt+C)" ) );
+        pConnectButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_C ) ); // bug QT setText() function overwrites the already defined shortcut
     }
 }
 
@@ -325,7 +325,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         {
             pConnectButton_->setPopupMode( QToolButton::InstantPopup );
             pConnectButton_->setIconSet( connectPix_ );
-            pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
+            pConnectButton_->setTextLabel( tr( "Disconnect (Alt+C)" ) );
             pConnectButton_->setPopup( 0 );
             pPlayButton_->setEnabled( true );
             pStepButton_->setEnabled( true );
@@ -338,7 +338,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         {
             pConnectButton_->setPopupMode( QToolButton::MenuButtonPopup );
             pConnectButton_->setIconSet( disconnectPix_ );
-            pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
+            pConnectButton_->setTextLabel( tr( "Connect (Alt+C)" ) );
             pConnectButton_->setFocus();
             {
                 kernel::ContextMenu* popup = new kernel::ContextMenu( pConnectButton_ );
@@ -352,7 +352,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pSpeedButton_->setEnabled( false );
             pCheckpointButton_->setEnabled( false );
         }
-        pConnectButton_->setShortcut( QKeySequence( Qt::Key_C ) ); // Bug Qt : setText() function overwrites the already defined shortcut
+        pConnectButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_C ) ); // Bug Qt : setText() function overwrites the already defined shortcut
     }
 
     if( paused_ != simulation.IsPaused() )
@@ -361,14 +361,14 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         if( paused_ )
         {
             pPlayButton_->setIconSet( playPix_ );
-            pPlayButton_->setTextLabel( tr( "Unpause (P)" ) );
+            pPlayButton_->setTextLabel( tr( "Unpause (Alt+P)" ) );
         }
         else
         {
             pPlayButton_->setIconSet( stopPix_ );
-            pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
+            pPlayButton_->setTextLabel( tr( "Pause (Alt+P)" ) );
         }
-        pPlayButton_->setShortcut( QKeySequence( Qt::Key_P ) );
+        pPlayButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_P ) );
     }
 
     if( speed_ != simulation.GetSpeed() )

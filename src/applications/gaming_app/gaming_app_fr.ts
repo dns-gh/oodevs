@@ -2855,14 +2855,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Contrôle de la simulation</translation>
     </message>
     <message>
-        <source>Connect (C)</source>
-        <translation>Connexion (C)</translation>
-    </message>
-    <message>
-        <source>Pause (P)</source>
-        <translation>Pause (P)</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -2875,20 +2867,28 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Connexion en cours</translation>
     </message>
     <message>
-        <source>Disconnect (C)</source>
-        <translation>Déconnexion (C)</translation>
-    </message>
-    <message>
-        <source>Unpause (P)</source>
-        <translation>Reprendre (P)</translation>
-    </message>
-    <message>
         <source>Speed factor: </source>
         <translation>Jeu accéléré: </translation>
     </message>
     <message>
-        <source>Step (S)</source>
-        <translation>Pas à pas (S)</translation>
+        <source>Connect (Alt+C)</source>
+        <translation>Connexion (Alt+C)</translation>
+    </message>
+    <message>
+        <source>Pause (Alt+P)</source>
+        <translation>Pause (Alt+P)</translation>
+    </message>
+    <message>
+        <source>Step (Alt+S)</source>
+        <translation>Pas à pas (Alt+S)</translation>
+    </message>
+    <message>
+        <source>Disconnect (Alt+C)</source>
+        <translation>Déconnexion (Alt+C)</translation>
+    </message>
+    <message>
+        <source>Unpause (Alt+P)</source>
+        <translation>Reprendre (Alt+P)</translation>
     </message>
 </context>
 <context>
