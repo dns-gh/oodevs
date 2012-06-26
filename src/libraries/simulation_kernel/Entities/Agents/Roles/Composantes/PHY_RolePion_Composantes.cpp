@@ -129,6 +129,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
     , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
     , bIsSurrender_               ( false )
+    , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
     if( initialize ) // $$$$ LDC: Set to false for debug in order to avoid useless creation of crap.
