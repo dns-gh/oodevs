@@ -463,7 +463,7 @@ public:
     public:
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::ResourceInfos> ptrDotation_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>  ptrCategory_;
-        ADN_Type_Double                                              rNbr_;
+        ADN_Type_Int                                                 rNbr_;
         ADN_Type_Double                                              rLogThreshold_;
         ADN_Type_Double                                              rNormalizedConsumption_;
     };
