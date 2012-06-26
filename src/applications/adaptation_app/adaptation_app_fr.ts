@@ -2370,7 +2370,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Doctrine models</source>
-        <translation>Modèles de doctrine</translation>
+        <translation>Modèles décisionnels</translation>
     </message>
 </context>
 <context>
@@ -6371,7 +6371,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Doctrine models</source>
-        <translation>Modèles de doctrine</translation>
+        <translation>Modèles décisionnels</translation>
     </message>
     <message>
         <source>Units</source>
@@ -6499,7 +6499,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Automate - Modèle invalide &apos;%1&apos;</translation>
+        <translation>Automate - Modèle décisionnel invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6875,7 +6875,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Type de pion - Modèle de doctrine &quot;%1&quot; invalide</translation>
+        <translation>Type de pion - Modèle décisionnel &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
