@@ -106,6 +106,7 @@
         <mission name="SAFETY - Resume construction works"/>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Reinforce"/>
+        <mission name="SAFETY - Perform deconstruction works"/>
       </missions>
       <fragorders/>
     </unit>
@@ -4008,4 +4009,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1499046117" -->
+<!-- signature="3936587134" -->
