@@ -6,7 +6,6 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <strstream>
 #include <fstream>
 #include <sstream>
 #include <cstring>
@@ -53,7 +52,6 @@
 #define LL_ERROR	4
 #define LL_FATAL	5
 
-
 // ------------------------------ CONFIGURATION ------------------------------
 
 //#define CPPLOG_FILTER_LEVEL				LL_WARN
@@ -62,7 +60,6 @@
 #define CPPLOG_HELPER_MACROS
 #define CPPLOG_FATAL_EXIT
 //#define CPPLOG_FATAL_EXIT_DEBUG
-
 
 // ---------------------------------- CODE -----------------------------------
 
@@ -88,7 +85,6 @@
 #define CPPLOG_FILTER_LEVEL LL_DEBUG
 #endif
 
-
 // The general concept for how logging works:
 //	- Every call to LOG(LEVEL, logger) works as follows:
 //		- Instantiates an object of type LogMessage.
@@ -99,7 +95,6 @@
 //		  messages' stream is sent to the specified logger.
 //		- When a LogMessage's destructor is called, it calls sendToLogger() to send all
 //		  remaining data.
-
 
 namespace cpplog
 {
@@ -172,11 +167,8 @@ namespace cpplog
 	// when the destructor is called.
 	struct LogData
 	{
-		// Constant.
-		static const size_t k_logBufferSize = 20000;
-
 		// Our stream to log data to.
-		std::ostrstream	stream;
+		std::stringstream stream;
 
 		// Captured data.
 		unsigned int level;
@@ -192,18 +184,15 @@ namespace cpplog
 		unsigned long threadId;
 #endif
 
-		// Buffer for our text.
-		char buffer[k_logBufferSize];
-
 		// Constructor that initializes our stream.
 		LogData(loglevel_t logLevel)
-			: stream(buffer, k_logBufferSize), level(logLevel)
+			: stream(), level(logLevel)
 			, line(0), fullPath(0), fileName(0)
 #ifdef CPPLOG_SYSTEM_IDS
 			  , processId(0), threadId(0)
 #endif
 		{
-			*buffer = 0;
+			// NOTHING
 		}
 
 		virtual ~LogData()
@@ -315,13 +304,7 @@ namespace cpplog
 		{
 			if( !m_flushed )
 			{
-				// Check if we have a newline.
-				char lastChar = m_logData->buffer[m_logData->stream.pcount() - 1];
-				if( lastChar != '\n' )
-					m_logData->stream << std::endl;
-
-				// Null-terminate.
-				m_logData->stream << '\0';
+				m_logData->stream << std::endl;
 
 				// Save the log level.
 				loglevel_t savedLogLevel = m_logData->level;
@@ -390,7 +373,7 @@ namespace cpplog
 
 		virtual bool sendLogMessage(LogData* logData)
 		{
-			m_logStream	<< logData->buffer;
+			m_logStream	<< logData->stream.str();
 			m_logStream	<< std::flush;
 
 			return true;
@@ -514,7 +497,6 @@ namespace cpplog
 
 			return deleteMessage;
 		}
-
 
 	private:
 		void RotateLog()
@@ -869,7 +851,6 @@ namespace cpplog
 			// Don't delete - the background thread should handle this.
 			return false;
 		}
-
 	};
 
 #endif
@@ -944,8 +925,6 @@ namespace cpplog
 // Note: Always logged.
 #define LOG_FATAL(logger)	LOG_LEVEL(LL_FATAL, logger)
 
-
-
 // Debug macros - only logged in debug mode.
 #ifdef _DEBUG
 #define DLOG_TRACE(logger)	LOG_TRACE(logger)
@@ -980,12 +959,10 @@ namespace cpplog
 #define DLOG_LL_ERROR(logger)	DLOG_ERROR(logger)
 #define DLOG_LL_FATAL(logger)	DLOG_FATAL(logger)
 
-
 // Helper - if you want to do:
 //		LOG(LL_FATAL, logger)
 #define LOG(level, logger)	LOG_##level(logger)
 #define DLOG(level, logger)	DLOG_##level(logger)
-
 
 // Log conditions.
 #define LOG_IF(level, logger, condition)		!(condition) ? (void)0 : cpplog::helpers::VoidStreamClass() & LOG_##level(logger)
@@ -1002,11 +979,9 @@ namespace cpplog
 													cpplog::helpers::VoidStreamClass() & LOG_##level(logger)
 #endif
 
-
 // Assertion helpers.
 #define LOG_ASSERT(logger, condition)			LOG_IF_NOT(LL_FATAL, logger, (condition)) << "Assertion failed: " #condition
 #define DLOG_ASSERT(logger, condition)			DLOG_IF_NOT(LL_FATAL, logger, (condition)) << "Assertion failed: " #condition
-
 
 // Only include further helper macros if we are supposed to.
 #ifdef CPPLOG_HELPER_MACROS
@@ -1027,7 +1002,6 @@ namespace cpplog
 #define CHECK_NE(logger, ex1, ex2)			__CHECK(logger, (ex1) != (ex2), #ex1 " != " #ex2)
 #define CHECK_NOT_EQUAL(logger, ex1, ex2)	__CHECK(logger, (ex1) != (ex2), #ex1 " != " #ex2)
 
-
 // String helpers.
 #define CHECK_STREQ(logger, s1, s2)			__CHECK(logger, strcmp((s1), (s2)) == 0, "") << s1 << " == " << s2
 #define CHECK_STRNE(logger, s1, s2)			__CHECK(logger, strcmp((s1), (s2)) != 0, "") << s1 << " != " << s2
@@ -1035,8 +1009,6 @@ namespace cpplog
 // NULL helpers.
 #define CHECK_NULL(logger, exp)				__CHECK(logger, (exp) == NULL, #exp " == NULL")
 #define CHECK_NOT_NULL(logger, exp)			__CHECK(logger, (exp) != NULL, #exp " != NULL")
-
-
 
 // Debug versions of above.
 #ifdef _DEBUG
@@ -1066,7 +1038,6 @@ namespace cpplog
 #define DCHECK_NULL(logger, exp)			while(false) CHECK_NULL(logger, exp)
 #define DCHECK_NOT_NULL(logger, exp)		while(false) CHECK_NOT_NULL(logger, exp)
 #endif
-
 
 #endif
 
