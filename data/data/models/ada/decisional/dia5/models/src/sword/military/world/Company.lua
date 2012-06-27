@@ -287,15 +287,31 @@ return
         local santePriorites = {}	
         local etatROEPopulation = -1
         local etatROE = -1
-        if DEC_Automate_isLogistic() then
-            saintRegimeTravail = DEC_Maintenance_RegimeTravail()
-            santePrioritesTact = DEC_Sante_PrioritesTactiques()
-            maintPrioritesTact = DEC_Maintenance_PrioritesTactiques()
-            maintPriorites = DEC_Maintenance_Priorites()
-            santePriorites = DEC_Sante_Priorites()
+        if DEC_Automate_isLogistic then
+            if DEC_Automate_isLogistic() then
+                if DEC_Maintenance_RegimeTravail then
+                    saintRegimeTravail = DEC_Maintenance_RegimeTravail()
+                end
+                if DEC_Sante_PrioritesTactiques then
+                    santePrioritesTact = DEC_Sante_PrioritesTactiques()
+                end
+                if DEC_Maintenance_PrioritesTactiques then
+                    maintPrioritesTact = DEC_Maintenance_PrioritesTactiques()
+                end
+                if DEC_Maintenance_Priorites then
+                    maintPriorites = DEC_Maintenance_Priorites()
+                end
+                if DEC_Sante_Priorites then
+                    santePriorites = DEC_Sante_Priorites()
+                end
+            end
         end
-        etatROEPopulation = DEC_Automate_ROEPopulation()
-        etatROE = DEC_Automate_ROE()
+        if DEC_Automate_ROEPopulation then
+            etatROEPopulation = DEC_Automate_ROEPopulation()
+        end
+        if DEC_Automate_ROE then
+            etatROE = DEC_Automate_ROE()
+        end
         meKnowledge:sendDataToNewUnitInAutomat( unit, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE )
     end,
 }
