@@ -73,7 +73,8 @@ rootnode
               myself.isEscorted = false
               self.escortUnit = nil
               Activate( skill.links.moveToward, 1, { entities  = { self.params.entities[ self.nextTargetIndex ] } , 
-                                                   positions = { self.params.entities[ self.nextTargetIndex ] } } )
+                                                   positions = { self.params.entities[ self.nextTargetIndex ] },
+                                                    pathType = self.params.pathType } )
           end
         end
     end,
