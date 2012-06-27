@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.rens.skills.ROIM_RenseignerSur" source-version="1.0.0">
-    <parameters>
-        <parameter name="ficelleDeVol">
-            <type>
-                <list>
-                    <class name="sword.military.world.Point"/>
-                </list>
-            </type>
-        </parameter>
-    </parameters>
-    <links>
-        <link name="moveAlong" skill="france.military.platoon.skills.MoveAlong"/>
-        <link name="decoller" skill="france.military.platoon.combat.support.air.skills.Decoller"/>
-        <link name="atterir" skill="france.military.platoon.combat.support.air.skills.Atterrir"/>
-    </links>
+	<parameters>
+		<parameter name="ficelleDeVol">
+			<type>
+				<list>
+					<class name="sword.military.world.Point"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<links>
+		<link name="moveAlong" skill="sword.military.platoon.skills.actions.MoveAndTakePosition"/>
+		<link name="decoller" skill="france.military.platoon.combat.support.air.skills.Decoller"/>
+		<link name="atterir" skill="france.military.platoon.combat.support.air.skills.Atterrir"/>
+	</links>
 </skill>
