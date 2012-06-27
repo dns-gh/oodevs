@@ -8,11 +8,11 @@ queryImplementation "GetResourceNodesWithinArea"
 {
     ["execute"] = function ( params )
         local allRes = {}
-        local resourceNodes = DEC_ResourceNetwork_NodesInZone( params.area.source )
+        local resourceNodes = DEC_ResourceNetwork_NodesInZone( meKnowledge.source, params.area.source )
         for _, resourceNode in pairs( resourceNodes ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.ResourceNode, resourceNode )
         end
-        -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release
+        -- affichePositions( allRes ) -- $$$ MIA: to debug.
         if not next( allRes ) then
             meKnowledge:sendReport( eRC_NoResourceNodesWithinArea )
         end
