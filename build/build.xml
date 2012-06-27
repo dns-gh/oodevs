@@ -1635,7 +1635,6 @@
             <zipfileset dir="${data.dir}">
                 <include name="data/models/ada/decisional/bms/**"/>
                 <include name="data/models/ada/decisional/dia5/**"/>
-                <exclude name="data/models/ada/decisional/dia5/models/src/france/**"/>
                 <exclude name="data/models/ada/decisional/dia5/models/security_test/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
