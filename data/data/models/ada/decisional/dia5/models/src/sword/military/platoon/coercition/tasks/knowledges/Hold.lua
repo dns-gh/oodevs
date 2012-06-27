@@ -1,5 +1,9 @@
 local result = 
 {
+    getPionEfficiency = function( self )
+        return ePionEfficiencyCombat
+    end,
+
     fillParameters = function( self, companyTask, params )
         local objectives = companyTask:getObjectives( params )
         local obstacles = companyTask:getObstaclesPlanForMelee( params )

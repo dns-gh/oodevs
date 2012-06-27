@@ -7,7 +7,11 @@ local result =
             paramsPositions[ #paramsPositions + 1 ] = objective:getMyPosition()
         end
         return { objectives = paramsPositions, fuseau = fuseau }
-    end
+    end,
+    
+    getPionEfficiency = function( self )
+        return ePionEfficiencyRecon
+    end,
 }
 
 local t = initTaskKnowledge( result )
