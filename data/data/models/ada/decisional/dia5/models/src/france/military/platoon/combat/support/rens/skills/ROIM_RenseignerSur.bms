@@ -7,6 +7,7 @@ rootnode
             meKnowledge:sendEndOfMission( pion, meKnowledge, false )
         end
         Feedback( self.feedbacks.done )
+        meKnowledge.source:SetbMiseEnOeuvre_ ( false )
     end,
     
     create = function( self )
@@ -52,7 +53,6 @@ rootnode
     
     destroy = function( self )
         meKnowledge.source:SetbEnExploitation_ ( false )
-        meKnowledge.source:SetbMiseEnOeuvre_ ( false )
     end,
     
 }
