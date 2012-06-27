@@ -48,7 +48,7 @@ end,
                 end
                 self.itineraryToSupplier[#self.itineraryToSupplier + 1] = self.ravitailleur:getMyPosition()
             end
-            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplier } )
+            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplier, pathType = eTypeItiLogistique } )
             if( self.arrived ) then
                 self.arrived = false
                 integration.deplacementVersRavitailleurEffectue()

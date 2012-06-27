@@ -10,6 +10,24 @@
         </list>
       </type>
     </parameter>
+    <parameter name="pathType">
+            <description>Le type de d'itineraire à emprunter est défini numéruiquement par une énumération. Une valeur de 0 correspond au type d'initéraire &quot;mouvement&quot;, qui favorise les routes ou tout type de terrain permettant d'aller &quot;au plus vite&quot;. &#xD;
+Les valeurs sont:&#xD;
+eTypeItiMouvement = 0&#xD;
+eTypeItiReconnaissance = 1&#xD;
+eTypeItiInfiltration = 2&#xD;
+eTypeItiAttaque = 3&#xD;
+eTypeItiRepli = 4&#xD;
+eTypeItiAppui = 5&#xD;
+eTypeItiDeminage = 6&#xD;
+eTypeItiLogistique = 7</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.0</number>
+            </default>
+        </parameter>
   </parameters>
   <goal>
     <description>Se déplacer vers tous les objectifs. Les objectifs sont parcourus de proche en proche.</description>

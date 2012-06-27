@@ -601,3 +601,12 @@ integration.isLogisticTypeUnit = function( )
         return false
     end
 end
+
+integration.isLogisticConvoy = function( platoon )
+    local typePion = DEC_Pion_GetMilPionType( platoon )
+    if typePion == "Pion LOG Convoi" then
+        return true
+    else
+        return false
+    end
+end
