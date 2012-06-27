@@ -41,7 +41,7 @@ rootnode
         self.nextTargetIndex = 1
         self.report = nil
         self.elementToRemove = nil
-        self.obstacles = {}
+        self.obstacles = sword.military.queries.objects.getObstaclesAroundMe[ "execute" ]({ distance = 100 })
     end,
 
     -- -------------------------------------------------------------------------------- 

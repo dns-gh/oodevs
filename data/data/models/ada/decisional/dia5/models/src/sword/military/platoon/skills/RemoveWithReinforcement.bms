@@ -30,7 +30,7 @@ rootnode
     create = function( self )
         self.nextTargetIndex = 1
         self.report = nil
-        self.obstacles = {}
+        self.obstacles = sword.military.queries.objects.getObstaclesAroundMe[ "execute" ]({ distance = 100 })
     end,
 
     -- -------------------------------------------------------------------------------- 
