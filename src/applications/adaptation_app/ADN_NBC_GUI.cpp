@@ -53,7 +53,7 @@ void ADN_NBC_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Propagation
     Q3GroupBox* pPropagationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Propagation" ) );
@@ -68,25 +68,29 @@ void ADN_NBC_GUI::Build()
     // Specific parameter
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     // effect
     Q3HBox* effectGroup = new Q3HBox();
     effectGroup->setSpacing( 5 );
     // Liquid
     ADN_GroupBox* liquidGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Liquid" ), effectGroup );
+    liquidGroup->setObjectName( strClassName_ + "_Liquid" );
     ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup );
-    vInfosConnectors[eLiquidGroup] = &liquid->GetConnector();
-    vInfosConnectors[eLiquidGroupPresent] = &liquidGroup->GetConnector();
+    liquid->setObjectName( strClassName_ + "_LiquidIntox" );
+    vInfosConnectors[ eLiquidGroup ] = &liquid->GetConnector();
+    vInfosConnectors[ eLiquidGroupPresent ] = &liquidGroup->GetConnector();
     // Gasous
     ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaseous" ), effectGroup );
-    vInfosConnectors[eGazGroupPresent] = &gazGroup->GetConnector();
+    gazGroup->setObjectName( strClassName_ + "_Gaz" );
+    vInfosConnectors[ eGazGroupPresent ] = &gazGroup->GetConnector();
     ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup );
-    vInfosConnectors[eGazGroup] = &gaz->GetConnector();
+    gaz->setObjectName( strClassName_ + "_GazIntox" );
+    vInfosConnectors[ eGazGroup ] = &gaz->GetConnector();
     QWidget* pHolder = builder.AddFieldHolder( gazGroup );
     // Span
-    ADN_TimeField* pField = builder.AddField<ADN_TimeField>( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
+    ADN_TimeField* pField = builder.AddField< ADN_TimeField >( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
     pField->SetMinimumValueInSecond( 1 );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
     builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
 
     // -------------------------------------------------------------------------

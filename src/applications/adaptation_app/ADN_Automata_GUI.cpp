@@ -72,12 +72,12 @@ void ADN_Automata_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     // Automaton type
     builder.AddEnumField<E_AgentTypeAutomate>( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType], ADN_Tr::ConvertFromAgentTypeAutomate );
     // Model
@@ -92,6 +92,7 @@ void ADN_Automata_GUI::Build()
     QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
+    pSubUnitsTable->setObjectName( strClassName_ + "_Subunits" );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
     pSubUnitsLayout->addWidget( pSubUnitsTable, 1 );
     vInfosConnectors[eSubUnit] = &pSubUnitsTable->GetConnector();
@@ -114,6 +115,7 @@ void ADN_Automata_GUI::Build()
     ADN_SearchListView< ADN_Automata_ListView >* pSearchListView = new ADN_SearchListView< ADN_Automata_ListView >( data_.GetAutomata(), vInfosConnectors );
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pAutomataList_ = pSearchListView->GetListView();
+    pAutomataList_->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

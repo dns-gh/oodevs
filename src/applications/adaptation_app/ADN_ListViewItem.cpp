@@ -106,7 +106,7 @@ private:
 ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
 :   Q3ListViewItem(parent, parent?parent->lastItem ():0 )
 ,   pData_(item)
-,   vConnectors_(ncol,(ADN_Connector_ABC*)0 )
+,   vConnectors_(ncol,static_cast< ADN_Connector_ABC* >( 0 ) )
 {
     int size=parent->columns();
     if (parent && size<ncol )

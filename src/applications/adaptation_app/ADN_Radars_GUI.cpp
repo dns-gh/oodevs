@@ -51,36 +51,42 @@ void ADN_Radars_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vConnectors[eName] );
-    builder.AddEnumField<E_RadarType>( pInfoHolder,  tr( "Type" ), vConnectors[eType], ADN_Tr::ConvertFromRadarType );
-    builder.AddField<ADN_EditLine_Double>( pInfoHolder, tr( "Range" ), vConnectors[eRange], tr( "m" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pInfoHolder, tr( "Min. height" ), vConnectors[eHasMinHeight], vConnectors[eMinHeight], tr( "m" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pInfoHolder, tr( "Max. height" ), vConnectors[eHasMaxHeight], vConnectors[eMaxHeight], tr( "m" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    builder.AddEnumField< E_RadarType >( pInfoHolder,  tr( "Type" ), vConnectors[ eType ], ADN_Tr::ConvertFromRadarType );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Range" ), vConnectors[ eRange ], tr( "m" ), eGreaterEqualZero );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pInfoHolder, tr( "Min. height" ), vConnectors[ eHasMinHeight ], vConnectors[ eMinHeight ], tr( "m" ), eGreaterEqualZero );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pInfoHolder, tr( "Max. height" ), vConnectors[ eHasMaxHeight ], vConnectors[ eMaxHeight ], tr( "m" ), eGreaterEqualZero );
 
     // Detectable activities
     ADN_GroupBox* pDetectableActivitiesGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Detectable activities" ) );
-    vConnectors[eHasDetectableActivities] = &pDetectableActivitiesGroup->GetConnector();
+    pDetectableActivitiesGroup->setObjectName( strClassName_ + "_Detectable" );
+    vConnectors[ eHasDetectableActivities ] = &pDetectableActivitiesGroup->GetConnector();
     for( int n = 0; n < eNbrConsumptionType; ++n )
-        builder.AddField<ADN_CheckBox>( pDetectableActivitiesGroup, ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n, ADN_Tr::eToTr ).c_str(), vConnectors[eHasDetectableActivities + 1 + n] );
+        builder.AddField< ADN_CheckBox >( pDetectableActivitiesGroup, ADN_Tr::ConvertFromConsumptionType( static_cast< E_ConsumptionType >( n ), ADN_Tr::eToTr ).c_str(), vConnectors[ eHasDetectableActivities + 1 + n ] );
 
     // Detect times
     ADN_GroupBox* pDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Durations" ) );
-    vConnectors[eHasDetectionTimes] = &pDetectTimesGroup->GetConnector();
+    pDetectTimesGroup->setObjectName( strClassName_ + "_Durations" );
+    vConnectors[ eHasDetectionTimes ] = &pDetectTimesGroup->GetConnector();
     QWidget* pHolder = builder.AddFieldHolder( pDetectTimesGroup );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detection duration" ), vConnectors[eHasDetectionTime], vConnectors[eDetectionTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognition duration" ), vConnectors[eHasRecoTime], vConnectors[eRecoTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification duration" ), vConnectors[eHasIdentificationTime], vConnectors[eIdentificationTime] );
+    builder.AddOptionnalField< ADN_TimeField >( pHolder, tr( "Detection duration" ), vConnectors[ eHasDetectionTime ], vConnectors[ eDetectionTime ] );
+    builder.AddOptionnalField< ADN_TimeField >( pHolder, tr( "Recognition duration" ), vConnectors[ eHasRecoTime ], vConnectors[ eRecoTime ] );
+    builder.AddOptionnalField< ADN_TimeField >( pHolder, tr( "Identification duration" ), vConnectors[ eHasIdentificationTime ], vConnectors[ eIdentificationTime ] );
 
     ADN_GroupBox* pHQDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "CP durations" ), pDetectTimesGroup );
-    vConnectors[eHasHQDetectionTimes] = &pHQDetectTimesGroup->GetConnector();
+    pHQDetectTimesGroup->setObjectName( strClassName_+ "_CPDurations" );
+    vConnectors[ eHasHQDetectionTimes ] = &pHQDetectTimesGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pHQDetectTimesGroup );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detection duration" ), vConnectors[eHasHQDetectionTime], vConnectors[eHQDetectionTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognition duration" ), vConnectors[eHasHQRecoTime], vConnectors[eHQRecoTime] );
-    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification duration" ), vConnectors[eHasHQIdentificationTime], vConnectors[eHQIdentificationTime] );
+    ADN_TimeField* timeField = builder.AddOptionnalField< ADN_TimeField >( pHolder, tr( "Detection duration" ), vConnectors[ eHasHQDetectionTime ], vConnectors[ eHQDetectionTime ] );
+    timeField->setObjectName( timeField->objectName() + "_CP" );
+    timeField = builder.AddOptionnalField< ADN_TimeField >( pHolder, tr( "Recognition duration" ), vConnectors[ eHasHQRecoTime ], vConnectors[ eHQRecoTime ] );
+    timeField->setObjectName( timeField->objectName() + "_CP" );
+    timeField = builder.AddOptionnalField< ADN_TimeField >( pHolder, tr( "Identification duration" ), vConnectors[ eHasHQIdentificationTime ], vConnectors[ eHQIdentificationTime ] );
+    timeField->setObjectName( timeField->objectName() + "_CP" );
 
     QLabel* pLabel = new QLabel( pDetectTimesGroup );
     pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly.\n"
@@ -102,6 +108,7 @@ void ADN_Radars_GUI::Build()
     // List view
     ADN_SearchListView< ADN_Radars_ListView >* pSearchListView = new ADN_SearchListView< ADN_Radars_ListView >( data_.vRadars_, vConnectors );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView, false, false, true, 0, 0 );

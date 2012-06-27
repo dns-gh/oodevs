@@ -56,9 +56,11 @@ void ADN_Maintenance_GUI::Build()
 
     Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers availability warnings" ) );
     ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
+    pRepairerWarningTable->setObjectName( strClassName_ + "_Repairers" );
     pRepairerWarningTable->GetConnector().Connect( & data_.vRepairerWarnings_ );
     Q3HGroupBox* pHaulerGroup = new Q3HGroupBox( tr( "Tow trucks availability warnings" ) );
     ADN_AvailabilityWarningTable* pHaulerWarningTable = new ADN_AvailabilityWarningTable( pHaulerGroup );
+    pHaulerGroup->setObjectName( strClassName_+ "Haulers" );
     pHaulerWarningTable->GetConnector().Connect( & data_.vHaulerWarnings_ );
 
     // -------------------------------------------------------------------------
@@ -92,11 +94,12 @@ void ADN_Maintenance_GUI::Build()
 // -----------------------------------------------------------------------------
 Q3GroupBox* ADN_Maintenance_GUI::BuildWorkingSchemeTable()
 {
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
 
     Q3GroupBox* pGroup = new Q3HGroupBox( tr( "Shifts durations" ) );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
+    pTable->setObjectName( strClassName_ + "_Durations");
     pTable->setNumCols( static_cast< int >( data_.vWorkingSchemes_.size() ) );
     pTable->setNumRows( 2 );
     pTable->verticalHeader()->show();

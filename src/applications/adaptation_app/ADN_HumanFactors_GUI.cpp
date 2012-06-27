@@ -124,11 +124,16 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
 {
     ADN_GuiBuilder builder;
     Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
-    builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
-    builder.AddField< ADN_PH_EditLine_Double >( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
+    ADN_EditLine_Double* editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
+    editDouble->setObjectName( editDouble->objectName() + szName );
+    editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
+    editDouble->setObjectName( editDouble->objectName() + szName );
+    editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
+    editDouble->setObjectName( editDouble->objectName() + szName );
+    ADN_PH_EditLine_Double* phEditDouble = builder.AddField< ADN_PH_EditLine_Double >( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
+    phEditDouble->setObjectName( phEditDouble->objectName() + szName );
+    editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
+    editDouble->setObjectName( editDouble->objectName() + szName );
     return pGroupBox;
 }
 
@@ -140,7 +145,9 @@ QWidget* ADN_HumanFactors_GUI::BuildThresholds( QWidget* pParent, ADN_HumanFacto
 {
     ADN_GuiBuilder builder;
     Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
-    builder.AddField<ADN_EditLine_Int>( pGroupBox, firstThresholdName, thresholds.firstThreshold_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Int>( pGroupBox, secondThresholdName, thresholds.secondThreshold_, 0, eGreaterZero );
+    ADN_EditLine_Int* editInt = builder.AddField< ADN_EditLine_Int >( pGroupBox, firstThresholdName, thresholds.firstThreshold_, 0, eGreaterZero );
+    editInt->setObjectName( editInt->objectName() + firstThresholdName );
+    editInt = builder.AddField< ADN_EditLine_Int >( pGroupBox, secondThresholdName, thresholds.secondThreshold_, 0, eGreaterZero );
+    editInt->setObjectName( editInt->objectName() + secondThresholdName );
     return pGroupBox;
 }

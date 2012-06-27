@@ -45,14 +45,14 @@ void ADN_ActiveProtections_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Properties
     Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Properties" ) );
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
-    ADN_EditLine_Double* pEdit = builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
+    ADN_EditLine_Double* pEdit = builder.AddField< ADN_EditLine_Double >( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
     pEdit->GetValidator().setTop( 1 );
-    builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
+    builder.AddField< ADN_CheckBox >( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
 
     // dotations
     Q3GroupBox* pDotationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resource" ) );
@@ -61,7 +61,7 @@ void ADN_ActiveProtections_GUI::Build()
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement );
     goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pHolder, tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
     builder.SetEnabled( true );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
 
     // Weapons
     Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );
@@ -86,6 +86,7 @@ void ADN_ActiveProtections_GUI::Build()
     // List view
     ADN_SearchListView< ADN_ActiveProtectionsListView >* pSearchListView = new ADN_SearchListView< ADN_ActiveProtectionsListView >( data_.GetActiveProtectionsInfos(), vConnectors );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

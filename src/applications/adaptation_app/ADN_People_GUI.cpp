@@ -61,6 +61,7 @@ void ADN_People_GUI::Build()
     // repartition
     Q3GroupBox* pRepartition = new Q3GroupBox( 3, Qt::Horizontal, tr( "Distribution" ) );
     ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pRepartition, builder );
+    pMultiPercentage->setObjectName( strClassName_ + "_Distribution" );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
     pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
@@ -79,10 +80,12 @@ void ADN_People_GUI::Build()
     Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ) );
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
     ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );
+    pTable->setObjectName( strClassName_ + "_ScheduleTable" );
 
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
     ADN_Consumptions_Table* pConsumptions = new ADN_Consumptions_Table( pConsumptionsGroup );
+    pConsumptions->setObjectName( strClassName_ + "_Consumptions" );
     vInfosConnectors[ eConsumptions ] = &pConsumptions->GetConnector();
 
     // -------------------------------------------------------------------------
@@ -104,6 +107,7 @@ void ADN_People_GUI::Build()
     // List view
     ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( data_.GetPeople(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
     connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 
     // Main widget

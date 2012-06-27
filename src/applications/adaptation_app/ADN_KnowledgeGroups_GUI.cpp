@@ -47,22 +47,22 @@ void ADN_KnowledgeGroups_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
 
     Q3GroupBox* pDelayGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ) );
-    builder.AddField<ADN_TimeField>( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
+    builder.AddField< ADN_TimeField >( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
 
     Q3GroupBox* pAgentGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ) );
-    builder.AddField<ADN_TimeField>( pAgentGroup, tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
-    builder.AddField<ADN_EditLine_Double>( pAgentGroup, tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
+    builder.AddField< ADN_TimeField >( pAgentGroup, tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
+    builder.AddField< ADN_EditLine_Double >( pAgentGroup, tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
     builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
 
     Q3GroupBox* pPopulationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ) );
-    builder.AddField<ADN_TimeField>( pPopulationGroup, tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );
+    builder.AddField< ADN_TimeField >( pPopulationGroup, tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -80,6 +80,7 @@ void ADN_KnowledgeGroups_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_KnowledgeGroups_ListView >* pSearchListView = new ADN_SearchListView< ADN_KnowledgeGroups_ListView >( data_.vGroups_, vInfosConnectors );
+    pSearchListView->GetListView()->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

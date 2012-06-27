@@ -67,7 +67,7 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
 ,   szDirectory_("")
 ,   pButton_(0)
 ,   pLineEdit_(0)
-,   vConnectors_(2,(ADN_Connector_ABC*)0 )
+,   vConnectors_(2,static_cast< ADN_Connector_ABC* >( 0 ) )
 {
     // objects
     Q3HBoxLayout *pLayout = new Q3HBoxLayout( this );

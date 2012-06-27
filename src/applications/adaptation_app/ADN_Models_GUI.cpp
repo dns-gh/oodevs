@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Models_GUI.h"
-
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Models_Data.h"
@@ -75,31 +74,35 @@ QWidget* ADN_Models_GUI::BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityTy
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder( strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str() );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements,(ADN_Connector_ABC*)0 );
+    const QString builderName = strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str();
+    ADN_GuiBuilder builder( builderName );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements,static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "DIA type" ), vInfosConnectors[eDiaType] );
-    builder.AddFileField( pInfoHolder, tr( "File" ), vInfosConnectors[eFile] );
-    builder.AddField<ADN_CheckBox>( pInfoHolder, tr( "Masalife" ), vInfosConnectors[eMasalife] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
+    builder.AddFileField( pInfoHolder, tr( "File" ), vInfosConnectors[ eFile ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Masalife" ), vInfosConnectors[ eMasalife ] );
 
     // Missions
     Q3GroupBox* pMissionsGroup = new Q3HGroupBox( tr( "Missions" ) );
     ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pMissionsGroup );
-    vInfosConnectors[eMissions] = &pListMissions->GetConnector();
+    pListMissions->setObjectName( builderName + "_Missions" );
+    vInfosConnectors[ eMissions ] = &pListMissions->GetConnector();
     pListMissions->SetGoToOnDoubleClick( ::eMissions, static_cast< int >( eEntityType ) );
 
     ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( true, pMissionsGroup );
-    T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, (ADN_Connector_ABC*)0 );
-    vMissionConnector[eOrders] = &pListOrders->GetConnector();
+    pListOrders->setObjectName( builderName + "_Orders" );
+    T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
+    vMissionConnector[ eOrders ] = &pListOrders->GetConnector();
     pListOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
     // Frag order
     Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( tr( "FragOrders" ) );
     ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( false , pFragOdersGroup );
-    vInfosConnectors[eFragOrders] = &pListFragOrders->GetConnector();
+    pListFragOrders->setObjectName( builderName + "_FragOrders" );
+    vInfosConnectors[ eFragOrders ] = &pListFragOrders->GetConnector();
     pListFragOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
     // Connect
@@ -120,6 +123,7 @@ QWidget* ADN_Models_GUI::BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityTy
 
     // List view
     ADN_SearchListView< ADN_ListView_Models >* pSearchListView = new ADN_SearchListView< ADN_ListView_Models >( eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
+    pSearchListView->GetListView()->setObjectName( builderName + "_List" );
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );

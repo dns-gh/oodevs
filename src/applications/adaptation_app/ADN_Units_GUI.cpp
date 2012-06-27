@@ -12,9 +12,7 @@
 #include "ADN_Units_GUI.h"
 #include "moc_ADN_Units_GUI.cpp"
 #include "ADN_App.h"
-#include "ADN_ComboBox_Drawings.h"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_CommonGfx.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "ADN_GoToButton.h"
 #include "ADN_GroupBox.h"
@@ -24,7 +22,6 @@
 #include "ADN_MultiPercentage.h"
 #include "ADN_Nature_GUI.h"
 #include "ADN_Point_GUI.h"
-#include "ADN_Project_Data.h"
 #include "ADN_SearchListView.h"
 #include "ADN_SymbolWidget.h"
 #include "ADN_TimeField.h"
@@ -37,7 +34,6 @@
 #include "ADN_Workspace.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "ENT/ENT_Tr.h"
-
 #include <numeric>
 #include <boost/bind.hpp>
 
@@ -47,7 +43,7 @@
 //-----------------------------------------------------------------------------
 ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
     : ADN_GUI_ABC( "ADN_Units_GUI" )
-    , data_( data )
+    , data_         ( data )
     , pSymbolWidget_( 0 )
 {
     // NOTHING
@@ -73,45 +69,46 @@ void ADN_Units_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
     // Unit type
-    pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pInfoHolder, tr( "Type" ), vInfosConnectors[eTypeId], &ADN_Tr::ConvertFromAgentTypePion );
+    pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pInfoHolder, tr( "Type" ), vInfosConnectors[ eTypeId ], &ADN_Tr::ConvertFromAgentTypePion );
     builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, ADN_Models_Data::ModelInfos::ePawn );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     builder.SetToolTip( tr( "The decisional model associated to the unit." ) );
 
     // Decontamination delay
-    ADN_TimeField* pTimeField = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
+    ADN_TimeField* pTimeField = builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ], 0, eGreaterZero );
     pTimeField->SetMinimumValueInSecond( 1 );
     // Feedback time
-    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, tr( "Force ratio feedback time" ), vInfosConnectors[eHasStrengthRatioFeedbackTime], vInfosConnectors[eStrengthRatioFeedbackTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, tr( "Force ratio feedback time" ), vInfosConnectors[ eHasStrengthRatioFeedbackTime ], vInfosConnectors[ eStrengthRatioFeedbackTime ] );
     // Can fly
-    builder.AddField<ADN_CheckBox>( pInfoHolder, tr( "Can fly" ), vInfosConnectors[eCanFly] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Can fly" ), vInfosConnectors[ eCanFly ] );
     // Crossing height
     builder.AddEnumField< E_CrossingHeight >( pInfoHolder, tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ], &ADN_Tr::ConvertFromCrossingHeight );
     // Is autonomous
-    builder.AddField<ADN_CheckBox>( pInfoHolder, tr( "Is autonomous (UAV)" ), vInfosConnectors[eIsAutonomous] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Is autonomous (UAV)" ), vInfosConnectors[ eIsAutonomous ] );
     builder.AddStretcher( pInfoHolder, Qt::Vertical );
 
     // Coup de sonde
     ADN_GroupBox* pReconGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scan" ) );
     vInfosConnectors[eCanProbe] = &pReconGroup->GetConnector();
-    builder.AddField<ADN_EditLine_Double>( pReconGroup, tr( "Width" ), vInfosConnectors[eProbeWidth], tr( "m" ) );
-    builder.AddField<ADN_EditLine_Double>( pReconGroup, tr( "Depth" ), vInfosConnectors[eProbeLength], tr( "m" ) );
+    builder.AddField< ADN_EditLine_Double >( pReconGroup, tr( "Width" ), vInfosConnectors[eProbeWidth], tr( "m" ) );
+    builder.AddField< ADN_EditLine_Double >( pReconGroup, tr( "Depth" ), vInfosConnectors[eProbeLength], tr( "m" ) );
 
     // sensor & equipment ranges
     ADN_GroupBox* pRangeGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Ranges" ) );
-    vInfosConnectors[eRanges] = &pRangeGroup->GetConnector();
-    builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Sensors" ), vInfosConnectors[eSensorRange], tr( "m" ) );
-    builder.AddField<ADN_EditLine_Int>( pRangeGroup, tr( "Equipments" ), vInfosConnectors[eEquipmentRange], tr( "m" ) );
+    pRangeGroup->setObjectName( strClassName_ + "_Ranges" );
+    vInfosConnectors[ eRanges ] = &pRangeGroup->GetConnector();
+    builder.AddField< ADN_EditLine_Int >( pRangeGroup, tr( "Sensors" ), vInfosConnectors[ eSensorRange ], tr( "m" ) );
+    builder.AddField< ADN_EditLine_Int >( pRangeGroup, tr( "Equipments" ), vInfosConnectors[ eEquipmentRange ], tr( "m" ) );
 
     // Nature group
     Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ) );
@@ -125,8 +122,8 @@ void ADN_Units_GUI::Build()
         subLayout->setMargin( 0 );
         subLayout->setInsideMargin( 0 );
         subLayout->setFrameStyle( Q3Frame::Plain );
-        builder.AddEnumField<E_NatureLevel>( subLayout, tr( "Level:" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
-        builder.AddEnumField<E_NatureAtlasType>( subLayout, tr( "Atlas:" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
+        builder.AddEnumField< E_NatureLevel >( subLayout, tr( "Level:" ), vInfosConnectors[ eNatureLevel ], ENT_Tr::ConvertFromNatureLevel );
+        builder.AddEnumField< E_NatureAtlasType >( subLayout, tr( "Atlas:" ), vInfosConnectors[ eNatureAtlas ], ADN_Tr::ConvertFromNatureAtlasType );
         // Separator
         QFrame* separator = new QFrame;
         separator->setFrameStyle( QFrame::HLine | QFrame::Raised );
@@ -134,11 +131,13 @@ void ADN_Units_GUI::Build()
         // Nature GUI
         pNatureInternalGroupLayout->addWidget( subLayout, 0, 0, 1, 2, Qt::AlignTop );
         pNatureGui_ = new ADN_Nature_GUI( pNatureInternalGroupLayout, 2 );
-        vInfosConnectors[eNatureNature] = &pNatureGui_->GetConnector();
+        pNatureGui_->setObjectName( strClassName_ + "Nature" );
+        vInfosConnectors[ eNatureNature ] = &pNatureGui_->GetConnector();
         // Symbol
         Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
         QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
         pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
+        pSymbolWidget_->setObjectName( strClassName_ + "_Symbols" );
         pSymbolWidget_->makeCurrent();
         pSymbolWidget_->initializeGL();
         pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
@@ -148,7 +147,7 @@ void ADN_Units_GUI::Build()
         connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
         // Symbol combo
         QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
-        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol"), vInfosConnectors[ eNatureSymbol ] );
+        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol" ), vInfosConnectors[ eNatureSymbol ] );
         unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
         connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
         connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
@@ -156,16 +155,16 @@ void ADN_Units_GUI::Build()
 
     // Commandement
     Q3GroupBox* pCommandGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Command" ) );
-    pCommandGroup->setInsideMargin(20);
-    pCommandGroup->setInsideSpacing(10);
+    pCommandGroup->setInsideMargin( 20 );
+    pCommandGroup->setInsideSpacing( 10 );
 
     // officer
-    pOfficersEditLine_ = builder.AddField<ADN_EditLine_Int>( pCommandGroup, tr( "Nbr of officer(s)" ), vInfosConnectors[eNbOfficer] );
+    pOfficersEditLine_ = builder.AddField< ADN_EditLine_Int >( pCommandGroup, tr( "Nbr of officer(s)" ), vInfosConnectors[ eNbOfficer ] );
     pOfficersEditLine_->GetValidator().setRange( 0, 0 );
     connect( pOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfOfficersChanged() ) );
 
     // nc officer
-    pNCOfficersEditLine_ = builder.AddField<ADN_EditLine_Int>( pCommandGroup, tr( "Nbr of warrant officer(s)" ), vInfosConnectors[eNbNCOfficer] );
+    pNCOfficersEditLine_ = builder.AddField< ADN_EditLine_Int >( pCommandGroup, tr( "Nbr of warrant officer(s)" ), vInfosConnectors[ eNbNCOfficer ] );
     pNCOfficersEditLine_->GetValidator().setRange( 0, 0 );
     connect( pNCOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfNCOfficersChanged() ) );
 
@@ -174,40 +173,48 @@ void ADN_Units_GUI::Build()
     // Postures
     Q3VGroupBox* pPosturesGroup = new Q3VGroupBox( tr( "Stances" ), postureInstallationBox );
     ADN_Units_Postures_GUI* pPostures = new ADN_Units_Postures_GUI( pPosturesGroup );
-    vInfosConnectors[ePostures] = &pPostures->GetConnector();
+    pPostures->setObjectName( strClassName_ + "_Postures" );
+    vInfosConnectors[ ePostures ] = &pPostures->GetConnector();
 
     // Installation
     pInstallationGroup_ = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Deployment" ), postureInstallationBox );
-    vInfosConnectors[eHasInstallation] = &pInstallationGroup_->GetConnector();
-    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Deployment duration" ), vInfosConnectors[eInstallationDelay] );
-    builder.AddField<ADN_TimeField>( pInstallationGroup_, tr( "Un-deployment duration" ), vInfosConnectors[eUninstallationDelay] );
+    pInstallationGroup_->setObjectName( strClassName_ + "_Installation" );
+    vInfosConnectors[ eHasInstallation ] = &pInstallationGroup_->GetConnector();
+    builder.AddField< ADN_TimeField >( pInstallationGroup_, tr( "Deployment duration" ), vInfosConnectors[ eInstallationDelay ] );
+    builder.AddField< ADN_TimeField >( pInstallationGroup_, tr( "Un-deployment duration" ), vInfosConnectors[ eUninstallationDelay ] );
 
     // Distances before point on path
     Q3GroupBox* pDistancesGroup = new Q3HGroupBox( tr( "Key terrain features range" ) );
     ADN_Point_GUI* pSensors = new ADN_Point_GUI( pDistancesGroup );
-    vInfosConnectors[ePointInfos] = &pSensors->GetConnector();
+    pSensors->setObjectName( strClassName_ + "_TerrainFeatures" );
+    vInfosConnectors[ ePointInfos ] = &pSensors->GetConnector();
 
     // Composantes
     Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ) );
     ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( pComposantesGroup );
+    pComposantes->setObjectName( strClassName_ + "_Equipments" );
     pComposantes->SetGoToOnDoubleClick( ::eComposantes );
-    vInfosConnectors[eComposantes] = &pComposantes->GetConnector();
+    vInfosConnectors[ eComposantes ] = &pComposantes->GetConnector();
     connect( pComposantes, SIGNAL( valueChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
     connect( pComposantes, SIGNAL( currentChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
     connect( pComposantes, SIGNAL( contextMenuRequested ( int, int, const QPoint& ) ), this, SLOT( OnComponentChanged() ) );
 
     // Dotations
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ) );
-    vInfosConnectors[eHasTC1] = &pDotationsGroup->GetConnector();
+    pDotationsGroup->setObjectName( strClassName_ + "_ComplementaryResources" );
+    vInfosConnectors[ eHasTC1 ] = &pDotationsGroup->GetConnector();
     ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, pDotationsGroup );
+    pDotations->setObjectName( strClassName_ + "_Dotations" );
     pDotations->SetGoToOnDoubleClick( ::eEquipement );
-    vInfosConnectors[eContenancesTC1] = &pDotations->GetConnector();
+    vInfosConnectors[ eContenancesTC1 ] = &pDotations->GetConnector();
 
     // Stock
     pStockGroup_ = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Stock" ) );
-    vInfosConnectors[eHasStock] = &pStockGroup_->GetConnector();
+    pStockGroup_->setObjectName( strClassName_ + "_Stock" );
+    vInfosConnectors[ eHasStock ] = &pStockGroup_->GetConnector();
     pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( pStockGroup_ );
-    vInfosConnectors[eStock] = &pStockLogThreshold_->GetConnector();
+    pStockLogThreshold_->setObjectName( strClassName_ + "_StockThreshold" );
+    vInfosConnectors[ eStock ] = &pStockLogThreshold_->GetConnector();
 
     // Aptitudes
     Q3GroupBox* pSkillsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Skills" ) );
@@ -230,8 +237,10 @@ void ADN_Units_GUI::Build()
 
     // Civilian
     ADN_GroupBox* pCivilianGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Civilian" ) );
+    pCivilianGroup->setObjectName( strClassName_ + "_IsCivilian" );
     vInfosConnectors[ eIsCivilian ] = &pCivilianGroup->GetConnector();
     ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pCivilianGroup, builder );
+    pMultiPercentage->setObjectName( strClassName_ + "_CivilianRepartition" );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMalesPercent ] );
     pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemalesPercent ] );
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildrenPercent ] );
@@ -266,6 +275,7 @@ void ADN_Units_GUI::Build()
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnTypeChanged() ) );
 
     // Main widget

@@ -76,20 +76,24 @@ void ADN_FireClass_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eNbrDead ], tr( "%" ), ePercentage  );
     // Urban
     Q3GroupBox* pUrbanModifiersGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ) );
-    new helpers::ADN_UrbanModifiersTable( pUrbanModifiersGroup, vInfosConnectors[ eUrbanAttrition ] );
+    helpers::ADN_UrbanModifiersTable* urbanTable = new helpers::ADN_UrbanModifiersTable( pUrbanModifiersGroup, vInfosConnectors[ eUrbanAttrition ] );
+    urbanTable->setObjectName( strClassName_ + "Urban" );
     // Extinguisher
     Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ) );
     ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );
+    pExtinguisherAgentInfosTable->setObjectName( strClassName_ + "Extinguisher" );
     pExtinguisherAgentInfosTable->SetGoToOnDoubleClick( ::eEquipement );
     vInfosConnectors[ eExtinguisherAgents ] = &pExtinguisherAgentInfosTable->GetConnector();
     // Weather fire effects
     Q3GroupBox* pWeatherFireEffectsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ) );
     ADN_WeatherFireEffects_Table* pWeatherFireEffectsTable = new ADN_WeatherFireEffects_Table( pWeatherFireEffectsGroup );
+    pWeatherFireEffectsGroup->setObjectName( strClassName_ + "Weather" );
     vInfosConnectors[ eWeatherFireEffects ] = &pWeatherFireEffectsTable->GetConnector();
     // Surface
     ADN_GroupBox* surfaceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Surface" ) );
     vInfosConnectors[ eSurface ] = &surfaceGroup->GetConnector();
     ADN_SurfaceFireInfos_Table *pSurfaceInfosTable = new ADN_SurfaceFireInfos_Table( surfaceGroup );
+    pSurfaceInfosTable->setObjectName( strClassName_ + "Surface" );
     vInfosConnectors[ eSurfaceEffects ] = &pSurfaceInfosTable->GetConnector();
 
     // -------------------------------------------------------------------------
@@ -110,7 +114,9 @@ void ADN_FireClass_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_FireClass_ListView >* pSearchListView = new ADN_SearchListView< ADN_FireClass_ListView >( data_.GetFireClassesInfos(), vInfosConnectors );
+    pSearchListView->GetListView()->setObjectName( strClassName_ + "_List" );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pFireClassContent, pSearchListView, false, false, true, 0, 0 );
 

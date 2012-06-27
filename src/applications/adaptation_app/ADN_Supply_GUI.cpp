@@ -68,22 +68,27 @@ void ADN_Supply_GUI::Build()
 
     Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ) );
     ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );
+    pWarningTable->setObjectName( strClassName_ + "_Conveyors" );
     pWarningTable->GetConnector().Connect( & data_.infos_.vVectorWarnings_ );
 
     Q3HGroupBox* pSetupGroup = new Q3HGroupBox( tr( "Convoy setup duration" ) );
     ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pSetupGroup );
+    pTrucksTimeTable->setObjectName( strClassName_ + "ConvoySetup" );
     pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );
 
     Q3HGroupBox* pLoadingGroup = new Q3HGroupBox( tr( "Convoy loading duration" ) );
     pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pLoadingGroup );
+    pTrucksTimeTable->setObjectName( strClassName_ + "ConvoyLoading" );
     pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyLoadingInfos_ );
 
     Q3HGroupBox* pUnloadingGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ) );
     pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pUnloadingGroup );
+    pTrucksTimeTable->setObjectName( strClassName_ + "ConvoyUnloading" );
     pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyUnloadingInfos_ );
 
     Q3HGroupBox* pSpeedGroup = new Q3HGroupBox( tr( "Convoy speed modifiers" ) );
     ADN_Supply_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Supply_TrucksDoubleTable( pSpeedGroup );
+    pTrucksDoubleTable->setObjectName( strClassName_ + "ConvoyModifiers" );
     pTrucksDoubleTable->GetConnector().Connect( & data_.infos_.vConvoySpeedModificatorInfos_ );
 
     // -------------------------------------------------------------------------

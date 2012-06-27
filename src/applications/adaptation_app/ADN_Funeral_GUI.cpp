@@ -57,11 +57,12 @@ void ADN_Funeral_GUI::Build()
     // Funeral
     QWidget* pHolder = builder.AddFieldHolder( 0 );
 
-    ADN_EditLine_Int* pTransporterSpeed = builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Fake transporter speed" ), data_.fakeTransporterSpeed_ );
+    ADN_EditLine_Int* pTransporterSpeed = builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Fake transporter speed" ), data_.fakeTransporterSpeed_ );
     pTransporterSpeed->GetValidator().setBottom( 1 );
     pHolder->setMaximumWidth( maxSize );
 
     resourceTable_ = new ADN_FuneralPackagingResources_GUI();
+    resourceTable_->setObjectName( strClassName_ + "FuneralTable" );
     resourceTable_->SetGoToOnDoubleClick( ::eEquipement );
     resourceTable_->GetConnector().Connect( &data_.funeralPackagingResources_ );
     resourceTable_->setMaximumWidth( maxSize );

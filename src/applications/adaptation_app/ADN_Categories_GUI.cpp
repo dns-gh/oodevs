@@ -10,9 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_GUI.h"
-
 #include "moc_ADN_Categories_GUI.cpp"
-
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_CommonGfx.h"
@@ -31,13 +29,14 @@
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
 ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
-: ADN_GUI_ABC( "ADN_Categories_GUI" )
-, data_      ( data )
-, pListArmor_( 0 )
-, pListSize_ ( 0 )
-, pListDotationNature_( 0 )
-, pAttritionEffects_( 0 )
+    : ADN_GUI_ABC( "ADN_Categories_GUI" )
+    , data_      ( data )
+    , pListArmor_( 0 )
+    , pListSize_ ( 0 )
+    , pListDotationNature_( 0 )
+    , pAttritionEffects_( 0 )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -46,6 +45,7 @@ ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
 //-----------------------------------------------------------------------------
 ADN_Categories_GUI::~ADN_Categories_GUI()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -67,51 +67,55 @@ void ADN_Categories_GUI::Build()
     Q3HBox* pArmorListViewGroup = new Q3HBox( pArmorGroup );
 
     // Armors listview
-    T_ConnectorVector vArmorInfosConnectors( eNbrArmorGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vArmorInfosConnectors( eNbrArmorGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     pListArmor_ = new ADN_ListView_Categories_Armor( pArmorListViewGroup );
+    pListArmor_->setObjectName( strClassName_ + "_Armors" );
     connect( pListArmor_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
-    static_cast<ADN_Connector_Vector_ABC*>( &pListArmor_->GetConnector() )->Connect( &data_.GetArmorsInfos() );
+    static_cast< ADN_Connector_Vector_ABC* >( &pListArmor_->GetConnector() )->Connect( &data_.GetArmorsInfos() );
 
     // Armor info
-    Q3VGroupBox* pArmorInfoGroup  = new Q3VGroupBox( tr( "Armor class" ), pArmorGroup );
+    Q3VGroupBox* pArmorInfoGroup = new Q3VGroupBox( tr( "Armor class" ), pArmorGroup );
 
     QWidget* pHolder = builder.AddFieldHolder( pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vArmorInfosConnectors[eArmorName], 0, eVarName );
+    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vArmorInfosConnectors[ eArmorName ], 0, eVarName );
 
-    pComboType_ = builder.AddEnumField<E_ProtectionType>( pHolder, tr( "Type" ), vArmorInfosConnectors[eArmorType], ADN_Tr::ConvertFromProtectionType );
+    pComboType_ = builder.AddEnumField< E_ProtectionType >( pHolder, tr( "Type" ), vArmorInfosConnectors[ eArmorType ], ADN_Tr::ConvertFromProtectionType );
     connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
 
     Q3GroupBox* pArmorNeutralizationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Neutralization" ), pArmorInfoGroup );
-    builder.AddField<ADN_TimeField>( pArmorNeutralizationGroup, tr( "Average time" ), vArmorInfosConnectors[eNeutralizationAverage] );
-    builder.AddField<ADN_TimeField>( pArmorNeutralizationGroup, tr( "Variance" ), vArmorInfosConnectors[eNeutralizationVariance] );
+    builder.AddField< ADN_TimeField >( pArmorNeutralizationGroup, tr( "Average time" ), vArmorInfosConnectors[ eNeutralizationAverage ] );
+    builder.AddField< ADN_TimeField >( pArmorNeutralizationGroup, tr( "Variance" ), vArmorInfosConnectors[ eNeutralizationVariance ] );
 
     pArmorBreakdownGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Breakdowns" ), pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "Maintenance support needed" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "On site fixable" ), vArmorInfosConnectors[eBreakdownNEVA], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Double >( pArmorBreakdownGroup_, tr( "Maintenance support needed" ), vArmorInfosConnectors[ eBreakdownEVA ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Double >( pArmorBreakdownGroup_, tr( "On site fixable" ), vArmorInfosConnectors[ eBreakdownNEVA ], tr( "%" ), ePercentage );
 
     pAttritionEffectGroup_ = new Q3VGroupBox( tr( "Attrition effects on humans" ), pArmorGroup );
     pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
-    vArmorInfosConnectors[eAttritionEffects] = &pAttritionEffects_->GetConnector();
+    pAttritionEffects_->setObjectName( strClassName_ + "_Attrition" );
+    vArmorInfosConnectors[ eAttritionEffects ] = &pAttritionEffects_->GetConnector();
 
     Q3VBox* pBox = new Q3VBox();
     ///////////////////
     // Sizes
     Q3GroupBox* pGroup = new Q3VGroupBox( tr( "Sizes" ), pBox );
-    Q3HBox* pGroupSize = new Q3HBox(pGroup);
+    Q3HBox* pGroupSize = new Q3HBox( pGroup );
 
     // sizes list
-    T_ConnectorVector    vSizeInfosConnectors(eNbrSizeGuiElements,(ADN_Connector_ABC*)0 );
-    pListSize_=new ADN_ListView_Categories_Size(pGroupSize);
+    T_ConnectorVector vSizeInfosConnectors( eNbrSizeGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
+    pListSize_ = new ADN_ListView_Categories_Size( pGroupSize );
+    pListSize_->setObjectName( strClassName_ + "_Sizes" );
     connect( pListSize_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
-    static_cast<ADN_Connector_Vector_ABC*>( &pListSize_->GetConnector() )->Connect( &data_.GetSizesInfos() );
+    static_cast< ADN_Connector_Vector_ABC* >( &pListSize_->GetConnector() )->Connect( &data_.GetSizesInfos() );
     //QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
 
     // size
-    pGroup = new Q3VGroupBox( tr( "Size" ),pGroup);
-    pGroup->setInsideMargin(20);
-    pGroup->setInsideSpacing(20);
-    pEdit = new ADN_EditLine_String(pGroup);
-    vSizeInfosConnectors[eSizeName]=&pEdit->GetConnector();
+    pGroup = new Q3VGroupBox( tr( "Size" ), pGroup );
+    pGroup->setInsideMargin( 20 );
+    pGroup->setInsideSpacing( 20 );
+    pEdit = new ADN_EditLine_String( pGroup );
+    pEdit->setObjectName( strClassName_ + "_Size" );
+    vSizeInfosConnectors[ eSizeName ]=&pEdit->GetConnector();
 
     ///////////////////
     // Dotation Natures
@@ -119,9 +123,10 @@ void ADN_Categories_GUI::Build()
     Q3HBox*     pNatureHBox  = new Q3HBox( pNatureGroup );
 
     // dotation natures list
-    T_ConnectorVector    vDotationNatureInfosConnectors( eNbrDotationNatureGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vDotationNatureInfosConnectors( eNbrDotationNatureGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     pListDotationNature_ = new ADN_ListView_Categories_DotationNature( pNatureHBox );
-    static_cast<ADN_Connector_Vector_ABC*>( &pListDotationNature_->GetConnector() )->Connect( &data_.GetDotationNaturesInfos() );
+    pListDotationNature_->setObjectName( strClassName_ + "_Dotations" );
+    static_cast< ADN_Connector_Vector_ABC* >( &pListDotationNature_->GetConnector() )->Connect( &data_.GetDotationNaturesInfos() );
     //QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
 
     // size
@@ -129,6 +134,7 @@ void ADN_Categories_GUI::Build()
     pNatureGroup->setInsideMargin( 20 );
     pNatureGroup->setInsideSpacing( 20 );
     pEdit = new ADN_EditLine_String( pNatureGroup );
+    pEdit->setObjectName( strClassName_ + "_Dotation" );
     vDotationNatureInfosConnectors[ eDotationNatureName ] = &pEdit->GetConnector();
 
     ///////////////////
@@ -137,9 +143,10 @@ void ADN_Categories_GUI::Build()
     Q3HBox*     pLogResourceCatHBox  = new Q3HBox( pLogResourceCatGroup );
 
     // dotation natures list
-    T_ConnectorVector   vLogisticSupplyClassesConnectors( eNbrLogisticSupplyClassGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vLogisticSupplyClassesConnectors( eNbrLogisticSupplyClassGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     pListLogisticSupplyClasses_ = new ADN_ListView_Categories_LogisticSupplyClass( pLogResourceCatHBox );
-    static_cast<ADN_Connector_Vector_ABC*>( &pListLogisticSupplyClasses_->GetConnector() )->Connect( &data_.GetLogisticSupplyClasses() );
+    pListLogisticSupplyClasses_->setObjectName( strClassName_ + "_LogisticSupplies" );
+    static_cast< ADN_Connector_Vector_ABC* >( &pListLogisticSupplyClasses_->GetConnector() )->Connect( &data_.GetLogisticSupplyClasses() );
     //QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
 
     // size
@@ -147,6 +154,7 @@ void ADN_Categories_GUI::Build()
     pLogResourceCatGroup->setInsideMargin( 20 );
     pLogResourceCatGroup->setInsideSpacing( 20 );
     pEdit = new ADN_EditLine_String( pLogResourceCatGroup );
+    pEdit->setObjectName( strClassName_ + "_LogisticSupply" );
     vLogisticSupplyClassesConnectors[ eLogisticSupplyClassName ] = &pEdit->GetConnector();
 
     // set auto connectors

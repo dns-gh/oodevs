@@ -102,7 +102,8 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder( strClassName_ + ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
+    const QString builderName = strClassName_ + ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str();
+    ADN_GuiBuilder builder( builderName );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
@@ -138,6 +139,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
 
     // List view
     ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( nType, data_.GetDotation( nType ).categories_, vConnectors, nType );
+    pSearchListView->GetListView()->setObjectName( builderName + "List" );
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );
     assert( nType == vListViews_.size() - 1 );
@@ -153,6 +155,7 @@ namespace
                          QButtonGroup* group, ADN_Equipement_GUI::E_AmmoGuiElements id )
     {
         ADN_CheckBox* checkbox = new ADN_CheckBox( name, parent );
+        checkbox->setObjectName( "ADN_Equipement_GUI_Ammunition" + name );
         vConnectors[ id ] = &checkbox->GetConnector();
         group->addButton( checkbox, id );
     }
@@ -180,6 +183,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eNetworkUsable ] );
+    networkUsableCheckBox->setObjectName( strClassName_ + "AmmunitionUsable" );
     vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
     builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
@@ -192,10 +196,13 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
     // Direct fire properties
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( tr( "Attritions" ) );
+    pDirectGroup->setObjectName( strClassName_ + "MunitionsAttritions" );
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
     pAttritionTable_ = new ADN_Equipement_AttritionTable( pDirectGroup );
+    pAttritionTable_->setObjectName( strClassName_ + "MunitionsAttritionsTable" );
     vConnectors[ eAttritions ] = &pAttritionTable_->GetConnector();
     ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( pDirectGroup, vConnectors[ eUrbanAttritions ] );
+    pUrbanTable->setObjectName( strClassName_ + "MunitionsUrbanTable" );
 
     QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
@@ -243,6 +250,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
         // Explosive parameters
         pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pEffectsInfo );
         ADN_Equipement_Postures_GUI* pStance = new ADN_Equipement_Postures_GUI( tr( "Stance" ), pExplosiveParametersGroup_ );
+        pStance->setObjectName( strClassName_ + "AmmunitionsStance" );
         vConnectors[ eModifStances ] = &pStance->GetConnector();
         QWidget* pExplosiveParametersGroupHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
         builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
@@ -276,12 +284,14 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
     // Illumination
     ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination capacity" ) );
+    pIlluminationGroup->setObjectName( strClassName_ + "_AmmuntitionsIllumination" );
     vConnectors[ eIlluminating ] = &pIlluminationGroup->GetConnector();
     builder.AddField< ADN_EditLine_Double >( pIlluminationGroup, tr( "Range" ), vConnectors[ eRange ], 0, eGreaterEqualZero );
     builder.AddField< ADN_CheckBox >( pIlluminationGroup, tr( "Must Maintain illumination" ), vConnectors[ eMaintainIllumination ] );
 
     // Guidance
     ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guidance" ) );
+    pIlluminationGroup->setObjectName( strClassName_ + "_AmmuntitionsGuidance" );
     vConnectors[ eGuided ] = &pGuidanceGroup->GetConnector();
     builder.AddField< ADN_CheckBox >( pGuidanceGroup, tr( "Must Maintain guidance" ), vConnectors[ eMaintainGuidance ] );
     builder.AddField< ADN_EditLine_Double >( pGuidanceGroup, tr( "Illumination range needed" ), vConnectors[ eGuidanceRange ], 0, eGreaterEqualZero );
@@ -304,6 +314,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
     // List view
     ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors, eDotationFamily_Munition );
+    pSearchListView->GetListView()->setObjectName( strClassName_ + "_Ammunition_List" );
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );

@@ -18,7 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Communications_GUI.h"
-
 #include "ADN_Communications_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
@@ -57,8 +56,8 @@ void ADN_Communications_GUI::Build()
 
     // Info holders
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_Double>( pInfoHolder, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pInfoHolder, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
     builder.AddStretcher( pInfoHolder, Qt::Vertical );
 
     // -------------------------------------------------------------------------

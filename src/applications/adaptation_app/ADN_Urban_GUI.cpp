@@ -70,6 +70,7 @@ void ADN_Urban_GUI::Build()
     {
         // materials list
         pListMaterial_ = new ADN_ListView_UrbanMaterial_Type( pGroupMaterials );
+        pListMaterial_->setObjectName( strClassName_ + "_Materials" );
         pListMaterial_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
@@ -78,9 +79,11 @@ void ADN_Urban_GUI::Build()
         pGroupMaterial->setInsideMargin( 10 );
         pGroupMaterial->setInsideSpacing( 10 );
         ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupMaterial );
+        pEdit->setObjectName( strClassName_ + "_MaterialName" );
         vMaterialInfosConnectors[ eUrbanMaterialName ] = &pEdit->GetConnector();
 
         pAttritionTable_ = new ADN_Urban_AttritionTable( pGroupMaterial );
+        pAttritionTable_->setObjectName( strClassName_ + "_MaterialAttrition" );
         pAttritionTable_->setFixedHeight( 180 );
 
         vMaterialInfosConnectors[ eUrbanMaterialAttrition ] = &pAttritionTable_->GetConnector();
@@ -90,7 +93,8 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pGroupFacades = new Q3VGroupBox( tr( "Facades" ) );
     {
         // facades list
-        pListFacade_= new ADN_ListView_Urban_Type( pGroupFacades );
+        pListFacade_ = new ADN_ListView_Urban_Type( pGroupFacades );
+        pListFacade_->setObjectName( strClassName_ + "_Facades" );
         static_cast< ADN_Connector_Vector_ABC* >( &pListFacade_->GetConnector() )->Connect( &data_.GetFacadesInfos() );
 
         // facade
@@ -98,6 +102,7 @@ void ADN_Urban_GUI::Build()
         pGroupFacade->setInsideMargin( 10 );
         pGroupFacade->setInsideSpacing( 10 );
         ADN_EditLine_ABC* pEdit = new ADN_EditLine_String(pGroupFacade);
+        pEdit->setObjectName( strClassName_ + "_FacadeName" );
         vFacadeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
     }
 
@@ -105,7 +110,8 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pGroupRoofShapes = new Q3VGroupBox( tr( "RoofShapes" ) );
     {
         // roofshapes list
-        pListRoofShape_= new ADN_ListView_RoofShapes( pGroupRoofShapes );
+        pListRoofShape_ = new ADN_ListView_RoofShapes( pGroupRoofShapes );
+        pListRoofShape_->setObjectName( strClassName_ + "_RoofShapes" );
         static_cast< ADN_Connector_Vector_ABC* >( &pListRoofShape_->GetConnector() )->Connect( &data_.GetRoofShapesInfos() );
 
         // roofsape
@@ -113,6 +119,7 @@ void ADN_Urban_GUI::Build()
         pGroupRoofShape->setInsideMargin( 10 );
         pGroupRoofShape->setInsideSpacing( 10 );
         ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupRoofShape );
+        pEdit->setObjectName( strClassName_ + "_RoofShapeName" );
         vRoofShapeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
     }
 
@@ -126,6 +133,7 @@ void ADN_Urban_GUI::Build()
 
         // accommodations list
         pListAccommodation_= new ADN_ListView_UrbanAccommodation_Type( pGroupAccommodations );
+        pListAccommodation_->setObjectName( strClassName_ + "_Accomodations" );
         pListAccommodation_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListAccommodation_->GetConnector() )->Connect( &data_.GetAccommodationsInfos() );
 
@@ -145,7 +153,7 @@ void ADN_Urban_GUI::Build()
     {
         // infrastructures list
         pListInfrastructure_= new ADN_ListView_UrbanInfrastructure_Type( pGroupInfrastructures );
-        //pListInfrastructure_->setFixedHeight( 250 );
+        pListInfrastructure_->setObjectName( strClassName_ + "_Infrastructures" );
         static_cast< ADN_Connector_Vector_ABC* >( &pListInfrastructure_->GetConnector() )->Connect( &data_.GetInfrastructuresInfos() );
 
         // infrastructures
@@ -158,6 +166,7 @@ void ADN_Urban_GUI::Build()
         builder.AddField< ADN_ComboBox_Vector< ADN_Symbols_Data::SymbolsInfra > >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
 
         ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
+        medical->setObjectName( strClassName_ + "_Medical" );
         {
             vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] = &medical->GetConnector();
             builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_NightRate ] );
@@ -173,6 +182,7 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pTemplates = new Q3VGroupBox( tr( "Templates" ) );
     {
         pListTemplate_ = new ADN_ListView_Templates( pTemplates );
+        pListTemplate_->setObjectName( strClassName_ + "_Templates" );
         pListTemplate_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListTemplate_->GetConnector() )->Connect( &data_.GetTemplatesInfos() );
         Q3GroupBox* pGroupTemplate = new Q3VGroupBox( tr( "Template" ), pTemplates );
@@ -197,6 +207,7 @@ void ADN_Urban_GUI::Build()
         builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::UrbanMaterialInfos > >( pArchitectureBox3, tr( "Material" ), vUsageInfosConnectors[ eUrbanUsageMaterial ] );
         builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::RoofShapeInfos > >( pArchitectureBox3, tr( "Roof shape" ), vUsageInfosConnectors[ eUrbanUsageRoofShape ] );
         pUsages_ = new ADN_Template_Usages( pGroupTemplate );
+        pUsages_->setObjectName( strClassName_ + "_Usages" );
         vUsageInfosConnectors[ eUrbanUsageRole ] = &pUsages_->GetConnector();
     }
 

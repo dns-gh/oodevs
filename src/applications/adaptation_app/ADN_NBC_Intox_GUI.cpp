@@ -65,7 +65,7 @@ namespace
 ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent )
     : ADN_Gfx_ABC()
     , Q3VBox( pParent )
-    , vInfosConnectors_( eNbrGuiElements, (ADN_Connector_ABC*)0 )
+    , vInfosConnectors_( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) )
 {
     ADN_GuiBuilder builder;
 
@@ -82,7 +82,7 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent )
     pMultiPercentage->AddWarning();
 
     QWidget* pHolder = builder.AddFieldHolder( this );
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Contamination" ), vInfosConnectors_[eContaminationPresent] );
+    builder.AddField< ADN_CheckBox >( pHolder, tr( "Contamination" ), vInfosConnectors_[eContaminationPresent] );
 
     pConnector_ = new ADN_NBC_Intox_Connector( vInfosConnectors_ );
 }

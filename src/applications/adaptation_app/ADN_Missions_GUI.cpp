@@ -77,22 +77,23 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    ADN_GuiBuilder builder( strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str() );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    const QString builderName = strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str();
+    ADN_GuiBuilder builder( builderName );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Doctrine description" ), vInfosConnectors[ eDoctrineDescription ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Usage description" ), vInfosConnectors[ eUsageDescription ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
     if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
     {
-        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "MRT Behavior" ), vInfosConnectors[eMRTBehavior] );
-        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CDT Behavior" ), vInfosConnectors[eCDTBehavior] );
+        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "MRT Behavior" ), vInfosConnectors[ eMRTBehavior ] );
+        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CDT Behavior" ), vInfosConnectors[ eCDTBehavior ] );
     }
     else
-        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
+        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Behavior" ), vInfosConnectors[ eBehavior ] );
 
     QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
@@ -101,16 +102,17 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
 
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    vInfosConnectors[eParameters] = &paramList->GetConnector();
+    paramList->setObjectName( builderName + "MissionParams" );
+    vInfosConnectors[ eParameters ] = &paramList->GetConnector();
 
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
-    vInfosConnectors[eParameterValues] = &valueList->GetConnector();
+    vInfosConnectors[ eParameterValues ] = &valueList->GetConnector();
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEnum, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pChoice = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeLocationComposite );
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
-    vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
+    vInfosConnectors[ eChoiceValues ] = &choiceList->GetConnector();
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pChoice, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pLimit = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Limits" ), eMissionParameterTypeNumeric );
@@ -153,6 +155,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
 
     // List view
     ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( eEntityType, missions, missions, vInfosConnectors );
+    pSearchListView->GetListView()->setObjectName( builderName + "_List" );
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );
 
@@ -194,29 +197,30 @@ QWidget* ADN_Missions_GUI::BuildPopulationMissions()
 QWidget* ADN_Missions_GUI::BuildFragOrders()
 {
     ADN_GuiBuilder builder( strClassName_ + "_Fragorders" );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Content
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
-    QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Doctrine description" ), vInfosConnectors[ eDoctrineDescription ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Usage description" ), vInfosConnectors[ eUsageDescription ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
+    QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Available without mission" ) , vInfosConnectors[ eFragOrderAvailableWithoutMission ] );
 
     // Parameters
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    vInfosConnectors[eParameters] = &paramList->GetConnector();
+    paramList->setObjectName( strClassName_ + "_FragordersParams" );
+    vInfosConnectors[ eParameters ] = &paramList->GetConnector();
 
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
-    vInfosConnectors[eParameterValues] = &valueList->GetConnector();
+    vInfosConnectors[ eParameterValues ] = &valueList->GetConnector();
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEnum, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pChoice = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeLocationComposite );
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
-    vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
+    vInfosConnectors[ eChoiceValues ] = &choiceList->GetConnector();
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pChoice, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pLimit = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Limits" ), eMissionParameterTypeNumeric );
@@ -259,6 +263,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 
     // List view
     ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( data_.fragOrders_, data_.fragOrders_, vInfosConnectors );
+    pSearchListView->GetListView()->setObjectName( strClassName_ + "_FragOrders_List" );
     connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );
 

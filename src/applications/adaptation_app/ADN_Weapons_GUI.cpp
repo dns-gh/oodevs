@@ -47,23 +47,26 @@
 class ADN_GC_Ph : public ADN_Connector_Vector_ABC
                 , private boost::noncopyable
 {
-
 public:
     explicit ADN_GC_Ph( ADN_GraphData& graphData )
         : ADN_Connector_Vector_ABC()
-        , graphData_ ( graphData )
-    {}
+        , graphData_( graphData )
+    {
+        // NOTHING
+    }
 
     virtual ~ADN_GC_Ph()
-    {}
+    {
+        // NOTHING
+    }
 
     bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
         if( pItem == 0 )
             return false;
 
-        ADN_Weapons_Data::PhInfos* pPhInfos = static_cast<ADN_Weapons_Data::PhInfos*>( pItem );
-        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nModifiedDistance_ , pPhInfos->rModifiedPerc_ );
+        ADN_Weapons_Data::PhInfos* pPhInfos = static_cast< ADN_Weapons_Data::PhInfos* >( pItem );
+        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nModifiedDistance_, pPhInfos->rModifiedPerc_ );
         return true;
     }
 
@@ -75,19 +78,19 @@ public:
 
     void ConnectPrivateSub( ADN_Connector_Vector_ABC* pDataConnector )
     {
-        ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pDataConnector );
+        ADN_Connector_ABC::ConnectPrivateSub( static_cast< ADN_Connector_ABC* >( pDataConnector ) );
 
         pDataConnector->Initialize( *this );
-        connect( pDataConnector, SIGNAL(ItemAdded(void*)),      this, SLOT(AddItemNoEmit(void*)) );
-        connect( pDataConnector, SIGNAL(ItemRemoved(void*)),    this, SLOT(RemItemNoEmit(void*)) );
+        connect( pDataConnector, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItemNoEmit( void* ) ) );
+        connect( pDataConnector, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItemNoEmit( void* ) ) );
     }
 
     void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pDataConnector )
     {
-        ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pDataConnector );
+        ADN_Connector_ABC::DisconnectPrivateSub( static_cast< ADN_Connector_ABC* >( pDataConnector ) );
 
-        disconnect( pDataConnector, SIGNAL(ItemAdded(void*)),      this, SLOT(AddItemNoEmit(void*)) );
-        disconnect( pDataConnector, SIGNAL(ItemRemoved(void*)),    this, SLOT(RemItemNoEmit(void*)) );
+        disconnect( pDataConnector, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItemNoEmit( void* ) ) );
+        disconnect( pDataConnector, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItemNoEmit( void* ) ) );
     }
 
 private:
@@ -100,22 +103,26 @@ class ADN_GC_PhSize : public ADN_Connector_Graph_ABC
 public:
     explicit ADN_GC_PhSize( ADN_Graph& graph )
         : ADN_Connector_Graph_ABC( graph )
-    {}
+    {
+        // NOTHING
+    }
 
     virtual ~ADN_GC_PhSize()
-    {}
+    {
+        // NOTHING
+    }
 
     bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
         if( pItem == 0 )
             return false;
 
-        ADN_Weapons_Data::PhSizeInfos* pPhSizeInfos = static_cast<ADN_Weapons_Data::PhSizeInfos*>(pItem);
+        ADN_Weapons_Data::PhSizeInfos* pPhSizeInfos = static_cast< ADN_Weapons_Data::PhSizeInfos* >(pItem);
 
-        ADN_GraphData* pNewData = new ADN_GraphData( (uint)pItem, graph_ );
+        ADN_GraphData* pNewData = new ADN_GraphData( reinterpret_cast< uint >( pItem ), graph_ );
         QColor color;
         color.setHsv( nNbrDatas_ * 100, 255, 255 );
-        GQ_PlotData::E_PointShapeType nPointShape = (GQ_PlotData::E_PointShapeType)(nNbrDatas_ % (GQ_PlotData::eUserShape-1) + 1);
+        GQ_PlotData::E_PointShapeType nPointShape = static_cast< GQ_PlotData::E_PointShapeType >( nNbrDatas_ % ( GQ_PlotData::eUserShape - 1 ) + 1 );
         pNewData->SetPointShape( nPointShape );
         pNewData->SetPointPen( QPen( color ) );
         pNewData->SetLinePen( QPen( color ) );
@@ -127,13 +134,13 @@ public:
 
         ADN_GC_Ph* pConnector = new ADN_GC_Ph( *pNewData );
         pNewData->SetConnector( *pConnector );
-        pConnector->Connect( & pPhSizeInfos->vPhs_ );
+        pConnector->Connect( &pPhSizeInfos->vPhs_ );
         return true;
     }
 
     bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
-        GQ_PlotData* pPlotData = graph_.FindPlotData( (uint)pItem );
+        GQ_PlotData* pPlotData = graph_.FindPlotData( reinterpret_cast< uint >( pItem ) );
         if( pPlotData == 0 )
             return false;
         // Unregister and destroy it.
@@ -184,34 +191,39 @@ void ADN_Weapons_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.SetEnabled( false );
     {
         ADN_GoToButton* goToButton = new ADN_GoToButton( ::eLaunchers );
-        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Launchers_Data::LauncherInfos> >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[eLauncher], 0, eNone, goToButton ) );
+        ADN_ComboBox_Vector< ADN_Launchers_Data::LauncherInfos >* combo = builder.AddField< ADN_ComboBox_Vector< ADN_Launchers_Data::LauncherInfos > >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[ eLauncher ], 0, eNone, goToButton );
+        combo->setObjectName( strClassName_ + "_Launchers" );
+        goToButton->SetLinkedCombo( combo );
         builder.SetEnabled( false );
     }
     {
         ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement, 0 );
-        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton ) );
+        ADN_ComboBox_Vector< ADN_Equipement_Data::AmmoCategoryInfo >* combo = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::AmmoCategoryInfo > >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton );
+        combo->setObjectName( strClassName_ + "_Ammos" );
+        goToButton->SetLinkedCombo( combo );
         builder.SetEnabled( false );
     }
-    builder.AddField<ADN_EditLine_Int>( pInfoHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterZero );
-    ADN_TimeField* burst = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Rounds per burst" ), vInfosConnectors[ eRoundsPerBurst ], 0, eGreaterZero );
+    ADN_TimeField* burst = builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Burst duration" ), vInfosConnectors[ eBurstDuration ], 0, eGreaterZero );
     burst->SetMinimumValueInSecond( 1 );
-    builder.AddField<ADN_EditLine_Int>( pInfoHolder, tr( "Rounds per reload" ), vInfosConnectors[eRoundsPerReload], 0, eGreaterZero );
-    ADN_TimeField* reload = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration], 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Rounds per reload" ), vInfosConnectors[ eRoundsPerReload ], 0, eGreaterZero );
+    ADN_TimeField* reload = builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Reload duration" ), vInfosConnectors[ eReloadDuration ], 0, eGreaterZero );
     reload->SetMinimumValueInSecond( 1 );
 
     // Direct group
     ADN_GroupBox2* pDirectGroup = new ADN_GroupBox2( tr( "Direct fire" ) );
+    pDirectGroup->setObjectName( strClassName_ + "_DirectFire" );
     pDirectGroup->GetConnector().bAutoHide_ = true;
     pDirectGroup->setCheckable( false );
-    vInfosConnectors[eDirect] = &pDirectGroup->GetConnector();
+    vInfosConnectors[ eDirect ] = &pDirectGroup->GetConnector();
 
     ADN_Graph* pGraph = new ADN_Graph(/* pDirectGroup */);
     pGraph->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
@@ -227,44 +239,48 @@ void ADN_Weapons_GUI::Build()
     pGraph->XAxis().ShowTicksValue( true );
 
     ADN_GC_PhSize* pGraphConnector = new ADN_GC_PhSize( *pGraph );
-    vInfosConnectors[ePhsGraph] = pGraphConnector;
+    pGraphConnector->setObjectName( strClassName_ + "_PHGraph" );
+    vInfosConnectors[ ePhsGraph ] = pGraphConnector;
 
     ADN_Weapons_PhSizeListView* pPhSizeListView = new ADN_Weapons_PhSizeListView( *pGraph/*, pDirectGroup*/ );
-    vInfosConnectors[ePhs] = &pPhSizeListView->GetConnector();
-    T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, (ADN_Connector_ABC*)0 );
+    pPhSizeListView->setObjectName( strClassName_ + "_PHSize" );
+    vInfosConnectors[ ePhs ] = &pPhSizeListView->GetConnector();
+    T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     ADN_Weapons_PhTable* pPhTable = new ADN_Weapons_PhTable( /*pDirectGroup*/ );
-    vPhConnectors[ePhVector] = & pPhTable->GetConnector();
+    pPhTable->setObjectName( strClassName_ + "_PHTable" );
+    vPhConnectors[ ePhVector ] = & pPhTable->GetConnector();
 
     pPhSizeListView->SetItemConnectors( vPhConnectors );
 
     ADN_GroupBox2* pSimulation = new ADN_GroupBox2( tr( "Simulation" ) );
-    vInfosConnectors[eSimulation] = &pSimulation->GetConnector();
+    vInfosConnectors[ eSimulation ] = &pSimulation->GetConnector();
     connect( pSimulation, SIGNAL( toggled( bool ) ), this, SLOT( ModifiersChanged( bool ) ) );
 
     QWidget* pModifiersHolder = builder.AddFieldHolder( pSimulation );
     // $$$$ LDC Code review: Should be extracted in its own method
     pModifiersHolder->layout()->setAlignment( Qt::AlignTop );
-    ADN_ComboBox* pFirePostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[eFirePosture], ENT_Tr::ConvertFromUnitPosture );
+    ADN_ComboBox* pFirePostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[ eFirePosture ], ENT_Tr::ConvertFromUnitPosture );
     connect( pFirePostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[eTargetPosture], ENT_Tr::ConvertFromUnitPosture );
+    ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[ eTargetPosture ], ENT_Tr::ConvertFromUnitPosture );
     connect( pTargetPostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pExperienceCombo = builder.AddEnumField< E_UnitExperience >( pModifiersHolder, tr( "Experience" ), vInfosConnectors[eExperience], ENT_Tr::ConvertFromUnitExperience );
+    ADN_ComboBox* pExperienceCombo = builder.AddEnumField< E_UnitExperience >( pModifiersHolder, tr( "Experience" ), vInfosConnectors[ eExperience ], ENT_Tr::ConvertFromUnitExperience );
     connect( pExperienceCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[eTiredness], ENT_Tr::ConvertFromUnitTiredness );
+    ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[ eTiredness ], ENT_Tr::ConvertFromUnitTiredness );
     connect( pTirednessCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pStressCombo = builder.AddEnumField< E_UnitStress >( pModifiersHolder, tr( "Stress" ), vInfosConnectors[eStress], ENT_Tr::ConvertFromUnitStress );
+    ADN_ComboBox* pStressCombo = builder.AddEnumField< E_UnitStress >( pModifiersHolder, tr( "Stress" ), vInfosConnectors[ eStress ], ENT_Tr::ConvertFromUnitStress );
     connect( pStressCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
 
     // Indirect group
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ) );
+    pIndirectGroup->setObjectName( strClassName_ + "_IndirectFire" );
     pIndirectGroup->GetConnector().bAutoHide_ = true;
     pIndirectGroup->setCheckable( false );
-    vInfosConnectors[eIndirect] = &pIndirectGroup->GetConnector();
+    vInfosConnectors[ eIndirect ] = &pIndirectGroup->GetConnector();
 
-    builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Average speed" ), vInfosConnectors[eAverageSpeed], tr( "km/h" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Min range" ), vInfosConnectors[eMinRange], tr( "m" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Max range" ), vInfosConnectors[eMaxRange], tr( "m" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pIndirectGroup, tr( "Average speed" ), vInfosConnectors[ eAverageSpeed ], tr( "km/h" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pIndirectGroup, tr( "Min range" ), vInfosConnectors[ eMinRange ], tr( "m" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pIndirectGroup, tr( "Max range" ), vInfosConnectors[ eMaxRange ], tr( "m" ), eGreaterEqualZero );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -300,6 +316,7 @@ void ADN_Weapons_GUI::Build()
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

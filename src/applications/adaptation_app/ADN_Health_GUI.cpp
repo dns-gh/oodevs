@@ -79,18 +79,22 @@ void ADN_Health_GUI::Build()
 
     // wounds
     ADN_Table* woundTable = BuildWoundsTable();
+    woundTable->setObjectName( strClassName_ + "_WoundsTable" );
 
     // Warning tables
     Q3HGroupBox* pEvacuationBox = new Q3HGroupBox( tr( "Ambulances (evacuation) availability warnings" ) );
     ADN_AvailabilityWarningTable* pChangeOverWarningTable = new ADN_AvailabilityWarningTable( pEvacuationBox );
+    pChangeOverWarningTable->setObjectName( strClassName_ + "_EvacuationTable" );
     pChangeOverWarningTable->GetConnector().Connect( & data_.vChangeOverWarnings_ );
 
     Q3HGroupBox* pCollectionBox = new Q3HGroupBox( tr( "Ambulances (collection) availability warnings" ) );
     ADN_AvailabilityWarningTable* pCollectWarningTable = new ADN_AvailabilityWarningTable( pCollectionBox );
+    pCollectWarningTable->setObjectName( strClassName_ + "_CollectTable" );
     pCollectWarningTable->GetConnector().Connect( & data_.vCollectingWarnings_ );
 
     Q3HGroupBox* pDoctorsBox = new Q3HGroupBox( tr( "Doctors availability warnings" ) );
     ADN_AvailabilityWarningTable* pDoctorsWarningTable = new ADN_AvailabilityWarningTable( pDoctorsBox );
+    pDoctorsWarningTable->setObjectName( strClassName_ + "_DoctorsTable" );
     pDoctorsWarningTable->GetConnector().Connect( & data_.vDoctorsWarnings_ );
 
     // -------------------------------------------------------------------------

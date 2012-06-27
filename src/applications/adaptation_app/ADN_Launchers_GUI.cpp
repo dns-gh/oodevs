@@ -51,18 +51,19 @@ void ADN_Launchers_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
 
     // Indirect fire
-    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Indirect fire" ), vConnectors[eIndirect] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Indirect fire" ), vConnectors[ eIndirect ] );
 
     // Direct fire
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Direct fire" ) );
-    vConnectors[eDirect] = &pDirectGroup->GetConnector();
+    pDirectGroup->setObjectName( strClassName_ + "DirectFire" );
+    vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
     QGroupBox* pGroupModificators = new QGroupBox( tr( "Phs modifiers" ), pDirectGroup );
 
     QLabel* pTargetLabel = new QLabel( tr( "Target's stance" ) );
@@ -71,14 +72,15 @@ void ADN_Launchers_GUI::Build()
     QLabel* pShooterLabel = new QLabel( tr( "Shooter's\nstance" ) );
     //pShooterLabel->setAlignment( Qt::AlignVCenter );
 
-    // modificators tab
+    // modifiers tab
     pModifPhs_ = new ADN_Launchers_ModifPhs_GUI();
-    vConnectors[ePhModifiers] = &pModifPhs_->GetConnector();
+    pModifPhs_->setObjectName( strClassName_ + "ModifPh" );
+    vConnectors[ ePhModifiers ] = &pModifPhs_->GetConnector();
 
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
-    // Modificators layout
+    // Modifier layout
     QGridLayout* pModificatorsLayout = new QGridLayout( pGroupModificators, 2, 2 );
     pModificatorsLayout->setMargin( 10 );
     pModificatorsLayout->setSpacing( 10 );
@@ -100,6 +102,7 @@ void ADN_Launchers_GUI::Build()
     ADN_SearchListView< ADN_ListView_Launchers >* pSearchListView = new ADN_SearchListView< ADN_ListView_Launchers >( data_.GetLaunchersInfos(), vConnectors );
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

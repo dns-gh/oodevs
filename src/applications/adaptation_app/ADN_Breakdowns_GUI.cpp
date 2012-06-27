@@ -50,26 +50,27 @@ void ADN_Breakdowns_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-    T_ConnectorVector vInfosConnectors( eNbrBreakdownGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrBreakdownGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // General
     Q3GroupBox* pGeneralGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "General parameters" ) );
     //QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
-    builder.AddField<ADN_TimeField>( pGeneralGroup, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
+    builder.AddField< ADN_TimeField >( pGeneralGroup, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
 
     // Specific parameter
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddEnumField<E_BreakdownType>( pInfoHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
     builder.AddEnumField<E_BreakdownNTI>( pInfoHolder, tr( "Seriousness" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
-    builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
-    builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
+    builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
+    builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 
     // Parts
     QGroupBox* pPartsGroup = new QGroupBox( tr( "Required parts" ) );
     QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
     ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable();
+    pPartsTable->setObjectName( strClassName_ + "_Parts" );
     pPartsTable->SetGoToOnDoubleClick( ::eEquipement );
     vInfosConnectors[eParts] = & pPartsTable->GetConnector();
     pPartsLayout->addWidget( pPartsTable );
@@ -90,6 +91,7 @@ void ADN_Breakdowns_GUI::Build()
     ADN_SearchListView< ADN_Breakdowns_ListView >* pSearchListView = new ADN_SearchListView< ADN_Breakdowns_ListView >( data_.vBreakdowns_, vInfosConnectors );
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
 
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView, false, false, true, 0, 0 );
