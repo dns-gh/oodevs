@@ -46,4 +46,12 @@
 !else 
     ${File} "${RUNDIR}\plugins\hla\" "plugin.xml"
 !endif
+    SetOutPath "$INSTDIR\doc\en"
+    ${File} "${DOCDIR}\en\final\" "HLA_Plugin.pdf"
+    SetOutPath "$INSTDIR\doc\fr"
+    ${File} "${DOCDIR}\fr\final\" "HLA_Plugin.pdf"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_SUITE_NAME}\Documentation\English\HLA Plugin.lnk" "$INSTDIR\doc\en\HLA_Plugin.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_SUITE_NAME}\Documentation\Français\HLA Plugin.lnk" "$INSTDIR\doc\fr\HLA_Plugin.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !macroend

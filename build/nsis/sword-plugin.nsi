@@ -11,6 +11,7 @@
 
 !define PRODUCT_SUITE_NAME "SWORD"
 !define PRODUCT_NAME "${PLUGIN_NAME}"
+!define COMPANY_NAME "MASA Group"
 
 !define UNINSTALL_LOG "uninstall_${PLUGIN_NAME}"
 
