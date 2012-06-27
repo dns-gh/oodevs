@@ -29,7 +29,7 @@
         </parameter>
         <parameter name="supportTasks">
             <value>
-                <string>france.military.platoon.tasks.SeDeployer</string>
+                <string>france.military.platoon.tasks.SeDeployer;france.military.platoon.tasks.SeDeployer;france.military.platoon.combat.support.log.tasks.TraiterBlesses;france.military.platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;france.military.platoon.combat.support.log.tasks.TrierEtTraiterBlesses;france.military.platoon.combat.support.log.tasks.Reparer;france.military.platoon.combat.support.log.tasks.DecontaminerBlesses</string>
             </value>
         </parameter>
         <parameter name="defaultTask">
