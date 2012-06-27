@@ -53,6 +53,7 @@ public:
     static bool PionChangeAutomate( DEC_Decision_ABC* pion, const DEC_Decision_ABC* superior );
 
     // Accesseurs sur les fonctions Pion
+    static bool IsLogistic( const MIL_Automate& callerAutomat );
     static bool IsPionContaminated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPionIntoxicated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPionNeutralized( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );

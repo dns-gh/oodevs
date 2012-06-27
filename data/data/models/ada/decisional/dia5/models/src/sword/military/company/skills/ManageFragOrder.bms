@@ -20,10 +20,26 @@ rootnode
     
     activate = function( self )
         local Activate = Activate
+        local oldEntities = myself.oldEntities
+        local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+
+        -- Si un pion a été ajouté à l'automate et que celui-ci est embrayé
+        if oldEntities and #oldEntities > 0 then
+            if meKnowledge:isCommanding() then
+                for i, entity in pairs( newEntities ) do
+                    if not exists( oldEntities, entity ) then
+                        meKnowledge:UpdateNewUnitInAutomat( entity ) -- Gestion et Mise à jour des ROE/Priorités à partir de l'automate
+                    end
+                end
+            end
+        end
+        myself.oldEntities = newEntities -- on enregistre la liste pour le tic suivant
+        
         for _, fragOrder in ipairs( self.params.fragOrders ) do
             if fragOrder:isROE() then
-               integration.setCompanyROE( fragOrder.source:GetorderConduiteChangerReglesEngagement_())
+                integration.setCompanyROE( fragOrder.source:GetorderConduiteChangerReglesEngagement_())
             end
+            fragOrder:setAutomatFragOrder()
             if fragOrder:mustBePropagate() then
                 local typeOrder = fragOrder.source:GetType()
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
@@ -39,7 +55,8 @@ rootnode
                     end
                 end
             end
-        end          
+        end
+        
     end
 }
 

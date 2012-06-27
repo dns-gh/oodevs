@@ -210,6 +210,9 @@ return
         integration.SendMessage( "FragOrder", receiver, { fragOrder = fragOrder }, { type = "dynamic" } )
         integration.cleanFragOrder( fragOrder )
     end,
+    sendDataToNewUnitInAutomat = function( self, receiver, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE  )
+        integration.SendMessage("DataToNewUnitInAutomat", receiver, { saintRegimeTravail = saintRegimeTravail, santePrioritesTact = santePrioritesTact, maintPrioritesTact = maintPrioritesTact, maintPriorites = maintPriorites, santePriorites = santePriorites, etatROEPopulation = etatROEPopulation, etatROE = etatROE }, { type = "dynamic" } )
+    end,
     slowDownSyncronisation = function( self, receiver )
         integration.SendMessage( "SlowDownSyncronisation", receiver, emptyTable, { type = "dynamic" } )
     end,
@@ -276,4 +279,23 @@ return
             return true
         end
     } ),
+    UpdateNewUnitInAutomat = function( self, unit )
+        local saintRegimeTravail = -1
+        local santePrioritesTact = {}
+        local maintPrioritesTact = {}	
+        local maintPriorites = {} 	
+        local santePriorites = {}	
+        local etatROEPopulation = -1
+        local etatROE = -1
+        if DEC_Automate_isLogistic() then
+            saintRegimeTravail = DEC_Maintenance_RegimeTravail()
+            santePrioritesTact = DEC_Sante_PrioritesTactiques()
+            maintPrioritesTact = DEC_Maintenance_PrioritesTactiques()
+            maintPriorites = DEC_Maintenance_Priorites()
+            santePriorites = DEC_Sante_Priorites()
+        end
+        etatROEPopulation = DEC_Automate_ROEPopulation()
+        etatROE = DEC_Automate_ROE()
+        meKnowledge:sendDataToNewUnitInAutomat( unit, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE )
+    end,
 }
