@@ -48,5 +48,5 @@ body{padding-top:60px;padding-bottom:40px;}
 .package_header .remove_all{float:right;margin-right:6px;margin-top:6px;}
 .masa_header{text-align:center;}
 .sign_in{margin-left:180px;}
-.sign_in_action{text-align:center;}
-.sign_in_action a{width:250px;}
+.sign_in_action{margin-left:160px;}
+.sign_in_action button{width:280px;}
