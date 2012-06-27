@@ -71,6 +71,28 @@ masalife.brain.communication.setMessageTreatment( "EndOfMission",
         end
     end )
 
+masalife.brain.communication.setMessageTreatment( "DataToNewUnitInAutomat",
+    function( content, sender )
+       if integration.isLogisticTypeUnit() then -- pour les unites logistiques uniquement
+           DEC_Maintenance_ChangerRegimeTravail( content.saintRegimeTravail )
+           if content.santePrioritesTact and #content.santePrioritesTact > 0 then
+               DEC_Sante_ChangerPrioritesTactiques( content.santePrioritesTact )
+           end
+           if content.maintPrioritesTact and #content.maintPrioritesTact > 0 then
+               DEC_Maintenance_ChangerPrioritesTactiques( content.maintPrioritesTact )
+           end
+           if content.maintPriorites and #content.maintPriorites > 0 then
+               DEC_Maintenance_ChangerPriorites( content.maintPriorites )
+           end
+           if content.santePriorites and #content.santePriorites > 0 then
+               DEC_Sante_ChangerPriorites( content.santePriorites )
+           end
+        end
+
+       DEC_Agent_ChangeEtatROEPopulation( content.etatROEPopulation )
+       DEC_Agent_ChangeEtatROE( content.etatROE )
+    end )
+
 -- -------------------------------------------------------------------------------- 
 -- Predicates
 -- --------------------------------------------------------------------------------
@@ -905,5 +927,5 @@ return
     end,
     isUnderIndirectFire = function( self )
         return integration.isUnderIndirectFire
-    end
+    end,
 }

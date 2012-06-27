@@ -453,7 +453,8 @@ PHY_RolePionLOG_Maintenance::T_AutomateVector PHY_RolePionLOG_Maintenance::GetAu
 {
     T_AutomateVector result;
     for( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
-        result.push_back( (*it).first );
+        if( (*it).first )
+            result.push_back( (*it).first );
     return result;
 }
 

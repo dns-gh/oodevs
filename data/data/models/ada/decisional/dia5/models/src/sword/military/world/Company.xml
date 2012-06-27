@@ -63,6 +63,23 @@
 				</type>
 			</argument>
 		</method>
+		<method name="sendDataToNewUnitInAutomat">
+			<description>Envoyer un ordre de conduite d'un automate vers un pion.</description>
+			<argument>
+				<description>Unité recevant l'ordre</description>
+				<type>
+					<class name="sword.military.knowledge.decisional.Commanding"/>
+				</type>
+			</argument>
+			<argument>
+				<description>Les paramètres des données à mettre à jour</description>
+				<type>
+					<list>
+						<class name="directia.core.Object"/>
+					</list>
+				</type>
+			</argument>
+		</method>		
 		<method name="slowDownSyncronisation">
 			<description>Envoie d'un signal vers un pion de ralentir pour syncroniser la vitesse des pions</description>
 			<argument name="receiver">
@@ -341,6 +358,15 @@
                     <simple name="boolean"/>
                 </type>
             </return>
+        </method>
+        <method name="UpdateNewUnitInAutomat">
+            <description>Mise à jour des ROE/Priorites/Regime de Travail pour les pions qui viennent renforcer ou réarticuler un automate</description>
+            <argument name="unit">
+                <description>Unité qui vient de s'ajouter à un automate.</description>
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
         </method>
 	</methods>
 	<predicates>

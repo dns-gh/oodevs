@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -281,6 +282,15 @@ bool DEC_AutomateFunctions::IsPionInAutomate( const MIL_Automate& automate, cons
 bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type )
 {
     return CanPionConstructObjectWithLocalisation( callerAutomate, pion, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::IsLogistic
+// Created: GGE 2012-06-26
+// -----------------------------------------------------------------------------
+bool DEC_AutomateFunctions::IsLogistic( const MIL_Automate& callerAutomat )
+{
+    return callerAutomat.GetType().IsLogistic();
 }
 
 // -----------------------------------------------------------------------------

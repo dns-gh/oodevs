@@ -5,6 +5,9 @@
     <method name="updateROE">
       <description>Appliquer le changement de ROE</description>
     </method>
+    <method name="setAutomatFragOrder">
+      <description>Appliquer le changement de frago lorsqu'une unité est ajouté à un automate</description>
+    </method>
     <method name="startTask">
       <description>Lancer la tâche correspondant à l'application de l'ordre de conduite</description>
     </method>

@@ -218,6 +218,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Automate_ChangeEtatROEPopulation" ] =
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Automate_ROEPopulation" ] = boost::bind( &DEC_AutomateFunctions::GetRoePopulation, boost::ref( GetAutomate() ) );
+    brain[ "DEC_Automate_isLogistic" ] = boost::bind( &DEC_AutomateFunctions::IsLogistic, boost::ref( GetAutomate() ) );
 
     // Debug
     brain[ "DEC_DecisionalState" ] =

@@ -105,6 +105,25 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_ModifierPrioritesBlesses"
 end
 
+integration.setAutomatFragOrder = function( self )
+  local orderType = self.source:GetType() -- ne pas faire de cleanFragOrder ici, le frago est réutilisé pour les pions
+  
+  if orderType == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
+      DEC_Maintenance_ChangerRegimeTravail( self.source:GetorderConduiteModifierRegimeTravailMaintenance_() )
+  elseif orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
+      DEC_Sante_ChangerPrioritesTactiques( self.source:GetorderConduiteModifierPrioritesTactiquesBlesses_() )
+  elseif orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
+      DEC_Maintenance_ChangerPrioritesTactiques( self.source:GetorderConduiteModifierPrioritesTactiquesReparations_() )
+  elseif orderType == "Rep_OrderConduite_ModifierPrioritesReparations" then
+      DEC_Maintenance_ChangerPriorites( self.source:GetorderConduiteModifierPrioritesReparations_() )
+  elseif orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" then
+      DEC_Sante_ChangerPriorites( self.source:GetorderConduiteModifierPrioritesBlesses_() )
+  elseif orderType == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
+      DEC_Automate_ChangeEtatROEPopulation(self.source:GetorderConduiteChangerReglesEngagementPopulation_())
+      integration.CR_ROE_Foules ( self.source:GetorderConduiteChangerReglesEngagementPopulation_() )
+  end
+end
+
 integration.updateROE = function( self )
   DEC_Agent_ChangeEtatROE(self.source:GetorderConduiteChangerReglesEngagement_())
   integration.CR_ROE ( DEC_Agent_GetEtatROE() )

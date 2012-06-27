@@ -3,6 +3,9 @@ return
     isROE = function( self )
         return integration.isROE( self )
     end,
+    setAutomatFragOrder = function( self )
+        return integration.setAutomatFragOrder( self )
+    end,
     mustBePropagate = function( self )
         return integration.mustBePropagate( self )
     end,
