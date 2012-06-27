@@ -105,7 +105,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
         return;
 
     selectedEntity_ = &entity;
-    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
