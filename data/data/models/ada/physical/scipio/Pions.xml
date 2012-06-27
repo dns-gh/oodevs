@@ -7930,7 +7930,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
+    <efficiencies combat="30" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="261" name="INF . Patrouille SRR 2SOFF" type="Pion ABC">
@@ -8012,7 +8012,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
+    <efficiencies combat="30" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="264" name="ABC . Peloton ERIAC OFF" type="Pion ABC">
@@ -8037,7 +8037,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
+    <efficiencies combat="30" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.Milan" id="265" name="ABC . Peloton ERIAC S/OFF" type="Pion ABC">
@@ -8062,7 +8062,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="300s"/>
-    <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
+    <efficiencies combat="30" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.PIR" id="266" name="ABC . Peloton Protection PC" type="Pion ABC">
@@ -19347,4 +19347,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3912040055" -->
+<!-- signature="1272538095" -->
