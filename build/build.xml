@@ -1527,7 +1527,7 @@
 
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.worldwide.QA,
                                             package.otpack.trainingML,package.otpack.decisional3,
-                                            package.otpack.decisional45,otpack.decisionalww"
+                                            package.otpack.decisional45,pakage.otpack.decisionalww"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
