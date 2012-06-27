@@ -183,6 +183,7 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
         self._namedParams.distance = self.params[3]
         self._namedParams.pointRegroupement = self.params[4]
         self._namedParams.attendrePourPionsIMEX = self.params[5]
+        self._namedParams.porteeAction_ = self.params[6]
     end,
 
     activate = function( self )
@@ -271,14 +272,14 @@ do
 ]]if( self._namedParams.attendrePourPionsIMEX ) then
                     do
                         if( not DIA_IsListEmpty( self.listePionsPourHeliporterPlots ) ) then
-                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self._namedParams.pointRegroupement, self.pointDebarquement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), } )
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self._namedParams.pointRegroupement, self.pointDebarquement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), self._namedParams.porteeAction_ } )
                         end
 
                     end
                 else
 do
                         if( not DIA_IsListEmpty( self.listePionsPourHeliporterPlots ) ) then
-                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self.pointDebarquement, self.pointDebarquement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), } )
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsHeliporterPlotsRavitaillementAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self.pointDebarquement, self.pointDebarquement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), self._namedParams.porteeAction_ } )
                         end
 
                     end
@@ -302,7 +303,7 @@ do
                 if( not ( self._namedParams.attendrePourPionsIMEX and not bDesPionsAExtraire ) ) then
                     do
                         if( not DIA_IsListEmpty( self.listePionsPourHeliporterPlots ) ) then
-                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self.listePionsASoutenirIMEX, self._namedParams.pointRegroupement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), } )
+                            Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsIMEXAListe, 1, { ePhase_CDT, self.listePionsPourHeliporterPlots, self.listePionsASoutenirIMEX, self._namedParams.pointRegroupement, S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ ), self._namedParams.porteeAction_ } )
                         end
 
                     end
