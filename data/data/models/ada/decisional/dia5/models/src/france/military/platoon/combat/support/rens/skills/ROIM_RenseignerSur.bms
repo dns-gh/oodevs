@@ -14,7 +14,8 @@ rootnode
         self.initPos = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
         self.destination = nil
         self.unitPC = meKnowledge:getUnitPC()
-        self.itinerary = fusionList( self.params.ficelleDeVol, { self.initPos } ) -- add initial position on itinerary
+        self.listPoint = fusionList( self.params.ficelleDeVol, { self.initPos } )
+        self.itinerary = integration.creerItineraireAPartirListePoint( self.listPoint )
         self.pionsFriends = sword.military.queries.miscellaneous.getFriends[ "execute" ]()
         self.fragOrderReceived = false
          for _, pion in pairs( self.pionsFriends ) do
@@ -45,9 +46,9 @@ rootnode
             else 
                 self.destination = self.initPos
             end
-            Activate( skill.links.moveAlong, 1, { entities = { self.destination } } )
+            Activate( skill.links.moveAlong, 1, { entity = { self.destination } } )
         else
-            Activate( skill.links.moveAlong, 1, { entities = self.itinerary } )
+            Activate( skill.links.moveAlong, 1, { entity = self.itinerary } )
         end
     end,
     
