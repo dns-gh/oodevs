@@ -219,7 +219,7 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar,
 
     T_Process ptr = runtime.Start( Utf8Convert( java ), boost::assign::list_of
         ( "-jar \"" + Utf8Convert( jar.filename() ) + "\"" )
-        ( MakeOption( "root",  Utf8Convert( web ) ) )
+        ( MakeOption( "www",  Utf8Convert( web ) ) )
         ( MakeOption( "uuid", id_ ) )
         ( MakeOption( "type", type ) )
         ( MakeOption( "name", name_ ) )

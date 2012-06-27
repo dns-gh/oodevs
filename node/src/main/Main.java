@@ -12,18 +12,18 @@ class Main {
     private static final Logger log_ = Logger.getLogger(Main.class);
 
     private static void parseParameters(final Agent.Configuration config, final String[] args) throws Exception {
-        config.root = "www";
+        config.www = "www";
         config.type = "cluster";
         config.name = "";
         config.port = 8081;
         config.isDebug = false;
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
-            if (it.equals("--root") || it.equals("-r")) {
+            if (it.equals("--www")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --www parameter");
-                config.root = args[++i];
-            } else if (it.equals("--port") || it.equals("-p")) {
+                config.www = args[++i];
+            } else if (it.equals("--port")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --port parameter");
                 config.port = Integer.parseInt(args[++i]);
@@ -31,13 +31,13 @@ class Main {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --name parameter");
                 config.name = args[++i];
-            } else if (it.equals("--uuid") || it.equals("-u")) {
+            } else if (it.equals("--uuid")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --uuid parameter");
                 config.uuid = args[++i];
-            } else if (it.equals("--debug") || it.equals("-d")) {
+            } else if (it.equals("--debug")) {
                 config.isDebug = true;
-            } else if (it.equals("--type") || it.equals("-t")) {
+            } else if (it.equals("--type")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --type parameter");
                 config.type = args[++i];
@@ -45,17 +45,17 @@ class Main {
                 throw new Exception("Unrecognized parameter " + it);
             }
         }
-        final File dir = new File(config.root);
+        final File dir = new File(config.www);
         if (!dir.isDirectory())
             throw new Exception(dir.getAbsolutePath() + " is not a directory");
-        config.root = dir.getAbsolutePath();
+        config.www = dir.getAbsolutePath();
         if (config.uuid.isEmpty())
             throw new Exception("Missing --uuid parameter");
     }
 
     private static void printParameters(final Agent.Configuration config) {
         log_.info("uuid:  " + config.uuid);
-        log_.info("root:  " + config.root);
+        log_.info("www:  " + config.www);
         log_.info("port:  " + config.port);
         log_.info("type:  " + config.type);
         log_.info("debug: " + (config.isDebug ? "true" : "false"));

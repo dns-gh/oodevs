@@ -20,7 +20,7 @@ public class Agent {
 
     public static class Configuration {
         public String uuid;
-        public String root;
+        public String www;
         public String type;
         public String name;
         public int port;
@@ -30,7 +30,7 @@ public class Agent {
     public Agent(final Configuration config) throws Exception {
 
         final ServletContextHandler ctx = new ServletContextHandler(ServletContextHandler.NO_SECURITY | ServletContextHandler.NO_SESSIONS);
-        ctx.setResourceBase(config.root);
+        ctx.setResourceBase(config.www);
 
         final ServletHolder files = new ServletHolder(new DefaultServlet());
         files.setInitParameter("dirAllowed", "false");

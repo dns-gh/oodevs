@@ -33,7 +33,7 @@ public class Handler extends HttpServlet {
 
     public Handler(final Agent.Configuration config) throws Exception {
         uuid_ = config.uuid;
-        root_ = new File(config.root);
+        root_ = new File(config.www);
         type_ = config.type;
         name_ = config.name;
         if (!root_.isDirectory())
