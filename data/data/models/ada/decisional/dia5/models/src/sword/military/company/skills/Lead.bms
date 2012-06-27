@@ -72,7 +72,7 @@ local function manageAddedAndDeletedUnits( self )
    if #newOperationnalEntities > #self.operationnalEntities and not redone then
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
-                if not DEC_HasMission( entity.source ) then -- Si le pion n'a pas de mission
+                if not DEC_HasMission( entity.source ) or DEC_Automate_isLogistic() then -- Si le pion n'a pas de mission ou si c'est de la LOG on donne Se deployer'
                     local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
                     issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
                 end
