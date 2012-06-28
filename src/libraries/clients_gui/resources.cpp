@@ -104,6 +104,8 @@
 #include "res/trash.xpm"
 #include "res/copy.xpm"
 #include "res/refresh.xpm"
+#include "res/dnd_lock.xpm"
+#include "res/dnd_unlock.xpm"
 
 #include "cursors/pen_cursor.xpm"
 #include "cursors/point_cursor.xpm"

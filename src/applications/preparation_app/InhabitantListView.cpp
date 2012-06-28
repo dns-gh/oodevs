@@ -83,6 +83,8 @@ void InhabitantListView::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 Q3DragObject* InhabitantListView::dragObject()
 {
+    if( IsDragAndDropLocked() )
+        return 0;
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;

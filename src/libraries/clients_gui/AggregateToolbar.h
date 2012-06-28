@@ -63,12 +63,16 @@ private:
     AggregateToolbar& operator=( const AggregateToolbar& ); //!< Assignment operator
     //@}
 
+signals:
+    void LockDragAndDrop( bool lock );
+
 private slots:
     //! @name Slots
     //@{
     void Aggregate();
     void DisaggregateAll();
     void Aggregate( int id );
+    void OnLockDragAndDropToggled( bool toggled );
     //@}
 
 private:

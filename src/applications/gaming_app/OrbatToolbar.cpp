@@ -55,6 +55,15 @@ OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, P
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrbatToolbar::GetToolbar
+// Created: JSR 2012-06-28
+// -----------------------------------------------------------------------------
+const gui::AggregateToolbar* OrbatToolbar::GetToolbar() const
+{
+    return pAggregateToolbar_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrbatToolbar destructor
 // Created: SBO 2007-03-05
 // -----------------------------------------------------------------------------

@@ -11,6 +11,10 @@
         <source>Disaggregate all</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lock/Unlock drag-and-drop</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

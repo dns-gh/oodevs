@@ -31,8 +31,20 @@ class RichListView : public Q3ListView
     Q_OBJECT
 
 public:
-    explicit RichListView( QWidget* parent, const char* name = 0 ) : Q3ListView( parent, name ), creationBlocked_( false ), readOnly_( false ), readOnlyModes_( 0 ) {}
-    virtual ~RichListView() {}
+    explicit RichListView( QWidget* parent, const char* name = 0 )
+        : Q3ListView( parent, name )
+        , readOnlyModes_  ( 0 )
+        , creationBlocked_( false )
+        , readOnly_       ( false )
+        , dndLocked_      ( false )
+    {
+        // NOTHING
+    }
+
+    virtual ~RichListView()
+    {
+        // NOTHING
+    }
 
 public:
     void SetCreationBlocked( bool creationBlocked )
@@ -144,6 +156,11 @@ public slots:
         }
     }
 
+    void LockDragAndDrop( bool lock )
+    {
+        dndLocked_ = lock;
+    }
+
 private:
     bool MatchItem( Q3ListViewItem* item )
     {
@@ -170,6 +187,12 @@ public:
         }
     }
 
+protected:
+    bool IsDragAndDropLocked()
+    {
+        return dndLocked_;
+    }
+
 private:
     bool HasAnyChildVisible( ValuedListItem* item, boost::function< bool ( ValuedListItem* ) > func )
     {
@@ -188,9 +211,10 @@ private:
 
 private:
     QString searchedText_;
-    bool    creationBlocked_;
     int     readOnlyModes_;
+    bool    creationBlocked_;
     bool    readOnly_;
+    bool    dndLocked_;
 };
 
 // =============================================================================

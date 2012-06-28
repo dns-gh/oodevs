@@ -98,6 +98,8 @@ DECLARE_ICON( checkbox_off );
 DECLARE_ICON( trash );
 DECLARE_ICON( copy );
 DECLARE_ICON( refresh );
+DECLARE_ICON( dnd_lock );
+DECLARE_ICON( dnd_unlock );
 
 // cursors
 DECLARE_ICON( pen_cursor );

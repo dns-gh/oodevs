@@ -329,7 +329,7 @@ void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
 // -----------------------------------------------------------------------------
 Q3DragObject* HierarchyListView_ABC::dragObject()
 {
-    if( IsReadOnly() )
+    if( IsReadOnly() || IsDragAndDropLocked() )
         return 0;
     ListView< HierarchyListView_ABC >::dragObject();
     ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );

@@ -86,6 +86,8 @@ void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 Q3DragObject* PopulationListView::dragObject()
 {
+    if( IsDragAndDropLocked() )
+        return 0;
     gui::PopulationListView::dragObject();
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )
