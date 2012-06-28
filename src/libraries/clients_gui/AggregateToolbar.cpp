@@ -61,6 +61,16 @@ AggregateToolbar::AggregateToolbar( QWidget* parent, kernel::Controller& control
     btn->setIconSet( MAKE_ICON( desaggregate ) );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Disaggregate all" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( DisaggregateAll() ) );
+
+    QIcon dndIcon;
+    dndIcon.addPixmap( MAKE_PIXMAP( dnd_lock ), QIcon::Normal, QIcon::On );
+    dndIcon.addPixmap( MAKE_PIXMAP( dnd_unlock ), QIcon::Normal, QIcon::Off );
+    btn = new QToolButton( this );
+    btn->setIcon( dndIcon );
+    btn->setToggleButton( true );
+    btn->setAutoRaise( true );
+    QToolTip::add( btn, tools::translate( "AggregateToolbar", "Lock/Unlock drag-and-drop" ) );
+    connect( btn, SIGNAL( toggled( bool ) ), SLOT( OnLockDragAndDropToggled( bool ) ) );
     controller_.Register( *this );
 }
 
@@ -125,6 +135,15 @@ void AggregateToolbar::Aggregate( int id )
             automatsLayer_.Aggregate( **it );
     }
     menu_->setItemChecked( id, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateToolbar::OnLockDragAndDropToggled
+// Created: JSR 2012-06-28
+// -----------------------------------------------------------------------------
+void AggregateToolbar::OnLockDragAndDropToggled( bool toggled )
+{
+    emit LockDragAndDrop( toggled );
 }
 
 // -----------------------------------------------------------------------------

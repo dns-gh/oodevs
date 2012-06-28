@@ -73,6 +73,8 @@ ObjectListView::~ObjectListView()
 // -----------------------------------------------------------------------------
 Q3DragObject* ObjectListView::dragObject()
 {
+    if( IsDragAndDropLocked() )
+        return 0;
     gui::ObjectListView::dragObject();
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )

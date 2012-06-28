@@ -217,7 +217,7 @@ namespace
 // -----------------------------------------------------------------------------
 Q3DragObject* UrbanListView::dragObject()
 {
-    if( GetCurrentMode() != ePreparationMode_Terrain )
+    if( GetCurrentMode() != ePreparationMode_Terrain || IsDragAndDropLocked() )
         return 0;
     gui::EntityListView::dragObject();
     dragged_.clear();

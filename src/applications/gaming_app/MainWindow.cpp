@@ -81,6 +81,7 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/ColorController.h"
 #include "clients_gui/AddRasterDialog.h"
+#include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/Logger.h"
@@ -257,17 +258,42 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
     Q3VBox* box = new Q3VBox( pListDockWnd_ );
     pListDockWnd_->setWidget( box );
-    new OrbatToolbar( box, controllers, *pProfile_, *automatsLayer, *formationLayer );
+    OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, *pProfile_, *automatsLayer, *formationLayer );
+    const gui::AggregateToolbar* aggregateToolbar = orbatToolbar->GetToolbar();
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
-    pListsTabWidget->addTab( new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Communication" ) );
-    gui::SearchListView< LogisticListView >* searchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, *factory, *pProfile_, *icons, model_.actions_, staticModel, simulation );
-    logisticListView_ = searchListView->GetListView();
-    pListsTabWidget->addTab( searchListView, tr( "Logistic" ) );
-    pListsTabWidget->addTab( new gui::SearchListView< gui::ObjectListView >( pListsTabWidget, controllers, *factory, *pProfile_ ), tr( "Objects" ) );
-    pListsTabWidget->addTab( new gui::SearchListView< gui::PopulationListView >( pListsTabWidget, controllers, *factory, *pProfile_ ), tr( "Crowds" ) );
-    pListsTabWidget->addTab( new gui::SearchListView< gui::InhabitantListView >( pListsTabWidget, controllers, *factory, *pProfile_ ), tr( "Populations" ) );
+    gui::SearchListView_ABC* searchListView = 0;
+    {
+        searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons );
+        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchListView, tr( "Tactical" ) );
+    }
+    {
+        searchListView = new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons );
+        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchListView, tr( "Communication" ) );
+    }
+    {
+        gui::SearchListView< LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, *factory, *pProfile_, *icons, model_.actions_, staticModel, simulation );
+        logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+        logisticListView_ = logisticSearchListView->GetListView();
+        pListsTabWidget->addTab( logisticSearchListView, tr( "Logistic" ) );
+    }
+    {
+        searchListView = new gui::SearchListView< gui::ObjectListView >( pListsTabWidget, controllers, *factory, *pProfile_ );
+        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchListView, tr( "Objects" ) );
+    }
+    {
+        searchListView = new gui::SearchListView< gui::PopulationListView >( pListsTabWidget, controllers, *factory, *pProfile_ );
+        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchListView, tr( "Crowds" ) );
+    }
+    {
+        searchListView = new gui::SearchListView< gui::InhabitantListView >( pListsTabWidget, controllers, *factory, *pProfile_ );
+        searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
+        pListsTabWidget->addTab( searchListView, tr( "Populations" ) );
+    }
 
     // Mini views
     gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_ );

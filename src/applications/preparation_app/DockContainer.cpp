@@ -63,7 +63,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         Q3VBox* box = new Q3VBox( pListDockWnd );
         pListDockWnd->setWidget( box );
 
-        new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
+        gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
         gui::SearchListView_ABC* searchListView = 0;
         QTabWidget* pListsTabWidget = new QTabWidget( box );
         {
@@ -72,6 +72,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
             // Tactical
             {
                 searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_ );
+                searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
                 listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Tactical" ) );
@@ -79,6 +80,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
             // Communication
             {
                 searchListView = new gui::SearchListView< CommunicationListView >( pListsTabWidget, controllers, factory, icons, modelBuilder );
+                searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
                 listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Communication" ) );
@@ -86,6 +88,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
             // Logistic
             {
                 searchListView = new gui::SearchListView< LogisticListView >( pListsTabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
+                searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
                 listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
                 pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer", "Logistic" ) );
@@ -94,6 +97,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         // Objects
         {
             searchListView = new gui::SearchListView< ObjectListView >( pListsTabWidget, controllers, factory, modelBuilder );
+            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
             listViews_.push_back( searchListView );
             searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Objects" ) );
@@ -101,12 +105,14 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         // Urban
         {
             searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder, symbols, staticModel );
+            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
             listViews_.push_back( searchListView );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Urban" ) );
         }
         // Crowds
         {
             searchListView = new gui::SearchListView< PopulationListView >( pListsTabWidget, controllers, factory, modelBuilder );
+            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
             listViews_.push_back( searchListView );
             searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Crowds" ) );
@@ -114,6 +120,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         // Populations
         {
             searchListView = new gui::SearchListView< InhabitantListView >( pListsTabWidget, controllers, factory, modelBuilder );
+            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
             listViews_.push_back( searchListView );
             searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
             pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Populations" ) );

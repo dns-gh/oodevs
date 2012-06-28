@@ -11,6 +11,10 @@
         <source>Disaggregate all</source>
         <translation>Désagréger</translation>
     </message>
+    <message>
+        <source>Lock/Unlock drag-and-drop</source>
+        <translation>Activer/Désactiver le glisser-déposer</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
@@ -202,7 +206,7 @@
     </message>
     <message>
         <source>New superior</source>
-        <translation type="unfinished">Nouveau supérieur</translation>
+        <translation>Nouveau supérieur</translation>
     </message>
     <message>
         <source>Entity moved: </source>
@@ -785,11 +789,11 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Add a user raster layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un calque utilisateur</translation>
     </message>
     <message>
         <source>Remove a user raster layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer un calque utilisateur</translation>
     </message>
 </context>
 <context>

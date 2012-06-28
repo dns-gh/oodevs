@@ -56,6 +56,12 @@ public:
     virtual ~OrbatToolbar();
     //@}
 
+public:
+    //! @name Accesors
+    //@{
+    const gui::AggregateToolbar* GetToolbar() const;
+    //@}
+    
 private slots:
     //! @name Slots
     //@{
