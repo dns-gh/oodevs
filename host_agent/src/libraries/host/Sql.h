@@ -48,8 +48,7 @@ struct Sql : public Sql_ABC
 
     //! @name Sql_ABC Methods
     //@{
-    virtual StatementPtr Prepare( const std::string& sql );
-    virtual StatementPtr Execute( const std::string& sql );
+    virtual void Prepare( const std::string& sql, const Operand& op );
     //@}
 
 private:
@@ -69,31 +68,26 @@ struct Statement : public Statement_ABC
 {
     //! @name Constructors/Destructor
     //@{
-             Statement( boost::shared_ptr< sqlite3 > db, sqlite3_stmt* stmt );
+             Statement( cpplog::BaseLogger& log, sqlite3_stmt* stmt );
     virtual ~Statement();
     //@}
 
     //! @name Methods
     //@{
-    virtual bool   Bind( const void* data, size_t size );
-    virtual bool   Bind( double value );
-    virtual bool   Bind( int value );
-    virtual bool   Bind( int64_t value );
-    virtual bool   Bind( const std::string& value );
-    virtual bool   Bind();
-    virtual bool   Execute();
-    virtual size_t RowCount();
-    virtual bool   Read( size_t col, void* data, size_t size );
-    virtual bool   Read( size_t col, double& value );
-    virtual bool   Read( size_t col, int& value );
-    virtual bool   Read( size_t col, int64_t& value );
-    virtual bool   Read( size_t col, std::string& value );
+    virtual bool   Bind( int col, double value );
+    virtual bool   Bind( int col, int value );
+    virtual bool   Bind( int col, int64_t value );
+    virtual bool   Bind( int col, const std::string& value );
     virtual bool   Next();
+    virtual bool   Read( int col, double& value );
+    virtual bool   Read( int col, int& value );
+    virtual bool   Read( int col, int64_t& value );
+    virtual bool   Read( int col, std::string& value );
     virtual bool   Reset();
     //@}
 
 private:
-    boost::shared_ptr< sqlite3 > db_;
+    cpplog::BaseLogger& log_;
     boost::shared_ptr< sqlite3_stmt > stmt_;
 };
 }

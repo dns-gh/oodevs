@@ -16,7 +16,7 @@
 
 namespace boost
 {
-    template< typename T > class shared_ptr;
+    template< typename T > class function;
 }
 
 namespace host
@@ -42,13 +42,12 @@ struct Sql_ABC : public boost::noncopyable
 
     //! @name Typedef helpers
     //@{
-    typedef boost::shared_ptr< Statement_ABC > StatementPtr;
+    typedef boost::function< void( Statement_ABC& ) > Operand;
     //@}
 
     //! @name Methods
     //@{
-    virtual StatementPtr Prepare( const std::string& sql ) = 0;
-    virtual StatementPtr Execute( const std::string& sql ) = 0;
+    virtual void Prepare( const std::string& sql, const Operand& op ) = 0;
     //@}
 };
 
@@ -68,20 +67,15 @@ struct Statement_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual bool   Bind( const void* data, size_t size ) = 0;
-    virtual bool   Bind( double value ) = 0;
-    virtual bool   Bind( int value ) = 0;
-    virtual bool   Bind( int64_t value ) = 0;
-    virtual bool   Bind( const std::string& value ) = 0;
-    virtual bool   Bind() = 0;
-    virtual bool   Execute() = 0;
-    virtual size_t RowCount() = 0;
-    virtual bool   Read( size_t col, void* data, size_t size ) = 0;
-    virtual bool   Read( size_t col, double& value ) = 0;
-    virtual bool   Read( size_t col, int& value ) = 0;
-    virtual bool   Read( size_t col, int64_t& value ) = 0;
-    virtual bool   Read( size_t col, std::string& value ) = 0;
+    virtual bool   Bind( int col, double value ) = 0;
+    virtual bool   Bind( int col, int value ) = 0;
+    virtual bool   Bind( int col, int64_t value ) = 0;
+    virtual bool   Bind( int col, const std::string& value ) = 0;
     virtual bool   Next() = 0;
+    virtual bool   Read( int col, double& value ) = 0;
+    virtual bool   Read( int col, int& value ) = 0;
+    virtual bool   Read( int col, int64_t& value ) = 0;
+    virtual bool   Read( int col, std::string& value ) = 0;
     virtual bool   Reset() = 0;
     //@}
 };

@@ -12,7 +12,8 @@
 #include "cpplog/cpplog.hpp"
 #include "runtime/Utf8.h"
 
-#include <boost/make_shared.hpp>
+#include <boost/function.hpp>
+
 #include <sqlite/sqlite3.h>
 
 using namespace host;
@@ -57,29 +58,27 @@ Sql::~Sql()
 // Name: Sql::Prepare
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Sql::StatementPtr Sql::Prepare( const std::string& sql )
+void Sql::Prepare( const std::string& sql, const Operand& op )
 {
     sqlite3_stmt* stmt = 0;
+    boost::lock_guard< boost::mutex > lock( access_ );
     // documentation suggest to include null-terminated byte to avoid copy
     int err = sqlite3_prepare_v2( db_.get(), sql.c_str(), static_cast< int >( sql.size() + 1 ), &stmt, 0 );
-    return boost::make_shared< Statement >( db_, stmt );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Sql::Execute
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-Sql::StatementPtr Sql::Execute( const std::string& sql )
-{
-    return Sql::StatementPtr();
+    if( err != SQLITE_OK )
+    {
+        LOG_ERROR( log_ ) << "[sql] " << err;
+        return;
+    }
+    Statement next( log_, stmt );
+    op( next );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Statement
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Statement::Statement( boost::shared_ptr< sqlite3 > db, sqlite3_stmt* stmt )
-    : db_  ( db )
+Statement::Statement( cpplog::BaseLogger& log, sqlite3_stmt* stmt )
+    : log_ ( log )
     , stmt_( stmt, &sqlite3_finalize )
 {
     // NOTHING
@@ -94,121 +93,51 @@ Statement::~Statement()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Statement::Bind
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Bind( const void* data, size_t size )
-{
-    return false;
-}
+#define LOG_AND_RETURN( X ) do {\
+    if( ( X ) == SQLITE_OK )\
+        return true;\
+    LOG_INFO( log_ ) << "[sql] " << ( X );\
+    return false;\
+} while( 0 )
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( double value )
+bool Statement::Bind( int col, double value )
 {
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Bind
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Bind( int value )
-{
-    return false;
+    const int err = sqlite3_bind_double( stmt_.get(), col, value );
+    LOG_AND_RETURN( err );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( int64_t value )
+bool Statement::Bind( int col, int value )
 {
-    return false;
+    const int err = sqlite3_bind_int( stmt_.get(), col, value );
+    LOG_AND_RETURN( err );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( const std::string& value )
+bool Statement::Bind( int col, int64_t value )
 {
-    return false;
+    const int err = sqlite3_bind_int64( stmt_.get(), col, value );
+    LOG_AND_RETURN( err );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind()
+bool Statement::Bind( int col, const std::string& value )
 {
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Execute
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Execute()
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::RowCount
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-size_t Statement::RowCount()
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Read( size_t col, void* data, size_t size )
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Read( size_t col, double& value )
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Read( size_t col, int& value )
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Read( size_t col, int64_t& value )
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Read( size_t col, std::string& value )
-{
-    return false;
+    const int err = sqlite3_bind_text( stmt_.get(), col, value.c_str(), static_cast< int >( value.size() ), SQLITE_TRANSIENT );
+    LOG_AND_RETURN( err );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +146,66 @@ bool Statement::Read( size_t col, std::string& value )
 // -----------------------------------------------------------------------------
 bool Statement::Next()
 {
-    return false;
+    const int err = sqlite3_step( stmt_.get() );
+    if( err == SQLITE_ROW )
+        return true;
+    if( err == SQLITE_DONE )
+        return false;
+    LOG_AND_RETURN( err );
+}
+
+#define CHECK_TYPE( X ) do {\
+    if( sqlite3_column_type( stmt_.get(), col ) != ( X ) )\
+    {\
+        LOG_ERROR( log_ ) << "[sql] Invalid type conversion at col " << col;\
+        return false;\
+    }\
+} while( 0 )
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Read
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+bool Statement::Read( int col, double& value )
+{
+    CHECK_TYPE( SQLITE_FLOAT );
+    value = sqlite3_column_double( stmt_.get(), col );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Read
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+bool Statement::Read( int col, int& value )
+{
+    CHECK_TYPE( SQLITE_INTEGER );
+    value = sqlite3_column_int( stmt_.get(), col );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Read
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+bool Statement::Read( int col, int64_t& value )
+{
+    CHECK_TYPE( SQLITE_INTEGER );
+    value = sqlite3_column_int64( stmt_.get(), col );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Read
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+bool Statement::Read( int col, std::string& value )
+{
+    CHECK_TYPE( SQLITE_TEXT );
+    const unsigned char* data = sqlite3_column_text( stmt_.get(), col );
+    const int size = sqlite3_column_bytes( stmt_.get(), col );
+    value = std::string( reinterpret_cast< const char* >( data ), size );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,5 +214,8 @@ bool Statement::Next()
 // -----------------------------------------------------------------------------
 bool Statement::Reset()
 {
-    return false;
+    int err = sqlite3_reset( stmt_.get() );
+    if( err == SQLITE_OK )
+        err = sqlite3_clear_bindings( stmt_.get() );
+    LOG_AND_RETURN( err );
 }
