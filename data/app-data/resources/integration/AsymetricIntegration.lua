@@ -131,6 +131,19 @@ integration.capture = function( units, message )
     return true
 end
 
+integration.captureEnd = function( units, message )
+
+    for _, unit in pairs( units ) do
+            DEC_Agent_ForcerSilenceRadio( unit.source, false )
+            DEC_UnitDecisionalState( unit.source, "hostage", "false" )
+            myself.CRCaptureSomeone[ unit ] = false
+            unit.capture = false
+            integration.SendMessage( "captureEnd", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
+    end
+
+    return true
+end
+
 integration.dropUnit = function( unit )
     DEC_Prisonniers_Debarquer(unit.source)
     meKnowledge:RC( eRC_TerroristDropped, unit.source )

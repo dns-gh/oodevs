@@ -53,6 +53,13 @@ masalife.brain.communication.setMessageTreatment( "capture",
     function( content, sender )
         meKnowledge:RC( eRC_Capture )
         myself.isCaught = true
+        myself.desactiveSelfProtection = true
+    end )
+
+masalife.brain.communication.setMessageTreatment( "captureEnd",
+    function( content, sender )
+        myself.isCaught = false
+        myself.desactiveSelfProtection = false
     end )
 
 --The uav is disponible

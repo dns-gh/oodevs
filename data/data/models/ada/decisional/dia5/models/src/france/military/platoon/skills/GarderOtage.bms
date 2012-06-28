@@ -11,8 +11,8 @@ rootnode
     end,
     
     destroy = function( self )
-        DEC_Agent_ForcerSilenceRadio( self.params.unit.source, false )
-        self.params.unit:unloadIt()
+         integration.captureEnd( {self.params.unit}, eRC_TakeHostage )
+         self.params.unit:dropIt()
     end,
 }
 -- **************************************************************************** 
