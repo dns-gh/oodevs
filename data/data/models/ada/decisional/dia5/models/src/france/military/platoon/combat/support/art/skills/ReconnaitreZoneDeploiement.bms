@@ -6,7 +6,7 @@ rootnode
     connections = { skill.links.moveToward, skill.links.dismount, skill.nodes.Deploy },
 
     done = function( self )-- from moveAndTakePosition
-        self.movementDone = true
+        Feedback( self.feedbacks.done )
     end,
     
     deployed = function( self )
