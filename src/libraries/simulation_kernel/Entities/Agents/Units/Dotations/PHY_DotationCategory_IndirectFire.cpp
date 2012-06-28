@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
+#include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -17,6 +18,7 @@
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Effects/MIL_Effect_Explosion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -37,6 +39,7 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include <urban/Model.h>
+#include <boost/tuple/tuple.hpp>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -228,6 +231,31 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 {
                     MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FratricideIndirectFire );
                     bRCSent = true;
+                }
+
+                //check if EO close enough (< 5km) to observe fire effect
+                TER_Agent_ABC::T_AgentPtrVector localObservers;
+                TER_World::GetWorld().GetAgentManager().GetListWithinCircle ( vTargetPosition, 5000.0, localObservers );
+
+                //RC
+                for( TER_Agent_ABC::CIT_AgentPtrVector itobserver = localObservers.begin(); itobserver != localObservers.end(); ++itobserver )
+                {
+                    MIL_Agent_ABC& observerAgent = static_cast< PHY_RoleInterface_Location& >( **itobserver ).GetAgent();
+                    MIL_AgentPion& observingPion = dynamic_cast< MIL_AgentPion& > (observerAgent);
+                    //only take those observers belonging to same army as firer:
+                    if( pFirer && observingPion.GetArmy().GetID() != pFirer->GetArmy().GetID() )
+                        continue;
+                    if( observingPion.GetRole< PHY_RoleInterface_Perceiver >().IsFireObserver() )
+                    {
+                        typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
+                        T_Content content;
+                        fireResult.GetDamages( target ).Serialize( content );
+                        for( T_Content::const_iterator it = content.begin(); it != content.end(); ++it )
+                        {
+                            MIL_Report::PostEvent( observingPion, MIL_Report::eReport_FireObserver, target.GetID(),
+                                                                   (*it).get< 0 >(), (*it).get< 1 >(), (*it).get< 2 >(), (*it).get< 3 > () );
+                        }
+                    }
                 }
             }
         }
