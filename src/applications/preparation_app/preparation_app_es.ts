@@ -1437,7 +1437,11 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown infrastructure: %1. It will be deleted at next save.</source>
+        <source>Unknown resource network type &quot;%1&quot;. Related networks will deleted at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown infrastructure &quot;%1&quot;. It will be deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
