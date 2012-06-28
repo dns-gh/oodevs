@@ -12,6 +12,9 @@
 #include "cpplog/cpplog.hpp"
 #include "PropertyTree.h"
 #include "runtime/Utf8.h"
+#include "Sql_ABC.h"
+
+#include <boost/shared_ptr.hpp>
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -25,7 +28,7 @@ UserController::UserController( cpplog::BaseLogger& log,
     : log_( log )
     , db_ ( db )
 {
-    // NOTHING
+    MigrateDatabase();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +46,13 @@ UserController::~UserController()
 // -----------------------------------------------------------------------------
 void UserController::MigrateDatabase()
 {
-    // NOTHING
+    Sql_ABC::Ptr ptr = db_.Prepare(
+        "CREATE TABLE IF NOT EXISTS revisions ("
+        "   id          INTEGER PRIMARY KEY"
+        "  ,revision    INTEGER"
+        ")" );
+    ptr->Next();
+    ptr.reset();
 }
 
 // -----------------------------------------------------------------------------
