@@ -16,7 +16,7 @@
 
 namespace boost
 {
-    template< typename T > class function;
+    template< typename T > class shared_ptr;
 }
 
 namespace host
@@ -42,12 +42,12 @@ struct Sql_ABC : public boost::noncopyable
 
     //! @name Typedef helpers
     //@{
-    typedef boost::function< void( Statement_ABC& ) > Operand;
+    typedef boost::shared_ptr< Statement_ABC > Ptr;
     //@}
 
     //! @name Methods
     //@{
-    virtual void Prepare( const std::string& sql, const Operand& op ) = 0;
+    virtual Ptr Prepare( const std::string& sql ) = 0;
     //@}
 };
 

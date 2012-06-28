@@ -12,8 +12,8 @@
 #include "cpplog/cpplog.hpp"
 #include "runtime/Utf8.h"
 
-#include <boost/function.hpp>
-
+#include <boost/make_shared.hpp>
+#include <boost/ref.hpp>
 #include <sqlite/sqlite3.h>
 
 using namespace host;
@@ -58,28 +58,28 @@ Sql::~Sql()
 // Name: Sql::Prepare
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void Sql::Prepare( const std::string& sql, const Operand& op )
+Sql::Ptr Sql::Prepare( const std::string& sql )
 {
     sqlite3_stmt* stmt = 0;
-    boost::lock_guard< boost::mutex > lock( access_ );
+    boost::shared_ptr< Statement > next = boost::make_shared< Statement >( boost::ref( log_ ), boost::ref( access_ ) );
     // documentation suggest to include null-terminated byte to avoid copy
     int err = sqlite3_prepare_v2( db_.get(), sql.c_str(), static_cast< int >( sql.size() + 1 ), &stmt, 0 );
     if( err != SQLITE_OK )
     {
         LOG_ERROR( log_ ) << "[sql] " << err;
-        return;
+        return Ptr();
     }
-    Statement next( log_, stmt );
-    op( next );
+    next->Assign( stmt );
+    return next;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Statement
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Statement::Statement( cpplog::BaseLogger& log, sqlite3_stmt* stmt )
+Statement::Statement( cpplog::BaseLogger& log, boost::mutex& access )
     : log_ ( log )
-    , stmt_( stmt, &sqlite3_finalize )
+    , lock_( access )
 {
     // NOTHING
 }
@@ -91,6 +91,15 @@ Statement::Statement( cpplog::BaseLogger& log, sqlite3_stmt* stmt )
 Statement::~Statement()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Assign
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+void Statement::Assign( sqlite3_stmt* stmt )
+{
+    stmt_.reset( stmt, &sqlite3_finalize );
 }
 
 #define LOG_AND_RETURN( X ) do {\

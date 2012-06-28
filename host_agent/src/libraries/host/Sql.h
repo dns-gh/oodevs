@@ -48,7 +48,7 @@ struct Sql : public Sql_ABC
 
     //! @name Sql_ABC Methods
     //@{
-    virtual void Prepare( const std::string& sql, const Operand& op );
+    virtual Ptr Prepare( const std::string& sql );
     //@}
 
 private:
@@ -68,11 +68,16 @@ struct Statement : public Statement_ABC
 {
     //! @name Constructors/Destructor
     //@{
-             Statement( cpplog::BaseLogger& log, sqlite3_stmt* stmt );
+             Statement( cpplog::BaseLogger& log, boost::mutex& access );
     virtual ~Statement();
     //@}
 
     //! @name Methods
+    //@{
+    void Assign( sqlite3_stmt* stmt );
+    //@}
+
+    //! @name Statement_ABC Methods
     //@{
     virtual bool   Bind( int col, double value );
     virtual bool   Bind( int col, int value );
@@ -88,6 +93,7 @@ struct Statement : public Statement_ABC
 
 private:
     cpplog::BaseLogger& log_;
+    boost::lock_guard< boost::mutex > lock_;
     boost::shared_ptr< sqlite3_stmt > stmt_;
 };
 }
