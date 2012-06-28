@@ -61,7 +61,7 @@ Sql::StatementPtr Sql::Prepare( const std::string& sql )
 {
     sqlite3_stmt* stmt = 0;
     // documentation suggest to include null-terminated byte to avoid copy
-    int err = sqlite3_prepare_v2( db_.get(), sql.c_str(), sql.size() + 1, &stmt, 0 );
+    int err = sqlite3_prepare_v2( db_.get(), sql.c_str(), static_cast< int >( sql.size() + 1 ), &stmt, 0 );
     return boost::make_shared< Statement >( db_, stmt );
 }
 
