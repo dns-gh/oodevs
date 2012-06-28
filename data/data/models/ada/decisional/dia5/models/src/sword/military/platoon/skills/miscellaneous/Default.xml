@@ -7,6 +7,5 @@
 	<links>
 		<link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
 		<link name="moveTo" skill="sword.military.platoon.skills.MoveToward"/>
-		<link name="engage" skill="sword.military.platoon.coercition.skills.Engage"/>
 	</links>
 </skill>
