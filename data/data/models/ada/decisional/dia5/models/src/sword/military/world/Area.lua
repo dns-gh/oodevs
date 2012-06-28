@@ -61,6 +61,11 @@ return
         start = integration.startRensRecceArea,
         stop = integration.stopRensRecceArea
     } ),
+    getIntelligenceForEo = masalife.brain.integration.startStopAction( 
+    { 
+        start = integration.startRecoEo,
+        stop = integration.stopRecoEo
+    } ),
     -- -------------------------------------------------------------------------------- 
     -- Predicates
     -- --------------------------------------------------------------------------------

@@ -263,6 +263,14 @@ integration.stopRensRecceArea  = function( area )
     return true
 end
 
+integration.startRecoEo = function()
+    DEC_Perception_ActiverObserveurTir()
+end
+
+integration.stopRecoEo = function()
+    DEC_Perception_DesactiverObserveurTir()
+end
+
 -- --------------------------------------------------------------------------------
 -- NBC Reco Area
 -- --------------------------------------------------------------------------------
