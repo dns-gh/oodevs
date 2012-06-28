@@ -25,15 +25,19 @@ namespace hla
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
-        explicit HlaObjectFactory( const MarkingFactory_ABC& markingFactory )
+        explicit HlaObjectFactory( const MarkingFactory_ABC& markingFactory, unsigned short siteID, unsigned short applicationID )
             : markingFactory_( markingFactory )
+            , siteID_( siteID )
+            , applicationID_( applicationID )
         {}
         virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/ ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_ ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_, siteID_, applicationID_ ) );
         }
     private:
         const MarkingFactory_ABC& markingFactory_;
+        unsigned short siteID_;
+        unsigned short applicationID_;
     };
     template< typename T >
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC

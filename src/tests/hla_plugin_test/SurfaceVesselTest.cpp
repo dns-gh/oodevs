@@ -45,7 +45,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43 )
         {}
         SurfaceVessel entity;
     };
@@ -85,6 +85,16 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_serializes_all_its_attributes, Registere
     }
 }
 
+namespace rpr
+{
+    template <typename Archive>
+    void operator >> (  Archive& archive, EntityIdentifier& id )
+    {
+        id.Deserialize( archive );
+    }
+    std::ostream& operator << ( std::ostream& os, const EntityIdentifier& id );
+}
+
 namespace
 {
     template< typename T >
@@ -106,6 +116,14 @@ namespace
         return true;
     }
     const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16 ) + 6 * sizeof( int8 ) + 1 * sizeof( int16 ) + sizeof( int32 );
+}
+
+BOOST_FIXTURE_TEST_CASE( surface_vessel_has_entity_identifier, RegisteredFixture )
+{
+    const rpr::EntityIdentifier expectedId( 42, 43, 1);
+    MOCK_EXPECT( functor, Visit ).once().with( "EntityIdentifier", boost::bind( &CheckSerialization< rpr::EntityIdentifier >, _1, expectedId ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_spatial_changed_event_is_serialized, RegisteredFixture )

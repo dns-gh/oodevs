@@ -10,6 +10,8 @@
 #ifndef __rpr_EntityIdentifier_h_
 #define __rpr_EntityIdentifier_h_
 
+#include <string>
+
 namespace rpr
 {
 // =============================================================================
@@ -42,6 +44,15 @@ public:
         federateIdentifier_.Deserialize( archive );
         archive >> entityNumber_;
     }
+
+    bool operator == ( const EntityIdentifier& other ) const
+    {
+        return entityNumber_ == other.entityNumber_ &&
+                federateIdentifier_.siteID_ == other.federateIdentifier_.siteID_ &&
+                federateIdentifier_.applicationID_ == other.federateIdentifier_.applicationID_;
+    }
+
+    std::string str() const;
     //@}
 
 private:

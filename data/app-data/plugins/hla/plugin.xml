@@ -22,6 +22,18 @@
                         <description name="Nom du fédéré" lang="fr"><![CDATA[]]></description>
                     </descriptions>
                 </setting>
+                <setting attribute="@dis-site" type="integer" default="1">
+                    <descriptions>
+                        <description name="SiteID DIS" lang="en"><![CDATA[]]></description>
+                        <description name="DIS site ID" lang="fr"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@dis-application" type="integer" default="1">
+                    <descriptions>
+                        <description name="ApplcationID DIS" lang="en"><![CDATA[]]></description>
+                        <description name="DIS application ID" lang="fr"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
                 <setting attribute="@host" type="string" default="localhost">
                     <descriptions>
                         <description name="Host name" lang="en"><![CDATA[]]></description>

@@ -63,7 +63,7 @@ namespace
     template< typename Rpr, typename Netn >
     std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( xml::xisubstream xis, CallsignResolver_ABC& resolver, const MarkingFactory_ABC& markingFactory )
     {
-        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory ) );
+        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ) );
         if( xis.attribute< bool >( "netn", true ) )
             return std::auto_ptr< HlaObjectFactory_ABC >( new NetnHlaObjectFactory< Netn >( result, resolver ) );
         return result;

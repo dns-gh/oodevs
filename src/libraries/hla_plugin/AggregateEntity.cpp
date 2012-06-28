@@ -29,12 +29,13 @@ using namespace plugins::hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned int identifier,
-                                  const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory )
+                                  const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                                  unsigned short siteID, unsigned short applicationID )
     : agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
-    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, static_cast< unsigned short >( identifier ) ) );
+    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( siteID, applicationID, static_cast< unsigned short >( identifier ) ) );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
     attributes_->Register( "AggregateMarking", markingFactory.CreateAggregateMarking( name, identifier ) );
     attributes_->Register( "AggregateState", Wrapper< unsigned char >( 1 ) ); // fully aggregated

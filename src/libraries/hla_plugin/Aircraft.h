@@ -48,7 +48,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Aircraft( Agent_ABC& agent, unsigned int identifier,
-                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory );
+                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                            unsigned short siteID, unsigned short applicationID );
     virtual ~Aircraft();
     //@}
 

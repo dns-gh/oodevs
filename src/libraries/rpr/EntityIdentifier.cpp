@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "EntityIdentifier.h"
+#include <sstream>
 
 using namespace rpr;
 
@@ -40,4 +41,17 @@ EntityIdentifier::EntityIdentifier( unsigned short site, unsigned short applicat
 EntityIdentifier::~EntityIdentifier()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifier::str
+// Created: AHC 2012-06-28
+// -----------------------------------------------------------------------------
+std::string EntityIdentifier::str() const
+{
+    std::stringstream ss;
+    ss << federateIdentifier_.siteID_ << " "
+       << federateIdentifier_.applicationID_ << " "
+       << entityNumber_;
+    return ss.str();
 }
