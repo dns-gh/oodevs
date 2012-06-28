@@ -1532,7 +1532,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object destruction-time-factor="0s" initial-destruction-time="20m" type="mines"/>
+      <object bypass-gain-factor="0.1" destruction-time-factor="0s" devalorization-time="1s" initial-destruction-time="20m" non-bypassed-speed="10" type="mines"/>
       <object bypass-gain-factor="0.5" destruction-time-factor="0s" devalorization-time="1s" initial-destruction-time="40m" non-bypassed-speed="10" type="mined area (linear)"/>
       <object bypass-gain-factor="0.5" destruction-time-factor="0s" devalorization-time="1s" initial-destruction-time="40m" non-bypassed-speed="10" type="mined area (scattered)"/>
     </objects>
@@ -35629,4 +35629,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3541980023" -->
+<!-- signature="3016122116" -->
