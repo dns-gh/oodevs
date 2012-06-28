@@ -114,6 +114,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Ve
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
+    , bFireObserver_                 ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( 0 )
     , pPerceptionRecoLocalisation_   ( 0 )
@@ -233,7 +234,8 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
          & surfacesAgent_
          & surfacesObject_
          & rMaxAgentPerceptionDistance_
-         & rMaxObjectPerceptionDistance_;
+         & rMaxObjectPerceptionDistance_
+         & bFireObserver_;
 }
 
 // =============================================================================
@@ -1488,4 +1490,31 @@ void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
 {
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnableFireObserver
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::EnableFireObserver()
+{
+    bFireObserver_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::DisableFireObserver
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::DisableFireObserver()
+{
+    bFireObserver_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::IsFireObserver
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::IsFireObserver() const
+{
+    return bFireObserver_;
 }

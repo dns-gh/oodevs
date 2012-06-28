@@ -484,3 +484,20 @@ bool DEC_PerceptionFunctions::PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC*
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return pAutomat->PointIsReconnoiteredByMeOrNoOne( pPion, point );
 }
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::EnableFireObserver
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::EnableFireObserver( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableFireObserver();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::DisableFireObserver
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::DisableFireObserver( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableFireObserver();
+}

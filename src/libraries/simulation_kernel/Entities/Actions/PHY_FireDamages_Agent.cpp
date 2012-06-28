@@ -134,3 +134,19 @@ void PHY_FireDamages_Agent::DoSerializeDamages( T& msg ) const
         personnel.set_dead( wounds[ PHY_HumanWound::killed_.GetID() ] );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Agent::Serialize
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Agent::Serialize( std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > >& content ) const
+{
+    for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult )
+    {
+        const PHY_ComposanteType_ABC& type = *itResult->first;
+        const T_ComposanteStates& states = itResult->second;
+        content.push_back( boost::make_tuple( type.GetName(), states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ],
+                                                              states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ],
+                                                              states[ PHY_ComposanteState::dead_.GetID() ] ) );
+    }
+}

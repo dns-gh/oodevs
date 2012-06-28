@@ -150,6 +150,7 @@ public:
         eReport_UnderIEDFire,
         eReport_FragOrderReceived,
         eReport_NotActivatedUndergroundNetwork,
+        eReport_FireObserver,
         eNbrReport
     };
 
@@ -582,6 +583,7 @@ public:
         eRC_FurtifModeOn,
         eRC_FurtifModeOff,
         eRC_ObstacleNonActivable,
+        eRC_FireObserver,
         eLast
     };
     //@}
@@ -609,6 +611,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, DEC_Knowledge_Population& populationKnowledge );
+    template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
     //@}
 
 private:

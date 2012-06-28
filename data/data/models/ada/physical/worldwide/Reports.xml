@@ -625,5 +625,12 @@
   <report category="operational" id="426" message="Obstacle %1 cannot be activated">
     <parameter type="ObjectKnowledge"/>
   </report>
+  <report category="operational" id="427" message="Atillery fire on unit %1, equipment %2 ( %3 fixable with evacuation, %4 fixable without evacuation, %5 destroyed )">
+    <parameter type="Integer"/>
+    <parameter type="String"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+  </report>
 </reports>
-<!-- signature="0012866652" -->
+<!-- signature="0654224757" -->

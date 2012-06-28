@@ -172,3 +172,24 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, DEC_Knowl
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void MIL_Report::PostEvent
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+template< typename T > inline
+ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateInteger( nParam1 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter2( MIL_MissionParameterFactory::Create( nParam2 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter3( MIL_MissionParameterFactory::CreateInteger( nParam3 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter4( MIL_MissionParameterFactory::CreateInteger( nParam4 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter5( MIL_MissionParameterFactory::CreateInteger( nParam5 ) );
+    parameters.push_back( pParameter1 );
+    parameters.push_back( pParameter2 );
+    parameters.push_back( pParameter3 );
+    parameters.push_back( pParameter4 );
+    parameters.push_back( pParameter5 );
+    PostEvent( receiver, nReport, parameters );
+}
