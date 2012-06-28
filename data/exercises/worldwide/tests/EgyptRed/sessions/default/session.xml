@@ -2,22 +2,22 @@
 <session>
   <config>
     <dispatcher>
-      <network client="localhost:10000" server="10001"/>
+      <network client="localhost:12000" server="12001"/>
       <plugins>
         <recorder fragmentfreq="200" keyframesfreq="100"/>
-		<hla configuration="configuration.xml" creation="1" debug="1" destruction="1" federation="MyFederation" fom="ASI_FOM_v2.0.8_2010.xml" host="sli" library="hla_plugin-vc80-mt.dll" lookahead="10" name="SWORD-Red" netn="1" port="8989" protocol="hla-1516e" time-constrained="1" time-regulating="1"/>
+        <hla configuration="configuration.xml" creation="1" debug="1" destruction="1" federation="MyFederation" fom="ASI_FOM_v2.0.8_2010.xml" host="localhost" library="hla_plugin_dll-vc100-mt.dll" lookahead="10" name="SWORD-Red" netn="1" port="8989" protocol="hla-1516e" time-constrained="1" time-regulating="1"/>
       </plugins>
     </dispatcher>
     <gaming>
-      <network server="localhost:10001"/>
+      <network server="localhost:12001"/>
     </gaming>
     <simulation>
       <GarbageCollector setpause="100" setstepmul="100"/>
       <checkpoint frequency="100000h" keep="1" usecrc="true"/>
-      <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false"/>
+      <debug decisional="false" diadebugger="false" diadebuggerport="17000" networklogger="true" networkloggerport="22000" pathfind="false"/>
       <decisional useonlybinaries="false"/>
       <dispatcher embedded="true"/>
-      <network port="10000"/>
+      <network port="12000"/>
       <orbat checkcomposition="false"/>
       <pathfinder threads="1"/>
       <profiling enabled="false"/>

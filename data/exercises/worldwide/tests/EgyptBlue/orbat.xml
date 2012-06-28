@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Local militia" type="enemy">
       <objects/>
@@ -80,11 +80,11 @@
         </object>
       </objects>
       <tactical>
-        <formation id="6" level="ii" name="Battalion">
-          <automat engaged="true" id="12" knowledge-group="4" logistic-level="logistic-base" name="battalion combat train [12]" type="LOG.Armored battalion combat train">
+        <formation id="6" level="ii" name="Battalion" symbol="symbols/sfgpucath">
+          <automat engaged="true" id="12" knowledge-group="4" logistic-level="logistic-base" name="battalion combat train [12]" symbol="symbols/sfgpuss" type="LOG.Armored battalion combat train">
             <unit command-post="true" id="13" name="Battalion CT" position="35RPP6441187828" type="LOG.Teeth arms battalion CT"/>
           </automat>
-          <automat engaged="true" id="54" knowledge-group="4" name="Infantry company [54]" type="INF.Infantry company">
+          <automat engaged="true" id="54" knowledge-group="4" name="Infantry company [54]" symbol="symbols/sfgpucim" type="INF.Infantry company">
             <unit command-post="true" id="55" name="Infantry company CP" position="35RPP6800694392" type="INF.Infantry company CP"/>
             <unit command-post="false" id="56" name="Infantry platoon" position="35RPP6848895153" type="INF.Infantry platoon"/>
             <unit command-post="false" id="58" name="Mortar troop" position="35RPP6848895153" type="INF.Mortar troop"/>
@@ -92,20 +92,20 @@
             <unit command-post="false" id="60" name="Infantry platoon" position="35RPP6891994625" type="INF.Infantry platoon"/>
             <unit command-post="false" id="61" name="Infantry platoon" position="35RPP6953594408" type="INF.Infantry platoon"/>
           </automat>
-          <automat engaged="true" id="62" knowledge-group="4" name="MBT squadron [62]" type="ARMOR.MBT squadron">
+          <automat engaged="true" id="62" knowledge-group="4" name="MBT squadron [62]" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
             <unit command-post="true" id="63" name="Armored squadron CP" position="35RPP7802392462" type="ARMOR.Armored squadron CP"/>
             <unit command-post="false" id="66" name="MBT platoon" position="35RPP7793093159" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="67" name="MBT platoon" position="35RPP7756192927" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="68" name="MBT platoon" position="35RPP7832893088" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="69" name="MBT platoon" position="35RPP7850592708" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="true" id="70" knowledge-group="4" name="Artillery firing battery [70]" type="ART.Artillery firing battery">
+          <automat engaged="false" id="70" knowledge-group="4" name="Artillery firing battery [70]" symbol="symbols/sfgpucfhe" type="ART.Artillery firing battery">
             <unit command-post="true" id="71" name="Battery CP" position="35RPP6643589511" type="ART.Battery CP"/>
             <unit command-post="false" id="74" name="Artillery firing platoon" position="35RPP6998289995" type="ART.Artillery firing platoon"/>
             <unit command-post="false" id="75" name="Artillery firing platoon" position="35RPP6907789330" type="ART.Artillery firing platoon"/>
             <unit command-post="false" id="76" name="Artillery firing platoon" position="35RPP6630090571" type="ART.Artillery firing platoon"/>
           </automat>
-          <automat engaged="true" id="77" knowledge-group="4" name="Light armored squadron [77]" type="ARMOR.Light armored squadron">
+          <automat engaged="true" id="77" knowledge-group="4" name="Light armored squadron [77]" symbol="symbols/sfgpucawm" type="ARMOR.Light armored squadron">
             <unit command-post="true" id="78" name="Armored squadron CP" position="35RPP7231891746" type="ARMOR.Armored squadron CP"/>
             <unit command-post="false" id="79" name="Light armored platoon" position="35RPP7249292155" type="ARMOR.Light armored platoon"/>
             <unit command-post="false" id="80" name="Light armored platoon" position="35RPP7231892489" type="ARMOR.Light armored platoon"/>
@@ -115,20 +115,20 @@
             <unit command-post="false" id="198" name="Scout patrol" position="35RPP7257393268" type="ARMOR.Scout patrol"/>
             <unit command-post="false" id="199" name="Antitank patrol" position="35RPP7145892250" type="ARMOR.Antitank patrol"/>
           </automat>
-          <automat engaged="true" id="89" knowledge-group="4" name="Countermobility company [89]" type="ENG.Countermobility company">
+          <automat engaged="true" id="89" knowledge-group="4" name="Countermobility company [89]" symbol="symbols/sfgpucect" type="ENG.Countermobility company">
             <unit command-post="true" id="90" name="Countermobility platoon" position="35RPP7169188477" type="ENG.Countermobility platoon"/>
             <unit command-post="false" id="91" name="Countermobility platoon" position="35RPP7246888729" type="ENG.Countermobility platoon"/>
             <unit command-post="false" id="92" name="Countermobility platoon" position="35RPP7110189075" type="ENG.Countermobility platoon"/>
             <unit command-post="false" id="93" name="Countermobility platoon" position="35RPP7170088900" type="ENG.Countermobility platoon"/>
           </automat>
-          <automat engaged="true" id="146" knowledge-group="4" name="MBT squadron [146]" type="ARMOR.MBT squadron">
+          <automat engaged="true" id="146" knowledge-group="4" name="MBT squadron [146]" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
             <unit command-post="true" id="147" name="Armored squadron CP" position="35RPP7147595631" type="ARMOR.Armored squadron CP"/>
             <unit command-post="false" id="148" name="MBT platoon" position="35RPP7198595143" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="149" name="MBT platoon" position="35RPP7149494635" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="150" name="MBT platoon" position="35RPP7098495123" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="151" name="MBT platoon" position="35RPP7197595640" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="true" id="172" knowledge-group="4" name="Scout platoon [172]" type="ARMOR.Scout platoon">
+          <automat engaged="true" id="172" knowledge-group="4" name="Scout platoon [172]" symbol="symbols/sfgpucr" type="ARMOR.Scout platoon">
             <unit command-post="false" id="173" name="Antitank patrol" position="35RPP7355499417" type="ARMOR.Antitank patrol"/>
             <unit command-post="true" id="174" name="Scout patrol" position="35RPP7543294501" type="ARMOR.Scout patrol"/>
             <unit command-post="false" id="175" name="Scout patrol" position="35RPP7405398091" type="ARMOR.Scout patrol"/>
@@ -201,37 +201,9 @@
             <adhesion party="1" value="0"/>
             <adhesion party="3" value="0"/>
             <adhesion party="35" value="0"/>
-            <adhesion party="38" value="0"/>
           </adhesions>
         </population>
       </populations>
-      <inhabitants/>
-      <logistics/>
-    </party>
-    <party id="38" name="Local refugees" type="friend">
-      <objects/>
-      <tactical>
-        <formation id="40" level="i" name="Refugees">
-          <automat engaged="false" id="41" knowledge-group="39" name="Refugees [41]" type="OOTW.Refugees">
-            <unit command-post="true" id="42" name="Refugee" position="35RPP6489687931" type="OOTW.Refugee"/>
-            <unit command-post="false" id="43" name="Refugee" position="35RPQ7892506123" type="OOTW.Refugee"/>
-            <unit command-post="false" id="44" name="Refugee" position="35RPQ7982105303" type="OOTW.Refugee"/>
-            <unit command-post="false" id="45" name="Refugee" position="35RPQ8521303352" type="OOTW.Refugee"/>
-            <unit command-post="false" id="46" name="Refugee" position="35RPQ7946402023" type="OOTW.Refugee"/>
-            <unit command-post="false" id="47" name="Refugee" position="35RPQ8273201135" type="OOTW.Refugee"/>
-            <unit command-post="false" id="48" name="Refugee" position="35RPP8173199517" type="OOTW.Refugee"/>
-            <unit command-post="false" id="49" name="Refugee" position="35RPP7699998931" type="OOTW.Refugee"/>
-            <unit command-post="false" id="50" name="Refugee" position="35RPP7586896131" type="OOTW.Refugee"/>
-            <unit command-post="false" id="51" name="Refugee" position="35RPP7746598560" type="OOTW.Refugee"/>
-            <unit command-post="false" id="52" name="Refugee" position="35RPP8039398115" type="OOTW.Refugee"/>
-            <unit command-post="false" id="53" name="Refugee" position="35RPQ8031705351" type="OOTW.Refugee"/>
-          </automat>
-        </formation>
-      </tactical>
-      <communication>
-        <knowledge-group id="39" name="Knowledge group [39]" type="Standard"/>
-      </communication>
-      <populations/>
       <inhabitants/>
       <logistics/>
     </party>
@@ -240,23 +212,15 @@
     <party id="1">
       <relationship diplomacy="enemy" party="3"/>
       <relationship diplomacy="enemy" party="35"/>
-      <relationship diplomacy="enemy" party="38"/>
     </party>
     <party id="3">
       <relationship diplomacy="enemy" party="1"/>
       <relationship diplomacy="neutral" party="35"/>
-      <relationship diplomacy="friend" party="38"/>
     </party>
     <party id="35">
       <relationship diplomacy="enemy" party="1"/>
       <relationship diplomacy="neutral" party="3"/>
-      <relationship diplomacy="neutral" party="38"/>
-    </party>
-    <party id="38">
-      <relationship diplomacy="enemy" party="1"/>
-      <relationship diplomacy="friend" party="3"/>
-      <relationship diplomacy="neutral" party="35"/>
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1400488454" -->
+<!-- signature="2970279336" -->
