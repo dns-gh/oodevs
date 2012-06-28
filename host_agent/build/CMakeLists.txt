@@ -71,6 +71,7 @@ add_target_external_library( cloud_server cpp-netlib_server-${platform}-mt_d cpp
 add_target_external_library( cloud_server cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
 add_target_external_library( cloud_server archive_static_d archive_static )
 add_target_external_library( cloud_server zlibd zlib )
+add_target_external_library( cloud_server libsqlite3-${platform}_d libsqlite3-${platform} )
 target_link_libraries( cloud_server
     host
     runtime

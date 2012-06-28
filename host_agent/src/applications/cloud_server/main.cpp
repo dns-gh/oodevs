@@ -23,6 +23,7 @@
 #include <runtime/Pool.h>
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Utf8.h>
+#include <runtime/Scoper.h>
 #include <web/Client.h>
 #include <web/Controller.h>
 #include <web/Server.h>
@@ -34,6 +35,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
+
+#include <sqlite/sqlite3.h>
 
 using namespace host;
 using namespace runtime;
@@ -254,6 +257,8 @@ struct SessionFactory : public SessionFactory_ABC
 
 int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )
 {
+    sqlite3_initialize();
+    Scoper sqliteShutdown( &sqlite3_shutdown );
     Pool pool( 8 );
     UuidFactory uuids;
     web::Client client;
