@@ -519,6 +519,9 @@ void ModelConsistencyChecker::CheckGhosts()
     while( it.HasMoreElements() )
     {
         const Ghost_ABC& ghost = it.NextElement();
+        if( const kernel::TacticalHierarchies* pHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >() )
+            if( const kernel::Ghost_ABC* ghostParent = dynamic_cast< const kernel::Ghost_ABC* >( pHierarchy->GetSuperior() ) )
+                continue;
         if( ghost.IsConverted() )
             convertedEntities.push_back( &ghost );
         else

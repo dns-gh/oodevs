@@ -19,7 +19,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_kernel/Moveable_ABC.h"
-
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -179,7 +179,7 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
         assert( currentGhost && currentGhost->Retrieve< Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< Positions >()->GetPosition() : point;
-        model_.agents_.CreateAutomat( *currentGhost, *droppedItem, position );
+        model_.agents_.CreateAutomatInsteadOf( *currentGhost, *droppedItem, position );
         delete static_cast< const Ghost_ABC* >( currentGhost );
         selectedGhost_ = 0;
         highLightedGhost_ = 0;
@@ -285,4 +285,17 @@ bool GhostsLayer::IsEligibleForDrag( const geometry::Point2f& point )
 void GhostsLayer::SetAlpha( float alpha )
 {
     Layer_ABC::SetAlpha( alpha / 3.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GhostsLayer::NotifyCreated
+// Created: ABR 2012-06-28
+// -----------------------------------------------------------------------------
+void GhostsLayer::NotifyCreated( const kernel::Ghost_ABC& ghost )
+{
+    if( ghost.GetGhostType() == eGhostType_Agent )
+        if( const kernel::TacticalHierarchies* pHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >() )
+            if( const kernel::Ghost_ABC* parentGhost = dynamic_cast< const kernel::Ghost_ABC* >( pHierarchy->GetSuperior() ))
+                return;
+    EntityLayer< kernel::Ghost_ABC >::NotifyCreated( ghost );
 }

@@ -49,6 +49,7 @@ public:
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     virtual bool HandleKeyPress( QKeyEvent* key );
+    virtual void NotifyCreated( const kernel::Ghost_ABC& );
     //@}
 
 private:

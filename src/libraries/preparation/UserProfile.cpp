@@ -11,6 +11,7 @@
 #include "UserProfile.h"
 #include "AgentsModel.h"
 #include "FormationModel.h"
+#include "GhostModel.h"
 #include "Model.h"
 #include "TeamsModel.h"
 #include "TacticalHierarchies.h"
@@ -18,6 +19,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ExtensionType.h"
@@ -43,6 +45,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     const ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
     const ExistenceChecker< tools::Resolver_ABC< kernel::Automat_ABC > >    automatChecker( model_.GetAutomatResolver() );
     const ExistenceChecker< tools::Resolver_ABC< kernel::Population_ABC > > populationChecker( model_.GetPopulationResolver() );
+    const ExistenceChecker< tools::Resolver_ABC< kernel::Ghost_ABC > >      ghostChecker( model_.ghosts_ );
 
     std::string login, pass;
     xis >> xml::attribute( "name", login )
@@ -52,14 +55,14 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
             >> xml::start( "readonly" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
                 >> xml::list( "formation" , *this, &UserProfile::ReadRights, readFormations_, formationChecker )
-                >> xml::list( "automat"   , *this, &UserProfile::ReadRights, readAutomats_, automatChecker )
-                >> xml::list( "crowd", *this, &UserProfile::ReadRights, readPopulations_, populationChecker )
+                >> xml::list( "automat"   , *this, &UserProfile::ReadAutomatRights, readAutomats_, automatChecker, readGhosts_, ghostChecker )
+                >> xml::list( "crowd"     , *this, &UserProfile::ReadRights, readPopulations_, populationChecker )
             >> xml::end
             >> xml::start( "readwrite" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, writeSides_, teamChecker )
                 >> xml::list( "formation" , *this, &UserProfile::ReadRights, writeFormations_, formationChecker )
-                >> xml::list( "automat"   , *this, &UserProfile::ReadRights, writeAutomats_, automatChecker )
-                >> xml::list( "crowd", *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
+                >> xml::list( "automat"   , *this, &UserProfile::ReadAutomatRights, writeAutomats_, automatChecker, writeGhosts_, ghostChecker )
+                >> xml::list( "crowd"     , *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
             >> xml::end
         >> xml::end;
     login_ = login.c_str();
@@ -118,10 +121,12 @@ UserProfile::UserProfile( const UserProfile& p )
     , readFormations_  ( p.readFormations_ )
     , readAutomats_    ( p.readAutomats_ )
     , readPopulations_ ( p.readPopulations_ )
+    , readGhosts_      ( p.readGhosts_ )
     , writeSides_      ( p.writeSides_ )
     , writeFormations_ ( p.writeFormations_ )
     , writeAutomats_   ( p.writeAutomats_ )
     , writePopulations_( p.writePopulations_ )
+    , writeGhosts_     ( p.writeGhosts_ )
     , isClone_         ( true )
     , isLowLevel_      ( p.isLowLevel_ )
     , userRole_        ( p.userRole_ )
@@ -266,6 +271,22 @@ void UserProfile::ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceCh
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::ReadAutomatRights
+// Created: ABR 2012-06-27
+// -----------------------------------------------------------------------------
+void UserProfile::ReadAutomatRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker, T_Ids& ghostList, const ExistenceChecker_ABC& ghostChecker )
+{
+    unsigned long id;
+    xis >> xml::attribute( "id", id );
+    if( checker( id ) )
+        list.push_back( id );
+    else if( ghostChecker( id ) )
+        ghostList.push_back( id );
+    else
+        std::cerr << "Invalid entity id in profile: " << id << std::endl; // $$$$ SBO 2007-11-06:
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SerializeRights
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
@@ -321,7 +342,8 @@ bool UserProfile::IsReadable( const kernel::Entity_ABC& entity ) const
     return FindIn( entity.GetId(), readSides_ )
         || FindIn( entity.GetId(), readFormations_ )
         || FindIn( entity.GetId(), readAutomats_ )
-        || FindIn( entity.GetId(), readPopulations_ );
+        || FindIn( entity.GetId(), readPopulations_ )
+        || FindIn( entity.GetId(), readGhosts_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +355,8 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
     return FindIn( entity.GetId(), writeSides_ )
         || FindIn( entity.GetId(), writeFormations_ )
         || FindIn( entity.GetId(), writeAutomats_ )
-        || FindIn( entity.GetId(), writePopulations_ );
+        || FindIn( entity.GetId(), writePopulations_ )
+        || FindIn( entity.GetId(), writeGhosts_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,6 +418,8 @@ void UserProfile::SetReadable( const kernel::Entity_ABC& entity, bool readable )
         SetRight( id, readAutomats_, readable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, readPopulations_, readable );
+    else if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+        SetRight( id, readGhosts_, readable );
 }
 
 // -----------------------------------------------------------------------------
@@ -412,6 +437,8 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
         SetRight( id, writeAutomats_, writeable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, writePopulations_, writeable );
+    else if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+        SetRight( id, writeGhosts_, writeable );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,10 +461,12 @@ void UserProfile::Clear()
     readFormations_.clear();
     readAutomats_.clear();
     readPopulations_.clear();
+    readGhosts_.clear();
     writeSides_.clear();
     writeFormations_.clear();
     writeAutomats_.clear();
     writePopulations_.clear();
+    writeGhosts_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -453,10 +482,12 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     readFormations_   = p.readFormations_;
     readAutomats_     = p.readAutomats_;
     readPopulations_  = p.readPopulations_;
+    readGhosts_       = p.readGhosts_;
     writeSides_       = p.writeSides_;
     writeFormations_  = p.writeFormations_;
     writeAutomats_    = p.writeAutomats_;
     writePopulations_ = p.writePopulations_;
+    writeGhosts_      = p.writeGhosts_;
     userRole_         = p.userRole_;
     isLowLevel_       = p.isLowLevel_;
     if( !isClone_ && changed )
@@ -505,6 +536,16 @@ void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::NotifyGhostDeleted
+// Created: ABR 2012-06-26
+// -----------------------------------------------------------------------------
+void UserProfile::NotifyGhostDeleted( unsigned long ghostId )
+{
+    SetRight( ghostId, readGhosts_, false );
+    SetRight( ghostId, writeGhosts_, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::Visit
 // Created: LGY 2011-09-16
 // -----------------------------------------------------------------------------
@@ -514,6 +555,7 @@ void UserProfile::Visit( std::vector< unsigned long >& elements ) const
     elements.insert( elements.begin(), writeFormations_.begin(), writeFormations_.end() );
     elements.insert( elements.begin(), writeAutomats_.begin(), writeAutomats_.end() );
     elements.insert( elements.begin(), writePopulations_.begin(), writePopulations_.end() );
+    elements.insert( elements.begin(), writeGhosts_.begin(), writeGhosts_.end() );
 }
 
 namespace{
@@ -576,7 +618,7 @@ void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
 // -----------------------------------------------------------------------------
 unsigned int UserProfile::GetWriteProfilesCount()
 {
-    return static_cast< unsigned int >( writeSides_.size() + writeFormations_.size() + writeAutomats_.size() + writePopulations_.size() );
+    return static_cast< unsigned int >( writeSides_.size() + writeFormations_.size() + writeAutomats_.size() + writePopulations_.size() + writeGhosts_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -585,8 +627,8 @@ unsigned int UserProfile::GetWriteProfilesCount()
 // -----------------------------------------------------------------------------
 unsigned int UserProfile::GetProfilesCount() const
 {
-    return static_cast< unsigned int >( writeSides_.size() + writeFormations_.size() + writeAutomats_.size() + writePopulations_.size() +
-                                        readSides_.size()  + readFormations_.size() + readAutomats_.size() + readPopulations_.size() );
+    return static_cast< unsigned int >( writeSides_.size() + writeFormations_.size() + writeAutomats_.size() + writePopulations_.size() + writeGhosts_.size() +
+                                        readSides_.size()  + readFormations_.size() + readAutomats_.size() + readPopulations_.size() + readGhosts_.size() );
 }
 
 // -----------------------------------------------------------------------------

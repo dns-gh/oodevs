@@ -23,6 +23,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
+    class Ghost_ABC;
     class Population_ABC;
     class Team_ABC;
 }
@@ -48,6 +49,7 @@ class ProfilesModel : public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                     , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                     , public tools::ElementObserver_ABC< kernel::Population_ABC >
+                    , public tools::ElementObserver_ABC< kernel::Ghost_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -80,6 +82,7 @@ public:
     void Visit( T_Profiles& profiles ) const;
 
     bool Exists( const QString& login ) const;
+    UserProfile* Find( const std::string& name ) const;
     const UserProfile* Find( const QString& name ) const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
@@ -87,11 +90,14 @@ public:
     bool IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
     bool IsControlledByLowLevel( const std::set< std::string >& editors, const kernel::Entity_ABC& entity );
+    std::vector< std::string > GetProfilesWhoCanRead( const kernel::Entity_ABC& entity ) const;
+    std::vector< std::string > GetProfilesWhoCanWrite( const kernel::Entity_ABC& entity ) const;
 
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
     virtual void NotifyDeleted( const kernel::Population_ABC& population );
+    virtual void NotifyDeleted( const kernel::Ghost_ABC& population );
 
     unsigned int GetProfilesCount() const;
     //@}

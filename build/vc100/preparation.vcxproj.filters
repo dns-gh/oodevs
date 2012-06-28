@@ -553,6 +553,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\UrbanFileExporter.cpp">
       <Filter>Source Files\Model\Urban\Export</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\GhostHierarchies.cpp">
+      <Filter>Source Files\Model\Ghosts\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -1040,6 +1043,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFileExporter.h">
       <Filter>Source Files\Model\Urban\Export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\GhostHierarchies.h">
+      <Filter>Source Files\Model\Ghosts\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "MT_Tools/MT_Logger.h"
@@ -232,7 +233,7 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
         const Dotation& dotation = it.NextElement();
         if( dotation.quantity_ > 0 )
         {
-            xos << xml::start( "resource" );                        
+            xos << xml::start( "resource" );
             dotation.SerializeAttributes( xos );
             xos << xml::end;
         }
@@ -247,7 +248,7 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
 void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
 {
     tools::Iterator< const kernel::Entity_ABC& > children = CreateSubordinateIterator();
-    if( !children.HasMoreElements() )
+    if( !children.HasMoreElements() || dynamic_cast< const kernel::Ghost_ABC* >( &GetEntity() ) )
         return;
 
     xos << xml::start( GetLinkType().ascii() )
@@ -255,10 +256,12 @@ void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
     while( children.HasMoreElements() )
     {
         const kernel::Entity_ABC& entity = children.NextElement();
+        if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+            continue;
         xos << xml::start( "subordinate" )
                 << xml::attribute( "id", entity.GetId());
 
-        //$$$ Ca me parait bien compliqué et bien foireux...
+        //$$$ Ca me parait bien compliqué et bien foireux... // $$$$ ABR 2012-06-25: Ca l'est... si pas de superieur les quotas ne sont pas enregistrés -> pertes d'information.
         const LogisticBaseStates* subordinateLogHierarchy = dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
         if( subordinateLogHierarchy )
             subordinateLogHierarchy->SerializeQuotas( xos );

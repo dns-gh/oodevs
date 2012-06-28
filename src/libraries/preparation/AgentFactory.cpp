@@ -20,6 +20,7 @@
 #include "AutomatDecisions.h"
 #include "AutomatHierarchies.h"
 #include "AutomatPositions.h"
+#include "Dotation.h"
 #include "InitialState.h"
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
@@ -31,6 +32,7 @@
 #include "InhabitantHierarchies.h"
 #include "InhabitantPositions.h"
 #include "Inhabitants.h"
+#include "ProfilesModel.h"
 #include "Population.h"
 #include "PopulationHierarchies.h"
 #include "PopulationPositions.h"
@@ -44,6 +46,7 @@
 #include "AgentAffinities.h"
 #include "ProfileHierarchies.h"
 #include "ProfileHierarchies_ABC.h"
+#include "UserProfile.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
@@ -52,6 +55,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -333,7 +337,7 @@ Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: AgentFactory::Create from ghost
 // Created: ABR 2011-10-25
 // -----------------------------------------------------------------------------
 kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel::AgentType& type, const geometry::Point2f position )
@@ -365,7 +369,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::Create
+// Name: AgentFactory::Create from ghost
 // Created: ABR 2011-10-25
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type )
@@ -378,26 +382,54 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     const kernel::Karma& karma = ghost.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
-    // Tactical Hierarchies
+    // Tactical hierarchy
     {
         const kernel::TacticalHierarchies& ghostHierarchy = ghost.Get< kernel::TacticalHierarchies >();
         Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy.GetSuperior() );
         assert( tactSuperior );
         result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, tactSuperior ) );
+        // Profile hierarchy
         result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, tactSuperior ) );
+        std::vector< std::string > readingProfiles = model_.profiles_.GetProfilesWhoCanRead( ghost );
+        for( std::vector< std::string >::const_iterator it = readingProfiles.begin(); it != readingProfiles.end(); ++it )
+            if( UserProfile* profile = model_.profiles_.Find( *it ) )
+                profile->SetReadable( *result, true );
+        std::vector< std::string > writingProfiles = model_.profiles_.GetProfilesWhoCanWrite( ghost );
+        for( std::vector< std::string >::const_iterator it = writingProfiles.begin(); it != writingProfiles.end(); ++it )
+            if( UserProfile* profile = model_.profiles_.Find( *it ) )
+                profile->SetWriteable( *result, true );
     }
-    // Communication Hierarchies
+    // Communication hierarchy
     {
         const CommunicationHierarchies& ghostHierarchy = ghost.Get< CommunicationHierarchies >();
         Entity_ABC* comSuperior = const_cast< Entity_ABC* >( ghostHierarchy.GetSuperior() );
         assert( comSuperior );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, comSuperior ) );
     }
-
-    bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttritube( controllers_, *result, isTC2, dico ) );
-    result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_, *result, static_.objectTypes_, dico, isTC2 ) );
-
+    // Logistic hierarchy
+    {
+        const LogisticHierarchiesBase& ghostHierarchy = ghost.Get< LogisticHierarchiesBase >();
+        // $$$$ ABR 2012-06-27: TODO: Warn if dropping a non log base to a log base ghost.
+        bool isTC2 = result->GetType().IsTC2(); //$$ NAZE
+        result->Attach( *new LogisticLevelAttritube( controllers_, *result, isTC2, dico ) );
+        LogisticBaseStates* logBaseStates = new LogisticBaseStates( controllers_, *result, static_.objectTypes_, dico, isTC2 );
+        result->Attach< LogisticHierarchiesBase >( *logBaseStates );
+        logBaseStates->SetLogisticSuperior( ghostHierarchy.GetSuperior() );
+        tools::Iterator< const Entity_ABC& > it = ghostHierarchy.CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Entity_ABC& child = it.NextElement();
+            LogisticHierarchiesBase& childHierarchy = const_cast< Entity_ABC& >( child ).Get< LogisticHierarchiesBase >();
+            childHierarchy.SetLogisticSuperior( result );
+        }
+        tools::Iterator< const Dotation& > itDot = static_cast< const LogisticBaseStates& >( ghostHierarchy ).tools::Resolver< Dotation >::CreateIterator();
+        while( itDot.HasMoreElements() )
+        {
+            const Dotation& dotation = itDot.NextElement();
+            if( dotation.quantity_ > 0 )
+                logBaseStates->SetDotation( dotation.type_, dotation.quantity_ );
+        }
+    }
     result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );

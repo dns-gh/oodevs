@@ -27,6 +27,7 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -88,14 +89,22 @@ void AgentsModel::CreateAutomat( Entity_ABC& parent, const AutomatType& type, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAutomat
-// Created: ABR 2011-10-25
+// Name: AgentsModel::CreateAutomatInsteadOf
+// Created: ABR 2012-06-28
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( Ghost_ABC& ghost, const AutomatType& type, const geometry::Point2f& position )
+void AgentsModel::CreateAutomatInsteadOf( Entity_ABC& original, const kernel::AutomatType& type, const geometry::Point2f& position )
 {
-    Automat_ABC* automat = agentFactory_.Create( ghost, type );
-    tools::Resolver< Automat_ABC >::Register( automat->GetId(), *automat );
-    CreateAutomatChildren( *automat, type, position );
+    Automat_ABC* result = 0;
+    if( Ghost_ABC* ghost = dynamic_cast< Ghost_ABC* >( &original ) )
+        result = agentFactory_.Create( *ghost, type );
+    else
+        if( Automat_ABC* automat = dynamic_cast< Automat_ABC* >( &original ) )
+            if( const TacticalHierarchies* pHierarchy = original.Retrieve< TacticalHierarchies >() )
+                if( Entity_ABC* parent = const_cast< Entity_ABC* >( pHierarchy->GetSuperior() ) )
+                    result = agentFactory_.Create( *parent, type, original.GetName() );
+
+    tools::Resolver< Automat_ABC >::Register( result->GetId(), *result );
+    CreateAutomatChildrenInsteadOf( original, *result, type, position );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,13 +120,56 @@ void AgentsModel::CreateAutomatChildren( Automat_ABC& automat, const AutomatType
     {
         const AutomatComposition& composition = it.NextElement();
         for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
+            InternalCreateAgent( automat, type, composition, formation, pcSet );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAutomatChildrenInsteadOf
+// Created: ABR 2012-06-28
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateAutomatChildrenInsteadOf( const Entity_ABC& original, Automat_ABC& automat, const AutomatType& type, const geometry::Point2f& position )
+{
+    const TacticalHierarchies& pHierarchy = original.Get< TacticalHierarchies >();
+    tools::Iterator< const Entity_ABC& > originalIterator = pHierarchy.CreateSubordinateIterator();
+    tools::Iterator< const AutomatComposition& > typeIterator = type.CreateIterator();
+    DiamondFormation formation( position );
+
+    bool pcSet = false;
+    while( originalIterator.HasMoreElements() && typeIterator.HasMoreElements() )
+    {
+        const AutomatComposition& composition = typeIterator.NextElement();
+        unsigned toAdd = composition.GetSensibleNumber();
+        for( ; toAdd > 0 && originalIterator.HasMoreElements(); --toAdd )
         {
+            const Entity_ABC& entity = originalIterator.NextElement();
+            const geometry::Point2f entityPosition = entity.Get< Positions >().GetPosition();
             const bool isPc = !pcSet && &composition.GetType() == type.GetTypePC();
-            CreateAgent( automat, composition.GetType(), formation.NextPosition(), isPc );
+            CreateAgent( automat, composition.GetType(), entityPosition, isPc, entity.GetName() );
             if( isPc )
                 pcSet = true;
         }
+        for( ; toAdd > 0; --toAdd ) // Type bigger than original
+            InternalCreateAgent( automat, type, composition, formation, pcSet );
     }
+    while( typeIterator.HasMoreElements() ) // Type bigger than original
+    {
+        const AutomatComposition& composition = typeIterator.NextElement();
+        for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
+            InternalCreateAgent( automat, type, composition, formation, pcSet );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::InternalCreateAgent
+// Created: ABR 2012-06-28
+// -----------------------------------------------------------------------------
+void AgentsModel::InternalCreateAgent( Automat_ABC& automat, const AutomatType& type, const AutomatComposition& composition, DiamondFormation& formation, bool& pcSet )
+{
+    const bool isPc = !pcSet && &composition.GetType() == type.GetTypePC();
+    CreateAgent( automat, composition.GetType(), formation.NextPosition(), isPc );
+    if( isPc )
+        pcSet = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,8 +180,7 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, Model& 
 {
     try
     {
-        Automat_ABC* automat = agentFactory_.Create( xis, parent );
-        if( automat )
+        if( Automat_ABC* automat = agentFactory_.Create( xis, parent ) )
         {
             tools::Resolver< Automat_ABC >::Register( automat->GetId(), *automat );
             xis >> xml::list( "automat", *this        , &AgentsModel::CreateAutomat, *automat, model )

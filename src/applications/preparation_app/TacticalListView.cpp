@@ -147,10 +147,10 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
     item->setRenameEnabled( 0, true );
     UpdatePixmap( entity, item );
     QColor color = Qt::transparent;
-    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
-        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
     if( HasMissingLogisticLinks( entity ) && tools_.ShouldDisplay( "MissingLogisticLinks" ) )
         color = QColor( controllers_.options_.GetOption( "Color/MissingLogisticLinks", QString( "" ) ).To< QString >() );
+    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
+        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
     item->SetBackgroundColor( color );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }

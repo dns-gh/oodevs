@@ -14,11 +14,13 @@
 #include "ControlsChecker_ABC.h"
 #include "preparation/Model.h"
 #include "clients_gui/LongNameHelper.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
 
@@ -71,6 +73,14 @@ void UserProfileUnitControls::Display( UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
+    if( !item )
+        return;
+
+    QColor color = Qt::transparent;
+    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
+        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+    item->SetBackgroundColor( color );
+
     HierarchyListView< ProfileHierarchies_ABC >::Display( entity, item );
     LongNameHelper::SetItemLongName( entity, *item );
 }
@@ -294,8 +304,9 @@ void UserProfileUnitControls::OnContextMenuRequested( Q3ListViewItem*, const QPo
 bool UserProfileUnitControls::Accept( const ProfileHierarchies_ABC& hierarchy ) const
 {
     const kernel::Entity_ABC& entity = hierarchy.GetEntity();
-    // accept only automats, formations, teams.
+    // accept only automats, formations, teams, and ghost.
     return ( dynamic_cast< const kernel::Team_ABC* >( &entity ) || 
-        dynamic_cast< const kernel::Automat_ABC* >( &entity ) ||
-        dynamic_cast< const kernel::Formation_ABC* >( &entity ) );
+             dynamic_cast< const kernel::Automat_ABC* >( &entity ) ||
+             dynamic_cast< const kernel::Formation_ABC* >( &entity ) ||
+             ( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) && static_cast< const kernel::Ghost_ABC* >( &entity )->GetGhostType() == eGhostType_Automat ) );
 }

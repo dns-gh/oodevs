@@ -17,6 +17,7 @@
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
+#include "preparation/GhostModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
@@ -73,7 +74,7 @@ void EditorFactory::Call( kernel::LogisticBaseSuperior* const& value )
 {
     if( !selected_ )
         return;
-    LogisticSuperiorEditor* editor = new LogisticSuperiorEditor( parent_, controllers_, model_.agents_, model_.formations_, *selected_ );
+    LogisticSuperiorEditor* editor = new LogisticSuperiorEditor( parent_, controllers_, model_.agents_, model_.formations_, model_.ghosts_, *selected_ );
     editor->SetCurrentItem( (kernel::LogisticBaseSuperior&)*value );
     result_ = editor;
 }

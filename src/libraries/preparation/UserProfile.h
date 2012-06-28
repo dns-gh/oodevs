@@ -78,6 +78,7 @@ public:
     void NotifyFormationDeleted( unsigned long formationId );
     void NotifyAutomatDeleted( unsigned long automatId );
     void NotifyPopulationDeleted( unsigned long populationId );
+    void NotifyGhostDeleted( unsigned long ghostId );
     //@}
 
 private:
@@ -105,6 +106,7 @@ private:
     //! @name Helpers
     //@{
     void ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker );
+    void ReadAutomatRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker, T_Ids& ghostList, const ExistenceChecker_ABC& ghostChecker );
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T_Ids& list ) const;
     void SetRight( unsigned long id, T_Ids& ids, bool status );
     bool HasProperty( const std::string& name ) const;
@@ -123,10 +125,12 @@ private:
     T_Ids readFormations_;
     T_Ids readAutomats_;
     T_Ids readPopulations_;
+    T_Ids readGhosts_;
     T_Ids writeSides_;
     T_Ids writeFormations_;
     T_Ids writeAutomats_;
     T_Ids writePopulations_;
+    T_Ids writeGhosts_;
     bool isClone_;
     bool isLowLevel_;
     std::string userRole_;

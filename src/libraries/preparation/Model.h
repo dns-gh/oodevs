@@ -120,6 +120,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const StaticModel& staticModel_;
     IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;

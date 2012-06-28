@@ -56,6 +56,7 @@ public:
     virtual void ClearDotations();
     virtual void SetDotation( const kernel::DotationType& type, unsigned int quantity );
     bool HasLogisticBaseSuperior() const;
+    void SerializeQuotas( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -68,7 +69,6 @@ private:
     void ReadDotation( xml::xistream& xis );
 
     void SerializeLogistics( xml::xostream& xos ) const;
-    void SerializeQuotas( xml::xostream& xos ) const;
 
     void DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;
     bool IsToSerializeQuotas() const;

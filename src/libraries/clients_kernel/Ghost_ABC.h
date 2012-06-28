@@ -13,8 +13,11 @@
 #include "Entity_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 
+class StaticModel;
+
 namespace kernel
 {
+    class LogisticLevel;
 
 // =============================================================================
 /** @class  Ghost_ABC
@@ -46,6 +49,10 @@ public:
     virtual const std::string& GetNature() const = 0;
     virtual bool IsConverted() const = 0;
     virtual void UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol ) = 0;
+    virtual const LogisticLevel& GetLogisticLevel() const = 0;
+    virtual void SerializeGhostAttributes( xml::xostream& ) const = 0;
+    virtual void ReadGhostAttributes( xml::xistream& xis ) = 0;
+    virtual void Finalize( const StaticModel& staticModel ) = 0;
     //@}
 
     //! @name Operations
