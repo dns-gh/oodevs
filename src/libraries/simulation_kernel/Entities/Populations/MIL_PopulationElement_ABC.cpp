@@ -122,7 +122,7 @@ void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_
     for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
     {
         MIL_Agent_ABC& target = **it;
-        if( target.GetArmy().IsAnEnemy( GetPopulation().GetArmy() ) != eTristate_True )
+        if( target.GetArmy().IsAFriend( GetPopulation().GetArmy() ) == eTristate_True )
             continue;
         FireOnPion( rIntensity, target, fireResult );
     }
