@@ -269,6 +269,29 @@ namespace
     }
 }
 
+namespace
+{
+    class DebugModel
+    {
+    public:
+        void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
+        {
+            xml::xofstream xos( file );
+            xos << xml::start( "debug" )
+                    << xml::start( "dispatcher" )
+                        << xml::attribute( "logfiles", 100 )
+                        << xml::attribute( "logsize", 50000 )
+                    << xml::end
+                    << xml::start( "shield" )
+                        << xml::attribute( "logfiles", 100 )
+                        << xml::attribute( "logsize", 1000000 )
+                    << xml::end
+                << xml::end;
+        }
+        void Load( const tools::Loader_ABC&, const std::string& ) {}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Model::Load
 // Created: SBO 2006-10-05
@@ -296,6 +319,8 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
+    DebugModel debugModel;
+    LoadOptional( config.GetLoader(), config.BuildExerciseChildFile( "debug.xml" ), debugModel, schemaWriter );
 
     performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     SetLoaded( true );
