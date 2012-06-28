@@ -576,6 +576,6 @@ std::string Controller::UploadCache( Request_ABC& request )
 std::string Controller::UserLogin( const Request_ABC& request )
 {
     const std::string username = RequireParameter< std::string >( "username", request );
-    const std::string password = RequireParameter< std::string >( "password", request ); 
+    const std::string password = RequireParameter< std::string >( "password", request );
     return WriteHttpReply( agent_.UserLogin( username, password ) );
 }
