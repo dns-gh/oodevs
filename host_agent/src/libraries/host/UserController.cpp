@@ -48,11 +48,20 @@ void UserController::MigrateDatabase()
 {
     Sql_ABC::Ptr ptr = db_.Prepare(
         "CREATE TABLE IF NOT EXISTS revisions ("
-        "   id          INTEGER PRIMARY KEY"
-        "  ,revision    INTEGER"
+        "  id       INTEGER PRIMARY KEY"
+        ", revision INTEGER"
         ")" );
     ptr->Next();
-    ptr.reset();
+    ptr = db_.Prepare(
+        "CREATE TABLE IF NOT EXISTS users ("
+        "  id    INTEGER PRIMARY KEY"
+        ", email TEXT"
+        ", name  TEXT"
+        ", hash  TEXT"
+        ", salt  TEXT"
+        ", reset BOOLEAN"
+        ")" );
+    ptr->Next();
 }
 
 // -----------------------------------------------------------------------------
