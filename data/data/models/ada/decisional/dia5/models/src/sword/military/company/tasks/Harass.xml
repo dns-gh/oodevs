@@ -83,11 +83,6 @@
         <stage label="Harceler une zone">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
-                    <parameter name="noCoordination">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
                     <parameter name="peiTasks">
                         <value>
                             <parameter>peiTasks</parameter>

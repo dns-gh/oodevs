@@ -55,11 +55,6 @@
               <string>france.military.platoon.tasks.FaireMouvement</string>
             </value>
           </parameter>
-          <parameter name="noCoordination">
-            <value>
-              <boolean>true</boolean>
-            </value>
-          </parameter>
         </skill>
       </skills>
     </stage>

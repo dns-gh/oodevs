@@ -42,11 +42,6 @@
         <stage label="Mouvement vers position de deploiement" disable-when-done="false">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
-                    <parameter name="noCoordination">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
                     <parameter name="companyTask">
                         <value>
                             <parameter>companyTask</parameter>

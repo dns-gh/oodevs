@@ -43,11 +43,6 @@
         <stage label="Decontamination" disable-when-done="true">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
-                    <parameter name="noCoordination">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
                     <parameter name="companyTask">
                         <value>
                             <parameter>companyTask</parameter>

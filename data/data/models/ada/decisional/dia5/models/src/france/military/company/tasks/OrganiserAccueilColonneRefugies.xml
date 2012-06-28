@@ -14,11 +14,6 @@
             <description>Organiser l'accueil des réfugiés.</description>
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
-                    <parameter name="noCoordination">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.tasks.OrganiserAccueilColonneRefugies</string>

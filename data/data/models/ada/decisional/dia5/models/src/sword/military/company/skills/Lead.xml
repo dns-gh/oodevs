@@ -72,7 +72,7 @@
 				<simple name="boolean"/>
 			</type>
 			<default>
-				<boolean>false</boolean>
+				<boolean>true</boolean>
 			</default>
 		</parameter>
 		<parameter name="allInFront" nullable="true">

@@ -29,11 +29,6 @@
         <stage label="Bouclage de l'objectif" permanent="true">
             <skills>
                 <skill name="sword.military.company.skills.Lead">
-                    <parameter name="noCoordination">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.tasks.Boucler</string>

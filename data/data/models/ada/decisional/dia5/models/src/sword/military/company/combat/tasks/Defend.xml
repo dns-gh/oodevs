@@ -84,11 +84,6 @@
                             <parameter>companyTask</parameter>
                         </value>
                     </parameter>
-                    <parameter name="noCoordination">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
                     <parameter name="mainTasks">
                         <value>
                             <parameter>mainTasks</parameter>
