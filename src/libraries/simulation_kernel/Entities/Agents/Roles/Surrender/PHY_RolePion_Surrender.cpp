@@ -205,6 +205,19 @@ void PHY_RolePion_Surrender::SetAsPrisoner()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender::SetAsFree
+// Created: LMT 2012-06-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Surrender::SetAsFree()
+{
+    if( bPrisoner_ )
+    {
+        bPrisoner_ = false;
+        bHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::IsImprisoned
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------

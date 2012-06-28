@@ -54,6 +54,7 @@ public:
     virtual bool IsPrisoner() const = 0;
     virtual bool IsImprisoned( const MIL_Object_ABC& camp ) = 0;
     virtual void SetAsPrisoner() = 0;
+    virtual void SetAsFree() = 0;
     //@}
 
     //! @name Operations
