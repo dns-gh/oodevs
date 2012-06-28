@@ -25,6 +25,7 @@
 #include "MockNodeController.h"
 #include "MockSession.h"
 #include "MockSessionController.h"
+#include "MockUserController.h"
 
 using namespace host;
 using namespace mocks;
@@ -100,7 +101,7 @@ namespace
         Fixture()
             : cluster     ( hasCluster )
             , nodes       ( true )
-            , agent       ( log, hasCluster ? &cluster.controller : 0, nodes, sessions )
+            , agent       ( log, hasCluster ? &cluster.controller : 0, nodes, sessions, users )
             , node        ( AddNode( defaultNodeString, "nodeName" ) )
             , mockSessions( boost::assign::list_of
                 ( AddSession( defaultNode, "myExercise", "myName", 0 ) )
@@ -137,6 +138,7 @@ namespace
         MockSessionController sessions;
         Cluster cluster;
         MockNodeController nodes;
+        MockUserController users;
         Agent agent;
         boost::shared_ptr< MockNode > node;
         std::vector< boost::shared_ptr< Session_ABC > > mockSessions;
@@ -158,9 +160,10 @@ BOOST_AUTO_TEST_CASE( agent_reloads )
     MockLog log;
     MockNodeController nodes( true );
     MockSessionController sessions;
+    MockUserController users;
     mock::reset( sessions );
     MOCK_EXPECT( sessions.Reload ).once().with( boost::bind( &CheckSessionReloadPredicate, boost::ref( nodes ), _1 ) );
-    Agent agent( log, 0, nodes, sessions );
+    Agent agent( log, 0, nodes, sessions, users );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_cluster, Fixture< true > )

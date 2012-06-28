@@ -95,6 +95,11 @@ private:
     std::string CountExercises( const Request_ABC& request );
     //@}
 
+    //! @name User Methods
+    //@{
+    std::string UserLogin( const Request_ABC& request );
+    //@}
+
 private:
     //! @name Member data
     //@{

@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#include <runtime/Factory.h>
 #include <host/Agent.h>
 #include <host/Node.h>
 #include <host/NodeController.h>
@@ -17,13 +16,16 @@
 #include <host/Proxy.h>
 #include <host/Session.h>
 #include <host/SessionController.h>
+#include <host/Sql.h>
+#include <host/UserController.h>
 #include <host/UuidFactory.h>
 #include <runtime/Daemon.h>
+#include <runtime/Factory.h>
 #include <runtime/FileSystem.h>
 #include <runtime/Pool.h>
 #include <runtime/Runtime_ABC.h>
-#include <runtime/Utf8.h>
 #include <runtime/Scoper.h>
+#include <runtime/Utf8.h>
 #include <web/Client.h>
 #include <web/Controller.h>
 #include <web/Server.h>
@@ -257,6 +259,7 @@ struct SessionFactory : public SessionFactory_ABC
 
 int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Configuration& cfg, const Waiter& waiter )
 {
+    sqlite3_config( SQLITE_CONFIG_SINGLETHREAD );
     sqlite3_initialize();
     Scoper sqliteShutdown( &sqlite3_shutdown );
     Pool pool( 8 );
@@ -272,7 +275,9 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, proxy );
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
-    Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
+    Sql db( log, "dummy" );
+    UserController users( log, db );
+    Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions, users );
     web::Controller controller( log, agent );
     const Port host = ports.Create();
     web::Server server( log, pool, controller, host->Get() );

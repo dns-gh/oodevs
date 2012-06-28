@@ -76,6 +76,8 @@ namespace
         // exercises
         MOCK_METHOD( ListExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
+        // users
+        MOCK_METHOD( UserLogin, 2 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )

@@ -277,6 +277,7 @@ std::string Controller::DoPost( Request_ABC& request )
     try
     {
         if( uri == "/upload_cache" ) return UploadCache( request );
+        if( uri == "/login" )        return UserLogin( request );
     }
     catch( const HttpException& err )
     {
@@ -566,4 +567,15 @@ std::string Controller::UploadCache( Request_ABC& request )
     request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
     request.ParseMime();
     return WriteHttpReply( reply );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UserLogin
+// Created: BAX 2012-06--28
+// -----------------------------------------------------------------------------
+std::string Controller::UserLogin( const Request_ABC& request )
+{
+    const std::string username = RequireParameter< std::string >( "username", request );
+    const std::string password = RequireParameter< std::string >( "password", request ); 
+    return WriteHttpReply( agent_.UserLogin( username, password ) );
 }

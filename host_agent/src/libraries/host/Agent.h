@@ -28,6 +28,7 @@ namespace host
 {
     struct NodeController_ABC;
     struct SessionController_ABC;
+    struct UserController_ABC;
     typedef web::Reply Reply;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
@@ -43,7 +44,7 @@ class Agent : public web::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions );
+             Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions, UserController_ABC& users );
     virtual ~Agent();
     //@}
 
@@ -91,10 +92,15 @@ public:
     virtual Reply PauseSession ( const Uuid& id ) const;
     //@}
 
-    //! @name Other Methods
+    //! @name Exercise Methods
     //@{
     virtual Reply ListExercises ( const Uuid& id, int offset, int limit ) const;
     virtual Reply CountExercises( const Uuid& id ) const;
+    //@}
+
+    //! @name User Methods
+    //@{
+    virtual Reply UserLogin( const std::string& username, const std::string& password ) const;
     //@}
 
 private:
@@ -106,6 +112,7 @@ private:
     Uuid clusterId_;
     NodeController_ABC& nodes_;
     SessionController_ABC& sessions_;
+    UserController_ABC& users_;
     //@}
 };
 }
