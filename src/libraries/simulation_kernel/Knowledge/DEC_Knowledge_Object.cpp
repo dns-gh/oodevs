@@ -178,6 +178,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> name;
     pObjectType_ = &MIL_ObjectFactory::FindType( name );
     file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
+         >> const_cast< MIL_KnowledgeGroup*& >( pGroupKnowing_ )
          >> pObjectKnown_
          >> const_cast< unsigned int& >( objectId_ )
          >> const_cast< unsigned int& >( nID_ )
@@ -234,6 +235,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << name
          << pArmyKnowing_
+         << pGroupKnowing_
          << pObjectKnown_
          << objectId_
          << nID_
