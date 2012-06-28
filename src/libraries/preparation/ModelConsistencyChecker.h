@@ -79,6 +79,7 @@ private:
     void CheckSuccessFactors();
     void CheckLogisticBase();
     void CheckLogisticFormation();
+    void CheckUrban();
     void CheckOrbat();
     void CheckFiles();
     //@}

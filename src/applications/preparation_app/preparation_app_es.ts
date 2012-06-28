@@ -1429,6 +1429,10 @@ This data can&apos;t be projected.</source>
         <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unknown infrastructure: %1. It will be deleted at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

@@ -40,7 +40,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsEnabled() const;
-    virtual bool HasValidType() const;
+    virtual const std::string& GetInvalidType() const;
     virtual unsigned int GetThreshold() const;
     virtual const kernel::InfrastructureType* GetType() const;
     virtual void SetType( kernel::InfrastructureType* infrastructure );

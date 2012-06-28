@@ -44,6 +44,7 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
@@ -51,6 +52,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
@@ -155,6 +157,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckLoadingErrors();
     CheckScores();
     CheckSuccessFactors();
+    CheckUrban();
     CheckOrbat();
     CheckFiles();
 
@@ -732,6 +735,22 @@ void ModelConsistencyChecker::CheckLogisticFormation()
                 continue;
         }
         AddError( eNoLogisticFormation, &automat );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckUrban
+// Created: JSR 2012-06-28
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckUrban()
+{
+    Iterator< const kernel::UrbanObject_ABC& > it = model_.GetUrbanObjectResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::UrbanObject_ABC& object = it.NextElement();
+        if( const kernel::Infrastructure_ABC* infrastructure = object.Retrieve< kernel::Infrastructure_ABC >() )
+            if( !infrastructure->GetInvalidType().empty() )
+                AddError( eUnknownInfrastructure, &object, infrastructure->GetInvalidType() );
     }
 }
 

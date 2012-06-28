@@ -55,7 +55,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsEnabled() const;
-    virtual bool HasValidType() const;
+    virtual const std::string& GetInvalidType() const;
     virtual unsigned int GetThreshold() const;
     virtual const kernel::InfrastructureType* GetType() const;
     virtual void SetType( kernel::InfrastructureType* infrastructure );
@@ -96,6 +96,7 @@ public:
     bool                          enabled_;
     unsigned int                  threshold_;
     std::string                   role_;
+    std::string                   invalidType_;
     const geometry::Point2f       position_;
     //@}
 };

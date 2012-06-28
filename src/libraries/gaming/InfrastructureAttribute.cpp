@@ -118,12 +118,13 @@ bool InfrastructureAttribute::IsEnabled() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfrastructureAttribute::HasValidType
+// Name: InfrastructureAttribute::GetInvalidType
 // Created: JSR 2012-05-14
 // -----------------------------------------------------------------------------
-bool InfrastructureAttribute::HasValidType() const
+const std::string& InfrastructureAttribute::GetInvalidType() const
 {
-    return type_ != 0;
+    static const std::string emptyStr;
+    return emptyStr;
 }
 
 // -----------------------------------------------------------------------------

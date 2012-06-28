@@ -1434,6 +1434,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Others</source>
         <translation>Autres</translation>
     </message>
+    <message>
+        <source>Unknown infrastructure: %1. It will be deleted at next save.</source>
+        <translation>Infrastructure inconnue: %1. Elle sera supprimée à la prochaine sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -2799,7 +2803,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished">Foules</translation>
+        <translation>Foules</translation>
     </message>
     <message>
         <source>Automats:</source>
