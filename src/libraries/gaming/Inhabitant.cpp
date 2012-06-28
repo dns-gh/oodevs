@@ -303,7 +303,7 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
         if( pObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
             ++medicalInfrastructures_;
         else if( const kernel::Infrastructure_ABC* infra = pObject->Retrieve< kernel::Infrastructure_ABC >() )
-            if( infra->HasValidType() )
+            if( infra->GetType() != 0 )
                 ++infrastructures_;
         const kernel::AccommodationTypes& accommodations = pObject->GetAccommodations();
         tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();

@@ -82,6 +82,8 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
         role_ = type_->GetName();
         object.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent();
     }
+    else
+        invalidType_ = type;
     assert( controllers_.modes_ );
     controllers_.modes_->Register( *this );
 }
@@ -139,6 +141,7 @@ void InfrastructureAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
+    const_cast< InfrastructureAttribute* >( this )->invalidType_.clear();
     if( GetCurrentMode() == ePreparationMode_Exercise && type_ && IsOverriden() )
     {
         xos << xml::start( "infrastructure" )
@@ -186,12 +189,12 @@ bool InfrastructureAttribute::IsEnabled() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfrastructureAttribute::HasValidType
+// Name: InfrastructureAttribute::GetInvalidType
 // Created: JSR 2012-05-14
 // -----------------------------------------------------------------------------
-bool InfrastructureAttribute::HasValidType() const
+const std::string& InfrastructureAttribute::GetInvalidType() const
 {
-    return type_ != 0;
+    return invalidType_;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,6 +221,7 @@ const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructure )
 {
+    invalidType_.clear();
     if( type_ != infrastructure )
     {
         type_ = infrastructure;

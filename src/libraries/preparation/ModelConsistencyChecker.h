@@ -78,6 +78,7 @@ private:
     void CheckSuccessFactors();
     void CheckLogisticBase();
     void CheckLogisticFormation();
+    void CheckUrban();
     void CheckFiles();
     //@}
 

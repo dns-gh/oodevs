@@ -111,6 +111,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoKnowledgeGroup ]                = tr( "Automat has no knowledge group." );
     errorDescriptions_[ eScoreError ]                      = tr( "Score definitions contain errors: %1" );
     errorDescriptions_[ eSuccessFactorError ]              = tr( "Success factor definitions contain errors: %1" );
+    errorDescriptions_[ eUnknownInfrastructure]            = tr( "Unknown infrastructure: %1. It will be deleted at next save." );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 

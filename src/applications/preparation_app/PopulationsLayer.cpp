@@ -140,7 +140,7 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
 // Name: PopulationsLayer::HandleLeaveDragEvent
 // Created: JSR 2012-06-26
 // -----------------------------------------------------------------------------
-bool PopulationsLayer::HandleLeaveDragEvent( QDragLeaveEvent* event )
+bool PopulationsLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
 {
     if( selectedPopulation_ && !oldPosition_.IsZero() )
     {
