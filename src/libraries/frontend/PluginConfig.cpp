@@ -31,6 +31,14 @@
 
 using namespace frontend;
 
+#ifndef PLATFORM
+#error PLATFORM must be defined (for instance vc80 or vc100_x64) for masalife and directia plugins
+#endif
+
+#ifndef PLUGIN
+#define PLUGIN( plugin ) ( std::string( plugin ) + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt.dll" ) )
+#endif
+
 namespace
 {
     std::string ReadLang()
@@ -48,7 +56,7 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     : PluginConfig_ABC( parent )
     , config_         ( config )
     , name_           ( xis.attribute< std::string >( "name" ) )
-    , library_        ( xis.attribute< std::string >( "library", "" ) )
+    , library_        ( xis.has_attribute( "library" ) ? PLUGIN( xis.attribute< std::string >( "library", "" ) ) : "" )
     , version_        ( xis.attribute< std::string >( "version" ) )
     , description_    ( xis, ReadLang() )
 {

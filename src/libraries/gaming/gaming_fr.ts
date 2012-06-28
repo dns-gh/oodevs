@@ -301,7 +301,7 @@
     </message>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
