@@ -148,6 +148,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
+    const_cast< ResourceNetworkAttribute* >( this )->invalidResources_.clear();
     if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain && !resourceNodes_.empty() || IsOverriden() )
     {
         xos << xml::start( "resources" );
@@ -202,6 +203,15 @@ void ResourceNetworkAttribute::NotifyDeleted( const kernel::UrbanObject_ABC& obj
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::GetInvalidResources
+// Created: JSR 2012-06-28
+// -----------------------------------------------------------------------------
+const std::set< std::string >& ResourceNetworkAttribute::GetInvalidResources() const
+{
+    return invalidResources_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::IsOverriden
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
@@ -237,6 +247,11 @@ void ResourceNetworkAttribute::Update( const kernel::ResourceNetwork_ABC::T_Reso
 void ResourceNetworkAttribute::ReadNode( xml::xistream& xis )
 {
     std::string resource = xis.attribute< std::string >( "resource-type" );
+    if( resources_.Find( resource ) == 0 )
+    {
+        invalidResources_.insert( resource );
+        return;
+    }
     ResourceNode& node = resourceNodes_[ resource ];
     node.resource_ = resource;
     xis >> xml::optional >> xml::attribute( "enabled", node.isEnabled_ )

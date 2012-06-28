@@ -110,7 +110,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoKnowledgeGroup ]                = tools::translate( "ModelConsistencyDialog", "Automat has no knowledge group." );
     errorDescriptions_[ eScoreError ]                      = tools::translate( "ModelConsistencyDialog", "Score definitions contain errors: %1" );
     errorDescriptions_[ eSuccessFactorError ]              = tools::translate( "ModelConsistencyDialog", "Success factor definitions contain errors: %1" );
-    errorDescriptions_[ eUnknownInfrastructure]            = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure: %1. It will be deleted at next save." );
+    errorDescriptions_[ eUnknownInfrastructure]            = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure \"%1\". It will be deleted at next save." );
+    errorDescriptions_[ eUnknownResourceNetwork]           = tools::translate( "ModelConsistencyDialog", "Unknown resource network type \"%1\". Related networks will deleted at next save." );
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found. The orbat.xml file will be created after the first save." );
     errorDescriptions_[ eOthers ]                          = "%1";
 }

@@ -20,6 +20,7 @@
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ProfilesModel.h"
+#include "ResourceNetworkAttribute.h"
 #include "ScoresModel.h"
 #include "StaticModel.h"
 #include "Stocks.h"
@@ -744,6 +745,7 @@ void ModelConsistencyChecker::CheckLogisticFormation()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckUrban()
 {
+    std::set< std::string > unknownNetworks;
     Iterator< const kernel::UrbanObject_ABC& > it = model_.GetUrbanObjectResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -751,7 +753,22 @@ void ModelConsistencyChecker::CheckUrban()
         if( const kernel::Infrastructure_ABC* infrastructure = object.Retrieve< kernel::Infrastructure_ABC >() )
             if( !infrastructure->GetInvalidType().empty() )
                 AddError( eUnknownInfrastructure, &object, infrastructure->GetInvalidType() );
+        if( const ResourceNetworkAttribute* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< kernel::ResourceNetwork_ABC >() ) )
+            if( !network->GetInvalidResources().empty() )
+                for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
+                    unknownNetworks.insert( *itResource );
     }
+    Iterator< const kernel::Object_ABC& > itObject = model_.GetObjectResolver().CreateIterator();
+    while( itObject.HasMoreElements() )
+    {
+        const kernel::Object_ABC& object = itObject.NextElement();
+        if( const ResourceNetworkAttribute* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< kernel::ResourceNetwork_ABC >() ) )
+            if( !network->GetInvalidResources().empty() )
+                for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
+                    unknownNetworks.insert( *itResource );
+    }
+    for( std::set< std::string >::const_iterator itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
+        AddError( eUnknownResourceNetwork, 0, *itNetwork );
 }
 
 // -----------------------------------------------------------------------------

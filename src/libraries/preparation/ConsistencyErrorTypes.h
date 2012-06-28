@@ -51,8 +51,9 @@ enum E_ConsistencyCheck
     eScoreError                      = 0x0006 << 20,
     eSuccessFactorError              = 0x0007 << 20,
     eUnknownInfrastructure           = 0x0008 << 20,
-    eNoOrbat                         = 0x0009 << 20,
-    eOthers                          = 0x000a << 20,
+    eUnknownResourceNetwork          = 0x0009 << 20,
+    eNoOrbat                         = 0x000a << 20,
+    eOthers                          = 0x000b << 20,
 };
 
 #endif // __ConsistencyErrorTypes_h_

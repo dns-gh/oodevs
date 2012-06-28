@@ -1435,8 +1435,12 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Autres</translation>
     </message>
     <message>
-        <source>Unknown infrastructure: %1. It will be deleted at next save.</source>
-        <translation>Infrastructure inconnue: %1. Elle sera supprimée à la prochaine sauvegarde.</translation>
+        <source>Unknown infrastructure &quot;%1&quot;. It will be deleted at next save.</source>
+        <translation>Infrastructure &quot;%1&quot; inconnue. Elle sera supprimée à la prochaine sauvegarde.</translation>
+    </message>
+    <message>
+        <source>Unknown resource network type &quot;%1&quot;. Related networks will deleted at next save.</source>
+        <translation>Type de réseau de ressource &quot;%1&quot; inconnu. Les réseaux associés seront supprimés à la prochaine sauvegarde.</translation>
     </message>
 </context>
 <context>

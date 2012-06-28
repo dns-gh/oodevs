@@ -70,6 +70,7 @@ public:
     void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
+    const std::set< std::string >& GetInvalidResources() const;
     //@}
 
     //! @name Serializable_ABC
@@ -93,6 +94,7 @@ private:
     const T_Urbans& urbans_;
     const T_Objects& objects_;
     const T_Resources& resources_;
+    std::set< std::string > invalidResources_;
     bool needSaving_;
     //@}
 };
