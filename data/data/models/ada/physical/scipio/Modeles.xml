@@ -7201,7 +7201,9 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.SDTI">
       <missions>
-        <mission name="AUTOMATE RENS ROIM Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROIM Renseigner Sur">
+          <fragorder name="Rejoindre point de lancement"/>
+        </mission>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE RENS ROIM Reconnaitre"/>
@@ -7479,4 +7481,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2986606396" -->
+<!-- signature="1833184472" -->
