@@ -92,7 +92,7 @@ void AgentsModel::CreateAutomat( Entity_ABC& parent, const AutomatType& type, co
 // Name: AgentsModel::CreateAutomatInsteadOf
 // Created: ABR 2012-06-28
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomatInsteadOf( Entity_ABC& original, const kernel::AutomatType& type, const geometry::Point2f& position )
+kernel::Automat_ABC* AgentsModel::CreateAutomatInsteadOf( Entity_ABC& original, const kernel::AutomatType& type, const geometry::Point2f& position )
 {
     Automat_ABC* result = 0;
     if( Ghost_ABC* ghost = dynamic_cast< Ghost_ABC* >( &original ) )
@@ -102,9 +102,12 @@ void AgentsModel::CreateAutomatInsteadOf( Entity_ABC& original, const kernel::Au
             if( const TacticalHierarchies* pHierarchy = original.Retrieve< TacticalHierarchies >() )
                 if( Entity_ABC* parent = const_cast< Entity_ABC* >( pHierarchy->GetSuperior() ) )
                     result = agentFactory_.Create( *parent, type, original.GetName() );
-
-    tools::Resolver< Automat_ABC >::Register( result->GetId(), *result );
-    CreateAutomatChildrenInsteadOf( original, *result, type, position );
+    if( result )
+    {
+        tools::Resolver< Automat_ABC >::Register( result->GetId(), *result );
+        CreateAutomatChildrenInsteadOf( original, *result, type, position );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

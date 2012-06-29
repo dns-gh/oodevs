@@ -60,6 +60,29 @@
     </message>
 </context>
 <context>
+    <name>ChangeAutomatTypeDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Change automat type</source>
+        <translation>Changer le type d&apos;automate</translation>
+    </message>
+    <message>
+        <source>Select new automat type for </source>
+        <translation>Sélectionnez un nouveau type d&apos;automate pour: </translation>
+    </message>
+    <message>
+        <source>Current type: </source>
+        <translation>Type actuel: </translation>
+    </message>
+</context>
+<context>
     <name>ColorEditor</name>
     <message>
         <source>Change color</source>
@@ -1442,6 +1465,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unknown resource network type &quot;%1&quot;. Related networks will deleted at next save.</source>
         <translation>Type de réseau de ressource &quot;%1&quot; inconnu. Les réseaux associés seront supprimés à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>The profile &quot;%1&quot; contains more than 12 automats and/or crowds.</source>
+        <translation>Le profil &quot;%1&quot; contient plus de 12 automates et/ou foules.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -2468,6 +2495,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
+    </message>
+    <message>
+        <source>Change automat type</source>
+        <translation>Changer le type d&apos;automate</translation>
     </message>
 </context>
 <context>

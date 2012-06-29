@@ -73,7 +73,7 @@ public:
     void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
-    void CreateAutomatInsteadOf( kernel::Entity_ABC& original, const kernel::AutomatType& type, const geometry::Point2f& position );
+    kernel::Automat_ABC* CreateAutomatInsteadOf( kernel::Entity_ABC& original, const kernel::AutomatType& type, const geometry::Point2f& position );
 
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );

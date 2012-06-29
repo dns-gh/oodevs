@@ -3,6 +3,7 @@ HEADERS =
 SOURCES = AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
 Application.cpp \
+ChangeAutomatTypeDialog.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
 ControlsChecker.cpp \

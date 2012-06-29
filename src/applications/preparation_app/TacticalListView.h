@@ -22,6 +22,7 @@ namespace gui
 namespace kernel
 {
     class Agent_ABC;
+    class AgentTypes;
     class Automat_ABC;
     class Formation_ABC;
     class FormationLevels;
@@ -55,8 +56,8 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,gui::EntitySymbols& icons,
-                               ModelBuilder& modelBuilder, const kernel::FormationLevels& levels, const kernel::GlTools_ABC& tools );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
+                               ModelBuilder& modelBuilder, const kernel::FormationLevels& levels, const kernel::AgentTypes& agentTypes, const kernel::GlTools_ABC& tools );
     virtual ~TacticalListView();
     //@}
 
@@ -81,6 +82,7 @@ private slots:
     void OnChangeSuperior();
     void Engage();
     void Disengage();
+    void ChangeAutomatType();
     //@}
 
 private:
@@ -112,6 +114,8 @@ private:
 private:
     //! @name Member data
     //@{
+    gui::ItemFactory_ABC& itemFactory_;
+    const kernel::AgentTypes& agentTypes_;
     ModelBuilder& modelBuilder_;
     const kernel::FormationLevels& levels_;
     const kernel::GlTools_ABC& tools_;

@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "TacticalListView.h"
 #include "moc_TacticalListView.cpp"
+#include "ChangeAutomatTypeDialog.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
 #include "preparation/AutomatDecisions.h"
@@ -65,8 +66,10 @@ namespace
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons,
-                                    ModelBuilder& modelBuilder, const FormationLevels& levels, const kernel::GlTools_ABC& tools )
+                                    ModelBuilder& modelBuilder, const FormationLevels& levels, const kernel::AgentTypes& agentTypes, const kernel::GlTools_ABC& tools )
     : HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
+    , itemFactory_         ( factory )
+    , agentTypes_          ( agentTypes )
     , modelBuilder_        ( modelBuilder )
     , levels_              ( levels )
     , tools_               ( tools )
@@ -369,6 +372,7 @@ void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu&
         else if( decisions->CanBeOrdered() )
             menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
+    menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -397,6 +401,17 @@ void TacticalListView::Disengage()
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
             decisions->Disengage();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::ChangeAutomatType
+// Created: JSR 2012-06-29
+// -----------------------------------------------------------------------------
+void TacticalListView::ChangeAutomatType()
+{
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
+        if( kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( valuedItem->GetValue< kernel::Entity_ABC >() ) )
+            ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, itemFactory_, *automat );
 }
 
 namespace

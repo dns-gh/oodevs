@@ -60,6 +60,29 @@
     </message>
 </context>
 <context>
+    <name>ChangeAutomatTypeDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Change automat type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select new automat type for </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ColorEditor</name>
     <message>
         <source>Change color</source>
@@ -1437,6 +1460,10 @@ This data can&apos;t be projected.</source>
         <source>Unknown resource network type &quot;%1&quot;. Related networks will deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The profile &quot;%1&quot; contains more than 12 automats and/or crowds.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -2462,6 +2489,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change automat type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
