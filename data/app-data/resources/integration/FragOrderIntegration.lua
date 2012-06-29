@@ -384,6 +384,8 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "Rep_OrderConduite_RejoindrePointLancement" then
     return
+  elseif orderType == "Rep_OrderConduite_Deboucher" then
+    return
   end
 
   masalife.brain.core.startTask( orderType, mission )
