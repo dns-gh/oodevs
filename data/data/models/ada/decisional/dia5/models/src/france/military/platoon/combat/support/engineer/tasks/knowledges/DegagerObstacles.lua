@@ -2,8 +2,9 @@ local result =
 {
     fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif, taskName )
         local obstacles = companyTask:getObstaclesPlan( params, entity, taskName )
+        local meetingPoint = companyTask:getFinalMeetingPoint( params )
         if next(obstacles) then
-            return { obstacles = obstacles }
+            return { obstacles = obstacles, meetingPoint = meetingPoint }
         else
             return nil
         end
