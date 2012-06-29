@@ -81,12 +81,13 @@ void MakeTables( Sql_ABC& db )
         ", revision INTEGER"
         ")" )->Next();
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
-        "  id       INTEGER PRIMARY KEY"
-        ", username TEXT"
-        ", name     TEXT"
-        ", hash     TEXT"
-        ", reset    BOOLEAN"
-        ", language TEXT"
+        "  id           INTEGER PRIMARY KEY"
+        ", username     TEXT"
+        ", hash         TEXT"
+        ", name         TEXT"
+        ", type         TEXT"
+        ", temporary    BOOLEAN"
+        ", language     TEXT"
         ")" )->Next();
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
@@ -104,12 +105,13 @@ void MakeDefaultDatabase( Sql_ABC& db )
     st->Bind( 1 );
     st->Next();
     st = db.Prepare( *tr, "INSERT INTO users"
-          "( username, name, hash, reset, language )"
+          "( username, hash, name, type, temporary, language )"
           "VALUES ( ?, ?, ?, ?, ? )" );
     st->Bind( "admin" );
-    st->Bind( "Admin" );
     st->Bind( HashPassword( "admin" ) );
-    st->Bind( 1 );
+    st->Bind( "Administrator" );
+    st->Bind( true );
+    st->Bind( "admin" );
     st->Bind( "eng" );
     st->Next();
     db.Commit( *tr );
@@ -121,7 +123,7 @@ int GetRevision( Sql_ABC& db )
     Sql_ABC::T_Statement st = db.Prepare( *tr, "SELECT revision FROM revisions" );
     int rev = 0;
     while( st->Next() )
-        st->Read( rev );
+        rev = st->ReadInt();
     return rev;
 }
 
@@ -152,14 +154,6 @@ void UserController::SetupDatabase()
 
 namespace
 {
-template< typename T >
-T Read( const Sql_ABC::T_Statement& st )
-{
-    T value;
-    st->Read( value );
-    return value;
-}
-
 Tree MakeToken( const std::string& token )
 {
     Tree rpy;
@@ -203,9 +197,9 @@ Tree UserController::Login( const std::string& username, const std::string& pass
         bool valid = st->Next();
         if( !valid )
             return Tree();
-        const int id = Read< int >( st );
-        const std::string hash = Read< std::string >( st );
-        const std::string token = Read< std::string >( st );
+        const int id = st->ReadInt();
+        const std::string hash = st->ReadText();
+        const std::string token = st->ReadText();
         if( !ValidatePassword( password, hash ) )
             return Tree();
         if( !token.empty() )
@@ -231,7 +225,7 @@ bool UserController::IsAuthenticated( const std::string& token )
                 "WHERE tokens.token = ?" );
         st->Bind( token );
         st->Next();
-        return Read< int >( st ) > 0;
+        return st->ReadInt() > 0;
     }
     catch( const std::exception& err )
     {

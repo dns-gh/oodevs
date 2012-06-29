@@ -91,16 +91,18 @@ struct Statement : public Statement_ABC
 
     //! @name Statement_ABC Methods
     //@{
-    virtual void   Bind( double value );
-    virtual void   Bind( int value );
-    virtual void   Bind( int64_t value );
-    virtual void   Bind( const std::string& value );
-    virtual bool   Next();
-    virtual void   Read( double& value );
-    virtual void   Read( int& value );
-    virtual void   Read( int64_t& value );
-    virtual void   Read( std::string& value );
-    virtual void   Reset();
+    virtual void        Bind( bool value );
+    virtual void        Bind( int value );
+    virtual void        Bind( int64_t value );
+    virtual void        Bind( double value );
+    virtual void        Bind( const std::string& value );
+    virtual bool        Next();
+    virtual bool        ReadBool();
+    virtual int         ReadInt();
+    virtual int64_t     ReadInt64();
+    virtual double      ReadDouble();
+    virtual std::string ReadText();
+    virtual void        Reset();
     //@}
 
 private:

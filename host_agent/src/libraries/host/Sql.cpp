@@ -185,11 +185,11 @@ Statement::~Statement()
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void Statement::Bind( double value )
+void Statement::Bind( bool value )
 {
-    const int err = sqlite3_bind_double( stmt_.get(), bind_++, value );
+    const int err = sqlite3_bind_int( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to bind double", err );
+        ThrowSqlException( "[sql] Unable to bind boolean", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,6 +212,17 @@ void Statement::Bind( int64_t value )
     const int err = sqlite3_bind_int64( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
         ThrowSqlException( "[sql] Unable to bind 64-bit integer", err );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Bind
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+void Statement::Bind( double value )
+{
+    const int err = sqlite3_bind_double( stmt_.get(), bind_++, value );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "[sql] Unable to bind double", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,46 +263,55 @@ void CheckType( sqlite3_stmt* stmt, int expected, int col )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Statement::Read
+// Name: Statement::ReadBool
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void Statement::Read( double& value )
+bool Statement::ReadBool()
+{
+    return !!ReadInt();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::ReadInt
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+int Statement::ReadInt()
+{
+    CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
+    return sqlite3_column_int( stmt_.get(), read_++ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::ReadInt64
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+int64_t Statement::ReadInt64()
+{
+    CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
+    return sqlite3_column_int64( stmt_.get(), read_++ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::ReadDouble
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+double Statement::ReadDouble()
 {
     CheckType( stmt_.get(), SQLITE_FLOAT, read_ );
-    value = sqlite3_column_double( stmt_.get(), read_++ );
+    return sqlite3_column_double( stmt_.get(), read_++ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Statement::Read
+// Name: Statement::ReadText
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void Statement::Read( int& value )
-{
-    CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
-    value = sqlite3_column_int( stmt_.get(), read_++ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-void Statement::Read( int64_t& value )
-{
-    CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
-    value = sqlite3_column_int64( stmt_.get(), read_++ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-void Statement::Read( std::string& value )
+std::string Statement::ReadText()
 {
     const int col = read_++;
     CheckType( stmt_.get(), SQLITE_TEXT, col );
     const unsigned char* data = sqlite3_column_text( stmt_.get(), col );
     const int size = sqlite3_column_bytes( stmt_.get(), col );
-    value = std::string( reinterpret_cast< const char* >( data ), size );
+    return std::string( reinterpret_cast< const char* >( data ), size );
 }
 
 // -----------------------------------------------------------------------------

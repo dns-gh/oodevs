@@ -71,16 +71,18 @@ struct Statement_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual void   Bind( double value ) = 0;
-    virtual void   Bind( int value ) = 0;
-    virtual void   Bind( int64_t value ) = 0;
-    virtual void   Bind( const std::string& value ) = 0;
-    virtual bool   Next() = 0;
-    virtual void   Read( double& value ) = 0;
-    virtual void   Read( int& value ) = 0;
-    virtual void   Read( int64_t& value ) = 0;
-    virtual void   Read( std::string& value ) = 0;
-    virtual void   Reset() = 0;
+    virtual void        Bind( bool value ) = 0;
+    virtual void        Bind( int value ) = 0;
+    virtual void        Bind( int64_t value ) = 0;
+    virtual void        Bind( double value ) = 0;
+    virtual void        Bind( const std::string& value ) = 0;
+    virtual bool        Next() = 0;
+    virtual bool        ReadBool() = 0;
+    virtual int         ReadInt() = 0;
+    virtual int64_t     ReadInt64() = 0;
+    virtual double      ReadDouble() = 0;
+    virtual std::string ReadText() = 0;
+    virtual void        Reset() = 0;
     //@}
 };
 }
