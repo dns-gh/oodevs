@@ -3172,8 +3172,6 @@
       <object devalorization-time="1h" initial-construction-time="120m" initial-destruction-time="4h" type="barricade" valorization-time="30m"/>
       <object devalorization-time="1h" initial-construction-time="90m" initial-destruction-time="4h" type="landslide" valorization-time="30m"/>
       <object initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
-      <object initial-construction-time="4h" type="prisoners camp"/>
-      <object construction-time-factor="1s" initial-construction-time="4h" type="refugees camp"/>
       <object initial-destruction-time="20m" type="mined area (scattered)"/>
       <object initial-construction-time="30m" type="checkpoint"/>
       <object devalorization-time="15m" initial-construction-time="6h" initial-destruction-time="6h" type="road destruction" valorization-time="15m"/>
@@ -35629,4 +35627,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0091065185" -->
+<!-- signature="2141297003" -->
