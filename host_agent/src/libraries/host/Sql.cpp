@@ -9,9 +9,9 @@
 
 #include "Sql.h"
 
-#include "cpplog/cpplog.hpp"
 #include "runtime/Utf8.h"
 
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
 #include <sqlite/sqlite3.h>
@@ -21,6 +21,48 @@ using runtime::Utf8Convert;
 
 namespace
 {
+std::string GetSqliteError( int err )
+{
+    switch( err )
+    {
+        case SQLITE_OK:         return "Ok";
+        case SQLITE_ERROR:      return "Error";
+        case SQLITE_INTERNAL:   return "Internal error";
+        case SQLITE_PERM:       return "Access denied";
+        case SQLITE_ABORT:      return "Aborted";
+        case SQLITE_BUSY:       return "Busy";
+        case SQLITE_LOCKED:     return "Locked";
+        case SQLITE_NOMEM:      return "Not enough memory";
+        case SQLITE_READONLY:   return "Read only";
+        case SQLITE_INTERRUPT:  return "Interrupted";
+        case SQLITE_IOERR:      return "IO error";
+        case SQLITE_CORRUPT:    return "Corrupted";
+        case SQLITE_NOTFOUND:   return "Not found";
+        case SQLITE_FULL:       return "Database full";
+        case SQLITE_CANTOPEN:   return "Not opened";
+        case SQLITE_PROTOCOL:   return "Protocol error";
+        case SQLITE_EMPTY:      return "Database empty";
+        case SQLITE_SCHEMA:     return "Schema changed";
+        case SQLITE_TOOBIG:     return "Too big";
+        case SQLITE_CONSTRAINT: return "Constraint violation";
+        case SQLITE_MISMATCH:   return "Type Mismatch";
+        case SQLITE_MISUSE:     return "API Misuse";
+        case SQLITE_NOLFS:      return "Missing LFS";
+        case SQLITE_AUTH:       return "Authorization denied";
+        case SQLITE_FORMAT:     return "Format error";
+        case SQLITE_RANGE:      return "Out of range";
+        case SQLITE_NOTADB:     return "Not a database";
+        case SQLITE_ROW:        return "Row ready";
+        case SQLITE_DONE:       return "Done";
+    }
+    return boost::lexical_cast< std::string >( err );
+}
+
+void ThrowSqlException( const std::string& data, int err )
+{
+    throw std::runtime_error( data + " (" + GetSqliteError( err ) + ")" );
+}
+
 void SqliteClose( sqlite3* db )
 {
     int err = SQLITE_BUSY;
@@ -33,15 +75,13 @@ void SqliteClose( sqlite3* db )
 // Name: Sql::Sql
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Sql::Sql( cpplog::BaseLogger& log,
-          const Path& file )
-    : log_   ( log )
-    , file_  ( file )
+Sql::Sql( const Path& file )
+    : file_  ( file )
 {
     sqlite3* pdb = 0;
     int err = sqlite3_open( Utf8Convert( file_ ).c_str(), &pdb );
     if( err != SQLITE_OK )
-        throw std::runtime_error( "[sql] Unable to open " + file.string() );
+        ThrowSqlException( "[sql] Unable to open " + file.string(), err );
     db_.reset( pdb, &SqliteClose );
 }
 
@@ -55,31 +95,79 @@ Sql::~Sql()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Sql::Begin
+// Created: BAX 2012-06-29
+// -----------------------------------------------------------------------------
+Sql::T_Transaction Sql::Begin( bool write )
+{
+    return boost::make_shared< Transaction >( boost::ref( access_ ), boost::ref( *this ), write );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Sql::Prepare
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Sql::Ptr Sql::Prepare( const std::string& sql )
+Sql::T_Statement Sql::Prepare( const Transaction& /*tr*/, const std::string& sql )
 {
     sqlite3_stmt* stmt = 0;
-    boost::shared_ptr< Statement > next = boost::make_shared< Statement >( boost::ref( log_ ), boost::ref( access_ ) );
     // documentation suggest to include null-terminated byte to avoid copy
     int err = sqlite3_prepare_v2( db_.get(), sql.c_str(), static_cast< int >( sql.size() + 1 ), &stmt, 0 );
     if( err != SQLITE_OK )
-    {
-        LOG_ERROR( log_ ) << "[sql] " << err;
-        return Ptr();
-    }
-    next->Assign( stmt );
-    return next;
+        ThrowSqlException( "[sql] Unable to prepare " + sql, err );
+    return boost::make_shared< Statement >( stmt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sql::Commit
+// Created: BAX 2012-06-29
+// -----------------------------------------------------------------------------
+void Sql::Commit( Transaction& tr )
+{
+    tr.Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Transaction::Transaction
+// Created: BAX 2012-06-29
+// -----------------------------------------------------------------------------
+Transaction::Transaction( boost::mutex& access, Sql& db, bool write )
+    : lock_ ( access )
+    , db_   ( db )
+    , write_( write )
+{
+    if( write_ )
+        db_.Prepare( *this, "BEGIN TRANSACTION" )->Next();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Transaction::~Transaction
+// Created: BAX 2012-06-29
+// -----------------------------------------------------------------------------
+Transaction::~Transaction()
+{
+    if( write_ )
+        db_.Prepare( *this, "ROLLBACK TRANSACTION" )->Next();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Transaction::Commit
+// Created: BAX 2012-06-29
+// -----------------------------------------------------------------------------
+void Transaction::Commit()
+{
+    if( write_ )
+        db_.Prepare( *this, "COMMIT TRANSACTION" )->Next();
+    write_ = false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Statement
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Statement::Statement( cpplog::BaseLogger& log, boost::mutex& access )
-    : log_ ( log )
-    , lock_( access )
+Statement::Statement( sqlite3_stmt* stmt )
+    : stmt_( stmt, &sqlite3_finalize )
+    , bind_( 1 )
+    , read_( 0 )
 {
     // NOTHING
 }
@@ -94,59 +182,47 @@ Statement::~Statement()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Statement::Assign
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-void Statement::Assign( sqlite3_stmt* stmt )
-{
-    stmt_.reset( stmt, &sqlite3_finalize );
-}
-
-#define LOG_AND_RETURN( X ) do {\
-    if( ( X ) == SQLITE_OK )\
-        return true;\
-    LOG_INFO( log_ ) << "[sql] " << ( X );\
-    return false;\
-} while( 0 )
-
-// -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( int col, double value )
+void Statement::Bind( double value )
 {
-    const int err = sqlite3_bind_double( stmt_.get(), col, value );
-    LOG_AND_RETURN( err );
+    const int err = sqlite3_bind_double( stmt_.get(), bind_++, value );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "[sql] Unable to bind double", err );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( int col, int value )
+void Statement::Bind( int value )
 {
-    const int err = sqlite3_bind_int( stmt_.get(), col, value );
-    LOG_AND_RETURN( err );
+    const int err = sqlite3_bind_int( stmt_.get(), bind_++, value );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "[sql] Unable to bind integer", err );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( int col, int64_t value )
+void Statement::Bind( int64_t value )
 {
-    const int err = sqlite3_bind_int64( stmt_.get(), col, value );
-    LOG_AND_RETURN( err );
+    const int err = sqlite3_bind_int64( stmt_.get(), bind_++, value );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "[sql] Unable to bind 64-bit integer", err );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Bind( int col, const std::string& value )
+void Statement::Bind( const std::string& value )
 {
-    const int err = sqlite3_bind_text( stmt_.get(), col, value.c_str(), static_cast< int >( value.size() ), SQLITE_TRANSIENT );
-    LOG_AND_RETURN( err );
+    const int err = sqlite3_bind_text( stmt_.get(), bind_++, value.c_str(), static_cast< int >( value.size() ), SQLITE_TRANSIENT );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "[sql] Unable to bind text", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,76 +231,78 @@ bool Statement::Bind( int col, const std::string& value )
 // -----------------------------------------------------------------------------
 bool Statement::Next()
 {
+    read_ = 0;
     const int err = sqlite3_step( stmt_.get() );
     if( err == SQLITE_ROW )
         return true;
     if( err == SQLITE_DONE )
         return false;
-    LOG_AND_RETURN( err );
+    ThrowSqlException( "[sql] Unable to step statement", err );
+    return false;
 }
 
-#define CHECK_TYPE( X ) do {\
-    if( sqlite3_column_type( stmt_.get(), col ) != ( X ) )\
-    {\
-        LOG_ERROR( log_ ) << "[sql] Invalid type conversion at col " << col;\
-        return false;\
-    }\
-} while( 0 )
-
-// -----------------------------------------------------------------------------
-// Name: Statement::Read
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool Statement::Read( int col, double& value )
+namespace
 {
-    CHECK_TYPE( SQLITE_FLOAT );
-    value = sqlite3_column_double( stmt_.get(), col );
-    return true;
+void CheckType( sqlite3_stmt* stmt, int expected, int col )
+{
+    const int actual = sqlite3_column_type( stmt, col );
+    if( expected != actual )
+        throw std::runtime_error( "[sql] Invalid type conversion" );
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Read
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Read( int col, int& value )
+void Statement::Read( double& value )
 {
-    CHECK_TYPE( SQLITE_INTEGER );
-    value = sqlite3_column_int( stmt_.get(), col );
-    return true;
+    CheckType( stmt_.get(), SQLITE_FLOAT, read_ );
+    value = sqlite3_column_double( stmt_.get(), read_++ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Read
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Read( int col, int64_t& value )
+void Statement::Read( int& value )
 {
-    CHECK_TYPE( SQLITE_INTEGER );
-    value = sqlite3_column_int64( stmt_.get(), col );
-    return true;
+    CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
+    value = sqlite3_column_int( stmt_.get(), read_++ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Read
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Read( int col, std::string& value )
+void Statement::Read( int64_t& value )
 {
-    CHECK_TYPE( SQLITE_TEXT );
+    CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
+    value = sqlite3_column_int64( stmt_.get(), read_++ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Statement::Read
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+void Statement::Read( std::string& value )
+{
+    const int col = read_++;
+    CheckType( stmt_.get(), SQLITE_TEXT, col );
     const unsigned char* data = sqlite3_column_text( stmt_.get(), col );
     const int size = sqlite3_column_bytes( stmt_.get(), col );
     value = std::string( reinterpret_cast< const char* >( data ), size );
-    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Statement::Reset
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool Statement::Reset()
+void Statement::Reset()
 {
-    int err = sqlite3_reset( stmt_.get() );
-    if( err == SQLITE_OK )
-        err = sqlite3_clear_bindings( stmt_.get() );
-    LOG_AND_RETURN( err );
+    bind_ = 1;
+    sqlite3_clear_bindings( stmt_.get() );
+    const int err = sqlite3_reset( stmt_.get() );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "[sql] Unable to reset statement", err );
 }

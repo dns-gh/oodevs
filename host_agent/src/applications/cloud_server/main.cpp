@@ -275,7 +275,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, proxy );
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
-    Sql db( log, cfg.root / "cloud.db" );
+    Sql db( cfg.root / "cloud.db" );
     UserController users( log, db );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions, users );
     web::Controller controller( log, agent );

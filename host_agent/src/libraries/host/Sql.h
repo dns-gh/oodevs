@@ -19,11 +19,6 @@
 struct sqlite3;
 struct sqlite3_stmt;
 
-namespace cpplog
-{
-    class BaseLogger;
-}
-
 namespace host
 {
     typedef boost::filesystem3::path Path;
@@ -41,21 +36,43 @@ struct Sql : public Sql_ABC
 {
     //! @name Constructors/Destructor
     //@{
-             Sql( cpplog::BaseLogger& log,
-                  const Path& file );
+             Sql( const Path& file );
     virtual ~Sql();
     //@}
 
     //! @name Sql_ABC Methods
     //@{
-    virtual Ptr Prepare( const std::string& sql );
+    virtual T_Transaction Begin  ( bool write );
+    virtual T_Statement   Prepare( const Transaction& tr, const std::string& sql );
+    virtual void          Commit ( Transaction& tr );
     //@}
 
 private:
-    cpplog::BaseLogger& log_;
     const Path file_;
     boost::mutex access_;
     boost::shared_ptr< sqlite3 > db_;
+};
+
+// =============================================================================
+/** @class  Transaction
+    @brief  Transaction class
+*/
+// Created: BAX 2012-06-28
+// =============================================================================
+struct Transaction
+{
+    //! @name Constructors/Destructor
+    //@{
+             Transaction( boost::mutex& access, Sql& db, bool write );
+    virtual ~Transaction();
+    //@}
+
+    void Commit();
+
+private:
+    boost::lock_guard< boost::mutex > lock_;
+    Sql& db_;
+    bool write_;
 };
 
 // =============================================================================
@@ -68,33 +85,28 @@ struct Statement : public Statement_ABC
 {
     //! @name Constructors/Destructor
     //@{
-             Statement( cpplog::BaseLogger& log, boost::mutex& access );
+             Statement( sqlite3_stmt* stmt );
     virtual ~Statement();
-    //@}
-
-    //! @name Methods
-    //@{
-    void Assign( sqlite3_stmt* stmt );
     //@}
 
     //! @name Statement_ABC Methods
     //@{
-    virtual bool   Bind( int col, double value );
-    virtual bool   Bind( int col, int value );
-    virtual bool   Bind( int col, int64_t value );
-    virtual bool   Bind( int col, const std::string& value );
+    virtual void   Bind( double value );
+    virtual void   Bind( int value );
+    virtual void   Bind( int64_t value );
+    virtual void   Bind( const std::string& value );
     virtual bool   Next();
-    virtual bool   Read( int col, double& value );
-    virtual bool   Read( int col, int& value );
-    virtual bool   Read( int col, int64_t& value );
-    virtual bool   Read( int col, std::string& value );
-    virtual bool   Reset();
+    virtual void   Read( double& value );
+    virtual void   Read( int& value );
+    virtual void   Read( int64_t& value );
+    virtual void   Read( std::string& value );
+    virtual void   Reset();
     //@}
 
 private:
-    cpplog::BaseLogger& log_;
-    boost::lock_guard< boost::mutex > lock_;
     boost::shared_ptr< sqlite3_stmt > stmt_;
+    int bind_;
+    int read_;
 };
 }
 

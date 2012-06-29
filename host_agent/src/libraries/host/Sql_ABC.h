@@ -22,6 +22,7 @@ namespace boost
 namespace host
 {
     struct Statement_ABC;
+    struct Transaction;
 }
 
 namespace host
@@ -42,12 +43,15 @@ struct Sql_ABC : public boost::noncopyable
 
     //! @name Typedef helpers
     //@{
-    typedef boost::shared_ptr< Statement_ABC > Ptr;
+    typedef boost::shared_ptr< Transaction >   T_Transaction;
+    typedef boost::shared_ptr< Statement_ABC > T_Statement;
     //@}
 
     //! @name Methods
     //@{
-    virtual Ptr Prepare( const std::string& sql ) = 0;
+    virtual T_Transaction Begin  ( bool write = true ) = 0;
+    virtual T_Statement   Prepare( const Transaction& tr, const std::string& sql ) = 0;
+    virtual void          Commit ( Transaction& tr ) = 0;
     //@}
 };
 
@@ -67,16 +71,16 @@ struct Statement_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual bool   Bind( int col, double value ) = 0;
-    virtual bool   Bind( int col, int value ) = 0;
-    virtual bool   Bind( int col, int64_t value ) = 0;
-    virtual bool   Bind( int col, const std::string& value ) = 0;
+    virtual void   Bind( double value ) = 0;
+    virtual void   Bind( int value ) = 0;
+    virtual void   Bind( int64_t value ) = 0;
+    virtual void   Bind( const std::string& value ) = 0;
     virtual bool   Next() = 0;
-    virtual bool   Read( int col, double& value ) = 0;
-    virtual bool   Read( int col, int& value ) = 0;
-    virtual bool   Read( int col, int64_t& value ) = 0;
-    virtual bool   Read( int col, std::string& value ) = 0;
-    virtual bool   Reset() = 0;
+    virtual void   Read( double& value ) = 0;
+    virtual void   Read( int& value ) = 0;
+    virtual void   Read( int64_t& value ) = 0;
+    virtual void   Read( std::string& value ) = 0;
+    virtual void   Reset() = 0;
     //@}
 };
 }

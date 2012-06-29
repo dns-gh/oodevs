@@ -47,7 +47,7 @@ struct UserController : public UserController_ABC
 private:
     //! @name Private methods
     //@{
-    void MigrateDatabase();
+    void SetupDatabase();
     //@}
 
 private:
