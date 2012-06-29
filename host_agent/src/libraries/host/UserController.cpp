@@ -13,11 +13,15 @@
 #include "PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "Sql_ABC.h"
+#include "UuidFactory_ABC.h"
 
 extern "C" {
 #include <bcrypt/bcrypt.h>
 }
+#include <boost/algorithm/string/erase.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
 using runtime::Utf8Convert;
@@ -49,9 +53,11 @@ bool ValidatePassword( const std::string& password, const std::string hash )
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
 UserController::UserController( cpplog::BaseLogger& log,
+                                UuidFactory_ABC& uuids,
                                 Sql_ABC& db )
-    : log_( log )
-    , db_ ( db )
+    : log_  ( log )
+    , uuids_( uuids )
+    , db_   ( db )
 {
     SetupDatabase();
 }
@@ -76,7 +82,7 @@ void MakeTables( Sql_ABC& db )
         ")" )->Next();
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
         "  id       INTEGER PRIMARY KEY"
-        ", email    TEXT"
+        ", username TEXT"
         ", name     TEXT"
         ", hash     TEXT"
         ", reset    BOOLEAN"
@@ -85,7 +91,7 @@ void MakeTables( Sql_ABC& db )
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
         ", token    TEXT"
-        ", expire   TEXT"
+        ", expire   DATE"
         ")" )->Next();
     db.Commit( *tr );
 }
@@ -97,7 +103,7 @@ void MakeDefaultDatabase( Sql_ABC& db )
     st->Bind( 1 );
     st->Next();
     st = db.Prepare( *tr, "INSERT INTO users"
-          "( email, name, hash, reset, language )"
+          "( username, name, hash, reset, language )"
           "VALUES ( ?, ?, ?, ?, ? )" );
     st->Bind( "admin" );
     st->Bind( "Admin" );
@@ -143,11 +149,61 @@ void UserController::SetupDatabase()
     MigrateDatabase( db_ );
 }
 
+namespace
+{
+template< typename T >
+T Read( const Sql_ABC::T_Statement& st )
+{
+    T value;
+    st->Read( value );
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+Tree CreateSession( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_Transaction tr, int id )
+{
+    std::string sid = boost::lexical_cast< std::string >( uuids.Create() );
+    boost::algorithm::erase_all( sid, "-" );
+    Sql_ABC::T_Statement st = db.Prepare( *tr, "INSERT INTO sessions"
+            "( sid, expire )"
+            "VALUES ( ?, DATE('now') )" );
+    st->Bind( sid );
+    st->Next();
+    db.Commit( *tr );
+    Tree rpy;
+    rpy.put( "sid", sid );
+    return rpy;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: UserController::GetToken
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
 Tree UserController::GetToken( const std::string& username, const std::string& password )
 {
+    try
+    {
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, "SELECT id, hash FROM users WHERE username = ? LIMIT 1" );
+        st->Bind( username );
+        bool valid = st->Next();
+        if( !valid )
+            return Tree();
+
+        const int id = Read< int >( st );
+        const std::string hash = Read< std::string >( st );
+        if( !ValidatePassword( password, hash ) )
+            return Tree();
+
+        return CreateSession( uuids_, db_, tr, id );
+    }
+    catch( const std::exception& /*err*/ )
+    {
+        // NOTHING
+    }
     return Tree();
 }
