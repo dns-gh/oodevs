@@ -14,10 +14,35 @@
 #include "runtime/Utf8.h"
 #include "Sql_ABC.h"
 
+extern "C" {
+#include <bcrypt/bcrypt.h>
+}
 #include <boost/shared_ptr.hpp>
 
 using namespace host;
 using runtime::Utf8Convert;
+
+namespace
+{
+std::string HashPassword( const std::string& password )
+{
+    char salt[BCRYPT_HASHSIZE], hash[BCRYPT_HASHSIZE];
+    bcrypt_gensalt( 4, salt );
+    bcrypt_hashpw( password.c_str(), salt, hash );
+    return std::string( hash, sizeof hash );
+}
+
+bool ValidatePassword( const std::string& password, const std::string hash )
+{
+    char output[BCRYPT_HASHSIZE];
+    if( hash.size() != sizeof output )
+        return false;
+    const int err = bcrypt_hashpw( password.c_str(), hash.c_str(), output );
+    if( err )
+        return false;
+    return !memcmp( hash.c_str(), output, sizeof output );
+}
+}
 
 // -----------------------------------------------------------------------------
 // Name: UserController::UserController
@@ -54,7 +79,6 @@ void MakeTables( Sql_ABC& db )
         ", email    TEXT"
         ", name     TEXT"
         ", hash     TEXT"
-        ", salt     TEXT"
         ", reset    BOOLEAN"
         ", language TEXT"
         ")" )->Next();
@@ -73,12 +97,11 @@ void MakeDefaultDatabase( Sql_ABC& db )
     st->Bind( 1 );
     st->Next();
     st = db.Prepare( *tr, "INSERT INTO users"
-          "( email, name, hash, salt, reset, language )"
-          "VALUES ( ?, ?, ?, ?, ?, ? )" );
+          "( email, name, hash, reset, language )"
+          "VALUES ( ?, ?, ?, ?, ? )" );
     st->Bind( "admin" );
     st->Bind( "Admin" );
-    st->Bind( "hash" );//FIXME
-    st->Bind( "salt" );//FIXME
+    st->Bind( HashPassword( "admin" ) );
     st->Bind( 1 );
     st->Bind( "eng" );
     st->Next();
