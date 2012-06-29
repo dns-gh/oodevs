@@ -294,7 +294,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -577,7 +577,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -799,7 +799,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2729,7 +2729,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -2818,7 +2818,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="300s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3159,7 +3159,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3192,7 +3192,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="300s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3225,7 +3225,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="300s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3288,7 +3288,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3324,7 +3324,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3416,7 +3416,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3534,7 +3534,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3567,7 +3567,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3603,7 +3603,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3639,7 +3639,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3848,7 +3848,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3885,7 +3885,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3921,7 +3921,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3957,7 +3957,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -3993,7 +3993,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -4029,7 +4029,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -4062,7 +4062,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -4122,7 +4122,7 @@
       <posture name="PosteAmenage" setup-time="0s"/>
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4888,7 +4888,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -4922,7 +4922,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5274,7 +5274,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5313,7 +5313,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5355,7 +5355,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5397,7 +5397,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5433,7 +5433,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5469,7 +5469,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5505,7 +5505,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5541,7 +5541,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5577,7 +5577,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5613,7 +5613,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5688,7 +5688,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -5734,7 +5734,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -9320,7 +9320,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -9356,7 +9356,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -9402,7 +9402,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="6m" speed-modifier="0.7" uninstallation-time="0s"/>
+    <setup footprint-radius="10" installation-time="3m" speed-modifier="0.7" uninstallation-time="0s"/>
     <nbc decontamination-delay="3900s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -9551,19 +9551,17 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.Traitement des eaux" id="318" name="GEN . Section Traitement Eau" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.Traitement des eaux" id="318" name="GEN . Groupe Traitement Eau" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
-      <equipment count="2" crew="5" loadable="true" major="true" type="MATEM"/>
-      <equipment count="2" crew="6" type="GBC 8 KT 7.62"/>
-      <equipment count="4" crew="5" major="true" type="UMTE"/>
-      <equipment count="1" crew="3" type="MFRD"/>
+      <equipment count="1" crew="3" loadable="true" major="true" type="MATEM"/>
+      <equipment count="2" crew="3" major="true" type="UMTE"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
     <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="9" type="SousOfficier"/>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
@@ -19347,4 +19345,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1272538095" -->
+<!-- signature="0935562398" -->

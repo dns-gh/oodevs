@@ -764,7 +764,7 @@
   </automat>
   <automat decisional-model="Masalife.Automate.GEN.Appui" id="823" name="GEN . Compagnie Eau" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC EAU NRJ"/>
-    <unit max-occurs="2" min-occurs="2" type="GEN . Section Traitement Eau"/>
+    <unit max-occurs="4" min-occurs="4" type="GEN . Groupe Traitement Eau"/>
   </automat>
   <automat decisional-model="Masalife.Automate.GEN.Appui" id="824" name="GEN . Compagnie Energie" type="Automate GEN">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC NRJ"/>
@@ -1526,4 +1526,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="2670555785" -->
+<!-- signature="3957491174" -->
