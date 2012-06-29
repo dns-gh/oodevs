@@ -1364,6 +1364,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.DepolluerZone" dia-type="france.military.platoon.combat.support.engineer.tasks.DepolluerZone" id="2113" name="PION GENIE Depolluer zone" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3752,6 +3753,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.OuvrirItineraire" dia-type="france.military.company.combat.support.engineer.tasks.OuvrirItineraire" id="1057" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.OuvrirItineraire" name="AUTOMATE GENIE Ouvrir Itineraire" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4633,4 +4635,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0200633983" -->
+<!-- signature="3493076036" -->
