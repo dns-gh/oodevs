@@ -16,7 +16,9 @@ namespace mocks
 {
     MOCK_BASE_CLASS( MockUserController, host::UserController_ABC )
     {
-        MOCK_METHOD( GetToken, 2 );
+        MOCK_METHOD( Login, 2 );
+        MOCK_METHOD( IsAuthenticated, 1 );
+        MOCK_METHOD( Logout, 1 );
     };
 };
 

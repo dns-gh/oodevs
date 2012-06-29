@@ -33,7 +33,9 @@ struct UserController_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Tree GetToken( const std::string& user, const std::string& password ) = 0;
+    virtual Tree Login( const std::string& user, const std::string& password ) = 0;
+    virtual bool IsAuthenticated( const std::string& token ) = 0;
+    virtual void Logout( const std::string& token ) = 0;
     //@}
 };
 }

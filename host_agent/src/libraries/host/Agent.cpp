@@ -391,7 +391,7 @@ Reply Agent::CountExercises( const Uuid& node ) const
 // -----------------------------------------------------------------------------
 Reply Agent::UserLogin( const std::string& username, const std::string& password ) const
 {
-    const Tree token = users_.GetToken( username, password );
+    const Tree token = users_.Login( username, password );
     if( token.empty() )
         return Reply( "Unable to login " + username, false );
     return MakeReply( token );

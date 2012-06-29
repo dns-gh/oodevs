@@ -90,8 +90,9 @@ void MakeTables( Sql_ABC& db )
         ")" )->Next();
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
+        ", user     INTEGER"
         ", token    TEXT"
-        ", expire   DATE"
+        ", created  DATE"
         ")" )->Next();
     db.Commit( *tr );
 }
@@ -159,51 +160,100 @@ T Read( const Sql_ABC::T_Statement& st )
     return value;
 }
 
+Tree MakeToken( const std::string& token )
+{
+    Tree rpy;
+    rpy.put( "token", token );
+    return rpy;
+}
+
 // -----------------------------------------------------------------------------
-// Name: CreateSession
+// Name: CreateToken
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree CreateSession( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_Transaction tr, int id )
+Tree CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_Transaction tr, int user )
 {
-    std::string sid = boost::lexical_cast< std::string >( uuids.Create() );
-    boost::algorithm::erase_all( sid, "-" );
-    Sql_ABC::T_Statement st = db.Prepare( *tr, "INSERT INTO sessions"
-            "( sid, expire )"
-            "VALUES ( ?, DATE('now') )" );
-    st->Bind( sid );
+    std::string token = boost::lexical_cast< std::string >( uuids.Create() );
+    boost::algorithm::erase_all( token, "-" );
+    Sql_ABC::T_Statement st = db.Prepare( *tr, "INSERT INTO tokens"
+            "( user, token, created )"
+            "VALUES ( ?, ?, DATE( 'now' ) )" );
+    st->Bind( user );
+    st->Bind( token );
     st->Next();
     db.Commit( *tr );
-    Tree rpy;
-    rpy.put( "sid", sid );
-    return rpy;
+    return MakeToken( token );
 }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserController::GetToken
+// Name: UserController::Login
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree UserController::GetToken( const std::string& username, const std::string& password )
+Tree UserController::Login( const std::string& username, const std::string& password )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        Sql_ABC::T_Statement st = db_.Prepare( *tr, "SELECT id, hash FROM users WHERE username = ? LIMIT 1" );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr,
+                "SELECT users.id, users.hash, tokens.token FROM users "
+                "LEFT JOIN tokens ON users.id = tokens.user "
+                "WHERE users.username = ?" );
         st->Bind( username );
         bool valid = st->Next();
         if( !valid )
             return Tree();
-
         const int id = Read< int >( st );
         const std::string hash = Read< std::string >( st );
+        const std::string token = Read< std::string >( st );
         if( !ValidatePassword( password, hash ) )
             return Tree();
-
-        return CreateSession( uuids_, db_, tr, id );
+        if( !token.empty() )
+            MakeToken( token );
+        return CreateToken( uuids_, db_, tr, id );
     }
-    catch( const std::exception& /*err*/ )
+    catch( const std::exception& err )
     {
-        // NOTHING
+        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] Unable to login";
     }
     return Tree();
+}
+
+bool UserController::IsAuthenticated( const std::string& token )
+{
+    try
+    {
+        Sql_ABC::T_Transaction tr = db_.Begin( false );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr,
+                "SELECT COUNT( tokens.id ) FROM tokens "
+                "JOIN users ON users.id = tokens.user "
+                "WHERE tokens.token = ?" );
+        st->Bind( token );
+        st->Next();
+        return Read< int >( st ) > 0;
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] Unable to authenticate token";
+    }
+    return false;
+}
+
+void UserController::Logout( const std::string& token )
+{
+    try
+    {
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, "DELETE FROM tokens WHERE token = ?" );
+        st->Bind( token );
+        st->Next();
+        db_.Commit( *tr );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] Unable to logout";
+    }
 }

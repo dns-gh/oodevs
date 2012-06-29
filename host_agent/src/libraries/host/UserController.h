@@ -43,7 +43,9 @@ struct UserController : public UserController_ABC
 
     //! @name UserController_ABC Methods
     //@{
-    virtual Tree GetToken( const std::string& user, const std::string& password );
+    virtual Tree Login( const std::string& user, const std::string& password );
+    virtual bool IsAuthenticated( const std::string& token );
+    virtual void Logout( const std::string& token );
     //@}
 
 private:
