@@ -3273,8 +3273,8 @@
     </mission>
   </populations>
   <fragorders>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Mettre Tenue NBC"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Enlever Tenue NBC"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="335" name="Passer En NBC4"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="336" name="Passer En NBC1"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="338" name="Arreter Silence Radio"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="339" name="Passer En Silence Radar"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="340" name="Arreter Silence Radar"/>
@@ -3470,4 +3470,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3601938504" -->
+<!-- signature="3082299747" -->

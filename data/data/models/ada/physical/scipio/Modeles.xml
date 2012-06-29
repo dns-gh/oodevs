@@ -68,8 +68,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -116,8 +116,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -187,8 +187,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -236,8 +236,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -274,8 +274,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -313,8 +313,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -353,8 +353,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -394,8 +394,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -438,8 +438,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -518,8 +518,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -557,8 +557,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -618,8 +618,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -659,8 +659,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -699,8 +699,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -742,8 +742,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -789,8 +789,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -835,8 +835,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -885,8 +885,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -928,8 +928,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -971,8 +971,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1025,8 +1025,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1101,8 +1101,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1147,8 +1147,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1183,8 +1183,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1267,7 +1267,7 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -1295,8 +1295,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1341,8 +1341,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1387,8 +1387,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1431,8 +1431,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1471,8 +1471,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1510,8 +1510,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1557,8 +1557,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1591,8 +1591,8 @@
         <mission name="PION Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1621,8 +1621,8 @@
         <mission name="PION ALAT Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1660,8 +1660,8 @@
         <mission name="PION ALAT Renseigner Sur Foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1700,8 +1700,8 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1745,8 +1745,8 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1785,8 +1785,8 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1817,8 +1817,8 @@
         <mission name="PION ALAT Aller Se Recompleter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1859,8 +1859,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1909,8 +1909,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -1962,8 +1962,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2015,8 +2015,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2079,8 +2079,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2144,8 +2144,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2206,8 +2206,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2281,8 +2281,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2354,8 +2354,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2401,8 +2401,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2455,8 +2455,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2515,8 +2515,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2561,8 +2561,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2599,8 +2599,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2638,8 +2638,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2679,8 +2679,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2730,8 +2730,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2772,8 +2772,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2825,8 +2825,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2864,8 +2864,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2905,8 +2905,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2940,8 +2940,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -2989,8 +2989,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3032,8 +3032,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3071,8 +3071,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3110,8 +3110,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3149,8 +3149,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3188,8 +3188,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3229,8 +3229,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3271,8 +3271,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3328,8 +3328,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3370,8 +3370,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3407,8 +3407,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3440,8 +3440,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3470,8 +3470,8 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3501,8 +3501,8 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3531,8 +3531,8 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3566,8 +3566,8 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3598,8 +3598,8 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3632,8 +3632,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Illuminer"/>
         <fragorder name="Utiliser ALR"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3670,8 +3670,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3711,8 +3711,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3750,8 +3750,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3798,8 +3798,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3842,8 +3842,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3876,8 +3876,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3905,8 +3905,8 @@
         <mission name="PION AIR Faire Mouvement"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3932,8 +3932,8 @@
         <mission name="PION COMMUNES Stationner"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -3968,8 +3968,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4001,8 +4001,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4031,8 +4031,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4072,8 +4072,8 @@
         <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4108,8 +4108,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4143,8 +4143,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4177,8 +4177,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4216,8 +4216,8 @@
         <mission name="PION S'Infiltrer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4255,8 +4255,8 @@
         <mission name="PION RENS ROHUM Renseigner Sur"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4296,8 +4296,8 @@
         <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4334,8 +4334,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4367,8 +4367,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4399,8 +4399,8 @@
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4433,8 +4433,8 @@
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4472,8 +4472,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4513,8 +4513,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4556,8 +4556,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4599,8 +4599,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4638,8 +4638,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4731,8 +4731,8 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4776,8 +4776,8 @@
         <fragorder name="Rejoindre"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4872,8 +4872,8 @@
         <mission name="AUTOMATE HLA Embarquer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -4927,8 +4927,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5002,8 +5002,8 @@
         <mission name="AUTOMATE MELEE Donner Coup Arret"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5040,8 +5040,8 @@
         </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5092,8 +5092,8 @@
         <mission name="AUTOMATE MELEE Donner Coup Arret"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5144,8 +5144,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5199,8 +5199,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5256,8 +5256,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5321,8 +5321,8 @@
         <mission name="AUTOMATE COMMUNES Interroger"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5356,8 +5356,8 @@
         <mission name="AUTOMATE COMMUNES Interroger"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5438,8 +5438,8 @@
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5498,8 +5498,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5577,8 +5577,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5630,8 +5630,8 @@
         <mission name="AUTOMATE MELEE Controler foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5668,8 +5668,8 @@
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5703,8 +5703,8 @@
         <mission name="AUTOMATE RENS RASIT Renseigner Sur"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5765,8 +5765,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5821,8 +5821,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5876,8 +5876,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5939,8 +5939,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -5978,8 +5978,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6128,8 +6128,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6152,8 +6152,8 @@
         <mission name="AUTOMATE COMMUNES Suivre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6189,8 +6189,8 @@
         </mission>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6225,8 +6225,8 @@
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6268,8 +6268,8 @@
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6299,8 +6299,8 @@
         <mission name="AUTOMATE NRBC Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6331,8 +6331,8 @@
         <mission name="AUTOMATE NRBC Decontaminer Zone"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6363,8 +6363,8 @@
         <mission name="AUTOMATE ASA Surveiller"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6411,8 +6411,8 @@
         <mission name="AUTOMATE Decrocher"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6455,8 +6455,8 @@
         <mission name="AUTOMATE Decrocher"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6489,8 +6489,8 @@
         <mission name="AUTOMATE Decrocher"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6520,8 +6520,8 @@
         <mission name="AUTOMATE Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6552,8 +6552,8 @@
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6595,8 +6595,8 @@
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6642,8 +6642,8 @@
         <mission name="AUTOMATE COMMUNES Interroger"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
@@ -6726,8 +6726,8 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6755,8 +6755,8 @@
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6780,8 +6780,8 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6804,8 +6804,8 @@
         <mission name="AUTOMATE TRANS Commander"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6830,8 +6830,8 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6855,8 +6855,8 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6881,8 +6881,8 @@
         <mission name="AUTOMATE LOGISTIQUE Transporter Unites"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6902,8 +6902,8 @@
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6930,8 +6930,8 @@
         <mission name="AUTOMATE HLA Decoller"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -6965,8 +6965,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7001,8 +7001,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7034,8 +7034,8 @@
         <mission name="AUTOMATE ASS Se Deployer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7068,8 +7068,8 @@
         <mission name="AUTOMATE ASS Se Deployer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7099,8 +7099,8 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7127,8 +7127,8 @@
         <mission name="AUTOMATE RENS ROEM Appuyer"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7155,8 +7155,8 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7183,8 +7183,8 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7209,8 +7209,8 @@
         <mission name="AUTOMATE RENS ROIM Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7239,8 +7239,8 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7265,8 +7265,8 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7294,8 +7294,8 @@
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7327,8 +7327,8 @@
         <mission name="AUTOMATE ASS RATAC Acquerir Objectifs"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7362,8 +7362,8 @@
         <mission name="AUTOMATE MELEE Interdire foules"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7395,8 +7395,8 @@
         <mission name="AUTOMATE RENS ROEM Brouiller"/>
       </missions>
       <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Passer En Silence Radar"/>
         <fragorder name="Arreter Silence Radar"/>
@@ -7481,4 +7481,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1833184472" -->
+<!-- signature="1907713547" -->
