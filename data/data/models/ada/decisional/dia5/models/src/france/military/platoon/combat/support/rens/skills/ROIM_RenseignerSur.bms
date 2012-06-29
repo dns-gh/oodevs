@@ -1,6 +1,6 @@
 rootnode
 {
-    connections = { skill.links.moveAlong, skill.nodes.CR },
+    connections = { skill.links.moveAndTakePosition, skill.links.moveAlong, skill.nodes.CR },
   
     done = function( self, additionnalParams )
         for _, pion in pairs( self.pionsFriends ) do
@@ -38,17 +38,18 @@ rootnode
         
         if self.fragOrderReceived then
             if self.unitPC ~= nil then  
-                self.pcPos = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint( self.unitPC:getPosition() ) )
+                self.pcPos = self.unitPC:getMyPosition()
             end
 
             if self.pcPos ~= nil then
                 self.destination = self.pcPos
-            else 
+            else
                 self.destination = self.initPos
             end
-            Activate( skill.links.moveAlong, 1, { entity = { self.destination } } )
+
+            Activate( skill.links.moveAndTakePosition, 1, { entity = self.initPos } )
         else
-            Activate( skill.links.moveAlong, 1, { entity = self.itinerary } )
+            Activate( skill.links.moveAndTakePosition, 1, { entity = self.itinerary } )
         end
     end,
     

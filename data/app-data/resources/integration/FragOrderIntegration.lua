@@ -102,7 +102,8 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" or
          orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" or
          orderType == "Rep_OrderConduite_ModifierPrioritesReparations" or
-         orderType == "Rep_OrderConduite_ModifierPrioritesBlesses"
+         orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" or
+         orderType == "Rep_OrderConduite_RejoindrePointLancement"
 end
 
 integration.setAutomatFragOrder = function( self )
