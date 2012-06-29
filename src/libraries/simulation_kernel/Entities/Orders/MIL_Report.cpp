@@ -146,6 +146,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_FragOrderReceived ] = eRC_FragOrderReceived;
 
     diaEvents_[ eReport_NotActivatedUndergroundNetwork ] = eRC_NotActivatedUndergroundNetwork;
+    diaEvents_[ eReport_FireObserver ] = eRC_FireObserver;
 }
 
 // -----------------------------------------------------------------------------

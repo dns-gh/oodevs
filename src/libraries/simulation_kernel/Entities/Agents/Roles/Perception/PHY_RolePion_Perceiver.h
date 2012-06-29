@@ -150,6 +150,8 @@ public:
     void  DisableSurveillanceLocalisation( int );
     int   EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent );
     void  DisableRecoObjects             ( int );
+    virtual void EnableFireObserver();
+    virtual void DisableFireObserver();
 
     // Radars
     int   EnableRadarOnLocalisation      ( const PHY_RadarClass& radarClass, const TER_Localisation& localisation );
@@ -189,6 +191,7 @@ public:
     bool IsIdentified( const MIL_Object_ABC& object ) const;
     bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
     bool IsIdentified( const UrbanObjectWrapper& object ) const;
+    virtual bool IsFireObserver() const;
     //@}
 
     //! @name Network
@@ -273,6 +276,7 @@ private:
     bool bExternalCanPerceive_;
     bool bExternalMustUpdateVisionCones_;
     bool bRadarStateHasChanged_;
+    bool bFireObserver_;
     //@}
 
     //! @name Static member data

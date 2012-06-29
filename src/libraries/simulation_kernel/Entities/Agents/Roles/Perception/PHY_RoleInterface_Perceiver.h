@@ -120,6 +120,8 @@ public:
     virtual void DisableSurveillanceLocalisation( int ) = 0;
     virtual int EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoObjects( int ) = 0;
+    virtual void EnableFireObserver() = 0;
+    virtual void DisableFireObserver() = 0;
 
     // Radars
     virtual int EnableRadarOnLocalisation( const PHY_RadarClass& radarClass, const TER_Localisation& localisation ) = 0;
@@ -158,6 +160,7 @@ public:
     virtual bool IsIdentified( const MIL_Object_ABC& object ) const = 0;
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const = 0;
     virtual bool IsIdentified( const UrbanObjectWrapper& object ) const = 0;
+    virtual bool IsFireObserver() const = 0;
     //@}
 
     //! @name Network

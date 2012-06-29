@@ -41,6 +41,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
 
     MOCK_METHOD( EnableSensors, 0 );
     MOCK_METHOD( DisableSensors, 0 );
+    MOCK_METHOD( EnableFireObserver, 0 );
+    MOCK_METHOD( DisableFireObserver, 0 );
 
     MOCK_METHOD( HasDelayedPerceptions, 0 );
     MOCK_METHOD( EnableRecoAlat, 1 );
@@ -84,6 +86,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Object_ABC& ), IsObjectIdentified );
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_PopulationConcentration& ), IsPopulationConcentrationIdentified );
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const UrbanObjectWrapper& ), IsUrbanBlockIdentified );
+    MOCK_METHOD( IsFireObserver, 0 );
 
     MOCK_METHOD( SendDebugState, 0 );
     MOCK_METHOD( SendChangedState, 1 );

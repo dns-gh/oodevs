@@ -483,4 +483,5 @@ eRC_FragOrderReceived = 467
 eRC_FurtifModeOn = 468
 eRC_FurtifModeOff = 469
 eRC_ObstacleNonActivable = 470
-eNbr = 470
+eRC_FireObserver = 471
+eNbr = 472
