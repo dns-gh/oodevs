@@ -93,6 +93,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eProfileUniqueness ]               = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );
     errorDescriptions_[ eProfileUnreadable ]               = tools::translate( "ModelConsistencyDialog", "Not 'readable' to any user profile. You will not be able to see it on the game." );
     errorDescriptions_[ eProfileUnwritable ]               = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+    errorDescriptions_[ eProfileNumberTooHigh ]            = tools::translate( "ModelConsistencyDialog", "The profile \"%1\" contains more than 12 automats and/or crowds." );
 
     // Ghost
     errorDescriptions_[ eGhostExistence ]                  = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );

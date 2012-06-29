@@ -70,6 +70,7 @@ private:
     void CheckLogisticInitialization();
     void CheckProfileUniqueness();
     void CheckProfileInitialization();
+    void CheckProfileNumberOfElements();
     void CheckGhosts();
     void CheckCommandPosts();
     void CheckKnowledgeGroups();

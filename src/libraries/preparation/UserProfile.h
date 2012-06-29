@@ -57,6 +57,7 @@ public:
     void Visit( std::vector< unsigned long >& elements ) const;
     void VisitAllAutomats( std::set< unsigned long >& elements ) const;
     unsigned int GetWriteProfilesCount();
+    unsigned int GetAutomatAndPopulationsProfilesCount() const;
     unsigned int GetProfilesCount() const;
     //@}
 

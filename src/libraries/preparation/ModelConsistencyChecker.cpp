@@ -27,6 +27,7 @@
 #include "SuccessFactorsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
+#include "UserProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -148,6 +149,7 @@ bool ModelConsistencyChecker::CheckConsistency()
 
     CheckProfileUniqueness();
     CheckProfileInitialization();
+    CheckProfileNumberOfElements();
 
     CheckGhosts();
 
@@ -497,6 +499,22 @@ void ModelConsistencyChecker::CheckProfileInitialization()
             if( !model_.profiles_.IsReadable( agent ) )
                 AddError( eProfileUnreadable, &agent );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckProfileNumberOfElements
+// Created: JSR 2012-06-29
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckProfileNumberOfElements()
+{
+    ProfilesModel::T_Profiles profiles;
+    model_.profiles_.Visit( profiles );
+    for( ProfilesModel::T_Profiles::const_iterator it = profiles.begin(); it != profiles.end(); ++it )
+    {
+        const UserProfile* profile = model_.profiles_.Find( *it );
+        if( profile && profile->GetAutomatAndPopulationsProfilesCount() > 12 )
+            AddError( eProfileNumberTooHigh, 0, *it );
     }
 }
 

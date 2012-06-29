@@ -67,6 +67,7 @@ template< typename T >
 void ConsistencyDialog< EnumError, TargetItem >::AddItem( T data, QString text, const TargetItem& targetItem, EnumError type, QList< QStandardItem* >& items )
 {
     QStandardItem* item = new QStandardItem( text );
+    item->setToolTip( text );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();
     variant->setValue( kernel::VariantPointer( &targetItem ) );

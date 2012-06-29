@@ -632,6 +632,17 @@ unsigned int UserProfile::GetProfilesCount() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::GetAutomatAndPopulationsProfilesCount
+// Created: JSR 2012-06-29
+// -----------------------------------------------------------------------------
+unsigned int UserProfile::GetAutomatAndPopulationsProfilesCount() const
+{
+    std::set< unsigned long > elements;
+    VisitAllAutomats( elements );
+    return static_cast< unsigned int >( elements.size() + writePopulations_.size() + readPopulations_.size() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::ComputeLowLevel
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
