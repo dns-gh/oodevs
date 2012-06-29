@@ -153,16 +153,6 @@ void FloodAttribute::WriteODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::OnUpdate
-// Created: JSR 2011-09-06
-// -----------------------------------------------------------------------------
-void FloodAttribute::OnUpdate( const sword::MissionParameter_Value& /*attribute*/ )
-{
-    GenerateFlood( true );
-    NotifyAttributeUpdated( eOnUpdate );
-}
-
-// -----------------------------------------------------------------------------
 // Name: FloodAttribute::SendFullState
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
