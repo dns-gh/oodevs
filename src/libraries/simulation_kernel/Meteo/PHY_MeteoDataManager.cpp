@@ -267,13 +267,13 @@ void PHY_MeteoDataManager::SendStateToNewClient()
 // Name: PHY_MeteoDataManager::GetLocalWeather
 // Created: ABR 2012-03-21
 // -----------------------------------------------------------------------------
-weather::Meteo* PHY_MeteoDataManager::GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const
+boost::shared_ptr< weather::Meteo > PHY_MeteoDataManager::GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const
 {
-    weather::Meteo* result = 0;
+    boost::shared_ptr< weather::Meteo > result;
     for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         if( ( *it )->IsPatched() && ( *it )->IsInside( position ) && ( !result || result->IsOlder( **it ) ) && it->get() != pMeteo.get() )
-            result = it->get();
+            result = *it;
     }
     return result;
 }

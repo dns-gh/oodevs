@@ -126,9 +126,9 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            weather::Meteo* meteo = meteoManager.GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
-            if( meteo && cell.pMeteo.get() != meteo )
-                cell.pMeteo.reset( meteo );
+            boost::shared_ptr< weather::Meteo > meteo = meteoManager.GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
+            if( meteo.get() && cell.pMeteo.get() != meteo.get() )
+                cell.pMeteo = meteo;
             else if( !meteo )
                 cell.pMeteo.reset();
         }
