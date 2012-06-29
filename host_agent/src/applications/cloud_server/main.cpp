@@ -437,7 +437,8 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
     }
     catch( const std::exception& err )
     {
-        LOG_ERROR( log ) << "[main] Unable to start, " << err.what();
+        LOG_ERROR( log ) << err.what();
+        LOG_ERROR( log ) << "[main] Unable to start";
         return -1;
     }
 
