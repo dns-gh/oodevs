@@ -127,6 +127,8 @@ void CommunicationListView::NotifyDeleted( const kernel::KnowledgeGroup_ABC& kg 
 // -----------------------------------------------------------------------------
 void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
+    if( !item )
+        return;
     QColor color = Qt::transparent;
     if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
         color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
