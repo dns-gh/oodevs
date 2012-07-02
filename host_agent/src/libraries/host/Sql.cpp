@@ -261,6 +261,16 @@ bool Statement::Next()
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Statement::IsColumnDefined
+// Created: BAX 2012-07-02
+// -----------------------------------------------------------------------------
+bool Statement::IsColumnDefined()
+{
+    const int type = sqlite3_column_type( stmt_.get(), read_ );
+    return type != SQLITE_NULL;
+}
+
 namespace
 {
 void CheckType( sqlite3_stmt* stmt, int expected, int col )
