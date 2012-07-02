@@ -96,6 +96,7 @@ struct Statement : public Statement_ABC
     virtual void        Bind( int64_t value );
     virtual void        Bind( double value );
     virtual void        Bind( const std::string& value );
+    virtual void        Bind( const char* value );
     virtual bool        Next();
     virtual bool        ReadBool();
     virtual int         ReadInt();
