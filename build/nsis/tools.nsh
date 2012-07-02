@@ -179,10 +179,7 @@
 
     SetOutPath "$INSTDIR\doc\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\en\final\AuthoringTool_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\final\Trainee_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\final\Reference_Guide.pdf"
-	File /r /x ".svn" "${DOCDIR}\en\final\Terrain _Generation_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\final\Sword_General_User_Guide.pdf"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Authoring Tool User Guide.lnk" "$INSTDIR\doc\en\AuthoringTool_User_Guide.pdf"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Trainee User Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
