@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -38,6 +39,11 @@ public:
     //! @name Serializable_ABC operations
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+    //! @name Creatable_ABC
+    //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 };
 

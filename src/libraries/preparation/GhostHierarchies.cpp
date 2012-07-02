@@ -46,5 +46,15 @@ void GhostHierarchies::SerializeAttributes( xml::xostream& xos ) const
             xos << xml::end;
         }
     }
+}
 
+// -----------------------------------------------------------------------------
+// Name: GhostHierarchies::DoUpdate
+// Created: ABR 2012-07-02
+// -----------------------------------------------------------------------------
+void GhostHierarchies::DoUpdate( const kernel::InstanciationComplete& instanciation )
+{
+    if( GetSuperior() && GetSuperior()->GetTypeName() == kernel::Ghost_ABC::typeName_ )
+        return;
+    AgentHierarchies::DoUpdate( instanciation );
 }
