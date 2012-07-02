@@ -35,7 +35,7 @@ class Controller : public Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Controller( cpplog::BaseLogger& log, Agent_ABC& host, UserController_ABC& users );
+             Controller( cpplog::BaseLogger& log, Agent_ABC& host, UserController_ABC& users, bool secure );
     virtual ~Controller();
     //@}
 
@@ -110,6 +110,7 @@ private:
     cpplog::BaseLogger& log_;
     Agent_ABC& agent_;
     UserController_ABC& users_;
+    const bool secure_;
     //@}
 };
 }

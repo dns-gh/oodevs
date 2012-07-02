@@ -278,7 +278,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Sql db( cfg.root / "cloud.db" );
     UserController users( log, uuids, db );
-    web::Controller controller( log, agent, users );
+    web::Controller controller( log, agent, users, true );
     const Port host = ports.Create();
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();

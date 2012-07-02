@@ -111,7 +111,7 @@ namespace
     struct Fixture
     {
         Fixture()
-            : controller( log, agent, users )
+            : controller( log, agent, users, false )
         {
             // NOTHING
         }

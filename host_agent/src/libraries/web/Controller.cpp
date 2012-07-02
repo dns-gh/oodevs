@@ -29,10 +29,11 @@ using namespace web;
 // Name: Controller::Controller
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Controller::Controller( cpplog::BaseLogger& log, Agent_ABC& agent, UserController_ABC& users )
-    : log_  ( log )
-    , agent_( agent )
-    , users_( users )
+Controller::Controller( cpplog::BaseLogger& log, Agent_ABC& agent, UserController_ABC& users, bool secure )
+    : log_   ( log )
+    , agent_ ( agent )
+    , users_ ( users )
+    , secure_( secure )
 {
     // NOTHING
 }
@@ -594,6 +595,8 @@ std::string Controller::GetSource( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 bool Controller::IsAuthenticated( const Request_ABC& request )
 {
+    if( !secure_ )
+        return true;
     const boost::optional< std::string > opt = request.GetParameter( "sid" );
     if( opt == boost::none )
         return false;
