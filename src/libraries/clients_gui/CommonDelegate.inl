@@ -163,6 +163,7 @@ template< typename T >
 inline
 std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index ) const
 {
+    QWidget* pParent = dynamic_cast< QWidget* >( parent() );
     T minimum = spinbox.min_;
     T maximum = spinbox.max_;
     QModelIndex newIndex = GetIndexFromSource( index );
@@ -173,13 +174,13 @@ std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spin
         {
             int minRow = ( spinbox.minLinkedRow_ == -1 ) ? newIndex.row() : spinbox.minLinkedRow_;
             int minCol = ( spinbox.minLinkedCol_ == -1 ) ? newIndex.column() : spinbox.minLinkedCol_;
-            minimum = static_cast< T >( model->item( minRow, minCol )->data( Qt::EditRole ).toDouble() );
+            minimum = pParent? static_cast< T >( pParent->locale().toDouble( model->item( minRow, minCol )->data( Qt::EditRole ).toString() ) ) : 0;
         }
         if( spinbox.maxLinkedRow_ != -1 || spinbox.maxLinkedCol_ != -1 )
         {
             int maxRow = ( spinbox.maxLinkedRow_ == -1 ) ? newIndex.row() : spinbox.maxLinkedRow_;
             int maxCol = ( spinbox.maxLinkedCol_ == -1 ) ? newIndex.column() : spinbox.maxLinkedCol_;
-            maximum = static_cast< T >( model->item( maxRow, maxCol )->data( Qt::EditRole ).toDouble() );
+            maximum = pParent? static_cast< T >( pParent->locale().toDouble( model->item( maxRow, maxCol )->data( Qt::EditRole ).toString() ) ) : 0;
         }
     }
     return std::pair< T, T >( minimum, maximum );
