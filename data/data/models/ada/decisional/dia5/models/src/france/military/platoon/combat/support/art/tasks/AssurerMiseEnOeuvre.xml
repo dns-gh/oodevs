@@ -15,7 +15,7 @@
 	<stages>
 		<stage label="Deploiement sur les positions">
 			<skills>
-				<skill name="france.military.platoon.skills.EnsureIndirectFire" main="true">
+				<skill name="sword.military.platoon.skills.EnsureIndirectFire" main="true">
 					<parameter name="firePositions">
 						<value>
 							<parameter>firePositions</parameter>

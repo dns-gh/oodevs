@@ -703,5 +703,5 @@ integration.creerItineraireAPartirListePoint = function( listPoint )
     for i=1,#listPoint do 
         listPointSource[#listPointSource + 1] = listPoint[i].source
     end
-    return CreateKnowledge( france.military.ontologie.classe.Itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
+    return CreateKnowledge( sword.military.world.Itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
 end

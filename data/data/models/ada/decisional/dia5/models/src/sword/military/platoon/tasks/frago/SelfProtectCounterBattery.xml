@@ -15,7 +15,7 @@
 	<stages>
 		<stage label="Sauvegarde" permanent="true">
 			<skills>
-				<skill name="france.military.platoon.skills.EnsureIndirectFire" priority="1000.0">
+				<skill name="sword.military.platoon.skills.EnsureIndirectFire" priority="1000.0">
 					<parameter name="firePositions">
 						<value>
 							<list>

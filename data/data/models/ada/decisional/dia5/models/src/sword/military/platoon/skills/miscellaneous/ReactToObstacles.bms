@@ -15,7 +15,7 @@ rootnode
         local Activate = Activate
         if not meKnowledge:isSelfCommanding() then
             local friends   = sword.military.queries.miscellaneous.getFriends[ "execute" ]( { dynamic = true } ) -- get friends that could help me to bypass obstacles
-            local nbAppuiMobility = integration.nbPlatoonsHaveTask( friends , "france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" )
+            local nbAppuiMobility = integration.nbPlatoonsHaveTask( friends , "sword.military.platoon.tasks.MobilitySupport" )
             if nbAppuiMobility > 0 and meKnowledge:isMoving() then
                 local obstacles = sword.military.queries.objects.getObstaclesOnPath[ "execute" ]()-- get obstacle
                 for _, entity in pairs( friends ) do
