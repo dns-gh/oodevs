@@ -122,12 +122,12 @@ void MakeDefaultDatabase( Sql_ABC& db )
     st->Next();
     st = db.Prepare( *tr, "INSERT INTO users"
           "( username, hash, name, type, temporary, language )"
-          "VALUES ( ?, ?, ?, ?, ? )" );
+          "VALUES ( ?, ?, ?, ?, ?, ? )" );
     st->Bind( "admin" );
     st->Bind( HashPassword( "admin" ) );
     st->Bind( "Administrator" );
-    st->Bind( true );
     st->Bind( "admin" );
+    st->Bind( true );
     st->Bind( "eng" );
     st->Next();
     db.Commit( *tr );
