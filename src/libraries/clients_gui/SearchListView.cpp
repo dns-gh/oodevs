@@ -112,7 +112,11 @@ void SearchListView_ABC::Purge()
     delete filtersLayout_;
     filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
     filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
+    for( std::vector< CheckComboBox* >::iterator it = combos_.begin(); it != combos_.end(); ++it )
+        delete *it;
     combos_.clear();
+    for( std::vector< NumericLimitsEditor_ABC* >::iterator it = numericLimits_.begin(); it != numericLimits_.end(); ++it )
+        delete *it;
     numericLimits_.clear();
 }
 
