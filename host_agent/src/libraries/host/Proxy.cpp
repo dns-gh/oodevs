@@ -244,7 +244,7 @@ Proxy::T_Process Proxy::MakeProcess() const
     std::vector< std::string > args = boost::assign::list_of
         ( "-jar \""  + Utf8Convert( config_.jar.filename() ) + "\"" )
         ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" );
-    if( config_.ssl.port )
+    if( !config_.ssl.store.empty() )
     {
         args.push_back( "--ssl \"" + boost::lexical_cast< std::string >( config_.ssl.port ) + "\"" );
         args.push_back( "--ssl_store \"" + Utf8Convert( config_.ssl.store ) + "\"" );
