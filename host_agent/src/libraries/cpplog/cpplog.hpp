@@ -76,10 +76,6 @@
 #include "outputdebugstream.hpp"
 #endif
 
-#ifdef CPPLOG_WITH_SCRIBE_LOGGER
-#include "scribestream.hpp"
-#endif
-
 // If we don't have a level defined, set it to CPPLOG_LEVEL_DEBUG (log all except trace statements)
 #ifndef CPPLOG_FILTER_LEVEL
 #define CPPLOG_FILTER_LEVEL LL_DEBUG
@@ -588,21 +584,6 @@ namespace cpplog
 			::time(&m_lastRotateTime);
 		}
 	};
-
-#ifdef CPPLOG_WITH_SCRIBE_LOGGER
-	// Given a Scribe node, will send log messages there with the given category.
-	class ScribeLogger : public OstreamLogger
-	{
-	private:
-		scribe_stream m_outStream;
-	public:
-		ScribeLogger(std::string host, unsigned short port, std::string category, int timeout)
-			: OstreamLogger(m_outStream)
-		{
-			m_outStream.open(host, port, category, timeout);
-		}
-	};
-#endif
 
 	// Tee logger - given two loggers, will forward a message to both.
 	class TeeLogger : public BaseLogger
