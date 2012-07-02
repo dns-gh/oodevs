@@ -28,6 +28,10 @@ using runtime::Utf8Convert;
 
 namespace
 {
+// -----------------------------------------------------------------------------
+// Name: HashPassword
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 std::string HashPassword( const std::string& password )
 {
     char salt[BCRYPT_HASHSIZE], hash[BCRYPT_HASHSIZE];
@@ -36,6 +40,10 @@ std::string HashPassword( const std::string& password )
     return std::string( hash, sizeof hash );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ValidatePassword
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 bool ValidatePassword( const std::string& password, const std::string hash )
 {
     char output[BCRYPT_HASHSIZE];
@@ -73,6 +81,10 @@ UserController::~UserController()
 
 namespace
 {
+// -----------------------------------------------------------------------------
+// Name: MakeTables
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 void MakeTables( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
@@ -98,6 +110,10 @@ void MakeTables( Sql_ABC& db )
     db.Commit( *tr );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MakeDefaultDatabase
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 void MakeDefaultDatabase( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
@@ -117,6 +133,10 @@ void MakeDefaultDatabase( Sql_ABC& db )
     db.Commit( *tr );
 }
 
+// -----------------------------------------------------------------------------
+// Name: GetRevision
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 int GetRevision( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin( false );
@@ -127,6 +147,10 @@ int GetRevision( Sql_ABC& db )
     return rev;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MigrateDatabase
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 void MigrateDatabase( Sql_ABC& db )
 {
     int rev = GetRevision( db );
@@ -143,7 +167,7 @@ void MigrateDatabase( Sql_ABC& db )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserController::MigrateDatabase
+// Name: UserController::SetupDatabase
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
 void UserController::SetupDatabase()
@@ -154,6 +178,10 @@ void UserController::SetupDatabase()
 
 namespace
 {
+// -----------------------------------------------------------------------------
+// Name: MakeToken
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 Tree MakeToken( const std::string& token )
 {
     Tree rpy;
@@ -214,6 +242,10 @@ Tree UserController::Login( const std::string& username, const std::string& pass
     return Tree();
 }
 
+// -----------------------------------------------------------------------------
+// Name: UserController::IsAuthenticated
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 bool UserController::IsAuthenticated( const std::string& token )
 {
     try
@@ -235,6 +267,10 @@ bool UserController::IsAuthenticated( const std::string& token )
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: UserController::Logout
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
 void UserController::Logout( const std::string& token )
 {
     try
