@@ -44,7 +44,7 @@ std::string HashPassword( const std::string& password )
 // Name: ValidatePassword
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool ValidatePassword( const std::string& password, const std::string hash )
+bool ValidatePassword( const std::string& password, const std::string& hash )
 {
     char output[BCRYPT_HASHSIZE];
     if( hash.size() != sizeof output )
