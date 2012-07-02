@@ -18,6 +18,7 @@ namespace kernel
 {
     class Controller;
     class Object_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace actions
@@ -34,6 +35,7 @@ namespace actions
 // =============================================================================
 class ParamResourceNetwork : public Param_ABC
                            , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
 {
     Q_OBJECT
 
@@ -56,6 +58,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu );
+    void DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     void UpdateLabel();
     //@}
 
@@ -69,8 +73,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Object_ABC* current_;
-    const kernel::Object_ABC* selected_;
+    const kernel::Entity_ABC* current_;
+    const kernel::Entity_ABC* selected_;
     QLabel* objectName_;
     QLabel* resourceName_;
     T_Actions actions_;

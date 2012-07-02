@@ -18,6 +18,7 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Controllers.h"
 
@@ -133,6 +134,24 @@ void ParamResourceNetwork::OnMenuClick( QAction* action )
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
 void ParamResourceNetwork::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoNotifyContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetwork::NotifyContextMenu
+// Created: JSR 2012-07-02
+// -----------------------------------------------------------------------------
+void ParamResourceNetwork::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoNotifyContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetwork::DoNotifyContextMenu
+// Created: JSR 2012-07-02
+// -----------------------------------------------------------------------------
+void ParamResourceNetwork::DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     // $$$$ JSR 2011-05-02: TODO gérer Deleted
     current_ = 0;
