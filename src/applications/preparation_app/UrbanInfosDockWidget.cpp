@@ -29,7 +29,7 @@
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
 UrbanInfosDockWidget::UrbanInfosDockWidget( QWidget* parent, kernel::Controllers& controllers, UrbanModel& model )
-    : RichDockWidget( controllers, parent, "urbanInfosDockWidget", tr( "Urban informations" ) )
+    : RichDockWidget( controllers, parent, "urbanInfosDockWidget", tools::translate( "UrbanInfosDockWidget", "Urban informations" ) )
     , controllers_( controllers )
     , model_      ( model )
 {
@@ -217,21 +217,21 @@ void UrbanInfosDockWidget::Update()
 
     infos_.clear();
     values_.clear();
-    InsertLine( ( selectedElements_.empty() ) ? tr( "Total urban blocks number: " ) : tr( "Selected urban blocks number: " ), locale().toString( nbUrbanBlocks ) );
+    InsertLine( ( selectedElements_.empty() ) ? tools::translate( "UrbanInfosDockWidget", "Total urban blocks number: " ) : tools::translate( "UrbanInfosDockWidget", "Selected urban blocks number: " ), locale().toString( nbUrbanBlocks ) );
 
     InsertLine();
-    InsertLine( tr( "Non medical infrastructures: " ), locale().toString( nonMedicalInfrastructures ) );
-    InsertLine( tr( "Medical infrastructures: " ), locale().toString( medicalInfrastructures ) );
+    InsertLine( tools::translate( "UrbanInfosDockWidget", "Non medical infrastructures: " ), locale().toString( nonMedicalInfrastructures ) );
+    InsertLine( tools::translate( "UrbanInfosDockWidget", "Medical infrastructures: " ), locale().toString( medicalInfrastructures ) );
     InsertLine();
-    InsertLine( tr( "Total capacity: " ), locale().toString( totalCapacity ) );
+    InsertLine( tools::translate( "UrbanInfosDockWidget", "Total capacity: " ), locale().toString( totalCapacity ) );
     for( std::map< std::string, unsigned int >::const_iterator it = motivationsCapacities.begin(); it != motivationsCapacities.end(); ++it )
-        InsertLine( tr( "Capacity  %1: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
+        InsertLine( tools::translate( "UrbanInfosDockWidget", "Capacity  %1: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
     InsertLine();
     for( std::map< std::string, unsigned int >::const_iterator it = resourcesProd.begin(); it != resourcesProd.end(); ++it )
-        InsertLine( tr( "Resource %1 production: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
+        InsertLine( tools::translate( "UrbanInfosDockWidget", "Resource %1 production: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
     InsertLine();
     for( std::map< std::string, unsigned int >::const_iterator it = resourceConso.begin(); it != resourceConso.end(); ++it )
-        InsertLine( tr( "Resource %1 consumption: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
+        InsertLine( tools::translate( "UrbanInfosDockWidget", "Resource %1 consumption: " ).arg( QString::fromStdString( it->first ) ), locale().toString( it->second ) );
 
     assert( infos_.size() == values_.size() );
     QString info;
