@@ -148,9 +148,9 @@ struct Configuration
             found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
             found |= ReadParameter( session.apps, "--session_apps", i, argc, argv );
-            found |= ReadParameter( ssl.store, "-ssl_store", i, argc, argv );
-            found |= ReadParameter( ssl.type, "-ssl_type", i, argc, argv );
-            found |= ReadParameter( ssl.password, "ssl_password", i, argc, argv );
+            found |= ReadParameter( ssl.store, "--ssl_store", i, argc, argv );
+            found |= ReadParameter( ssl.type, "--ssl_type", i, argc, argv );
+            found |= ReadParameter( ssl.password, "--ssl_password", i, argc, argv );
             if( !found )
             {
                 LOG_ERROR( log ) << "[cfg] Unknown parameter " << argv[i];
@@ -361,7 +361,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ports.proxy     = GetTree( tree, "ports.proxy", 8080 );
     cfg.ports.ssl       = GetTree( tree, "ports.ssl", 8443 );
     cfg.cluster.enabled = GetTree( tree, "cluster.enabled", true );
-    cfg.ssl.type        = GetTree( tree, "ssl.type", std::string( "PCKS12" ) );
+    cfg.ssl.type        = GetTree( tree, "ssl.type", std::string( "PKCS12" ) );
     cfg.java            = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
     cfg.proxy.jar       = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
     cfg.node.jar        = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
