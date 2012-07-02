@@ -15,6 +15,5 @@ RandomPluginConfigPanel.cpp \
 SessionConfigPanel.cpp \
 SpawnCommand.cpp \
 StartExercise.cpp \
-StartTerrainWorkshop.cpp \
 
 TRANSLATIONS = frontend_fr.ts frontend_es.ts

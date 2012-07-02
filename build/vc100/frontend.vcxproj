@@ -117,7 +117,6 @@
     <ClCompile Include="..\..\src\libraries\frontend\StartDispatcher.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp" />
-    <ClCompile Include="..\..\src\libraries\frontend\StartTerrainWorkshop.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\ConfigurationManipulator.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\XmlNode.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\ProcessList.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="..\..\src\libraries\frontend\StartDispatcher.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h" />
-    <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h" />
     <ClInclude Include="..\..\src\libraries\frontend\XmlNode.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ProcessList.h" />
