@@ -71,14 +71,6 @@
         <translation>Ejecutar herramienta de generación de terreno</translation>
     </message>
     <message>
-        <source>Terrain Workshop</source>
-        <translation>Edición de Terreno</translation>
-    </message>
-    <message>
-        <source>Launch Terrain Workshop application</source>
-        <translation>Ejecutar herramienta de edición de terreno</translation>
-    </message>
-    <message>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>

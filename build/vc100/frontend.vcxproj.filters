@@ -100,9 +100,6 @@
     <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\frontend\StartTerrainWorkshop.cpp">
-      <Filter>Source Files\Commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\frontend\ConfigurationManipulator.cpp">
       <Filter>Source Files\xml tools</Filter>
     </ClCompile>
@@ -226,9 +223,6 @@
       <Filter>Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h">
-      <Filter>Source Files\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h">
       <Filter>Source Files\Commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h">

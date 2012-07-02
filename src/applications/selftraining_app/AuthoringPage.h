@@ -51,7 +51,6 @@ private slots:
     //! @name Slots
     //@{
     void OnAuthoring();
-    void OnTerrainWorkshop();
     //@}
 
 private:
@@ -63,7 +62,6 @@ private:
     DataPage* dataPage_;
     QPushButton* authoring_;
     QPushButton* terrainGen_;
-    QPushButton* terrainWorkshop_;
     QPushButton* data_;
     //@}
 };

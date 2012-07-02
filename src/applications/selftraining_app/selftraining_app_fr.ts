@@ -71,14 +71,6 @@
         <translation>Démarrage de la Génération de Terrain</translation>
     </message>
     <message>
-        <source>Terrain Workshop</source>
-        <translation>Atelier Terrain</translation>
-    </message>
-    <message>
-        <source>Launch Terrain Workshop application</source>
-        <translation>Démarrage de l&apos;Atelier Terrain</translation>
-    </message>
-    <message>
         <source>Data</source>
         <translation>Données</translation>
     </message>
