@@ -19,6 +19,7 @@
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace actions::gui;
@@ -133,6 +134,24 @@ void ParamResourceNetworkNode::OnMenuClick( QAction* action )
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
 void ParamResourceNetworkNode::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoNotifyContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetworkNode::NotifyContextMenu
+// Created: JSR 2012-07-02
+// -----------------------------------------------------------------------------
+void ParamResourceNetworkNode::NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu )
+{
+    DoNotifyContextMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetworkNode::DoNotifyContextMenu
+// Created: JSR 2012-07-02
+// -----------------------------------------------------------------------------
+void ParamResourceNetworkNode::DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     // $$$$ JSR 2011-05-02: TODO gérer Deleted
     current_ = 0;
