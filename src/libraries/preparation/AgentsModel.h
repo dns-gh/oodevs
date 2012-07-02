@@ -39,7 +39,7 @@ namespace xml
 }
 
 class AgentFactory_ABC;
-class DiamondFormation;
+class CircleFormation;
 class Model;
 class StaticModel;
 
@@ -104,7 +104,7 @@ private:
     //@{
     void CreateAutomatChildren( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomatChildrenInsteadOf( const kernel::Entity_ABC& original, kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void InternalCreateAgent( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const kernel::AutomatComposition& composition, DiamondFormation& formation, bool& pcSet );
+    void InternalCreateAgent( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const kernel::AutomatComposition& composition, CircleFormation& formation, bool& pcSet );
     //@}
 
     //! @name Helpers

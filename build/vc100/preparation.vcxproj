@@ -91,6 +91,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\preparation\CircleFormation.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Ghost.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostHierarchies.cpp" />
@@ -242,6 +243,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\LocationSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\preparation\CircleFormation.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ConsistencyErrorTypes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Ghost.h" />
     <ClInclude Include="..\..\src\libraries\preparation\GhostFactory.h" />

@@ -556,6 +556,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\GhostHierarchies.cpp">
       <Filter>Source Files\Model\Ghosts\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\CircleFormation.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -1046,6 +1049,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\GhostHierarchies.h">
       <Filter>Source Files\Model\Ghosts\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\CircleFormation.h">
+      <Filter>Source Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

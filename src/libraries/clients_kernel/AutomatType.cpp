@@ -69,6 +69,22 @@ void AutomatType::ReadAgent( xml::xistream& xis, const tools::Resolver_ABC< Agen
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatType::NumberOfAgents
+// Created: JSR 2012-07-02
+// -----------------------------------------------------------------------------
+unsigned int AutomatType::NumberOfAgents() const
+{
+    unsigned int number = 0;
+    tools::Iterator< const AutomatComposition& > it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::AutomatComposition& composition = it.NextElement();
+        number += composition.GetSensibleNumber();
+    }
+    return number;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatType::CreateIterator
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------

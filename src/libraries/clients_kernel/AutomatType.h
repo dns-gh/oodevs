@@ -49,6 +49,7 @@ public:
     std::string GetSymbol() const;
     std::string GetTypeName() const;
     const DecisionalModel& GetDecisionalModel() const;
+    unsigned int NumberOfAgents() const;
     tools::Iterator< const AutomatComposition& > CreateIterator() const;
 
     bool HasLogistics() const;

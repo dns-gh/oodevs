@@ -12,7 +12,7 @@
 #include "AgentFactory_ABC.h"
 #include "AgentsModel.h"
 #include "Automat.h"
-#include "DiamondFormation.h"
+#include "CircleFormation.h"
 #include "GhostModel.h"
 #include "LogisticBaseStates.h"
 #include "LimitsModel.h"
@@ -116,7 +116,7 @@ kernel::Automat_ABC* AgentsModel::CreateAutomatInsteadOf( Entity_ABC& original, 
 // -----------------------------------------------------------------------------
 void AgentsModel::CreateAutomatChildren( Automat_ABC& automat, const AutomatType& type, const geometry::Point2f& position )
 {
-    DiamondFormation formation( position );
+    CircleFormation formation( position, type.NumberOfAgents() );
     bool pcSet = false;
     tools::Iterator< const AutomatComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
@@ -136,7 +136,7 @@ void AgentsModel::CreateAutomatChildrenInsteadOf( const Entity_ABC& original, Au
     const TacticalHierarchies& pHierarchy = original.Get< TacticalHierarchies >();
     tools::Iterator< const Entity_ABC& > originalIterator = pHierarchy.CreateSubordinateIterator();
     tools::Iterator< const AutomatComposition& > typeIterator = type.CreateIterator();
-    DiamondFormation formation( position );
+    CircleFormation formation( position, type.NumberOfAgents() );
 
     bool pcSet = false;
     while( originalIterator.HasMoreElements() && typeIterator.HasMoreElements() )
@@ -167,10 +167,10 @@ void AgentsModel::CreateAutomatChildrenInsteadOf( const Entity_ABC& original, Au
 // Name: AgentsModel::InternalCreateAgent
 // Created: ABR 2012-06-28
 // -----------------------------------------------------------------------------
-void AgentsModel::InternalCreateAgent( Automat_ABC& automat, const AutomatType& type, const AutomatComposition& composition, DiamondFormation& formation, bool& pcSet )
+void AgentsModel::InternalCreateAgent( Automat_ABC& automat, const AutomatType& type, const AutomatComposition& composition, CircleFormation& formation, bool& pcSet )
 {
     const bool isPc = !pcSet && &composition.GetType() == type.GetTypePC();
-    CreateAgent( automat, composition.GetType(), formation.NextPosition(), isPc );
+    CreateAgent( automat, composition.GetType(), formation.NextPosition( isPc ), isPc );
     if( isPc )
         pcSet = true;
 }
