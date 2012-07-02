@@ -54,7 +54,7 @@ public class Handler extends HttpServlet {
         else if (uri.equals("list_proxies"))
             listProxies(req, res);
         else if ((proxy = findProxy(req, uri)) != null)
-            proxy.service(req, res);
+            proxy.service(new ProxyRequest(req), res);
         else
             ((HttpServletResponse) res).sendError(HttpServletResponse.SC_NOT_FOUND);
     }
