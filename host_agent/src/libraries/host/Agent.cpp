@@ -15,7 +15,6 @@
 #include "PropertyTree.h"
 #include "Session_ABC.h"
 #include "SessionController_ABC.h"
-#include "UserController_ABC.h"
 
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
@@ -96,12 +95,11 @@ Reply ClusterDispatch( T* controller, const U& member, const Uuid& id, const std
 // Name: Agent::Agent
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions, UserController_ABC& users )
+Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions )
     : log_     ( log )
     , cluster_ ( cluster )
     , nodes_   ( nodes )
     , sessions_( sessions )
-    , users_   ( users )
 {
     if( cluster_ )
     {
@@ -383,16 +381,4 @@ Reply Agent::ListExercises( const Uuid& node, int offset, int limit ) const
 Reply Agent::CountExercises( const Uuid& node ) const
 {
     return Count( nodes_.CountExercises( node ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::UserLogin
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-Reply Agent::UserLogin( const std::string& username, const std::string& password ) const
-{
-    const Tree token = users_.Login( username, password );
-    if( token.empty() )
-        return Reply( "Unable to login " + username, false );
-    return MakeReply( token );
 }

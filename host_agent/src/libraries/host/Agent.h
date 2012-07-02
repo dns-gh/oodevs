@@ -44,7 +44,7 @@ class Agent : public web::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions, UserController_ABC& users );
+             Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions );
     virtual ~Agent();
     //@}
 
@@ -98,11 +98,6 @@ public:
     virtual Reply CountExercises( const Uuid& id ) const;
     //@}
 
-    //! @name User Methods
-    //@{
-    virtual Reply UserLogin( const std::string& username, const std::string& password ) const;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -112,7 +107,6 @@ private:
     Uuid clusterId_;
     NodeController_ABC& nodes_;
     SessionController_ABC& sessions_;
-    UserController_ABC& users_;
     //@}
 };
 }

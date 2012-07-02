@@ -101,11 +101,6 @@ struct Agent_ABC : public boost::noncopyable
     virtual Reply ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
     virtual Reply CountExercises( const Uuid& id ) const = 0;
     //@}
-
-    //! @name User Methods
-    //@{
-    virtual Reply UserLogin( const std::string& username, const std::string& password ) const = 0;
-    //@}
 };
 }
 

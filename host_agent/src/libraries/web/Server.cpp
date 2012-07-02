@@ -20,6 +20,7 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -62,6 +63,8 @@ boost::optional< typename T::mapped_type > FindFrom( const T& data, const typena
     return it->second;
 }
 
+const boost::xpressive::sregex portRegex = boost::xpressive::sregex::compile( ":\\d+$" );
+
 class WebRequest : public Request_ABC
 {
 public:
@@ -69,6 +72,7 @@ public:
         : request_   ( request )
         , uri_       ( "http://" + request_.source + request_.destination )
         , parameters_( ParseParameters( uri_ ) )
+        , source_    ( boost::xpressive::regex_replace( request_.source, portRegex, "" ) )
     {
         // NOTHING
     }
@@ -106,10 +110,16 @@ public:
         throw std::runtime_error( "unsupported action" );
     }
 
+    virtual std::string GetRemoteIp() const
+    {
+        return source_;
+    }
+
 private:
     const HttpServer::request& request_;
     const boost::network::uri::uri uri_;
     const T_Parameters parameters_;
+    const std::string source_;
 };
 
 template< void (*Callback)( HttpServer::connection_ptr, size_t, AsyncStream&, Timer& deadline ) >

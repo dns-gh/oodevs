@@ -12,6 +12,7 @@
 #include "cpplog/cpplog.hpp"
 #include "Agent_ABC.h"
 #include "Request_ABC.h"
+#include "UserController_ABC.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
@@ -28,9 +29,10 @@ using namespace web;
 // Name: Controller::Controller
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Controller::Controller( cpplog::BaseLogger& log, Agent_ABC& agent )
+Controller::Controller( cpplog::BaseLogger& log, Agent_ABC& agent, UserController_ABC& users )
     : log_  ( log )
     , agent_( agent )
+    , users_( users )
 {
     // NOTHING
 }
@@ -229,6 +231,8 @@ std::string Controller::DoGet( Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
+        if( !IsAuthenticated( request ) )
+            return WriteHttpReply( Unauthorized, "Invalid authentication" );
         if( uri == "/get_cluster" )        return GetCluster( request );
         if( uri == "/start_cluster" )      return StartCluster( request );
         if( uri == "/stop_cluster" )       return StopCluster( request );
@@ -276,8 +280,11 @@ std::string Controller::DoPost( Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
+        if( uri != "/login" && !IsAuthenticated( request ) )
+            return WriteHttpReply( Unauthorized, "Invalid authentication" );
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
+        if( uri == "/logout" )       return UserLogout( request );
     }
     catch( const HttpException& err )
     {
@@ -570,12 +577,47 @@ std::string Controller::UploadCache( Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Controller::GetSource
+// Created: BAX 2012-07-02
+// -----------------------------------------------------------------------------
+std::string Controller::GetSource( const Request_ABC& request )
+{
+    const boost::optional< std::string > opt = request.GetHeader( "Remote-Address" );
+    if( opt == boost::none )
+        return request.GetRemoteIp();
+    return *opt;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::isAuthenticated
+// Created: BAX 2012-07-02
+// -----------------------------------------------------------------------------
+bool Controller::IsAuthenticated( const Request_ABC& request )
+{
+    const boost::optional< std::string > opt = request.GetParameter( "sid" );
+    if( opt == boost::none )
+        return false;
+    return users_.IsAuthenticated( *opt, GetSource( request ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Controller::UserLogin
-// Created: BAX 2012-06--28
+// Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
 std::string Controller::UserLogin( const Request_ABC& request )
 {
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string password = RequireParameter< std::string >( "password", request );
-    return WriteHttpReply( agent_.UserLogin( username, password ) );
+    return WriteHttpReply( users_.Login( username, password, GetSource( request ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UserLogout
+// Created: BAX 2012-06-28
+// -----------------------------------------------------------------------------
+std::string Controller::UserLogout( const Request_ABC& request )
+{
+    const std::string sid = RequireParameter< std::string >( "sid", request );
+    users_.Logout( sid );
+    return WriteHttpReply( Ok );
 }

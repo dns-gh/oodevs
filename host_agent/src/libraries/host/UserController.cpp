@@ -91,6 +91,7 @@ void MakeTables( Sql_ABC& db )
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS revisions ("
         "  id       INTEGER PRIMARY KEY"
         ", revision INTEGER"
+        ", created  DATE"
         ")" )->Next();
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
         "  id           INTEGER PRIMARY KEY"
@@ -100,10 +101,12 @@ void MakeTables( Sql_ABC& db )
         ", type         TEXT"
         ", temporary    BOOLEAN"
         ", language     TEXT"
+        ", created      DATE"
         ")" )->Next();
     db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
-        ", user     INTEGER"
+        ", id_users INTEGER"
+        ", source   TEXT"
         ", token    TEXT"
         ", created  DATE"
         ")" )->Next();
@@ -117,12 +120,16 @@ void MakeTables( Sql_ABC& db )
 void MakeDefaultDatabase( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
-    Sql_ABC::T_Statement st = db.Prepare( *tr, "INSERT INTO revisions ( revision ) VALUES ( ? )" );
+    Sql_ABC::T_Statement st = db.Prepare( *tr,
+            "INSERT INTO revisions"
+            "          ( revision, created )"
+            "VALUES    ( ?, DATE('NOW') )" );
     st->Bind( 1 );
     st->Next();
-    st = db.Prepare( *tr, "INSERT INTO users"
-          "( username, hash, name, type, temporary, language )"
-          "VALUES ( ?, ?, ?, ?, ?, ? )" );
+    st = db.Prepare( *tr,
+        "INSERT INTO users"
+        "          ( username, hash, name, type, temporary, language, created )"
+        "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
     st->Bind( "admin" );
     st->Bind( HashPassword( "admin" ) );
     st->Bind( "Administrator" );
@@ -182,25 +189,27 @@ namespace
 // Name: MakeToken
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree MakeToken( const std::string& token )
+std::string MakeToken( const std::string& token )
 {
     Tree rpy;
     rpy.put( "token", token );
-    return rpy;
+    return ToJson( rpy );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CreateToken
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_Transaction tr, int user )
+std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_Transaction tr, int user, const std::string& source )
 {
     std::string token = boost::lexical_cast< std::string >( uuids.Create() );
     boost::algorithm::erase_all( token, "-" );
-    Sql_ABC::T_Statement st = db.Prepare( *tr, "INSERT INTO tokens"
-            "( user, token, created )"
-            "VALUES ( ?, ?, DATE( 'now' ) )" );
+    Sql_ABC::T_Statement st = db.Prepare( *tr,
+        "INSERT INTO tokens"
+        "          ( id_users, source, token, created ) "
+        "VALUES    ( ?, ?, ?, DATE('now') )" );
     st->Bind( user );
+    st->Bind( source );
     st->Bind( token );
     st->Next();
     db.Commit( *tr );
@@ -212,52 +221,61 @@ Tree CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_Transact
 // Name: UserController::Login
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Tree UserController::Login( const std::string& username, const std::string& password )
+std::string UserController::Login( const std::string& username, const std::string& password, const std::string& source )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-                "SELECT users.id, users.hash, tokens.token FROM users "
-                "LEFT JOIN tokens ON users.id = tokens.user "
-                "WHERE users.username = ?" );
+            "SELECT     users.id, users.hash, tokens.token "
+            "FROM       users "
+            "LEFT JOIN  tokens "
+            "ON         users.id = tokens.id_users "
+            "AND        tokens.source  = ? "
+            "WHERE      users.username = ? "
+            );
+        st->Bind( source );
         st->Bind( username );
         bool valid = st->Next();
         if( !valid )
-            return Tree();
+            return std::string();
         const int id = st->ReadInt();
         const std::string hash = st->ReadText();
-        const std::string token = st->ReadText();
         if( !ValidatePassword( password, hash ) )
-            return Tree();
-        if( !token.empty() )
-            MakeToken( token );
-        return CreateToken( uuids_, db_, tr, id );
+            return std::string();
+        if( st->IsColumnDefined() )
+            MakeToken( st->ReadText() );
+        return CreateToken( uuids_, db_, tr, id, source );
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to login";
     }
-    return Tree();
+    return std::string();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::IsAuthenticated
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool UserController::IsAuthenticated( const std::string& token )
+bool UserController::IsAuthenticated( const std::string& token, const std::string& source )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-                "SELECT COUNT( tokens.id ) FROM tokens "
-                "JOIN users ON users.id = tokens.user "
-                "WHERE tokens.token = ?" );
+            "SELECT COUNT( tokens.id ) "
+            "FROM   tokens "
+            "JOIN   users "
+            "ON     users.id = tokens.id_users "
+            "WHERE  tokens.source = ? "
+            "AND    tokens.token  = ? "
+            );
+        st->Bind( source );
         st->Bind( token );
         st->Next();
-        return st->ReadInt() > 0;
+        return st->ReadBool();
     }
     catch( const std::exception& err )
     {

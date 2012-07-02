@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 
-namespace host
+namespace web
 {
     typedef boost::property_tree::ptree Tree;
 
@@ -33,8 +33,8 @@ struct UserController_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Tree Login( const std::string& user, const std::string& password ) = 0;
-    virtual bool IsAuthenticated( const std::string& token ) = 0;
+    virtual std::string Login( const std::string& user, const std::string& password, const std::string& source ) = 0;
+    virtual bool IsAuthenticated( const std::string& token, const std::string& source ) = 0;
     virtual void Logout( const std::string& token ) = 0;
     //@}
 };

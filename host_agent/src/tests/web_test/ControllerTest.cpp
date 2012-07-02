@@ -9,13 +9,12 @@
 
 #include "web_test.h"
 
-#include <cpplog/cpplog.hpp>
-
-#include <web/Agent_ABC.h>
-
-#include <web/Controller.h>
-#include <web/Observer_ABC.h>
-#include <web/Request_ABC.h>
+#include "cpplog/cpplog.hpp"
+#include "MockUserController.h"
+#include "web/Agent_ABC.h"
+#include "web/Controller.h"
+#include "web/Observer_ABC.h"
+#include "web/Request_ABC.h"
 
 #include <boost/bind.hpp>
 #include <boost/bind/apply.hpp>
@@ -27,6 +26,7 @@
 #include <boost/xpressive/xpressive.hpp>
 
 using namespace web;
+using mocks::MockUserController;
 
 namespace
 {
@@ -76,8 +76,6 @@ namespace
         // exercises
         MOCK_METHOD( ListExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
-        // users
-        MOCK_METHOD( UserLogin, 2 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
@@ -87,6 +85,7 @@ namespace
         MOCK_METHOD( GetHeader, 1 );
         MOCK_METHOD( RegisterMime, 2 );
         MOCK_METHOD( ParseMime, 0 );
+        MOCK_METHOD( GetRemoteIp, 0 );
     };
 
     const boost::xpressive::sregex httpCodeRegex = boost::xpressive::sregex::compile( "^HTTP\\/1\\.1\\s+(\\d+)\\s+.+\r\n" );
@@ -112,7 +111,7 @@ namespace
     struct Fixture
     {
         Fixture()
-            : controller( log, agent )
+            : controller( log, agent, users )
         {
             // NOTHING
         }
@@ -126,6 +125,7 @@ namespace
         MockLog log;
         MockRequest request;
         MockAgent agent;
+        MockUserController users;
         Controller controller;
     };
 }

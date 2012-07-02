@@ -10,7 +10,7 @@
 #ifndef USER_CONTROLLER_H
 #define USER_CONTROLLER_H
 
-#include "UserController_ABC.h"
+#include "web/UserController_ABC.h"
 
 namespace cpplog
 {
@@ -21,6 +21,7 @@ namespace host
 {
     struct Sql_ABC;
     struct UuidFactory_ABC;
+    typedef boost::property_tree::ptree Tree;
 }
 
 namespace host
@@ -31,7 +32,7 @@ namespace host
 */
 // Created: BAX 2012-06-28
 // =============================================================================
-struct UserController : public UserController_ABC
+struct UserController : public web::UserController_ABC
 {
     //! @name Constructors/Destructor
     //@{
@@ -43,8 +44,8 @@ struct UserController : public UserController_ABC
 
     //! @name UserController_ABC Methods
     //@{
-    virtual Tree Login( const std::string& user, const std::string& password );
-    virtual bool IsAuthenticated( const std::string& token );
+    virtual std::string Login( const std::string& user, const std::string& password, const std::string& source );
+    virtual bool IsAuthenticated( const std::string& token, const std::string& source );
     virtual void Logout( const std::string& token );
     //@}
 

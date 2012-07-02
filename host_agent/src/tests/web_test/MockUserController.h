@@ -10,14 +10,14 @@
 #ifndef MOCK_USER_CONTROLLER_H
 #define MOCK_USER_CONTROLLER_H
 
-#include "host/UserController_ABC.h"
+#include "web/UserController_ABC.h"
 
 namespace mocks
 {
-    MOCK_BASE_CLASS( MockUserController, host::UserController_ABC )
+    MOCK_BASE_CLASS( MockUserController, web::UserController_ABC )
     {
-        MOCK_METHOD( Login, 2 );
-        MOCK_METHOD( IsAuthenticated, 1 );
+        MOCK_METHOD( Login, 3 );
+        MOCK_METHOD( IsAuthenticated, 2 );
         MOCK_METHOD( Logout, 1 );
     };
 };

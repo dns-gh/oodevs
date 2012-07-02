@@ -22,6 +22,7 @@ namespace web
 {
     struct Agent_ABC;
     struct Request_ABC;
+    struct UserController_ABC;
 
 // =============================================================================
 /** @class  Controller
@@ -34,7 +35,7 @@ class Controller : public Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Controller( cpplog::BaseLogger& log, Agent_ABC& host );
+             Controller( cpplog::BaseLogger& log, Agent_ABC& host, UserController_ABC& users );
     virtual ~Controller();
     //@}
 
@@ -97,7 +98,10 @@ private:
 
     //! @name User Methods
     //@{
-    std::string UserLogin( const Request_ABC& request );
+    std::string GetSource      ( const Request_ABC& request );
+    std::string UserLogin      ( const Request_ABC& request );
+    std::string UserLogout     ( const Request_ABC& request );
+    bool        IsAuthenticated( const Request_ABC& request );
     //@}
 
 private:
@@ -105,6 +109,7 @@ private:
     //@{
     cpplog::BaseLogger& log_;
     Agent_ABC& agent_;
+    UserController_ABC& users_;
     //@}
 };
 }
