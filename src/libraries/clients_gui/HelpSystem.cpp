@@ -101,7 +101,7 @@ std::string HelpSystem::FindWidget( const QObject* root )
 void HelpSystem::ShowHelp()
 {
     static const std::string strHelp = "help/";
-    const std::string strGuide = tools::translate( "gui::HelpSystem", "Reference Guide" ).ascii();
+    const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).ascii();
     std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.ascii() + "/" + strGuide + ".chm" );
     const std::string page = FindWidget( qApp->widgetAt( QCursor::pos() ) );
     if( !page.empty() )

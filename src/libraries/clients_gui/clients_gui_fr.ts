@@ -666,7 +666,7 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::HelpSystem</name>
     <message>
-        <source>Reference Guide</source>
+        <source>Sword_General_User_Guide</source>
         <translation>Guide_Utilisateur_General_Sword</translation>
     </message>
 </context>
