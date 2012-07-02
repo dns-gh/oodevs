@@ -30,7 +30,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     , resourceToolTip_ ( tr( "Resources" ) )
     , equipmentToolTip_( tr( "Composition" ) )
 {
-    setCaption( "Unit state" );
+    setCaption( tr( "Unit state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
     tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
