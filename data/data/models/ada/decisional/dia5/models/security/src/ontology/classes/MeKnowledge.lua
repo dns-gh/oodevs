@@ -289,8 +289,8 @@ method "selfDecontaminate" (
 -- Resources capability
 -- --------------------------------------------------------------------------------
 method "createResourceLink" ( 
-    function( self, resourceNode, resourceReceiver )
-        return resourceReceiver:createLinkWith( resourceNode )
+    function( self, resourceProducer, resourceNode )
+        return resourceProducer:createLinkWith( resourceNode )
     end )
 
 -- --------------------------------------------------------------------------------

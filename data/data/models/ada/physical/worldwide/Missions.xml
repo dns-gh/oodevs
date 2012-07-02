@@ -891,6 +891,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -950,6 +951,7 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -961,6 +963,10 @@ overwhelming force.]]></doctrine>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -971,6 +977,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1030,6 +1037,7 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -1041,6 +1049,10 @@ overwhelming force.]]></doctrine>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -1051,6 +1063,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1110,6 +1123,7 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -1121,6 +1135,10 @@ overwhelming force.]]></doctrine>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -1131,6 +1149,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1190,6 +1209,7 @@ overwhelming force.]]></doctrine>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -1201,6 +1221,10 @@ overwhelming force.]]></doctrine>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -2711,6 +2735,22 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="behaviors.tasks.CreateResourceNetWorkLinks" dia-type="behaviors.tasks.CreateResourceNetWorkLinks" id="44501" name="SAFETY - Connect urban block with resource nodes">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="resourceProducer" name="Urban block (producer)" optional="false" type="UrbanKnowledge"/>
+      <parameter dia-name="resourceReceivers" max-occurs="unbounded" min-occurs="1" name="Resource nodes (receivers)" optional="false" type="ResourceNetworkNode"/>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.CreateResourceNetWorkLinksWithinArea" dia-type="behaviors.tasks.CreateResourceNetWorkLinks_connectWithinarea" id="44502" name="SAFETY - Connect urban block with resource nodes within area">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="resourceProducer" name="Urban block (producer)" optional="false" type="UrbanKnowledge"/>
+      <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
+    </mission>
     <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter4" id="4464" name="COMMON - request embark">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2797,30 +2837,82 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Works" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
+          <parameter type="Decontamination Site"/>
           <parameter type="Supply Route"/>
           <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
           <parameter type="Abatis"/>
           <parameter type="Anti-tank Ditch"/>
           <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
           <parameter type="Roadblock"/>
           <parameter type="Bridge destruction"/>
           <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
           <parameter type="Landing Zone"/>
           <parameter type="Airfield Zone"/>
           <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
           <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
           <parameter type="Detainee Holding Area"/>
           <parameter type="Refugee Holding Area"/>
           <parameter type="Checkpoint"/>
           <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
           <parameter type="Installation"/>
           <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
           <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
+          <parameter type="Highway"/>
           <parameter type="Main road"/>
           <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
+          <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
@@ -2893,7 +2985,82 @@ any physical capabilities consideration</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Fires locations" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
+          <parameter type="Decontamination Site"/>
+          <parameter type="Supply Route"/>
+          <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
+          <parameter type="Abatis"/>
+          <parameter type="Anti-tank Ditch"/>
+          <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
+          <parameter type="Roadblock"/>
+          <parameter type="Bridge destruction"/>
+          <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
+          <parameter type="Landing Zone"/>
+          <parameter type="Airfield Zone"/>
+          <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
+          <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
+          <parameter type="Detainee Holding Area"/>
+          <parameter type="Refugee Holding Area"/>
+          <parameter type="Checkpoint"/>
+          <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
+          <parameter type="Installation"/>
+          <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
+          <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
+          <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
+          <parameter type="Underground Exit"/>
+          <parameter type="Country road"/>
+          <parameter type="Highway"/>
+          <parameter type="Main road"/>
+          <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
@@ -2924,7 +3091,82 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Decontamination site location" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
           <parameter type="Decontamination Site"/>
+          <parameter type="Supply Route"/>
+          <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
+          <parameter type="Abatis"/>
+          <parameter type="Anti-tank Ditch"/>
+          <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
+          <parameter type="Roadblock"/>
+          <parameter type="Bridge destruction"/>
+          <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
+          <parameter type="Landing Zone"/>
+          <parameter type="Airfield Zone"/>
+          <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
+          <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
+          <parameter type="Detainee Holding Area"/>
+          <parameter type="Refugee Holding Area"/>
+          <parameter type="Checkpoint"/>
+          <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
+          <parameter type="Installation"/>
+          <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
+          <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
+          <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
+          <parameter type="Underground Exit"/>
+          <parameter type="Country road"/>
+          <parameter type="Highway"/>
+          <parameter type="Main road"/>
+          <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
+          <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE)" optional="true" type="Boolean"/>
@@ -2957,7 +3199,82 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Checkpoint location" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
+          <parameter type="Decontamination Site"/>
+          <parameter type="Supply Route"/>
+          <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
+          <parameter type="Abatis"/>
+          <parameter type="Anti-tank Ditch"/>
+          <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
+          <parameter type="Roadblock"/>
+          <parameter type="Bridge destruction"/>
+          <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
+          <parameter type="Landing Zone"/>
+          <parameter type="Airfield Zone"/>
+          <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
+          <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
+          <parameter type="Detainee Holding Area"/>
+          <parameter type="Refugee Holding Area"/>
           <parameter type="Checkpoint"/>
+          <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
+          <parameter type="Installation"/>
+          <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
+          <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
+          <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
+          <parameter type="Underground Exit"/>
+          <parameter type="Country road"/>
+          <parameter type="Highway"/>
+          <parameter type="Main road"/>
+          <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
+          <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="intensity" name="Intensity (%, default is 100%)" optional="true" type="Integer"/>
@@ -3273,7 +3590,82 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Roadblock location" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
+          <parameter type="Decontamination Site"/>
+          <parameter type="Supply Route"/>
+          <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
+          <parameter type="Abatis"/>
+          <parameter type="Anti-tank Ditch"/>
+          <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
           <parameter type="Roadblock"/>
+          <parameter type="Bridge destruction"/>
+          <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
+          <parameter type="Landing Zone"/>
+          <parameter type="Airfield Zone"/>
+          <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
+          <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
+          <parameter type="Detainee Holding Area"/>
+          <parameter type="Refugee Holding Area"/>
+          <parameter type="Checkpoint"/>
+          <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
+          <parameter type="Installation"/>
+          <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
+          <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
+          <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
+          <parameter type="Underground Exit"/>
+          <parameter type="Country road"/>
+          <parameter type="Highway"/>
+          <parameter type="Main road"/>
+          <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
+          <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE)" optional="true" type="Boolean"/>
@@ -3360,7 +3752,82 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" name="Dike location" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
+          <parameter type="Decontamination Site"/>
+          <parameter type="Supply Route"/>
+          <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
+          <parameter type="Abatis"/>
+          <parameter type="Anti-tank Ditch"/>
+          <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
+          <parameter type="Roadblock"/>
+          <parameter type="Bridge destruction"/>
+          <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
+          <parameter type="Landing Zone"/>
+          <parameter type="Airfield Zone"/>
+          <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
+          <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
+          <parameter type="Detainee Holding Area"/>
+          <parameter type="Refugee Holding Area"/>
+          <parameter type="Checkpoint"/>
+          <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
+          <parameter type="Installation"/>
+          <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
+          <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
+          <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
           <parameter type="Dike"/>
+          <parameter type="Underground Exit"/>
+          <parameter type="Country road"/>
+          <parameter type="Highway"/>
+          <parameter type="Main road"/>
+          <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
+          <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -3388,7 +3855,82 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Firebreak location" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
+          <parameter type="Safe Point"/>
+          <parameter type="Jamming Area"/>
+          <parameter type="Full jamming Area"/>
+          <parameter type="NBC Contaminated Area - External"/>
+          <parameter type="NBC Cloud - External"/>
+          <parameter type="NBC Contaminated Area"/>
+          <parameter type="NBC Cloud"/>
+          <parameter type="Fire"/>
+          <parameter type="Wild Surface Fire"/>
+          <parameter type="Decontamination Site"/>
+          <parameter type="Supply Route"/>
+          <parameter type="Crossing Site"/>
+          <parameter type="ROTA Point"/>
+          <parameter type="Abatis"/>
+          <parameter type="Anti-tank Ditch"/>
+          <parameter type="Barricade"/>
+          <parameter type="Mined Area (linear)"/>
+          <parameter type="Mined Area (scattered)"/>
+          <parameter type="Landslide"/>
+          <parameter type="Roadblock"/>
+          <parameter type="Bridge destruction"/>
+          <parameter type="Bridge (continuous)"/>
+          <parameter type="Bridge (discontinuous)"/>
+          <parameter type="Firing post"/>
+          <parameter type="Gun artillery deployment area"/>
+          <parameter type="Cobra deployment area"/>
+          <parameter type="Mrls deployment area"/>
+          <parameter type="Mortar deployment area"/>
+          <parameter type="Rearm, Refuel and Resupply Point (R3P)"/>
+          <parameter type="Landing Zone"/>
+          <parameter type="Airfield Zone"/>
+          <parameter type="Platform"/>
+          <parameter type="Mobility enhanced area"/>
+          <parameter type="Landing Zone (helicopter)"/>
+          <parameter type="Forward Arming and Refueling Point (FARP)"/>
+          <parameter type="Detainee Holding Area"/>
+          <parameter type="Refugee Holding Area"/>
+          <parameter type="Checkpoint"/>
+          <parameter type="Drop Zone (DZ)"/>
+          <parameter type="No-Fire Area (NFA)"/>
+          <parameter type="General obstacle zone"/>
+          <parameter type="Installation"/>
+          <parameter type="Distribution point"/>
+          <parameter type="Sensors detection zone"/>
+          <parameter type="Sensors zone"/>
+          <parameter type="Supply Point"/>
+          <parameter type="Urban Block"/>
+          <parameter type="Dirty bomb"/>
+          <parameter type="Hospital"/>
+          <parameter type="Weapons Cache"/>
+          <parameter type="Emergency Shelter"/>
+          <parameter type="Meeting Place for Victims (PRV)"/>
+          <parameter type="Victims Discovery"/>
+          <parameter type="Stock"/>
+          <parameter type="Flood Origin"/>
+          <parameter type="Moving Population"/>
+          <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
+          <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
+          <parameter type="Underground Exit"/>
+          <parameter type="Country road"/>
+          <parameter type="Highway"/>
+          <parameter type="Main road"/>
+          <parameter type="Secondary road"/>
+          <parameter type="Wet terrain"/>
+          <parameter type="Snowed terrain"/>
+          <parameter type="Iced terrain"/>
+          <parameter type="Border"/>
+          <parameter type="Ressource node"/>
+          <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -4136,6 +4678,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4195,6 +4738,7 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4206,6 +4750,10 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="zone_" name="Aera" optional="false" type="Polygon"/>
@@ -4220,6 +4768,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4279,6 +4828,7 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4290,6 +4840,10 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -4300,6 +4854,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4359,6 +4914,7 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4370,6 +4926,10 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
@@ -4397,6 +4957,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4456,6 +5017,7 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -4467,6 +5029,10 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
@@ -5266,6 +5832,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork">
         <objects>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -5325,6 +5892,7 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Secured Area"/>
           <parameter type="Firebreak"/>
           <parameter type="Mined Area (linear and destructible)"/>
+          <parameter type="Dike"/>
           <parameter type="Underground Exit"/>
           <parameter type="Country road"/>
           <parameter type="Highway"/>
@@ -5336,6 +5904,10 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Border"/>
           <parameter type="Ressource node"/>
           <parameter type="Arson"/>
+          <parameter type="Destruction Bomb"/>
+          <parameter type="Medical camp"/>
+          <parameter type="Emergency services HQ"/>
+          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </fragorder>
@@ -5382,4 +5954,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3006045003" -->
+<!-- signature="2051479518" -->

@@ -4,17 +4,17 @@
 &#xD;
 When several links should be created, the agent acts on each target by following the order of the elements into the 'resourceReceivers' list. </description>
     <parameters>
-        <parameter name="resourceNode">
-            <description>The source resource node.</description>
+        <parameter name="resourceProducer">
+            <description>The ressource producer.</description>
             <type>
-                <class name="agent.world.ResourceNode"/>
+                <class name="agent.world.ResourceProducer"/>
             </type>
         </parameter>
-        <parameter name="resourceReceivers">
-            <description>The target ressource nodes.</description>
+        <parameter name="resourceNodes">
+            <description>The list of resource  receivers.</description>
             <type>
                 <list>
-                    <class name="agent.world.ResourceReceiver"/>
+                    <class name="agent.world.ResourceNode"/>
                 </list>
             </type>
         </parameter>
@@ -36,7 +36,7 @@ When several links should be created, the agent acts on each target by following
             <argument name="resourceReceiver">
                 <description>The target object that has been connected with the resource node.</description>
                 <type>
-                    <class name="agent.world.ResourceReceiver"/>
+                    <class name="agent.world.ResourceProducer"/>
                 </type>
             </argument>
         </feedback>

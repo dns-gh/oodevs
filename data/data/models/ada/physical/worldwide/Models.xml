@@ -107,6 +107,8 @@
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Reinforce"/>
         <mission name="SAFETY - Perform deconstruction works"/>
+        <mission name="SAFETY - Connect urban block with resource nodes"/>
+        <mission name="SAFETY - Connect urban block with resource nodes within area"/>
       </missions>
       <fragorders/>
     </unit>
@@ -4009,4 +4011,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3936587134" -->
+<!-- signature="0631277594" -->

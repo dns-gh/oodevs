@@ -7,7 +7,7 @@ A urban block can be evacuated, alerted or confined. These states have an impact
     <realizes>agent.world.PopulatedArea</realizes>
     <realizes>agent.world.ContaminationArea</realizes>
     <realizes>agent.world.Work</realizes>
-    <realizes>agent.world.ResourceReceiver</realizes>
+    <realizes>agent.world.ResourceProducer</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -149,15 +149,6 @@ Returns 'true' when element is deconstructed.</description>
                 </type>
             </return>
         </method>
-        <method name="createLinkWith" abstract="false">
-            <description>To create a link with a resource node in order to make this element getting some resource.</description>
-            <argument name="resourceNode">
-                <description>The resource node to get resource from.</description>
-                <type>
-                    <class name="agent.world.ResourceNode"/>
-                </type>
-            </argument>
-        </method>
         <method name="isDeconstructed" abstract="false">
             <description>Returns 'true' if this element has been deconstructed (by deconstruction action or a &quot;magic&quot; destruction action),'false' otherwise.&#xD;
 &#xD;
@@ -248,6 +239,15 @@ This implementation returns 'true' if this element is not already evacuated. It 
                     <simple name="boolean"/>
                 </type>
             </return>
+        </method>
+        <method name="createLinkWith" abstract="false">
+            <description>To create a link between this element and a resource node in order to make this element getting some resource.</description>
+            <argument name="resourceNode">
+                <description>The resource node to get resource from.</description>
+                <type>
+                    <class name="agent.world.ResourceNode"/>
+                </type>
+            </argument>
         </method>
     </methods>
 </class>
