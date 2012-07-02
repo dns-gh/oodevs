@@ -73,5 +73,6 @@ class Main {
             log_.error(err.toString());
             log_.error("Internal agent error");
         }
+        log_.info("Sword Proxy - Exit");
     }
 }
