@@ -56,11 +56,6 @@ void GhostModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent )
 {
     kernel::Ghost_ABC* ghost = ghostFactory_.Create( parent, xis );
     Register( ghost->GetId(), *ghost );
-    if( ghost->GetGhostType() == eGhostType_Automat )
-    {
-        ghost->ReadGhostAttributes( xis );
-        xis >> xml::list( "phantom", *this, &GhostModel::Create, *ghost );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,14 +66,6 @@ void GhostModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, E_Ghost
 {
     kernel::Ghost_ABC* ghost = ghostFactory_.Create( parent, xis, ghostType );
     Register( ghost->GetId(), *ghost );
-    if( ghostType == eGhostType_Automat )
-    {
-        E_GhostType childGhostType = eGhostType_Agent;
-        xis >> xml::list( "unit", *this, &GhostModel::Create, *ghost, childGhostType );
-        childGhostType = eGhostType_Automat;
-        xis >> xml::list( "automat", *this, &GhostModel::Create, *ghost, childGhostType )
-            >> xml::list( "phantom", *this, &GhostModel::Create, *ghost );
-    }
     if( !hasConvertNeedSaving_ )
         hasConvertNeedSaving_ = true;
 }

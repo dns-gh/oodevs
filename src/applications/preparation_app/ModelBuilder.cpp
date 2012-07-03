@@ -338,10 +338,10 @@ void ModelBuilder::Delete( const Entity_ABC& entity )
 // Name: ModelBuilder::ReplaceAutomat
 // Created: JSR 2012-06-29
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* ModelBuilder::ReplaceAutomat( kernel::Automat_ABC& original, const kernel::AutomatType& type )
+kernel::Automat_ABC* ModelBuilder::ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type )
 {
-    const AutomatPositions& positions = static_cast< const AutomatPositions& >( original.Get< kernel::Positions >() );
-    kernel::Automat_ABC* result = model_.agents_.CreateAutomatInsteadOf( original, type, positions.GetPosition( false ) );
+    const kernel::Positions& position = original.Get< kernel::Positions >();
+    kernel::Automat_ABC* result = model_.agents_.CreateAutomatInsteadOf( original, type, position.GetPosition( false ) );
     if( result )
         Delete( original );
     return result;

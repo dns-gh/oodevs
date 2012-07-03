@@ -69,7 +69,7 @@ GhostFactory::~GhostFactory()
 // -----------------------------------------------------------------------------
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position )
 {
-    Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, prototype );
+    Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, prototype );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
@@ -100,7 +100,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
 // -----------------------------------------------------------------------------
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis )
 {
-    Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, xis, symbolsFactory_ );
+    Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, symbolsFactory_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
@@ -129,7 +129,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
 // -----------------------------------------------------------------------------
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis, E_GhostType ghostType )
 {
-    Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, xis, parent, ghostType );
+    Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, parent, ghostType );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );

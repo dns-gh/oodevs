@@ -55,17 +55,17 @@ namespace
 // Name: ChangeAutomatTypeDialog constructor
 // Created: JSR 2012-06-29
 // -----------------------------------------------------------------------------
-ChangeAutomatTypeDialog::ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ModelBuilder& builder, gui::ItemFactory_ABC& factory, kernel::Automat_ABC& automat )
+ChangeAutomatTypeDialog::ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ModelBuilder& builder, gui::ItemFactory_ABC& factory, kernel::Entity_ABC& entity, const std::string& typeName )
     : QDialog( parent )
     , controllers_( controllers )
     , builder_    ( builder )
-    , automat_    ( automat )
+    , entity_     ( entity )
 {
     setModal( true );
-    setCaption( tr( "Change automat type" ) );
+    setCaption( tr( "Replace by a new automat" ) );
 
-    QLabel* label1 = new QLabel( tr( "Select new automat type for ") + automat_.GetName() );
-    QLabel* label2 = new QLabel( tr( "Current type: ") + automat_.GetType().GetName().c_str() );
+    QLabel* label1 = new QLabel( tr( "Select new automat type for ") + entity_.GetName() );
+    QLabel* label2 = new QLabel( tr( "Current type: ") + typeName.c_str() );
     list_ = new ::LocalUnitListView( 0, controllers, list, factory );
     okBtn_ = new QPushButton( tr( "Ok" ) );
     okBtn_->setEnabled( false );
@@ -115,7 +115,7 @@ void ChangeAutomatTypeDialog::OnOk()
     gui::ValuedListItem* item = dynamic_cast< gui::ValuedListItem* >( list_->selectedItem() );
     if( item && item->IsA< const kernel::AutomatType >() )
         if( const kernel::AutomatType* type = item->GetValueNoCheck< const kernel::AutomatType >() )
-            if( kernel::Automat_ABC* result = builder_.ReplaceAutomat( automat_, *type ) )
+            if( kernel::Automat_ABC* result = builder_.ReplaceAutomat( entity_, *type ) )
                 result->Select( controllers_.actions_ );
     accept();
 }

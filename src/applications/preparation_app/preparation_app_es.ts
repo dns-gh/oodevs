@@ -70,15 +70,15 @@
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Change automat type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select new automat type for </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Current type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace by a new automat</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2493,6 +2493,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Change automat type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace by automat</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

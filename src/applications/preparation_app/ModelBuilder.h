@@ -66,7 +66,7 @@ public:
     void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteEntity( const kernel::Entity_ABC& entity );
-    kernel::Automat_ABC* ReplaceAutomat( kernel::Automat_ABC& original, const kernel::AutomatType& type );
+    kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type );
     //@}
 
 public slots:

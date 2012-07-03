@@ -23,7 +23,9 @@
 #include "preparation/ProfileHierarchies.h"
 #include "preparation/LogisticLevelAttritube.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Level.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -322,6 +324,22 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyContextMenu
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
+{
+    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
+    {
+        if( ! decisions->IsEmbraye() )
+            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
+        else if( decisions->CanBeOrdered() )
+            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
+    }
+    menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalListView::AddFormationMenu
 // Created: SBO 2011-05-16
 // -----------------------------------------------------------------------------
@@ -332,6 +350,15 @@ void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel
     kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
     for( const HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
         subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyContextMenu
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyContextMenu( const kernel::Ghost_ABC& agent, kernel::ContextMenu& menu )
+{
+    menu.InsertItem( "Command", tr( "Replace by automat" ), this, SLOT( ChangeAutomatType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -357,22 +384,6 @@ void TacticalListView::OnChangeSuperior()
             changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
         changeSuperiorDialog_->Show( entity );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::NotifyContextMenu
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
-{
-    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
-    {
-        if( ! decisions->IsEmbraye() )
-            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
-        else if( decisions->CanBeOrdered() )
-            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
-    }
-    menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -410,8 +421,15 @@ void TacticalListView::Disengage()
 void TacticalListView::ChangeAutomatType()
 {
     if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
-        if( kernel::Automat_ABC* automat = dynamic_cast< kernel::Automat_ABC* >( valuedItem->GetValue< kernel::Entity_ABC >() ) )
-            ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, itemFactory_, *automat );
+        if( kernel::Entity_ABC* entity = valuedItem->GetValue< kernel::Entity_ABC >() )
+        {
+            std::string typeName = "";
+            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
+                typeName = static_cast< kernel::Automat_ABC* >( entity )->GetType().GetName();
+            if( entity->GetTypeName() == kernel::Ghost_ABC::typeName_ )
+                typeName = static_cast< kernel::Ghost_ABC* >( entity )->GetType();
+            ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, itemFactory_, *entity, typeName );
+        }
 }
 
 namespace

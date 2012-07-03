@@ -28,6 +28,14 @@ namespace kernel
 class Ghost_ABC : public Entity_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::pair< std::string, geometry::Point2f >     T_Child;
+    typedef std::vector< T_Child >                          T_Children;
+    typedef T_Children::const_iterator                    CIT_Children;
+    //@}
+
+public:
     //! @name Static
     //@{
     static const QString typeName_;
@@ -53,6 +61,7 @@ public:
     virtual void SerializeGhostAttributes( xml::xostream& ) const = 0;
     virtual void ReadGhostAttributes( xml::xistream& xis ) = 0;
     virtual void Finalize( const StaticModel& staticModel ) = 0;
+    virtual const T_Children& GetChildren() const = 0;
     //@}
 
     //! @name Operations

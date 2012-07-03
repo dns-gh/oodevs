@@ -18,7 +18,7 @@ namespace gui
 namespace kernel
 {
     class AgentTypes;
-    class Automat_ABC;
+    class Entity_ABC;
     class Controllers;
 }
 
@@ -36,7 +36,8 @@ class ChangeAutomatTypeDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ModelBuilder& builder, gui::ItemFactory_ABC& factory, kernel::Automat_ABC& automat );
+             ChangeAutomatTypeDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list,
+                                      ModelBuilder& builder, gui::ItemFactory_ABC& factory, kernel::Entity_ABC& entity, const std::string& typeName );
     virtual ~ChangeAutomatTypeDialog();
     //@}
 
@@ -52,7 +53,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ModelBuilder& builder_;
-    kernel::Automat_ABC& automat_;
+    kernel::Entity_ABC& entity_;
     Q3ListView* list_;
     QPushButton* okBtn_;
     //@}

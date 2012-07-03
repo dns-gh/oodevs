@@ -103,7 +103,8 @@ private:
     //! @name Helpers
     //@{
     void CreateAutomatChildren( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAutomatChildrenInsteadOf( const kernel::Entity_ABC& original, kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void ReplaceAutomatChildrenByAGhost( const kernel::Ghost_ABC& original, kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void ReplaceAutomatChildrenByAnAutomat( const kernel::Automat_ABC& original, kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
     void InternalCreateAgent( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const kernel::AutomatComposition& composition, CircleFormation& formation, bool& pcSet );
     //@}
 

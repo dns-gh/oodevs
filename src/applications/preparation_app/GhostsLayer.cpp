@@ -286,16 +286,3 @@ void GhostsLayer::SetAlpha( float alpha )
 {
     Layer_ABC::SetAlpha( alpha / 3.f );
 }
-
-// -----------------------------------------------------------------------------
-// Name: GhostsLayer::NotifyCreated
-// Created: ABR 2012-06-28
-// -----------------------------------------------------------------------------
-void GhostsLayer::NotifyCreated( const kernel::Ghost_ABC& ghost )
-{
-    if( ghost.GetGhostType() == eGhostType_Agent )
-        if( const kernel::TacticalHierarchies* pHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >() )
-            if( const kernel::Ghost_ABC* parentGhost = dynamic_cast< const kernel::Ghost_ABC* >( pHierarchy->GetSuperior() ))
-                return;
-    EntityLayer< kernel::Ghost_ABC >::NotifyCreated( ghost );
-}

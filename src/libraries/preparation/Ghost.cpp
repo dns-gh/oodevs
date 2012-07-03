@@ -27,6 +27,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
@@ -50,9 +51,10 @@ using namespace kernel;
 // Name: Ghost constructor from creation panel
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const GhostPrototype& prototype )
+Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const GhostPrototype& prototype )
     : EntityImplementation< Ghost_ABC >( controller, idManager.GetNextId(), prototype.name_.c_str() )
     , model_             ( model )
+    , converter_         ( converter )
     , ghostType_         ( prototype.ghostType_ )
     , type_              ( prototype.type_.c_str() )
     , symbol_            ( prototype.symbol_ )
@@ -69,9 +71,10 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
 // Name: Ghost constructor from xml
 // Created: ABR 2011-10-24
 // -----------------------------------------------------------------------------
-Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory )
+Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
     , model_             ( model )
+    , converter_         ( converter )
     , ghostType_         ( ENT_Tr::ConvertToGhostType( xis.attribute< std::string >( "ghost-type", ENT_Tr::ConvertFromGhostType( eGhostType_Invalid ) ) ) )
     , type_              ( xis.attribute< std::string >( "type", "" ).c_str() )
     , nature_            ( xis.attribute< std::string >( "nature", "" ) )
@@ -80,6 +83,15 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
     , logisticSuperiorID_( -1 )
 {
     assert( ghostType_ != eGhostType_Invalid && !nature_.empty() && !level_.empty() );
+
+    if( ghostType_ == eGhostType_Automat )
+    {
+        ReadGhostAttributes( xis );
+        E_GhostType childGhostType = eGhostType_Agent;
+        xis >> xml::list( "unit", *this, &Ghost::ReadChildren );
+        childGhostType = eGhostType_Automat;
+        xis >> xml::list( "phantom", *this, &Ghost::ReadChildren );
+    }
 
     symbol_ = symbolsFactory.CreateSymbol( nature_ );
     idManager.Lock( id_ );
@@ -91,9 +103,10 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, IdManager& idM
 // Name: Ghost constructor from unknown type conversion
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
-Ghost::Ghost( Controller& controller, const Model& model, IdManager& idManager, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
+Ghost::Ghost( Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType )
     : EntityImplementation< Ghost_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name", "" ).c_str() )
     , model_             ( model )
+    , converter_         ( converter )
     , ghostType_         ( ghostType )
     , type_              ( xis.attribute< std::string >( "type", "" ).c_str() )
     , symbol_            ( "symbols/s*gpu" )
@@ -103,6 +116,14 @@ Ghost::Ghost( Controller& controller, const Model& model, IdManager& idManager, 
     , logisticSuperiorID_( -1 )
 {
     assert( ghostType_ != eGhostType_Invalid );
+
+    if( ghostType == eGhostType_Automat )
+    {
+        E_GhostType childGhostType = eGhostType_Agent;
+        xis >> xml::list( "unit", *this, &Ghost::ReadChildren );
+        childGhostType = eGhostType_Automat;
+        xis >> xml::list( "phantom", *this, &Ghost::ReadChildren );
+    }
 
     if( const kernel::TacticalHierarchies* pHierarchy = parent.Retrieve< kernel::TacticalHierarchies >() )
     {
@@ -195,6 +216,21 @@ void Ghost::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "nature", nature_ )
         << xml::attribute( "level", level_ );
+    for( CIT_Children it = children_.begin(); it != children_.end(); ++it )
+        xos << xml::start( "phantom" )
+                << xml::attribute( "name", it->first )
+                << xml::attribute( "position", converter_.ConvertToMgrs( it->second ) )
+            << xml::end; //! phantom
+}
+
+// -----------------------------------------------------------------------------
+// Name: Ghost::ReadChildren
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+void Ghost::ReadChildren( xml::xistream& xis )
+{
+    if( xis.has_attribute( "name" ) && xis.has_attribute( "position" ) )
+        children_.push_back( T_Child( xis.attribute< std::string >( "name" ), converter_.ConvertToXY( xis.attribute< std::string >( "position" ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,6 +472,15 @@ const std::string Ghost::GetLevelSymbol() const
 bool Ghost::IsConverted() const
 {
     return converted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Ghost::GetChildren
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+const Ghost_ABC::T_Children& Ghost::GetChildren() const
+{
+    return children_;
 }
 
 // -----------------------------------------------------------------------------
