@@ -335,7 +335,10 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::IsMined() const
 {
-    return !object_.IsMarkedForDestruction() && object_.GetAttribute< MineAttribute >().GetState() > 0.;
+    if( object_.IsMarkedForDestruction() )
+        return false;
+    const MineAttribute* attribute = object_.RetrieveAttribute< MineAttribute >();
+    return attribute && attribute->GetState() > 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -344,7 +347,10 @@ bool MIL_ObjectManipulator::IsMined() const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::IsFullyMined() const
 {
-    return !object_.IsMarkedForDestruction() && object_.GetAttribute< MineAttribute >().GetState() == 1.;
+    if( object_.IsMarkedForDestruction() )
+        return false;
+    const MineAttribute* attribute = object_.RetrieveAttribute< MineAttribute >();
+    return attribute && attribute->GetState() ==1.;
 }
 
 // -----------------------------------------------------------------------------
@@ -353,7 +359,10 @@ bool MIL_ObjectManipulator::IsFullyMined() const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::IsBypassed() const
 {
-    return !object_.IsMarkedForDestruction() && object_.GetAttribute< BypassAttribute >().IsBypassed();
+    if( object_.IsMarkedForDestruction() )
+        return false;
+    const BypassAttribute* attribute = object_.RetrieveAttribute< BypassAttribute >();
+    return attribute && attribute->IsBypassed();
 }
 
 // -----------------------------------------------------------------------------

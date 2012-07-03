@@ -442,7 +442,7 @@ float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC
         const ConstructionAttribute* attr = object->RetrieveAttribute< ConstructionAttribute >();
         if( attr )
             return static_cast< float >( attr->GetState() );
-        return 1.f;
+        return 0.f;
     }
     return 0.f;
 }
@@ -472,7 +472,7 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
         const MineAttribute* attr = object->RetrieveAttribute< MineAttribute >();
         if( attr )
             return static_cast< float >( attr->GetState() );
-        return 1.f;
+        return 0.f;
     }
     return 0.f;
 }
