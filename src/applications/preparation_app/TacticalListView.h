@@ -22,6 +22,7 @@ namespace gui
 namespace kernel
 {
     class Agent_ABC;
+    class AgentTypes;
     class Automat_ABC;
     class Formation_ABC;
     class FormationLevels;
@@ -47,6 +48,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
                        , public gui::ChangeSuperior_ABC
 {
     Q_OBJECT
@@ -54,7 +56,8 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ModelBuilder& modelBuilder, const kernel::FormationLevels& levels );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
+                               ModelBuilder& modelBuilder, const kernel::FormationLevels& levels, const kernel::AgentTypes& agentTypes );
     virtual ~TacticalListView();
     //@}
 
@@ -79,6 +82,7 @@ private slots:
     void OnChangeSuperior();
     void Engage();
     void Disengage();
+    void ChangeAutomatType();
     //@}
 
 private:
@@ -96,6 +100,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Ghost_ABC& agent, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
 
     bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
@@ -110,11 +115,14 @@ private:
 private:
     //! @name Member data
     //@{
+    gui::ItemFactory_ABC& itemFactory_;
+    const kernel::AgentTypes& agentTypes_;
     ModelBuilder& modelBuilder_;
     const kernel::FormationLevels& levels_;
     QPixmap lock_;
     QPixmap commandPost_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
+    kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
     //@}
 };
 

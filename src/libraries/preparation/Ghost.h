@@ -19,9 +19,11 @@
 namespace kernel
 {
     class Controller;
+    class CoordinateConverter_ABC;
     class GhostPrototype;
     class GlTools_ABC;
     class Entity_ABC;
+    class LogisticLevel;
     class Viewport_ABC;
     class SymbolFactory;
 }
@@ -32,6 +34,9 @@ namespace xml
 }
 
 class IdManager;
+class LogisticBaseStates;
+class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  Ghost
@@ -48,9 +53,9 @@ class Ghost : public kernel::EntityImplementation< kernel::Ghost_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Ghost( kernel::Controller& controller, IdManager& idManager, const kernel::GhostPrototype& prototype );
-             Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory );
-             Ghost( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
+             Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const kernel::GhostPrototype& prototype );
+             Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::SymbolFactory& symbolsFactory );
+             Ghost( kernel::Controller& controller, const Model& model, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
     virtual ~Ghost();
     //@}
 
@@ -59,6 +64,9 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void ReadGhostAttributes( xml::xistream& xis );
+    virtual void SerializeGhostAttributes( xml::xostream& xos ) const;
+    virtual void Finalize( const StaticModel& staticModel );
     //@}
 
     //! @name Ghost_ABC Accessors
@@ -68,6 +76,8 @@ public:
     virtual bool IsConverted() const;
     virtual const std::string& GetNature() const;
     virtual void UpdateSymbol( const std::string& level, const std::string& nature, const std::string& symbol );
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+    virtual const T_Children& GetChildren() const;
     //@}
 
     //! @name Operations
@@ -83,20 +93,42 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, int >                    T_DotationsList;
+    typedef T_DotationsList::const_iterator               CIT_DotationsList;
+
+    typedef std::map< int, T_DotationsList >                T_DotationsMap;
+    //@}
+
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
+    void ReadChildren( xml::xistream& xis );
+    void ReadGhostSubordinate( xml::xistream& xis );
+    void ReadGhostProfiles( xml::xistream& xis );
+    void ReadDotations( xml::xistream& xis, int entityID );
+    void ReadDotation( xml::xistream& xis, T_DotationsList& dotationList );
+    void FinalizeDotations( const StaticModel& staticModel, const Entity_ABC&, LogisticBaseStates& logHierarchy );
     //@}
 
 private:
     //! @name Member data
     //@{
-    E_GhostType         ghostType_;
-    QString             type_;
-    mutable std::string symbol_; // $$$$ ABR 2011-11-07: Bad ... working on it
-    std::string         nature_;
-    std::string         level_;
-    bool                converted_;
+    const Model&                            model_;
+    const kernel::CoordinateConverter_ABC&  converter_;
+    E_GhostType                             ghostType_;
+    int                                     logisticSuperiorID_;
+    std::vector< int >                      logisticSubordinatesID_;
+    T_DotationsMap                          dotations_;
+    T_Children                              children_;
+    std::vector< std::string >              profilesReadOnly_;
+    std::vector< std::string >              profilesWriteOnly_;
+    QString                                 type_;
+    mutable std::string                     symbol_; // $$$$ ABR 2011-11-07: Bad ... working on it
+    std::string                             nature_;
+    std::string                             level_;
+    bool                                    converted_;
     //@}
 };
 

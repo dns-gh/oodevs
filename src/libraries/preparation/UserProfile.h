@@ -71,6 +71,7 @@ public:
     void NotifyFormationDeleted( unsigned long formationId );
     void NotifyAutomatDeleted( unsigned long automatId );
     void NotifyPopulationDeleted( unsigned long populationId );
+    void NotifyGhostDeleted( unsigned long ghostId );
     //@}
 
 private:

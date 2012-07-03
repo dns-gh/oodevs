@@ -67,6 +67,29 @@
     </message>
 </context>
 <context>
+    <name>ChangeAutomatTypeDialog</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Select new automat type for </source>
+        <translation>Sélectionnez un nouveau type d&apos;automate pour: </translation>
+    </message>
+    <message>
+        <source>Current type: </source>
+        <translation>Type actuel: </translation>
+    </message>
+    <message>
+        <source>Replace by a new automat</source>
+        <translation>Remplacer par un nouvel automate</translation>
+    </message>
+</context>
+<context>
     <name>ColorEditor</name>
     <message>
         <source>Change color</source>
@@ -2429,6 +2452,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
+    </message>
+    <message>
+        <source>Change automat type</source>
+        <translation>Changer le type d&apos;automate</translation>
+    </message>
+    <message>
+        <source>Replace by a new automat</source>
+        <translation type="unfinished">Remplacer par un nouvel automate</translation>
     </message>
 </context>
 <context>

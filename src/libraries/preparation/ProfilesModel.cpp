@@ -18,6 +18,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "tools/Iterator.h"
@@ -219,6 +220,18 @@ const UserProfile* ProfilesModel::Find( const QString& name ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::Find
+// Created: ABR 2012-06-26
+// -----------------------------------------------------------------------------
+UserProfile* ProfilesModel::Find( const std::string& name ) const
+{
+    BOOST_FOREACH( const T_UserProfiles::value_type profile, userProfiles_ )
+        if( profile->GetLogin() == name.c_str() )
+            return profile;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::NotifyDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
@@ -259,6 +272,16 @@ void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::NotifyDeleted
+// Created: ABR 2012-06-26
+// -----------------------------------------------------------------------------
+void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        (*it)->NotifyGhostDeleted( ghost.GetId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::Visit
 // Created: LGY 2011-09-16
 // -----------------------------------------------------------------------------
@@ -290,4 +313,30 @@ void ProfilesModel::Visit( T_Profiles& profiles ) const
 unsigned int ProfilesModel::GetProfilesCount() const
 {
     return static_cast< unsigned int >( userProfiles_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::GetProfilesWhoCanRead
+// Created: ABR 2012-06-26
+// -----------------------------------------------------------------------------
+std::vector< std::string > ProfilesModel::GetProfilesWhoCanRead( const kernel::Entity_ABC& entity ) const
+{
+    std::vector< std::string > result;
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( ( *it )->IsReadable( entity ) )
+            result.push_back( ( *it )->GetLogin().toStdString() );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::GetProfilesWhoCanWrite
+// Created: ABR 2012-06-26
+// -----------------------------------------------------------------------------
+std::vector< std::string > ProfilesModel::GetProfilesWhoCanWrite( const kernel::Entity_ABC& entity ) const
+{
+    std::vector< std::string > result;
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( ( *it )->IsWriteable( entity ) )
+            result.push_back( ( *it )->GetLogin().toStdString() );
+    return result;
 }

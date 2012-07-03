@@ -16,6 +16,7 @@ namespace kernel
 {
     class Automat_ABC;
     class Formation_ABC;
+    class Ghost_ABC;
     class LogisticLevel;
     class Profile_ABC;
 }
@@ -32,6 +33,7 @@ namespace gui
 // Created: ABR 2011-09-13
 // =============================================================================
 class LogisticListView : public HierarchyListView_ABC
+                       , public tools::ElementObserver_ABC< kernel::Ghost_ABC >
                        , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                        , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                        , public tools::ElementObserver_ABC< kernel::Team_ABC >
@@ -82,6 +84,8 @@ private:
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Ghost_ABC& ghost );
+    virtual void NotifyDeleted( const kernel::Ghost_ABC& ghost );
     void NotifyDeletedInternal( const kernel::Entity_ABC& entity );
     //@}
 

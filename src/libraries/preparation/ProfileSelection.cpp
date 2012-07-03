@@ -69,7 +69,7 @@ ProfileSelection::~ProfileSelection()
 void ProfileSelection::ReadProfile( xml::xistream& xis, const ProfilesModel& model )
 {
     const std::string name = xis.attribute< std::string >( "name" );
-    if( const UserProfile* profile = model.Find( name.c_str() ) )
+    if( const UserProfile* profile = model.Find( QString( name.c_str() ) ) )
         Register( profile->GetLogin(), *profile );
 }
 

@@ -21,8 +21,10 @@
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
@@ -105,6 +107,8 @@ const LogisticLevel& LogisticListView::GetLogisticLevel( const Entity_ABC& entit
         return static_cast< const Formation_ABC* >( &entity )->GetLogisticLevel();
     else if( entity.GetTypeName() == Automat_ABC::typeName_ )
         return static_cast< const Automat_ABC* >( &entity )->GetLogisticLevel();
+    else if( entity.GetTypeName() == Ghost_ABC::typeName_ )
+        return static_cast< const Ghost_ABC* >( &entity )->GetLogisticLevel();
     assert( false );
     return LogisticLevel::none_;
 }
@@ -129,6 +133,12 @@ ValuedListItem* LogisticListView::CreateItem( ValuedListItem& parent, const Enti
     item->SetToolTip( QString( "%1 [%L2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
     item->setDragEnabled( true );
     SetVisible( item, profile_.IsVisible( entity ) );
+    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
+    {
+        QColor color = Qt::transparent;
+        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+        item->SetBackgroundColor( color );
+    }
     DisplayIcon( entity, item );
     return item;
 }
@@ -248,6 +258,26 @@ void LogisticListView::NotifyDeleted( const Formation_ABC& formation )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticListView::NotifyCreated
+// Created: ABR 2012-06-25
+// -----------------------------------------------------------------------------
+void LogisticListView::NotifyCreated( const Ghost_ABC& ghost )
+{
+    if( ghost.GetGhostType() == eGhostType_Automat)
+        FindOrCreateOrReplace( &ghost );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticListView::NotifyDeleted
+// Created: ABR 2012-06-25
+// -----------------------------------------------------------------------------
+void LogisticListView::NotifyDeleted( const Ghost_ABC& ghost )
+{
+    if( ghost.GetGhostType() == eGhostType_Automat)
+        NotifyDeletedInternal( ghost );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticListView::NotifyCreated
 // Created: ABR 2011-09-16
 // -----------------------------------------------------------------------------
 void LogisticListView::NotifyCreated( const Team_ABC& team )
@@ -320,8 +350,8 @@ bool LogisticListView::Drop( const Entity_ABC& entity, ValuedListItem& target )
 bool LogisticListView::Drop( const Entity_ABC& source, const Entity_ABC& target )
 {
     droppedUnit_ = 0;
-    if( ( source.GetTypeName() != Formation_ABC::typeName_ && source.GetTypeName() != Automat_ABC::typeName_ ) ||
-        ( target.GetTypeName() != Formation_ABC::typeName_ && target.GetTypeName() != Automat_ABC::typeName_ ) ||
+    if( ( source.GetTypeName() != Formation_ABC::typeName_ && source.GetTypeName() != Automat_ABC::typeName_ && source.GetTypeName() != Ghost_ABC::typeName_ ) ||
+        ( target.GetTypeName() != Formation_ABC::typeName_ && target.GetTypeName() != Automat_ABC::typeName_ && target.GetTypeName() != Ghost_ABC::typeName_ ) ||
         GetLogisticLevel( target ) == LogisticLevel::none_ )
         return false;
     droppedUnit_ = &source;
@@ -357,8 +387,9 @@ bool LogisticListView::CanDrop( const Entity_ABC* srcEntity, QPoint dstPosition 
 
     const Formation_ABC* srcFormation = dynamic_cast< const Formation_ABC* >( srcEntity );
     const Automat_ABC* srcAutomat = dynamic_cast< const Automat_ABC* >( srcEntity );
-    if( !srcFormation && !srcAutomat )
-        return false; // can drop only automats or formations
+    const Ghost_ABC* srcGhost = dynamic_cast< const Ghost_ABC* >( srcEntity );
+    if( !srcFormation && !srcAutomat && !srcGhost )
+        return false; // can drop only automats or formations or ghost
 
     const Entity_ABC*    dstEntity =   ( dstItem->IsA< const Entity_ABC >() )    ? dstItem->GetValueNoCheck< const Entity_ABC >()    : 0;
     const LogisticLevel* dstLogistic = ( dstItem->IsA< const LogisticLevel >() ) ? dstItem->GetValueNoCheck< const LogisticLevel >() : 0;
@@ -369,8 +400,8 @@ bool LogisticListView::CanDrop( const Entity_ABC* srcEntity, QPoint dstPosition 
     const Entity_ABC* dstTeam = 0;
     if( dstEntity )
     {
-        if( dstEntity->GetTypeName() != Automat_ABC::typeName_ && dstEntity->GetTypeName() != Formation_ABC::typeName_ )
-            return false; // can drop only to an Automat or a Formation
+        if( dstEntity->GetTypeName() != Automat_ABC::typeName_ && dstEntity->GetTypeName() != Formation_ABC::typeName_ && dstEntity->GetTypeName() != Ghost_ABC::typeName_ )
+            return false; // can drop only to an Automat or a Formation or a ghost
         if( const TacticalHierarchies* dstHierarchies = dstEntity->Retrieve< TacticalHierarchies >() )
             dstTeam = &dstHierarchies->GetTop();
         const LogisticLevel& dstLogLevel = GetLogisticLevel( *dstEntity );

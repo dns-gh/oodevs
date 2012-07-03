@@ -18,10 +18,11 @@
 
 namespace kernel
 {
-    class Formation_ABC;
-    class Entity_ABC;
     class Automat_ABC;
     class Controllers;
+    class Entity_ABC;
+    class Formation_ABC;
+    class Ghost_ABC;
 }
 
 // =============================================================================
@@ -35,11 +36,16 @@ class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Entity_
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                              , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                             , public tools::ElementObserver_ABC< kernel::Ghost_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::Entity_ABC& selected );
+             LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers,
+                                     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                                     const tools::Resolver_ABC< kernel::Ghost_ABC >& ghostResolver,
+                                     const kernel::Entity_ABC& selected );
     virtual ~LogisticSuperiorEditor();
     //@}
 
@@ -56,6 +62,9 @@ private:
 
     virtual void NotifyCreated( const kernel::Automat_ABC& automat );
     virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
+
+    virtual void NotifyCreated( const kernel::Ghost_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Ghost_ABC& automat );
 
     template< typename T >
     bool IsValidSuperior( const T& superiorToTest ) const;

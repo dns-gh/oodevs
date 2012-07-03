@@ -20,11 +20,8 @@ namespace xml
 
 namespace kernel
 {
-    class Automat_ABC;
     class Entity_ABC;
-    class Formation_ABC;
-    class Population_ABC;
-    class Team_ABC;
+
 // =============================================================================
 /** @class  UserRights
     @brief  UserRights
@@ -72,39 +69,46 @@ public:
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
     bool FindSide( unsigned long id ) const;
     void Clear();
-    void Read( xml::xistream& xis, const ExistenceChecker_ABC& teamChecker, const ExistenceChecker_ABC& formationChecker, const ExistenceChecker_ABC& automatChecker, const ExistenceChecker_ABC& populationChecker );
+    void Read( xml::xistream& xis, const ExistenceChecker_ABC& teamChecker, const ExistenceChecker_ABC& formationChecker, const ExistenceChecker_ABC& automatChecker, const ExistenceChecker_ABC& populationChecker, const ExistenceChecker_ABC& ghostChecker );
     void Serialize( xml::xostream& xos ) const;
     void NotifyTeamDeleted( unsigned long teamId );
     void NotifyFormationDeleted( unsigned long formationId );
     void NotifyAutomatDeleted( unsigned long automatId );
     void NotifyPopulationDeleted( unsigned long populationId );
+    void NotifyGhostDeleted( unsigned long ghostsId );
     void InsertWriteSides( T_Ids& elements ) const;
     void InsertWriteAutomats( T_Ids& elements ) const;
     void InsertWritePopulations( T_Ids& elements ) const;
+    void InsertWriteGhosts( T_Ids& elements ) const;
 
     const T_Ids& GetWriteSides() const;
     const T_Ids& GetWriteAutomats() const;
     const T_Ids& GetWritePopulations() const;
     const T_Ids& GetWriteFormations() const;
+    const T_Ids& GetWriteGhosts() const;
     const T_Ids& GetReadSides() const;
     const T_Ids& GetReadAutomats() const;
     const T_Ids& GetReadPopulations() const;
     const T_Ids& GetReadFormations() const;
+    const T_Ids& GetReadGhosts() const;
 
     template< typename List > void SetWriteSides( const List& ids ) { Set( ids, writeSides_ ); }
     template< typename List > void SetWriteAutomats( const List& ids ) { Set( ids, writeAutomats_ ); }
     template< typename List > void SetWritePopulations( const List& ids ) { Set( ids, writePopulations_ ); }
     template< typename List > void SetWriteFormations( const List& ids ) { Set( ids, writeFormations_ ); }
+    template< typename List > void SetWriteGhosts( const List& ids ) { Set( ids, writeGhosts_ ); }
     template< typename List > void SetReadSides( const List& ids ) { Set( ids, readSides_ ); }
     template< typename List > void SetReadAutomats( const List& ids ) { Set( ids, readAutomats_ ); }
     template< typename List > void SetReadPopulations( const List& ids ) { Set( ids, readPopulations_ ); }
     template< typename List > void SetReadFormations( const List& ids ) { Set( ids, readFormations_ ); }
+    template< typename List > void SetReadGhosts( const List& ids ) { Set( ids, readGhosts_ ); }
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceChecker_ABC& checker );
+    void ReadAutomatRights( xml::xistream& xis, T_Ids& automatList, const ExistenceChecker_ABC& automatChecker, T_Ids& ghostList, const ExistenceChecker_ABC& ghostChecker );
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T_Ids& list ) const;
     template< typename List > void Set( const List& from, T_Ids& to )
     {
@@ -128,6 +132,8 @@ private:
     T_Ids writePopulations_;
     T_Ids readFormations_;
     T_Ids writeFormations_;
+    T_Ids readGhosts_;
+    T_Ids writeGhosts_;
     //@}
 };
 

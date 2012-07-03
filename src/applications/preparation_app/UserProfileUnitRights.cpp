@@ -13,6 +13,8 @@
 #include "PreparationProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -57,6 +59,14 @@ void UserProfileUnitRights::Display( UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
+    if( !item )
+        return;
+
+    QColor color = Qt::transparent;
+    if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
+        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+    item->SetBackgroundColor( color );
+
     T_Parent::Display( entity, item );
     LongNameHelper::SetItemLongName( entity, *item );
 }

@@ -71,7 +71,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
             pListsTabWidget->addTab( pAgentsTabWidget, tools::translate( "DockContainer", "Units" ) );
             // Tactical
             {
-                searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_ );
+                searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_, staticModel.types_ );
                 searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
                 listViews_.push_back( searchListView );
                 searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );

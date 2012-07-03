@@ -12,6 +12,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 
@@ -52,7 +53,8 @@ bool UserRights::IsReadable( const kernel::Entity_ABC& entity ) const
     return FindIn( entity.GetId(), readSides_ )
         || FindIn( entity.GetId(), readFormations_ )
         || FindIn( entity.GetId(), readAutomats_ )
-        || FindIn( entity.GetId(), readPopulations_ );
+        || FindIn( entity.GetId(), readPopulations_ )
+        || FindIn( entity.GetId(), readGhosts_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +66,8 @@ bool UserRights::IsWriteable( const kernel::Entity_ABC& entity ) const
     return FindIn( entity.GetId(), writeSides_ )
         || FindIn( entity.GetId(), writeFormations_ )
         || FindIn( entity.GetId(), writeAutomats_ )
-        || FindIn( entity.GetId(), writePopulations_ );
+        || FindIn( entity.GetId(), writePopulations_ )
+        || FindIn( entity.GetId(), writeGhosts_ );
 }
 
 namespace
@@ -94,6 +97,8 @@ void UserRights::SetReadable( const kernel::Entity_ABC& entity, bool readable )
         SetRight( id, readAutomats_, readable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, readPopulations_, readable );
+    else if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+        SetRight( id, readGhosts_, readable );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +116,8 @@ void UserRights::SetWriteable( const kernel::Entity_ABC& entity, bool writeable 
         SetRight( id, writeAutomats_, writeable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, writePopulations_, writeable );
+    else if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
+        SetRight( id, writeGhosts_, writeable );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,24 +144,26 @@ void UserRights::Clear()
     writePopulations_.clear();
     readFormations_.clear();
     writeFormations_.clear();
+    readGhosts_.clear();
+    writeGhosts_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserRights::Read
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
-void UserRights::Read( xml::xistream& xis, const ExistenceChecker_ABC& teamChecker, const ExistenceChecker_ABC& formationChecker, const ExistenceChecker_ABC& automatChecker, const ExistenceChecker_ABC& populationChecker )
+void UserRights::Read( xml::xistream& xis, const ExistenceChecker_ABC& teamChecker, const ExistenceChecker_ABC& formationChecker, const ExistenceChecker_ABC& automatChecker, const ExistenceChecker_ABC& populationChecker, const ExistenceChecker_ABC& ghostChecker )
 {
     xis >> xml::start( "readonly" )
             >> xml::list( "side", *this, &UserRights::ReadRights, readSides_, teamChecker )
             >> xml::list( "formation", *this, &UserRights::ReadRights, readFormations_, formationChecker )
-            >> xml::list( "automat", *this, &UserRights::ReadRights, readAutomats_, automatChecker )
+            >> xml::list( "automat", *this, &UserRights::ReadAutomatRights, readAutomats_, automatChecker, readGhosts_, ghostChecker )
             >> xml::list( "crowd", *this, &UserRights::ReadRights, readPopulations_, populationChecker )
         >> xml::end
         >> xml::start( "readwrite" )
             >> xml::list( "side", *this, &UserRights::ReadRights, writeSides_, teamChecker )
             >> xml::list( "formation", *this, &UserRights::ReadRights, writeFormations_, formationChecker )
-            >> xml::list( "automat", *this, &UserRights::ReadRights, writeAutomats_, automatChecker )
+            >> xml::list( "automat", *this, &UserRights::ReadAutomatRights, writeAutomats_, automatChecker, writeGhosts_, ghostChecker )
             >> xml::list( "crowd", *this, &UserRights::ReadRights, writePopulations_, populationChecker )
         >> xml::end;
 }
@@ -170,7 +179,23 @@ void UserRights::ReadRights( xml::xistream& xis, T_Ids& list, const ExistenceChe
     if( checker( id ) )
         list.push_back( id );
     else
-        std::cerr << "Invalid entity id in profile: " << id << std::endl; // $$$$ SBO 2007-11-06:
+        std::cerr << "Invalid entity id in profile: " << id << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserRights::ReadAutomatRights
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+void UserRights::ReadAutomatRights( xml::xistream& xis, T_Ids& automatList, const ExistenceChecker_ABC& automatChecker, T_Ids& ghostList, const ExistenceChecker_ABC& ghostChecker )
+{
+    unsigned long id;
+    xis >> xml::attribute( "id", id );
+    if( automatChecker( id ) )
+        automatList.push_back( id );
+    else if( ghostChecker( id ) )
+        ghostList.push_back( id );
+    else
+        std::cerr << "Invalid entity id in profile: " << id << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,6 +271,16 @@ void UserRights::NotifyPopulationDeleted( unsigned long populationId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserRights::NotifyGhostDeleted
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+void UserRights::NotifyGhostDeleted( unsigned long ghostsId )
+{
+    SetRight( ghostsId, readGhosts_, false );
+    SetRight( ghostsId, writeGhosts_, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserRights::InsertWriteSides
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
@@ -268,6 +303,15 @@ void UserRights::InsertWriteAutomats( T_Ids& elements ) const
 void UserRights::InsertWritePopulations( T_Ids& elements ) const
 {
     elements.insert( elements.begin(), writePopulations_.begin(), writePopulations_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserRights::InsertWriteGhosts
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+void UserRights::InsertWriteGhosts( T_Ids& elements ) const
+{
+    elements.insert( elements.begin(), writeGhosts_.begin(), writeGhosts_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,6 +351,15 @@ const UserRights::T_Ids& UserRights::GetWriteFormations() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserRights::GetWriteGhosts
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+const UserRights::T_Ids& UserRights::GetWriteGhosts() const
+{
+    return writeGhosts_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserRights::GetReadSides
 // Created: LDC 2012-05-09
 // -----------------------------------------------------------------------------
@@ -340,4 +393,13 @@ const UserRights::T_Ids& UserRights::GetReadPopulations() const
 const UserRights::T_Ids& UserRights::GetReadFormations() const
 {
     return readFormations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserRights::GetReadGhosts
+// Created: ABR 2012-07-03
+// -----------------------------------------------------------------------------
+const UserRights::T_Ids& UserRights::GetReadGhosts() const
+{
+    return readGhosts_;
 }

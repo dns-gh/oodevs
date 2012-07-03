@@ -20,6 +20,7 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class AutomatComposition;
     class Inhabitant_ABC;
     class Population_ABC;
     class AgentType;
@@ -38,6 +39,7 @@ namespace xml
 }
 
 class AgentFactory_ABC;
+class CircleFormation;
 class Model;
 class StaticModel;
 
@@ -69,9 +71,9 @@ public:
     //! @name Operations
     //@{
     void CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAutomat( kernel::Ghost_ABC& ghost, const kernel::AutomatType& type, const geometry::Point2f& position );
     void CreateAutomat( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     kernel::Automat_ABC& CreateAutomat( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name = "" );
+    kernel::Automat_ABC* CreateAutomatInsteadOf( kernel::Entity_ABC& original, const kernel::AutomatType& type, const geometry::Point2f& position );
 
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
@@ -101,6 +103,9 @@ private:
     //! @name Helpers
     //@{
     void CreateAutomatChilds( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void ReplaceAutomatChildrenByAGhost( const kernel::Ghost_ABC& original, kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void ReplaceAutomatChildrenByAnAutomat( const kernel::Automat_ABC& original, kernel::Automat_ABC& automat, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void InternalCreateAgent( kernel::Automat_ABC& automat, const kernel::AutomatType& type, const kernel::AutomatComposition& composition, CircleFormation& formation, bool& pcSet );
     //@}
 
     //! @name Helpers

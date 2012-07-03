@@ -4,6 +4,7 @@ SOURCES = AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
 AgentsLayer.cpp \
 Application.cpp \
+ChangeAutomatTypeDialog.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
 CsvExport.cpp \

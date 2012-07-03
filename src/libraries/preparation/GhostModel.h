@@ -30,6 +30,8 @@ namespace xml
 }
 
 class GhostFactory_ABC;
+class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  GhostModel
@@ -55,6 +57,7 @@ public:
     kernel::Ghost_ABC* Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent, E_GhostType ghostType );
+    void Finalize( const StaticModel& staticModel );
     void Purge();
     bool NeedSaving() const;
     //@}

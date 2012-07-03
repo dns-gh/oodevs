@@ -16,6 +16,7 @@
 
 namespace kernel
 {
+    class AutomatType;
     class Controllers;
     class ContextMenu;
     class Team_ABC;
@@ -65,6 +66,7 @@ public:
     void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteEntity( const kernel::Entity_ABC& entity );
+    kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type );
     //@}
 
 public slots:
@@ -79,12 +81,6 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ModelBuilder( const ModelBuilder& );            //!< Copy constructor
-    ModelBuilder& operator=( const ModelBuilder& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual void BeforeSelection();

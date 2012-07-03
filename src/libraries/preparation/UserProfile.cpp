@@ -11,6 +11,7 @@
 #include "UserProfile.h"
 #include "AgentsModel.h"
 #include "FormationModel.h"
+#include "GhostModel.h"
 #include "Model.h"
 #include "TacticalHierarchies.h"
 #include "TeamsModel.h"
@@ -18,6 +19,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ExtensionType.h"
@@ -40,13 +42,14 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Automat_ABC > >    automatChecker( model_.GetAutomatResolver() );
     const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Population_ABC > > populationChecker( model_.GetPopulationResolver() );
+    const kernel::UserRights::ExistenceChecker< tools::Resolver_ABC< kernel::Ghost_ABC > >      ghostChecker( model_.ghosts_ );
 
     std::string login, pass;
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::attribute( "supervision", supervisor_ )
         >> xml::start( "rights" );
-    rights_.Read( xis, teamChecker, formationChecker, automatChecker, populationChecker );
+    rights_.Read( xis, teamChecker, formationChecker, automatChecker, populationChecker, ghostChecker );
     xis >> xml::end;
     login_ = login.c_str();
     password_ = pass.c_str();
@@ -259,6 +262,15 @@ void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::NotifyGhostDeleted
+// Created: ABR 2012-06-26
+// -----------------------------------------------------------------------------
+void UserProfile::NotifyGhostDeleted( unsigned long ghostId )
+{
+    rights_.NotifyGhostDeleted( ghostId );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::Visit
 // Created: LGY 2011-09-16
 // -----------------------------------------------------------------------------
@@ -267,6 +279,7 @@ void UserProfile::Visit( std::vector< unsigned long >& elements ) const
     rights_.InsertWriteSides( elements );
     rights_.InsertWriteAutomats( elements );
     rights_.InsertWritePopulations( elements );
+    rights_.InsertWriteGhosts( elements );
 }
 
 namespace

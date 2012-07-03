@@ -23,6 +23,7 @@
 #include "preparation/Formation.h"
 #include "preparation/KnowledgeGroup.h"
 #include "preparation/Automat.h"
+#include "preparation/AutomatPositions.h"
 #include "preparation/Agent.h"
 #include "preparation/Ghost.h"
 #include "preparation/Object.h"
@@ -239,7 +240,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelBuilder::Delete
+// Name: ModelBuilder::DeleteEntity
 // Created: LGY 2011-11-28
 // -----------------------------------------------------------------------------
 void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
@@ -339,6 +340,19 @@ void ModelBuilder::Delete( const kernel::Entity_ABC& entity )
                 Delete( **it );
     }
     delete &entity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::ReplaceAutomat
+// Created: JSR 2012-06-29
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC* ModelBuilder::ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type )
+{
+    const kernel::Positions& position = original.Get< kernel::Positions >();
+    kernel::Automat_ABC* result = model_.agents_.CreateAutomatInsteadOf( original, type, position.GetPosition( false ) );
+    if( result )
+        Delete( original );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

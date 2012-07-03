@@ -15,6 +15,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -37,7 +38,11 @@ namespace
 // Name: LogisticSuperiorEditor constructor
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
-LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& controllers, const tools::Resolver_ABC< Automat_ABC >& automatResolver, const tools::Resolver_ABC< Formation_ABC >& formationResolver, const Entity_ABC& selected )
+LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& controllers,
+                                                const tools::Resolver_ABC< Automat_ABC >& automatResolver,
+                                                const tools::Resolver_ABC< Formation_ABC >& formationResolver,
+                                                const tools::Resolver_ABC< kernel::Ghost_ABC >& ghostResolver,
+                                                const Entity_ABC& selected )
     : gui::ValuedComboBox< const kernel::Entity_ABC* >( parent )
     , controllers_( controllers )
     , selected_( selected )
@@ -64,6 +69,17 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
             if( ( bObject && formation.GetLogisticLevel() != LogisticLevel::none_ )
                 ||  ( !bObject && IsValidSuperior( formation ) ) )
                 AddItem( GetDisplayName( formation ), &formation );
+        }
+    }
+
+    {
+        tools::Iterator< const Ghost_ABC& > it = ghostResolver.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Ghost_ABC& ghost = it.NextElement();
+            if( ( bObject && ghost.GetLogisticLevel() != LogisticLevel::none_ )
+                ||  ( !bObject && IsValidSuperior( ghost ) ) )
+                AddItem( GetDisplayName( ghost ), &ghost );
         }
     }
 
@@ -119,6 +135,27 @@ void LogisticSuperiorEditor::NotifyCreated( const Formation_ABC& formation )
 void LogisticSuperiorEditor::NotifyDeleted( const Formation_ABC& formation )
 {
     RemoveItem( &formation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSuperiorEditor::NotifyCreated
+// Created: ABR 2012-06-25
+// -----------------------------------------------------------------------------
+void LogisticSuperiorEditor::NotifyCreated( const Ghost_ABC& ghost )
+{
+    if( GetItemIndex( &ghost ) != -1 )
+        return;
+    if( IsValidSuperior( ghost ) )
+        AddItem( GetDisplayName( ghost ), &ghost );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSuperiorEditor::NotifyDeleted
+// Created: ABR 2012-06-25
+// -----------------------------------------------------------------------------
+void LogisticSuperiorEditor::NotifyDeleted( const Ghost_ABC& ghost )
+{
+    RemoveItem( &ghost );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,6 +18,7 @@
 #include "ObjectsModel.h"
 #include "AgentsModel.h"
 #include "Diplomacies.h"
+#include "GhostModel.h"
 #include "Objects.h"
 #include "Object.h"
 #include "clients_kernel/Tools.h"
@@ -25,6 +26,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include <xeumeuleu/xml.hpp>
@@ -228,6 +230,8 @@ void TeamsModel::ReadLogistic( xml::xistream& xis, Model& model )
     Entity_ABC* entity = model.formations_.Find( id );
     if( !entity )
         entity = model.agents_.FindAutomat( id );
+    if( !entity )
+        entity = model.ghosts_.Find( id );
     if( entity )
         xis >> xml::list( "subordinate", *this, &TeamsModel::ReadLogisticLink, model, *entity );
 }
@@ -244,6 +248,8 @@ void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Ent
         Entity_ABC* entity = model.formations_.Find( id );
         if( !entity )
             entity = model.agents_.FindAutomat( id );
+        if( !entity )
+            entity = model.ghosts_.Find( id );
         if( entity )
         {
             LogisticHierarchiesBase* hierarchies = entity->Retrieve< LogisticHierarchiesBase >();

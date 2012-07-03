@@ -92,7 +92,8 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
             xos << xml::start( "automat" );
         else
             xos << xml::start( "formation" );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
+        it->second->Interface().Apply( &kernel::Ghost_ABC::SerializeGhostAttributes, xos );
         xos << xml::end;
     }
 }
