@@ -264,6 +264,8 @@ std::string Controller::DoGet( Request_ABC& request )
         // exercises
         if( uri == "/list_exercises")      return ListExercises( request );
         if( uri == "/count_exercises" )    return CountExercises( request );
+        // users
+        if( uri == "/logout" )             return UserLogout( request );
     }
     catch( const HttpException& err )
     {
@@ -285,7 +287,6 @@ std::string Controller::DoPost( Request_ABC& request )
             return WriteHttpReply( Unauthorized, "Invalid authentication" );
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
-        if( uri == "/logout" )       return UserLogout( request );
     }
     catch( const HttpException& err )
     {
