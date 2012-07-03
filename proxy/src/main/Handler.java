@@ -126,7 +126,7 @@ public class Handler extends HttpServlet {
             res.getWriter().print("Unable to remove unknown proxy");
             return;
         }
-        res.getWriter().print(target.toString());
+        res.getWriter().print(target.toJson());
         target.destroy();
         log_.info("Removed proxy /" + prefix);
     }
