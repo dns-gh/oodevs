@@ -132,8 +132,8 @@ namespace
 BOOST_FIXTURE_TEST_CASE( agent_has_entity_identifier, RegisteredFixture )
 {
     const rpr::EntityIdentifier expectedId( 42, 43, 1);
-    MOCK_EXPECT( functor, Visit ).once().with( "EntityIdentifier", boost::bind( &CheckSerialization< rpr::EntityIdentifier >, _1, expectedId ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "EntityIdentifier", boost::bind( &CheckSerialization< rpr::EntityIdentifier >, _1, expectedId ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
