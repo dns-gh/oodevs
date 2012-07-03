@@ -142,7 +142,7 @@ void AgentsModel::ReplaceAutomatChildrenByAGhost( const kernel::Ghost_ABC& origi
     const kernel::Ghost_ABC::T_Children& originalChildren = original.GetChildren();
     kernel::Ghost_ABC::CIT_Children originalIterator = originalChildren.begin();
     tools::Iterator< const AutomatComposition& > typeIterator = type.CreateIterator();
-    DiamondFormation formation( position );
+    CircleFormation formation( position, type.NumberOfAgents() );
 
     bool pcSet = false;
     while( originalIterator != originalChildren.end() && typeIterator.HasMoreElements() )
