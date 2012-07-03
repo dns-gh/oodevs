@@ -123,6 +123,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     QPixmap lock_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
+    kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
     //@}
 };
 

@@ -77,6 +77,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , tools_               ( tools )
     , lock_                ( MAKE_PIXMAP( lock ) )
     , changeSuperiorDialog_( 0 )
+    , contextMenuEntity_   ( controllers )
 {
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
@@ -297,6 +298,7 @@ void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoin
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
+    contextMenuEntity_ = &entity;
     if( !isVisible() )
         return;
     menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
@@ -308,8 +310,9 @@ void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, ContextMenu&
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
+    contextMenuEntity_ = &team;
     if( const HierarchyLevel_ABC* root = levels_.GetRoot() )
         AddFormationMenu( menu, *root );
 }
@@ -320,6 +323,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
+    contextMenuEntity_ = &formation;
     AddFormationMenu( menu, formation.GetLevel() );
 }
 
@@ -329,6 +333,7 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
+    contextMenuEntity_ = &agent;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
     {
         if( ! decisions->IsEmbraye() )
@@ -356,9 +361,10 @@ void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel
 // Name: TacticalListView::NotifyContextMenu
 // Created: ABR 2012-07-03
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const kernel::Ghost_ABC& agent, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
 {
-    menu.InsertItem( "Command", tr( "Replace by automat" ), this, SLOT( ChangeAutomatType() ) );
+    contextMenuEntity_ = &ghost;
+    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +383,7 @@ void TacticalListView::OnRename()
 // -----------------------------------------------------------------------------
 void TacticalListView::OnChangeSuperior()
 {
-    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) ) // $$$$ ABR 2012-07-03: Use ContextMenuEntity instead, could operate on the wrong entity otherwise
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( !changeSuperiorDialog_ )
@@ -392,7 +398,7 @@ void TacticalListView::OnChangeSuperior()
 // -----------------------------------------------------------------------------
 void TacticalListView::Engage()
 {
-    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) ) // $$$$ ABR 2012-07-03: Use ContextMenuEntity instead, could operate on the wrong entity otherwise
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
@@ -406,7 +412,7 @@ void TacticalListView::Engage()
 // -----------------------------------------------------------------------------
 void TacticalListView::Disengage()
 {
-    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) ) // $$$$ ABR 2012-07-03: Use ContextMenuEntity instead, could operate on the wrong entity otherwise
     {
         Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
@@ -420,16 +426,14 @@ void TacticalListView::Disengage()
 // -----------------------------------------------------------------------------
 void TacticalListView::ChangeAutomatType()
 {
-    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
-        if( kernel::Entity_ABC* entity = valuedItem->GetValue< kernel::Entity_ABC >() )
-        {
-            std::string typeName = "";
-            if( entity->GetTypeName() == kernel::Automat_ABC::typeName_ )
-                typeName = static_cast< kernel::Automat_ABC* >( entity )->GetType().GetName();
-            if( entity->GetTypeName() == kernel::Ghost_ABC::typeName_ )
-                typeName = static_cast< kernel::Ghost_ABC* >( entity )->GetType();
-            ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, itemFactory_, *entity, typeName );
-        }
+    std::string typeName = "";
+    if( contextMenuEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
+        typeName = static_cast< const kernel::Automat_ABC& >( *contextMenuEntity_ ).GetType().GetName();
+    else if( contextMenuEntity_->GetTypeName() == kernel::Ghost_ABC::typeName_ )
+        typeName = static_cast< const kernel::Ghost_ABC& >( *contextMenuEntity_ ).GetType();
+    else
+        return;
+    ChangeAutomatTypeDialog( this, controllers_, agentTypes_, modelBuilder_, itemFactory_, *contextMenuEntity_.ConstCast(), typeName );
 }
 
 namespace

@@ -2496,7 +2496,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Replace by automat</source>
+        <source>Replace by a new automat</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

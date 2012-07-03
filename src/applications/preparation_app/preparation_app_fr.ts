@@ -2501,8 +2501,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Changer le type d&apos;automate</translation>
     </message>
     <message>
-        <source>Replace by automat</source>
-        <translation type="unfinished"></translation>
+        <source>Replace by a new automat</source>
+        <translation>Remplacer par un nouvel automate</translation>
     </message>
 </context>
 <context>
