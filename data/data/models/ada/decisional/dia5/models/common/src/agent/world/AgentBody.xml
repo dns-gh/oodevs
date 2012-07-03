@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface extends="directia.core.model.RoleBody" name="agent.world.AgentBody" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.AgentBody" source-version="1.0.0" extends="directia.core.model.RoleBody">
+    <description>The agent's own body knowledge. In sword, it reprensents the body knowledge of crowd agents and units agents. Those agents use their body to enact in the world.</description>
     <methods>
-     <method name="moveTo">
+        <method name="moveTo">
             <description>Returns true upon simulation method completion, false otherwise. </description>
             <argument name="destination">
                 <description>The destination to move to. </description>
@@ -50,15 +51,15 @@ Display a message.</description>
                 </type>
             </argument>
         </method>
-                <method name="sendMessage">
-            <description>To send a simple message.</description>
+        <method name="sendMessage">
+            <description>To send a simple trace message toward the gaming interface.</description>
             <argument name="message">
                 <type>
                     <simple name="string"/>
                 </type>
             </argument>
         </method>
-                <method name="getDecontaminated">
+        <method name="getDecontaminated">
             <description>To be decontaminated with the given decontamination plot. Returns 'true' once deonctamination is complete, 'false' otherwise.</description>
             <argument name="decontaminationPlot">
                 <description></description>
@@ -72,5 +73,5 @@ Display a message.</description>
                 </type>
             </return>
         </method>
-        </methods>
+    </methods>
 </interface>

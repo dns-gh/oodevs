@@ -5,8 +5,8 @@
         <skill name="france.military.platoon.skills.CoordinateIlluminationAndIndirectFire"/>
         <skill name="france.military.platoon.skills.DetruireReseau"/>
         <skill name="france.military.platoon.skills.DesactiverReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.Eclairer"/>
-        <skill name="france.military.platoon.skills.EnsureIndirectFire"/>
+        <skill name="sword.military.platoon.skills.Scout"/>
+        <skill name="sword.military.platoon.skills.EnsureIndirectFire"/>
         <skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
         <skill name="france.military.platoon.skills.Escort"/>
         <skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>
@@ -63,6 +63,8 @@
         <skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurOuSenseur"/>
         <skill name="france.military.platoon.combat.support.rens.skills.Appuyer"/>
         <skill name="sword.military.platoon.coercition.skills.ReconnoiterSite"/>
+        <skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurTirIndirect"/>
+        <skill name="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
     </skills>
     <resources>
         <resource name="france.military.platoon.resources.CapaciteEmbarquement"/>

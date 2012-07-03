@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateResourceNetWorkLinks" source-version="1.0.0">
     <parameters>
-        <parameter name="resourceNode">
+        <parameter name="resourceProducer">
             <description>The resource node to create the link with.</description>
             <type>
-                <class name="agent.world.ResourceNode"/>
+                <class name="agent.world.ResourceProducer"/>
             </type>
         </parameter>
-        <parameter name="resourceReceivers">
+        <parameter name="resourceNodes">
             <description>The resource node to create the link with.</description>
             <type>
                 <list>
-                    <class name="agent.world.ResourceReceiver"/>
+                    <class name="agent.world.ResourceNode"/>
                 </list>
             </type>
         </parameter>
@@ -19,15 +19,15 @@
     <stages>
         <stage label="CreateResourceNetWorkLinks" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks" main="true">
-                    <parameter name="resourceNode">
+                <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks">
+                    <parameter name="resourceProducer">
                         <value>
-                            <parameter>resourceNode</parameter>
+                            <parameter>resourceProducer</parameter>
                         </value>
                     </parameter>
-                    <parameter name="resourceReceivers">
+                    <parameter name="resourceNodes">
                         <value>
-                            <parameter>resourceReceivers</parameter>
+                            <parameter>resourceNodes</parameter>
                         </value>
                     </parameter>
                 </skill>

@@ -40,7 +40,7 @@
 	</parameters>
 	<modifiers/>
 	<links>
-		<link name="EnsureIndirectFire" skill="france.military.platoon.skills.EnsureIndirectFire">
+		<link name="EnsureIndirectFire" skill="sword.military.platoon.skills.EnsureIndirectFire">
 			<description>Lien vers le skill EnsureIndirectFire</description>
 		</link>
 		<link name="GiveOrderIlluminate" skill="france.military.platoon.skills.GiveOrderIlluminate">
