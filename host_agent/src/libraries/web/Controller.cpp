@@ -232,7 +232,7 @@ std::string Controller::DoGet( Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
-        if( !IsAuthenticated( request ) )
+        if( uri != "/is_authenticated" && !IsAuthenticated( request ) )
             return WriteHttpReply( Unauthorized, "Invalid authentication" );
         if( uri == "/get_cluster" )        return GetCluster( request );
         if( uri == "/start_cluster" )      return StartCluster( request );
@@ -265,6 +265,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/list_exercises")      return ListExercises( request );
         if( uri == "/count_exercises" )    return CountExercises( request );
         // users
+        if( uri == "/is_authenticated" )   return WriteHttpReply( IsAuthenticated( request ) ? Ok : Unauthorized );
         if( uri == "/logout" )             return UserLogout( request );
     }
     catch( const HttpException& err )
