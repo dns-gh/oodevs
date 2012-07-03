@@ -42,8 +42,9 @@ struct Request_ABC : public boost::noncopyable
     //! @name Mime methods
     //@{
     typedef boost::function< void( std::istream& ) > MimeHandler;
-    virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) const = 0;
+    virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) = 0;
     virtual void ParseMime() = 0;
+    virtual void ParseForm() = 0;
     //@}
 };
 }

@@ -105,9 +105,9 @@ public:
         return ::GetHeader( request_, name );
     }
 
-    virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ ) const
+    virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ )
     {
-        // NOTHING
+        throw std::runtime_error( "unsupported action" );
     }
 
     virtual void ParseMime()
@@ -115,9 +115,19 @@ public:
         throw std::runtime_error( "unsupported action" );
     }
 
+    virtual void ParseForm()
+    {
+        throw std::runtime_error( "unsupported action" );
+    }
+
     virtual std::string GetRemoteIp() const
     {
         return source_;
+    }
+
+    virtual const HttpServer::request& GetRequest() const
+    {
+        return request_;
     }
 
 private:
@@ -169,18 +179,14 @@ public:
         : WebRequest( request )
         , pool_     ( pool )
         , link_     ( link )
-        , reader_   ( boost::make_shared< MimeReader >() )
+        , reader_   ()
         , deadline_ ( server.get_service() )
         , size_     ( 0 )
     {
-        BOOST_FOREACH( const boost::network::http::request_header_narrow& item, request.headers )
-        {
-            reader_->PutHeader( item.name, item.value );
-            if( boost::iequals( item.name, "content-length" ) )
-                size_ = boost::lexical_cast< size_t >( item.value );
-        }
-        if( !reader_->IsValid() )
-            size_ = 0;
+        const boost::optional< std::string > opt = ::GetHeader( request, "Content-Length" );
+        if( opt == boost::none )
+            return;
+        size_ = boost::lexical_cast< size_t >( *opt );
     }
 
     ~MimeWebRequest()
@@ -188,8 +194,19 @@ public:
         // NOTHING
     }
 
-    virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) const
+    void SetupReader()
     {
+        reader_ = boost::make_shared< MimeReader >();
+        BOOST_FOREACH( const boost::network::http::request_header_narrow& item, GetRequest().headers )
+            reader_->PutHeader( item.name, item.value );
+        if( !reader_->IsValid() )
+            size_ = 0;
+    }
+
+    virtual void RegisterMime( const std::string& name, const MimeHandler& handler )
+    {
+        if( !reader_ )
+            SetupReader();
         reader_->Register( name, handler );
     }
 
@@ -200,6 +217,36 @@ public:
         stream_.Read( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
     }
 
+    virtual void ParseForm()
+    {
+        deadline_.async_wait( boost::bind( &OnTimeout, boost::ref( stream_ ), _1 ) );
+        ReadBody( link_, size_, stream_, deadline_ );
+        stream_.Read( boost::bind( &MimeWebRequest::ParseFormParameters, this, _1 ) );
+    }
+
+    void ParseFormParameters( std::istream& stream )
+    {
+        std::stringstream full;
+        std::copy( std::istreambuf_iterator< char >( stream ),
+                   std::istreambuf_iterator< char >(),
+                   std::ostreambuf_iterator< char >( full ) );
+        std::vector< std::string > tokens;
+        boost::algorithm::split( tokens, full.str(), boost::is_any_of( "&" ) );
+        size_t pos;
+        BOOST_FOREACH( const std::string& item, tokens )
+            if( ( pos = item.find( '=' ) ) != std::string::npos )
+                form_.insert( std::make_pair( item.substr( 0, pos ),
+                              boost::network::uri::decoded( item.substr( pos+1 ) ) ) );
+    }
+
+    virtual boost::optional< std::string > GetParameter( const std::string& name ) const
+    {
+        const boost::optional< std::string > opt = WebRequest::GetParameter( name );
+        if( opt != boost::none )
+            return opt;
+        return FindFrom( form_, name );
+    }
+
 private:
     Pool_ABC& pool_;
     AsyncStream stream_;
@@ -207,6 +254,7 @@ private:
     boost::shared_ptr< MimeReader > reader_;
     Timer deadline_;
     size_t size_;
+    T_Parameters form_;
 };
 
 template< typename T >
