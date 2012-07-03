@@ -87,7 +87,7 @@ Section $(^Name)
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
-    !insertmacro CreateInternetShortcut "$SMPROGRAMS\$(^Name)\Cluster" "http://localhost:8080/cluster/"    
+    !insertmacro CreateInternetShortcut "$SMPROGRAMS\$(^Name)\Cluster" "http://localhost:8080/"    
 
     ; registry
     WriteRegStr HKLM "Software\MASA Group\$(^Name)" "Install_Dir" "$INSTDIR"

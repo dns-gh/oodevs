@@ -36,6 +36,7 @@ public class Agent {
         final ServletContextHandler ctx = new ServletContextHandler(ServletContextHandler.NO_SECURITY | ServletContextHandler.NO_SESSIONS);
 
         final ServletHolder handler = new ServletHolder(new Handler(config));
+        ctx.addServlet(handler, "");
         ctx.addServlet(handler, "/");
 
         final EnumSet<DispatcherType> all = EnumSet.of(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD, DispatcherType.INCLUDE,
