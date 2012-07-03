@@ -2,6 +2,7 @@ package web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.client.ContentExchange;
+import org.eclipse.jetty.client.HttpClient;
+import org.eclipse.jetty.client.HttpExchange;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil2;
@@ -30,6 +35,7 @@ public class Handler extends HttpServlet {
     private final MimeUtil2 mimes_;
     private final String type_;
     private final String name_;
+    private final HttpClient client_;
 
     public Handler(final Agent.Configuration config) throws Exception {
         uuid_ = config.uuid;
@@ -46,6 +52,13 @@ public class Handler extends HttpServlet {
         cfg_.setOutputEncoding("UTF-8");
         mimes_ = new MimeUtil2();
         mimes_.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
+        client_ = new HttpClient();
+        client_.setConnectBlocking(false);
+        client_.setConnectorType(HttpClient.CONNECTOR_SELECT_CHANNEL);
+        client_.setMaxConnectionsPerAddress(200);
+        client_.setThreadPool(new QueuedThreadPool(250));
+        client_.setTimeout(30 * 1000);
+        client_.start();
     }
 
     private String getContentType(final File file) {
@@ -82,14 +95,39 @@ public class Handler extends HttpServlet {
         }
     }
 
+    private static void tryAddHeader(final HttpExchange exchange, final HttpServletRequest req, final String name) {
+        final Enumeration<String> tokens = req.getHeaders(name);
+        while (tokens.hasMoreElements())
+            exchange.addRequestHeader(name, tokens.nextElement());
+    }
+
+    private boolean isAuthenticated(final HttpServletRequest req, final int api) throws IOException {
+        try {
+            final ContentExchange exchange = new ContentExchange(true);
+            final String next = "http://localhost:" + api + "/is_authenticated";
+            exchange.setURL(next);
+            tryAddHeader(exchange, req, "Remote-Address");
+            tryAddHeader(exchange, req, "sid");
+            client_.send(exchange);
+            final int state = exchange.waitForDone();
+            if (state != HttpExchange.STATUS_COMPLETED)
+                return false;
+            final int code = exchange.getResponseStatus();
+            return code == HttpServletResponse.SC_OK;
+        } catch (final InterruptedException e) {
+            // NOTHING
+        }
+        return false;
+    }
+
     @Override
-    protected void doGet(final HttpServletRequest request, final HttpServletResponse reply) throws ServletException, IOException {
-        String uri = request.getRequestURI();
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
+        String uri = isAuthenticated(req, 40040) ? req.getRequestURI() : "login";
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())
             uri = type_ + "/index";
-        final String target = identify(uri, reply);
-        serveTemplate(reply, request, target);
+        final String target = identify(uri, res);
+        serveTemplate(res, req, target);
     }
 }
