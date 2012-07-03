@@ -43,7 +43,8 @@ public class Handler extends HttpServlet {
 
     @Override
     public void service(final ServletRequest req, final ServletResponse res) throws ServletException, IOException {
-        String uri = ((HttpServletRequest) req).getRequestURI();
+        final HttpServletRequest raw = (HttpServletRequest) req;
+        String uri = raw.getRequestURI();
         ProxyHolder proxy = null;
         if (uri.startsWith("/"))
             uri = uri.substring(1);
@@ -54,7 +55,7 @@ public class Handler extends HttpServlet {
         else if (uri.equals("list_proxies"))
             listProxies(req, res);
         else if ((proxy = findProxy(req, uri)) != null)
-            proxy.service(new ProxyRequest(req), res);
+            proxy.service(new ProxyRequest(raw), res);
         else
             ((HttpServletResponse) res).sendError(HttpServletResponse.SC_NOT_FOUND);
     }
