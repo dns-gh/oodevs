@@ -29,11 +29,12 @@ FloodModel::~FloodModel()
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: FloodModel::GenerateFlood
 // Created: LGY 2012-06-18
 // -----------------------------------------------------------------------------
-bool FloodModel::GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force /*= false*/ )
+bool FloodModel::GenerateFlood( const geometry::Point2d& /*center*/, int /*depth*/, int /*refDist*/, bool /*force*/ )
 {
     return true;
 }
@@ -44,7 +45,8 @@ bool FloodModel::GenerateFlood( const geometry::Point2d& center, int depth, int 
 // -----------------------------------------------------------------------------
 const std::vector< geometry::Polygon2f* >& FloodModel::GetDeepAreas() const
 {
-    return std::vector< geometry::Polygon2f* >();
+    static const std::vector< geometry::Polygon2f* > v;
+    return v;
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +55,6 @@ const std::vector< geometry::Polygon2f* >& FloodModel::GetDeepAreas() const
 // -----------------------------------------------------------------------------
 const std::vector< geometry::Polygon2f* >& FloodModel::GetLowAreas() const
 {
-    return std::vector< geometry::Polygon2f* >();
+    static const std::vector< geometry::Polygon2f* > v;
+    return v;
 }

@@ -60,7 +60,7 @@ void ObjectKnowledge_ABC::MultipleSelect( ActionController& controller, const st
     std::vector< const ObjectKnowledge_ABC* > first;
     std::vector< const Knowledge_ABC* > second;
     std::vector< const Entity_ABC* > third;
-    for( int i = 0; i < elements.size(); ++i )
+    for( std::size_t i = 0; i < elements.size(); ++i )
     {
         first.push_back( static_cast< const ObjectKnowledge_ABC* >( elements[ i ] ) );
         second.push_back( static_cast< const Knowledge_ABC* >( elements[ i ] ) );

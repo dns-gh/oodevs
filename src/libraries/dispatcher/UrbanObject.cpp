@@ -224,7 +224,7 @@ void UrbanObject::ApplyTemplate( const UrbanTemplateTypePtr& /*urbanTemplate*/ )
 // Name: UrbanObject::UpdateTemplate
 // Created: JSR 2012-06-20
 // -----------------------------------------------------------------------------
-void UrbanObject::UpdateTemplate( const kernel::ObjectTypes& objectTypes )
+void UrbanObject::UpdateTemplate( const kernel::ObjectTypes& /*objectTypes*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

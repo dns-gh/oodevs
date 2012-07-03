@@ -205,7 +205,7 @@ private:
 // Name: boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextRemovableObjectOnPath
 // Created: BCI 2011-06-20
 // -----------------------------------------------------------------------------
-std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextRemovableObjectOnPath( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > oId, float oDistance )
+std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextRemovableObjectOnPath( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > oId, float /*oDistance*/ )
 {
     RemovableFromPathObjectFilter filter( callerAgent.GetPion() );
     return ::GetNextObjectOnPath( filter, callerAgent.GetPion() );

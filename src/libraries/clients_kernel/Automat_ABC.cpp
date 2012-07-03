@@ -59,7 +59,7 @@ void Automat_ABC::MultipleSelect( ActionController& controller, const std::vecto
 {
     std::vector< const Automat_ABC* > first;
     std::vector< const Entity_ABC* > second;
-    for( int i = 0; i < elements.size(); ++i )
+    for( std::size_t i = 0; i < elements.size(); ++i )
     {
         first.push_back( static_cast< const Automat_ABC* >( elements[ i ] ) );
         second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );

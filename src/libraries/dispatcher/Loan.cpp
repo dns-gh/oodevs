@@ -23,7 +23,7 @@ namespace
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEquipment& message )
+Loan::Loan( const Model_ABC& /*model*/, const sword::BorrowedEquipments_BorrowedEquipment& message )
     : idAgent_      ( message.owner().id() )
     , equipmentType_( message.type().id() )
     , quantity_     ( message.quantity() )
@@ -36,7 +36,7 @@ Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEqui
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model_ABC& model, const sword::LentEquipments_LentEquipment& message )
+Loan::Loan( const Model_ABC& /*model*/, const sword::LentEquipments_LentEquipment& message )
     : idAgent_      ( message.borrower().id() )
     , equipmentType_( message.type().id() )
     , quantity_     ( message.quantity() )

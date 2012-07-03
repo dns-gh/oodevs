@@ -75,7 +75,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 // Name: AgentFactory::Create
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
+MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string& name )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, name );
     type.RegisterRoles( *pPion );

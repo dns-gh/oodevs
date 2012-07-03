@@ -60,7 +60,7 @@ void PopulationKnowledge_ABC::MultipleSelect( ActionController& controller, cons
     std::vector< const PopulationKnowledge_ABC* > first;
     std::vector< const Knowledge_ABC* > second;
     std::vector< const Entity_ABC* > third;
-    for( int i = 0; i < elements.size(); ++i )
+    for( std::size_t i = 0; i < elements.size(); ++i )
     {
         first.push_back( static_cast< const PopulationKnowledge_ABC* >( elements[ i ] ) );
         second.push_back( static_cast< const Knowledge_ABC* >( elements[ i ] ) );

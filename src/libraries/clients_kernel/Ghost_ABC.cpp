@@ -59,7 +59,7 @@ void Ghost_ABC::MultipleSelect( ActionController& controller, const std::vector<
 {
     std::vector< const Ghost_ABC* > first;
     std::vector< const Entity_ABC* > second;
-    for( int i = 0; i < elements.size(); ++i )
+    for( std::size_t i = 0; i < elements.size(); ++i )
     {
         first.push_back( static_cast< const Ghost_ABC* >( elements[ i ] ) );
         second.push_back( static_cast< const Entity_ABC* >( elements[ i ] ) );
