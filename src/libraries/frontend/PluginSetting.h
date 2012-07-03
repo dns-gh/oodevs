@@ -41,6 +41,7 @@ namespace frontend
 {
     class PluginSettingVisitor_ABC;
     class PluginSetting;
+    class FileList;
 
 
 class FileButtonEvent : public QPushButton
@@ -112,6 +113,7 @@ private:
     QCheckBox*                       booleanValue_;
     Q3TimeEdit*                      timeValue_;
     QComboBox*                       enumerationValue_;
+    FileList*                        fileList_;
     std::string                      fileName_;
     std::auto_ptr< FileButtonEvent > fileValue_;
     //@}

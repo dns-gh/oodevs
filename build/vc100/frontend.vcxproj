@@ -104,6 +104,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\frontend\CommandLineTools.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\FileList.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\frontend_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -149,6 +150,14 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h" />
     <ClInclude Include="..\..\src\libraries\frontend\Config.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\FileList.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\frontend\frontend_pch.h" />
     <ClInclude Include="..\..\src\libraries\frontend\commands.h" />
     <ClInclude Include="..\..\src\libraries\frontend\CreateExercise.h" />

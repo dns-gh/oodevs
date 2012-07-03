@@ -114,7 +114,35 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation, BuildFixture )
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
-    MOCK_EXPECT( federate->Create ).once().in( s ).with( "Federation", "directory/fom" ).returns( true );
+    MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "directory/fom" ).returns( true );
+    MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_absolute_fom, BuildFixture )
+{
+    xml::xistringstream xis( "<root name='name' creation='true' fom='c:/fom'/>" );
+    xis >> xml::start( "root" );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
+    MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "c:/fom" ).returns( true );
+    MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
+    FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_fom_modules, BuildFixture )
+{
+	std::vector< std::string > FOM_FILES;
+	FOM_FILES.push_back("c:/fom1");
+	FOM_FILES.push_back("c:/fom2");
+
+    xml::xistringstream xis( "<root name='name' creation='true' fom='c:/fom1;c:/fom2'/>" );
+    xis >> xml::start( "root" );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
+    MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
+    MOCK_EXPECT( federate->CreateV ).once().in( s ).with( "Federation", FOM_FILES ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
 }

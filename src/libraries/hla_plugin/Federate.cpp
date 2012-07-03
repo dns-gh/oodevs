@@ -60,6 +60,15 @@ bool Federate::Create( const std::string& federation, const std::string& fomFile
 }
 
 // -----------------------------------------------------------------------------
+// Name: Federate::Create
+// Created: SLI 2011-06-10
+// -----------------------------------------------------------------------------
+bool Federate::Create( const std::string& federation, const T_FomFiles& fomFiles )
+{
+    return federate_->Create( federation, fomFiles );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Federate::Destroy
 // Created: SLI 2011-06-10
 // -----------------------------------------------------------------------------

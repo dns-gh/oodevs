@@ -29,6 +29,7 @@ namespace hla
         virtual bool Connect() { return true; }
         virtual void Disconnect() {}
         virtual bool Create( const std::string&, const std::string& ) { return true; }
+        virtual bool Create( const std::string&, const T_FomFiles& ) { return true; }
         virtual bool Destroy( const std::string& ) { return true; }
         virtual bool Join( const std::string&, bool, bool ) { return true; }
         virtual void Resign() {}

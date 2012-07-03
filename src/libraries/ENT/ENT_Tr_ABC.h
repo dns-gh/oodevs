@@ -14,7 +14,7 @@
 #pragma warning( disable : 4996 )
 
 #pragma warning( push, 0 )
-#include <QtGui/qapplication.h>
+#include <QtGui/QApplication>
 #pragma warning( pop )
 
 #include <assert.h>

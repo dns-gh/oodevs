@@ -46,6 +46,7 @@ public:
     virtual void Disconnect();
 
     virtual bool Create( const std::string& federation, const std::string& fomFile );
+    virtual bool Create( const std::string& federation, const T_FomFiles& fomFiles );
     virtual bool Destroy( const std::string& federation );
 
     virtual bool Join( const std::string& federation, bool timeConstrained, bool timeRegulating );

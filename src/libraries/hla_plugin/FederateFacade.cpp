@@ -33,11 +33,14 @@
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 
 using namespace plugins::hla;
 
 namespace
 {
+
     std::auto_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
     {
         std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
@@ -49,9 +52,25 @@ namespace
         {
             if( xis.attribute< bool >( "creation", false ) )
             {
-                const std::string fom = xis.attribute< std::string >( "fom", "ASI_FOM_v2.0.8_2010.xml" );
-                if( !federate->Create( name, pluginDirectory + "/" + fom ) )
-                    throw std::runtime_error( "Could not create the federation '" + name + "'" );
+                std::string fom = xis.attribute< std::string >( "fom", "ASI_FOM_v2.0.8_2010.xml" );
+                std::vector<std::string> fomFiles;
+
+                boost::split(fomFiles, fom, boost::is_any_of(",;"));
+
+                if (fomFiles.size() > 1)
+                {
+                    if( !federate->Create( name, fomFiles ) )
+                        throw std::runtime_error( "Could not create the federation '" + name + "'" );
+                }
+                else
+                {
+                    if( !boost::filesystem::path(fom).is_complete() )
+                        fom = pluginDirectory + "/" + fom ;
+                    if( !federate->Create( name, fom ) )
+                        throw std::runtime_error( "Could not create the federation '" + name + "'" );
+                }
+
+
                 if( !federate->Join( name, xis.attribute< bool >( "time-constrained", true ), xis.attribute< bool >( "time-regulating", true ) ) )
                     throw std::runtime_error( "Could not join the federation '" + name + "'" );
             }
@@ -207,6 +226,15 @@ void FederateFacade::Disconnect()
 bool FederateFacade::Create( const std::string& federation, const std::string& fomFile )
 {
     return federate_->Create( federation, fomFile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::Create
+// Created: DGE 2012-03-28
+// -----------------------------------------------------------------------------
+bool FederateFacade::Create( const std::string& federation, const T_FomFiles& fomFiles )
+{
+    return federate_->Create( federation, fomFiles );
 }
 
 // -----------------------------------------------------------------------------

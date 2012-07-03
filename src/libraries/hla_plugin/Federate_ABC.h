@@ -35,6 +35,7 @@ namespace hla
 class Federate_ABC : private boost::noncopyable
 {
 public:
+    typedef std::vector< std::string >                T_FomFiles;
     //! @name Constructors/Destructor
     //@{
              Federate_ABC() {}
@@ -47,6 +48,7 @@ public:
     virtual void Disconnect() = 0;
 
     virtual bool Create( const std::string& federation, const std::string& fomFile ) = 0;
+    virtual bool Create( const std::string& federation, const T_FomFiles& fomFiles ) = 0;
     virtual bool Destroy( const std::string& federation ) = 0;
 
     virtual bool Join( const std::string& federation, bool timeConstrained, bool timeRegulating ) = 0;

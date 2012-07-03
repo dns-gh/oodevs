@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "PluginSetting.h"
 #include "PluginSettingVisitor_ABC.h"
+#include "FileList.h"
 #include "moc_PluginSetting.cpp"
 #include "tools/GeneralConfig.h"
 
@@ -78,6 +79,13 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     , type_ ( xis.attribute< std::string >( "type" ) )
     , config_ ( config )
     , description_( xis, ReadLang() )
+    , label_()
+    , stringValue_()
+    , integerValue_()
+    , booleanValue_()
+    , timeValue_()
+    , enumerationValue_()
+    , fileList_()
 {
     bool display = xis.attribute< bool >( "display", true );
 
@@ -115,6 +123,11 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     {
         fileValue_.reset( new FileButtonEvent( *this, parent ) );
     }
+    else if( type_ == "file_list" )
+    {
+        fileList_ = new FileList( "Files", parent, "?", "");
+        fileList_->SetFilesDelimited(xis.attribute< std::string >( "default" ) );
+    }
     else if( type_ == "enumeration" )
     {
         enumerationValue_ = new QComboBox( parent );
@@ -149,6 +162,8 @@ void PluginSetting::OnLanguageChanged()
 
     if( fileValue_.get() && !fileValue_->HasBeenUpdated() )
         fileValue_->setText( description_.GetDescription().empty() ? tools::translate( "PluginSetting", "Select a file..." ) : description_.GetDescription().c_str() );
+    if( fileList_ != NULL )
+        fileList_->OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -173,6 +188,10 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
         // if( exerciseDir.string() == std::string( orderDir.string(), 0, exerciseDir.string().size() ) )
         //    action.SetOption( "session/config/dispatcher/plugins/timeline/orders/@file", std::string( orderFile_, exerciseDir.string().size() + 1, orderFile_.size() - exerciseDir.string().size() - 1 ) );
         visitor.Visit( attribute_, fileName_ );
+    }
+    else if( type_ == "file_list" )
+    {
+        visitor.Visit( attribute_,  fileList_->GetFilesDelimited());
     }
     else if( type_ == "enumeration" )
         visitor.Visit( attribute_, std::string( enumerationValue_->currentText().ascii() ) );

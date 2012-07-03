@@ -47,7 +47,7 @@ HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
     {
         logger.LogError( "Initialization failed (unhandled error)." );
     }
-    return 0;
+    return 0;  
 }
 
 // -----------------------------------------------------------------------------
