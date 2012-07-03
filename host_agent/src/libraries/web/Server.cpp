@@ -45,6 +45,14 @@ typedef std::map< std::string, std::string > T_Parameters;
 typedef boost::asio::deadline_timer Timer;
 const int timeout_seconds = 10;
 
+boost::optional< std::string > GetHeader( const HttpServer::request& request, const std::string& name )
+{
+    BOOST_FOREACH( const HttpServer::request::header_type& header, request.headers )
+        if( boost::iequals( header.name, name ) )
+            return header.value;
+    return boost::none;
+}
+
 T_Parameters ParseParameters( const boost::network::uri::uri& uri )
 {
     T_Parameters reply;
@@ -94,10 +102,7 @@ public:
 
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const
     {
-        BOOST_FOREACH( const HttpServer::request::header_type& header, request_.headers )
-            if( header.name == name )
-                return header.value;
-        return boost::none;
+        return ::GetHeader( request_, name );
     }
 
     virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ ) const
