@@ -98,7 +98,7 @@ private:
 
     //! @name User Methods
     //@{
-    std::string UserLogin      ( const Request_ABC& request );
+    std::string UserLogin      ( Request_ABC& request );
     std::string UserLogout     ( const Request_ABC& request );
     bool        IsAuthenticated( const Request_ABC& request );
     //@}

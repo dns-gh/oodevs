@@ -609,8 +609,9 @@ bool Controller::IsAuthenticated( const Request_ABC& request )
 // Name: Controller::UserLogin
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-std::string Controller::UserLogin( const Request_ABC& request )
+std::string Controller::UserLogin( Request_ABC& request )
 {
+    request.ParseForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string password = RequireParameter< std::string >( "password", request );
     return WriteHttpReply( users_.Login( username, password, GetSource( request ) ) );
