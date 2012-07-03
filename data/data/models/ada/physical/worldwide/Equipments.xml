@@ -10753,9 +10753,6 @@
         <resource capacity="60" logistic-threshold="1" name="Gasoil" normalized-consumption="60"/>
         <resource capacity="100" logistic-threshold="80" name="Kerosene" normalized-consumption="1"/>
       </category>
-      <category name="mine">
-        <resource capacity="1000" logistic-threshold="0" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="barbele">
         <resource capacity="200" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="1"/>
         <resource capacity="100" logistic-threshold="10" name="Sand Bag" normalized-consumption="10"/>
@@ -10789,7 +10786,6 @@
       <object construction-time-factor="0s" initial-construction-time="120s" initial-destruction-time="120s" type="decontamination site"/>
       <object initial-construction-time="4m" type="Arson"/>
       <object initial-construction-time="10m" initial-destruction-time="5m" type="firebreak area"/>
-      <object initial-destruction-time="5m" type="landslide"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="50" type="Flat Tire"/>
@@ -11401,4 +11397,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3289416212" -->
+<!-- signature="2182047872" -->
