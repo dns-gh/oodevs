@@ -11,6 +11,8 @@ class Main {
         config.port = 8080;
         config.isDebug = false;
         config.ssl = 0;
+        config.store = "";
+        config.type = "";
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
             if (it.equals("--port")) {
