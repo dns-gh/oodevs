@@ -41,7 +41,7 @@ public:
     void UpdateSymbol( const std::string& level, const std::string& symbol );
     //@}
 
-protected:
+private:
     //! @name Copy/Assignment
     //@{
     AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
