@@ -251,10 +251,7 @@ namespace
         {
             if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
                 MagicFunctor::operator()( *agent );
-            const Hierarchies* h = entity.Retrieve< CommunicationHierarchies >();
-            if( ! h )
-                h = entity.Retrieve< TacticalHierarchies >();
-            if( h )
+            if( const Hierarchies* h = entity.Retrieve< TacticalHierarchies >() )
             {
                 tools::Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
                 while( it.HasMoreElements() )
