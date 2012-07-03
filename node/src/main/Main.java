@@ -16,6 +16,7 @@ class Main {
         config.type = "cluster";
         config.name = "";
         config.port = 8081;
+        config.host = 0;
         config.isDebug = false;
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
@@ -27,6 +28,10 @@ class Main {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --port parameter");
                 config.port = Integer.parseInt(args[++i]);
+            } else if (it.equals("--host")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --host parameter");
+                config.host = Integer.parseInt(args[++i]);
             } else if (it.equals("--name")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --name parameter");
@@ -51,12 +56,15 @@ class Main {
         config.www = dir.getAbsolutePath();
         if (config.uuid.isEmpty())
             throw new Exception("Missing --uuid parameter");
+        if (config.host == 0)
+            throw new Exception("Missing --host parameter");
     }
 
     private static void printParameters(final Agent.Configuration config) {
         log_.info("uuid:  " + config.uuid);
         log_.info("www:  " + config.www);
         log_.info("port:  " + config.port);
+        log_.info("host:  " + config.host);
         log_.info("type:  " + config.type);
         log_.info("debug: " + (config.isDebug ? "true" : "false"));
     }

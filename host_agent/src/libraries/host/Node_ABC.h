@@ -69,7 +69,7 @@ struct Node_ABC : public boost::noncopyable
     //@{
     virtual Tree Save() const = 0;
     virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& java, const Path& jar,
-                        const Path& web, const std::string& type, bool weak ) = 0;
+                        const Path& web, const std::string& type, int host, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async ) = 0;
     //@}

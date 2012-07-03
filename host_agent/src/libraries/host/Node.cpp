@@ -206,7 +206,8 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar, const Path& web, const std::string& type, bool weak )
+bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar,
+                  const Path& web, const std::string& type, int host, bool weak )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( stopped_ && weak )
@@ -223,6 +224,7 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar,
         ( MakeOption( "uuid", id_ ) )
         ( MakeOption( "type", type ) )
         ( MakeOption( "name", name_ ) )
+        ( MakeOption( "host", host ) )
         ( MakeOption( "port", port_->Get() ) ),
         Utf8Convert( Path( jar ).remove_filename() ),
         Utf8Convert( root_ / ( type + ".log" ) ) );

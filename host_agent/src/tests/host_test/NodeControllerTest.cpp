@@ -91,7 +91,7 @@ namespace
             , web    ( "e:/zomg/www" )
             , type   ( isCluster ? "cluster" : "node" )
             , sub    ( java, jar, web )
-            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, java, jar, web, type, sub.pool, sub.proxy )
+            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, java, jar, web, type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }

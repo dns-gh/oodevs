@@ -36,6 +36,7 @@ public class Handler extends HttpServlet {
     private final String type_;
     private final String name_;
     private final HttpClient client_;
+    private final int host_;
 
     public Handler(final Agent.Configuration config) throws Exception {
         uuid_ = config.uuid;
@@ -59,6 +60,7 @@ public class Handler extends HttpServlet {
         client_.setThreadPool(new QueuedThreadPool(250));
         client_.setTimeout(30 * 1000);
         client_.start();
+        host_ = config.host;
     }
 
     private String getContentType(final File file) {
@@ -101,10 +103,10 @@ public class Handler extends HttpServlet {
             exchange.addRequestHeader(name, tokens.nextElement());
     }
 
-    private boolean isAuthenticated(final HttpServletRequest req, final int api) throws IOException {
+    private boolean isAuthenticated(final HttpServletRequest req) throws IOException {
         try {
             final ContentExchange exchange = new ContentExchange(true);
-            final String next = "http://localhost:" + api + "/is_authenticated";
+            final String next = "http://localhost:" + host_ + "/is_authenticated";
             exchange.setURL(next);
             tryAddHeader(exchange, req, "Remote-Address");
             tryAddHeader(exchange, req, "sid");
@@ -122,7 +124,7 @@ public class Handler extends HttpServlet {
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
-        String uri = isAuthenticated(req, 40040) ? req.getRequestURI() : "login";
+        String uri = isAuthenticated(req) ? req.getRequestURI() : "login";
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())

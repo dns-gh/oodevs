@@ -56,6 +56,7 @@ public:
                              const Path& jar,
                              const Path& web,
                              const std::string& type,
+                             int host,
                              runtime::Pool_ABC& pool,
                              Proxy_ABC& proxy );
     virtual ~NodeController();
@@ -122,6 +123,7 @@ private:
     const Path jar_;
     const Path web_;
     const std::string type_;
+    const int host_;
     Proxy_ABC& proxy_;
     Container< Node_ABC > nodes_;
     runtime::Timer timer_;

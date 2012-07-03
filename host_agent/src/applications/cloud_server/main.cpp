@@ -271,15 +271,15 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( pool, system );
     NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
-    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, proxy );
-    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, proxy );
+    const Port host = ports.Create();
+    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", host->Get(), pool, proxy );
+    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", host->Get(), pool, proxy );
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Sql db( cfg.root / "cloud.db" );
     UserController users( log, uuids, db );
     web::Controller controller( log, agent, users, true );
-    const Port host = ports.Create();
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
     proxy.Register( "api", "localhost", host->Get() );
