@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
     tools::Resolver< dispatcher::Team_ABC > sides;
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -40,9 +40,9 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
 }
 
@@ -55,11 +55,11 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
     {
         std::auto_ptr< dispatcher::Team_ABC > result;
         {
@@ -88,9 +88,9 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendFullUpdate( publisher );
-            publisher.verify();
+            mock::verify( publisher );
         }
         {
             // Change diplomacies
@@ -115,9 +115,9 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendFullUpdate( publisher );
-            publisher.verify();
+            mock::verify( publisher );
         }
     }
 }

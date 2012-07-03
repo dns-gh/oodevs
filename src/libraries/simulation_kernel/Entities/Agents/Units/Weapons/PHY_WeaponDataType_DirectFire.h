@@ -68,10 +68,10 @@ private:
     //! @name Init / Tools
     //@{
     double GetPH( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const;
-    double GetPH( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, double rDistance ) const;
+    double GetPH( const PHY_Volume& targetVolume, double rDistance ) const;
 
-    double GetMaxDistanceForPH( double rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
-    double GetMinDistanceForPH( double rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
+    double GetMaxDistanceForPH( double rPH, const PHY_Volume& targetVolume ) const;
+    double GetMinDistanceForPH( double rPH, const PHY_Volume& targetVolume ) const;
     double GetMaxDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
     double GetMinDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
 

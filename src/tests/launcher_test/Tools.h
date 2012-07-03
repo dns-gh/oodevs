@@ -182,7 +182,7 @@ namespace launcher_test
         {
             launcher.Initialize( argc, &args[0] );
             BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
-            MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
+            MOCK_EXPECT( handler.OnConnectionSucceeded ).once();
             client.Connect( host, PORT, handler );
             while( !client.Connected() && !timeout.Expired() )
                 Update();
@@ -225,7 +225,7 @@ namespace launcher_test
             savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml.save" ) );
             bfs::copy_file( filePath, savePath, bfs::copy_option::overwrite_if_exists );
 
-            MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
+            MOCK_EXPECT( dispatcher.ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
             exercise->StartDispatcher( session,
                 boost::assign::map_list_of
                     ( "session/config/simulation/network/@port", boost::lexical_cast< std::string >( PORT + 1 ) )
@@ -251,7 +251,7 @@ namespace launcher_test
         void VerifySendRequest( const std::string& expected )
         {
             sword::ClientToSim message;
-            MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any, mock::retrieve( message ) );
+            MOCK_EXPECT( dispatcher.ReceiveSim ).once().with( mock::any, mock::retrieve( message ) );
             timeout.Start();
             while( !message.IsInitialized()&& !timeout.Expired() )
                 Update();
@@ -261,7 +261,7 @@ namespace launcher_test
         void VerifySendAuthRequest( const std::string& expected )
         {
             sword::ClientToAuthentication message;
-            MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any, mock::retrieve( message ) );
+            MOCK_EXPECT( dispatcher.ReceiveAuth ).once().with( mock::any, mock::retrieve( message ) );
             timeout.Start();
             while( !message.IsInitialized()&& !timeout.Expired() )
                 Update();

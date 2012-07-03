@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.Create" source-version="1.0.0">
-    <description>To create and/or build a given work object.</description>
+    <description>To create or build a given work object.</description>
     <parameters>
         <parameter name="work">
-            <description>The work to create and build.</description>
+            <description>The work to create or build.</description>
             <type>
                 <class name="agent.world.Work"/>
             </type>

@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "AdvancedConfigPanel.h"
+#include "moc_AdvancedConfigPanel.cpp"
 #include "clients_gui/tools.h"
 #include "frontend/CreateSession.h"
 #include <QtGui/qcheckbox.h>
@@ -66,6 +67,12 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
         fragmentsFrequencySpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox );
         fragmentsFrequencySpin_->setValue( 200 );
     }
+    legacyBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
+    {
+        legacyCheckBox_ = new QCheckBox( legacyBox_ );
+        legacyCheckBox_->setChecked( false );
+        connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +101,9 @@ void AdvancedConfigPanel::OnLanguageChanged()
 
     recordBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Recorder" ) );
     fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ) );
+    
+    legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
+    legacyCheckBox_->setText( tools::translate( "AdvancedConfigPanel", "Enable Legacy Mode" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,4 +129,13 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
     action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreadsSpin_->value() );
     action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequencySpin_->value() );
     action.Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdvancedConfigPanel::SwordVersionChecked
+// Created: SLI 2012-01-30
+// -----------------------------------------------------------------------------
+void AdvancedConfigPanel::SwordVersionChecked( int state )
+{
+    emit SwordVersionSelected( state == Qt::Checked );
 }

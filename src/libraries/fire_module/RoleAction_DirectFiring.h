@@ -1,0 +1,82 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#ifndef fire_module_RoleAction_DirectFiring_h
+#define fire_module_RoleAction_DirectFiring_h
+
+#include "DirectFireData.h"
+#include <vector>
+
+namespace sword
+{
+namespace wrapper
+{
+    class View;
+}
+namespace fire
+{
+// =============================================================================
+/** @class  RoleAction_DirectFiring
+    @brief  Role action direct firing
+*/
+// Created: MCO 2012-03-19
+// =============================================================================
+class RoleAction_DirectFiring
+{
+public:
+    //! @name Operations
+    //@{
+    //int  FirePopulation         ( unsigned int nTargetKnowledgeID, const PHY_AmmoDotationClass* dotationClass );
+    //void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
+
+    int  FirePion               ( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, DirectFireData::E_ComposanteFiringType nComposanteFiringType, DirectFireData::E_ComposanteFiredType nComposanteFiredType, bool mustReport, int ammoDotationClass ) const;
+    void FirePionSuspended      ( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
+    //int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
+    //void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
+
+    //void FireZone               ( const MIL_Object_ABC& zone, FireResults_Default*& pFireResult );
+    //@}
+
+    //! @name Return codes
+    //@{
+    int GetInitialReturnCode() const;
+    int GetFinalReturnCode  () const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    enum E_ReturnCode
+    {
+        eImpossible,
+        eEnemyDestroyed,    // -> le tir est terminé parceque le pion adverse est détruit
+        eNoCapacity,        // -> le tir est terminé car il ne reste aucune composante ayant la capacité de tirer
+        eNoAmmo,            // -> le tir est terminé parque qu'il reste des composante capables de tirer mais qu'il ne reste plus de munition adéquates
+        eRunning,           // -> le tir est en cours d'exécution
+        eFinished,          // Stop tir
+        eTemporarilyBlocked // -> Le tir ne peut pas etre effectue tout de suite pour cause d'encombrement en zone urbaine
+    };
+
+    typedef std::vector< wrapper::View >         T_ComposanteVector;
+    typedef T_ComposanteVector::const_iterator CIT_ComposanteVector;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    //MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
+    void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const;
+    T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, bool bFireOnlyOnMajorComposantes, unsigned int nNbrWeaponsUsable ) const;
+    //@}
+};
+
+}
+}
+
+#endif // fire_module_RoleAction_DirectFiring_h

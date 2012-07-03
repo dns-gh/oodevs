@@ -25,11 +25,11 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
     std::auto_ptr< dispatcher::KnowledgeGroup_ABC > result;
     {
         sword::SimToClient expected;
@@ -43,16 +43,16 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
-        MOCK_EXPECT( side, RegisterKnowledgeGroup ).once();
+        MOCK_EXPECT( side.RegisterKnowledgeGroup ).once();
         result.reset( new dispatcher::KnowledgeGroup( model, message ) );
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
-    MOCK_EXPECT( side, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
+    MOCK_EXPECT( side.RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,17 +64,17 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     std::auto_ptr< dispatcher::KnowledgeGroup_ABC > result;
     {
         {
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // creation
-            MOCK_EXPECT( side, RegisterKnowledgeGroup ).once();
+            MOCK_EXPECT( side.RegisterKnowledgeGroup ).once();
             result.reset( new dispatcher::KnowledgeGroup( model, message ) );
         }
         {
@@ -103,8 +103,8 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             message.mutable_parent()->set_id( knowledgeGroup.GetId() );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( side, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
-            MOCK_EXPECT( knowledgeGroup, RegisterKnowledgeGroup ).once().with( mock::same( *result ) );
+            MOCK_EXPECT( side.RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
+            MOCK_EXPECT( knowledgeGroup.RegisterKnowledgeGroup ).once().with( mock::same( *result ) );
             result->Update( message );
         }
         {
@@ -121,10 +121,10 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
-            publisher.verify();
+            mock::verify( publisher );
         }
     }
-    MOCK_EXPECT( knowledgeGroup, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
+    MOCK_EXPECT( knowledgeGroup.RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
 }

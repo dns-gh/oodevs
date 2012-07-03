@@ -114,6 +114,11 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 
+#include "Adapters/Sink.h"
+#include "Adapters/Legacy/Sink.h"
+#include "Adapters/FloodModelFactory.h"
+#include "Adapters/Legacy/FloodModelFactory.h"
+
 namespace bfs = boost::filesystem;
 
 using namespace sword;
@@ -190,6 +195,7 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 {
     ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(),
+                                    MIL_AgentServer::GetWorkspace().GetConfig().IsLegacy(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
 }
@@ -202,7 +208,7 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, unsigned int gcPause, unsigned int gcMult )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult )
     : time_                         ( time )
     , effectManager_                ( effects )
     , profilerManager_              ( profiler )
@@ -215,15 +221,18 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rEffectsTime_                 ( 0. )
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
-    , pObjectManager_               ( new MIL_ObjectManager() )
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
     , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
-    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_, gcPause, gcMult ) )
+    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
+    , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
+                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, gcPause, gcMult ) ) )
+    , pFloodModelFactory_           ( sink_->CreateFloodModelFactory() )
+    , pObjectManager_               ( new MIL_ObjectManager( pFloodModelFactory_.get() ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *agentFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *sink_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , gcPause_                      ( gcPause )
     , gcMult_                       ( gcMult )
 {
@@ -300,7 +309,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"       , automateFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"           , agentFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"           , sink_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations"     , populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants"     , inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"         , pObjectManager_->Count() ) );
@@ -427,7 +436,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::NotifyPionsInsideUrbanObject()
 {
-    agentFactory_->Apply( boost::bind( &UrbanNotificationFunctor, _1 )  );
+    sink_->Apply( boost::bind( &UrbanNotificationFunctor, _1 )  );
 }
 
 // -----------------------------------------------------------------------------
@@ -508,7 +517,8 @@ void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned in
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    return *agentFactory_->Create( type, automate, xis );
+    MIL_AgentPion* pPion = sink_->Create( type, automate, xis );
+    return *pPion;
 }
 
 // -----------------------------------------------------------------------------
@@ -517,7 +527,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx )
 {
-    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
+    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
     pPion->SendCreation ( nCtx );
@@ -532,7 +542,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx )
 {
-    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition, name );
+    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
     pPion->SendCreation ( nCtx );
@@ -675,7 +685,7 @@ void MIL_EntityManager::UpdateDecisions()
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        agentFactory_->Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
+        sink_->Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -689,7 +699,7 @@ void MIL_EntityManager::UpdateDecisions()
         rAutomatesDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
-        agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
+        sink_->Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
         rPionsDecisionTime_ = profiler_.Stop();
 
         profiler_.Start();
@@ -705,9 +715,10 @@ void MIL_EntityManager::UpdateDecisions()
 void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
+    sink_->ExecuteCommands();
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateActions, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
-    agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
+    sink_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateActions, _1 ) );
     rActionsTime_ = profiler_.Stop();
 }
@@ -720,6 +731,7 @@ void MIL_EntityManager::UpdateEffects()
 {
     profiler_.Start();
     pObjectManager_->ProcessEvents();
+    sink_->ApplyEffects();
     effectManager_.Update();
     rEffectsTime_ = profiler_.Stop();
 }
@@ -733,11 +745,11 @@ void MIL_EntityManager::UpdateStates()
     profiler_.Start();
     // !! Automate avant Pions (?? => LOG ??)
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
-    agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
+    sink_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateNetwork, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
-    agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
+    sink_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
     pObjectManager_->UpdateStates();
     inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateState, _1 ) ); // $$$$ LDC: Must be done after pObjectManager_ because otherwise objects are destroyed too early
@@ -756,7 +768,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
         return;
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )
         nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / time_.GetTickDuration() );
-    agentFactory_->Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
+    sink_->Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
     MT_LOG_INFO_MSG( "Breakdowns preprocessed" );
 }
 
@@ -785,11 +797,9 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
 void MIL_EntityManager::Update()
 {
     PreprocessRandomBreakdowns();
-    if( !MIL_AgentServer::GetWorkspace().GetConfig().IsFrozenMode() )
-    {
-        UpdateKnowledges();
-        UpdateDecisions ();
-    }
+    UpdateKnowledges();
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration() );
+    UpdateDecisions();
     UpdateActions();
     UpdateEffects();
     UpdateStates();
@@ -802,7 +812,7 @@ void MIL_EntityManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Clean()
 {
-    agentFactory_->Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
+    sink_->Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
     formationFactory_->Apply( boost::bind( &MIL_Formation::Clean, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::Clean, _1 ) );
@@ -1909,15 +1919,20 @@ bool MIL_EntityManager::IsInhabitantsEvacuated( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    sink_.reset();
     ArmyFactory_ABC * armyFactory;
     FormationFactory_ABC * formationFactory;
     AutomateFactory_ABC * automateFactory;
     AgentFactory_ABC * agentFactory;
+    Sink_ABC* sink;
     PopulationFactory_ABC * populationFactory;
     InhabitantFactory_ABC * inhabitantFactory;
     KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
+    FloodModelFactory_ABC* floodModelFactory;
     MIL_ObjectManager* objectManager;
     MissionController_ABC* missionController;
+    file >> sink;
+    sink_.reset( sink );
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> knowledgeGroupFactory; // LTO
     knowledgeGroupFactory_.reset( knowledgeGroupFactory );
@@ -1927,6 +1942,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> automateFactory
          >> populationFactory
          >> inhabitantFactory
+         >> floodModelFactory
          >> objectManager
          >> missionController
          >> rKnowledgesTime_
@@ -1944,13 +1960,14 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     automateFactory_.reset( automateFactory );
     populationFactory_.reset( populationFactory );
     inhabitantFactory_.reset( inhabitantFactory );
+    pFloodModelFactory_.reset( floodModelFactory );
     pObjectManager_.reset( objectManager );
     missionController_.reset( missionController );
-    missionController_->Initialize( *agentFactory, *populationFactory );
-    agentFactory_->Apply( boost::bind( &MIL_AgentPion::Register, _1, boost::ref( *missionController_ ) ) );
+    missionController_->Initialize( *sink_, *populationFactory );
+    sink_->Apply( boost::bind( &MIL_AgentPion::Register, _1, boost::ref( *missionController_ ) ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::Register, _1, boost::ref( *missionController_ ) ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , sink_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d objects"    , pObjectManager_->Count() ) );
@@ -1965,14 +1982,17 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const ArmyFactory_ABC * const tempArmy = armyFactory_.get();
     const FormationFactory_ABC * const tempFormationFactory = formationFactory_.get();
     const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
+    const Sink_ABC * const tempSink = sink_.get();
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
     const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
+    const FloodModelFactory_ABC* const floodModelFactory = pFloodModelFactory_.get();
     const MIL_ObjectManager* const objectManager = pObjectManager_.get();
     const MissionController_ABC* const missionController = missionController_.get();
 
-    file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
+    file << tempSink
+         //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << knowledgeGroupFactory; // LTO
     file << tempArmy
          << tempFormationFactory
@@ -1980,6 +2000,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << tempAutomateFactory
          << populationFactory
          << inhabitantFactory
+         << floodModelFactory
          << objectManager
          << missionController
          << rKnowledgesTime_
@@ -2129,7 +2150,7 @@ MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned i
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 {
-    return agentFactory_->Find( nID );
+    return sink_->Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -2260,7 +2281,7 @@ unsigned long MIL_EntityManager::GetAutomatsCount() const
 // -----------------------------------------------------------------------------
 unsigned long MIL_EntityManager::GetAgentsCount() const
 {
-    return agentFactory_->Count();
+    return sink_->Count();
 }
 
 // -----------------------------------------------------------------------------

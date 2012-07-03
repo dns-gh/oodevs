@@ -54,6 +54,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bEmbeddedDispatcher_      ( false )
     , bPausedAtStartup_         ( false )
     , bSilentMode_              ( false )
+    , bLegacy_                  ( false )
     , randomSeed_               ( 0 )
 {
     po::options_description desc( "Simulation options" );
@@ -64,6 +65,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
         ( "savecheckpoint" , po::value( &strCheckPointNameTestMode_ ), "specify checkpoint to save"                )
         ( "deletecheckpoint"                                         , "delete checkpoint folder"                  )
         ( "silent"                                                   , "activate silent mode"                      )
+        ( "legacy"                                                   , "activate legacy mode"                      )
         ( "simulation-port", po::value( &networkPort_ )              , "specify the simulation server port number" );
     AddOptions( desc );
 }
@@ -90,6 +92,7 @@ void MIL_Config::Parse( int argc, char** argv )
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     bDeleteCheckpointTestMode_ = IsSet( "deletecheckpoint" );
     bSilentMode_ = IsSet( "silent" );
+    bLegacy_ = IsSet( "legacy" );
     ReadSessionFile( GetSessionFile() );
 }
 

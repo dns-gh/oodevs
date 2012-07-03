@@ -24,7 +24,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "protocol/ClientSenders.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
@@ -69,7 +69,7 @@ void PHY_RolePion_Refugee::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
          & bManaged_
-         & pCamp_
+         & const_cast< MIL_Object_ABC*& >( pCamp_ )
          & nbrHumansLodgingManaged_;
          & lodgingSatisfaction_;
          & securitySatisfaction_;
@@ -132,7 +132,7 @@ void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Ob
 
     if( !owner_.GetType().IsRefugee() || !bManaged_ )
         return;
-    pCamp_       = const_cast< MIL_Object_ABC* >( &camp );
+    pCamp_       = &camp;
     bManaged_    = true;
     bHasChanged_ = true;
     owner_.GetAutomate().NotifyRefugeeReleased( camp );
@@ -253,7 +253,7 @@ void PHY_RolePion_Refugee::ManageLodgingCamp()
     if( !pCamp_ )
         UpdateLodging( 0 );
 
-    LodgingAttribute* pLodgingAttribute = pCamp_->RetrieveAttribute< LodgingAttribute >();
+    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if( pLodgingAttribute )
         pLodgingAttribute->ManageResident( owner_ );
 
@@ -269,7 +269,7 @@ void PHY_RolePion_Refugee::UnmanageLodgingCamp()
     if( !pCamp_ )
         return;
 
-    LodgingAttribute* pLodgingAttribute = pCamp_->RetrieveAttribute< LodgingAttribute >();
+    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if( pLodgingAttribute )
         pLodgingAttribute->UnmanageResident( owner_ );
 
@@ -285,7 +285,7 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
 {
     float prevSatisf = securitySatisfaction_;
     securitySatisfaction_ = 0.5f;
-    nearbyUnitsAffinity.resetAffinitySum(   owner_.GetRole< PHY_RolePion_Perceiver >().GetMaxTheoreticalcAgentPerceptionDistance(),
+    nearbyUnitsAffinity.resetAffinitySum(   owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalcAgentPerceptionDistance(),
                                             owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     if( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
     {

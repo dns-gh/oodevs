@@ -35,9 +35,9 @@ namespace
             , team( 2 )
         {
             types.Register( type->GetType(), *type );
-            MOCK_EXPECT( team, GetId ).returns( 2 );
+            MOCK_EXPECT( team.GetId ).returns( 2 );
             teams.Register( team.GetId(), team );
-            MOCK_EXPECT( model, Sides ).returns( boost::ref( teams ) );
+            MOCK_EXPECT( model.Sides ).returns( boost::ref( teams ) );
             expected.set_context( 0 );
         }
         void CreateObject()
@@ -54,12 +54,12 @@ namespace
             message.mutable_attributes();
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( team, RegisterObject ).once();
+            MOCK_EXPECT( team.RegisterObject ).once();
             result.reset( new dispatcher::Object( model, message, types ) );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
-            publisher.verify();
-            MOCK_EXPECT( team, RemoveObject ).once().with( mock::same( *result ) );
+            mock::verify( publisher );
+            MOCK_EXPECT( team.RemoveObject ).once().with( mock::same( *result ) );
             expected.mutable_message()->Clear();
         }
         tools::Resolver< kernel::ObjectType, std::string > types;
@@ -93,9 +93,9 @@ BOOST_FIXTURE_TEST_CASE( Object_IsDestroyed, Fixture )
     message.mutable_object()->set_id( 1 );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-    MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,9 +116,9 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         result->Update( message );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
     {
         expected.mutable_message()->Clear();
@@ -134,9 +134,9 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
 }
 
@@ -154,9 +154,9 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         result->Update( message );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
     {
         expected.mutable_message()->Clear();
@@ -172,9 +172,9 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
 }
 

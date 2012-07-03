@@ -216,9 +216,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     const std::string input( "<parameter name='test' type='agent' value='42'/>" );
     kernel::Controller controller;
     MockAgent agent;
-    MOCK_EXPECT( agent, GetId ).returns( 42 );
+    MOCK_EXPECT( agent.GetId ).returns( 42 );
     MockEntityResolver resolver;
-    MOCK_EXPECT( resolver, GetAgent ).with( 42u ).returns( boost::ref( agent ) );
+    MOCK_EXPECT( resolver.GetAgent ).with( 42u ).returns( boost::ref( agent ) );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "agent", input,
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
@@ -317,9 +317,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
     const std::string input( "<parameter name='test' type='automate' value='42'/>" );
     kernel::Controller controller;
     MockAutomat automat;
-    MOCK_EXPECT( automat, GetId ).returns( 42 );
+    MOCK_EXPECT( automat.GetId ).returns( 42 );
     MockEntityResolver resolver;
-    MOCK_EXPECT( resolver, GetAutomat ).with( 42u ).returns( boost::ref( automat ) );
+    MOCK_EXPECT( resolver.GetAutomat ).with( 42u ).returns( boost::ref( automat ) );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "automate", input,
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
@@ -508,11 +508,11 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 //
 //
 //    MockAgent agent;
-//    MOCK_EXPECT( agent, GetId ).returns( 62 );
-//    MOCK_EXPECT( agent, GetId ).returns( 63 );
-//    MOCK_EXPECT( agent, GetId ).returns( 64 );
-//    MOCK_EXPECT( agent, GetId ).returns( 65 );
-//    MOCK_EXPECT( agent, GetId ).returns( 66 );
+//    MOCK_EXPECT( agent.GetId ).returns( 62 );
+//    MOCK_EXPECT( agent.GetId ).returns( 63 );
+//    MOCK_EXPECT( agent.GetId ).returns( 64 );
+//    MOCK_EXPECT( agent.GetId ).returns( 65 );
+//    MOCK_EXPECT( agent.GetId ).returns( 66 );
 //    resolver.Register( agent.GetId(), agent );
 //
 //    std::auto_ptr< sword::MissionParameter > message( Serialize( "agentlist", input,
@@ -551,16 +551,16 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeF
     const std::string input( "<parameter name='test' type='crowdknowledge' value='42'/>" );
 
     MockPopulation population;
-    MOCK_EXPECT( resolver, FindPopulation ).with( 42u ).once().in( s ).returns( &population );
+    MOCK_EXPECT( resolver.FindPopulation ).with( 42u ).once().in( s ).returns( &population );
     MockAgent owner;
     MockPopulationKnowledge knowledge;
     MockAgentKnowledgeConverter converter;
-    MOCK_EXPECT( converter, FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &population );
-    MOCK_EXPECT( population, GetId ).once().in( s ).returns( 42u );
-    MOCK_EXPECT( converter, FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &population );
-    MOCK_EXPECT( population, GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter.FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &population );
+    MOCK_EXPECT( population.GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter.FindPopulationKnowledgeFromPopulation ).once().in( s ).with( mock::same( population ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &population );
+    MOCK_EXPECT( population.GetId ).once().in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "crowdknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
@@ -577,16 +577,16 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixtu
     const std::string input( "<parameter name='test' type='objectknowledge' value='42'/>" );
 
     MockObject object;
-    MOCK_EXPECT( resolver, FindObject ).once().in( s ).with( 42u ).returns( &object );
+    MOCK_EXPECT( resolver.FindObject ).once().in( s ).with( 42u ).returns( &object );
     MockTeam owner;
     MockObjectKnowledgeConverter converter;
     MockObjectKnowledge knowledge;
-    MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &object );
-    MOCK_EXPECT( object, GetId ).once().in( s ).returns( 42u );
-    MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &object );
-    MOCK_EXPECT( object, GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter.FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &object );
+    MOCK_EXPECT( object.GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter.FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &object );
+    MOCK_EXPECT( object.GetId ).once().in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
@@ -603,16 +603,16 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixtur
     const std::string input( "<parameter name='test' type='agentknowledge' value='42'/>" );
 
     MockAgent agent;
-    MOCK_EXPECT( resolver, FindAgent ).once().in( s ).with( 42u ).returns( &agent );
+    MOCK_EXPECT( resolver.FindAgent ).once().in( s ).with( 42u ).returns( &agent );
     MockAgent owner;
     MockAgentKnowledgeConverter converter;
     MockAgentKnowledge knowledge;
-    MOCK_EXPECT( converter, FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &agent );
-    MOCK_EXPECT( agent, GetId ).once().in( s ).returns( 42u );
-    MOCK_EXPECT( converter, FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetEntity ).once().in( s ).returns( &agent );
-    MOCK_EXPECT( agent, GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter.FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &agent );
+    MOCK_EXPECT( agent.GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( converter.FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
+    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &agent );
+    MOCK_EXPECT( agent.GetId ).once().in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "agentknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::AgentKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );

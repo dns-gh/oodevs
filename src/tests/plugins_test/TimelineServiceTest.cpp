@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE( timeline_plugin_action_loader_test )
     xis >> xml::start( "actions" ) >> xml::start( "action" );
     xml::xostringstream xos;
     xos << xml::content( "action", xis );
-    MOCK_EXPECT( publisher, PushReport ).once().with( Expect( xos.str() ) );
+    MOCK_EXPECT( publisher.PushReport ).once().with( Expect( xos.str() ) );
     plugins::timeline::ActionLoader loader( 1, 1, publisher );
     loader.Load( filename );
 }

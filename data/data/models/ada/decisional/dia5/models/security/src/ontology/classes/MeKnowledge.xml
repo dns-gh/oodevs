@@ -513,6 +513,27 @@ Returns 'true' upon action completion.</description>
                 </type>
             </return>
         </method>
+        <method name="createResourceLink" abstract="false">
+            <description>To create a link between a resource node and an element that needs to get som resource (the 'resourceReceiver' objet).&#xD;
+Returns 'true' upon action completion (when the link is done).</description>
+            <argument name="resourceNode">
+                <description>The resource node to create the link with.</description>
+                <type>
+                    <class name="agent.world.ResourceNode"/>
+                </type>
+            </argument>
+            <argument name="resourceReceiver">
+                <description>The resource receiver to create the link with.</description>
+                <type>
+                    <class name="agent.world.ResourceReceiver"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="operate" abstract="false">
             <description>To operate and run a system.</description>
             <argument name="system">
@@ -712,27 +733,6 @@ Agent can be decontaminated only if issued decontamination site is being operate
                 <description></description>
                 <type>
                     <class name="agent.world.DecontaminationPlot"/>
-                </type>
-            </argument>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
-        <method name="createResourceLink" abstract="false">
-            <description>To create a link between a resource producer element and a resource node (the receiver of the resource).&#xD;
-Returns 'true' upon action completion (when the connection is effective).</description>
-            <argument name="resourceProducer">
-                <description>The resource receiver to create the link with.</description>
-                <type>
-                    <class name="agent.world.ResourceProducer"/>
-                </type>
-            </argument>
-            <argument name="resourceNode">
-                <description>The resource node to create the link with.</description>
-                <type>
-                    <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
             <return>

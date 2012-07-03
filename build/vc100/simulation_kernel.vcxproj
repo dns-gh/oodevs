@@ -75,6 +75,7 @@
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Lib />
   </ItemDefinitionGroup>
@@ -83,6 +84,7 @@
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Lib />
   </ItemDefinitionGroup>
@@ -91,6 +93,7 @@
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Lib />
   </ItemDefinitionGroup>
@@ -99,17 +102,43 @@
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathAdapter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAction_Moving.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAdapter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Composantes.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Decision.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConsign.cpp" />
@@ -832,6 +861,38 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Hook.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\KnowledgeCache.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\NullRoleAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PathAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAction_Moving.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAdapter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAdapterInterface.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Composantes.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Decision.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h" />
@@ -839,7 +900,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\PHY_RoleAction_InterfaceMoving.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RoleInterface_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.h" />

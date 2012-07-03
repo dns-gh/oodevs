@@ -28,7 +28,7 @@ class DEC_Path_KnowledgeObject : public DEC_Path_KnowledgeObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+             DEC_Path_KnowledgeObject( const DEC_Knowledge_Object& knowledge, double rCost, double rObstructionThreshold );
              DEC_Path_KnowledgeObject( const DEC_Population_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
     virtual ~DEC_Path_KnowledgeObject();
     //@}
@@ -39,7 +39,7 @@ public:
     virtual double GetCostOut() const;
     virtual double GetMaxTrafficability() const;
 
-    static boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > New( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge );
+    static boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > New( const DEC_Knowledge_Object& knowledge, double rCost, double rObstructionThreshold );
     //@}
 
 private:
@@ -48,9 +48,9 @@ private:
     TER_Localisation localisation_;
     TER_Localisation scaledLocalisation_;
     TER_Localisation realLocalisation_;
-    const DEC_PathClass& pathClass_;
-    const MIL_ObjectType_ABC& objectType_;
     double rMaxTrafficability_;
+    double rThreshold_;
+    double rCost_;
     //@}
 };
 

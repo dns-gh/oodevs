@@ -106,7 +106,6 @@ public:
     void GetLivingEnemiesPerceived( T_ConstKnowledgeAgentVector& container ) const;
     void GetLivingEnemiesPerceivedInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     const T_ConstKnowledgeAgentVector& GetDangerousEnemies() const;
-    void GetDangerousEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     void GetAgentsAttacking( T_ConstKnowledgeAgentVector& container ) const;
     double GetRapForLocalValue() const;
 

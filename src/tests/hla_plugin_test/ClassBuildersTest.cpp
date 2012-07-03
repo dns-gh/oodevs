@@ -29,12 +29,12 @@ namespace
         {}
         void Check( ClassBuilder_ABC& builder, const std::string& name, bool publish, bool subscribe )
         {
-            MOCK_EXPECT( federate, RegisterClass ).once().with( name, mock::any, publish, subscribe);
+            MOCK_EXPECT( federate.RegisterClass ).once().with( name, mock::any, publish, subscribe);
             builder.Build( federate, hlaClass );
             mock::sequence s;
             ::hla::MockAttributeFunctor visitor;
             BOOST_FOREACH( const std::string& attribute, attributes )
-                MOCK_EXPECT( visitor, Visit ).once().in( s ).with( attribute );
+                MOCK_EXPECT( visitor.Visit ).once().in( s ).with( attribute );
             hlaClass.Apply( visitor );
         }
         MockFederate federate;

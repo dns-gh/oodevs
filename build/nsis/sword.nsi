@@ -91,6 +91,8 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libiconv-2.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
+    ;modules
+    File "${RUNDIR}\*_module.dll"
 
     ; evaluation licence
     !ifdef EVALUATION

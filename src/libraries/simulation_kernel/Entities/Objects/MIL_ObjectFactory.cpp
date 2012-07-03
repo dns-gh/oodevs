@@ -20,7 +20,8 @@
 // Name: MIL_ObjectFactory constructor
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
-MIL_ObjectFactory::MIL_ObjectFactory()
+MIL_ObjectFactory::MIL_ObjectFactory( const sword::FloodModelFactory_ABC& floodFactory )
+    : floodFactory_( floodFactory )
 {
     // NOTHING
 }
@@ -76,7 +77,7 @@ const double MIL_ObjectFactory::GetMaxAvoidanceDistance()
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC* army )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( xis, army );
+    return MIL_ObjectLoader::GetLoader().CreateObject( xis, army, floodFactory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +86,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& msg, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
+    return MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value, floodFactory_ );
 }
 
 // -----------------------------------------------------------------------------

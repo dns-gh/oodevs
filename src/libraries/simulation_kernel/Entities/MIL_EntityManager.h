@@ -35,6 +35,8 @@ namespace sword
     class MissionParameter_Value;
     class BurningCellRequest;
     class ParentEntity;
+    class Sink_ABC;
+    class FloodModelFactory_ABC;
 }
 
 namespace urban
@@ -89,7 +91,7 @@ class MIL_EntityManager : public MIL_EntityManager_ABC
                         , public MIL_EntityManagerStaticMethods
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, unsigned int gcPause, unsigned int gcMult );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_EntityManager();
 
     //! @name Factory
@@ -255,6 +257,7 @@ private:
     void UpdateEffects();
     void UpdateStates();
     void UpdateKnowledgeGroups();
+
     void PreprocessRandomBreakdowns();
     //@}
 
@@ -277,18 +280,21 @@ private:
     double rStatesTime_;
 
     // Order is important here
-    std::auto_ptr< MIL_IDManager >          idManager_;         // have to be declared before agentFactory & automatFactory
-    std::auto_ptr< MIL_ObjectManager >      pObjectManager_;    // have to be declared before armyFactory
-    std::auto_ptr< MissionController_ABC >  missionController_; // have to be declared before populationFactory and agentFactory
+    std::auto_ptr< MIL_IDManager >                idManager_;          // have to be declared before agentFactory & automatFactory
+    std::auto_ptr< MissionController_ABC >        missionController_;  // have to be declared before populationFactory and agentFactory
 
     // Factories
-    std::auto_ptr< PopulationFactory_ABC >     populationFactory_;      // have to be declared before armyFactory
-    std::auto_ptr< InhabitantFactory_ABC >     inhabitantFactory_;      // have to be declared before armyFactory
-    std::auto_ptr< AgentFactory_ABC >          agentFactory_;           // have to be declared before armyFactory
-    std::auto_ptr< AutomateFactory_ABC >       automateFactory_;        // have to be declared before armyFactory & formation factory
-    std::auto_ptr< FormationFactory_ABC >      formationFactory_;       // have to be declared before armyFactory
-    std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;  // have to be declared before armyFactory
-    std::auto_ptr< ArmyFactory_ABC >           armyFactory_;
+    std::auto_ptr< PopulationFactory_ABC >        populationFactory_;      // have to be declared before armyFactory
+    std::auto_ptr< InhabitantFactory_ABC >        inhabitantFactory_;      // have to be declared before armyFactory
+    std::auto_ptr< AgentFactory_ABC >             agentFactory_;           // have to be declared before armyFactory
+    std::auto_ptr< sword::Sink_ABC >              sink_;
+    std::auto_ptr< sword::FloodModelFactory_ABC > pFloodModelFactory_;
+    std::auto_ptr< MIL_ObjectManager >            pObjectManager_;
+    std::auto_ptr< AutomateFactory_ABC >          automateFactory_;        // have to be declared before armyFactory & formation factory
+    std::auto_ptr< FormationFactory_ABC >         formationFactory_;       // have to be declared before armyFactory
+    std::auto_ptr< KnowledgeGroupFactory_ABC >    knowledgeGroupFactory_;  // have to be declared before armyFactory
+    std::auto_ptr< ArmyFactory_ABC >              armyFactory_;
+
     unsigned int  gcPause_;
     unsigned int  gcMult_;
     //@}

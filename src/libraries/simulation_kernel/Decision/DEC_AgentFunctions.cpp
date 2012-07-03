@@ -18,7 +18,7 @@
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
@@ -404,7 +404,7 @@ bool DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation( const MIL_
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, callerAgent, true );
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -413,7 +413,7 @@ bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, con
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, callerAgent, false );
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -477,17 +477,6 @@ void DEC_AgentFunctions::EnableDiscreteMode( MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::DisableDiscreteMode( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Posture >().DisableDiscreteMode();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::AgentCanFly
-// Created: JSR 2012-04-19
-// -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanFly( const DEC_Decision_ABC* agent )
-{
-    if( !agent )
-        throw std::runtime_error( "Invalid pion in DEC_AgentFunctions::AgentCanFly" );
-    return agent->GetPion().GetType().GetUnitType().CanFly();
 }
 
 // -----------------------------------------------------------------------------
@@ -840,7 +829,7 @@ float DEC_AgentFunctions::TimeLeftForMoving( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance )
 {
-   const double rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
+   const double rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement();
    if( rMaxSpeed == 0 )
        return std::numeric_limits< float >::max();
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );
@@ -858,7 +847,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
         result.reset( new MT_Vector2D() );
         DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(),
                 callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
-                callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement(), *result );
+                callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement(), *result );
     }
     return result;
 }
@@ -1393,7 +1382,7 @@ bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* ag
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentHasDotationForBuilding" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent->GetPion(), true );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1474,17 +1463,6 @@ bool DEC_AgentFunctions::AgentCanByPassObjectWithLocalisation( const DEC_Decisio
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::AgentCanExtinguish
-// Created: JSR 2012-04-19
-// -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanExtinguish( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-{
-    if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanExtinguish" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanExtinguish( pKnowledge );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
@@ -1492,7 +1470,7 @@ bool DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded( const DEC_Dec
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentHasDotationForBuildingWithOutLoaded" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent->GetPion(), false );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1503,7 +1481,7 @@ bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, b
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanDestroyObject" );
-    return objectKnowledge && objectKnowledge->IsValid() && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+    return objectKnowledge && objectKnowledge->IsValid() && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1534,7 +1512,7 @@ bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, bo
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanBypassObject" );
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------

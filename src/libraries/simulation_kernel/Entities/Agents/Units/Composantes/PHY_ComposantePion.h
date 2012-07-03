@@ -12,9 +12,9 @@
 #ifndef __PHY_ComposantePion_h_
 #define __PHY_ComposantePion_h_
 
+#include "PHY_ComposanteTypePion.h"
 #include "PHY_Composante_ABC.h"
 #include "PHY_ComposanteState.h"
-#include "PHY_ComposanteTypePion.h"
 
 class AttritionCapacity;
 class DEC_Knowledge_AgentComposante;

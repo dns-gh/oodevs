@@ -42,14 +42,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
 
     MockArmy army;
-    MOCK_EXPECT( army, RegisterObject ).once();
+    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
-        MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
-        MOCK_EXPECT( builder, Build ).once();
+        MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
+        MOCK_EXPECT( builder.Build ).once();
         BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, &army ) ) );
-        builder.verify();
+        mock::verify( builder );
     }
 
     BOOST_REQUIRE( pObject.get() != 0 );
@@ -61,8 +61,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     BOOST_CHECK_NO_THROW( pObject->GetAttribute< ConstructionAttribute >() );
     BOOST_CHECK_EQUAL( pObject->GetAttribute< ConstructionAttribute >().GetState(), 1. );
 
-    MOCK_EXPECT( army, UnregisterObject ).once();
+    MOCK_EXPECT( army.UnregisterObject ).once();
     pObject.reset();
-    army.verify();
+    mock::verify( army );
     TER_World::DestroyWorld();
 }

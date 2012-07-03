@@ -10,6 +10,9 @@
 #ifndef __MIL_Report_h_
 #define __MIL_Report_h_
 
+#include <string>
+#include <vector>
+#include <map>
 #include "MIL_MissionParameterFactory.h"
 #include "Tools/MIL_IDManager.h"
 

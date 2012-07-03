@@ -37,15 +37,12 @@
 #include "Entities/Specialisations/LOG/Supply/MIL_AgentTypePionLOGSupply.h"
 #include "Entities/Specialisations/LOG/Convoy/MIL_AgentTypePionLOGConvoy.h"
 
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
 
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
@@ -62,7 +59,6 @@
 
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_Flying.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
@@ -72,7 +68,6 @@
 #include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
@@ -351,21 +346,16 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Reinforcement( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Posture( pion ) );
-    PHY_RolePion_Location* roleLocation = new PHY_RolePion_Location( pion );
-    pion.RegisterRole( *roleLocation );
     pion.RegisterRole( *new PHY_RolePion_UrbanLocation( pion ) );
     pion.RegisterRole( *new dotation::PHY_RolePion_Dotations( pion ) );
     pion.RegisterRole( *new human::PHY_RolePion_Humans( pion ) );
-    PHY_RolePion_Composantes* rolePionComposantes = new PHY_RolePion_Composantes( pion );
-    pion.RegisterRole( *rolePionComposantes );
-    pion.RegisterRole( *new PHY_RolePion_ActiveProtection( *rolePionComposantes ) );
-    pion.RegisterRole( *new PHY_RolePion_Perceiver( pion, &roleLocation->GetPosition(), &roleLocation->GetDirection() ) );
+    pion.RegisterRole( *new PHY_RolePion_ActiveProtection( pion ) );
     pion.RegisterRole( *new nbc::PHY_RolePion_NBC( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Communications( pion, bIsAutonomous ) );
     pion.RegisterRole( *new PHY_RolePion_HumanFactors( pion ) );
@@ -376,19 +366,10 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause
     pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) );
     pion.RegisterRole( *new transport::PHY_RoleAction_Transport( pion ) );
     pion.RegisterRole( *new crowdtransport::PHY_RoleAction_CrowdTransport( pion ) );
-    pion.RegisterRole( *new moving::PHY_RoleAction_Moving( pion ) );
     pion.RegisterRole( *new PHY_RoleAction_Objects( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Illumination() ); // LTO
-    try
-    {
-        pion.RegisterRole( *new DEC_RolePion_Decision( pion, gcPause, gcMult ) );
-    }
-    catch( MT_ScipioException& e )
-    {
-        e.SendToLogger();
-    }
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );

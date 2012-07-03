@@ -35,7 +35,6 @@ class PHY_Posture;
 class PHY_SensorTypeAgent_ABC;
 class DEC_Knowledge_AgentPerception;
 class PHY_NatureAtlas;
-class PHY_ComposantePion;
 class PHY_ComposanteType_ABC;
 class UrbanObjectWrapper;
 
@@ -125,6 +124,7 @@ public:
     const std::string& GetCriticalIntelligence() const;
     bool IsPerceptionDistanceHacked() const;
     bool IsTransported() const;
+    const T_KnowledgeComposanteVector& GetComposantes() const;
     //@}
 
     //! @name Perception

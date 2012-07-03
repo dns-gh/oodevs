@@ -55,15 +55,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestAdder )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > adder( new Adder< unsigned long, float >( handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 42.f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 42.f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *adder );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 18.f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 18.f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *adder );
     }
 }
@@ -77,15 +77,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestCount )
     MockFunction1< NumericValue, NumericValue > handler;
     std::auto_ptr< Function1_ABC< NumericValue, NumericValue > > counter( new Count< NumericValue, NumericValue >( handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( NumericValue( 2u ) );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( NumericValue( 2u ) );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *counter );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( NumericValue( 1u ) );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( NumericValue( 1u ) );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *counter );
     }
 }
@@ -99,15 +99,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestMeaner )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > meaner( new Meaner< unsigned long, float >( handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 21.f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 21.f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *meaner );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 18.f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 18.f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *meaner );
     }
 }
@@ -121,15 +121,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestSelector )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Selector< unsigned long, float >( 2, handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 24.f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 24.f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *selector );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).once().with( 18.f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).once().with( 18.f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *selector );
     }
 }
@@ -143,15 +143,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestMinimum )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Minimum< unsigned long, float >( handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 18.f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 18.f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *selector );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 18.f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 18.f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *selector );
     }
 }
@@ -165,15 +165,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestMaximum )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > selector( new Maximum< unsigned long, float >( handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 24.f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 24.f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *selector );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 18.f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 18.f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *selector );
     }
 }
@@ -190,16 +190,16 @@ BOOST_AUTO_TEST_CASE( Reduction_TestThresholdSingleValue )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 0.1f );
-        MOCK_EXPECT( handler, Apply ).once().with( 0.2f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 0.1f );
+        MOCK_EXPECT( handler.Apply ).once().with( 0.2f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *stepper );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 0.1f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 0.1f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *stepper );
     }
 }
@@ -216,16 +216,16 @@ BOOST_AUTO_TEST_CASE( Reduction_TestThresholdMultipleValues )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).once().with( 0.5f );
-        MOCK_EXPECT( handler, Apply ).once().with( 1.0f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).once().with( 0.5f );
+        MOCK_EXPECT( handler.Apply ).once().with( 1.0f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *stepper );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 0.5f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 0.5f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *stepper );
     }
 }
@@ -242,15 +242,15 @@ BOOST_AUTO_TEST_CASE( Reduction_TestThresholdMoreValuesThanRanges )
     MockFunction1< unsigned long, float > handler;
     std::auto_ptr< Function1_ABC< unsigned long, float > > stepper( new Threshold< unsigned long, float >( xis, handler ) );
     {
-        MOCK_EXPECT( handler, BeginTick ).once();
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 0.25f );
-        MOCK_EXPECT( handler, EndTick ).once();
+        MOCK_EXPECT( handler.BeginTick ).once();
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 0.25f );
+        MOCK_EXPECT( handler.EndTick ).once();
         ReduceSimple( *stepper );
     }
     {
-        MOCK_EXPECT( handler, BeginTick ).exactly( 2 );
-        MOCK_EXPECT( handler, Apply ).exactly( 2 ).with( 0.25f );
-        MOCK_EXPECT( handler, EndTick ).exactly( 2 );
+        MOCK_EXPECT( handler.BeginTick ).exactly( 2 );
+        MOCK_EXPECT( handler.Apply ).exactly( 2 ).with( 0.25f );
+        MOCK_EXPECT( handler.EndTick ).exactly( 2 );
         ReduceTwoTicks( *stepper );
     }
 }

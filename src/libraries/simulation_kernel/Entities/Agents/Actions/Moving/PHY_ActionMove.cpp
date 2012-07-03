@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
-#include "PHY_RoleAction_Moving.h"
+#include "PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -34,7 +34,7 @@
 PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
     : PHY_DecisionCallbackAction_ABC( pion )
     , pion_                         ( pion )
-    , role_                         ( pion.GetRole< moving::PHY_RoleAction_Moving >() )
+    , role_                         ( pion.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
     , pMainPath_                    ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , executionSuspended_           ( false )
     , isBlockedByObject_            ( false )
@@ -73,7 +73,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     else
     {
         bool modified = false;
-        for( int i = 0; i < knowledges.size(); ++i )
+        for( std::size_t i = 0; i < knowledges.size(); ++i )
         {
             if( geometrySignatures_[i] != knowledges[i]->GetLocalisation() )
             {
@@ -98,7 +98,7 @@ bool PHY_ActionMove::AvoidObstacles()
 {
     if( !pMainPath_.get() || pMainPath_->GetState() == DEC_Path_ABC::eComputing )
         return false;
-
+    
     if( !UpdateObjectsToAvoid() )
     {
         if( isBlockedByObject_ )
@@ -162,7 +162,7 @@ void PHY_ActionMove::Execute()
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
-    }
+            }
 
     executionSuspended_ = false;
     isBlockedByObject_ = false;
@@ -211,9 +211,9 @@ void PHY_ActionMove::StopAction()
 {
     if( pMainPath_.get() )
     {
-        role_.MoveCanceled( pMainPath_ );
+    role_.MoveCanceled( pMainPath_ );
         pMainPath_->DecRef();
         executionSuspended_ = false;
-    }
-    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
 }
+    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
+    }

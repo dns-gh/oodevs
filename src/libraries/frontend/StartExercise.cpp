@@ -55,7 +55,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
@@ -72,6 +72,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
         AddArgument( "--checkpoint=" + checkpoint );
+    if( legacy )
+        AddArgument( "--legacy" );
 }
 
 // -----------------------------------------------------------------------------

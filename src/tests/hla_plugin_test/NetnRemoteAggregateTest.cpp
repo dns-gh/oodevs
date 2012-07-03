@@ -48,7 +48,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( netn_remote_aggregate_deserialize_also_rpr_remote_aggregate, Fixture )
 {
     mock::sequence s;
-    MOCK_EXPECT( rprRemote, Deserialize ).once().in( s );
+    MOCK_EXPECT( rprRemote->Deserialize ).once().in( s );
     const int8 buffer = 0;
     ::hla::Deserializer deserializer( &buffer );
     netnRemote.Deserialize( "attribute", deserializer );
@@ -64,8 +64,8 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_aggregate_deserializes_callsign_attribute_a
 {
     const UnicodeString callsign( "callsign" );
     callsign.Serialize( serializer );
-    MOCK_EXPECT( rprRemote, Deserialize );
-    MOCK_EXPECT( listener, CallsignChanged ).once().with( "identifier", "callsign" );
+    MOCK_EXPECT( rprRemote->Deserialize );
+    MOCK_EXPECT( listener.CallsignChanged ).once().with( "identifier", "callsign" );
     ::hla::Deserializer deserializer( Deserialize() );
     netnRemote.Deserialize( "Callsign", deserializer );
 }
@@ -74,8 +74,8 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_aggregate_deserializes_unique_identifier_at
 {
     const UniqueId uniqueId( "unique" );
     uniqueId.Serialize( serializer );
-    MOCK_EXPECT( rprRemote, Deserialize );
-    MOCK_EXPECT( listener, UniqueIdChanged ).once().with( "identifier", "unique" );
+    MOCK_EXPECT( rprRemote->Deserialize );
+    MOCK_EXPECT( listener.UniqueIdChanged ).once().with( "identifier", "unique" );
     ::hla::Deserializer deserializer( Deserialize() );
     netnRemote.Deserialize( "UniqueID", deserializer );
 }

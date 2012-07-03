@@ -58,13 +58,13 @@ protected:
 protected:
     //! @name Member data
     //@{
-    double rRapForValue_;
     unsigned int nLastCacheUpdateTick_;
     //@}
 
 private:
     //! @name Member data
     //@{
+    double rRapForValue_;
     static const double rRapForBoundMin_;
     static const double rRapForBoundMax_;
     static double rRapForTimeStepDefaultValue_;

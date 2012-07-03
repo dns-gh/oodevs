@@ -223,10 +223,10 @@ double PHY_WeaponType::GetPHModificator( const PHY_RoleInterface_Posture& firerP
 // Name: PHY_WeaponType::GetPHModificator
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
+double PHY_WeaponType::GetPHModificator() const
 {
     assert( pLauncherType_ );
-    return pLauncherType_->GetPHModificator( firerPosture, targetPosture );
+    return pLauncherType_->GetPHModificator();
 }
 
 // -----------------------------------------------------------------------------

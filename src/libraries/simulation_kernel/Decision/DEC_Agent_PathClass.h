@@ -75,7 +75,7 @@ public:
           double       GetEnemyCostAtSecurityRange         () const;
           double       GetEnemyMaximumCost                 () const;
           double       GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
-          double       GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
+          double       GetPopulationAttitudeCost           ( unsigned int attitudeID ) const;
           double       GetPopulationSecurityRange          () const;
           double       GetPopulationMaximumCost            () const;
           double       GetCostOutsideOfPopulation          () const;
@@ -122,7 +122,7 @@ private:
     typedef std::pair< std::string, T_BooleanPair >              T_RuleType;
     typedef std::map< T_RuleType, DEC_Agent_PathClass* >         T_Rules;
 
-    typedef std::map< const MIL_PopulationAttitude*, double >  T_PopulationAttitudeCosts;
+    typedef std::map< unsigned int, double >  T_PopulationAttitudeCosts;
     //@}
 
 private:

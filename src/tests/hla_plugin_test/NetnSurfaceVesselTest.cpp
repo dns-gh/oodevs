@@ -52,7 +52,7 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_cannot_be_deserialized, RegisteredF
 
 BOOST_FIXTURE_TEST_CASE( unmodified_netn_surface_vessel_serializes_nothing, RegisteredFixture )
 {
-    MOCK_EXPECT( aggregate, Serialize ).once();
+    MOCK_EXPECT( aggregate->Serialize ).once();
     entity.Serialize( functor, false );
 }
 
@@ -63,17 +63,17 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_serializes_all_its_attributes_but_r
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
-        MOCK_EXPECT( aggregate, Serialize ).once().in( s );
+        MOCK_EXPECT( aggregate->Serialize ).once().in( s );
         BOOST_FOREACH( const std::string& attribute, attributes )
-            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+            MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
-        MOCK_EXPECT( aggregate, Serialize ).once().in( s );
+        MOCK_EXPECT( aggregate->Serialize ).once().in( s );
         BOOST_FOREACH( const std::string& attribute, attributes )
-            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+            MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
 }
@@ -103,21 +103,21 @@ namespace
     public:
         SurfaceVesselFixture()
         {
-            MOCK_EXPECT( aggregate, Serialize ).once();
+            MOCK_EXPECT( aggregate->Serialize ).once();
         }
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_unique_id_is_sword_plus_identifier, SurfaceVesselFixture )
 {
-    MOCK_EXPECT( functor, Visit ).once().with( "UniqueID", boost::bind( &CheckSize, _1, 11u ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "UniqueID", boost::bind( &CheckSize, _1, 11u ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_callsign_is_its_name, SurfaceVesselFixture )
 {
-    MOCK_EXPECT( functor, Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32 ) + 4 * sizeof( uint16 ) ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32 ) + 4 * sizeof( uint16 ) ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }

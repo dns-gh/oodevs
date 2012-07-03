@@ -30,10 +30,10 @@ namespace
             , remoteAgentListener( 0 )
             , unitCreationObserver( 0 )
         {
-            MOCK_EXPECT( agentSubject, Register ).once().with( mock::retrieve( remoteAgentListener ) );
-            MOCK_EXPECT( contextHandler, Register ).once().with( mock::retrieve( unitCreationObserver ) );
-            MOCK_EXPECT( agentSubject, Unregister ).once();
-            MOCK_EXPECT( contextHandler, Unregister ).once();
+            MOCK_EXPECT( agentSubject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( contextHandler.Register ).once().with( mock::retrieve( unitCreationObserver ) );
+            MOCK_EXPECT( agentSubject.Unregister ).once();
+            MOCK_EXPECT( contextHandler.Unregister ).once();
             creationMessage.mutable_unit()->set_id( unitId );
         }
         const unsigned long unitId;
@@ -56,8 +56,8 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
     BOOST_REQUIRE( remoteAgentListener );
     BOOST_REQUIRE( unitCreationObserver );
     unitCreationObserver->Notify( creationMessage, "identifier" );
-    MOCK_EXPECT( contextFactory, Create ).once().returns( 1337 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( teleportMessage ) );
+    MOCK_EXPECT( contextFactory.Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( teleportMessage ) );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     BOOST_CHECK( teleportMessage.message().has_unit_magic_action() );
     const sword::UnitMagicAction& action = teleportMessage.message().unit_magic_action();
@@ -78,7 +78,7 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_only_when_unit_has_been_creat
     BOOST_REQUIRE( unitCreationObserver );
     remoteAgentListener->Moved( "identifier", 1., 2. );
     unitCreationObserver->Notify( creationMessage, "identifier" );
-    MOCK_EXPECT( contextFactory, Create ).once().returns( 1337 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once();
+    MOCK_EXPECT( contextFactory.Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
 }

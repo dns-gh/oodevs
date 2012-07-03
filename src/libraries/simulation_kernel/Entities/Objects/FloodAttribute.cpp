@@ -11,7 +11,8 @@
 #include "FloodAttribute.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
-#include "flood/FloodModel.h"
+#include "Adapters/FloodModelFactory_ABC.h"
+#include "flood/FloodModel_ABC.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "protocol/Protocol.h"
@@ -28,9 +29,9 @@ using namespace geometry;
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute()
-    : floodModel_ ( new flood::FloodModel( *this ) )
-    , depth_      ( 0 )
-    , refDist_    ( 0 )
+    : depth_        ( 0 )
+    , refDist_      ( 0 )
+    , pFloodFactory_( 0 )
 {
     // NOTHING
 }
@@ -39,11 +40,12 @@ FloodAttribute::FloodAttribute()
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
-FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation )
-    : floodModel_ ( new flood::FloodModel( *this ) )
-    , depth_      ( xis.attribute< int >( "depth" ) )
-    , refDist_    ( xis.attribute< int >( "reference-distance" ) )
-    , location_   ( objectLocation.ComputeBarycenter(), refDist_ )
+FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation, const sword::FloodModelFactory_ABC& floodFactory )
+    : pFloodModel_  ( floodFactory.CreateFloodModel() )
+    , pFloodFactory_( &floodFactory )
+    , depth_        ( xis.attribute< int >( "depth" ) )
+    , refDist_      ( xis.attribute< int >( "reference-distance" ) )
+    , location_     ( objectLocation.ComputeBarycenter(), refDist_ )
 {
     // NOTHING
 }
@@ -52,11 +54,12 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& obje
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-FloodAttribute::FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation )
-    : floodModel_ ( new flood::FloodModel( *this ) )
-    , depth_      ( attributes.list( 1 ).quantity() )
-    , refDist_    ( attributes.list( 2 ).quantity() )
-    , location_   ( objectLocation.ComputeBarycenter(), refDist_ )
+FloodAttribute::FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation, const sword::FloodModelFactory_ABC& floodFactory )
+    : pFloodModel_  ( floodFactory.CreateFloodModel() )
+    , pFloodFactory_( &floodFactory )
+    , depth_        ( attributes.list( 1 ).quantity() )
+    , refDist_      ( attributes.list( 2 ).quantity() )
+    , location_     ( objectLocation.ComputeBarycenter(), refDist_ )
 {
     GenerateFlood();
 }
@@ -79,7 +82,8 @@ FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
     depth_ = from.depth_;
     refDist_ = from.refDist_;
     location_.Reset( from.location_ );
-    *floodModel_ = *from.floodModel_;
+    pFloodModel_ = from.pFloodModel_;
+    pFloodFactory_ = from.pFloodFactory_;
     return *this;
 }
 
@@ -95,22 +99,37 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
         depth_ = rhs.depth_;
         refDist_ = rhs.refDist_;
         location_.Reset( rhs.location_ );
-        *floodModel_ = *rhs.floodModel_;
+        pFloodModel_ = rhs.pFloodModel_; // todo 
+        pFloodFactory_ = rhs.pFloodFactory_;
     }
     return NeedUpdate( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::serialize
-// Created: JSR 2011-10-07
+// Name: FloodAttribute::load
+// Created: LGY 2012-06-18
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void FloodAttribute::serialize( Archive& file, const unsigned int )
+void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-         & depth_
-         & refDist_
-         & location_;
+    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         >> depth_
+         >> refDist_
+         >> location_
+         >> const_cast< sword::FloodModelFactory_ABC*& >( pFloodFactory_ );
+    pFloodModel_.reset( pFloodFactory_->CreateFloodModel().release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::save
+// Created: LGY 2012-06-18
+// -----------------------------------------------------------------------------
+void FloodAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         << depth_
+         << refDist_
+         << location_
+         << pFloodFactory_;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +203,7 @@ bool FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 void FloodAttribute::GenerateFlood( bool force )
 {
     MT_Vector2D center = location_.ComputeBarycenter();
-    floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_, force );
+    pFloodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_, force );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +222,7 @@ const TER_Localisation& FloodAttribute::GetLocalisation() const
 // -----------------------------------------------------------------------------
 const std::vector< Polygon2f* >& FloodAttribute::GetDeepAreas() const
 {
-    return floodModel_->GetDeepAreas();
+    return pFloodModel_->GetDeepAreas();
 }
 
 // -----------------------------------------------------------------------------
@@ -212,5 +231,5 @@ const std::vector< Polygon2f* >& FloodAttribute::GetDeepAreas() const
 // -----------------------------------------------------------------------------
 const std::vector< Polygon2f* >& FloodAttribute::GetLowAreas() const
 {
-    return floodModel_->GetLowAreas();
+    return pFloodModel_->GetLowAreas();
 }

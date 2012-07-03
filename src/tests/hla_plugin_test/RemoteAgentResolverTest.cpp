@@ -24,10 +24,10 @@ namespace
             : remoteAgentListener ( 0 )
             , unitCreationObserver( 0 )
         {
-            MOCK_EXPECT( remoteAgentSubject, Register ).once().with( mock::retrieve( remoteAgentListener ) );
-            MOCK_EXPECT( remoteAgentSubject, Unregister ).once();
-            MOCK_EXPECT( unitCreation, Register ).once().with( mock::retrieve( unitCreationObserver ) );
-            MOCK_EXPECT( unitCreation, Unregister ).once();
+            MOCK_EXPECT( remoteAgentSubject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( remoteAgentSubject.Unregister ).once();
+            MOCK_EXPECT( unitCreation.Register ).once().with( mock::retrieve( unitCreationObserver ) );
+            MOCK_EXPECT( unitCreation.Unregister ).once();
         }
         sword::UnitCreation MakeCreationMessage( unsigned int identifier )
         {

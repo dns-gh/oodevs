@@ -44,8 +44,8 @@ namespace
             , team                    ( party )
         {
             xis >> xml::start( "configuration" );
-            MOCK_EXPECT( formationCreation, Register ).once().with( mock::retrieve( formationCreationHandler ) );
-            MOCK_EXPECT( formationCreation, Unregister ).once();
+            MOCK_EXPECT( formationCreation.Register ).once().with( mock::retrieve( formationCreationHandler ) );
+            MOCK_EXPECT( formationCreation.Unregister ).once();
         }
         template< typename T_Result, typename T_Mock, typename T_Vector >
         tools::Iterator< const T_Result& > MakeIterator( const T_Identifiers& identifiers, T_Vector& elements )
@@ -61,9 +61,9 @@ namespace
         }
         void ConfigureKnowledgeGroups()
         {
-            MOCK_EXPECT( knowledgeGroupResolver, CreateIterator ).once().returns( MakeKnowledgeGroupIterator( boost::assign::list_of( party ) ) );
+            MOCK_EXPECT( knowledgeGroupResolver.CreateIterator ).once().returns( MakeKnowledgeGroupIterator( boost::assign::list_of( party ) ) );
             BOOST_FOREACH( T_KnowledgeGroup group, groups )
-                MOCK_EXPECT( *group, GetTeam ).once().returns( boost::ref( team ) );
+                MOCK_EXPECT( group->GetTeam ).once().returns( boost::ref( team ) );
         }
         sword::FormationCreation MakeFormationCreationMessage()
         {
@@ -87,19 +87,19 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( automat_creater_checks_remote_automat_type_id_existence, Fixture )
 {
-    formationCreation.reset();
-    MOCK_EXPECT( automatResolver, Resolve ).once().returns( 0 );
+    mock::reset( formationCreation );
+    MOCK_EXPECT( automatResolver.Resolve ).once().returns( 0 );
     BOOST_CHECK_THROW( AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver ), std::runtime_error );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_receiving_formation_creation, Fixture )
 {
-    MOCK_EXPECT( automatResolver, Resolve ).once().with( "automat type name" ).returns( 42u );
+    MOCK_EXPECT( automatResolver.Resolve ).once().with( "automat type name" ).returns( 42u );
     ConfigureKnowledgeGroups();
     AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver );
     BOOST_REQUIRE( formationCreationHandler );
     simulation::UnitMagicAction actual;
-    MOCK_EXPECT( automatCreation, Send ).once().with( mock::retrieve( actual ), mock::any );
+    MOCK_EXPECT( automatCreation.Send ).once().with( mock::retrieve( actual ), mock::any );
     formationCreationHandler->Notify( MakeFormationCreationMessage(), "formation" );
     const sword::UnitMagicAction& action = actual();
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );

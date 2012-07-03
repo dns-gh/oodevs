@@ -26,15 +26,15 @@ namespace
             , urban( 4 )
             , automat( 5 )
         {
-            MOCK_EXPECT( side, GetId ).returns( 2 );
+            MOCK_EXPECT( side.GetId ).returns( 2 );
             sides.Register( side.GetId(), side );
-            MOCK_EXPECT( urban, GetId ).returns( 4 );
+            MOCK_EXPECT( urban.GetId ).returns( 4 );
             urbans.Register( urban.GetId(), urban );
-            MOCK_EXPECT( automat, GetId ).returns( 5 );
+            MOCK_EXPECT( automat.GetId ).returns( 5 );
             automats.Register( automat.GetId(), automat );
-            MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-            MOCK_EXPECT( model, UrbanBlocks ).returns( boost::ref( urbans ) );
-            MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
+            MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+            MOCK_EXPECT( model.UrbanBlocks ).returns( boost::ref( urbans ) );
+            MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
             expected.set_context( 0 );
         }
         void CreateUrbanKnowledge()
@@ -46,9 +46,9 @@ namespace
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             result.reset( new dispatcher::UrbanKnowledge( model, message ) );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
-            publisher.verify();
+            mock::verify( publisher );
             expected.mutable_message()->Clear();
         }
         MockSide side;
@@ -85,9 +85,9 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture
     message.mutable_party()->set_id( side.GetId() );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-    MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,9 +108,9 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         message.mutable_automat_perceptions()->add_elem()->set_id( automat.GetId() );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         result->Update( message );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
     {
         expected.mutable_message()->Clear();
@@ -119,8 +119,8 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_object()->set_id( 0 );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
 }

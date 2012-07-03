@@ -45,7 +45,7 @@ namespace
             plot.set_error( "" );
             BOOST_FOREACH( const float& value, data )
                 plot.add_values( value );
-            MOCK_EXPECT( publisher, Send4 ).once().with( boost::bind( &TestTools::CheckValue, result, _1 ) );
+            MOCK_EXPECT( publisher.Send4 ).once().with( boost::bind( &TestTools::CheckValue, result, _1 ) );
         }
         MockClientPublisher publisher;
         MockStaticModel model;
@@ -912,11 +912,11 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 1, 1, 1, 1, 0 };
     sword::SimToClient message = TestTools::MakeEquipementVariation( variation, 42u );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 10.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 10.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message );
     task->Receive( TestTools::EndTick() );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 11.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 11.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message );
     task->Receive( TestTools::EndTick() );
@@ -942,20 +942,20 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
     int variation[5] = { 1, 1, 1, 1, 0 };
     sword::SimToClient  message1 = TestTools::MakeEquipementVariation( variation, 42u );
     sword::SimToClient  message2 = TestTools::MakeEquipementVariation( variation, 123u );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 10.f );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 1000.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 10.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 1000.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( message2 );
     task->Receive( TestTools::OperationalState( 50, 42 ) );
     task->Receive( TestTools::EndTick() ); // expect 10 * 0.5
     mock::verify();
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 20.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 20.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( TestTools::OperationalState( 25, 42 ) );
     task->Receive( TestTools::EndTick() ); // expect 20 * 0.25
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 30.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 30.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( TestTools::OperationalState( 100, 42 ) );
@@ -2087,19 +2087,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCombinedZoneAndUnitlistDirectFirePower, Fixt
     task->Receive( TestTools::MakePosition( "31TBN7728449218", 13 ) ); // in zone
     task->Receive( TestTools::MakePosition( "31TBN7728449218", 14 ) ); // in zone
     task->Receive( TestTools::MakePosition( "31TCM1543486826", 23 ) ); // out of zone
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 10.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 10.f );
     task->Receive( message );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 12.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 12.f );
     task->Receive( message2 );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 17.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 17.f );
     task->Receive( message3 );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 15.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 15.f );
     task->Receive( message );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 19.f );
+    MOCK_EXPECT( model.ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 19.f );
     task->Receive( message2 );
     task->Receive( TestTools::EndTick() );
     const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 10 )( 15 );

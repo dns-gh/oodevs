@@ -13,14 +13,12 @@
 #define __PHY_RoleAction_Moving_h_
 
 #include "MIL.h"
-#include "MT_Tools/Role_ABC.h"
+#include "PHY_RoleAction_InterfaceMoving.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include <boost/serialization/export.hpp>
 
-class PHY_RoleInterface_Location;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 
@@ -41,18 +39,11 @@ namespace moving
 // @class  PHY_RoleAction_Moving
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RoleAction_Moving : public tools::Role_ABC
-                            , public PHY_MovingEntity_ABC
+class PHY_RoleAction_Moving : public PHY_RoleAction_InterfaceMoving
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                             , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                             , public network::NetworkMessageSender_ABC
 {
-public:
-    //! @name Types
-    //@{
-    typedef PHY_RoleAction_Moving RoleInterface;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -67,27 +58,33 @@ public:
 
     //! @name Operations
     //@{
-    void Update( bool bIsDead );
-    void Clean();
+    virtual void Update( bool bIsDead );
+    virtual void Clean();
     bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     virtual void SendRC( int nReportID ) const;
     virtual void SendRC( int nReportID, const std::string& name ) const;
+    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
+    virtual double GetMaxSpeedWithReinforcement() const;
     virtual double GetMaxSpeed() const;
-    double GetMaxSpeed( const TerrainData& environment ) const;
-    double GetMaxSlope() const;
-    double GetMaxSpeedWithReinforcement() const;
-    double GetTheoricMaxSpeed( bool loaded ) const;
-    void SetSpeedModificator( double rFactor );
-    void SetMaxSpeedModificator( double rFactor );
-    double GetMaxSpeedModificator();
+    virtual double GetMaxSpeed( const TerrainData& environment ) const;
+    virtual double GetMaxSlope() const;
+    virtual double GetTheoricMaxSpeed( bool loaded ) const;
+    virtual void SetSpeedModificator( double rFactor );
+    virtual void SetMaxSpeedModificator( double rFactor );
+    virtual double GetMaxSpeedModificator() const;
+    virtual bool HasResources();
+    virtual bool CanMove() const;
+
+    virtual const MT_Vector2D& GetPosition () const;
+    virtual const MT_Vector2D& GetDirection() const;
     //@}
 
     //! @name Network
@@ -98,34 +95,23 @@ public:
 
     //! @name Tools
     //@{
-    MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const;
+    virtual MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const;
     //@}
-
-private:
-    //! @name
-    //@{
-    virtual const MT_Vector2D& GetPosition () const;
-    virtual const MT_Vector2D& GetDirection() const;
-    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
-    //@}
-
     //! @name Notifications
     //@{
-    virtual void NotifyMovingOnPathPoint( const DEC_PathPoint& point );
+    virtual void NotifyMovingOnPathPoint( const MT_Vector2D& point );
     virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point );
     virtual void NotifyMovingInsideObject( MIL_Object_ABC& object );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     virtual void NotifyEnvironmentChanged();
     virtual void NotifyCurrentPathChanged();
     //@}
-
     //! @name
     //@{
-    virtual bool CanMove() const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
-    virtual bool HasResources();
     //@}
 
+private:
     //! @name Speed management
     //@{
     double GetMaxSpeed( const MIL_Object_ABC& object ) const;
@@ -148,7 +134,6 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion&              owner_;
-    PHY_RoleInterface_Location* pRoleLocation_;
     double                      rSpeed_;
     double                      rSpeedModificator_;
     double                      rMaxSpeedModificator_;

@@ -18,7 +18,6 @@ namespace xml
     class xistream;
 }
 
-class PHY_Weapon;
 class PHY_DotationCategory;
 class PHY_HumanWound;
 class TerrainData;

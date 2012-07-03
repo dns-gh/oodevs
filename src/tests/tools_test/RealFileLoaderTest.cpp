@@ -66,7 +66,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_throws, Fixture )
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( false );
+    MOCK_EXPECT( observer.NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( false );
     BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
 }
 
@@ -76,7 +76,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_nothrows, Fixture )
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( true );
+    MOCK_EXPECT( observer.NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( true );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -97,7 +97,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_signature_throws, Fixture )
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( false );
+    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( false );
     BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
 }
 
@@ -107,7 +107,7 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_signature_nothrows, Fixture )
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( false );
+    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( false );
     BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
 }
 
@@ -117,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( test_missing_xml_signature_throws, Fixture )
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_NotSigned ).returns( false );
+    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_NotSigned ).returns( false );
     BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
 }
 
@@ -127,7 +127,7 @@ BOOST_FIXTURE_TEST_CASE( test_missing_xml_signature_nothrows, Fixture )
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_NotSigned ).returns( false );
+    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_NotSigned ).returns( false );
     BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
 }
 
@@ -137,8 +137,8 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_and_signature_nothrows, Fixture
     tools::SchemaVersionExtractor ve;
     tools::RealFileLoader loader( emptyMigrations_, ve );
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( true );
-    MOCK_EXPECT( observer, NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( true );
+    MOCK_EXPECT( observer.NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( true );
+    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( true );
     loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
 }
 
@@ -151,10 +151,10 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_schema_migration, Fixture )
     const std::string inputFile( BOOST_RESOLVE( "testFileMigration/input-1.0.xml" ) );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
 
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( inputFile, observer );
     BOOST_REQUIRE( inputStream.get() );
@@ -187,7 +187,7 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_schema_no_default_assignment, Fixture
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyNoXmlSchemaSpecified ).once().with( BOOST_RESOLVE( inputFile ) );
+    MOCK_EXPECT( observer.NotifyNoXmlSchemaSpecified ).once().with( BOOST_RESOLVE( inputFile ) );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -201,10 +201,10 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_schema_default_assignment_rootnode, F
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( inputFile, observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -218,10 +218,10 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_default_assignment_
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( inputFile, observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -235,10 +235,10 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_schema_default_assignment_filename, F
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( inputFile, observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -252,10 +252,10 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_default_assignment_
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( inputFile, observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -269,10 +269,10 @@ BOOST_FIXTURE_TEST_CASE( test_valid_xml_no_version_in_schema_default_assignment_
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( inputFile, observer );
     BOOST_REQUIRE( inputStream.get() );
 }
@@ -286,10 +286,10 @@ BOOST_FIXTURE_TEST_CASE( test_added_file, Fixture )
     tools::RealFileLoader loader( migrations, ve );
 
     MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     std::auto_ptr< xml::xistream > inputStream = loader.LoadFile( "physical/test.xml", observer );
     BOOST_REQUIRE( inputStream.get() );
 
@@ -303,17 +303,17 @@ BOOST_FIXTURE_TEST_CASE( test_added_file, Fixture )
     //BOOST_REQUIRE( inputStream.get() );
     BOOST_TODO;
 
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     inputStream = loader.LoadFile( "/physical/test.xml", observer );
     BOOST_REQUIRE( inputStream.get() );
 
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
-    MOCK_EXPECT( observer, NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.0", "1.1" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.1", "1.2" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.2", "1.3" );
+    MOCK_EXPECT( observer.NotifyFileMigrated ).once().with( inputFile, "1.3", "1.4" );
     inputStream = loader.LoadFile( "/whatever/resource/blabla/physical/test.xml", observer );
     BOOST_REQUIRE( inputStream.get() );
 }

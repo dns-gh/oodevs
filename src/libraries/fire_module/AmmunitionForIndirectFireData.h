@@ -1,0 +1,56 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#ifndef fire_module_AmmunitionForIndirectFireData_h
+#define fire_module_AmmunitionForIndirectFireData_h
+
+#include "MT_Tools/MT_Vector2D.h"
+#include <wrapper/View.h>
+#include <boost/noncopyable.hpp>
+
+namespace sword
+{
+namespace fire
+{
+    class DotationCategory;
+
+// =============================================================================
+/** @class  AmmunitionForIndirectFireData
+    @brief  Ammunition for indirect fire data
+*/
+// Created: JVT 2004-08-03
+// =============================================================================
+class AmmunitionForIndirectFireData : boost::noncopyable
+{
+public:
+             AmmunitionForIndirectFireData( const wrapper::View& firer, const std::string& type, const MT_Vector2D& target );
+    virtual ~AmmunitionForIndirectFireData();
+
+    //! @name Operations
+    //@{
+    void ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon );
+
+    const char* GetResult() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const wrapper::View firer_;
+    const std::string type_;
+    const MT_Vector2D target_;
+    const DotationCategory* pAmmunition_;
+    double dotationValue_;
+    //@}
+};
+
+}
+}
+
+#endif // fire_module_AmmunitionForIndirectFireData_h

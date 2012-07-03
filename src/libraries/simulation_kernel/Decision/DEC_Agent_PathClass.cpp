@@ -323,7 +323,7 @@ void DEC_Agent_PathClass::ReadPopulation( xml::xistream& xis )
     if( pAttitude )
     {
         xis >> xml::attribute( "contact-cost", rCost );
-        populationAttitudeCosts_[ pAttitude ] = rCost;
+        populationAttitudeCosts_[ pAttitude->GetID() ] = rCost;
     }
 }
 
@@ -355,9 +355,9 @@ double DEC_Agent_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectType 
 // Name: DEC_Agent_PathClass::GetPopulationAttitudeCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-double DEC_Agent_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttitude& attitude ) const
+double DEC_Agent_PathClass::GetPopulationAttitudeCost( unsigned int attitudeID ) const
 {
-    T_PopulationAttitudeCosts::const_iterator it = populationAttitudeCosts_.find( &attitude );
+    T_PopulationAttitudeCosts::const_iterator it = populationAttitudeCosts_.find( attitudeID );
     if( it == populationAttitudeCosts_.end() )
         return 0.0f;
     return it->second;

@@ -190,7 +190,7 @@ void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis, unsigned int nI
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown indirect fire data type" );
-    indirectFireEffects_.push_back(  &pType->InstanciateDotationCategory( *this, xis, nInterventionType, rDispersionX, rDispersionY ) );
+    indirectFireEffects_.push_back(  &pType->InstanciateDotationCategory( *this, xis, nInterventionType, rDispersionX, rDispersionY ) ); // $$$$ MCO 2012-06-28: never deleted
 }
 
 // -----------------------------------------------------------------------------

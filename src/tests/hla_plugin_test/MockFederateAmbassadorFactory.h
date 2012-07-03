@@ -25,7 +25,6 @@ namespace hla
 MOCK_BASE_CLASS( MockFederateAmbassadorFactory, plugins::hla::FederateAmbassadorFactory_ABC )
 {
     MOCK_METHOD( Create, 3 );
-
 };
 
 }

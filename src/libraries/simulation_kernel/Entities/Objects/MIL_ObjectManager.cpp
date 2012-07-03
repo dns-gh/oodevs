@@ -20,6 +20,7 @@
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "UrbanObjectWrapper.h"
+#include "Adapters/FloodModelFactory_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -37,10 +38,22 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager constructor
-// Created: NLD 2004-09-07
+// Created: LGY 2012-06-13
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::MIL_ObjectManager()
-    : builder_( new MIL_ObjectFactory() )
+    : floodFactory_( 0 )
+    , builder_     ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager constructor
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+MIL_ObjectManager::MIL_ObjectManager( sword::FloodModelFactory_ABC* floodFactory )
+    : floodFactory_( floodFactory )
+    , builder_     ( new MIL_ObjectFactory( *floodFactory ) )
 {
     // NOTHING
 }
@@ -61,7 +74,9 @@ MIL_ObjectManager::~MIL_ObjectManager()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> objects_;
+    file >> floodFactory_
+         >> objects_;
+    builder_.reset( new MIL_ObjectFactory( *floodFactory_ ) );
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
@@ -82,7 +97,8 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << objects_;
+    file << floodFactory_
+         << objects_;
 }
 
 // -----------------------------------------------------------------------------

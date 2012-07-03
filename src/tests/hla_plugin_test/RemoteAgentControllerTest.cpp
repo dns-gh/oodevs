@@ -42,13 +42,13 @@ namespace
             , longitude             ( 2. )
             , automat               ( 1337 )
         {
-            MOCK_EXPECT( logger, LogInfo );
-            MOCK_EXPECT( logger, LogError );
-            MOCK_EXPECT( logger, LogWarning );
-            MOCK_EXPECT( remoteSubject, Register ).once().with( mock::retrieve( remoteAgentListener ) );
-            MOCK_EXPECT( automatCreation, Register ).once().with( mock::retrieve( automatCreationHandler ) );
-            MOCK_EXPECT( automatCreation, Unregister );
-            MOCK_EXPECT( remoteSubject, Unregister );
+            MOCK_EXPECT( logger.LogInfo );
+            MOCK_EXPECT( logger.LogError );
+            MOCK_EXPECT( logger.LogWarning );
+            MOCK_EXPECT( remoteSubject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( automatCreation.Register ).once().with( mock::retrieve( automatCreationHandler ) );
+            MOCK_EXPECT( automatCreation.Unregister );
+            MOCK_EXPECT( remoteSubject.Unregister );
             ConfigureTeams();
         }
         template< typename T_Result, typename T_Mock, typename T_Vector >
@@ -65,9 +65,9 @@ namespace
         }
         void ConfigureTeams()
         {
-            MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( boost::assign::list_of( party ) ) );
+            MOCK_EXPECT( teamResolver.CreateIterator ).once().returns( MakeTeamIterator( boost::assign::list_of( party ) ) );
             BOOST_FOREACH( T_Team team, teams )
-                MOCK_EXPECT( *team, GetKarma ).returns( kernel::Karma::friend_ );
+                MOCK_EXPECT( team->GetKarma ).returns( kernel::Karma::friend_ );
         }
         MockRemoteAgentSubject remoteSubject;
         RemoteAgentListener_ABC* remoteAgentListener;
@@ -112,11 +112,11 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
-    MOCK_EXPECT( unitTypeResolver, Resolve ).once().with( mock::same( entityType ) ).returns( agentTypeId );
+    MOCK_EXPECT( unitTypeResolver.Resolve ).once().with( mock::same( entityType ) ).returns( agentTypeId );
     remoteAgentListener->TypeChanged( "identifier", entityType );
     simulation::UnitMagicAction actual;
-    MOCK_EXPECT( unitCreation, Send ).once().with( mock::retrieve( actual ), "identifier" );
-    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( true );
+    MOCK_EXPECT( unitCreation.Send ).once().with( mock::retrieve( actual ), "identifier" );
+    MOCK_EXPECT( extentResolver.IsInBoundaries ).once().returns( true );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
     const sword::UnitMagicAction& action = actual();
@@ -137,10 +137,10 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_s
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
-    MOCK_EXPECT( unitTypeResolver, Resolve ).once().returns( 4242 );
+    MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
     remoteAgentListener->TypeChanged( "identifier", rpr::EntityType() );
-    MOCK_EXPECT( unitCreation, Send ).once();
-    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( true );
+    MOCK_EXPECT( unitCreation.Send ).once();
+    MOCK_EXPECT( extentResolver.IsInBoundaries ).once().returns( true );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
@@ -151,13 +151,13 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_onl
     remoteAgentListener->Created( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
-    MOCK_EXPECT( unitTypeResolver, Resolve ).once().returns( 4242 );
+    MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
     remoteAgentListener->TypeChanged( "identifier", rpr::EntityType() );
-    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( false );
+    MOCK_EXPECT( extentResolver.IsInBoundaries ).once().returns( false );
     remoteAgentListener->Moved( "identifier", latitude, longitude );
     mock::verify();
-    MOCK_EXPECT( extentResolver, IsInBoundaries ).once().returns( true );
-    MOCK_EXPECT( unitCreation, Send ).once();
+    MOCK_EXPECT( extentResolver.IsInBoundaries ).once().returns( true );
+    MOCK_EXPECT( unitCreation.Send ).once();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
 }
 

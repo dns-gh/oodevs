@@ -12,7 +12,7 @@
     <realizes>agent.world.Fire</realizes>
     <realizes>agent.world.ResourceNode</realizes>
     <realizes>agent.world.Work</realizes>
-    <realizes>agent.world.ResourceProducer</realizes>
+    <realizes>agent.world.ResourceReceiver</realizes>
     <realizes>agent.world.System</realizes>
     <realizes>agent.world.CheckPoint</realizes>
     <realizes>agent.world.DecontaminationPlot</realizes>
@@ -96,6 +96,15 @@ Returns 'true' when element is deconstructed.</description>
                     <simple name="boolean"/>
                 </type>
             </return>
+        </method>
+        <method name="createLinkWith" abstract="false">
+            <description>To create a link with a resource node in order to make this element getting some resource.</description>
+            <argument name="resourceNode">
+                <description>The resource node to get resource from.</description>
+                <type>
+                    <class name="agent.world.ResourceNode"/>
+                </type>
+            </argument>
         </method>
         <method name="disableIt" abstract="false">
             <description>Stops a system from being activated. A deactivated system can't be used. </description>
@@ -269,15 +278,6 @@ This implementation returns 'true' if this element has the capacity to decontami
                     <simple name="boolean"/>
                 </type>
             </return>
-        </method>
-        <method name="createLinkWith" abstract="false">
-            <description>To create a link between this element and a resource node in order to make this element getting some resource.</description>
-            <argument name="resourceNode">
-                <description>The resource node to get resource from.</description>
-                <type>
-                    <class name="agent.world.ResourceNode"/>
-                </type>
-            </argument>
         </method>
     </methods>
 </class>

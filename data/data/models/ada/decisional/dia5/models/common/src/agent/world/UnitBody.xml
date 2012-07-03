@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.UnitBody" source-version="1.0.0" extends="agent.world.AgentBody">
-    <description>The unit agent's own body knowledge.</description>
     <methods>
         <method name="stopMovement">
             <description>To call when the movement of the agent is stopped for a given target.</description>
@@ -426,18 +425,18 @@ Returns 'true' upon action completion.</description>
             </return>
         </method>
         <method name="createResourceLink">
-            <description>To create a link between a resource producer element and a resource node (the receiver of the resource).&#xD;
-Returns 'true' upon action completion (when the connection is effective).</description>
-            <argument name="resourceProducer">
-                <description>The resource receiver to create the link with.</description>
-                <type>
-                    <class name="agent.world.ResourceProducer"/>
-                </type>
-            </argument>
+            <description>To create a link between a resource node and an element that needs to get som resource (the 'resourceReceiver' objet).&#xD;
+Returns 'true' upon action completion (when the link is done).</description>
             <argument name="resourceNode">
                 <description>The resource node to create the link with.</description>
                 <type>
                     <class name="agent.world.ResourceNode"/>
+                </type>
+            </argument>
+            <argument name="resourceReceiver">
+                <description>The resource receiver to create the link with.</description>
+                <type>
+                    <class name="agent.world.ResourceReceiver"/>
                 </type>
             </argument>
             <return>

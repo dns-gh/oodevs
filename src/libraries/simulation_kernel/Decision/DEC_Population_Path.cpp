@@ -90,7 +90,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
 // Name: DEC_Population_Path::InitializePathKnowledges
 // Created: CMA 2011-11-24
 // -----------------------------------------------------------------------------
-void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
+void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& /*pathPoints*/ )
 {
     // Objects
     if( pathClass_.AvoidObjects() )

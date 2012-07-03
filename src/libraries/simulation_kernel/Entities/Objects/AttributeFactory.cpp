@@ -91,15 +91,6 @@ namespace
             object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( xis, object );
         }
     };
-
-    template<>
-    struct AddBuilder< FloodAttribute >
-    {
-        static void Add( Object& object, xml::xistream& xis )
-        {
-            object.GetAttribute< FloodAttribute >() = FloodAttribute( xis, object.GetLocalisation() );
-        }
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +116,7 @@ AttributeFactory::AttributeFactory()
     Register( "max-size", boost::bind( &AddBuilder< OccupantAttribute >::Add, _1, _2 ) );
     Register( "delay", boost::bind( &AddBuilder< DelayAttribute >::Add, _1, _2 ) );
     Register( "resources", boost::bind( &AddBuilder< ResourceNetworkAttribute >::Add, _1, _2 ) );
-    Register( "flood", boost::bind( &AddBuilder< FloodAttribute >::Add, _1, _2 ) );
+    //Register( "flood", boost::bind( &AddBuilder< FloodAttribute >::Add, _1, _2, _3 ) );
     Register( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierAttribute >::Add, _1, _2 ) );
     Register( "lodging", boost::bind( &AddBuilder< LodgingAttribute >::Add, _1, _2 ) );
     Register( "underground", boost::bind( &AddBuilder< UndergroundAttribute >::Add, _1, _2 ) );
@@ -155,11 +146,16 @@ void AttributeFactory::Register( const std::string& attribute, const T_CallBack&
 // Name: AttributeFactory::Create
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const std::string& attribute, xml::xistream& xis ) const
+void AttributeFactory::Create( Object& object, const std::string& attribute, xml::xistream& xis, const sword::FloodModelFactory_ABC& floodFactory ) const
 {
-    const CIT_Callbacks it = callbacks_.find( attribute );
-    if( it != callbacks_.end() )
-        it->second( object, xis );
+    if( attribute == "flood" )
+        object.GetAttribute< FloodAttribute >() = FloodAttribute( xis, object.GetLocalisation(), floodFactory );
+    else
+    {
+        const CIT_Callbacks it = callbacks_.find( attribute );
+        if( it != callbacks_.end() )
+            it->second( object, xis );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +174,7 @@ void AttributeFactory::Initialize( Object& object ) const
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const sword::MissionParameter& parameter ) const
+void AttributeFactory::Create( Object& object, const sword::MissionParameter& parameter, const sword::FloodModelFactory_ABC& floodFactory ) const
 {
     Initialize( object );
     for( int i = 0; i < parameter.value_size(); ++i )
@@ -236,7 +232,7 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 object.GetAttribute< StockAttribute >() = StockAttribute( attributes );
                 break;
             case ObjectMagicAction::flood:
-                object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation() );
+                object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation(), floodFactory );
                 break;
             case ObjectMagicAction::resource_network:
                 object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );

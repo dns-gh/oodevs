@@ -64,6 +64,7 @@ private slots:
     void OnSelect( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
+    void OnSwordVersionSelected( bool isLegacy );
     //@}
 
 protected:
@@ -99,6 +100,7 @@ protected:
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
+    bool                          isLegacy_;
     //@}
 };
 

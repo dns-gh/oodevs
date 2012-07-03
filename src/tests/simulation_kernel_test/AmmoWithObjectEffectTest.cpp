@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'><indirect-fires intervention-type='1' x-dispersion='1' y-dispersion='1'><indirect-fire type='effect' life-time='300s' object-type='Zone brouillage'/></indirect-fires></resource></resources>" );
 
         MockAgent pion;
-        MOCK_EXPECT( pion, GetID ).once().returns( 1u );
+        MOCK_EXPECT( pion.GetID ).once().returns( 1u );
         StubDEC_Decision< MockAgent >* decision = new StubDEC_Decision< MockAgent >( pion );
         pion.RegisterRole( *decision );
         firing::PHY_RoleAction_IndirectFiring* roleIndirectFiring = new firing::PHY_RoleAction_IndirectFiring( pion );
@@ -73,18 +73,18 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         pion.RegisterRole( *roleMovingUnderground );
 
         MockMIL_Time_ABC time;
-        MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
-        MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
+        MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
         TestIndirectFireModifier* testRole = new TestIndirectFireModifier( time, effectManager, pion, dotations );
         pion.RegisterRole< TestIndirectFireModifier >( *testRole );
         MockRoleLocation* locationRole = new MockRoleLocation();
         pion.RegisterRole( *locationRole );
         const MT_Vector2D sourcePosition;
-        MOCK_EXPECT( locationRole, GetPosition ).once().returns( sourcePosition );
+        MOCK_EXPECT( locationRole->GetPosition ).once().returns( sourcePosition );
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
-        MOCK_EXPECT( dotationRole, AddFireReservation ).once().returns( 1. );
+        MOCK_EXPECT( dotationRole->AddFireReservation ).once().returns( 1. );
 
         const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 
@@ -98,20 +98,20 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         // Expect a Callback
         decision->RegisterFunction( "CallbackAction", &CheckCallback );
 
-        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
+        MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
 
         AlgorithmsFactories algorithms;
-        MOCK_EXPECT( pion, GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
+        MOCK_EXPECT( pion.GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
 
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );
         MockMIL_Object_ABC object;
-        MOCK_EXPECT( entityManager, CreateObjectFromType ).once().returns( &object ); // $$$$ with type Zone brouillage
-        MOCK_EXPECT( object, RegisterAttribute ).once();
+        MOCK_EXPECT( entityManager.CreateObjectFromType ).once().returns( &object ); // $$$$ with type Zone brouillage
+        MOCK_EXPECT( object.RegisterAttribute ).once();
         MockArmy mockArmy;
-        MOCK_EXPECT( pion, GetArmy ).once().returns( boost::ref( mockArmy ) );
+        MOCK_EXPECT( pion.GetArmy ).once().returns( boost::ref( mockArmy ) );
         effectManager.Update();
-        entityManager.verify();
+        mock::verify( entityManager );
 
         PHY_IndirectFireDotationClass::Terminate();
     }

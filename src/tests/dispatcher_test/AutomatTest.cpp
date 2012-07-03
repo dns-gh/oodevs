@@ -28,32 +28,32 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -69,19 +69,19 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
-        MOCK_EXPECT( formation, RegisterAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
+        MOCK_EXPECT( formation.RegisterAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
         dispatcher::Automat result( model, message, "brain" );
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result.SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
 
         // cleaning
-        MOCK_EXPECT( formation, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
+        MOCK_EXPECT( formation.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
 
@@ -94,32 +94,32 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -135,19 +135,19 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
-        MOCK_EXPECT( automat, RegisterAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
+        MOCK_EXPECT( automat.RegisterAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
         dispatcher::Automat result( model, message, "brain" );
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result.SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
 
         // cleaning
-        MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
+        MOCK_EXPECT( automat.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
 
@@ -160,32 +160,32 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         std::auto_ptr< dispatcher::Automat > result;
         {
@@ -201,8 +201,8 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             message.set_app6symbol( "sfgpu----------" );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
+            MOCK_EXPECT( automat.RegisterAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
@@ -213,16 +213,16 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             message.mutable_superior()->mutable_formation()->set_id( 52 );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( automat, RemoveAutomat ).once();
-            MOCK_EXPECT( formation, RegisterAutomat ).once();
+            MOCK_EXPECT( automat.RemoveAutomat ).once();
+            MOCK_EXPECT( formation.RegisterAutomat ).once();
             automats.Get( 1 ).Update( message );
-            automat.verify();
-            formation.verify();
+            mock::verify( automat );
+            mock::verify( formation );
         }
 
         // cleaning
-        MOCK_EXPECT( formation, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
+        MOCK_EXPECT( formation.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
 
@@ -235,35 +235,35 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup1( 3 );
-    MOCK_EXPECT( knowledgeGroup1, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup1.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup1.GetId(), knowledgeGroup1 );
     MockKnowledgeGroup knowledgeGroup2( 4 );
-    MOCK_EXPECT( knowledgeGroup2, GetId ).returns( 4 );
+    MOCK_EXPECT( knowledgeGroup2.GetId ).returns( 4 );
     knowledgeGroups.Register( knowledgeGroup2.GetId(), knowledgeGroup2 );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         std::auto_ptr< dispatcher::Automat > result;
         {
@@ -279,8 +279,8 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.set_app6symbol( "sfgpu----------" );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup1, RegisterAutomat ).once();
+            MOCK_EXPECT( automat.RegisterAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup1.RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
@@ -292,16 +292,16 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup2.GetId() );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( knowledgeGroup1, RemoveAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup2, RegisterAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup1.RemoveAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup2.RegisterAutomat ).once();
             automats.Get( 1 ).Update( message );
-            knowledgeGroup1.verify();
-            knowledgeGroup2.verify();
+            mock::verify( knowledgeGroup1 );
+            mock::verify( knowledgeGroup2 );
         }
 
         // cleaning
-        MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup2, RemoveAutomat ).once();
+        MOCK_EXPECT( automat.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup2.RemoveAutomat ).once();
     }
 }
 
@@ -314,32 +314,32 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         std::auto_ptr< dispatcher::Automat > result;
         {
@@ -355,8 +355,8 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             message.set_app6symbol( "sfgpu----------" );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
+            MOCK_EXPECT( automat.RegisterAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
@@ -373,16 +373,16 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 2 ); // TODO! AutomatAttributes, AutomatOrder
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 1 ); // AutomatChangeLogisticLinks
+            MOCK_EXPECT( publisher.SendSimToClient ).exactly( 2 ); // TODO! AutomatAttributes, AutomatOrder
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).exactly( 1 ); // AutomatChangeLogisticLinks
             result->SendFullUpdate( publisher );
-            publisher.verify();
+            mock::verify( publisher );
         }
 
         // cleaning
-        MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
+        MOCK_EXPECT( automat.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
 
@@ -395,32 +395,32 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         std::auto_ptr< dispatcher::Automat > result;
         {
@@ -436,8 +436,8 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.set_app6symbol( "sfgpu----------" );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
+            MOCK_EXPECT( automat.RegisterAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
@@ -458,16 +458,16 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
             // no DecisionalStates if none is set
             result->SendFullUpdate( publisher );
-            publisher.verify();
+            mock::verify( publisher );
         }
 
         // cleaning
-        MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
+        MOCK_EXPECT( automat.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
 
@@ -494,32 +494,32 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // formations
     tools::Resolver< dispatcher::Formation_ABC > formations;
     MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
     formations.Register( formation.GetId(), formation );
 
     // knowledge groups
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
     MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
     knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
         std::auto_ptr< dispatcher::Automat > result;
         {
@@ -535,8 +535,8 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
             message.set_app6symbol( "sfgpu----------" );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
-            MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
+            MOCK_EXPECT( automat.RegisterAutomat ).once();
+            MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
             result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
@@ -550,7 +550,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MockLogisticEntity logisticEntity;
-            MOCK_EXPECT( automat, GetLogisticEntity ).once().returns( &logisticEntity );
+            MOCK_EXPECT( automat.GetLogisticEntity ).once().returns( &logisticEntity );
             automats.Get( 1 ).Update( message );
 
             // change log supply quotas
@@ -566,24 +566,23 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
             message2.mutable_quotas()->mutable_elem( 1 )->mutable_resource()->set_id( 69 );
             message2.mutable_quotas()->mutable_elem( 1 )->set_quantity( 6945 );
 
-            MOCK_EXPECT( automat, GetLogisticEntity ).once().returns( &logisticEntity );
+            MOCK_EXPECT( automat.GetLogisticEntity ).once().returns( &logisticEntity );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             automats.Get( 1 ).Update( message2 );
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
-            MOCK_EXPECT( logisticEntity, Send ).exactly( 2 ).calls( ParentEntitySender( 51 ) ); // 1 for logistic links, 1 for quotas
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedLink );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedQuotas );
+            MOCK_EXPECT( publisher.SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
+            MOCK_EXPECT( logisticEntity.Send ).exactly( 2 ).calls( ParentEntitySender( 51 ) ); // 1 for logistic links, 1 for quotas
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedLink );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedQuotas );
             automats.Get( 1 ).SendFullUpdate( publisher );
-            publisher.verify();
+            mock::verify( publisher );
         }
 
         // cleaning
-        MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
+        MOCK_EXPECT( automat.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
-

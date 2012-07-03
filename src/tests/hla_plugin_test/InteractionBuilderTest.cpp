@@ -33,13 +33,13 @@ namespace
             ::hla::MockInteractionNotification< Interaction > notification;
             ::hla::Interaction< Interaction > interaction( notification );
             hla::MockInteractionHandler* handler = new hla::MockInteractionHandler();
-            MOCK_EXPECT( federate, RegisterInteraction ).once().with( name, mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
+            MOCK_EXPECT( federate.RegisterInteraction ).once().with( name, mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
             builder.Build( interaction );
             mock::verify();
             mock::sequence s;
             BOOST_FOREACH( const std::string& parameter, parameters )
-                MOCK_EXPECT( handler, Visit ).once().in( s ).with( parameter, mock::any );
-            MOCK_EXPECT( handler, End ).once().in( s );
+                MOCK_EXPECT( handler->Visit ).once().in( s ).with( parameter, mock::any );
+            MOCK_EXPECT( handler->End ).once().in( s );
             Interaction message;
             interaction.Send( message );
         }

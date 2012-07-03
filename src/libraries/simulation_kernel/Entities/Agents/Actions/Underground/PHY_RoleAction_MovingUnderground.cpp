@@ -15,8 +15,8 @@
 #include "NetworkNotificationHandler_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Objects/UndergroundAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -130,7 +130,7 @@ bool PHY_RoleAction_MovingUnderground::Run()
     {
         bHasChanged_ = true;
         MT_Vector2D destination = pDestination_->GetLocalisation().ComputeBarycenter();
-        owner_.GetRole< PHY_RolePion_Location >().MagicMove( destination );
+        owner_.GetRole< PHY_RoleInterface_Location >().MagicMove( destination );
         owner_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( destination );
         transferTime_ = 0;
         pCurrentLocation_ = pDestination_;
@@ -179,7 +179,7 @@ double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared
 {
     if( speed_ == 0 )
         return -1.f;
-    return owner_.GetRole< PHY_RolePion_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
+    return owner_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
     bHasChanged_ = true;
     preparingToHide_ = true;
     unsigned int duration = MIL_Singletons::GetTime().GetTickDuration();
-    speed_ = duration == 0 ? 0 : owner_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
+    speed_ = duration == 0 ? 0 : owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
     preparingToHide_ = false;
     pCurrentLocation_ = pKnowledge;
     currentNetwork_ = attr->Network();

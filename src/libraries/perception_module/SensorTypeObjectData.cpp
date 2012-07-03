@@ -1,0 +1,175 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "SensorTypeObjectData.h"
+#include "PerceptionLevel.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
+#include "wrapper/Hook.h"
+#include "wrapper/View.h"
+#include <xeumeuleu/xml.hpp>
+
+using namespace sword;
+using namespace sword::perception;
+
+DECLARE_HOOK( GetPostureSize, size_t, () )
+DECLARE_HOOK( GetPostureIdentifier, bool, ( const char* type, size_t* identifier ) )
+DECLARE_HOOK( PostureCanModifyDetection, bool, ( const char* type ) )
+DECLARE_HOOK( GetLastPostureIdentifier, size_t, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetCurrentPostureIdentifier, size_t, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetPostureCompletionPercentage, double, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetCollidingPopulationDensity, double, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( ObjectIntersectWithCircle, bool, ( const MIL_Object_ABC& object, const MT_Vector2D& center, double radius ) )
+DECLARE_HOOK( KnowledgeObjectIntersectWithCircle, bool, ( const DEC_Knowledge_Object& object, const MT_Vector2D& center, double radius ) )
+
+struct SensorTypeObjectData::LoadingWrapper
+{
+    void ReadPosture( xml::xistream& xis, SensorTypeObjectData::T_FactorVector& factors )
+    {
+        SensorTypeObjectData::ReadPosture( xis, factors );
+    }
+};
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::InitializeFactors
+// Created: NLD 2004-08-06
+// -----------------------------------------------------------------------------
+void SensorTypeObjectData::InitializeFactors( const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis )
+{
+    LoadingWrapper loader;
+    xis >> xml::start( strTagName )
+            >> xml::list( "distance-modifier", loader, &LoadingWrapper::ReadPosture, factors )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::ReadPosture
+// Created: ABL 2007-07-25
+// -----------------------------------------------------------------------------
+void SensorTypeObjectData::ReadPosture( xml::xistream& xis, T_FactorVector& factors )
+{
+    std::string postureType;
+    double rFactor = 0;
+    xis >> xml::attribute( "type", postureType )
+        >> xml::attribute( "value", rFactor );
+    if( rFactor < 0 || rFactor > 1 )
+        xis.error( "distance-modifier: value not in [0..1]" );
+    size_t postureId = 0;
+    if( !GET_HOOK( GetPostureIdentifier )( postureType.c_str(), &postureId ) )
+        xis.error( "distance-modifier: unknow type" );
+    if( !GET_HOOK( PostureCanModifyDetection )( postureType.c_str() ) )
+        return;
+    assert( factors.size() > postureId );
+    factors[ postureId ] = rFactor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::SensorTypeObjectData
+// Created: NLD 2004-08-09
+// -----------------------------------------------------------------------------
+SensorTypeObjectData::SensorTypeObjectData( xml::xistream& xis )
+    : rDD_                 ( 0. )
+    , postureSourceFactors_( GET_HOOK( GetPostureSize )(), 0. )
+    , rPopulationDensity_  ( 1. )
+    , rPopulationFactor_   ( 1. )
+{
+    xis >> xml::attribute( "detection-distance", rDD_ );
+
+    InitializeFactors          ( "source-posture-modifiers", postureSourceFactors_, xis );
+    InitializePopulationFactors( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData destructor
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+SensorTypeObjectData::~SensorTypeObjectData()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::InitializePopulationFactors
+// Created: NLD 2005-10-27
+// -----------------------------------------------------------------------------
+void SensorTypeObjectData::InitializePopulationFactors( xml::xistream& xis )
+{
+    xis >> xml::start( "population-modifier" )
+            >> xml::attribute( "density", rPopulationDensity_ )
+            >> xml::attribute( "modifier", rPopulationFactor_ )
+        >> xml::end;
+
+    if( rPopulationDensity_ < 0 )
+        xis.error( "population-modifier: density < 0" );
+    if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
+        xis.error( "population-modifier: modifier not in [0..1]" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::GetPopulationFactor
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+double SensorTypeObjectData::GetPopulationFactor( double rDensity ) const
+{
+    if( rDensity == 0. || rPopulationDensity_ == 0. )
+        return 1.;
+    return std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rDensity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::GetSourceFactor
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+double SensorTypeObjectData::GetSourceFactor( const wrapper::View& source ) const
+{
+    const unsigned int nOldPostureIdx = GET_HOOK( GetLastPostureIdentifier )( source );
+    const unsigned int nCurPostureIdx = GET_HOOK( GetCurrentPostureIdentifier )( source );
+    assert( postureSourceFactors_.size() > nOldPostureIdx );
+    assert( postureSourceFactors_.size() > nCurPostureIdx );
+    double rModificator =     postureSourceFactors_[ nOldPostureIdx ] + GET_HOOK( GetPostureCompletionPercentage )( source )
+                          * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
+    rModificator *= GET_HOOK( ComputePerceptionDistanceFactor )( source );
+    rModificator *= GetPopulationFactor( GET_HOOK( GetCollidingPopulationDensity )( source ) );
+    return rModificator;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObject::ComputePerception
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& source, const MIL_Object_ABC& target, double /*rSensorHeight*/ ) const
+{
+    const double     rDistanceMaxModificator = GetSourceFactor( source );
+    const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
+    if( rDistanceMaxModificator == 0. || !GET_HOOK( ObjectIntersectWithCircle )( target, vSourcePos, rDD_ * rDistanceMaxModificator ) )
+        return PerceptionLevel::notSeen_;
+    return PerceptionLevel::identified_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObject::ComputePerception
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& source, const DEC_Knowledge_Object& target, double /*rSensorHeight*/ ) const
+{
+    const double     rDistanceMaxModificator = GetSourceFactor( source );
+    const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
+    if( rDistanceMaxModificator == 0. || !GET_HOOK( KnowledgeObjectIntersectWithCircle )( target, vSourcePos, rDD_ * rDistanceMaxModificator ) )
+        return PerceptionLevel::notSeen_;
+    return PerceptionLevel::identified_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObjectData::GetMaxDistance
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+double SensorTypeObjectData::GetMaxDistance() const
+{
+    return rDD_;
+}

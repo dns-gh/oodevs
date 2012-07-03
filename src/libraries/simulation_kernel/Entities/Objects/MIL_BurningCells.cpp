@@ -23,7 +23,7 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_EntityManager.h"
@@ -607,7 +607,7 @@ bool MIL_BurningCells::IsTrafficable( const MT_Vector2D& from, const MT_Vector2D
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    MT_Vector2D position = agent.GetRole< PHY_RolePion_Location >().GetPosition();
+    MT_Vector2D position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( ComputeCellOriginFromPoint( position.rX_, position.rY_ ) );
     if( it != burningCellsByCoordinates_.end() )
     {

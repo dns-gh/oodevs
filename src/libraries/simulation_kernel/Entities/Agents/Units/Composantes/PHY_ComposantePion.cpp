@@ -1539,11 +1539,8 @@ const PHY_RoleInterface_Composantes& PHY_ComposantePion::GetRole() const
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
 {
-    if( algorithm.CanFire( *this ) )
-    {
-        for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-            algorithm.ApplyOnWeapon( *this, **itWeapon );
-    }
+    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
+        algorithm.ApplyOnWeapon( *this, **itWeapon );
 }
 
 // -----------------------------------------------------------------------------

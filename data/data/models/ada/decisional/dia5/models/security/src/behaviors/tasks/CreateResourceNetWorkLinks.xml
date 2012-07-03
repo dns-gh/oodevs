@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.CreateResourceNetWorkLinks" source-version="1.0.0">
-    <description>For an gent to know how to create new resource links between a resource producer (a urban block or an object)  and a list of resource nodes (the 'resourceReceivers' list). &#xD;
+    <description>For an gent to know how to create new resource links between a node and a list of objects that need this resource ('resourceReceivers' list). &#xD;
 &#xD;
-When several links should be created, the agent acts on each target nodes by following the order of the elements into the 'resourceReceivers' list. </description>
+When several links should be created, the agent acts on each target by following the order of the elements into the 'resourceReceivers' list. </description>
     <parameters>
-        <parameter name="resourceProducer">
-            <description>The resource producer.</description>
+        <parameter name="resourceNode">
+            <description>The source resource node.</description>
             <type>
-                <class name="agent.world.ResourceProducer"/>
+                <class name="agent.world.ResourceNode"/>
             </type>
         </parameter>
         <parameter name="resourceReceivers">
-            <description>The list of resource receivers.</description>
+            <description>The target node.</description>
             <type>
                 <list>
-                    <class name="agent.world.ResourceNode"/>
+                    <class name="agent.world.ResourceReceiver"/>
                 </list>
             </type>
         </parameter>
@@ -23,12 +23,12 @@ When several links should be created, the agent acts on each target nodes by fol
         <stage label="Link creation between nodes" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks" main="true">
-                    <parameter name="resourceProducer">
+                    <parameter name="resourceNode">
                         <value>
-                            <parameter>resourceProducer</parameter>
+                            <parameter>resourceNode</parameter>
                         </value>
                     </parameter>
-                    <parameter name="resourceNodes">
+                    <parameter name="resourceReceivers">
                         <value>
                             <parameter>resourceReceivers</parameter>
                         </value>

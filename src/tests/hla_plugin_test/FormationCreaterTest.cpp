@@ -54,9 +54,9 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( formation_creater_creates_formation_for_each_party, Fixture )
 {
-    MOCK_EXPECT( teamResolver, CreateIterator ).once().returns( MakeTeamIterator( boost::assign::list_of( party ) ) );
+    MOCK_EXPECT( teamResolver.CreateIterator ).once().returns( MakeTeamIterator( boost::assign::list_of( party ) ) );
     simulation::UnitMagicAction actual;
-    MOCK_EXPECT( formationCreation, Send ).once().with( mock::retrieve( actual ), mock::any );
+    MOCK_EXPECT( formationCreation.Send ).once().with( mock::retrieve( actual ), mock::any );
     FormationCreater formationCreater( teamResolver, formationCreation );
     mock::verify();
     const sword::UnitMagicAction& action = actual();

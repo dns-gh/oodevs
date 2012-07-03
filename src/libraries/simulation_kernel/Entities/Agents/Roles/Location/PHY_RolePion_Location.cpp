@@ -165,7 +165,6 @@ void PHY_RolePion_Location::SetDirection( const MT_Vector2D& vDirection )
     if( vDirection == vDirection_ )
         return;
 
-    assert( MT_IsZero( vDirection.SquareMagnitude() - 1. ) );
     bDirectionHasChanged_ = true;
     vDirection_           = vDirection;
 }

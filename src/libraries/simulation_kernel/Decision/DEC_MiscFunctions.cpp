@@ -17,7 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -32,7 +32,7 @@ std::set<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::enemyRe
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, double rFactor )
 {
-    callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetSpeedModificator( rFactor );
+    callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetSpeedModificator( rFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, 
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, double rFactor )
 {
-    callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
+    callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetMaxSpeedModificator( rFactor );
 }
 
 
@@ -53,7 +53,7 @@ double DEC_MiscFunctions::GetMaxSpeedModificator( const DEC_Decision_ABC* agent 
 {
     if( !agent )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    return agent->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedModificator();
+    return agent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedModificator();
 }
 
 // =============================================================================

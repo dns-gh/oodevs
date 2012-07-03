@@ -19,8 +19,8 @@
 // -----------------------------------------------------------------------------
 PHY_ActionResumeWorkUrbanBlock::PHY_ActionResumeWorkUrbanBlock( MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanBlock )
     : PHY_DecisionCallbackAction_ABC( pion )
-    , role_       ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pUrbanBlock_( pUrbanBlock )
+    , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
+    , pUrbanBlock_  ( pUrbanBlock )
 {
     // NOTHING
 }

@@ -157,6 +157,11 @@ protected:
     {
         (*pBrain_)[ strFunctionName ] = function;
     }
+    template< typename MethodType >
+    void RegisterMethod( const char* strFunctionName, MethodType function )
+    {
+        pBrain_->Register( strFunctionName, function );
+    }
     //@}
 
 private://! @name Helpers

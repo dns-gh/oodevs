@@ -228,7 +228,14 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\frontend\ListViewHelper.h" />
-    <CustomBuildStep Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <CustomBuildStep Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.h" />
     <ClInclude Include="..\..\src\libraries\frontend\PluginConfig_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.h">

@@ -27,8 +27,8 @@ public:
     TestPK()
     {
         MockMIL_Time_ABC time;
-        MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
-        MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
+        MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
 
         xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types><material-composition-type name='Bois'>"
             "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"

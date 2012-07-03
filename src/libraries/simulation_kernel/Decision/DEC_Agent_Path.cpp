@@ -24,11 +24,11 @@
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/FloodCapacity.h"
@@ -44,6 +44,8 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/foreach.hpp>
+#include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor
@@ -54,8 +56,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
@@ -79,8 +81,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
@@ -107,8 +109,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , queryMaker_               ( queryMaker )
     , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
+    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_ ( 0. )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
@@ -132,8 +134,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >(), loaded )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
     , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
@@ -159,7 +161,7 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , bRefine_                 ( rhs.bRefine_ )
     , vDirDanger_              ( rhs.vDirDanger_ )
  //   , unitSpeeds_               ( rhs.unitSpeeds_ ) $$$ TODO
-    , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >() )
+    , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
     , rMaxSlope_               ( rhs.rMaxSlope_ )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( rhs.pathClass_ )
@@ -229,7 +231,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
-                pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
+                pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge, queryMaker_,
+                    pathClass_.GetEnemyCostAtSecurityRange(), pathClass_.GetEnemyCostOnContact() ) );
         }
     }
 
@@ -253,7 +256,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {
                         TerrainData data;
-                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
+                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( data, *pObject );
                         if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
                             continue;
                     }
@@ -269,7 +272,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
                     pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
                 else if( pathClass_.GetObjectCost( knowledge.GetType() ) != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
-                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) ) );
+                    pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( knowledge, pathClass_.GetObjectCost( knowledge.GetType() ), pathClass_.GetThreshold() ) ) );
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }
@@ -283,7 +286,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         queryMaker_.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, !queryMaker_.GetType().IsTerrorist() ) );
+            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, boost::bind( &DEC_Agent_PathClass::GetPopulationAttitudeCost, &pathClass_, _1 ), !queryMaker_.GetType().IsTerrorist() ) );
     }
 }
 
@@ -596,9 +599,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     {
         const PHY_RoleAction_MovingUnderground* roleUnderground = queryMaker_.RetrieveRole< PHY_RoleAction_MovingUnderground >();
         if( roleUnderground && roleUnderground->IsUnderground() )
-            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_NotActivatedUndergroundNetwork );
+            queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SendRC( MIL_Report::eReport_NotActivatedUndergroundNetwork );
         else
-            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+            queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SendRC( MIL_Report::eReport_DifficultTerrain );
     }
 
 #ifndef NDEBUG
@@ -680,7 +683,7 @@ void DEC_Agent_Path::ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath )
 {
     if( !IsDestinationTrafficable() )
     {
-        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+        queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SendRC( MIL_Report::eReport_DifficultTerrain );
         Cancel();
     }
     else

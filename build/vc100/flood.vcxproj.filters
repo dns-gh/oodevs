@@ -18,6 +18,9 @@
     <ClInclude Include="..\..\src\libraries\flood\FloodModel.h">
       <Filter>Source Files\Flood</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\flood\FloodModel_ABC.h">
+      <Filter>Source Files\Flood</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\flood\FloodDrawer.cpp">

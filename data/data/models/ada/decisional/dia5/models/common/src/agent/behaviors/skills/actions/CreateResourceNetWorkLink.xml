@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.CreateResourceNetWorkLink" source-version="1.0.0">
-    <description>To create a connection between a resource producer and a resource network node.</description>
+    <description/>
     <parameters>
-        <parameter name="resourceProducer">
-            <description>The element that produces the resource toward the resource node.</description>
-            <type>
-                <class name="agent.world.ResourceProducer"/>
-            </type>
-        </parameter>
         <parameter name="resourceNode">
-            <description>The resource node that receives the resource.</description>
+            <description/>
             <type>
                 <class name="agent.world.ResourceNode"/>
+            </type>
+        </parameter>
+        <parameter name="resourceReceiver">
+            <description></description>
+            <type>
+                <class name="agent.world.ResourceReceiver"/>
             </type>
         </parameter>
     </parameters>
@@ -19,8 +19,6 @@
         <class name="agent.world.UnitBody"/>
     </body-type>
     <feedbacks>
-        <feedback name="linkCreationActionCompleted">
-            <description>Sent upon action completion.</description>
-        </feedback>
+        <feedback name="linkCreationActionCompleted"/>
     </feedbacks>
 </skill>

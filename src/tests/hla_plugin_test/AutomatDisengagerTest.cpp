@@ -25,8 +25,8 @@ namespace
             : automatId              ( 1337 )
             , automatCreationObserver( 0 )
         {
-            MOCK_EXPECT( automatCreation, Register ).once().with( mock::retrieve( automatCreationObserver ) );
-            MOCK_EXPECT( automatCreation, Unregister ).once();
+            MOCK_EXPECT( automatCreation.Register ).once().with( mock::retrieve( automatCreationObserver ) );
+            MOCK_EXPECT( automatCreation.Unregister ).once();
             creationMessage.mutable_automat()->set_id( automatId );
         }
         const unsigned long automatId;
@@ -43,8 +43,8 @@ BOOST_FIXTURE_TEST_CASE( automat_disengager_sends_disengage_message_when_receivi
 {
     AutomatDisengager disengager( automatCreation, publisher, contextFactory );
     BOOST_REQUIRE( automatCreationObserver );
-    MOCK_EXPECT( contextFactory, Create ).once().returns( 42 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( disengageMessage ) );
+    MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( disengageMessage ) );
     automatCreationObserver->Notify( creationMessage, "automat" );
     BOOST_CHECK( disengageMessage.message().has_set_automat_mode() );
     const sword::SetAutomatMode& mode = disengageMessage.message().set_automat_mode();

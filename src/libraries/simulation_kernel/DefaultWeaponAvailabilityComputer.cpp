@@ -40,12 +40,3 @@ void DefaultWeaponAvailabilityComputer::ApplyOnWeapon( const PHY_ComposantePion&
 {
     (*pFirerWeapons_)( firer, weapon );
 }
-
-// -----------------------------------------------------------------------------
-// Name: DefaultWeaponAvailabilityComputer::CanFire
-// Created: LDC 2011-03-09
-// -----------------------------------------------------------------------------
-bool DefaultWeaponAvailabilityComputer::CanFire( const PHY_ComposantePion& firer )
-{
-    return pFirerWeapons_->CanFire( firer );
-}

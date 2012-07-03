@@ -11,7 +11,7 @@
 #include "PHY_RoleAction_CrowdTransport.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "protocol/ClientSenders.h"
@@ -128,7 +128,7 @@ void PHY_RoleAction_CrowdTransport::NotifyComposanteChanged( const PHY_Composant
         if( !humans.IsEmpty() )
         {
             loadedHumans_ -= humans;
-            currentCrowd_->GetConcentration( owner_.GetRole< PHY_RolePion_Location >().GetPosition() ).PushHumans( humans );
+            currentCrowd_->GetConcentration( owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() ).PushHumans( humans );
         }
     }
 }

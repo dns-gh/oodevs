@@ -72,8 +72,8 @@ class DEC_TestPopulationDecision;
 
 namespace
 {
-    MOCK_FUNCTOR( void( const std::string& ) ) NotifyCallFromScript;
-    MOCK_FUNCTOR( void( boost::shared_ptr< MIL_Mission_ABC > ) ) NotifyMissionCallFromScript;
+    MOCK_FUNCTOR( NotifyCallFromScript, void( const std::string& ) );
+    MOCK_FUNCTOR( NotifyMissionCallFromScript, void( boost::shared_ptr< MIL_Mission_ABC > ) );
     boost::shared_ptr< MIL_Mission_ABC > GetRawMission( DEC_TestPopulationDecision* pAgent );
 }
 
@@ -163,12 +163,12 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ActivateOrderExecutesBehaviour, Pion )
 {
-    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehavior" );
+    MOCK_EXPECT( missionType.GetDIABehavior ).once().returns( "missionBehavior" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
-    missionType.verify();
-    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( "missionBehavior called" );
+    mock::verify( missionType );
+    MOCK_EXPECT( NotifyCallFromScript ).once().with( "missionBehavior called" );
     decision.UpdateDecision( 1.f );
 }
 
@@ -178,12 +178,12 @@ BOOST_FIXTURE_TEST_CASE( ActivateOrderExecutesBehaviour, Pion )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ActivateOrderPassesMissionToDecisional, Pion )
 {
-    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehaviorWithArg" );
+    MOCK_EXPECT( missionType.GetDIABehavior ).once().returns( "missionBehaviorWithArg" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
-    missionType.verify();
-    MOCK_EXPECT( NotifyMissionCallFromScript, _ ).once().with( mission );
+    mock::verify( missionType );
+    MOCK_EXPECT( NotifyMissionCallFromScript ).once().with( mission );
     decision.UpdateDecision( 1.f );
 }
 
@@ -195,13 +195,13 @@ BOOST_FIXTURE_TEST_CASE( ActivateOrderPassesMissionToDecisional, Pion )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( DecisionalCanUseMissionParameters, Pion )
 {
-    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehavior" );
+    MOCK_EXPECT( missionType.GetDIABehavior ).once().returns( "missionBehavior" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "param" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
-    missionType.verify();
-    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( "missionBehavior called" );
+    mock::verify( missionType );
+    MOCK_EXPECT( NotifyCallFromScript ).once().with( "missionBehavior called" );
     decision.UpdateDecision( 1.f );
 }
 
@@ -238,13 +238,13 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesParametersToLua, Mission )
 {
-    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "testDEC_GetMission" );
+    MOCK_EXPECT( missionType.GetDIABehavior ).once().returns( "testDEC_GetMission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
-    missionType.verify();
-    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( missionParameter );
+    mock::verify( missionType );
+    MOCK_EXPECT( NotifyCallFromScript ).once().with( missionParameter );
     decision.UpdateDecision( 1.f );
 }
 
@@ -256,13 +256,13 @@ BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesParametersToLua, Mission )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission, Mission )
 {
-    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "mission" );
+    MOCK_EXPECT( missionType.GetDIABehavior ).once().returns( "mission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
-    missionType.verify();
-    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( missionParameter );
+    mock::verify( missionType );
+    MOCK_EXPECT( NotifyCallFromScript ).once().with( missionParameter );
     decision.UpdateDecision( 1.f );
 }
 
@@ -277,15 +277,15 @@ BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua, Missi
 {
     DEC_TestPopulationDecision otherDecision( population, 0 );
     DEC_TestPopulationDecision populationDecision( population, &otherDecision );
-    MOCK_EXPECT( missionType, GetDIABehavior ).exactly( 2 ).returns( "testDEC_GetOtherMission" );
+    MOCK_EXPECT( missionType.GetDIABehavior ).exactly( 2 ).returns( "testDEC_GetOtherMission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     std::string otherMissionParameter( "otherParameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > otherMission ( new StubMIL_Mission_ABC( missionType, resolver, otherMissionParameter ) );
     otherDecision.StartMissionBehavior( otherMission );
     populationDecision.StartMissionBehavior( mission );
-    missionType.verify();
-    MOCK_EXPECT( NotifyCallFromScript, _ ).once().with( otherMissionParameter );
+    mock::verify( missionType );
+    MOCK_EXPECT( NotifyCallFromScript ).once().with( otherMissionParameter );
     populationDecision.UpdateDecision( 1.f );
 }
 

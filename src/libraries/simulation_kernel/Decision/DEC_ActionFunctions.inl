@@ -106,7 +106,7 @@ unsigned int DEC_ActionFunctions::StopAction( T& caller, unsigned int actionId )
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_ActionFunctions::SuspendAction( const T& caller, unsigned int actionId  )
+void DEC_ActionFunctions::SuspendAction( const T& caller, unsigned int actionId )
 {
     boost::shared_ptr< PHY_Action_ABC > pAction = caller.GetAction( actionId );
     if( pAction.get() )
@@ -118,7 +118,7 @@ void DEC_ActionFunctions::SuspendAction( const T& caller, unsigned int actionId 
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_ActionFunctions::ResumeAction( const T& caller, unsigned int actionId  )
+void DEC_ActionFunctions::ResumeAction( const T& caller, unsigned int actionId )
 {
     boost::shared_ptr< PHY_Action_ABC > pAction = caller.GetAction( actionId );
     if( pAction.get() )

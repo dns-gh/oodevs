@@ -62,7 +62,7 @@ public:
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const;
 
-    virtual void RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult ) const;
+    virtual void RegisterRoles( MIL_AgentPion& pion ) const;
     //@}
 
     //! @name Accessors

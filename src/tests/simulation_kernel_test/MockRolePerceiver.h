@@ -14,7 +14,7 @@
 
 MOCK_BASE_CLASS( MockRolePerceiver, PHY_RolePion_Perceiver )
 {
-    MockRolePerceiver( MIL_Agent_ABC& pion ) : PHY_RolePion_Perceiver( pion, 0, 0 ) {}
+    MockRolePerceiver( MIL_Agent_ABC& pion ) : PHY_RolePion_Perceiver( pion ) {}
     MOCK_METHOD( NotifyExternalPerception, 2 );
 };
 

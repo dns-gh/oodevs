@@ -290,13 +290,13 @@ bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) c
 // Name: MIL_PopulationFlow::NotifyMovingOnPathPoint
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
+void MIL_PopulationFlow::NotifyMovingOnPathPoint( const MT_Vector2D& point )
 {
     // Head position
     assert( !flowShape_.empty() );
     IT_PointList itTmp = flowShape_.end();
     --itTmp;
-    flowShape_.insert( itTmp, point.GetPos() );
+    flowShape_.insert( itTmp, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -426,6 +426,8 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
+    if( ! CanMove() )
+        return;
     if( ManageSplit() )
         return;
     if( ManageObjectSplit() )

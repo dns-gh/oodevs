@@ -31,7 +31,7 @@ namespace
             , munitionId      ( 1337 )
             , interventionType( 1. )
         {
-            MOCK_EXPECT( factory, Create ).returns( 42 );
+            MOCK_EXPECT( factory.Create ).returns( 42 );
         }
         dispatcher::MockSimulationPublisher publisher;
         MockContextFactory factory;
@@ -49,8 +49,8 @@ namespace
 BOOST_FIXTURE_TEST_CASE( indirect_fire_receiver_sends_create_fire_order_on_location_when_receiving_ground_impact_munition_detonation, Fixture )
 {
     sword::ClientToSim message;
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
-    MOCK_EXPECT( munitionResolver, ResolveType ).once().with( rpr::EntityType( munitionType ) ).returns( munitionId );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( munitionResolver.ResolveType ).once().with( rpr::EntityType( munitionType ) ).returns( munitionId );
     parameters.detonationLocation = rpr::WorldLocation( latitude, longitude, 0. );
     parameters.munitionType = rpr::EntityType( munitionType );
     receiver.Receive( parameters );

@@ -33,10 +33,10 @@ namespace
             message.mutable_attributes();
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             result.reset( new dispatcher::UrbanObject( model, message ) );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
-            publisher.verify();
-            publisher.reset();
+            mock::verify( publisher );
+            mock::reset( publisher );
             expected.mutable_message()->Clear();
         }
         std::auto_ptr< dispatcher::UrbanObject_ABC > result;
@@ -72,10 +72,10 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         result->Update( message );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
-        publisher.verify();
-        publisher.reset();
+        mock::verify( publisher );
+        mock::reset( publisher );
     }
     {
         expected.mutable_message()->Clear();
@@ -88,7 +88,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
     }
 }
@@ -105,10 +105,10 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
         message.mutable_object()->set_id( 1 );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         result->Update( message );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
-        publisher.verify();
-        publisher.reset();
+        mock::verify( publisher );
+        mock::reset( publisher );
     }
     {
         expected.mutable_message()->Clear();
@@ -121,7 +121,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
     }
 }

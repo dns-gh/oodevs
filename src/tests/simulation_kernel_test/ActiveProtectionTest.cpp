@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MIL_EffectManager effectManager;
 
         MockAgent pion;
-        MOCK_EXPECT( pion, GetID ).once().returns( 1u );
+        MOCK_EXPECT( pion.GetID ).once().returns( 1u );
         StubDEC_Decision< MockAgent >* decision = new StubDEC_Decision< MockAgent >( pion );
         pion.RegisterRole( *decision );
         firing::PHY_RoleAction_IndirectFiring* roleIndirectFiring = new firing::PHY_RoleAction_IndirectFiring( pion );
@@ -83,8 +83,8 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         pion.RegisterRole( *roleMovingUnderground );
 
         MockMIL_Time_ABC time;
-        MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
-        MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
+        MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
 
         const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.2' repairable-without-evacuation='0.8'/></attritions>"
@@ -98,17 +98,17 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         pion.RegisterRole( *locationRole );
         const MT_Vector2D sourcePosition;
         locationRole->UpdatePatch();
-        MOCK_EXPECT( locationRole, GetPosition ).at_least( 1 ).returns( sourcePosition );
-        MOCK_EXPECT( locationRole, GetAgent ).at_least( 1 ).returns( boost::ref( pion ) );
-        MOCK_EXPECT( locationRole, GetHeight ).at_least( 1 ).returns( 0. );
+        MOCK_EXPECT( locationRole->GetPosition ).at_least( 1 ).returns( sourcePosition );
+        MOCK_EXPECT( locationRole->GetAgent ).at_least( 1 ).returns( boost::ref( pion ) );
+        MOCK_EXPECT( locationRole->GetHeight ).at_least( 1 ).returns( 0. );
 
         MockPHY_RoleInterface_UrbanLocation* urbanRole = new MockPHY_RoleInterface_UrbanLocation();
         pion.RegisterRole( *urbanRole );
-        MOCK_EXPECT( urbanRole, GetCurrentUrbanBlock ).once().returns( ( UrbanObjectWrapper* )0 );
+        MOCK_EXPECT( urbanRole->GetCurrentUrbanBlock ).once().returns( ( UrbanObjectWrapper* )0 );
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
-        MOCK_EXPECT( dotationRole, AddFireReservation ).once().returns( 1. );
+        MOCK_EXPECT( dotationRole->AddFireReservation ).once().returns( 1. );
 
         decision->RegisterFunction( "CallbackAction", &InitCallback );
 
@@ -120,32 +120,32 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         // Expect a Callback
         decision->RegisterFunction( "CallbackAction", &CheckCallback );
 
-        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
+        MOCK_EXPECT( mockPublisher.Send ).at_least( 1 );
 
         AlgorithmsFactories algorithms;
-        MOCK_EXPECT( pion, GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
+        MOCK_EXPECT( pion.GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
 
         MockPHY_RoleInterface_HumanFactors* humanFactorRole = new MockPHY_RoleInterface_HumanFactors();
         pion.RegisterRole< PHY_RoleInterface_HumanFactors >( *humanFactorRole );
-        MOCK_EXPECT( humanFactorRole, NotifyAttacked ).once();
+        MOCK_EXPECT( humanFactorRole->NotifyAttacked ).once();
 
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );
         MockPHY_RoleInterface_ActiveProtection* protectionRole = new MockPHY_RoleInterface_ActiveProtection();
         pion.RegisterRole< PHY_RoleInterface_ActiveProtection >( *protectionRole );
-        MOCK_EXPECT( protectionRole, UseAmmunition ).once();
-        MOCK_EXPECT( protectionRole, DestroyIndirectFire ).once().returns( false );
-        MOCK_EXPECT( protectionRole, CounterIndirectFire ).once().returns( false );
+        MOCK_EXPECT( protectionRole->UseAmmunition ).once();
+        MOCK_EXPECT( protectionRole->DestroyIndirectFire ).once().returns( false );
+        MOCK_EXPECT( protectionRole->CounterIndirectFire ).once().returns( false );
         MockArmy mockArmy;
-        MOCK_EXPECT( pion, GetArmy ).at_least( 1 ).returns( boost::ref( mockArmy ) );
+        MOCK_EXPECT( pion.GetArmy ).at_least( 1 ).returns( boost::ref( mockArmy ) );
         MockPHY_RoleInterface_Composantes* composanteRole = new MockPHY_RoleInterface_Composantes();
         pion.RegisterRole( *composanteRole );
-        MOCK_EXPECT( composanteRole, Neutralize ).once();
-        MOCK_EXPECT( urbanRole, ComputeRatioPionInsideEllipse ).once().returns( 1.f );
-        MOCK_EXPECT( composanteRole, ApplyIndirectFire ).once();
-        MOCK_EXPECT( mockArmy, IsAFriend ).once().returns( eTristate_False );
+        MOCK_EXPECT( composanteRole->Neutralize ).once();
+        MOCK_EXPECT( urbanRole->ComputeRatioPionInsideEllipse ).once().returns( 1.f );
+        MOCK_EXPECT( composanteRole->ApplyIndirectFire ).once();
+        MOCK_EXPECT( mockArmy.IsAFriend ).once().returns( eTristate_False );
         effectManager.Update();
-        entityManager.verify();
+        mock::verify( entityManager );
         PHY_IndirectFireDotationClass::Terminate();
     }
     TER_World::DestroyWorld();

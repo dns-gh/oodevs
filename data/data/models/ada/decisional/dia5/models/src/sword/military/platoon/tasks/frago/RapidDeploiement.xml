@@ -31,7 +31,7 @@
 	<stages>
 		<stage label="Deploiement">
 			<skills>
-				<skill name="sword.military.platoon.skills.EnsureIndirectFire" main="true" priority="1000.0">
+				<skill name="france.military.platoon.skills.EnsureIndirectFire" main="true" priority="1000.0">
 					<parameter name="callByFragOrder">
 						<value>
 							<boolean>true</boolean>

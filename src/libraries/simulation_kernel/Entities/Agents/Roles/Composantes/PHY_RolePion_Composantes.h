@@ -288,10 +288,15 @@ public:
     typedef T_ComposanteTypeMap::const_iterator                                 CIT_ComposanteTypeMap;
     //@}
 
+protected:
+    //! @name Init
+    //@{
+    void DistributeCommanders();
+    //@}
+
 private:
     //! @name Init
     //@{
-    void DistributeCommanders      ();
     void ReadComposantesOverloading( xml::xistream& xis );
     void ReadHumansOverloading     ( xml::xistream& xis );
     //@}

@@ -13,6 +13,11 @@
 #include "MIL.h"
 #include "Tools/MIL_IDManager.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 class PHY_Actor;
 
 // =============================================================================

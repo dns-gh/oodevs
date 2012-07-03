@@ -68,9 +68,9 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     pion.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     {
         MockMIL_Time_ABC time;
-        MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
-        MOCK_EXPECT( army, GetID ).returns( 1u );
-        MOCK_EXPECT( publisher, Send ).at_least( 1 );
+        MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+        MOCK_EXPECT( army.GetID ).returns( 1u );
+        MOCK_EXPECT( publisher.Send ).at_least( 1 );
         DEC_Knowledge_Urban kn( army, *pObject );
         DEC_Knowledge_UrbanPerception perception( *pion.pPion_, pObject->GetID() );
         perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );

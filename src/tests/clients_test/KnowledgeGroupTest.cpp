@@ -152,8 +152,8 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
     Model model( controllers, staticModel );
     MockTeam team;
     MockKnowledgeGroup group;
-    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
-    MOCK_EXPECT( group, GetId ).returns( 42 );
+    MOCK_EXPECT( factory.Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
+    MOCK_EXPECT( group.GetId ).returns( 42 );
     kgModel.Create( xis, team, model );
 }
 
@@ -179,11 +179,11 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupCompositeTest )
     Model model( controllers, staticModel );
     MockTeam team;
     MockKnowledgeGroup group;
-    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
-    MOCK_EXPECT( group, GetId ).returns( 42 );
+    MOCK_EXPECT( factory.Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
+    MOCK_EXPECT( group.GetId ).returns( 42 );
     MockKnowledgeGroup subGroup;
-    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( group ) ).returns( &subGroup );
-    MOCK_EXPECT( subGroup, GetId ).returns( 2 );
+    MOCK_EXPECT( factory.Create4 ).with( mock::any, mock::same( group ) ).returns( &subGroup );
+    MOCK_EXPECT( subGroup.GetId ).returns( 2 );
 
     kgModel.Create( xis, team, model );
 }
@@ -210,14 +210,14 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupMultiTest )
     Model model( controllers, staticModel );
     MockTeam team;
     MockKnowledgeGroup group;
-    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
-    MOCK_EXPECT( group, GetId ).returns( 42 );
+    MOCK_EXPECT( factory.Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
+    MOCK_EXPECT( group.GetId ).returns( 42 );
     MockKnowledgeGroup subGroup;
-    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( group ) ).returns( &subGroup );
-    MOCK_EXPECT( subGroup, GetId ).returns( 2 );
+    MOCK_EXPECT( factory.Create4 ).with( mock::any, mock::same( group ) ).returns( &subGroup );
+    MOCK_EXPECT( subGroup.GetId ).returns( 2 );
     MockKnowledgeGroup subSubGroup;
-    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( subGroup ) ).returns( &subSubGroup );
-    MOCK_EXPECT( subSubGroup, GetId ).returns( 71 );
+    MOCK_EXPECT( factory.Create4 ).with( mock::any, mock::same( subGroup ) ).returns( &subSubGroup );
+    MOCK_EXPECT( subSubGroup.GetId ).returns( 71 );
 
     kgModel.Create( xis, team, model );
 }
@@ -240,7 +240,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
     IdManager idManager;
     MockKnowledgeGroupTypeResolver types;
     std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
-    MOCK_EXPECT( types, Find ).with( mock::any ).returns( standardType.get() );
+    MOCK_EXPECT( types.Find ).with( mock::any ).returns( standardType.get() );
     kernel::Controller controller;
     MockTeam team;
     {
@@ -265,7 +265,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
 //    IdManager idManager;
 //    MockKnowledgeGroupTypeResolver types;
 //    std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
-//    MOCK_EXPECT( types, Get ).with( mock::any ).returns( boost::ref( *standardType ) );
+//    MOCK_EXPECT( types.Get ).with( mock::any ).returns( boost::ref( *standardType ) );
 //    kernel::Controller controller;
 //    MockTeam team;
 //    {

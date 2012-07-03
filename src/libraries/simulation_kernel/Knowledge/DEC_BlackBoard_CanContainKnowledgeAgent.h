@@ -63,6 +63,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
     bool                 HasKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
+    const T_KnowledgeAgentMap& GetKnowledgeAgents() const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const

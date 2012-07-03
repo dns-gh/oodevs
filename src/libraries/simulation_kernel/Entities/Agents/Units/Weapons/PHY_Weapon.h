@@ -40,6 +40,15 @@ public:
           bool                  CanDirectFire      () const;
           bool                  CanIndirectFire    () const;
     const PHY_DotationCategory& GetDotationCategory() const;
+
+    const PHY_WeaponType& GetType() const
+    {
+        return type_;
+    }
+    bool IsMajor() const
+    {
+        return bMajor_;
+    }
     //@}
 
     //! @name Operations

@@ -22,8 +22,8 @@
 BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
 {
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
+    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound' death-threshold='95'>"
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
 
         xis >> xml::start( "medical-treatment" );
         MedicalTreatmentAttribute attribute( xis );
-        MOCK_EXPECT( object, RegisterAttribute ).once();
+        MOCK_EXPECT( object.RegisterAttribute ).once();
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
         sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_available_count() );
         BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( 0 ).available_count() );
 
-        MOCK_EXPECT( time, GetCurrentTick ).returns( 2 );
+        MOCK_EXPECT( time.GetCurrentTick ).returns( 2 );
         {
             PHY_InjuredHuman injuredHuman;
             capacity.ReceivePatient( injuredHuman );
@@ -72,9 +72,9 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         }
         {
             Mock_MIL_Injury_ABC abstractInjury;
-            MOCK_EXPECT( abstractInjury, GetInjuryID ).returns( 1 );
-            MOCK_EXPECT( abstractInjury, SetLifeExpectancy ).returns( 42.f );
-            MOCK_EXPECT( abstractInjury, GetInjuryCategory ).returns( MIL_MedicalTreatmentType::eUA );
+            MOCK_EXPECT( abstractInjury.GetInjuryID ).returns( 1 );
+            MOCK_EXPECT( abstractInjury.SetLifeExpectancy ).returns( 42.f );
+            MOCK_EXPECT( abstractInjury.GetInjuryCategory ).returns( MIL_MedicalTreatmentType::eUA );
             PHY_InjuredHuman injuredHuman( abstractInjury );
             capacity.ReceivePatient( injuredHuman );
             capacity.Update( object, 1 );
@@ -94,8 +94,8 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
 BOOST_AUTO_TEST_CASE( VerifyInitialization )
 {
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
+    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound1' death-threshold='95'>"
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
         MIL_MedicalTreatmentType::Initialize( xisMedical, time );
 
         MockMIL_Object_ABC object;
-        MOCK_EXPECT( object, RegisterAttribute ).once();
+        MOCK_EXPECT( object.RegisterAttribute ).once();
 
         MedicalCapacity capacity;
         xml::xistringstream xis( "<medical-treatment doctors='3' reference='d'>"
@@ -142,8 +142,8 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
 BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
 {
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
+    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound1' death-threshold='95'>"
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         MIL_MedicalTreatmentType::Initialize( xisMedical, time );
 
         MockMIL_Object_ABC object;
-        MOCK_EXPECT( object, RegisterAttribute ).once();
+        MOCK_EXPECT( object.RegisterAttribute ).once();
 
         MedicalCapacity capacity;
         xml::xistringstream xis( "<medical-treatment doctors='3' reference='d'>"
@@ -225,8 +225,8 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
 BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
 {
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
+    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound1' death-threshold='95'>"
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
         MIL_MedicalTreatmentType::Initialize( xisMedical );
 
         MockMIL_Object_ABC object;
-        MOCK_EXPECT( object, RegisterAttribute ).once();
+        MOCK_EXPECT( object.RegisterAttribute ).once();
 
         MedicalCapacity capacity;
         xml::xistringstream xis( "<medical-treatment doctors='3' reference='d'>"

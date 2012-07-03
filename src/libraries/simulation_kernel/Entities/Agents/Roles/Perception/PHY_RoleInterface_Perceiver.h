@@ -151,6 +151,7 @@ public:
     virtual const MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
     virtual MIL_Agent_ABC& GetPion() const = 0;
     virtual double GetMaxAgentPerceptionDistance() const = 0;
+    virtual double GetMaxTheoreticalcAgentPerceptionDistance() const = 0;
     virtual void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const = 0;
 
     virtual bool IsPeriphericalVisionEnabled() const = 0;

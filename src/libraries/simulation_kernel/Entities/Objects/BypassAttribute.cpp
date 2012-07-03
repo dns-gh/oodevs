@@ -65,6 +65,7 @@ void BypassAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 // -----------------------------------------------------------------------------
 void BypassAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
+    std::string emptyString;
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << static_cast< double >( bypassPercentage_.Get() );
 }

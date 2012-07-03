@@ -384,7 +384,7 @@ bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown )
 // Name: MIL_KnowledgeGroup::IsPerceptionDistanceHacked
 // Created: MMC 2011-06-14
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown ) const
+bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( const MIL_Object_ABC& objectKnown ) const
 {
     DEC_BlackBoard_CanContainKnowledgeObject& knowledgeObjectContainer = GetKnowledgeObjectContainer();
     DEC_Knowledge_Object* pKnowledge = knowledgeObjectContainer.RetrieveKnowledgeObject( objectKnown );
@@ -423,7 +423,7 @@ const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Agent_ABC
 // Name: MIL_KnowledgeGroup::GetPerceptionLevel
 // Created: MMC 2011-06-14
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Object_ABC& objectKnown ) const
+const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( const MIL_Object_ABC& objectKnown ) const
 {
     DEC_BlackBoard_CanContainKnowledgeObject& knowledgeObjectContainer = GetKnowledgeObjectContainer();
     DEC_Knowledge_Object* pKnowledge = knowledgeObjectContainer.RetrieveKnowledgeObject( objectKnown );

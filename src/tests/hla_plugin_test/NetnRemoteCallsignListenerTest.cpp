@@ -25,10 +25,10 @@ namespace
             : listener        ( 0 )
             , responseObserver( 0 )
         {
-            MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
-            MOCK_EXPECT( subject, Unregister ).once();
-            MOCK_EXPECT( handler, Register ).once().with( mock::retrieve( responseObserver ) );
-            MOCK_EXPECT( handler, Unregister ).once();
+            MOCK_EXPECT( subject.Register ).once().with( mock::retrieve( listener ) );
+            MOCK_EXPECT( subject.Unregister ).once();
+            MOCK_EXPECT( handler.Register ).once().with( mock::retrieve( responseObserver ) );
+            MOCK_EXPECT( handler.Unregister ).once();
         }
         MockCallsignResolver resolver;
         MockRemoteAgentSubject subject;
@@ -59,7 +59,7 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_callsign_listener_adds_callsign_when_unit_c
 {
     listener->CallsignChanged( "identifier", "callsign" );
     listener->UniqueIdChanged( "identifier", "unique" );
-    MOCK_EXPECT( resolver, Add ).once().with( 42u, "callsign", "unique" );
+    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", "unique" );
     responseObserver->Notify( MakeCreation( 42u ), "identifier" );
 }
 
@@ -67,7 +67,7 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_callsign_listener_adds_callsign_when_callsi
 {
     listener->UniqueIdChanged( "identifier", "unique" );
     responseObserver->Notify( MakeCreation( 42u ), "identifier" );
-    MOCK_EXPECT( resolver, Add ).once().with( 42u, "callsign", "unique" );
+    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", "unique" );
     listener->CallsignChanged( "identifier", "callsign" );
 }
 
@@ -75,6 +75,6 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_callsign_listener_adds_callsign_when_unique
 {
     listener->CallsignChanged( "identifier", "callsign" );
     responseObserver->Notify( MakeCreation( 42u ), "identifier" );
-    MOCK_EXPECT( resolver, Add ).once().with( 42u, "callsign", "unique" );
+    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", "unique" );
     listener->UniqueIdChanged( "identifier", "unique" );
 }

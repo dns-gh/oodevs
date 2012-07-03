@@ -288,7 +288,6 @@ void DEC_RolePion_Decision::RegisterSelf( directia::brain::Brain& brain, bool is
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GeteEtatDec
 // Created: LDC 2009-05-19

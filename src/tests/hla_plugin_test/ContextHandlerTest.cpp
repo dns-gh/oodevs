@@ -25,8 +25,8 @@ namespace
             : context                  ( 42 )
             , unitMagicActionAckHandler( 0 )
         {
-            MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( unitMagicActionAckHandler ) );
-            MOCK_EXPECT( messageController, Unregister );
+            MOCK_EXPECT( messageController.Register ).once().with( mock::retrieve( unitMagicActionAckHandler ) );
+            MOCK_EXPECT( messageController.Unregister );
         }
         const int context;
         tools::MockMessageController< sword::SimToClient_Content > messageController;
@@ -41,9 +41,9 @@ BOOST_FIXTURE_TEST_CASE( context_handler_can_send_messages_with_new_context, Fix
 {
     ContextHandler< sword::FormationCreation > handler( "formation", messageController, contextFactory, publisher );
     simulation::UnitMagicAction request;
-    MOCK_EXPECT( contextFactory, Create ).once().returns( context );
+    MOCK_EXPECT( contextFactory.Create ).once().returns( context );
     sword::ClientToSim message;
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
     handler.Send( request, "identifier" );
     BOOST_CHECK_EQUAL( message.context(), context );
 }
@@ -56,8 +56,8 @@ namespace
         SentFixture()
             : handler( "formation", messageController, contextFactory, publisher )
         {
-            MOCK_EXPECT( contextFactory, Create ).once().returns( context );
-            MOCK_EXPECT( publisher, SendClientToSim ).once();
+            MOCK_EXPECT( contextFactory.Create ).once().returns( context );
+            MOCK_EXPECT( publisher.SendClientToSim ).once();
             simulation::UnitMagicAction message;
             handler.Send( message, "identifier" );
         }
@@ -97,7 +97,7 @@ namespace
             : messageResponseHandler( 0 )
         {
             message.mutable_formation_creation();
-            MOCK_EXPECT( messageController, Register ).once().with( mock::retrieve( messageResponseHandler ) );
+            MOCK_EXPECT( messageController.Register ).once().with( mock::retrieve( messageResponseHandler ) );
             CONNECT( messageController, handler, formation_creation );
             BOOST_REQUIRE( messageResponseHandler );
             mock::verify();
@@ -110,7 +110,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( context_handler_notifies_observer_when_message_received_and_context_is_valid, ConnectedFixture )
 {
     handler.Register( responseObserver );
-    MOCK_EXPECT( responseObserver, Notify ).once().with( mock::any, "identifier" );
+    MOCK_EXPECT( responseObserver.Notify ).once().with( mock::any, "identifier" );
     messageResponseHandler->Notify( message, context );
 }
 

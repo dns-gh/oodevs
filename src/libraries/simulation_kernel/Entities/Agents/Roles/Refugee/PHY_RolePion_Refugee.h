@@ -114,15 +114,15 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&      owner_;
-    MIL_Object_ABC*     pCamp_;
-    bool                bManaged_;
-    bool                bHasChanged_;
-    unsigned int        nbrHumansLodgingManaged_;
-    float               lodgingSatisfaction_;
-    float               securitySatisfaction_;
-    float               healthSatisfaction_;
-    NearbyUnitsAffinity nearbyUnitsAffinity;
+    MIL_AgentPion&        owner_;
+    const MIL_Object_ABC* pCamp_;
+    bool                  bManaged_;
+    bool                  bHasChanged_;
+    unsigned int          nbrHumansLodgingManaged_;
+    float                 lodgingSatisfaction_;
+    float                 securitySatisfaction_;
+    float                 healthSatisfaction_;
+    NearbyUnitsAffinity   nearbyUnitsAffinity;
     //@}
 };
 

@@ -242,6 +242,23 @@
         <move todir="${run.dir}/plugins/hla" file="${run.dir}/hla_plugin-${platform}-mt.dll"/>
     </target>
 
+    <target name="library.web_control_plugin" depends="library.protocol" description="build web_control_plugin static library">
+        <build-lib name="web_control_plugin" pattern="lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}" suffix="-gd">
+        </build-lib>
+    </target>
+
+    <target name="library.web_control_plugin_dll" depends="library.web_control_plugin" description="build web_control_plugin dynamic library">
+        <build-lib name="web_control_plugin_dll" outtype="shared" depends="boost,protobuf,xerces" pattern="web_control_plugin"
+            libs="mongoose@{suffix},
+                  lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32,wsock32"/>
+            <defineset define="WEB_CONTROL_PLUGIN_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+        <move todir="${run.dir}/plugins/web_control" file="${run.dir}/web_control_plugin.dll"/>
+    </target>
+
     <target name="library.vrforces_plugin" depends="library.protocol,library.rpr" description="build vrforces_plugin static library">
         <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <includepath path="${include.dir}/vrforces"/>
@@ -434,6 +451,7 @@
                                             library.edxlhave_plugin_dll,
                                             library.script_plugin,library.score_plugin,
                                             library.crossbow_plugin_dll,library.timeline_plugin_dll,
+                                            library.web_control_plugin_dll,
                                             library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
 
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
@@ -442,6 +460,94 @@
         </build-lib>
     </target>
 
+    <!--
+    ============================================================================
+     modules
+    ============================================================================
+    -->
+    <target name="modules" description="build Sword modules"
+            depends="library.simulation_kernel,library.wrapper,modules.module_tester_test,modules.movement_module_test,
+			         modules.perception_module_test,modules.fire_module_test,modules.propagation_module_test"/>
+
+    <target name="library.wrapper" description="build wrapper library">
+        <build-lib name="wrapper" />
+    </target>
+
+    <target name="modules.module_tester_test">
+        <build-test name="module_tester" depends="boost" libs="core@{suffix}"/>
+    </target>
+
+    <target name="modules.movement_module" description="build movement module">
+        <build-lib name="movement_module">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+        </build-lib>
+    </target>
+
+    <target name="modules.movement_module_dll" depends="library.MT_Tools,library.wrapper,modules.movement_module" description="build movement module dll">
+        <build-lib name="movement_module_dll" outtype="shared" pattern="movement_module" depends="terrain,boost,xerces"
+                   libs="movement_module@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
+    </target>
+
+    <target name="modules.movement_module_test" depends="modules.movement_module_dll">
+        <build-test name="movement_module" depends="boost,xerces,terrain" libs="movement_module@{suffix},core@{suffix}">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+            <compilerarg value="-Zm500"/>
+        </build-test>
+    </target>
+
+    <target name="modules.perception_module" description="build perception module">
+        <build-lib name="perception_module">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+        </build-lib>
+    </target>
+
+    <target name="modules.perception_module_dll" depends="library.wrapper,modules.perception_module" description="build perception module dll">
+        <build-lib name="perception_module_dll" outtype="shared" pattern="perception_module" depends="boost,xerces"
+                   libs="perception_module@{suffix},wrapper@{suffix}"/>
+    </target>
+
+    <target name="modules.perception_module_test" depends="modules.perception_module_dll">
+        <build-test name="perception_module" depends="boost" libs="perception_module@{suffix},core@{suffix}">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+            <compilerarg value="-Zm500"/>            
+        </build-test>
+    </target>
+    
+    <target name="modules.fire_module" description="build fire module">
+        <build-lib name="fire_module">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+        </build-lib>
+    </target>
+
+    <target name="modules.fire_module_dll"  depends="library.wrapper,modules.fire_module" description="build fire module dll">
+        <build-lib name="fire_module_dll" outtype="shared" pattern="fire_module" depends="boost,xerces"
+                   libs="fire_module@{suffix},wrapper@{suffix}"/>
+    </target>
+
+    <target name="modules.fire_module_test" depends="modules.fire_module_dll">
+        <build-test name="fire_module" depends="boost" libs="fire_module@{suffix},core@{suffix}">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+            <compilerarg value="-Zm500"/>            
+        </build-test>
+    </target>
+
+	<target name="modules.propagation_module" description="build propagation module">
+        <build-lib name="propagation_module">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+        </build-lib>
+    </target>
+
+    <target name="modules.propagation_module_dll" depends="library.wrapper,modules.propagation_module" description="build propagation module dll">
+        <build-lib name="propagation_module_dll" outtype="shared" pattern="propagation_module" depends="boost"
+                   libs="propagation_module@{suffix},wrapper@{suffix}"/>
+    </target>
+
+    <target name="modules.propagation_module_test" depends="modules.propagation_module_dll">
+        <build-test name="propagation_module" depends="boost" libs="propagation_module@{suffix},core@{suffix}">
+            <includepath path="${libraries.dir}/simulation_kernel"/>
+            <compilerarg value="-Zm500"/>            
+        </build-test>
+    </target>
     <!--
     ============================================================================
      applications
@@ -530,7 +636,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll" description="build Sword Simulation executable">
+    <target name="application.simulation_app" depends="library.dispatcher,library.license_gui,library.simulation_kernel,application.dispatcher_dll" description="build Sword Simulation executable">
         <build-app name="simulation_app" depends="terrain,boost,xerces,xalan,flexlm,qt4,protobuf" pattern="simulation_app"
             libs="masalloc,directia-${platform}-mt-4_6,library-${platform}-mt,
                   Qt3Support4,
@@ -546,7 +652,8 @@
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix},
-                  lib${ant.project.name}_license_gui-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_license_gui-${platform}-mt@{suffix},
+                  core@{suffix}">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32,gdi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset define="QT3_SUPPORT"/>
@@ -859,9 +966,9 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
+    <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
-                                 application.integration_decisionnal_test,protocol_test,checkpoint_test,positions_plugin_test,
+                                 application.integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
                                  actions_test,launcher_test,reports_test,flood_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
@@ -875,7 +982,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
+    <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin,web_control_plugin_test">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt4"
             libs="directia-${platform}-mt-4_6,gdal_i,
                   Qt3Support4,
@@ -910,6 +1017,15 @@
             <defineset define="QT3_SUPPORT"/>
         </build-test>
     </target>
+
+    <target name="web_control_plugin_test" depends="library.web_control_plugin">
+        <build-test name="web_control_plugin" depends="boost,protobuf,xerces"
+            libs="mongoose@{suffix},
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32,wsock32"/>
+        </build-test>
+    </target>    
 
     <target name="shield_test" depends="library.shield">
         <build-test name="shield" depends="boost,protobuf" excludes="**/*.h"
@@ -989,7 +1105,7 @@
             libs="lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"/>
     </target>
 
-    <macrodef name="run-simulation">
+    <macrodef name="run-one-simulation">
         <attribute name="exercise"/>
         <attribute name="session" default="default"/>
         <element name="args" implicit="true" optional="true"/>
@@ -1012,14 +1128,38 @@
         </sequential>
     </macrodef>
 
-    <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
-        <run-simulation exercise="scipio/CheckpointTests">
+    <macrodef name="run-simulation">
+        <attribute name="exercise"/>
+        <attribute name="session" default="default"/>
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <run-one-simulation exercise="@{exercise}" session="@{session}">
+                <args/>
+                <arg value="--legacy"/>
+            </run-one-simulation>
+            <run-one-simulation exercise="@{exercise}" session="@{session}">
+                <args/>
+            </run-one-simulation>
+        </sequential>
+    </macrodef>
+
+    <target name="checkpoint_test" depends="application.simulation_app,modules" description="save and load a checkpoint">
+        <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
-        </run-simulation>
-        <run-simulation exercise="scipio/CheckpointTests">
+            <arg value="--legacy"/>
+        </run-one-simulation>
+        <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
-        </run-simulation>
+            <arg value="--legacy"/>
+        </run-one-simulation>
+        <run-one-simulation exercise="scipio/CheckpointTests">
+            <arg value="--savecheckpoint=tempcheckpoint"/>
+        </run-one-simulation>
+        <run-one-simulation exercise="scipio/CheckpointTests">
+            <arg value="--checkpoint=tempcheckpoint"/>
+            <arg value="--deletecheckpoint"/>
+        </run-one-simulation>
     </target>
 
     <macrodef name="test-scripts">
@@ -1138,7 +1278,7 @@
 
     <target name="application.simulation_kernel_test" depends="library.simulation_kernel" description="build Sword Simulation kernel test executable">
         <build-test name="simulation_kernel"
-                   libs="masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
+                   libs="core,masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
                          gdal_i,gdal_ogr,log4cxx,geodata,analysis,
                          dispatcher-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt@{suffix},
@@ -1391,7 +1531,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins,package.binaries" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.bml,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow,package.plugin.edxlhave" description="package plugin individual installers"/>
@@ -1452,7 +1592,7 @@
     
     <target name="package.plugin.edxlhave" description="create edxl plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DPLUGIN=plugin-edxlhave"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1469,20 +1609,30 @@
     </target>
 
     <target name="package.debug" description="create a zip with all PDB files">
-        <copy todir="${out.dir}/pdb" flatten="true">
-            <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
-        </copy>
         <zip destfile="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip">
-            <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
+            <mappedresources>
+                <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
+                <flattenmapper/>
+            </mappedresources>
+        </zip>
+    </target>
+
+    <target name="package.binaries" description="create a zip with all binaries">
+        <zip destfile="${dist.dir}/SWORD_binaries_${platform}_${version.project}.zip">
+            <mappedresources>
+                <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
+                <flattenmapper/>
+            </mappedresources>
+            <fileset dir="${run.dir}"/>
         </zip>
     </target>
 
     <target name="package.ts" description="create a zip with all ts files">
-        <copy todir="${out.dir}/ts" flatten="true">
-            <fileset dir="${src.dir}" includes="**/*.ts"/>
-        </copy>
         <zip destfile="${dist.dir}/SWORD_ts_${version.project}.zip">
-            <fileset dir="${out.dir}/ts" includes="*.ts"/>
+           <mappedresources>
+               <fileset dir="${src.dir}" includes="**/*.ts"/>
+               <flattenmapper/>
+           </mappedresources>
         </zip>
     </target>
 
@@ -1693,8 +1843,9 @@
         <update name="svgl"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
+        <update name="mongoose"/>
         <update name="gdal"/>
-        <update name="turtle" version="1.1.1"/>
+        <update name="turtle"/>
         <update name="protobuf" version="2.3.0"/>
         <update name="vcredist" package="vcredist"/>
         <update name="openssl"/>
@@ -1704,6 +1855,7 @@
         <update name="mak" version="4.0.2" package="dll/${platform}" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise"/>
         <update name="spatialite"/>
+        <update name="steel"/>
         <update name="geos"/>
         <update name="iconv"/>
         <update name="proj4"/>
@@ -1717,7 +1869,7 @@
         <delete dir="${out.dir}"/>
     </target>
 
-    <target name="build" depends="libraries,applications"/>
+    <target name="build" depends="libraries,applications,modules"/>
 
     <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
 

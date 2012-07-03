@@ -1,7 +1,8 @@
--- ****************************************************************************
 -- GetResourceNodesWithinArea
--- Try to find Resource nodes within an area .
---
+-- Try to find Resource nodes within an area passed as parameter.
+
+-- >/!\ Tester que si un UB/object contient pls noeuds, que leur dessactivation
+-- ne requiert qu'une seule visite de l'UB/object
 -- ****************************************************************************
 queryImplementation "GetResourceNodesWithinArea" 
 {

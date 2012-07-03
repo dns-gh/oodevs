@@ -18,6 +18,7 @@ namespace sword
     class Location;
     class MissionParameters;
     enum ObjectMagicActionAck_ErrorCode;
+    class FloodModelFactory_ABC;
 }
 
 namespace urban
@@ -58,8 +59,8 @@ public:
     //! @name Operations
     //@{
     void Initialize( xml::xistream& xis );
-    MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC* army ) const;
-    MIL_Object_ABC* CreateObject( const sword::MissionParameters& asn, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value ) const;
+    MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC* army, const sword::FloodModelFactory_ABC& floodFactory ) const;
+    MIL_Object_ABC* CreateObject( const sword::MissionParameters& asn, MIL_Army_ABC* army, sword::ObjectMagicActionAck_ErrorCode& value, const sword::FloodModelFactory_ABC& floodFactory ) const;
     MIL_Object_ABC* CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC* army, const TER_Localisation& location,
                                   bool reserved, unsigned int externalIdentifier, unsigned int forcedId, double density ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army ) const;
@@ -96,7 +97,7 @@ private:
     //@{
     void ReadObjectPrototype( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, ObjectPrototype& prototype );
-    void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const;
+    void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object, const sword::FloodModelFactory_ABC& floodFactory ) const;
     sword::ObjectMagicActionAck_ErrorCode InitializeLocation( Object& object, const sword::Location& asn ) const;
     //@}
 

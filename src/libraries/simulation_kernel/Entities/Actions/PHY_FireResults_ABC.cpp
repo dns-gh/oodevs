@@ -16,6 +16,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "MT_Tools/MT_Logger.h"
 
 MIL_IDManager PHY_FireResults_ABC::idManager_;
 
@@ -115,6 +116,7 @@ void PHY_FireResults_ABC::SendDamagesCrowd( const MIL_Population& firer, unsigne
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Agent& PHY_FireResults_ABC::GetDamages( const MIL_Agent_ABC& target )
 {
+    assert( agentsDamages_.size() <= 1 ); // $$$$ MCO 2012-05-04: added by me to verify what I suspect
     return agentsDamages_[ &target ];
 }
 

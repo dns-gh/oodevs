@@ -51,10 +51,10 @@ namespace
             , cancelId ( 45 )
         {
             xis >> xml::start( "configuration" );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportId );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "embarkment" ).returns( embarkId );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "disembarkment" ).returns( disembarkId );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "cancel" ).returns( cancelId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "transport" ).returns( transportId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "embarkment" ).returns( embarkId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "disembarkment" ).returns( disembarkId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "cancel" ).returns( cancelId );
         }
         xml::xistringstream xis;
         unsigned int transportId;
@@ -95,10 +95,10 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_announce_offer_to_client
     request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
     sword::MessengerToClient announce;
     sword::MessengerToClient flag;
-    MOCK_EXPECT( clientPublisher, SendMessengerToClient ).once().with( mock::retrieve( announce ) );
-    MOCK_EXPECT( contextFactory, Create ).exactly( 2 ).returns( 42 );
-    MOCK_EXPECT( clientPublisher, SendMessengerToClient ).exactly( 2 ).with( mock::retrieve( flag ) );
-    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( "unique" ).returns( 111 );
+    MOCK_EXPECT( clientPublisher.SendMessengerToClient ).once().with( mock::retrieve( announce ) );
+    MOCK_EXPECT( contextFactory.Create ).exactly( 2 ).returns( 42 );
+    MOCK_EXPECT( clientPublisher.SendMessengerToClient ).exactly( 2 ).with( mock::retrieve( flag ) );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( "unique" ).returns( 111 );
     transportationOfferer.Receive( request );
     mock::verify();
     BOOST_CHECK( announce.message().has_text_message() );

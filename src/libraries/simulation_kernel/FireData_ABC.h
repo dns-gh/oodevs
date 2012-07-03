@@ -33,7 +33,6 @@ public:
     //! @name Operation
     //@{
     virtual void operator()( const PHY_ComposantePion& firer, PHY_Weapon& weapon ) = 0;
-    virtual bool CanFire( const PHY_ComposantePion& ) { return true; }
     //@}
 };
 

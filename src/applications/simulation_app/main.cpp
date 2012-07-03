@@ -50,16 +50,34 @@ void SetLowFragmentationHeapAlgorithm()
     HeapSetInformation( GetProcessHeap(), HeapCompatibilityInformation, &ulHeapCompatibilityInformation, sizeof(ulHeapCompatibilityInformation) );
 }
 
+namespace
+{
+typedef std::vector< std::string > T_Args;
+std::string GetOption( const T_Args& args, const std::string& name )
+{
+    T_Args::const_iterator it = std::find( args.begin(), args.end(), name );
+    if( it != args.end() )
+        if( ++it != args.end() )
+            return *it;
+    return std::string();
+}
+}
+
 //-----------------------------------------------------------------------------
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
 int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
+    const T_Args argv = boost::program_options:: split_winmain( lpCmdLine );
+    std::string debugRoot = GetOption( argv, "--debug-dir" );
+    if( debugRoot.empty() )
+        debugRoot = "./Debug";
+
     // Init logger
-    _mkdir( "./Debug" );
-    MT_FileLogger           fileLogger     ( "./Debug/Sim.log", 1, -1, MT_Logger_ABC::eLogLevel_All );
-    const std::string filename = "./Debug/Crash Version " + std::string( tools::AppProjectVersion() ) + ".log";
+    _mkdir( debugRoot.c_str() );
+    MT_FileLogger           fileLogger     ( ( debugRoot + "/Sim.log" ).c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All );
+    const std::string filename = debugRoot + "/Crash Version " + std::string( tools::AppProjectVersion() ) + ".log";
     MT_FileLogger           crashFileLogger( filename.c_str(), 1, -1,  MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
@@ -71,7 +89,6 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     try
     {
         // Silent mode
-        std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
         silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
 
         // Check license

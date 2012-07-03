@@ -96,9 +96,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Rect.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h">
-      <Filter>Source Files\Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_triangle.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
@@ -140,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LogManager.h">
       <Filter>Source Files\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h">
+      <Filter>Source Files\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +227,6 @@
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Rect.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Sector.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_triangle.cpp">

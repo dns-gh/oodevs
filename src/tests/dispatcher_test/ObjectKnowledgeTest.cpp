@@ -30,21 +30,21 @@ namespace
             , automat       ( 5 )
             , urbanObject   ( 6 )
         {
-            MOCK_EXPECT( side, GetId ).returns( 2 );
+            MOCK_EXPECT( side.GetId ).returns( 2 );
             sides.Register( side.GetId(), side );
-            MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
+            MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
             knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
-            MOCK_EXPECT( object, GetId ).returns( 4 );
+            MOCK_EXPECT( object.GetId ).returns( 4 );
             objects.Register( object.GetId(), object );
-            MOCK_EXPECT( automat, GetId ).returns( 5 );
+            MOCK_EXPECT( automat.GetId ).returns( 5 );
             automats.Register( automat.GetId(), automat );
-            MOCK_EXPECT( urbanObject, GetId ).returns( 6 );
+            MOCK_EXPECT( urbanObject.GetId ).returns( 6 );
             urbanObjects.Register( urbanObject.GetId(), urbanObject );
-            MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-            MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
-            MOCK_EXPECT( model, Objects ).returns( boost::ref( objects ) );
-            MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-            MOCK_EXPECT( model, UrbanBlocks ).returns( boost::ref( urbanObjects ) );
+            MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+            MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+            MOCK_EXPECT( model.Objects ).returns( boost::ref( objects ) );
+            MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+            MOCK_EXPECT( model.UrbanBlocks ).returns( boost::ref( urbanObjects ) );
             expected.set_context( 0 );
         }
         void CreateObjectKnowledge()
@@ -60,9 +60,9 @@ namespace
 
             // creation
             result.reset( new dispatcher::ObjectKnowledge( model, message ) );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
-            publisher.verify();
+            mock::verify( publisher );
             expected.mutable_message()->Clear();
         }
         MockSide side;
@@ -104,9 +104,9 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeDestroyedWithoutAttributes, Fixtur
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
     // network serialization
-    MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,9 +133,9 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // network serialization
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
     {
         expected.mutable_message()->Clear();
@@ -149,9 +149,9 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // network serialization
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
     }
 }
 

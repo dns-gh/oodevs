@@ -42,19 +42,19 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
 {
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( center_ ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( center_ ).returns( deepElevation_ );
 
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f( -100.f, 100.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(    0.f, 100.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(  100.f, 100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, 100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, 100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, 100.f ) ).returns( deepElevation_ );
 
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f( -100.f, 0.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(    0.f, 0.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(  100.f, 0.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, 0.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, 0.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, 0.f ) ).returns( deepElevation_ );
 
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f( -100.f, -100.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, -100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
 
     flood_.GenerateFlood( center_, depth_, refDist_ );
 
@@ -71,19 +71,19 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateStrips, Fixture )
 {
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( center_ ).returns( middleElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( center_ ).returns( middleElevation_ );
 
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f( -100.f, 100.f ) ).returns( lowElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(    0.f, 100.f ) ).returns( lowElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(  100.f, 100.f ) ).returns( lowElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, 100.f ) ).returns( lowElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, 100.f ) ).returns( lowElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, 100.f ) ).returns( lowElevation_ );
 
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f( -100.f, 0.f ) ).returns( middleElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(    0.f, 0.f ) ).returns( middleElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(  100.f, 0.f ) ).returns( middleElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, 0.f ) ).returns( middleElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, 0.f ) ).returns( middleElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, 0.f ) ).returns( middleElevation_ );
 
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f( -100.f, -100.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
-    MOCK_EXPECT( elevationGetter_, GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f( -100.f, -100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
+    MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
 
     flood_.GenerateFlood( center_, depth_, refDist_ );
 

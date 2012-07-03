@@ -84,7 +84,7 @@ namespace
     {
         ListenerFixture()
         {
-            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Starting shield server on port" ) );
+            MOCK_EXPECT( listener.Info ).once().with( mock::contain( "Starting shield server on port" ) );
         }
         MockListener listener;
     };
@@ -94,15 +94,15 @@ namespace
             : shield( PORT, dispatcher, model, handler, listener, true )
         {
             int notified = 4;
-            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );
-            MOCK_EXPECT( handler, Register ).once().with( mock::any, mock::retrieve( sender ), mock::retrieve( broadcaster ) )
+            MOCK_EXPECT( listener.Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( handler.Register ).once().with( mock::any, mock::retrieve( sender ), mock::retrieve( broadcaster ) )
                 .calls( (--bl::var( notified ), bl::bind( &dispatcher::ClientBroadcaster_ABC::Activate, &bl::_3, bl::_1 )) );
-            MOCK_EXPECT( client, ConnectionSucceeded ).once().with( mock::retrieve( client.host ) ).calls( --bl::var( notified ) );
-            MOCK_EXPECT( model, Send ).once().calls( --bl::var( notified ) );
+            MOCK_EXPECT( client.ConnectionSucceeded ).once().with( mock::retrieve( client.host ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( model.Send ).once().calls( --bl::var( notified ) );
             wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
             mock::verify();
             mock::reset();
-            MOCK_EXPECT( handler, Unregister ).once();
+            MOCK_EXPECT( handler.Unregister ).once();
         }
         void Update()
         {
@@ -134,37 +134,37 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( message_sent_from_client_is_received_on_simulation, Fixture )
 {
-    MOCK_FUNCTOR( void( const std::string&, const sword::ClientToSim& ) ) functor;
+    MOCK_FUNCTOR( functor, void( const std::string&, const sword::ClientToSim& ) );
     tools::ObjectMessageCallback< sword::ClientToSim > callback;
     callback.AddCallback( functor );
-    MOCK_EXPECT( dispatcher, Retrieve ).returns( &callback );
+    MOCK_EXPECT( dispatcher.Retrieve ).returns( &callback );
     {
         MsgsClientToSim::MsgClientToSim msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
-        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
+        MOCK_EXPECT( listener.Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
     bool received = false;
-    MOCK_EXPECT( functor, _ ).once().calls( bl::var( received ) = true );
+    MOCK_EXPECT( functor ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( message_sent_from_admin_is_received_on_launcher, Fixture )
 {
-    MOCK_FUNCTOR( void( const std::string&, const sword::AdminToLauncher& ) ) functor;
+    MOCK_FUNCTOR( functor, void( const std::string&, const sword::AdminToLauncher& ) );
     tools::ObjectMessageCallback< sword::AdminToLauncher > callback;
     callback.AddCallback( functor );
-    MOCK_EXPECT( dispatcher, Retrieve ).returns( &callback );
+    MOCK_EXPECT( dispatcher.Retrieve ).returns( &callback );
     {
         MsgsAdminToLauncher::MsgAdminToLauncher msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_exercise_list_request();
-        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
+        MOCK_EXPECT( listener.Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
     bool received = false;
-    MOCK_EXPECT( functor, _ ).once().calls( bl::var( received ) = true );
+    MOCK_EXPECT( functor ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
 
@@ -176,7 +176,7 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_client_is_detected_by_pro
         client.Send( client.host, msg );
     }
     bool notified = false;
-    MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
+    MOCK_EXPECT( listener.Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "warning" ) &&
                                                 mock::contain( "Unknown message tag" ) ).calls( bl::var( notified ) = true );
     wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );
@@ -184,24 +184,24 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_client_is_detected_by_pro
 
 BOOST_FIXTURE_TEST_CASE( message_a_bit_long_sent_from_client_is_detected_by_proxy, Fixture )
 {
-    MOCK_FUNCTOR( void( const std::string&, const sword::ClientToSim& ) ) functor;
+    MOCK_FUNCTOR( functor, void( const std::string&, const sword::ClientToSim& ) );
     tools::ObjectMessageCallback< sword::ClientToSim > callback;
     callback.AddCallback( functor );
-    MOCK_EXPECT( dispatcher, Retrieve ).returns( &callback );
+    MOCK_EXPECT( dispatcher.Retrieve ).returns( &callback );
     {
         MsgsClientToSim::MsgClientToSim msg;
         msg.set_context( 77 );
         std::string name( 32 * 1024, 'a' ); // 32 kB
         msg.mutable_message()->mutable_control_checkpoint_save_now()->set_name( name );
-        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
+        MOCK_EXPECT( listener.Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
     int notified = 1;
-    MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
+    MOCK_EXPECT( listener.Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "warning" ) &&
                                                 mock::contain( "Message size larger than" ) ).calls( --bl::var( notified ) );
     bool received = false;
-    MOCK_EXPECT( functor, _ ).once().calls( bl::var( received ) = true );
+    MOCK_EXPECT( functor ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ) && bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
 }
 
@@ -212,12 +212,12 @@ BOOST_FIXTURE_TEST_CASE( message_too_long_sent_from_client_is_detected_by_proxy,
         client.Send( client.host, 1, msg );
     }
     int notified = 2;
-    MOCK_EXPECT( client, ConnectionError ).once().calls( --bl::var( notified ) );
-    MOCK_EXPECT( client, ConnectionError );
-    MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
+    MOCK_EXPECT( client.ConnectionError ).once().calls( --bl::var( notified ) );
+    MOCK_EXPECT( client.ConnectionError );
+    MOCK_EXPECT( listener.Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "aborted" ) &&
                                                 mock::contain( "Message size too large" ) ).calls( --bl::var( notified ) );
-    MOCK_EXPECT( listener, Error );
+    MOCK_EXPECT( listener.Error );
     wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
 }
 
@@ -227,11 +227,11 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_simulation_is_received_on_client, Fix
         sword::SimToClient msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_unit_creation_request_ack()->set_error_code( sword::UnitActionAck::error_invalid_unit );
-        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield sent" ) );
+        MOCK_EXPECT( listener.Debug ).once().with( start_with( "Shield sent" ) );
         sender->Send( "unused", msg );
     }
     bool received = false;
-    MOCK_EXPECT( client, Receive ).once().calls( bl::var( received ) = true );
+    MOCK_EXPECT( client.Receive ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
 
@@ -241,26 +241,26 @@ BOOST_FIXTURE_TEST_CASE( message_broascasted_from_simulation_is_received_on_clie
         sword::SimToClient msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_unit_creation_request_ack()->set_error_code( sword::UnitActionAck::error_invalid_unit );
-        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield sent" ) );
+        MOCK_EXPECT( listener.Debug ).once().with( start_with( "Shield sent" ) );
         broadcaster->Broadcast( msg );
     }
     bool received = false;
-    MOCK_EXPECT( client, Receive ).once().calls( bl::var( received ) = true );
+    MOCK_EXPECT( client.Receive ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( invalid_message_sent_from_client_is_logged_on_simulation, Fixture )
 {
-    MOCK_EXPECT( dispatcher, Retrieve ).returns( 0 );
+    MOCK_EXPECT( dispatcher.Retrieve ).returns( 0 );
     {
         MsgsClientToSim::MsgClientToSim msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
-        MOCK_EXPECT( listener, Debug ).once().with( start_with( "Shield received" ) );
+        MOCK_EXPECT( listener.Debug ).once().with( start_with( "Shield received" ) );
         client.Send( client.host, msg );
     }
     bool notified = false;
-    MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
+    MOCK_EXPECT( listener.Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "warning" ) &&
                                                 mock::contain( "Unknown message" ) ).calls( bl::var( notified ) = true );
     wait( bl::var( notified ), boost::bind( &Fixture::Update, this ) );

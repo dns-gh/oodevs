@@ -131,12 +131,13 @@ namespace
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
-    , config_( config )
-    , fileLoader_( fileLoader )
-    , controllers_( controllers )
-    , interpreter_( interpreter )
+    , config_      ( config )
+    , fileLoader_  ( fileLoader )
+    , controllers_ ( controllers )
+    , interpreter_ ( interpreter )
     , progressPage_( new ProgressPage( pages, *this ) )
-    , exercise_( 0 )
+    , exercise_    ( 0 )
+    , isLegacy_    ( false )
 {
     setName( "ScenarioLauncherPage" );
     Q3VBox* box = new Q3VBox( this );
@@ -156,13 +157,14 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
             configTabs_ = new QTabWidget( configBox );
             tabs_->addTab( configBox, "" ); // Settings
             {
-                frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >();
-                connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), panel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
-                connect( exercises_, SIGNAL( ClearSelection() ), panel, SLOT( ClearSelection() ) );
-                connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
+                frontend::CheckpointConfigPanel* checkpointPanel = AddPlugin< frontend::CheckpointConfigPanel >();
+                connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+                connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
+                connect( checkpointPanel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
                 AddPlugin< frontend::SessionConfigPanel >();
                 AddPlugin< frontend::RandomPluginConfigPanel >();
-                AddPlugin< frontend::AdvancedConfigPanel >();
+                frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
+                connect( advancedPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
             }
         }
         {
@@ -251,7 +253,7 @@ void ScenarioLauncherPage::OnStart()
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
         CreateSession( exerciseName, session );
-        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true, isLegacy_ ) );
         boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
         boost::shared_ptr< CompositeProcessWrapper > process( new CompositeProcessWrapper( *progressPage_, simulation, client ) );
         progressPage_->Attach( process );
@@ -356,4 +358,13 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QSt
 {
     session_ = session;
     checkpoint_ = checkpoint;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnSwordVersionSelected
+// Created: SLI 2012-01-27
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnSwordVersionSelected( bool isLegacy )
+{
+    isLegacy_ = isLegacy;
 }

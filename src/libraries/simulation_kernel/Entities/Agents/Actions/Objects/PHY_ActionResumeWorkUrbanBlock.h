@@ -45,6 +45,13 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    PHY_ActionResumeWorkUrbanBlock( const PHY_ActionResumeWorkUrbanBlock& );            //!< Copy constructor
+    PHY_ActionResumeWorkUrbanBlock& operator=( const PHY_ActionResumeWorkUrbanBlock& ); //!< Assignment operator
+    //@}
+
+private:
     //! @name Member data
     //@{
     PHY_RoleAction_Objects& role_;

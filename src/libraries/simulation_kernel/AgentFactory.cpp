@@ -13,8 +13,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -30,12 +28,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Name: AgentFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult )
+AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController )
     : idManager_          ( idManager )
     , missionController_  ( missionController )
     , algorithmsFactories_( new AlgorithmsFactories() )
-    , gcPause_            ( gcPause )
-    , gcMult_             ( gcMult )
 {
     // NOTHING
 }
@@ -59,12 +55,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     if( pPion )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
-    type.RegisterRoles( *pPion, gcPause_, gcMult_ );
-    std::string strPosition;
-    xis >> xml::attribute( "position", strPosition );
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
-    Initialize( *pPion, vPosTmp );
+    type.RegisterRoles( *pPion );
     pPion->Register( missionController_ );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     pPion->ReadOverloading( xis );
@@ -87,21 +78,10 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, name );
-    type.RegisterRoles( *pPion, gcPause_, gcMult_ );
-    Initialize( *pPion, vPosition );
+    type.RegisterRoles( *pPion );
     pPion->Register( missionController_ );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     return pPion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory::Initialize
-// Created: SLG 2010-01-21
-// -----------------------------------------------------------------------------
-void AgentFactory::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
-{
-    pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
-    pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( vPosition );
 }
 
 // -----------------------------------------------------------------------------

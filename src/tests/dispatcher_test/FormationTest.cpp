@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
     sides.Register( side.GetId(), side );
 
     kernel::FormationLevels levels;
@@ -38,9 +38,9 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
     tools::Resolver< dispatcher::Formation_ABC > formations;
 
     MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -54,16 +54,16 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
-        MOCK_EXPECT( side, RegisterFormation ).once();
+        MOCK_EXPECT( side.RegisterFormation ).once();
         std::auto_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message, levels ) ); // $$$$ MCO : why is it an auto_ptr ?
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
 
         // cleaning
-        MOCK_EXPECT( side, RemoveFormation ).once();
+        MOCK_EXPECT( side.RemoveFormation ).once();
     }
 }

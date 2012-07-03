@@ -60,7 +60,7 @@ public:
 
     //! @name Notifications
     //@{
-    virtual void NotifyMovingOnPathPoint   ( const DEC_PathPoint& point ) = 0;
+    virtual void NotifyMovingOnPathPoint   ( const MT_Vector2D& point ) = 0;
     virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point ) = 0;
     virtual void NotifyMovingInsideObject  ( MIL_Object_ABC& object ) = 0;
     virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object ) = 0;

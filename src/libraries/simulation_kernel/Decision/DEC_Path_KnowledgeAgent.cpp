@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeAgent.h"
-#include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "MT_Tools/MT_Line.h"
 #include "DEC_PerceptionFunctions.h"
@@ -19,7 +18,7 @@
 // Created: NLD 2004-04-06
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion )
+DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion, double enemyCostAtSecurityRange, double enemyCostOnContact )
     : vEnemyPosition_ ( knowledge.GetPosition() )
     , pKnowledgeAgent_( &knowledge.GetAgentKnown() )
 {
@@ -33,8 +32,8 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pat
         maxRangeToFire = 1000.;
 
     rSquareSecurityDistance_ = maxRangeToFire * maxRangeToFire;
-    rOffset_ = pathClass.GetEnemyCostAtSecurityRange();
-    rFactor_ = pathClass.GetEnemyCostOnContact() / 100.;
+    rOffset_ = enemyCostAtSecurityRange;
+    rFactor_ = enemyCostOnContact / 100.;
 }
 
 // -----------------------------------------------------------------------------

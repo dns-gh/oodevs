@@ -25,7 +25,7 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion );
+             DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion, double enemyCostAtSecurityRange, double enemyCostOnContact );
     virtual ~DEC_Path_KnowledgeAgent();
     //@}
 

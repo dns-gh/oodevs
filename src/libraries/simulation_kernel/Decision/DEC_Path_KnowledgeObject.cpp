@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeObject.h"
-#include "DEC_Agent_PathClass.h"
 #include "DEC_Population_PathClass.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
@@ -22,15 +21,14 @@
 // Name: DEC_Path_KnowledgeObject constructor
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
+DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Knowledge_Object& knowledge, double rCost, double rObstructionThreshold )
     : localisation_         ( knowledge.GetLocalisation() )
     , scaledLocalisation_   ( localisation_ )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
-    , pathClass_            ( pathClass )
-    , objectType_           ( knowledge.GetType() )
     , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
+    , rThreshold_           ( rObstructionThreshold )
+    , rCost_                ( rCost )
 {
-    const double rCost = pathClass.GetObjectCost( objectType_ );
     if( rCost != 0 )
         scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision (useful for making path very close to obstacle expensive)
 }
@@ -43,12 +41,11 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Population_PathCla
     : localisation_         ( knowledge.GetLocalisation() )
     , scaledLocalisation_   ( localisation_ )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : knowledge.GetLocalisation() )
-    , pathClass_            ( pathClass )
-    , objectType_           ( knowledge.GetType() )
     , rMaxTrafficability_   ( knowledge.GetMaxTrafficability() )
+    , rThreshold_           ( pathClass.GetThreshold() )
+    , rCost_                ( pathClass.GetObjectCost( knowledge.GetType() ) )
 {
-    const double rCost = pathClass.GetObjectCost( objectType_ );
-    if( rCost != 0 )
+    if( rCost_ != 0 )
         scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision (useful for making path very close to obstacle expensive)
 }
 
@@ -80,18 +77,17 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
         {
             if( rMaxTrafficability_ != 0. && weight > rMaxTrafficability_ )
                 return -1.; //$$$$ CMA in order to block the unit if there is a non-trafficable object
-            double rCostIn = pathClass_.GetObjectCost( objectType_ );
-            if( rCostIn < 0. )
+            if( rCost_ < 0. )
                 return 0.;
-            else if( rCostIn >= pathClass_.GetThreshold() )
+            else if( rCost_ >= rThreshold_ )
                 return -1;  //$$$$ SLG in order to block the unit if there is an object
             else
-                return rCostIn;
+                return rCost_;
         }
         else if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
                  ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
                  ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
-            return pathClass_.GetObjectCost( objectType_ );
+            return rCost_;
     }
     return std::numeric_limits< double >::min();
 }
@@ -102,8 +98,7 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObject::GetCostOut() const
 {
-    double cost = pathClass_.GetObjectCost( objectType_ );
-    return cost > 0 ? 0. : -cost;
+    return rCost_ > 0 ? 0 : - rCost_;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,16 +114,16 @@ double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
 // Name: DEC_Path_KnowledgeObject::New
 // Created: LDC 2012-05-14
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > DEC_Path_KnowledgeObject::New( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
+boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > DEC_Path_KnowledgeObject::New( const DEC_Knowledge_Object& knowledge, double rCost, double rObstructionThreshold )
 {
     static int lastTick = 0;
-    static std::map< const DEC_Agent_PathClass*, std::map< const DEC_Knowledge_Object*, boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >> > cache;
+    static std::map< std::pair< double, double >, std::map< const DEC_Knowledge_Object*, boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > > cache;
     MIL_Time_ABC& time = MIL_Singletons::GetTime(); 
     int currentTick = time.GetCurrentTick();
     if( lastTick != currentTick )
         cache.clear();
-    boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >& result = cache[&pathClass][&knowledge];
+    boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >& result = cache[ std::make_pair( rCost, rObstructionThreshold ) ][&knowledge];
     if( !result.get() )
-        result.reset( new DEC_Path_KnowledgeObject( pathClass, knowledge ) );
+        result.reset( new DEC_Path_KnowledgeObject( knowledge, rCost, rObstructionThreshold ) );
     return result;
 }

@@ -28,7 +28,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult );
+             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController );
     virtual ~AgentFactory();
     //@}
 
@@ -55,11 +55,6 @@ private:
     AgentFactory& operator=( const AgentFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Operations
-    //@{
-    void Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition );
-    //@}
-
     //! @name CheckPoint
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const AgentFactory* factory, const unsigned int /*version*/ );
@@ -72,8 +67,6 @@ private:
     MIL_IDManager& idManager_;
     MissionController_ABC& missionController_;
     std::auto_ptr< AlgorithmsFactories > algorithmsFactories_;
-    unsigned int gcPause_;
-    unsigned int gcMult_;
     //@}
 };
 
@@ -85,22 +78,16 @@ void save_construct_data( Archive& archive, const AgentFactory* factory, const u
     const MIL_IDManager* const idManager = &factory->idManager_;
     const MissionController_ABC* const missionController = &factory->missionController_;
     archive << idManager
-            << missionController
-            << factory->gcPause_
-            << factory->gcMult_;
+            << missionController;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, AgentFactory* factory, const unsigned int /*version*/ )
 {
     MIL_IDManager* idManager;
     MissionController_ABC* missionController;
-    unsigned int gcPause;
-    unsigned int gcMult;
     archive >> idManager
-            >> missionController
-            >> gcPause
-            >> gcMult;
-    ::new( factory )AgentFactory( *idManager, *missionController, gcPause, gcMult );
+            >> missionController;
+    ::new( factory )AgentFactory( *idManager, *missionController );
 }
 
 #endif // __AgentFactory_h_

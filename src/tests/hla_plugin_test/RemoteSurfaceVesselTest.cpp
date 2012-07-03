@@ -54,7 +54,7 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_spatial_attribute_and_notifi
 {
     Spatial spatial( true, 1., 2., 3., 4., 5. );
     spatial.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer )  );
-    MOCK_EXPECT( listener, Moved ).once().with( "identifier", mock::close( 1., 0.001 ), mock::close( 2., 0.001 ) );
+    MOCK_EXPECT( listener.Moved ).once().with( "identifier", mock::close( 1., 0.001 ), mock::close( 2., 0.001 ) );
     ::hla::Deserializer deserializer( Deserialize() );
     vessel.Deserialize( "Spatial", deserializer );
 }
@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_spatial_attribute_and_notifi
 BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_force_identifier_attribute_and_notifies_listener, Fixture )
 {
     serializer << static_cast< int8 >( rpr::Friendly );
-    MOCK_EXPECT( listener, SideChanged ).once().with( "identifier", rpr::Friendly );
+    MOCK_EXPECT( listener.SideChanged ).once().with( "identifier", rpr::Friendly );
     ::hla::Deserializer deserializer( Deserialize() );
     vessel.Deserialize( "ForceIdentifier", deserializer );
 }
@@ -71,7 +71,7 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_vessel_marking_attribute_and
 {
     const Marking marking( "name", 42 );
     marking.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
-    MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name42" );
+    MOCK_EXPECT( listener.NameChanged ).once().with( "identifier", "name42" );
     ::hla::Deserializer deserializer( Deserialize() );
     vessel.Deserialize( "Marking", deserializer );
 }
@@ -80,8 +80,8 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_entity_type_attribute_and_no
 {
     const rpr::EntityType type( "1 2 3" );
     type.Serialize( serializer );
-    MOCK_EXPECT( listener, TypeChanged ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ) );
-    MOCK_EXPECT( listener, EquipmentUpdated ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ), 1u );
+    MOCK_EXPECT( listener.TypeChanged ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ) );
+    MOCK_EXPECT( listener.EquipmentUpdated ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ), 1u );
     ::hla::Deserializer deserializer( Deserialize() );
     vessel.Deserialize( "EntityType", deserializer );
 }

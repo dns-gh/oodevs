@@ -31,9 +31,9 @@ namespace
         Fixture()
             : listener( 0 )
         {
-            MOCK_EXPECT( agent, Register ).once().with( mock::retrieve( listener ) );
-            MOCK_EXPECT( agent, Unregister ).once();
-            MOCK_EXPECT( factory, CreateMarking ).once().returns( Marking() );
+            MOCK_EXPECT( agent.Register ).once().with( mock::retrieve( listener ) );
+            MOCK_EXPECT( agent.Unregister ).once();
+            MOCK_EXPECT( factory.CreateMarking ).once().returns( Marking() );
         }
         MockAgent agent;
         MockMarkingFactory factory;
@@ -73,14 +73,14 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_serializes_all_its_attributes, Registere
         hla::MockUpdateFunctor functor;
         mock::sequence s;
         BOOST_FOREACH( const std::string& attribute, attributes )
-            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+            MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
         BOOST_FOREACH( const std::string& attribute, attributes )
-            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+            MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
 }
@@ -130,7 +130,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_spatial_changed_event_is_serialized, Reg
 {
     BOOST_REQUIRE( listener );
     listener->SpatialChanged( 1., 2., 3., 4., 5. );
-    MOCK_EXPECT( functor, Visit ).once().with( "Spatial", mock::any );
+    MOCK_EXPECT( functor.Visit ).once().with( "Spatial", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
 }

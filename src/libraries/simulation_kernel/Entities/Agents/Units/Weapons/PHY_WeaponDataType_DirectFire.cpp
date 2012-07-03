@@ -126,9 +126,9 @@ void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_I
 // Created: JVT 03-09-19
 //-----------------------------------------------------------------------------
 inline
-double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume ) const
+double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY_Volume& targetVolume ) const
 {
-    return weaponType_.GetPHModificator( firerPosture, targetPosture ) * phs_[ targetVolume.GetID() ].GetMaxYForX( rPH );
+    return weaponType_.GetPHModificator() * phs_[ targetVolume.GetID() ].GetMaxYForX( rPH );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,9 +136,9 @@ double PHY_WeaponDataType_DirectFire::GetMaxDistanceForPH( double rPH, const PHY
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
 inline
-double PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( double rPH, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume ) const
+double PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( double rPH, const PHY_Volume& targetVolume ) const
 {
-    return weaponType_.GetPHModificator( firerPosture, targetPosture ) * phs_[ targetVolume.GetID() ].GetMinYForX( rPH );
+    return weaponType_.GetPHModificator() * phs_[ targetVolume.GetID() ].GetMinYForX( rPH );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,11 +190,11 @@ double PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const M
 // Name: PHY_WeaponDataType_DirectFire::GetPH
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponDataType_DirectFire::GetPH( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, double rDistance ) const
+double PHY_WeaponDataType_DirectFire::GetPH( const PHY_Volume& targetVolume, double rDistance ) const
 {
     assert( phs_.size() > targetVolume.GetID() );
 
-    const double rPHModificator = weaponType_.GetPHModificator( firerPosture, targetPosture );
+    const double rPHModificator = weaponType_.GetPHModificator();
     if( rPHModificator <= 0. )
         return 0.;
     rDistance /= rPHModificator;
@@ -211,7 +211,7 @@ double PHY_WeaponDataType_DirectFire::GetPH( const PHY_Posture& firerPosture, co
 // -----------------------------------------------------------------------------
 double PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOn( const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    return GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, targetComposanteType.GetVolume() );
+    return GetMaxDistanceForPH( rWantedPH, targetComposanteType.GetVolume() );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ double PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOn( const PHY_ComposanteT
 // -----------------------------------------------------------------------------
 double PHY_WeaponDataType_DirectFire::GetMinRangeToFireOn( const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    return GetMinDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, targetComposanteType.GetVolume() );
+    return GetMinDistanceForPH( rWantedPH, targetComposanteType.GetVolume() );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +258,7 @@ double PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( double rWantedPH ) cons
     double result = 0.;
     for( PHY_Volume::CIT_VolumeMap it = volumes.begin(); it != volumes.end(); ++it )
     {
-        result = std::max( result, GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, *it->second ) );
+        result = std::max( result, GetMaxDistanceForPH( rWantedPH, *it->second ) );
     }
 
     return result;
@@ -293,7 +293,7 @@ double PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType_A
     const PHY_Volume&     targetVolume      = targetComposanteType.GetVolume    ();
     const PHY_Protection& targetProtection  = targetComposanteType.GetProtection();
 
-    double rDangerosity  = GetPH( PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, targetVolume, rDistBtwFirerAndTarget );
+    double rDangerosity  = GetPH( targetVolume, rDistBtwFirerAndTarget );
              rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
     return rDangerosity;
 }

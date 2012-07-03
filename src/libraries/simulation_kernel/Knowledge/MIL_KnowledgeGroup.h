@@ -115,10 +115,10 @@ public:
     void CleanKnowledges ();
     bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const;
-    bool IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown ) const;
+    bool IsPerceptionDistanceHacked( const MIL_Object_ABC& objectKnown ) const;
     bool IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Agent_ABC& agentKnown ) const;
-    const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Object_ABC& ObjectKnown ) const;
+    const PHY_PerceptionLevel& GetPerceptionLevel( const MIL_Object_ABC& ObjectKnown ) const;
     const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Population& populationKnown ) const;
 
     bool operator==( const MIL_KnowledgeGroup& rhs ) const;

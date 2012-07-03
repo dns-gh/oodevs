@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Speeds.h"
 #include "Tools/MIL_Tools.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <algorithm>
@@ -43,7 +43,7 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
+PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role )
     : rMaxSpeed_               ( role.GetMaxSpeedWithReinforcement() )
     , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
@@ -59,7 +59,7 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 // Name: PHY_Speeds constructor
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
+PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role, bool loaded )
     : rMaxSpeed_               ( role.GetTheoricMaxSpeed( loaded ) )
     , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
@@ -84,7 +84,7 @@ PHY_Speeds::~PHY_Speeds()
 // Name: PHY_Speeds::Initialize
 // Created: JSR 2012-02-02
 // -----------------------------------------------------------------------------
-void PHY_Speeds::Initialize( const moving::PHY_RoleAction_Moving& role )
+void PHY_Speeds::Initialize( const moving::PHY_RoleAction_InterfaceMoving& role )
 {
     std::vector< std::string > allTypes = TerrainData::GetAllTypes();
     const unsigned int size = TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes;

@@ -20,6 +20,7 @@ namespace sword
     enum ObstacleType_DemolitionTargetType;
     class MissionParameters;
     enum ObjectMagicActionAck_ErrorCode;
+    class FloodModelFactory_ABC;
 }
 
 namespace urban
@@ -46,7 +47,7 @@ class MIL_ObjectFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ObjectFactory();
+    explicit MIL_ObjectFactory( const sword::FloodModelFactory_ABC& floodFactory );
     virtual ~MIL_ObjectFactory();
     //@}
 
@@ -79,6 +80,12 @@ private:
     //@{
     MIL_ObjectFactory( const MIL_ObjectFactory& );            //!< Copy constructor
     MIL_ObjectFactory& operator=( const MIL_ObjectFactory& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    const sword::FloodModelFactory_ABC& floodFactory_;
     //@}
 };
 

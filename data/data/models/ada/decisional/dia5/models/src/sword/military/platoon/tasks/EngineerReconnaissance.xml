@@ -15,7 +15,7 @@
 	<stages>
 		<stage label="Reconnaissance" disable-when-done="true">
 			<skills>
-				<skill name="sword.military.platoon.skills.Scout" main="true" priority="1.0">
+				<skill name="france.military.platoon.skills.Eclairer" main="true" priority="1.0">
 					<parameter name="entities">
 						<value>
 							<parameter>objectives</parameter>

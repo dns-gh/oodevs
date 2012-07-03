@@ -201,11 +201,6 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const unsigned int /*version*/ );
     //@}
 
-    //! @name Checkpoint
-    //@{
-    //struct sStates;
-    //@}
-
 private:
     // Etat décisionnel
           E_ForceRatioState        nForceRatioState_;

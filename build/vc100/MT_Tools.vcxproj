@@ -84,6 +84,7 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FormatString.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Profiler.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Scipio_enum.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Shared.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Stl.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_String.h" />
@@ -102,7 +103,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Line.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Polyline.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Rect.h" />
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_triangle.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Vector2D.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\Mt_Vector2DTypes.h" />
@@ -149,7 +149,6 @@
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Line.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Polyline.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Rect.cpp" />
-    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Sector.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_triangle.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Vector2D.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Timer_ABC.cpp" />

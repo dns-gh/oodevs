@@ -526,6 +526,12 @@
     <Filter Include="Source Files\Entities\Agents\Roles\Deployment">
       <UniqueIdentifier>{6f759646-5c5f-47e9-a831-da54af6e8385}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Adapters">
+      <UniqueIdentifier>{531f96a4-bb98-453b-9d44-c3155624770f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Adapters\Legacy">
+      <UniqueIdentifier>{376da3a0-ac39-41df-8be2-ae971b1fea70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2538,14 +2544,89 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp">
-      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathAdapter.cpp">
+      <Filter>Source Files\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAdapter.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAction_Moving.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.cpp">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.cpp">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Decision.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Composantes.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.cpp">
+      <Filter>Source Files\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.cpp">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.cpp">
+      <Filter>Source Files\Adapters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -4991,17 +5072,83 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\PHY_RoleAction_InterfaceMoving.h">
+      <Filter>Source Files\Entities\Agents\Actions\Moving</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PathAdapter.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h">
       <Filter>Source Files\Decision\Path</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.h">
-      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PathPointAdapter.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAdapter.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAdapterInterface.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink_ABC.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\KnowledgeCache.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RoleAction_Moving.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.h">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.h">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Decision.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Hook.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\NullRoleAdapter.h">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Composantes.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeAgent_ABC.h">
+      <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeAgent_ABC.h">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.h">
+      <Filter>Source Files\Adapters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -5169,5 +5316,40 @@
     <CustomBuildStep Include="..\..\src\libraries\simulation_kernel\Knowledge\DEC_Knowledge_PopulationFlow.h">
       <Filter>Source Files\Knowledge\Knowledges\Knowledge Population\Knowledge</Filter>
     </CustomBuildStep>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.h">
+      <Filter>Source Files\Adapters\Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

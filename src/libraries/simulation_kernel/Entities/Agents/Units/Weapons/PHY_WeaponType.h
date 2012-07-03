@@ -92,7 +92,7 @@ public:
     double GetMinRangeToIndirectFire() const;
 
     double GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
-    double GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;
+    double GetPHModificator() const;
     //@}
 
 private:

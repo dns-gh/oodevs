@@ -61,7 +61,6 @@ public:
     //! @name Operations
     //@{
     virtual void operator() ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
-    virtual bool CanFire( const PHY_ComposantePion& firer );
 
     void ChooseRandomWeapon  ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
     void ChooseBestWeapon    ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
@@ -80,6 +79,7 @@ public:
 private:
     //! @name Tools
     //@{
+    bool CanFire();
     void RemoveFirer ( const PHY_ComposantePion& firer );
     void RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}

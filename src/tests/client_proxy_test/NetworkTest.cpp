@@ -131,8 +131,8 @@ BOOST_AUTO_TEST_CASE( ClientConnectsAndAuthenticatesToSimulation )
     MockServer server( PORT );
     SwordProxy client( defaultHost, PORT, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
-    MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
-    MOCK_EXPECT( connectionHandler, OnAuthenticationSucceeded ).once().with( defaultProfile );
+    MOCK_EXPECT( connectionHandler.OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
+    MOCK_EXPECT( connectionHandler.OnAuthenticationSucceeded ).once().with( defaultProfile );
     client.Connect( &connectionHandler );
     Timeout timeout( timeOut );
     while( !timeout.Expired() )
@@ -152,12 +152,12 @@ BOOST_AUTO_TEST_CASE( MessageHandlersCanBeRegistered )
     MockServer server( PORT );
     SwordProxy client( defaultHost, PORT, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
-    MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
-    MOCK_EXPECT( connectionHandler, OnAuthenticationSucceeded ).once().with( defaultProfile );
+    MOCK_EXPECT( connectionHandler.OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
+    MOCK_EXPECT( connectionHandler.OnAuthenticationSucceeded ).once().with( defaultProfile );
     MockMessageHandler messageHandler;
-    MOCK_EXPECT( messageHandler, OnReceiveMessageSimToClient ).at_least( 1 );
-    MOCK_EXPECT( messageHandler, OnReceiveMessageMessengerToClient ).at_least( 1 );
-    MOCK_EXPECT( messageHandler, OnReceiveMessageAuthenticationToClient ).at_least( 1 );
+    MOCK_EXPECT( messageHandler.OnReceiveMessageSimToClient ).at_least( 1 );
+    MOCK_EXPECT( messageHandler.OnReceiveMessageMessengerToClient ).at_least( 1 );
+    MOCK_EXPECT( messageHandler.OnReceiveMessageAuthenticationToClient ).at_least( 1 );
     client.RegisterMessageHandler( &messageHandler );
     client.Connect( &connectionHandler );
     Timeout timeout( timeOut );

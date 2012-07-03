@@ -12,10 +12,11 @@
 #ifndef __DEC_PathFind_Manager_h_
 #define __DEC_PathFind_Manager_h_
 
-#pragma warning( push, 1 )
+#pragma warning( push, 0 )
 #include <tools/thread/MessageQueue_ABC.h>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
+#pragma warning( pop )
 #include <deque>
 
 class DEC_Path_ABC;

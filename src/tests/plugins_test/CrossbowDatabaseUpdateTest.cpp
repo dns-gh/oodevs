@@ -208,19 +208,19 @@ namespace
 //        workspace.InitializeConnectionReference( "geometry", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
 //
 //        MockSession session;
-//        MOCK_EXPECT( session, GetId ).returns( 2000 );
+//        MOCK_EXPECT( session.GetId ).returns( 2000 );
 //
 //        tools::Resolver< dispatcher::Agent_ABC > agents;
 //        MockAgent agent( 10071 );
-//        MOCK_EXPECT( agent, GetId ).returns( 10071 );
+//        MOCK_EXPECT( agent.GetId ).returns( 10071 );
 //        MockSymbol* symbol = new MockSymbol();
 //        agent.Attach( *static_cast< dispatcher::EntitySymbols_ABC* >( symbol ) );
-//        MOCK_EXPECT( *symbol, BuildSymbol ).returns( "**************" );
+//        MOCK_EXPECT( symbol->BuildSymbol ).returns( "**************" );
 //        BOOST_CHECK_EQUAL( symbol, &agent.Get< dispatcher::EntitySymbols_ABC >() );
 //        agents.Register( agent.GetId(), agent );
 //
 //        MockModel model;
-//        MOCK_EXPECT( model, Agents ).returns( boost::ref( agents ) );
+//        MOCK_EXPECT( model.Agents ).returns( boost::ref( agents ) );
 //
 //        crossbow::DatabaseUpdater updater( workspace, model, session );
 //        {
@@ -258,7 +258,7 @@ namespace
 //        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
 //
 //        MockSession session;
-//        MOCK_EXPECT( session, GetId ).returns( 2000 );
+//        MOCK_EXPECT( session.GetId ).returns( 2000 );
 //        {
 //            sword::CoordLatLongList list;
 //            UpdateCoordinates( *list.add_elem(), 33.123, 0.123 );
@@ -276,7 +276,7 @@ namespace
 //        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
 //
 //        MockSession session;
-//        MOCK_EXPECT( session, GetId ).returns( 2000 );
+//        MOCK_EXPECT( session.GetId ).returns( 2000 );
 //        {
 //            sword::CoordLatLongList list;
 //            UpdateCoordinates( *list.add_elem(), 33.123, 0.123 );

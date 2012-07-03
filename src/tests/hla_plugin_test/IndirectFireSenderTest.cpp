@@ -78,10 +78,10 @@ namespace
             position->set_longitude( longitude );
             startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1338 );
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
-            MOCK_EXPECT( localResolver, ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
+            MOCK_EXPECT( localResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
             controller.Dispatch( startMessage );
-            MOCK_EXPECT( interactionSender, Send ).once().with( mock::retrieve( parameters ) );
-            MOCK_EXPECT( munitionTypeResolver, ResolveIdentifier ).once().with( ammunitionType ).returns( rpr::EntityType( ammunitionName ) );
+            MOCK_EXPECT( interactionSender.Send ).once().with( mock::retrieve( parameters ) );
+            MOCK_EXPECT( munitionTypeResolver.ResolveIdentifier ).once().with( ammunitionType ).returns( rpr::EntityType( ammunitionName ) );
             controller.Dispatch( stopMessage );
         }
         interactions::MunitionDetonation parameters;

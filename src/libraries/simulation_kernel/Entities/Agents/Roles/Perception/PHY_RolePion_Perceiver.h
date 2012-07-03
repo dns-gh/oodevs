@@ -81,14 +81,13 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection );
+    explicit PHY_RolePion_Perceiver( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Perceiver();
     //@}
 
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    void Initialization( const MT_Vector2D& perceiverPosition, const MT_Vector2D& perceiverDirection );
     //@}
 
     //@{
@@ -242,8 +241,6 @@ private:
     //! @name Member data
     //@{
     MIL_Agent_ABC& owner_;
-    const MT_Vector2D* perceiverPosition_;
-    const MT_Vector2D* perceiverDirection_;
     MT_Vector2D lastPerceiverPosition_;
     unsigned int nNextPeriphericalVisionStep_;
     // Perceptions

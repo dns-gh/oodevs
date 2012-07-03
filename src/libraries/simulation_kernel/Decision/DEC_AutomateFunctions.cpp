@@ -13,7 +13,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -352,7 +352,7 @@ float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pio
     if( !pion )
         throw std::runtime_error( "Invalid pion in PionTimeToMoveDistance" );
     const double rDistance = MIL_Tools::ConvertMeterToSim( distance );
-    const double rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
+    const double rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement();
     return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
 }
 

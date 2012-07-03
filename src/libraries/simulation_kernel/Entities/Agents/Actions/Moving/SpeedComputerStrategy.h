@@ -19,7 +19,7 @@ class TerrainData;
 namespace moving
 {
 
-class PHY_RoleAction_Moving;
+class PHY_RoleAction_InterfaceMoving;
 
 // =============================================================================
 /** @class  SpeedComputerStrategy
@@ -51,7 +51,7 @@ private:
     bool withReinforcement_;
     bool isMax_;
     boost::function< double( const PHY_ComposantePion& ) > compFunctor_;
-    boost::function< double( PHY_RoleAction_Moving& ) > pionFunctor_;
+    boost::function< double( PHY_RoleAction_InterfaceMoving& ) > pionFunctor_;
     //@}
 };
 

@@ -22,7 +22,7 @@ namespace
         formation.Start( from, geometry::Vector2f( 1.f, 0.f ), 12u );
         for( unsigned int i = 0; i < 12u; ++i )
             formation.Apply( &movable );
-        movable.verify();
+        mock::verify( movable );
     }
 }
 
@@ -38,32 +38,32 @@ BOOST_AUTO_TEST_CASE( Test_RoadFormation )
                                                                   ( geometry::Point2f( 0.f, 1000.f ) );
     {
         MockMovable movable;
-        MOCK_EXPECT( movable, Stop );
-        MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 0.f, 0.f ) );
+        MOCK_EXPECT( movable.Stop );
+        MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 0.f, 0.f ) );
         Test( path, geometry::Point2f( 0.f, 0.f ), movable );
     }
     {
         MockMovable movable;
-        MOCK_EXPECT( movable, Stop );
-        MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 20.f, 0.f ) );
-        MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 0.f, 0.f ) );
+        MOCK_EXPECT( movable.Stop );
+        MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 20.f, 0.f ) );
+        MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 0.f, 0.f ) );
         Test( path, geometry::Point2f( 20.f, 0.f ), movable );
     }
     {
         MockMovable movable;
-        MOCK_EXPECT( movable, Stop );
+        MOCK_EXPECT( movable.Stop );
         for( unsigned int i = 0; i < 12u; ++i )
-            MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 220.f - 20.f * i, 0.f ) );
+            MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 220.f - 20.f * i, 0.f ) );
         Test( path, geometry::Point2f( 220, 0 ), movable );
     }
     {
         MockMovable movable;
-        MOCK_EXPECT( movable, Stop );
+        MOCK_EXPECT( movable.Stop );
         for( unsigned int i = 0; i < 5; ++i )
-            MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 1000.f, 100.f - 20.f * i ) );
-        MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 1000.f, 0.f ) );
+            MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 1000.f, 100.f - 20.f * i ) );
+        MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 1000.f, 0.f ) );
         for( unsigned int i = 1; i <= 6; ++i )
-            MOCK_EXPECT( movable, Move ).once().with( geometry::Point2f( 1000.f - 20.f * i, 0.f ) );
+            MOCK_EXPECT( movable.Move ).once().with( geometry::Point2f( 1000.f - 20.f * i, 0.f ) );
         Test( path, geometry::Point2f( 1000, 100 ), movable );
     }
 }

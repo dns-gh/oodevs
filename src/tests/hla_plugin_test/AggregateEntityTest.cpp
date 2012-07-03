@@ -31,9 +31,9 @@ namespace
         Fixture()
             : listener( 0 )
         {
-            MOCK_EXPECT( agent, Register ).once().with( mock::retrieve( listener ) );
-            MOCK_EXPECT( agent, Unregister ).once();
-            MOCK_EXPECT( factory, CreateAggregateMarking ).once().returns( AggregateMarking() );
+            MOCK_EXPECT( agent.Register ).once().with( mock::retrieve( listener ) );
+            MOCK_EXPECT( agent.Unregister ).once();
+            MOCK_EXPECT( factory.CreateAggregateMarking ).once().returns( AggregateMarking() );
         }
         MockAgent agent;
         MockMarkingFactory factory;
@@ -81,14 +81,14 @@ BOOST_FIXTURE_TEST_CASE( agregate_entity_serializes_all_its_attributes, Register
         hla::MockUpdateFunctor functor;
         mock::sequence s;
         BOOST_FOREACH( const std::string& attribute, attributes )
-            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+            MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
         BOOST_FOREACH( const std::string& attribute, attributes )
-            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+            MOCK_EXPECT( functor.Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
 }
@@ -140,41 +140,41 @@ BOOST_FIXTURE_TEST_CASE( agent_has_entity_identifier, RegisteredFixture )
 BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, RegisteredFixture )
 {
     const unsigned char fullyAggregated = 1;
-    MOCK_EXPECT( functor, Visit ).once().with( "AggregateState", boost::bind( &CheckSerialization< unsigned char >, _1, fullyAggregated ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "AggregateState", boost::bind( &CheckSerialization< unsigned char >, _1, fullyAggregated ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_no_sub_aggregate_identifiers, RegisteredFixture )
 {
     const uint32 numberSubAggregateIdentifiers = 0u;
-    MOCK_EXPECT( functor, Visit ).once().with( "SubAggregateIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberSubAggregateIdentifiers ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "SubAggregateIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberSubAggregateIdentifiers ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_no_entity_identifiers, RegisteredFixture )
 {
     const uint32 numberOfEntityIdentifiers = 0u;
-    MOCK_EXPECT( functor, Visit ).once().with( "EntityIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberOfEntityIdentifiers ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "EntityIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberOfEntityIdentifiers ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_no_silent_aggregate, RegisteredFixture )
 {
     const uint32 numberOfSilentAggregates = 0u;
-    MOCK_EXPECT( functor, Visit ).once().with( "SilentAggregates", boost::bind( &CheckSerialization< uint32 >, _1, numberOfSilentAggregates ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "SilentAggregates", boost::bind( &CheckSerialization< uint32 >, _1, numberOfSilentAggregates ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( empty_agent_does_not_have_any_silent_entity, RegisteredFixture )
 {
     const unsigned short numberOfSilentEntity = 0;
-    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
-    MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 0 * SILENT_ENTITY_SIZE ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 0 * SILENT_ENTITY_SIZE ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
@@ -184,9 +184,9 @@ BOOST_FIXTURE_TEST_CASE( agent_updates_already_known_equipment, RegisteredFixtur
     BOOST_REQUIRE( listener );
     listener->EquipmentChanged( 1u, entityType, 1u );
     listener->EquipmentChanged( 1u, entityType, 2u );
-    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
-    MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 1 * SILENT_ENTITY_SIZE ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 1 * SILENT_ENTITY_SIZE ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
@@ -196,9 +196,9 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_silent_entities_number, RegisteredFixt
     BOOST_REQUIRE( listener );
     listener->EquipmentChanged( 1u, entityType, 1u );
     listener->EquipmentChanged( 2u, entityType, 2u );
-    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
-    MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 2 * SILENT_ENTITY_SIZE ) );
-    MOCK_EXPECT( functor, Visit );
+    MOCK_EXPECT( functor.Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 2 * SILENT_ENTITY_SIZE ) );
+    MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
@@ -206,7 +206,7 @@ BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, RegisteredFixture 
 {
     BOOST_REQUIRE( listener );
     listener->SpatialChanged( 1., 2., 3., 4., 5. );
-    MOCK_EXPECT( functor, Visit ).once().with( "Spatial", mock::any );
+    MOCK_EXPECT( functor.Visit ).once().with( "Spatial", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
 }
@@ -216,8 +216,8 @@ BOOST_FIXTURE_TEST_CASE( formation_changed_event_is_serialized, RegisteredFixtur
     BOOST_REQUIRE( listener );
     listener->FormationChanged( true );
     mock::sequence s;
-    MOCK_EXPECT( functor, Visit ).once().in( s ).with( "Dimensions", mock::any );
-    MOCK_EXPECT( functor, Visit ).once().in( s ).with( "Formation", mock::any );
+    MOCK_EXPECT( functor.Visit ).once().in( s ).with( "Dimensions", mock::any );
+    MOCK_EXPECT( functor.Visit ).once().in( s ).with( "Formation", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
 }
@@ -227,8 +227,8 @@ BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, RegisteredFixtur
     BOOST_REQUIRE( listener );
     listener->EquipmentChanged( 1u, entityType, 2u );
     mock::sequence s;
-    MOCK_EXPECT( functor, Visit ).once().in( s ).with( "NumberOfSilentEntities", mock::any );
-    MOCK_EXPECT( functor, Visit ).once().in( s ).with( "SilentEntities", mock::any );
+    MOCK_EXPECT( functor.Visit ).once().in( s ).with( "NumberOfSilentEntities", mock::any );
+    MOCK_EXPECT( functor.Visit ).once().in( s ).with( "SilentEntities", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
 }

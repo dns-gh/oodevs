@@ -32,6 +32,8 @@ namespace frontend
 // =============================================================================
 class AdvancedConfigPanel : public PluginConfig_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -44,6 +46,18 @@ public:
     virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void SwordVersionSelected( bool isLegacy );
+    //@}
+
+private slots:
+    //! @name Operations
+    //@{
+    void SwordVersionChecked( int state );
     //@}
 
 private:
@@ -67,6 +81,9 @@ private:
     Q3GroupBox*                 recordBox_;
     QLabel*                     fragmentsFrequencyLabel_;
     QSpinBox*                   fragmentsFrequencySpin_;
+
+    Q3GroupBox*                 legacyBox_;
+    QCheckBox*                  legacyCheckBox_;
     //@}
 };
 }

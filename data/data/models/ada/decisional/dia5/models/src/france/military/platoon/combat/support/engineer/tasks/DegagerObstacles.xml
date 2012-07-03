@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.ClearObstacles">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.engineer.tasks.knowledges.DegagerObstacles">
 	<parameters>
 		<parameter name="obstacles">
 			<description>Les éléments à dégager.</description>

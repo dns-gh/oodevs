@@ -1,0 +1,515 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "WeaponType.h"
+#include "LauncherType.h"
+#include "DotationCategory.h"
+#include "WeaponDataType_DirectFire.h"
+#include "WeaponDataType_IndirectFire.h"
+#include "tools/xmlcodecs.h"
+#include <wrapper/Hook.h>
+#include <wrapper/View.h>
+#include <module_api/Log.h>
+#include <xeumeuleu/xml.hpp>
+#include <boost/optional.hpp>
+#include <boost/bind.hpp>
+#include <cassert>
+
+DEFINE_HOOK( InitializeWeaponSystems, void, ( const char* xml, double tickDuration ) )
+{
+    try
+    {
+        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        sword::fire::WeaponType::Initialize( xml::xistringstream( xml ), tickDuration );
+    }
+    catch( std::exception& e )
+    {
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+    }
+    catch( ... )
+    {
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during weapon type initialization" );
+    }
+    if( GET_PREVIOUS_HOOK( InitializeWeaponSystems ) )
+        GET_PREVIOUS_HOOK( InitializeWeaponSystems )( xml, tickDuration );
+}
+
+using namespace sword;
+using namespace sword::fire;
+
+WeaponType::T_WeaponTypeMap WeaponType::weaponTypes_;
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::Initialize
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void WeaponType::Initialize( xml::xisubstream xis, double tickDuration )
+{
+    ::SWORD_Log( SWORD_LOG_LEVEL_INFO, "Initializing weapons" );
+    xis >> xml::start( "weapons" )
+            >> xml::list( "weapon-system", boost::bind( &WeaponType::ReadWeapon, _1, tickDuration ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::ReadWeapon
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void WeaponType::ReadWeapon( xml::xistream& xis, double tickDuration )
+{
+    std::string strLauncher, strAmmunition;
+    xis >> xml::attribute( "launcher", strLauncher )
+        >> xml::attribute( "munition", strAmmunition );
+    boost::shared_ptr< WeaponType >& pWeaponType = weaponTypes_[ strLauncher + "/" + strAmmunition ];
+    if( pWeaponType )
+        xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
+    pWeaponType.reset( new WeaponType( strLauncher, strAmmunition, xis, tickDuration ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType constructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+WeaponType::WeaponType( const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis, double tickDuration )
+    : pLauncherType_     ( LauncherType::FindLauncherType( strLauncher ) )
+    , dotation_          ( DotationCategory::FindDotationCategory( strAmmunition ) )
+    , nNbrAmmoPerBurst_  ( 1 )
+    , rBurstDuration_    ( 1. )
+    , nNbrAmmoPerLoader_ ( 1 )
+    , rReloadingDuration_( 1. )
+{
+    if( ! pLauncherType_ )
+        xis.error( "Unknown launcher type '" + strLauncher + "'" );
+    if( ! dotation_ )
+        xis.error( "Unknown dotation category '" + strAmmunition + "'" );
+    std::string burstTime, reloadingTime;
+    xis >> xml::start( "burst" )
+            >> xml::attribute( "munition", nNbrAmmoPerBurst_ )
+            >> xml::attribute( "duration", burstTime )
+        >> xml::end
+        >> xml::start( "reloading" )
+            >> xml::attribute( "munition", nNbrAmmoPerLoader_ )
+            >> xml::attribute( "duration", reloadingTime )
+        >> xml::end;
+    if( ! tools::DecodeTime( burstTime,     rBurstDuration_ )
+     || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
+        xis.error( "Invalid burst or reloading durations" );
+    rBurstDuration_     /= tickDuration;
+    rReloadingDuration_ /= tickDuration;
+    if( nNbrAmmoPerBurst_ <= 0 )
+        xis.error( "burst: munition <= 0" );
+    if( rBurstDuration_ <= 0 )
+        xis.error( "burst: duration <= 0" );
+    if( nNbrAmmoPerLoader_ <= 0 )
+        xis.error( "reloading: munition <= 0" );
+    if( rReloadingDuration_ <= 0 )
+        xis.error( "reloading: duration <= 0" );
+    xis >> xml::list( "direct-fire", *this, &WeaponType::ReadDirect )
+        >> xml::list( "indirect-fire", *this, &WeaponType::ReadIndirect, tickDuration );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::ReadDirect
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void WeaponType::ReadDirect( xml::xistream& xis )
+{
+    assert( pLauncherType_ );
+    assert( dotation_ );
+    if( ! pLauncherType_->CanDirectFire() )
+        xis.error( "Associated launcher cannot direct fire" );
+    if( ! dotation_->CanBeUsedForDirectFire() )
+        xis.error( "Associated ammunition cannot direct fire" );
+    pDirectFireData_.reset( new WeaponDataType_DirectFire( *pLauncherType_, *dotation_, xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::ReadIndirect
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void WeaponType::ReadIndirect( xml::xistream& xis, double tickDuration )
+{
+    assert( pLauncherType_ );
+    assert( dotation_ );
+    if( ! pLauncherType_->CanIndirectFire() )
+        xis.error( "Associated launcher cannot indirect fire" );
+    if( ! dotation_->CanBeUsedForIndirectFire() )
+        xis.error( "Associated ammunition cannot indirect fire" );
+    pIndirectFireData_.reset( new WeaponDataType_IndirectFire( xis, tickDuration ) );
+}
+
+//// -----------------------------------------------------------------------------
+//// Name: WeaponType::IndirectFire
+//// Created: NLD 2004-10-15
+//// -----------------------------------------------------------------------------
+//void WeaponType::IndirectFire( MIL_Effect_IndirectFire& effect, unsigned int nNbrAmmoReserved ) const
+//{
+//    assert( pIndirectFireData_ );
+//    pIndirectFireData_->Fire( effect, nNbrAmmoReserved );
+//}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::DirectFire
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+void WeaponType::DirectFire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const
+{
+    assert( pDirectFireData_.get() );
+    pDirectFireData_->Fire( firer, target, compTarget, bUsePH );
+}
+
+//// -----------------------------------------------------------------------------
+//// Name: WeaponType::DirectFire
+//// Created: NLD 2005-11-16
+//// -----------------------------------------------------------------------------
+//void WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+//{
+//    assert( pDirectFireData_ );
+//    pDirectFireData_->Fire( firer, target, nNbrAmmoReserved, fireResult, GetDotationCategory().GetAmmoDotationClass() );
+//}
+//
+//// -----------------------------------------------------------------------------
+//// Name: WeaponType::ThrowSmoke
+//// Created: NLD 2004-10-21
+//// -----------------------------------------------------------------------------
+//void WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
+//{
+//    assert( pIndirectFireData_ );
+//    pIndirectFireData_->ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
+//}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::CheckDirectFireDotation
+// Created: MCO 2012-05-09
+// -----------------------------------------------------------------------------
+bool WeaponType::CheckDirectFireDotation( const wrapper::View& firer, bool checkAmmo ) const
+{
+    if( ! pDirectFireData_.get() )
+        return false;
+    if( ! checkAmmo )
+        return true;
+    return dotation_->HasDotation( firer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::CheckIndirectFireDotation
+// Created: MCO 2012-06-22
+// -----------------------------------------------------------------------------
+bool WeaponType::CheckIndirectFireDotation( const wrapper::View& firer, bool checkAmmo ) const
+{
+    if( ! pIndirectFireData_.get() )
+        return false;
+    if( ! checkAmmo )
+        return true;
+    return dotation_->HasDotation( firer );
+}
+
+namespace
+{
+    boost::shared_ptr< WeaponType > FindWeaponType( const std::string& weapon )
+    {
+        boost::shared_ptr< WeaponType > type = WeaponType::FindWeaponType( weapon );
+        if( ! type )
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ("Unknown weapon type : " + weapon).c_str() );
+        return type;
+    }
+    template< typename Accumulator, typename Filter, typename Operation >
+    double Get( Accumulator accumulator, const wrapper::View& firer, Filter filter, Operation operation, double init )
+    {
+        double result = init;
+        const wrapper::View& components = firer[ "components" ];
+        for( std::size_t c = 0; c < components.GetSize(); ++c )
+        {
+            const wrapper::View& component = components.GetElement( c );
+            if( filter( component ) )
+            {
+                const wrapper::View& weapons = component[ "weapons" ];
+                for( std::size_t w = 0; w < weapons.GetSize(); ++w )
+                {
+                    boost::shared_ptr< WeaponType > type =
+                        FindWeaponType( weapons.GetElement( w )[ "type" ] );
+                    if( type )
+                        result = accumulator( result, operation( type ) );
+                }
+            }
+        }
+        return result;
+    }
+    template< typename Filter, typename Operation >
+    double GetMax( const wrapper::View& firer, Filter filter, Operation operation, double init = 0 )
+    {
+        return Get( &std::max< double >, firer, filter, operation, init );
+    }
+    template< typename Filter, typename Operation >
+    double GetMin( const wrapper::View& firer, Filter filter, Operation operation, double init = std::numeric_limits< double >::max() )
+    {
+        return Get( &std::min< double >, firer, filter, operation, init );
+    }
+}
+
+DEFINE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) )
+{
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetDangerosity, _1, firer, target, rDistBtwSourceAndTarget, checkAmmo ) );
+}
+DEFINE_HOOK( GetMaxRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
+{
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFireOn, _1, firer, target, rWantedPH, dotation ) );
+}
+DEFINE_HOOK( GetMinRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+{
+    return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToFireOn, _1, firer, target, rWantedPH ) );
+}
+DEFINE_HOOK( GetMaxRangeToFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+{
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFire, _1, rWantedPH ) );
+}
+DEFINE_HOOK( GetMaxRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+{
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFireOnWithPosture, _1, firer, target, rWantedPH ) );
+}
+DEFINE_HOOK( GetMinRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+{
+    return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToFireOnWithPosture, _1, firer, target, rWantedPH ) );
+}
+DEFINE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
+{
+    if( dotation )
+        return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToIndirectFire, _1, firer, dotation, checkAmmo ), -1 );
+    return -1;
+}
+DEFINE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
+{
+    if( dotation )
+        return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToIndirectFire, _1, firer, dotation, checkAmmo ) );
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetDangerosity
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH, bool checkAmmo ) const
+{
+    if( CheckDirectFireDotation( firer, checkAmmo ) )
+        return pDirectFireData_->GetDangerosity( firer, target, compTarget, bUsePH );
+    return 0;
+}
+
+namespace
+{
+    boost::optional< wrapper::View > GetMajorComponent( const wrapper::View& components )
+    {
+        boost::optional< wrapper::View > result;
+        std::size_t major = 0;
+        for( std::size_t i = 0; i < components.GetSize(); ++i )
+        {
+            const wrapper::View& component = components.GetElement( i );
+            const std::size_t score = component[ "score" ];
+            if( score >= major )
+            {
+                result = component;
+                major = score;
+            }
+        }
+        return result;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetDangerosity
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::View& target, double rDistBtwFirerAndTarget, bool checkAmmo ) const
+{
+    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    if( component && CheckDirectFireDotation( firer, checkAmmo ) )
+        return pDirectFireData_->GetDangerosity( *component, rDistBtwFirerAndTarget );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMaxRangeToFireOn
+// Created: NLD 2004-10-15
+// -----------------------------------------------------------------------------
+double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, const char* dotation ) const
+{
+    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    if( ! component || ! pDirectFireData_.get() )
+        return 0;
+    if( dotation ) // $$$$ MCO 2012-05-09: weird that we don't check if firer has enough ammo in the else case
+    {
+        if( dotation != dotation_->GetName() ) // $$$$ MCO 2012-06-21: pouah GetName
+            return 0;
+        if( ! dotation_->HasDotation( firer ) )
+            return 0;
+    }
+    return pDirectFireData_->GetMaxRangeToFireOn( *component, rWantedPH );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMinRangeToFireOn
+// Created: JVT 2004-12-17
+// -----------------------------------------------------------------------------
+double WeaponType::GetMinRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const
+{
+    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    if( component && CheckDirectFireDotation( firer, true ) )
+        return pDirectFireData_->GetMinRangeToFireOn( *component, rWantedPH );
+    return std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMaxRangeToFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+double WeaponType::GetMaxRangeToFire( double rWantedPH ) const
+{
+    if( pDirectFireData_.get() )
+        return pDirectFireData_->GetMaxRangeToFire( rWantedPH );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMaxRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+double WeaponType::GetMaxRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const
+{
+    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    if( component && CheckDirectFireDotation( firer, true ) )
+        return pDirectFireData_->GetMaxRangeToFireOnWithPosture( firer, target, *component, rWantedPH );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMinRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+double WeaponType::GetMinRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const
+{
+    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    if( component && CheckDirectFireDotation( firer, true ) )
+        return pDirectFireData_->GetMinRangeToFireOnWithPosture( firer, target, *component, rWantedPH );
+    return std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMaxRangeToIndirectFire
+// Created: MCO 2012-06-21
+// -----------------------------------------------------------------------------
+double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, const std::string& dotation, bool checkAmmo ) const
+{
+    if( DotationCategory::FindDotationCategory( dotation ) == dotation_ && CheckIndirectFireDotation( firer, checkAmmo ) )
+        return pIndirectFireData_->GetMaxRange();
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetMinRangeToIndirectFire
+// Created: MCO 2012-06-25
+// -----------------------------------------------------------------------------
+double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, const std::string& dotation, bool checkAmmo ) const
+{
+    if( DotationCategory::FindDotationCategory( dotation ) == dotation_ && CheckIndirectFireDotation( firer, checkAmmo ) )
+        return pIndirectFireData_->GetMinRange();
+    return std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::FindWeaponType
+// Created: NLD 2004-08-06
+// -----------------------------------------------------------------------------
+boost::shared_ptr< WeaponType > WeaponType::FindWeaponType( const std::string& strType )
+{
+    CIT_WeaponTypeMap it = weaponTypes_.find( strType );
+    if( it == weaponTypes_.end() )
+        return boost::shared_ptr< WeaponType >();
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetNbrAmmoPerLoader
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+unsigned int WeaponType::GetNbrAmmoPerLoader() const
+{
+    return nNbrAmmoPerLoader_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetNbrAmmoPerBurst
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+unsigned int WeaponType::GetNbrAmmoPerBurst() const
+{
+    return nNbrAmmoPerBurst_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetBurstDuration
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+double WeaponType::GetBurstDuration() const
+{
+    return rBurstDuration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetReloadingDuration
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+double WeaponType::GetReloadingDuration() const
+{
+    return rReloadingDuration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::CanDirectFire
+// Created: MCO 2012-06-21
+// -----------------------------------------------------------------------------
+bool WeaponType::CanDirectFire( const wrapper::View& entity, const wrapper::View& component, int nComposanteFiringType, int ammoDotationClass ) const
+{
+    return pDirectFireData_.get() && dotation_->CanFire( entity, component, nComposanteFiringType, ammoDotationClass );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::CanIndirectFire
+// Created: MCO 2012-06-27
+// -----------------------------------------------------------------------------
+bool WeaponType::CanIndirectFire( const wrapper::View& entity, const wrapper::View& component, double range, const std::string& type ) const
+{
+    return pIndirectFireData_.get() && dotation_->CanFire( entity, component, type ) &&
+        pIndirectFireData_->GetMinRange() <= range && range <= pIndirectFireData_->GetMaxRange();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::ReserveAmmunition
+// Created: MCO 2012-06-21
+// -----------------------------------------------------------------------------
+unsigned int WeaponType::ReserveAmmunition( const wrapper::View& firer, unsigned int nNbrAmmoToFire )
+{
+    return dotation_->ReserveAmmunition( firer, nNbrAmmoToFire );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::HasDotation
+// Created: MCO 2012-06-21
+// -----------------------------------------------------------------------------
+bool WeaponType::HasDotation( const wrapper::View& firer ) const
+{
+    return dotation_->HasDotation( firer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::GetDotation
+// Created: MCO 2012-06-28
+// -----------------------------------------------------------------------------
+const DotationCategory& WeaponType::GetDotation() const
+{
+    return *dotation_;
+}

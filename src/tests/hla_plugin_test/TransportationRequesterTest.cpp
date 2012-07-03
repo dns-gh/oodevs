@@ -58,15 +58,15 @@ BOOST_AUTO_TEST_CASE( transportation_requester_reads_transportation_mission_name
     MockInteractionSender< interactions::NetnReadyToReceiveService > readySender;
     MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
     MockInteractionSender< interactions::NetnCancelConvoy > cancelSender;
-    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "transportation mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, ResolveUnit ).once().with( "transportation mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "embarkment mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, ResolveUnit ).once().with( "embarkment mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "disembarkment mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, ResolveUnit ).once().with( "disembarkment mission name" ).returns( 42 );
-    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "pause" ).returns( 43 );
-    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "resume" ).returns( 44 );
-    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "cancel" ).returns( 45 );
+    MOCK_EXPECT( resolver.ResolveAutomat ).once().with( "transportation mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver.ResolveUnit ).once().with( "transportation mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver.ResolveAutomat ).once().with( "embarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver.ResolveUnit ).once().with( "embarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver.ResolveAutomat ).once().with( "disembarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver.ResolveUnit ).once().with( "disembarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver.ResolveAutomat ).once().with( "pause" ).returns( 43 );
+    MOCK_EXPECT( resolver.ResolveAutomat ).once().with( "resume" ).returns( 44 );
+    MOCK_EXPECT( resolver.ResolveAutomat ).once().with( "cancel" ).returns( 45 );
     TransportationRequester requester( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
 }
 
@@ -106,15 +106,15 @@ namespace
             , unitId            ( 48 )
         {
             xis >> xml::start( "configuration" );
-            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "transport" ).returns( transportAutomatId );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportUnitId );
-            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "embarkment" ).returns( embarkmentAutomatId );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "embarkment" ).returns( embarkmentUnitId );
-            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "disembarkment" ).returns( disembarkmentAutomatId );
-            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "disembarkment" ).returns( disembarkmentUnitId );
-            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "pause" ).returns( pauseId );
-            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "resume" ).returns( resumeId );
-            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "cancel" ).returns( cancelId );
+            MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "transport" ).returns( transportAutomatId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "transport" ).returns( transportUnitId );
+            MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "embarkment" ).returns( embarkmentAutomatId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "embarkment" ).returns( embarkmentUnitId );
+            MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "disembarkment" ).returns( disembarkmentAutomatId );
+            MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "disembarkment" ).returns( disembarkmentUnitId );
+            MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "pause" ).returns( pauseId );
+            MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "resume" ).returns( resumeId );
+            MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "cancel" ).returns( cancelId );
         }
         sword::SimToClient_Content MakeTransportationMessage( unsigned int missionType )
         {
@@ -151,7 +151,7 @@ namespace
     bool CheckTransportedUnits( const TransportedUnits_ABC& visitable, const std::string& subordinateCallsign, const std::string& subordinateNetnUniqueId )
     {
         MockTransportedUnitsVisitor visitor;
-        MOCK_EXPECT( visitor, Notify ).once().with( subordinateCallsign, subordinateNetnUniqueId );
+        MOCK_EXPECT( visitor.Notify ).once().with( subordinateCallsign, subordinateNetnUniqueId );
         visitable.Apply( visitor );
         return true;
     }
@@ -197,10 +197,10 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
     interactions::NetnRequestConvoy convoy;
     sword::ClientToSim pauseMessage;
-    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
-    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
-    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    MOCK_EXPECT( subordinates.Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    MOCK_EXPECT( requestSender.Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory.Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
     messageController.Dispatch( message );
     BOOST_CHECK( pauseMessage.message().has_frag_order() );
     BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
@@ -246,10 +246,10 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_embarkment_
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // embarking time
     interactions::NetnRequestConvoy convoy;
     sword::ClientToSim pauseMessage;
-    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
-    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
-    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    MOCK_EXPECT( subordinates.Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    MOCK_EXPECT( requestSender.Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory.Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
     messageController.Dispatch( message );
     BOOST_CHECK( pauseMessage.message().has_frag_order() );
     BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
@@ -292,10 +292,10 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_disembarkme
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // disembarking time
     interactions::NetnRequestConvoy convoy;
     sword::ClientToSim pauseMessage;
-    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
-    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
-    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    MOCK_EXPECT( subordinates.Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    MOCK_EXPECT( requestSender.Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory.Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
     messageController.Dispatch( message );
     BOOST_CHECK( pauseMessage.message().has_frag_order() );
     BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
@@ -340,11 +340,11 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_unit_transportation
     parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
     interactions::NetnRequestConvoy convoy;
     sword::ClientToSim pauseMessage;
-    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
-    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
-    MOCK_EXPECT( callsignResolver, ResolveUniqueId ).once().with( unitId ).returns( unitNetnUniqueId );
-    MOCK_EXPECT( callsignResolver, ResolveCallsign ).once().with( unitId ).returns( unitCallsign );
+    MOCK_EXPECT( requestSender.Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory.Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( unitId ).returns( unitNetnUniqueId );
+    MOCK_EXPECT( callsignResolver.ResolveCallsign ).once().with( unitId ).returns( unitCallsign );
     messageController.Dispatch( message );
     BOOST_CHECK( pauseMessage.message().has_frag_order() );
     BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
@@ -393,10 +393,10 @@ namespace
             parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // embarking time
             AddLocation( *parameters, debarkingPoint ); // debarking point
             parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000002" ); // debarking time
-            MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
-            MOCK_EXPECT( requestSender, Send ).once();
-            MOCK_EXPECT( factory, Create ).once().returns( context );
-            MOCK_EXPECT( publisher, SendClientToSim ).once();
+            MOCK_EXPECT( subordinates.Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+            MOCK_EXPECT( requestSender.Send ).once();
+            MOCK_EXPECT( factory.Create ).once().returns( context );
+            MOCK_EXPECT( publisher.SendClientToSim ).once();
             messageController.Dispatch( message );
         }
         sword::SimToClient_Content MakeReportMessage( unsigned int automatId, unsigned int reportType )
@@ -443,10 +443,10 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_accepts_offer_if_offer_is_same_as_request_and_notifies_listener_and_resume_mission, RequestedFixture )
 {
-    MOCK_EXPECT( acceptSender, Send ).once();
+    MOCK_EXPECT( acceptSender.Send ).once();
     interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
     sword::ClientToSim resumeMessage;
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( resumeMessage ) );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( resumeMessage ) );
     requester.Receive( offer );
     BOOST_CHECK( resumeMessage.message().has_frag_order() );
     BOOST_CHECK_EQUAL( resumeMessage.message().frag_order().type().id(), resumeId );
@@ -456,7 +456,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_rejects_offer_if_offer_is_part
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 2, "provider" );
     interactions::NetnRejectOfferConvoy reject;
-    MOCK_EXPECT( rejectSender, Send ).once().with( mock::retrieve( reject ) );
+    MOCK_EXPECT( rejectSender.Send ).once().with( mock::retrieve( reject ) );
     requester.Receive( offer );
     BOOST_CHECK_EQUAL( reject.reason, "Offering only partial offer" );
 }
@@ -464,13 +464,13 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_rejects_offer_if_offer_is_part
 BOOST_FIXTURE_TEST_CASE( transportation_requester_reject_all_good_offers_if_already_accepted, RequestedFixture )
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
-    MOCK_EXPECT( acceptSender, Send ).once();
-    MOCK_EXPECT( publisher, SendClientToSim ).once();
+    MOCK_EXPECT( acceptSender.Send ).once();
+    MOCK_EXPECT( publisher.SendClientToSim ).once();
     requester.Receive( offer );
     mock::verify();
     interactions::NetnOfferConvoy secondOffer = MakeOffer( 1, "provider2" );
     interactions::NetnRejectOfferConvoy reject;
-    MOCK_EXPECT( rejectSender, Send ).once().with( mock::retrieve( reject ) );
+    MOCK_EXPECT( rejectSender.Send ).once().with( mock::retrieve( reject ) );
     requester.Receive( secondOffer );
     BOOST_CHECK_EQUAL( reject.reason, "An other offer has already been accepted" );
     BOOST_CHECK_EQUAL( reject.provider.str(), "provider2" );
@@ -479,7 +479,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_reject_all_good_offers_if_alre
 BOOST_FIXTURE_TEST_CASE( transportation_requester_does_nothing_when_report_mission_complete_but_offer_rejected, RequestedFixture )
 {
     interactions::NetnOfferConvoy offer = MakeOffer( 2, "provider" );
-    MOCK_EXPECT( rejectSender, Send ).once();
+    MOCK_EXPECT( rejectSender.Send ).once();
     requester.Receive( offer );
     sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
     messageController.Dispatch( message );
@@ -499,8 +499,8 @@ namespace
     public:
         AcceptedFixture()
         {
-            MOCK_EXPECT( acceptSender, Send ).once();
-            MOCK_EXPECT( publisher, SendClientToSim ).once();
+            MOCK_EXPECT( acceptSender.Send ).once();
+            MOCK_EXPECT( publisher.SendClientToSim ).once();
             interactions::NetnOfferConvoy offer = MakeOffer( 1, "provider" );
             requester.Receive( offer );
         }
@@ -509,7 +509,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_notifies_ready_to_receive_service_when_receiving_mission_complete_report, AcceptedFixture )
 {
-    MOCK_EXPECT( readySender, Send ).once();
+    MOCK_EXPECT( readySender.Send ).once();
     sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
     messageController.Dispatch( message );
 }
@@ -533,7 +533,7 @@ namespace
     public:
         ReadyAndStartedFixture()
         {
-            MOCK_EXPECT( readySender, Send ).once();
+            MOCK_EXPECT( readySender.Send ).once();
             sword::SimToClient_Content message = MakeReportMessage( automatId, missionCompleteId );
             messageController.Dispatch( message );
             interactions::NetnServiceStarted started;
@@ -549,9 +549,9 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_load_unit_magic_action_f
     const unsigned int surbordinateId = 999;
     MockTransportedUnits units;
     sword::ClientToSim message;
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
-    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
-    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
     interactions::NetnConvoyEmbarkmentStatus status;
     FillService( status, "provider", 1337 );
     status.transportUnitIdentifier = UnicodeString( transportingUnitCallsign );
@@ -576,9 +576,9 @@ namespace
             : vesselId      ( 888 )
             , surbordinateId( 999 )
         {
-            MOCK_EXPECT( publisher, SendClientToSim ).once();
-            MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
-            MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+            MOCK_EXPECT( publisher.SendClientToSim ).once();
+            MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
+            MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
             interactions::NetnConvoyEmbarkmentStatus status;
             FillService( status, "provider", 1337 );
             status.transportUnitIdentifier = UnicodeString( transportingUnitCallsign );
@@ -596,8 +596,8 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_destroy_all_magic_action
     FillService( destroyed, "provider", 1337 );
     destroyed.listOfEmbarkedObjectDestroyed.list.push_back( NetnObjectDefinitionStruct( subordinateCallsign, subordinateNetnUniqueId, NetnObjectFeatureStruct() ) );
     sword::ClientToSim message;
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
-    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
     requester.Receive( destroyed );
     mock::verify();
     BOOST_CHECK( message.message().has_unit_magic_action() );
@@ -614,10 +614,10 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_sends_unload_unit_magic_action
     status.listOfObjectDisembarked.list.push_back( NetnObjectDefinitionStruct( subordinateCallsign, subordinateNetnUniqueId, NetnObjectFeatureStruct() ) );
     sword::ClientToSim message;
     sword::ClientToSim teleport;
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( message ) );
-    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( teleport ) );
-    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
-    MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( message ) );
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( teleport ) );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
     requester.Receive( status );
     mock::verify();
     BOOST_CHECK( message.message().has_unit_magic_action() );
@@ -642,9 +642,9 @@ namespace
             FillService( status, "provider", 1337 );
             status.transportUnitIdentifier = UnicodeString( transportingUnitCallsign );
             status.listOfObjectDisembarked.list.push_back( NetnObjectDefinitionStruct( subordinateCallsign, subordinateNetnUniqueId, NetnObjectFeatureStruct() ) );
-            MOCK_EXPECT( publisher, SendClientToSim ).exactly( 2 );
-            MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
-            MOCK_EXPECT( callsignResolver, ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
+            MOCK_EXPECT( publisher.SendClientToSim ).exactly( 2 );
+            MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( transportingUnitUniqueId ).returns( vesselId );
+            MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( subordinateNetnUniqueId ).returns( surbordinateId );
             requester.Receive( status );
         }
     };
@@ -652,7 +652,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_notifies_service_received_when_complete, DebarkedFixture )
 {
-    MOCK_EXPECT( receivedSender, Send ).once();
+    MOCK_EXPECT( receivedSender.Send ).once();
     interactions::NetnServiceComplete complete;
     FillService( complete, "provider", 1337 );
     requester.Receive( complete );

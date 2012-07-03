@@ -50,9 +50,9 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreated )
     std::auto_ptr< ClientObject > result;
     result.reset( new ClientObject( 42, msg ) );
     MockClientPublisher publisher;
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( expected );
     result->SendCreation( publisher );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,10 +92,10 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreatedByModel )
         prop2->set_name( "param2" );
         prop2->mutable_value()->set_integer_value( 5 );
     }
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( expected );
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( ack );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( ack );
     model.HandleRequest( publisher, msg );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,9 +123,9 @@ BOOST_AUTO_TEST_CASE( ClientObject_ErrorDuplicate )
         prop2->set_name( "param" );
         prop2->mutable_value()->set_string_value( "string" );
     }
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( ack );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( ack );
     model.HandleRequest( publisher, msg );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,14 +167,14 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeUpdatedByModel )
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "new_string" );
     }
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once();
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once();
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once();
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once();
     model.HandleRequest( publisher, msgCreation );
-    publisher.verify();
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( expected );
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( ack );
+    mock::verify( publisher );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( ack );
     model.HandleRequest( publisher, msgUpdate );
-    publisher.verify();
+    mock::verify( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,12 +208,12 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeDestroyedByModel )
     {
         msgDestruction.mutable_object()->set_id( 1 );
     }
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once();
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once();
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once();
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once();
     model.HandleRequest( publisher, msgCreation );
-    publisher.verify();
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( expected );
-    MOCK_EXPECT( publisher, SendMessengerToClient ).once().with( ack );
+    mock::verify( publisher );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( expected );
+    MOCK_EXPECT( publisher.SendMessengerToClient ).once().with( ack );
     model.HandleRequest( publisher, msgDestruction );
-    publisher.verify();
+    mock::verify( publisher );
 }

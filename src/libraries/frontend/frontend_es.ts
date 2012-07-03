@@ -43,6 +43,14 @@
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Legacy Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Legacy Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

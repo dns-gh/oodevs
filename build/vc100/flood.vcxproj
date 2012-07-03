@@ -85,6 +85,7 @@
     <ClInclude Include="..\..\src\libraries\flood\ElevationGetter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\flood\FloodDrawer.h" />
     <ClInclude Include="..\..\src\libraries\flood\FloodModel.h" />
+    <ClInclude Include="..\..\src\libraries\flood\FloodModel_ABC.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\flood\FloodDrawer.cpp" />

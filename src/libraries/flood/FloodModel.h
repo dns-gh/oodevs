@@ -10,6 +10,7 @@
 #ifndef __FloodModel_h_
 #define __FloodModel_h_
 
+#include "FloodModel_ABC.h"
 #include <geometry/types.h>
 
 namespace flood
@@ -22,7 +23,7 @@ namespace flood
 */
 // Created: JSR 2010-12-08
 // =============================================================================
-class FloodModel
+class FloodModel : public FloodModel_ABC
 {
 public:
     //! @name Types
@@ -45,13 +46,14 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force = false );
+    virtual const T_Polygons& GetDeepAreas() const { return deepAreas_; }
+    virtual const T_Polygons& GetLowAreas() const { return lowAreas_; }
+
     bool GenerateFlood( const geometry::Point2f& center, int depth, int refDist, bool force = false );
-    bool GenerateFlood( const geometry::Point2d& center, int depth, int refDist, bool force = false );
     const geometry::Point2f& GetCenter() const { return center_; }
     int GetReferenceDistance() const { return refDist_; }
     int GetDepth() const { return oldDepth_; }
-    const T_Polygons& GetDeepAreas() const { return deepAreas_; }
-    const T_Polygons& GetLowAreas() const { return lowAreas_; }
     //@}
 
 private:

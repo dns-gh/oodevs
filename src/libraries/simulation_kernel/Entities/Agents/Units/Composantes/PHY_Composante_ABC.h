@@ -12,6 +12,8 @@
 #ifndef __PHY_Composante_ABC_h_
 #define __PHY_Composante_ABC_h_
 
+#include <vector>
+
 class PHY_ComposanteType_ABC;
 
 // =============================================================================

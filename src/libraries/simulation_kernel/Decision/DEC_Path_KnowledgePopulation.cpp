@@ -9,9 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgePopulation.h"
-#include "DEC_Agent_PathClass.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 
 namespace
@@ -36,10 +36,9 @@ namespace
 // Name: DEC_Path_KnowledgePopulation constructor
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Population& knowledge, bool avoidPolicy )
-    : elements_    ()
-    , pPathClass_  ( &pathClass )
-    , bAvoidPolicy_( avoidPolicy )
+DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Knowledge_Population& knowledge, boost::function< double( unsigned int ) > populationAttitudeCost, bool avoidPolicy )
+    : populationAttitudeCost_( populationAttitudeCost )
+    , bAvoidPolicy_          ( avoidPolicy )
 {
     elements_.reserve( 10 );
     PopulationPathInserter pathInserter( *this );
@@ -70,20 +69,20 @@ void DEC_Path_KnowledgePopulation::AddElement( const MIL_PopulationElement_ABC& 
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
 {
-    const double rMaxRange = pPathClass_->GetPopulationSecurityRange();
+    const double rMaxRange = populationSecurityRange_;
     const sPopulationElement* pClosestElement = 0;
     const double rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
     if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)
     {
         if( !pClosestElement )
             return 0.f;
-        const double rElementCost = pPathClass_->GetPopulationAttitudeCost( *pClosestElement->pAttitude_ ) * pClosestElement->rDensity_;
+        const double rElementCost = populationAttitudeCost_( pClosestElement->pAttitude_->GetID() ) * pClosestElement->rDensity_;
         return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
     }
     else // "loving" policy (terrorist)
     {
         if( !pClosestElement )
-            return pPathClass_->GetCostOutsideOfPopulation();
+            return costOutsideOfPopulation_;
         return 0.;
     }
 }

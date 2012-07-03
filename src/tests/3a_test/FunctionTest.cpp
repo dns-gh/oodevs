@@ -26,9 +26,9 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithNoKeyJustForwards )
     marshaller.FirstParameter().EndTick();
     marshaller.SecondParameter().BeginTick();
     marshaller.SecondParameter().Apply( 12u );
-    MOCK_EXPECT( function, BeginTick ).once();
-    MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
-    MOCK_EXPECT( function, EndTick ).once();
+    MOCK_EXPECT( function.BeginTick ).once();
+    MOCK_EXPECT( function.Apply ).once().with( 42.f, 12u );
+    MOCK_EXPECT( function.EndTick ).once();
     marshaller.SecondParameter().EndTick();
 }
 
@@ -51,16 +51,16 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithOneKeyForwardsKey )
         marshaller.FirstParameter().EndTick();
         marshaller.SecondParameter().BeginTick();
         marshaller.SecondParameter().Apply( 12u );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
-        MOCK_EXPECT( function, SetKey ).once().with( 2ul );
-        MOCK_EXPECT( function, Apply ).once().with( 43.f, 12u );
-        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
-        MOCK_EXPECT( function, Apply ).once().with( 44.f, 12u );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f, 12u );
+        MOCK_EXPECT( function.SetKey ).once().with( 2ul );
+        MOCK_EXPECT( function.Apply ).once().with( 43.f, 12u );
+        MOCK_EXPECT( function.SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function.Apply ).once().with( 44.f, 12u );
+        MOCK_EXPECT( function.EndTick ).once();
         marshaller.SecondParameter().EndTick();
-        function.verify();
+        mock::verify( function );
     }
     {
         marshaller.FirstParameter().BeginTick();
@@ -73,16 +73,16 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithOneKeyForwardsKey )
         marshaller.SecondParameter().Apply( 13u );
         marshaller.SecondParameter().SetKey( 3 );
         marshaller.SecondParameter().Apply( 14u );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
-        MOCK_EXPECT( function, SetKey ).once().with( 2ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f, 13u );
-        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f, 14u );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f, 12u );
+        MOCK_EXPECT( function.SetKey ).once().with( 2ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f, 13u );
+        MOCK_EXPECT( function.SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f, 14u );
+        MOCK_EXPECT( function.EndTick ).once();
         marshaller.SecondParameter().EndTick();
-        function.verify();
+        mock::verify( function );
     }
 }
 
@@ -110,16 +110,16 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysSortsKeysBack )
         marshaller.SecondParameter().Apply( 12u );
         marshaller.SecondParameter().SetKey( 2 );
         marshaller.SecondParameter().Apply( 13u );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f, 12u );
-        MOCK_EXPECT( function, SetKey ).once().with( 2ul );
-        MOCK_EXPECT( function, Apply ).once().with( 43.f, 13u );
-        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
-        MOCK_EXPECT( function, Apply ).once().with( 44.f, 14u );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f, 12u );
+        MOCK_EXPECT( function.SetKey ).once().with( 2ul );
+        MOCK_EXPECT( function.Apply ).once().with( 43.f, 13u );
+        MOCK_EXPECT( function.SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function.Apply ).once().with( 44.f, 14u );
+        MOCK_EXPECT( function.EndTick ).once();
         marshaller.SecondParameter().EndTick();
-        function.verify();
+        mock::verify( function );
     }
 }
 
@@ -143,12 +143,12 @@ BOOST_AUTO_TEST_CASE( Function_TestMarshallingWithTwoKeysOnlyForwardsWhenBothKey
         marshaller.SecondParameter().BeginTick();
         marshaller.SecondParameter().SetKey( 2 );
         marshaller.SecondParameter().Apply( 13u );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
-        MOCK_EXPECT( function, Apply ).once().with( 44.f, 14u );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function.Apply ).once().with( 44.f, 14u );
+        MOCK_EXPECT( function.EndTick ).once();
         marshaller.SecondParameter().EndTick();
-        function.verify();
+        mock::verify( function );
     }
 }
 
@@ -172,12 +172,12 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithKeysComposes )
         composer.F().Apply( 42.f );
         composer.F().SetKey( 14  );
         composer.F().Apply( 44.f );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f );
-        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
-        MOCK_EXPECT( function, Apply ).once().with( 44.f );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f );
+        MOCK_EXPECT( function.SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function.Apply ).once().with( 44.f );
+        MOCK_EXPECT( function.EndTick ).once();
         composer.F().EndTick();
     }
 }
@@ -199,12 +199,12 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantFIsConstant )
         composer.G().EndTick();
         composer.F().BeginTick();
         composer.F().Apply( 42.f );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, SetKey ).once().with( 1ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f );
-        MOCK_EXPECT( function, SetKey ).once().with( 3ul );
-        MOCK_EXPECT( function, Apply ).once().with( 42.f );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.SetKey ).once().with( 1ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f );
+        MOCK_EXPECT( function.SetKey ).once().with( 3ul );
+        MOCK_EXPECT( function.Apply ).once().with( 42.f );
+        MOCK_EXPECT( function.EndTick ).once();
         composer.F().EndTick();
     }
 }
@@ -226,9 +226,9 @@ BOOST_AUTO_TEST_CASE( Model_TestComposerWithConstantGIsConstant )
         composer.F().Apply( 42.f );
         composer.F().SetKey( 14  );
         composer.F().Apply( 44.f );
-        MOCK_EXPECT( function, BeginTick ).once();
-        MOCK_EXPECT( function, Apply ).once().with( 44.f );
-        MOCK_EXPECT( function, EndTick ).once();
+        MOCK_EXPECT( function.BeginTick ).once();
+        MOCK_EXPECT( function.Apply ).once().with( 44.f );
+        MOCK_EXPECT( function.EndTick ).once();
         composer.F().EndTick();
     }
 }

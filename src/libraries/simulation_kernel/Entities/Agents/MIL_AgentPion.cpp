@@ -16,9 +16,9 @@
 #include "Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Roles/Network/NET_RolePion_Dotations.h"
 #include "Roles/Decision/DEC_RolePion_Decision.h"
-#include "Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Roles/Posture/PHY_RolePion_Posture.h"
-#include "Roles/Location/PHY_RolePion_Location.h"
+#include "Roles/Location/PHY_RoleInterface_Location.h"
 #include "Roles/Protection/PHY_RolePion_ActiveProtection.h"
 #include "Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Roles/NBC/PHY_RolePion_NBC.h"
@@ -37,7 +37,7 @@
 #include "Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Actions/Flying/PHY_RoleAction_Flying.h"
 #include "Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
@@ -82,6 +82,8 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
+
+#include "Adapters/RoleAdapterInterface.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
@@ -213,13 +215,12 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
-    LoadRole< PHY_RolePion_Location >( file, *this );
+    LoadRole< PHY_RoleInterface_Location >( file, *this );
     LoadRole< PHY_RolePion_UrbanLocation >( file, *this );
     LoadRole< dotation::PHY_RolePion_Dotations >( file, *this );
     LoadRole< human::PHY_RolePion_Humans >( file, *this );
-    LoadRole< PHY_RolePion_Composantes >( file, *this );
+    LoadRole< PHY_RoleInterface_Composantes >( file, *this );
     LoadRole< PHY_RolePion_ActiveProtection >( file, *this );
-    LoadRole< PHY_RolePion_Perceiver >( file, *this ).Initialization( GetRole< PHY_RoleInterface_Location >().GetPosition(), GetRole< PHY_RoleInterface_Location >().GetDirection() );
     LoadRole< nbc::PHY_RolePion_NBC >( file, *this );
     LoadRole< PHY_RolePion_Communications >( file, *this );
     LoadRole< PHY_RolePion_HumanFactors >( file, *this );
@@ -233,11 +234,12 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< transport::PHY_RoleAction_Loading >( file, *this );
     LoadRole< transport::PHY_RoleAction_Transport >( file, *this );
     LoadRole< crowdtransport::PHY_RoleAction_CrowdTransport >( file, *this );
-    LoadRole< moving::PHY_RoleAction_Moving >( file, *this );
+    LoadRole< moving::PHY_RoleAction_InterfaceMoving >( file, *this );
     LoadRole< PHY_RoleAction_Objects >( file, *this );
     LoadRole< firing::PHY_RoleAction_DirectFiring >( file, *this );
     LoadRole< firing::PHY_RoleAction_IndirectFiring >( file, *this );
     LoadRole< DEC_RolePion_Decision >( file, *this );
+    LoadRole< PHY_RoleInterface_Perceiver >( file, *this );
     LoadRole< PHY_RoleAction_InterfaceFlying >( file, *this );
     LoadRole< PHY_RoleAction_FolkInfluence >( file, *this );
     LoadRole< PHY_RolePion_Illumination >( file, *this ); // LTO
@@ -249,6 +251,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     pExtensions_.reset( pExtensions );
     pColor_.reset( pColor );
     pHumanRepartition_.reset( pRepartition );
+    LoadRole< sword::RoleAdapterInterface >( file, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,13 +275,12 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
-    SaveRole< PHY_RolePion_Location >( *this, file );
+    SaveRole< PHY_RoleInterface_Location >( *this, file );
     SaveRole< PHY_RolePion_UrbanLocation >( *this, file );
     SaveRole< dotation::PHY_RolePion_Dotations >( *this, file );
     SaveRole< human::PHY_RolePion_Humans >( *this, file );
-    SaveRole< PHY_RolePion_Composantes >( *this, file );
+    SaveRole< PHY_RoleInterface_Composantes >( *this, file );
     SaveRole< PHY_RolePion_ActiveProtection >( *this, file );
-    SaveRole< PHY_RolePion_Perceiver >( *this, file );
     SaveRole< nbc::PHY_RolePion_NBC >( *this, file );
     SaveRole< PHY_RolePion_Communications >( *this, file );
     SaveRole< PHY_RolePion_HumanFactors >( *this, file );
@@ -292,16 +294,18 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< transport::PHY_RoleAction_Loading >( *this, file );
     SaveRole< transport::PHY_RoleAction_Transport >( *this, file );
     SaveRole< crowdtransport::PHY_RoleAction_CrowdTransport >( *this, file );
-    SaveRole< moving::PHY_RoleAction_Moving >( *this, file );
+    SaveRole< moving::PHY_RoleAction_InterfaceMoving >( *this, file );
     SaveRole< PHY_RoleAction_Objects >( *this, file );
     SaveRole< firing::PHY_RoleAction_DirectFiring >( *this, file );
     SaveRole< firing::PHY_RoleAction_IndirectFiring >( *this, file );
     SaveRole< DEC_RolePion_Decision >( *this, file );
+    SaveRole< PHY_RoleInterface_Perceiver >( *this, file );
     SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
     SaveRole< PHY_RoleAction_FolkInfluence >( *this, file );
     SaveRole< PHY_RolePion_Illumination >( *this, file ); // LTO
     SaveRole< PHY_RoleAction_MovingUnderground >( *this, file );
     SaveRole< PHY_RoleInterface_Deployment >( *this, file );
+    SaveRole< sword::RoleAdapterInterface >( *this, file );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +320,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     xos << xml::attribute( "id", GetID() )
         << xml::attribute( "type", pType_->GetName() )
         << xml::attribute( "command-post", IsPC() )
-        << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
+        << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
     pColor_->WriteODB( xos );
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos );         // Equipments
     GetRole< human::PHY_RolePion_Humans >().WriteODB( xos );       // Humans
@@ -343,7 +347,6 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
-    GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis );         // Equipments + Humans
     GetRole< dotation::PHY_RolePion_Dotations >().ReadOverloading( xis ); // Dotations
     GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis );        // Human factor
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
@@ -471,7 +474,7 @@ void MIL_AgentPion::UpdatePhysicalState()
         GetRole< PHY_RolePion_Composantes >().Update( bIsDead );
         GetRole< PHY_RolePion_Posture >().Update( bIsDead );
         GetRole< PHY_RolePion_Reinforcement >().Update( bIsDead );
-        GetRole< PHY_RolePion_Location >().Update( bIsDead );
+        GetRole< PHY_RoleInterface_Location >().Update( bIsDead );
         GetRole< nbc::PHY_RolePion_NBC >().Update( bIsDead );
         GetRole< PHY_RolePion_Communications >().Update( bIsDead );
         GetRole< PHY_RolePion_HumanFactors >().Update( bIsDead );
@@ -479,12 +482,12 @@ void MIL_AgentPion::UpdatePhysicalState()
         GetRole< surrender::PHY_RolePion_Surrender >().Update( bIsDead );
         GetRole< refugee::PHY_RolePion_Refugee >().Update( bIsDead );
         GetRole< PHY_RolePion_Population >().Update( bIsDead );
-        GetRole< PHY_RolePion_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
+        GetRole< PHY_RoleInterface_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
         GetRole< transport::PHY_RoleAction_Loading >().Update( bIsDead );
         GetRole< transport::PHY_RoleAction_Transport >().Update( bIsDead );
         GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Update( bIsDead );
         GetRole< PHY_RoleAction_Objects >().Update( bIsDead );
-        GetRole< moving::PHY_RoleAction_Moving >().Update( bIsDead );
+        GetRole< moving::PHY_RoleAction_InterfaceMoving >().Update( bIsDead );
         GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
         GetRole< firing::PHY_RoleAction_DirectFiring >().Update( bIsDead );
         GetRole< firing::PHY_RoleAction_IndirectFiring >().Update( bIsDead );
@@ -558,8 +561,8 @@ void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) c
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Clean()
 {
-    GetRole< PHY_RolePion_Location >().Clean();
-    GetRole< PHY_RolePion_Perceiver >().Clean();
+    GetRole< PHY_RoleInterface_Location >().Clean();
+    GetRole< PHY_RoleInterface_Perceiver >().Clean();
     GetRole< dotation::PHY_RolePion_Dotations >().Clean();
     GetRole< human::PHY_RolePion_Humans >().Clean();
     GetRole< PHY_RolePion_Composantes >().Clean();
@@ -576,7 +579,7 @@ void MIL_AgentPion::Clean()
     GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Clean();
     GetRole< transport::PHY_RoleAction_Loading >().Clean();
     GetRole< PHY_RoleAction_Objects >().Clean();
-    GetRole< moving::PHY_RoleAction_Moving >().Clean();
+    GetRole< moving::PHY_RoleAction_InterfaceMoving >().Clean();
     GetRole< PHY_RoleAction_InterfaceFlying >().Clean();
     GetRole< firing::PHY_RoleAction_DirectFiring >().Clean();
     GetRole< firing::PHY_RoleAction_IndirectFiring >().Clean();
@@ -753,7 +756,7 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 {
     GetRole< PHY_RoleAction_MovingUnderground >().GetOutFromUndergroundNetwork();
-    GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
+    GetRole< PHY_RoleInterface_Location >().MagicMove( vNewPos );
     GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
     CancelAllActions();
     DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();

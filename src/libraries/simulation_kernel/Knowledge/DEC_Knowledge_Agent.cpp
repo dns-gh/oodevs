@@ -659,6 +659,15 @@ double DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_Agent_ABC& target, do
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetComposantes
+// Created: MCO 2012-05-29
+// -----------------------------------------------------------------------------
+const T_KnowledgeComposanteVector& DEC_Knowledge_Agent::GetComposantes() const
+{
+    return dataRecognition_.GetComposantes();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetMajorComposante
 // Created: NLD 2004-04-15
 // -----------------------------------------------------------------------------

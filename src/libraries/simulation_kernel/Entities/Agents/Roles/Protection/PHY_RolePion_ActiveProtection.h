@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_ActiveProtection.h"
 
-class PHY_RolePion_Composantes;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  PHY_RolePion_ActiveProtection
@@ -26,7 +26,7 @@ class PHY_RolePion_ActiveProtection : public PHY_RoleInterface_ActiveProtection
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RolePion_ActiveProtection( PHY_RolePion_Composantes& pion );
+    explicit PHY_RolePion_ActiveProtection( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_ActiveProtection();
     //@}
 
@@ -52,11 +52,11 @@ private:
 private:
     //! @name Member data
     //@{
-    PHY_RolePion_Composantes& owner_;
+    MIL_Agent_ABC& owner_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_ActiveProtection )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_ActiveProtection, PHY_RolePion_Composantes )
+INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_ActiveProtection, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_ActiveProtection_h_

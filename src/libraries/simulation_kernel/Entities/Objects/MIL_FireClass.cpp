@@ -11,7 +11,6 @@
 #include "MIL_FireClass.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_UrbanAttritionData.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"

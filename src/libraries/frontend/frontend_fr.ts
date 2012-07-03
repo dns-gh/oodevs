@@ -43,6 +43,14 @@
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
+    <message>
+        <source>Legacy Mode</source>
+        <translation>Mode Compatibilité</translation>
+    </message>
+    <message>
+        <source>Enable Legacy Mode</source>
+        <translation>Activer le mode compatibilité</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

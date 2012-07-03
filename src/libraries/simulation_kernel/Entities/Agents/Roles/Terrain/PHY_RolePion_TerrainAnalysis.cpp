@@ -14,7 +14,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -192,15 +192,15 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
     if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.empty() )
         return true;
 
-    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-    {
-        const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
-        double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
+        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        {
+            const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
+            double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed( data );
         if( maxSpeed > 0. )
             return true;
-    }
+        }
     return false;
-}
+    }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock
@@ -216,7 +216,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
         if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return true;
     return false;
-}
+        }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells
@@ -225,7 +225,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_Vector2D >& points ) const
 {
     if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.size() <= 1 )
-        return true;
+    return true;
 
     std::vector< MT_Vector2D >::const_iterator itStart = points.begin();
     std::vector< MT_Vector2D >::const_iterator itEnd = points.begin();
@@ -263,10 +263,10 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
                 isInside = true;
                 break;
             }
-        }
+    }
         if( !isInside )
             return true;
-    }
+}
     return false;
 }
 

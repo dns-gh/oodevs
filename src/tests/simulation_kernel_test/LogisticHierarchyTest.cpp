@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyXml )
 
     LogisticHierarchy logHierarchy( owner, brainLog, true, xis );
     boost::shared_ptr< LogisticLink_ABC > linkBrainLog = logHierarchy.FindSuperiorLink( brainLog );
-    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10000 ), 6666 );
 }
 
@@ -191,13 +191,13 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
 
     linkBrainLog1->OnReceiveChangeQuotas( quotaParameter );
 
-    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10 ), 5 );
-    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 4 );
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 0 );
     linkBrainLog1->ReturnQuota( *PHY_DotationType::FindDotationCategory( 42 ), 1.1 );
-    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
+    MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 1.1 );
 }
 

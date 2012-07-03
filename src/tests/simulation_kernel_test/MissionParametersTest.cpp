@@ -74,9 +74,9 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter )
     in.mutable_value()->Add()->mutable_agentknowledge()->set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
+    MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
-    MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
+    MOCK_EXPECT( resolver.ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
 
     xml::xistringstream xisParam("<parameter dia-name='pointAReconnaitre_' name='Point a reconnaitre' optional='false' type='AgentKnowledge'/>");
     xisParam >> xml::start( "parameter" );
@@ -108,11 +108,11 @@ namespace
         {
             MIL_KnowledgeGroupType::Terminate();
             mock::reset();
-            MOCK_EXPECT( mockPublisher, Send );
+            MOCK_EXPECT( mockPublisher.Send );
             MIL_KnowledgeGroupType::InitializeWithTime( group, 0.5f );
-            MOCK_EXPECT( army, GetID ).returns( 29u );
-            MOCK_EXPECT( army, RegisterKnowledgeGroup );
-            MOCK_EXPECT( army, UnregisterKnowledgeGroup );
+            MOCK_EXPECT( army.GetID ).returns( 29u );
+            MOCK_EXPECT( army.RegisterKnowledgeGroup );
+            MOCK_EXPECT( army.UnregisterKnowledgeGroup );
         }
         ~KnowledgeFixture()
         {
@@ -143,11 +143,11 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, KnowledgeFixture )
     MIL_AgentPion pion( type, algorithmsFactories );
     xml::xistringstream xisID( "<root id='35'/>" );
     MockAgent agent( xisID >> xml::start( "root" ) );
-    MOCK_EXPECT( manager, FindAgentPion ).once().returns( &pion );
-    MOCK_EXPECT( agent, BelongsTo ).once().returns( false );
-    MOCK_EXPECT( agent, GetType ).once().returns( boost::cref( type ) );
+    MOCK_EXPECT( manager.FindAgentPion ).once().returns( &pion );
+    MOCK_EXPECT( agent.BelongsTo ).once().returns( false );
+    MOCK_EXPECT( agent.GetType ).once().returns( boost::cref( type ) );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( groupArmy, agent ) );
-    MOCK_EXPECT( resolver, ResolveKnowledgeAgent ).once().returns( knowledge );
+    MOCK_EXPECT( resolver.ResolveKnowledgeAgent ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
@@ -165,10 +165,10 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_ObjectKnowledgeParameter, KnowledgeFixture )
     in.set_id( 56 );
     MockMIL_ObjectType_ABC objectType;
     StubMIL_Object_ABC object( &army, objectType, 56u );
-    MOCK_EXPECT( objectType, GetName ).once().returns( "type" );
-    MOCK_EXPECT( manager, FindObject ).once().returns( &object );
+    MOCK_EXPECT( objectType.GetName ).once().returns( "type" );
+    MOCK_EXPECT( manager.FindObject ).once().returns( &object );
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( army, object ) );
-    MOCK_EXPECT( resolver, ResolveKnowledgeObject ).once().returns( knowledge );
+    MOCK_EXPECT( resolver.ResolveKnowledgeObject ).once().returns( knowledge );
     MIL_ObjectKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
@@ -189,10 +189,10 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, KnowledgeFixture 
     DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type, army );
-    MOCK_EXPECT( manager, FindPopulation ).once().returns( &population );
+    MOCK_EXPECT( manager.FindPopulation ).once().returns( &population );
     MIL_KnowledgeGroup groupArmy( *MIL_KnowledgeGroupType::FindType( "Standard" ), 30, army );
     DEC_Knowledge_Population knowledge( groupArmy, population );
-    MOCK_EXPECT( resolver, ResolveKnowledgePopulation ).once().returns( &knowledge );
+    MOCK_EXPECT( resolver.ResolveKnowledgePopulation ).once().returns( &knowledge );
 
     MIL_PopulationKnowledgeParameter param( in, resolver, manager );
     MissionParameter_Value out;
@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, 100, 100 ) );
-    MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
+    MOCK_EXPECT( entityManager.FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( in, entityManager );
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
@@ -232,7 +232,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter )
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
-    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
+    MOCK_EXPECT( entityManager.FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatParameter param( in, entityManager );
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
@@ -558,8 +558,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
     in.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    MOCK_EXPECT( entityManager, FindObjectType ).returns( boost::cref( objectType ) );
-    MOCK_EXPECT( objectType, GetPointSize ).returns( 250. );
+    MOCK_EXPECT( entityManager.FindObjectType ).returns( boost::cref( objectType ) );
+    MOCK_EXPECT( objectType.GetPointSize ).returns( 250. );
     MIL_PlannedWorkParameter param( in, entityManager );
     in.mutable_position()->mutable_coordinates()->Clear();
     MissionParameter_Value out;

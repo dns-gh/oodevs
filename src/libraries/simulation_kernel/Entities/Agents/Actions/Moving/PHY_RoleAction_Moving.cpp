@@ -44,7 +44,6 @@ namespace moving
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     : owner_                 ( pion )
-    , pRoleLocation_         ( &owner_.GetRole< PHY_RoleInterface_Location >() )
     , rSpeed_                ( 0.)
     , rSpeedModificator_     ( 1. )
     , rMaxSpeedModificator_  ( 1. )
@@ -71,7 +70,7 @@ PHY_RoleAction_Moving::~PHY_RoleAction_Moving()
 template< typename Archive >
 void PHY_RoleAction_Moving::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< tools::Role_ABC >( *this );
+    file & boost::serialization::base_object< moving::PHY_RoleAction_InterfaceMoving >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +224,10 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
 // -----------------------------------------------------------------------------
 MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const
 {
-    return PHY_MovingEntity_ABC::ExtrapolatePosition( pRoleLocation_->GetPosition(), pRoleLocation_->GetCurrentSpeed(), rTime, bBoundOnPath );
+    return PHY_MovingEntity_ABC::ExtrapolatePosition(
+        owner_.GetRole< PHY_RoleInterface_Location >().GetPosition(),
+        owner_.GetRole< PHY_RoleInterface_Location >().GetCurrentSpeed(),
+        rTime, bBoundOnPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,8 +283,7 @@ void PHY_RoleAction_Moving::SendChangedState() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_RoleAction_Moving::GetPosition() const
 {
-    assert( pRoleLocation_ );
-    return pRoleLocation_->GetPosition();
+    return owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -291,8 +292,7 @@ const MT_Vector2D& PHY_RoleAction_Moving::GetPosition() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PHY_RoleAction_Moving::GetDirection() const
 {
-    assert( pRoleLocation_ );
-    return pRoleLocation_->GetDirection();
+    return owner_.GetRole< PHY_RoleInterface_Location >().GetDirection();
 }
 
 // -----------------------------------------------------------------------------
@@ -301,10 +301,11 @@ const MT_Vector2D& PHY_RoleAction_Moving::GetDirection() const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
+    if( ! CanMove() )
+        return;
     rSpeed_ = rSpeed;
     bHasMove_ = ( rSpeed != 0. );
-    assert( pRoleLocation_ );
-    return pRoleLocation_->Move( position, direction, rSpeed );
+    return owner_.GetRole< PHY_RoleInterface_Location >().Move( position, direction, rSpeed );
 }
 
 
@@ -312,7 +313,7 @@ void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vec
 // Name: PHY_RoleAction_Moving::NotifyMovingOnPathPoint
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*point*/ )
+void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const MT_Vector2D& /*point*/ )
 {
     // NOTHING
 }
@@ -478,7 +479,7 @@ void PHY_RoleAction_Moving::SetMaxSpeedModificator( double rFactor )
 // Name: PHY_RoleAction_Moving::GetMaxSpeedModificator
 // Created: LMT 2011-07-06
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetMaxSpeedModificator()
+double PHY_RoleAction_Moving::GetMaxSpeedModificator() const
 {
     return rMaxSpeedModificator_;
 }

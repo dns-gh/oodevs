@@ -330,24 +330,6 @@ const T_ConstKnowledgeAgentVector& DEC_KnowledgeBlackBoard_AgentPion::GetDangero
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemies
-// Created: NLD 2006-04-13
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
-{
-    container.clear();
-
-    assert( pKnowledgeRapForLocal_ );
-    const T_ConstKnowledgeAgentVector& knowledges = pKnowledgeRapForLocal_->GetDangerousEnemies();
-    for( CIT_ConstKnowledgeAgentVector it = knowledges.begin(); it != knowledges.end(); ++it )
-    {
-        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = *it;
-        if( zone.IsInside( pKnowledge->GetPosition() ) )
-            container.push_back( pKnowledge );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------

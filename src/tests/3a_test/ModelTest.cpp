@@ -78,10 +78,10 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
     const NumericValue epsilon( 0.001f );
     MockValueHandler< NumericValue > handler;
     std::auto_ptr< ModelFunction_ABC > function( new ModelFunction< attributes::OperationalState >( handler ) );
-    MOCK_EXPECT( handler, BeginTick ).exactly( 4 );
-    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
-    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
-    MOCK_EXPECT( handler, EndTick ).exactly( 4 );
+    MOCK_EXPECT( handler.BeginTick ).exactly( 4 );
+    MOCK_EXPECT( handler.Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
+    MOCK_EXPECT( handler.Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
+    MOCK_EXPECT( handler.EndTick ).exactly( 4 );
     sword::UnitAttributes attributes;
     attributes.set_raw_operational_state( 25 );
     {
@@ -104,16 +104,16 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
     MockValueHandler< NumericValue > keyHandler;
     DispatcherFactory< IdentifierValue, attributes::OperationalState > factory;
     boost::shared_ptr< ModelFunction_ABC > function( factory( keyHandler, handler ) );
-    MOCK_EXPECT( handler, BeginTick ).exactly( 4 );
-    MOCK_EXPECT( keyHandler, BeginTick ).exactly( 4 );
-    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
-    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 1 ) );
-    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 2 ) );
-    MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
-    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 1 ) );
-    MOCK_EXPECT( keyHandler, Handle ).once().with( NumericValue( 2 ) );
-    MOCK_EXPECT( handler, EndTick ).exactly( 4 );
-    MOCK_EXPECT( keyHandler, EndTick ).exactly( 4 );
+    MOCK_EXPECT( handler.BeginTick ).exactly( 4 );
+    MOCK_EXPECT( keyHandler.BeginTick ).exactly( 4 );
+    MOCK_EXPECT( handler.Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.25f ), _1, epsilon ) );
+    MOCK_EXPECT( keyHandler.Handle ).once().with( NumericValue( 1 ) );
+    MOCK_EXPECT( keyHandler.Handle ).once().with( NumericValue( 2 ) );
+    MOCK_EXPECT( handler.Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
+    MOCK_EXPECT( keyHandler.Handle ).once().with( NumericValue( 1 ) );
+    MOCK_EXPECT( keyHandler.Handle ).once().with( NumericValue( 2 ) );
+    MOCK_EXPECT( handler.EndTick ).exactly( 4 );
+    MOCK_EXPECT( keyHandler.EndTick ).exactly( 4 );
     sword::UnitAttributes attributes;
     attributes.set_raw_operational_state( 25 );
     {

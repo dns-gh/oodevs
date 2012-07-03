@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // agent types
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
 
     // models
     MockModel model;
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
     {
         sword::SimToClient expected;
         expected.set_context( 0 );
@@ -90,17 +90,17 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
         BOOST_REQUIRE( message.IsInitialized() );
 
         // creation
-        MOCK_EXPECT( automat, RegisterAgent ).once();
+        MOCK_EXPECT( automat.RegisterAgent ).once();
         std::auto_ptr< dispatcher::Agent_ABC > result( new dispatcher::Agent( model, message, types ) );
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
+        mock::verify( publisher );
 
         // cleaning
-        MOCK_EXPECT( automat, RemoveAgent ).once().with( mock::same( *result ) );
+        MOCK_EXPECT( automat.RemoveAgent ).once().with( mock::same( *result ) );
     }
 }
 
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
     automats.Register( automat.GetId(), automat );
 
     // agent types
@@ -126,8 +126,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 
     // models
     MockModel model;
-    MOCK_EXPECT( model, Agents ).returns( boost::ref( agents ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.Agents ).returns( boost::ref( agents ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
     {
         std::auto_ptr< dispatcher::Agent_ABC > result;
         {
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             BOOST_REQUIRE( message.IsInitialized() );
 
             // creation
-            MOCK_EXPECT( automat, RegisterAgent ).once();
+            MOCK_EXPECT( automat.RegisterAgent ).once();
             result.reset( new dispatcher::Agent( model, message, types ) );
             agents.Register( result->GetId(), *result );
         }
@@ -230,12 +230,12 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedAttributes );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedChangeSuperior );
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedNoMission );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedAttributes );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedChangeSuperior );
+            MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedNoMission );
             result->SendFullUpdate( publisher );
         }
         // cleaning
-        MOCK_EXPECT( automat, RemoveAgent ).once().with( mock::same( *result ) );
+        MOCK_EXPECT( automat.RemoveAgent ).once().with( mock::same( *result ) );
     }
 }

@@ -196,9 +196,9 @@ double PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& fire
 // Name: PHY_LauncherType::GetPHModificator
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_LauncherType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
+double PHY_LauncherType::GetPHModificator() const
 {
-    return phModificators_[ firerPosture.GetID() ][ targetPosture.GetID() ];
+    return phModificators_[ PHY_Posture::posteReflexe_.GetID() ][ PHY_Posture::posteReflexe_.GetID() ];
 }
 
 // -----------------------------------------------------------------------------

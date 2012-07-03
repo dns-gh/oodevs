@@ -301,9 +301,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuildStep Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h">
-      <Filter>Source Files\Panels\Plugins config</Filter>
-    </CustomBuildStep>
     <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h">
       <Filter>Source Files\Panels\Plugins config</Filter>
     </CustomBuildStep>
@@ -326,6 +323,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\frontend\translator.pro">
       <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 -- ****************************************************************************
 -- GetResourceNodesWithinUrbanBlocks
 -- Try to find Resource nodes within urban blocks.
---
 -- ****************************************************************************
 queryImplementation "GetResourceNodesWithinUrbanBlocks" 
 {

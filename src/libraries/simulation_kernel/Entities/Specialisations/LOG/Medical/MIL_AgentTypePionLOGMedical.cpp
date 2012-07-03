@@ -58,9 +58,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( MIL_Automate& autom
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in AgentFactory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult ) const
+void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion ) const
 {
-    MIL_AgentTypePion::RegisterRoles( pion, gcPause, gcMult );
+    MIL_AgentTypePion::RegisterRoles( pion );
     pion.RegisterRole( *new PHY_RolePionLOG_Medical( static_cast< MIL_AgentPionLOG_ABC& >( pion ) ) );//@TODO remove cast when AgentPionLOG will be deleted
 }
 

@@ -17,7 +17,6 @@ MOCK_BASE_CLASS( MockPHY_Composante_ABC, PHY_Composante_ABC )
     MOCK_METHOD( GetType, 0 );
     MOCK_METHOD( GetIdentificationMaxRange, 0 );
     MOCK_METHOD( GetReconnoissanceMaxRange, 0 );
-    MOCK_METHOD( CanFire, 0 );
     MOCK_METHOD( CanFireWhenUnloaded, 0 );
     MOCK_METHOD( GetMajorScore, 0 );
 };

@@ -15,15 +15,21 @@
 #include "flood/ElevationGetter_ABC.h"
 #include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
 
 namespace flood
 {
-    class FloodModel;
+    class FloodModel_ABC;
 }
 
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+
+namespace sword
+{
+    class FloodModelFactory_ABC;
+}
 
 // =============================================================================
 /** @class  FloodAttribute
@@ -42,8 +48,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              FloodAttribute();
-             FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation );
-             FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation );
+             FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation, const sword::FloodModelFactory_ABC& floodFactory );
+             FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation, const sword::FloodModelFactory_ABC& floodFactory );
     virtual ~FloodAttribute();
     //@}
 
@@ -55,8 +61,9 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive >
-    void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC
@@ -98,7 +105,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< flood::FloodModel > floodModel_;
+    boost::shared_ptr< flood::FloodModel_ABC > pFloodModel_;
+    const sword::FloodModelFactory_ABC* pFloodFactory_;
     int depth_;
     int refDist_;
     TER_Localisation location_;

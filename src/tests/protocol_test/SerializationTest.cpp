@@ -38,8 +38,8 @@ namespace
             , client_  ( endpoint_ )
         {
             int connections = 0;
-            MOCK_EXPECT( server_, ConnectionSucceeded ).once().with( mock::retrieve( link_ ) ).calls( ++boost::lambda::var( connections ) );
-            MOCK_EXPECT( client_, ConnectionSucceeded ).once().with( endpoint_ ).calls( ++boost::lambda::var( connections ) );
+            MOCK_EXPECT( server_.ConnectionSucceeded ).once().with( mock::retrieve( link_ ) ).calls( ++boost::lambda::var( connections ) );
+            MOCK_EXPECT( client_.ConnectionSucceeded ).once().with( endpoint_ ).calls( ++boost::lambda::var( connections ) );
             wait( boost::lambda::var( connections ) == 2, boost::bind( &Fixture::Update, this ) );
             mock::verify();
             mock::reset();
@@ -56,17 +56,17 @@ namespace
 
         void VerifyServerReception( const MsgPion& message )
         {
-            VerifyReception( client_, endpoint_, message, MOCK_EXPECT( server_, OnReceivePion ) );
+            VerifyReception( client_, endpoint_, message, MOCK_EXPECT( server_.OnReceivePion ) );
         }
 
         void VerifyClientReception( const MsgPion& message )
         {
-            VerifyReception( server_, link_, message, MOCK_EXPECT( client_, OnReceivePion ) );
+            VerifyReception( server_, link_, message, MOCK_EXPECT( client_.OnReceivePion ) );
         }
 
         void VerifyClientReception( const EmptyMessage& message )
         {
-            VerifyReception( server_, link_, message, MOCK_EXPECT( client_, OnReceiveEmpty ) );
+            VerifyReception( server_, link_, message, MOCK_EXPECT( client_.OnReceiveEmpty ) );
         }
 
         void Update()

@@ -133,6 +133,9 @@ unsigned int PHY_DirectFireData::GetNbrWeaponsUsable() const
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_Weapon& weapon )
 {
+    if( ! CanFire() )
+        return;
+
     if( !compFirer.CanFire() || !weapon.CanDirectFire() )
         return;
 
@@ -162,7 +165,7 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
 // Name: PHY_DirectFireData::CanFire
 // Created: LDC 2011-03-09
 // -----------------------------------------------------------------------------
-bool PHY_DirectFireData::CanFire( const PHY_ComposantePion& /*firer*/ )
+bool PHY_DirectFireData::CanFire()
 {
     if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return true;

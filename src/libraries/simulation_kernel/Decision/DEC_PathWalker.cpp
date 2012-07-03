@@ -135,7 +135,7 @@ void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 // -----------------------------------------------------------------------------
 DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath )
 {
-    if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
+    if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
 	
 	DEC_PathWalker::E_ReturnCode rc = eRunning;
@@ -187,7 +187,7 @@ bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
 {
     if( ( *itNextPathPoint_ )->GetType() == DEC_PathPoint::eTypePointPath )
     {
-        movingEntity_.NotifyMovingOnPathPoint( **itNextPathPoint_ );
+        movingEntity_.NotifyMovingOnPathPoint( (*itNextPathPoint_)->GetPos() );
         SetCurrentPathPoint( path );
         ++itNextPathPoint_;
         return false;

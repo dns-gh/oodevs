@@ -24,7 +24,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
@@ -777,7 +777,7 @@ double MIL_Automate::GetAlivePionsMaxSpeed() const
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
-        const double rSpeed = pion.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed();
+        const double rSpeed = pion.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
         if( rSpeed != 0. )
             rMaxSpeed = std::min( rMaxSpeed, rSpeed );
     }

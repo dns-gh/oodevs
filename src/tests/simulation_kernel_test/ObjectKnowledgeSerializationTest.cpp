@@ -33,7 +33,7 @@ namespace
         void load( MIL_CheckPointInArchive& archive, const unsigned int )
         {
             archive >> boost::serialization::base_object< MockArmy >( *this );
-            MOCK_EXPECT( this, GetID ).returns( 42u );
+            MOCK_EXPECT( GetID ).returns( 42u );
         }
         void save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
         {
@@ -47,7 +47,7 @@ namespace
         {
             WorldInitialize( "worldwide/Paris" );
             PHY_ConsumptionType::Initialize();
-            MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
+            MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
         }
         ~ObjectKnowledgeSerializationFixture()
         {
@@ -85,18 +85,18 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
-        MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
-        MOCK_EXPECT( builder, Build ).once();
-        MOCK_EXPECT( army, RegisterObject ).once();
+        MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
+        MOCK_EXPECT( builder.Build ).once();
+        MOCK_EXPECT( army.RegisterObject ).once();
         pObject.reset( loader.CreateObject( builder, &army ) );
-        builder.verify();
-        army.verify();
+        mock::verify( builder );
+        mock::verify( army );
     }
-    MOCK_EXPECT( army, UnregisterObject ).with( mock::same( *pObject ) ).once();
+    MOCK_EXPECT( army.UnregisterObject ).with( mock::same( *pObject ) ).once();
 
     MockNET_Publisher_ABC publisher;
-    MOCK_EXPECT( publisher, Send ).once(); // object knowledge creation
-    MOCK_EXPECT( army, GetID ).returns( 42u );
+    MOCK_EXPECT( publisher.Send ).once(); // object knowledge creation
+    MOCK_EXPECT( army.GetID ).returns( 42u );
     DEC_Knowledge_Object knowledge( army, *pObject );
     knowledge.Update( PHY_PerceptionLevel::identified_ );
     std::stringstream s;
@@ -111,10 +111,10 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
         MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s );
         DEC_Knowledge_Object reloaded;
         ( *in ) >> reloaded;
-        MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
+        MOCK_EXPECT( publisher.Send ).once(); // object knowledge destruction
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
         delete in;
 #endif
     }
-    MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
+    MOCK_EXPECT( publisher.Send ).once(); // object knowledge destruction
 }
