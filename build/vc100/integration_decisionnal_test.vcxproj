@@ -79,6 +79,10 @@
     <ClCompile>
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=resources</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
@@ -91,7 +95,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --result_code=no --report_level=no --log_level=warning --data_directory=../../data/app-data/resources</Command>
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=resources</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -102,6 +106,10 @@ $(TargetDir)$(TargetName).exe --result_code=no --report_level=no --log_level=war
       <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=resources</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
@@ -112,7 +120,7 @@ $(TargetDir)$(TargetName).exe --result_code=no --report_level=no --log_level=war
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --result_code=no --report_level=no --log_level=warning --data_directory=../../data/data/app-data/resources</Command>
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=resources</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
