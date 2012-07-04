@@ -251,7 +251,6 @@ private:
     E_SensorMode nSensorMode_;
     MT_Vector2D  vSensorInfo_;
 
-    bool bPeriphericalVisionEnabled_;
     bool bRecordModeEnabled_;
     bool bHasChanged_;
     bool bExternalMustChangePerception_;

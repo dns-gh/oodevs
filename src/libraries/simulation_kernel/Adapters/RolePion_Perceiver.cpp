@@ -245,7 +245,6 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     , rMaxAgentPerceptionDistance_   ( 0. )
     , rMaxObjectPerceptionDistance_  ( 0. )
     , nSensorMode_                   ( eNormal )
-    , bPeriphericalVisionEnabled_    ( false )
     , bRecordModeEnabled_            ( false )
     , bHasChanged_                   ( true )
     , bExternalMustChangePerception_ ( false )
@@ -266,7 +265,7 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     static unsigned int nNbr = 0;
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/peripherical-vision/next-step" ] = nNextPeriphericalVisionStep_;
-    entity[ "perceptions/peripherical-vision/activated" ] = bPeriphericalVisionEnabled_;
+    entity[ "perceptions/peripherical-vision/activated" ] = false;
     entity[ "perceptions/max-agent-perception-distance" ] = GetMaxTheoreticalcAgentPerceptionDistance();
     entity[ "perceptions/fire-observer/activated" ] = false;
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
@@ -389,7 +388,6 @@ template< typename Archive >
 void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
-         & bPeriphericalVisionEnabled_
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
          & surfacesObject_
@@ -1310,7 +1308,7 @@ void RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 {
-    return bPeriphericalVisionEnabled_;
+    return entity_[ "perceptions/peripherical-vision/activated" ];
 }
 
 // -----------------------------------------------------------------------------
