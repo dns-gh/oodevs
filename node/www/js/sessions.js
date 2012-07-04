@@ -191,6 +191,14 @@
     return params;
   };
 
+  $(".sign_out").click(function() {
+    return ajax("/api/logout", {}, function() {
+      return location.reload();
+    }, function() {
+      return location.reload();
+    });
+  });
+
   session_template = Handlebars.compile($("#session_template").html());
 
   session_error_template = Handlebars.compile($("#session_error_template").html());

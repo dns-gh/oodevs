@@ -191,6 +191,14 @@
     return params;
   };
 
+  $(".sign_out").click(function() {
+    return ajax("/api/logout", {}, function() {
+      return location.reload();
+    }, function() {
+      return location.reload();
+    });
+  });
+
   node_settings = Handlebars.compile($("#node_settings_template").html());
 
   node_template = Handlebars.compile($("#node_template").html());

@@ -127,8 +127,13 @@ parse_parameters = ->
     r = /([^&;=]+)=?([^&;]*)/g
     d = (s) -> decodeURIComponent s.replace a, " "
     q = window.location.search.substring 1
-    params = {};
+    params = {}
     while (e = r.exec q)
       v = d e[2]
       params[d e[1]] = if v.length then v else null
     return params
+
+$(".sign_out").click ->
+    ajax "/api/logout", {},
+        ->  location.reload(),
+        ->  location.reload()

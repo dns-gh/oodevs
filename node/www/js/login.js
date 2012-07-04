@@ -188,6 +188,14 @@
     return params;
   };
 
+  $(".sign_out").click(function() {
+    return ajax("/api/logout", {}, function() {
+      return location.reload();
+    }, function() {
+      return location.reload();
+    });
+  });
+
   error_template = Handlebars.compile($("#error_template").html());
 
   print_error = function(text) {
