@@ -184,9 +184,8 @@ public:
         , size_     ( 0 )
     {
         const boost::optional< std::string > opt = ::GetHeader( request, "Content-Length" );
-        if( opt == boost::none )
-            return;
-        size_ = boost::lexical_cast< size_t >( *opt );
+        if( opt != boost::none )
+            size_ = boost::lexical_cast< size_t >( *opt );
     }
 
     ~MimeWebRequest()
@@ -210,18 +209,21 @@ public:
         reader_->Register( name, handler );
     }
 
-    virtual void ParseMime()
+    void ParseBody( const AsyncStream::Handler& handler )
     {
         deadline_.async_wait( boost::bind( &OnTimeout, boost::ref( stream_ ), _1 ) );
         ReadBody( link_, size_, stream_, deadline_ );
-        stream_.Read( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
+        stream_.Read( handler );
+    }
+
+    virtual void ParseMime()
+    {
+        ParseBody( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_ ), _1 ) );
     }
 
     virtual void ParseForm()
     {
-        deadline_.async_wait( boost::bind( &OnTimeout, boost::ref( stream_ ), _1 ) );
-        ReadBody( link_, size_, stream_, deadline_ );
-        stream_.Read( boost::bind( &MimeWebRequest::ParseFormParameters, this, _1 ) );
+        ParseBody( boost::bind( &MimeWebRequest::ParseFormParameters, this, _1 ) );
     }
 
     void ParseFormParameters( std::istream& stream )
