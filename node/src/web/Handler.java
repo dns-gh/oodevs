@@ -17,6 +17,8 @@ import org.eclipse.jetty.client.ContentExchange;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.HttpExchange;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil2;
@@ -80,7 +82,7 @@ public class Handler extends HttpServlet {
         return uri;
     }
 
-    private void serveTemplate(final HttpServletResponse reply, final HttpServletRequest request, final String target) throws IOException {
+    private void serveTemplate(final HttpServletResponse reply, final HttpServletRequest request, final String target, final String user) throws IOException {
         reply.setStatus(HttpServletResponse.SC_OK);
         final Template ctx = cfg_.getTemplate(target);
         final Map<String, String> root = new HashMap<String, String>();
@@ -89,6 +91,14 @@ public class Handler extends HttpServlet {
         root.put("uuid", uuid_);
         root.put("name", name_);
         root.put("type", type_);
+        if (user != null) {
+            final JSONObject obj = (JSONObject) JSONValue.parse(user);
+            root.put("u_username", obj.get("username").toString());
+            root.put("u_name", obj.get("name").toString());
+            root.put("u_type", obj.get("type").toString());
+            root.put("u_temporary", obj.get("temporary").toString());
+            root.put("u_language", obj.get("language").toString());
+        }
         try {
             ctx.process(root, reply.getWriter());
         } catch (final TemplateException e) {
@@ -103,7 +113,7 @@ public class Handler extends HttpServlet {
             exchange.addRequestHeader(name, tokens.nextElement());
     }
 
-    private boolean isAuthenticated(final HttpServletRequest req) throws IOException {
+    private String isAuthenticated(final HttpServletRequest req) throws IOException {
         try {
             final ContentExchange exchange = new ContentExchange(true);
             String uri = "http://localhost:" + host_ + "/is_authenticated";
@@ -115,23 +125,26 @@ public class Handler extends HttpServlet {
             client_.send(exchange);
             final int state = exchange.waitForDone();
             if (state != HttpExchange.STATUS_COMPLETED)
-                return false;
+                return null;
             final int code = exchange.getResponseStatus();
-            return code == HttpServletResponse.SC_OK;
+            if (code != HttpServletResponse.SC_OK)
+                return null;
+            return exchange.getResponseContent();
         } catch (final InterruptedException e) {
             // NOTHING
         }
-        return false;
+        return null;
     }
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
-        String uri = isAuthenticated(req) ? req.getRequestURI() : "login";
+        final String user = isAuthenticated(req);
+        String uri = user != null ? req.getRequestURI() : "login";
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())
             uri = type_ + "/index";
         final String target = identify(uri, res);
-        serveTemplate(res, req, target);
+        serveTemplate(res, req, target, user);
     }
 }
