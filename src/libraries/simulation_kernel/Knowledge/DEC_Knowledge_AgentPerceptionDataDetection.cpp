@@ -79,7 +79,9 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
     while( nNbr-- )
     {
         file >> nID;
-        visionVolumes_.insert( PHY_Volume::FindVolume( nID ) );
+        const PHY_Volume* volume = PHY_Volume::FindVolume( nID );
+        if( volume )
+            visionVolumes_.insert( volume );
     }
     // Déserialisation des postures ( données statiques )
     file >> nID;
@@ -107,15 +109,21 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << rPopulationDensity_;
     // Serialisation des volumes par nom ( données "statiques" )
     std::size_t size = visionVolumes_.size();
+    for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
+        if( !( *it ) )
+            --size;
     file << size;
     for( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {
-        unsigned id = (*it)->GetID();
-        file << id;
+        if( (*it) )
+        {
+            unsigned int id = (*it)->GetID();
+            file << id;
+        }
     }
     // Serialisation des postures ( données statiques )
-    unsigned last    = ( pLastPosture_    ? pLastPosture_->GetID()    : (unsigned int)-1 ),
-             current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : (unsigned int)-1 );
+    unsigned int last = ( pLastPosture_ ? pLastPosture_->GetID() : static_cast< unsigned int >( -1 ) );
+    unsigned int current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : static_cast< unsigned int >( -1 ) );
     file << last << current;
 }
 
