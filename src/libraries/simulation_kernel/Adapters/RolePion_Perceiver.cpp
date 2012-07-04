@@ -17,7 +17,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionView.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionCoupDeSonde.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoPoint.h"
@@ -271,8 +270,6 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     entity[ "perceptions/peripherical-vision/activated" ] = bPeriphericalVisionEnabled_;
     entity[ "perceptions/max-agent-perception-distance" ] = GetMaxTheoreticalcAgentPerceptionDistance();
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
-    pPerceptionView_ = new PHY_PerceptionView( *this, pion );
-    activePerceptions_.push_back( pPerceptionView_ );
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/sensor/activated", boost::bind( &RolePion_Perceiver::EnableSensors, this ), boost::bind( &RolePion_Perceiver::DisableSensors, this ) );
     AddListener< ToggleListener >( "perceptions/radars/radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ) );
@@ -411,8 +408,7 @@ void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableSensors()
 {
-    if( pPerceptionView_ )
-        pPerceptionView_->Enable();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -421,8 +417,7 @@ void RolePion_Perceiver::EnableSensors()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableSensors()
 {
-    if( pPerceptionView_ )
-        pPerceptionView_->Disable();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1013,7 +1008,6 @@ namespace
 void RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
-    activePerceptions_.push_back( pPerceptionView_ );
     Reset( pPerceptionCoupDeSonde_ );
     Reset( pPerceptionRecoPoint_ );
     Reset( pPerceptionRecoLocalisation_ );

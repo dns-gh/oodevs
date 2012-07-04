@@ -21,7 +21,6 @@
 
 class DEC_KS_Perception;
 class PHY_Perception_ABC;
-class PHY_PerceptionView;
 class PHY_PerceptionCoupDeSonde;
 class PHY_PerceptionRecoPoint;
 class PHY_PerceptionRecoLocalisation;
@@ -238,7 +237,6 @@ private:
     double rMaxAgentPerceptionDistance_;
     double rMaxObjectPerceptionDistance_;
 
-    PHY_PerceptionView*             pPerceptionView_;
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;
     PHY_PerceptionRecoPoint*        pPerceptionRecoPoint_;
     PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
