@@ -130,9 +130,9 @@ void MakeDefaultDatabase( Sql_ABC& db )
         "INSERT INTO users"
         "          ( username, hash, name, type, temporary, language, created )"
         "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
-    st->Bind( "admin" );
+    st->Bind( "admin@masagroup.net" );
     st->Bind( HashPassword( "admin" ) );
-    st->Bind( "Administrator" );
+    st->Bind( "John Doe" );
     st->Bind( "admin" );
     st->Bind( true );
     st->Bind( "eng" );
