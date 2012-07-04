@@ -282,10 +282,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_ARadar" ] = &DEC_AgentFunctions::AgentHasRadar;
     brain[ "DEC_Perception_PointEstVisible" ] =
         boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::IsPointVisible, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_Perception_ActiverObserveurTir" ] =
-        boost::bind( &DEC_PerceptionFunctions::EnableFireObserver, boost::ref( GetPion() ) );
-    brain[ "DEC_Perception_DesactiverObserveurTir" ] =
-        boost::bind( &DEC_PerceptionFunctions::DisableFireObserver, boost::ref( GetPion() ) );
 
     // Gestion des renforts
     brain[ "DEC_Renforts" ] =

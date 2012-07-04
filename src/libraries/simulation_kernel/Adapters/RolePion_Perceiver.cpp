@@ -253,7 +253,6 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
-    , bFireObserver_                 ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( 0 )
     , pPerceptionRecoLocalisation_   ( 0 )
@@ -269,6 +268,7 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     entity[ "perceptions/peripherical-vision/next-step" ] = nNextPeriphericalVisionStep_;
     entity[ "perceptions/peripherical-vision/activated" ] = bPeriphericalVisionEnabled_;
     entity[ "perceptions/max-agent-perception-distance" ] = GetMaxTheoreticalcAgentPerceptionDistance();
+    entity[ "perceptions/fire-observer/activated" ] = false;
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/sensor/activated", boost::bind( &RolePion_Perceiver::EnableSensors, this ), boost::bind( &RolePion_Perceiver::DisableSensors, this ) );
@@ -394,8 +394,7 @@ void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
          & surfacesAgent_
          & surfacesObject_
          & rMaxAgentPerceptionDistance_
-         & rMaxObjectPerceptionDistance_
-         & bFireObserver_;
+         & rMaxObjectPerceptionDistance_;
 }
 
 // =============================================================================
@@ -1517,7 +1516,7 @@ void RolePion_Perceiver::NotifyIsUnLoadedInVab()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableFireObserver()
 {
-    bFireObserver_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1526,7 +1525,7 @@ void RolePion_Perceiver::EnableFireObserver()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableFireObserver()
 {
-    bFireObserver_ = false;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1535,5 +1534,5 @@ void RolePion_Perceiver::DisableFireObserver()
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsFireObserver() const
 {
-    return bFireObserver_;
+    return entity_[ "perceptions/fire-observer/activated" ];
 }

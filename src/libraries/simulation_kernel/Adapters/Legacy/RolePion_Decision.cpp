@@ -175,6 +175,8 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPoint", boost::function< void( const MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePoint, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_VisionVerrouilleeSurPointPtr", boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::SetVisionModePointPtr, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Perception_VisionNormale", boost::bind( &DEC_PerceptionFunctions::SetVisionModeNormal, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_ActiverObserveurTir", boost::bind( &DEC_PerceptionFunctions::EnableFireObserver, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_DesactiverObserveurTir", boost::bind( &DEC_PerceptionFunctions::DisableFireObserver, boost::ref( GetPion() ) ) );
 }
 
 // -----------------------------------------------------------------------------

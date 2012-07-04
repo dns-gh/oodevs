@@ -259,7 +259,6 @@ private:
     bool bExternalCanPerceive_;
     bool bExternalMustUpdateVisionCones_;
     bool bRadarStateHasChanged_;
-    bool bFireObserver_;
     T_Notifications notifications_;
     //@}
 
