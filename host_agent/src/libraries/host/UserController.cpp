@@ -222,6 +222,10 @@ std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Transaction&
     return token;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DeleteToken
+// Created: BAX 2012-07-04
+// -----------------------------------------------------------------------------
 void DeleteToken( Sql_ABC& db, Transaction& tr, const std::string& token )
 {
     Sql_ABC::T_Statement st = db.Prepare( tr, "SELECT id_users FROM tokens WHERE token = ?" );
