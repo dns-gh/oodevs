@@ -889,7 +889,7 @@
         <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
     
-    <target name="generate-database" depends="deploy-application-data,generate-decisional-files,generate-common-database" description="compile behavior model database">
+    <target name="generate-database" depends="generate-decisional-files,generate-common-database" description="compile behavior model database">
         <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
