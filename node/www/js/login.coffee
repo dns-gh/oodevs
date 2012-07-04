@@ -17,6 +17,15 @@ $(".log_in").click ->
         username: $("#username").val()
         password: $("#password").val(),
         (obj) ->
-            window.location.href = window.location.href + "?sid=" + obj.sid
+            uri = get_url window.location.pathname
+            first = true
+            uri_params.sid = obj.sid
+            for k,v of uri_params
+                uri += if first then "?" else "&"
+                first = false
+                uri += k
+                uri += "=" + v if v?
+            uri += window.location.hash
+            window.location.href = uri
         ->
             print_error "Invalid username/email password combination"
