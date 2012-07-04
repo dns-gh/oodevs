@@ -734,7 +734,7 @@ void ModelConsistencyChecker::CheckFiles()
 {
     std::vector< std::string > filesErrors;
     fileLoaderObserver_.GetErrors( filesErrors );
-    for( int i = 0; i < filesErrors.size(); ++i )
+    for( std::size_t i = 0; i < filesErrors.size(); ++i )
         AddError( eOthers, 0, filesErrors[ i ] );
 }
 
