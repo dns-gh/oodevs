@@ -10,7 +10,7 @@
 get_url = (url) ->
     return window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + url
 
-ajax = (url, data, success, error) ->
+raw_ajax = (url, data, success, error, type) ->
     $.ajax
         cache:    false
         data:     data,
@@ -18,6 +18,13 @@ ajax = (url, data, success, error) ->
         error:    error,
         success:  success,
         url:      get_url url
+        type:     type
+
+ajax = (url, data, success, error) ->
+    raw_ajax url, data, success, error, "GET"
+
+pajax = (url, data, success, error) ->
+    raw_ajax url, data, success, error, "POST"
 
 diff_models = (prev, next) ->
     not_found = []
