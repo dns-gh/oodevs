@@ -169,3 +169,13 @@ void SideChecker::CallsignChanged( const std::string& /*identifier*/, const std:
 {
     // NOTHING
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: SideChecker::EmbeddedUnitListChanged
+// Created: AHC 2010-05-29
+// -----------------------------------------------------------------------------
+void SideChecker::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}

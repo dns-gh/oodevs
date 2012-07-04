@@ -12,8 +12,10 @@
 #include "ContextHandler_ABC.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextFactory_ABC.h"
+#include "CallsignResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 
 using namespace plugins::hla;
 
@@ -22,11 +24,14 @@ using namespace plugins::hla;
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
 UnitTeleporter::UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
-                                dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory )
+                                dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
+                                const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger )
     : agentSubject_  ( agentSubject )
     , contextHandler_( contextHandler )
     , publisher_     ( publisher )
     , contextFactory_( contextFactory )
+    , callsignResolver_ ( callsignResolver )
+    , logger_        ( logger )
 {
     agentSubject_.Register( *this );
     contextHandler_.Register( *this );
@@ -97,6 +102,31 @@ void UnitTeleporter::SideChanged( const std::string& /*identifier*/, rpr::ForceI
 void UnitTeleporter::Notify( const sword::UnitCreation& message, const std::string& identifier )
 {
     identifiers_[ identifier ] = message.unit().id();
+    T_EmbeddedUnitsMap::iterator it( pendingLoaded_.find( identifier ) );
+    if( pendingLoaded_.end() != it )
+    {
+        const std::vector< std::string >& units( it->second );
+        for(std::vector< std::string >::const_iterator itU=units.begin(); itU!=units.end(); ++itU )
+        {
+            const std::string& transportedUniqueId = *itU;
+            logger_.LogInfo("UnitTeleporter loading " + transportedUniqueId + " in " + identifier);
+            unsigned long transportedId( 0 );
+            try
+            {
+                transportedId = callsignResolver_.ResolveSimulationIdentifier( transportedUniqueId );
+            }
+            catch( const std::runtime_error&  )
+            {
+                continue;
+            }
+            simulation::UnitMagicAction magic;
+            magic().mutable_tasker()->mutable_unit()->set_id( message.unit().id() );
+            magic().set_type( static_cast< sword::UnitMagicAction_Type >( sword::UnitMagicAction::load_unit ) );
+            magic().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( transportedId );
+            magic.Send( publisher_ );
+        }
+        pendingLoaded_.erase( it );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -142,4 +172,40 @@ void UnitTeleporter::UniqueIdChanged( const std::string& /*identifier*/, const s
 void UnitTeleporter::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::EmbeddedUnitListChanged
+// Created: AHC 2010-05-29
+// -----------------------------------------------------------------------------
+void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units )
+{
+    logger_.LogInfo("UnitTeleporter EmbeddedUnitListChanged");
+    T_Identifiers::const_iterator it( identifiers_.find( identifier ) );
+    if( identifiers_.end() == it )
+    {
+        pendingLoaded_[identifier]=units;
+        return;
+    }
+
+    unsigned long transporterId( it->second );
+    for(std::vector< std::string >::const_iterator itU=units.begin(); itU!=units.end(); ++itU )
+    {
+        const std::string& transportedUniqueId = *itU;
+        logger_.LogInfo("UnitTeleporter loading " + transportedUniqueId + " in " + identifier);
+        unsigned long transportedId( 0 );
+        try
+        {
+            transportedId = callsignResolver_.ResolveSimulationIdentifier( transportedUniqueId );
+        }
+        catch( const std::runtime_error&  )
+        {
+            continue;
+        }
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( transporterId );
+        message().set_type( static_cast< sword::UnitMagicAction_Type >( sword::UnitMagicAction::load_unit ) );
+        message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( transportedId );
+        message.Send( publisher_ );
+    }
 }

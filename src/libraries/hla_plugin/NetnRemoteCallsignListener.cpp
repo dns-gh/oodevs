@@ -146,3 +146,13 @@ void NetnRemoteCallsignListener::EquipmentUpdated( const std::string& /*identifi
 {
     // NOTHING
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::EmbeddedUnitListChanged
+// Created: AHC 2010-05-29
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}

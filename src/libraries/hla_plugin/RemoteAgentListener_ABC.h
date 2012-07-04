@@ -47,6 +47,8 @@ public:
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number ) = 0;
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId ) = 0;
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
+    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units ) = 0;
+
     //@}
 };
 

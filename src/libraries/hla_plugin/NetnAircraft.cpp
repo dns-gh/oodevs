@@ -27,6 +27,8 @@ NetnAircraft::NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC&
 {
     attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
     attributes_->Register( "Callsign", UnicodeString( callsign ) );
+    attributes_->Register( "EmbeddedUnitList", Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -139,3 +139,13 @@ void RemoteAgentListenerComposite::CallsignChanged( const std::string& identifie
     BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
         listener->CallsignChanged( identifier, callsign );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentListenerComposite::EmbeddedUnitListChanged
+// Created: AHC 2012-07-04
+// -----------------------------------------------------------------------------
+void RemoteAgentListenerComposite::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units )
+{
+    BOOST_FOREACH( RemoteAgentListener_ABC* listener, listeners_ )
+        listener->EmbeddedUnitListChanged( identifier, units );
+}

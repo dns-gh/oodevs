@@ -33,6 +33,20 @@ namespace
         uniqueId.Deserialize( deserializer );
         listener.UniqueIdChanged( identifier, uniqueId.str() );
     }
+    void ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    {
+        std::vector< std::string > embeddedUnits;
+        uint32 size;
+        deserializer >> size;
+        embeddedUnits.resize(size);
+        for(uint32 i=0; i < size; ++i )
+        {
+            UniqueId tmp;
+            tmp.Deserialize( deserializer );
+            embeddedUnits[i]=tmp.str();
+        }
+        listener.EmbeddedUnitListChanged( identifier, embeddedUnits );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +59,7 @@ NetnRemoteSurfaceVessel::NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC >
 {
     attributes_->Register( "Callsign", boost::bind( &ReadCallsign, _1, _2, _3 ) );
     attributes_->Register( "UniqueID", boost::bind( &ReadUniqueId, _1, _2, _3 ) );
+    attributes_->Register( "EmbeddedUnitList", boost::bind( &ReadEmbeddedUnitList, _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------

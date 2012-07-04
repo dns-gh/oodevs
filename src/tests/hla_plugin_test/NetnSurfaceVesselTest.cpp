@@ -59,7 +59,8 @@ BOOST_FIXTURE_TEST_CASE( unmodified_netn_surface_vessel_serializes_nothing, Regi
 BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_serializes_all_its_attributes_but_rpr_aggregate_first, RegisteredFixture )
 {
     const std::vector< std::string > attributes = boost::assign::list_of( "UniqueID" )
-                                                                        ( "Callsign" );
+                                                                        ( "Callsign" )
+                                                                        ( "EmbeddedUnitList" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;

@@ -114,6 +114,7 @@ namespace hla
                                     ( "Callsign" )
                                     ( "Status" )
                                     ( "Symbol" )
+                                    ( "EmbeddedUnitList" )
             , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder() ) )
         {}
     };
@@ -136,6 +137,7 @@ namespace hla
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
+                                    ( "EmbeddedUnitList" )
             , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder() ) )
         {}
     };
@@ -158,6 +160,7 @@ namespace hla
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", false, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
+                                    ( "EmbeddedUnitList" )
             , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder() ) )
         {}
     };

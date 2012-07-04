@@ -241,3 +241,13 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     if( message().parameters().elem( 0 ).value_size() > 0 )
         message.Send( publisher_, factory_.Create() );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::EmbeddedUnitListChanged
+// Created: AHC 2010-05-29
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}

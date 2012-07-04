@@ -22,6 +22,7 @@ namespace sword
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
+    class Logger_ABC;
 }
 
 namespace plugins
@@ -30,6 +31,7 @@ namespace hla
 {
     class RemoteAgentSubject_ABC;
     class ContextFactory_ABC;
+    class CallsignResolver_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
 
 // =============================================================================
@@ -45,7 +47,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitTeleporter( RemoteAgentSubject_ABC& agentSubject, ContextHandler_ABC< sword::UnitCreation >& contextHandler,
-                             dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory );
+                             dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& contextFactory,
+                             const CallsignResolver_ABC& callsignResolver, dispatcher::Logger_ABC& logger );
     virtual ~UnitTeleporter();
     //@}
 
@@ -61,6 +64,7 @@ private:
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
+    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
     //@}
 
     //! @name Operations
@@ -72,6 +76,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, unsigned long > T_Identifiers;
+    typedef std::map< std::string, std::vector< std::string > > T_EmbeddedUnitsMap;
     //@}
 
 private:
@@ -81,7 +86,10 @@ private:
     ContextHandler_ABC< sword::UnitCreation >& contextHandler_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     const ContextFactory_ABC& contextFactory_;
+    const CallsignResolver_ABC& callsignResolver_;
+    dispatcher::Logger_ABC& logger_;
     T_Identifiers identifiers_;
+    T_EmbeddedUnitsMap pendingLoaded_;
     //@}
 };
 

@@ -153,3 +153,13 @@ void RemoteAgentResolver::Notify( const sword::UnitCreation& message, const std:
     identifiers_.insert( T_Identifiers::value_type( message.unit().id(), identifier ) );
     pendings_.erase( identifier );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::EmbeddedUnitListChanged
+// Created: AHC 2010-05-29
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}

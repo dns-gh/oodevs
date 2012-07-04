@@ -78,7 +78,7 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pAutomatDisengager_         ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, *pAutomatTypeResolver_, dynamicModel.KnowledgeGroups() ) )
-    , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory ) )
+    , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, callsignResolver, logger ) )
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, dynamicModel.Sides(), unitTypeResolver, logger, extent ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )

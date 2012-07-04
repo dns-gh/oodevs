@@ -86,7 +86,8 @@ BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixt
                                        ( "HigherHeadquarters" )
                                        ( "Callsign" )
                                        ( "Status" )
-                                       ( "Symbol" );
+                                       ( "Symbol" )
+                                       ( "EmbeddedUnitList" );
     Check( builder, "BaseEntity.AggregateEntity.NETN_Aggregate", true, true );
 }
 
@@ -111,7 +112,8 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixtu
                                        ( "Spatial" )
                                        // NETN
                                        ( "UniqueID" )
-                                       ( "Callsign" );
+                                       ( "Callsign" )
+                                       ( "EmbeddedUnitList" );
     Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true );
 }
 
@@ -136,6 +138,7 @@ BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
                                        ( "Spatial" )
                                        // NETN
                                        ( "UniqueID" )
-                                       ( "Callsign" );
+                                       ( "Callsign" )
+                                       ( "EmbeddedUnitList" );
     Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", false, true );
 }

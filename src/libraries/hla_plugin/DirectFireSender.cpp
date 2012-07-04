@@ -171,3 +171,13 @@ void DirectFireSender::CallsignChanged( const std::string& /*identifier*/, const
 {
     // NOTHING
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::EmbeddedUnitListChanged
+// Created: AHC 2010-05-29
+// -----------------------------------------------------------------------------
+void DirectFireSender::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+{
+    // NOTHING
+}

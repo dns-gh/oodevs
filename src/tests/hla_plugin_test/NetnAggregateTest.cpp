@@ -67,7 +67,8 @@ BOOST_FIXTURE_TEST_CASE( netn_agregate_entity_serializes_all_its_attributes_but_
                                                                         ( "HigherHeadquarters" )
                                                                         ( "Callsign" )
                                                                         ( "Status" )
-                                                                        ( "Symbol" );
+                                                                        ( "Symbol" )
+                                                                        ( "EmbeddedUnitList" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
