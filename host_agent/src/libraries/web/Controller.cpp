@@ -602,7 +602,7 @@ std::string Controller::GetSource( const Request_ABC& request )
 std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 {
     if( !secure_ )
-        return std::string();
+        return "{}";
     const boost::optional< std::string > opt = request.GetParameter( "sid" );
     if( opt == boost::none )
         return std::string();
