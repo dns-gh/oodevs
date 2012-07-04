@@ -10,6 +10,10 @@
   };
 
   raw_ajax = function(url, data, success, error, type) {
+    if (data == null) {
+      data = {};
+    }
+    data.sid = parse_parameters().sid;
     return $.ajax({
       cache: false,
       data: data,
