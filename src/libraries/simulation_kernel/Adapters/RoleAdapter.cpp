@@ -151,14 +151,18 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "can-fly" ] = pion.GetType().GetUnitType().CanFly();
     entity_[ "is-autonomous" ] = pion.IsAutonomous();
     entity_[ "is-pc" ] = pion.IsPC();
+    entity_[ "perceptions/peripherical-vision/activated" ] = false;
     entity_[ "perceptions/scan/activated" ] = false;
     entity_[ "perceptions/sensor/activated" ] = true;
     entity_[ "perceptions/radars/radar/activated" ] = false;
     entity_[ "perceptions/radars/tapping/activated" ] = false;
     entity_[ "perceptions/radars/tapping-radar/activated" ] = false;
+    entity_[ "perceptions/fire-observer/activated" ] = false;
     entity_[ "perceptions/vision/mode" ] = "normal";
     entity_[ "perceptions/vision/location/x" ] = 0;
     entity_[ "perceptions/vision/location/y" ] = 1;
+    entity_[ "perceptions/main-perception-direction/x" ] = 0;
+    entity_[ "perceptions/main-perception-direction/y" ] = 1;
     entity_[ "fire/force-ratio/feedback-time" ] = pion.GetType().GetFeedbackTime();
 }
 

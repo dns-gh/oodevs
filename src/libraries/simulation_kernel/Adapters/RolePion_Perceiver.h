@@ -188,13 +188,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< ListenerHelper > > T_Listeners;
-    enum E_SensorMode
-    {
-        eNormal,    // la direction de détection est déterminée en fonction de la direction de déplacement
-        eDirection, // la direction de détection est fixe
-        ePoint      // la détection est fixées sur un point précis
-    };
-
     typedef std::vector< PHY_Perception_ABC* > T_PerceptionVector;
     typedef T_PerceptionVector::iterator IT_PerceptionVector;
     typedef T_PerceptionVector::const_iterator CIT_PerceptionVector;
@@ -208,7 +201,6 @@ private:
     bool HasChanged() const;
     bool HasRadarStateChanged() const;
     bool CanPerceive() const;
-    void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
     double GetMaxObjectPerceptionDistance() const;
     void EnsurePerceptionRecoLocalisation();
     void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
@@ -247,9 +239,6 @@ private:
     PHY_PerceptionAlat*             pPerceptionAlat_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;
-
-    E_SensorMode nSensorMode_;
-    MT_Vector2D  vSensorInfo_;
 
     bool bRecordModeEnabled_;
     bool bHasChanged_;

@@ -181,17 +181,6 @@ namespace
         const MT_Vector2D center( node[ "center/x" ], node[ "center/y" ] );
         return perceiver.EnableRecoObjects( localization, center, node[ "speed" ], decision );
     }
-    void SwitchVisionMode( PHY_RoleInterface_Perceiver& perceiver, const core::Model& vision )
-    {
-        if( vision[ "mode" ] == std::string( "normal" ) ) // $$$$ _RC_ SLI 2012-03-29: switch not really that great
-            perceiver.SetVisionModeNormal();
-        else if( vision[ "mode" ] == std::string( "location" ) )
-            perceiver.SetVisionModePoint( MT_Vector2D( vision[ "location/x" ], vision[ "location/y" ] ) );
-        else if( vision[ "mode" ] == std::string( "direction" ) )
-            perceiver.SetVisionModeDirection( MT_Vector2D( vision[ "location/x" ], vision[ "location/y" ] ) );
-        else
-            throw std::runtime_error( "unknown vision mode '" + std::string( vision[ "mode" ] ) + "'" ); // $$$$ _RC_ SLI 2012-03-29: throw?
-    }
     typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
     template< typename Target, typename Result >
     void NotifyPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
@@ -244,7 +233,6 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     , entity_                        ( entity )
     , rMaxAgentPerceptionDistance_   ( 0. )
     , rMaxObjectPerceptionDistance_  ( 0. )
-    , nSensorMode_                   ( eNormal )
     , bRecordModeEnabled_            ( false )
     , bHasChanged_                   ( true )
     , bExternalMustChangePerception_ ( false )
@@ -265,9 +253,7 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     static unsigned int nNbr = 0;
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/peripherical-vision/next-step" ] = nNextPeriphericalVisionStep_;
-    entity[ "perceptions/peripherical-vision/activated" ] = false;
     entity[ "perceptions/max-agent-perception-distance" ] = GetMaxTheoreticalcAgentPerceptionDistance();
-    entity[ "perceptions/fire-observer/activated" ] = false;
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/sensor/activated", boost::bind( &RolePion_Perceiver::EnableSensors, this ), boost::bind( &RolePion_Perceiver::DisableSensors, this ) );
@@ -282,7 +268,6 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     AddListener< IdentifiedToggleListener >( "perceptions/reco", boost::bind( &EnableReco, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoLocalisation, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/recognition-point", boost::bind( &EnableRecognitionPoint, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoPoint, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/object-detection", boost::bind( &EnableObjectDetection, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoObjects, this, _1 ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/vision" ] ), boost::bind( &SwitchVisionMode, boost::ref( *this ), _1 ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyPerception< MIL_PopulationConcentration, bool >, _1, boost::ref( notifications_ ) ) ) );
@@ -966,28 +951,6 @@ private:
     const transport::PHY_RoleAction_Loading* transport_;
 };
 
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::ComputeMainPerceptionDirection
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-void RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const
-{
-    if( nSensorMode_ == eNormal )
-        vMainPerceptionDirection = owner_.GetRole< PHY_RoleInterface_Location >().GetDirection();
-    else if( nSensorMode_ == eDirection )
-        vMainPerceptionDirection = vSensorInfo_;
-    else if( nSensorMode_ == ePoint )
-    {
-        const MT_Vector2D& vDirection = owner_.GetRole< PHY_RoleInterface_Location >().GetDirection();
-        const MT_Vector2D& vPosition  = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-        if( vSensorInfo_ != vPosition )
-            vMainPerceptionDirection = ( vSensorInfo_ - vPosition ).Normalize();
-        else
-            vMainPerceptionDirection = vDirection;
-    }
-}
-
 namespace
 {
     template< typename T >
@@ -1326,7 +1289,6 @@ MIL_Agent_ABC& RolePion_Perceiver::GetPion() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModeNormal()
 {
-    nSensorMode_ = eNormal;
     bHasChanged_ = true;
 }
 
@@ -1334,10 +1296,8 @@ void RolePion_Perceiver::SetVisionModeNormal()
 // Name: RolePion_Perceiver::SetVisionModeDirection
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& vDirection )
+void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& /*vDirection*/ )
 {
-    nSensorMode_ = eDirection;
-    vSensorInfo_ = vDirection;
     bHasChanged_ = true;
 }
 
@@ -1345,10 +1305,8 @@ void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& vDirection )
 // Name: RolePion_Perceiver::SetVisionModePoint
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& vPoint )
+void RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& /*vPoint*/ )
 {
-    nSensorMode_ = ePoint;
-    vSensorInfo_ = vPoint;
     bHasChanged_ = true;
 }
 
@@ -1367,7 +1325,8 @@ bool RolePion_Perceiver::HasChanged() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::GetMainPerceptionDirection( MT_Vector2D& vDirection ) const
 {
-    ComputeMainPerceptionDirection( vDirection );
+    vDirection.rX_ = entity_[ "perceptions/main-perception-direction/x" ];
+    vDirection.rY_ = entity_[ "perceptions/main-perception-direction/y" ];
 }
 
 // -----------------------------------------------------------------------------

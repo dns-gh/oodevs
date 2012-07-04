@@ -229,9 +229,8 @@ namespace
     // Name: RolePion_Perceiver::PreparePerceptionData
     // Created: NLD 2004-08-20
     // -----------------------------------------------------------------------------
-    void PreparePerceptionData( const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
+    void PreparePerceptionData( const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance, MT_Vector2D& vMainPerceptionDirection )
     {
-        MT_Vector2D vMainPerceptionDirection;
         ComputeMainPerceptionDirection( entity, vMainPerceptionDirection );
         const double rotation = ComputePerceptionRotation( entity );
         UpdatePerceptionDataComposantes( entity, surfacesAgent, surfacesObject, vMainPerceptionDirection, rotation, rMaxAgentPerceptionDistance, rMaxObjectPerceptionDistance );
@@ -378,12 +377,21 @@ namespace
     {
         double rMaxAgentPerceptionDistance = 0;
         double rMaxObjectPerceptionDistance = 0;
+        MT_Vector2D vMainPerceptionDirection;
         UpdatePeriphericalVisionState( model, entity );
-        PreparePerceptionData        ( entity, surfacesAgent, surfacesObject, rMaxAgentPerceptionDistance, rMaxObjectPerceptionDistance );
+        PreparePerceptionData        ( entity, surfacesAgent, surfacesObject, rMaxAgentPerceptionDistance, rMaxObjectPerceptionDistance, vMainPerceptionDirection );
         PrepareRadarData             ( entity, radars );
-        wrapper::Effect effect( entity[ "perceptions/max-agent-perception-distance" ] );
-        effect = rMaxAgentPerceptionDistance * GET_HOOK( ComputePerceptionDistanceFactor )( entity );
-        effect.Post();
+        {
+            wrapper::Effect effect( entity[ "perceptions/max-agent-perception-distance" ] );
+            effect = rMaxAgentPerceptionDistance * GET_HOOK( ComputePerceptionDistanceFactor )( entity );
+            effect.Post();
+        }
+        {
+            wrapper::Effect effect( entity[ "perceptions/main-perception-direction" ] );
+            effect[ "x" ] = vMainPerceptionDirection.rX_;
+            effect[ "y" ] = vMainPerceptionDirection.rY_;
+            effect.Post();
+        }
         //    if( pPerceptionRecoPoint_ )
         //        pPerceptionRecoPoint_->Update();
         //   if( pPerceptionRecoLocalisation_ )
@@ -488,7 +496,8 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
     double maxDistance;
-    PreparePerceptionData( entity, surfacesAgent, surfacesObject, maxDistance, maxDistance );
+    MT_Vector2D vMainPerceptionDirection;
+    PreparePerceptionData( entity, surfacesAgent, surfacesObject, maxDistance, maxDistance, vMainPerceptionDirection );
     PrepareRadarData( entity, radars );
     if( !CanPerceive( entity ) )
         return PerceptionLevel::notSeen_;

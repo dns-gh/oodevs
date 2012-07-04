@@ -163,6 +163,8 @@ namespace
             MOCK_EXPECT( GetCollidingPopulationDensity ).returns( 1. );
             ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
             ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "activated", false ) );
+            ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", direction.rX_ )
+                                                                                                   ( "y", direction.rY_ ) );
         }
         typedef std::map< std::string, sword::test::ModelBuilder > T_Nofitications;
         void ExpectNotifications( const T_Nofitications& notifications )
@@ -359,6 +361,7 @@ BOOST_FIXTURE_TEST_CASE( next_peripherical_vision_step_is_updated_with_effect, P
     ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "next-step", 13 )
                                                                                      ( "activated", true ) );
     ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/main-perception-direction" ] );
     ExpectNotifications();
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
@@ -379,4 +382,42 @@ BOOST_FIXTURE_TEST_CASE( is_point_visible_hook_computes_visibility_between_entit
         MOCK_EXPECT( ComputeRayTrace ).once().returns( -1. );
         BOOST_CHECK( !IsPointVisible( core::Convert( &entity ), &point ) );
     }
+}
+
+BOOST_FIXTURE_TEST_CASE( direction_vision_mode_uses_vision_direction_as_main_perception_direction, PerceptionFixture )
+{
+    ExpectNotifications();
+    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
+    commands.Execute();
+    mock::verify();
+    model[ "step" ] = 1;
+    entity[ "perceptions/vision/mode" ] = "direction";
+    entity[ "perceptions/vision/location/x" ] = 42.;
+    entity[ "perceptions/vision/location/y" ] = 43.;
+    ExpectEffect( entity[ "perceptions/peripherical-vision" ] );
+    ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 42. )
+                                                                                           ( "y", 43. ) );
+    ExpectNotifications();
+    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
+    commands.Execute();
+}
+
+BOOST_FIXTURE_TEST_CASE( location_vision_mode_computes_location_direction_as_main_perception_direction, PerceptionFixture )
+{
+    ExpectNotifications();
+    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
+    commands.Execute();
+    mock::verify();
+    model[ "step" ] = 1;
+    entity[ "perceptions/vision/mode" ] = "location";
+    entity[ "perceptions/vision/location/x" ] = 0;
+    entity[ "perceptions/vision/location/y" ] = 0;
+    ExpectEffect( entity[ "perceptions/peripherical-vision" ] );
+    ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 0 )
+                                                                                           ( "y", -1 ) );
+    ExpectNotifications();
+    commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
+    commands.Execute();
 }
