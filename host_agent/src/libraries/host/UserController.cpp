@@ -312,11 +312,17 @@ void UserController::Logout( const std::string& token )
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        Sql_ABC::T_Statement st = db_.Prepare( *tr, "DELETE FROM tokens WHERE token = ?" );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, "SELECT id_users FROM tokens WHERE token = ?" );
         st->Bind( token );
+        bool valid = st->Next();
+        if( !valid )
+            return;
+        const int id = st->ReadInt();
+        st = db_.Prepare( *tr, "DELETE FROM tokens WHERE id_users = ?" );
+        st->Bind( id );
         while( st->Next() )
             continue;
-        db_.Commit( *tr );
+        db_.Commit();
     }
     catch( const std::exception& err )
     {
