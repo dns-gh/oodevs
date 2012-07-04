@@ -106,10 +106,12 @@ public class Handler extends HttpServlet {
     private boolean isAuthenticated(final HttpServletRequest req) throws IOException {
         try {
             final ContentExchange exchange = new ContentExchange(true);
-            final String next = "http://localhost:" + host_ + "/is_authenticated";
-            exchange.setURL(next);
+            String uri = "http://localhost:" + host_ + "/is_authenticated";
+            final String query = req.getQueryString();
+            if (query != null && !query.isEmpty())
+                uri += "?" + query;
+            exchange.setURL(uri);
             tryAddHeader(exchange, req, "Remote-Address");
-            tryAddHeader(exchange, req, "sid");
             client_.send(exchange);
             final int state = exchange.waitForDone();
             if (state != HttpExchange.STATUS_COMPLETED)
