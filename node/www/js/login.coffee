@@ -19,6 +19,7 @@ $(".log_in").click ->
         (obj) ->
             uri = get_url window.location.pathname
             first = true
+            uri_params = parse_parameters()
             uri_params.sid = obj.sid
             for k,v of uri_params
                 uri += if first then "?" else "&"

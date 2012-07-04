@@ -203,9 +203,10 @@
       username: $("#username").val(),
       password: $("#password").val()
     }, function(obj) {
-      var first, k, uri, v;
+      var first, k, uri, uri_params, v;
       uri = get_url(window.location.pathname);
       first = true;
+      uri_params = parse_parameters();
       uri_params.sid = obj.sid;
       for (k in uri_params) {
         v = uri_params[k];
