@@ -227,10 +227,16 @@ void RemoteAgentController::Send( simulation::UnitMagicAction& message, const st
 // -----------------------------------------------------------------------------
 unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
 {
-    const kernel::Karma& karma = GetKarma( force );
-    T_Karmas::const_iterator itKarma = karmas_.find( karma );
+    const kernel::Karma* karma = &GetKarma( force );
+    if (*karma == kernel::Karma::unknown_)
+        karma = &kernel::Karma::neutral_;
+    T_Karmas::const_iterator itKarma = karmas_.find( *karma );
     if( itKarma == karmas_.end() )
-        throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
+    {
+        //throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
+        logger_.LogError( "Karma '" +  karma->GetName().toStdString() + "' not found in scenario" );
+        return 0;
+    }
     T_Parties::const_iterator itParty = parties_.find( itKarma->second );
     if( itParty == parties_.end() )
     {

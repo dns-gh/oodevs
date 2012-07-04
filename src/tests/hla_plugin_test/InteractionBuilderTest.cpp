@@ -10,6 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/InteractionBuilder.h"
 #include "hla_plugin/Interactions.h"
+#include "hla_plugin/InteractionSender.h"
 #include "MockFederate.h"
 #include "MockInteractionHandler.h"
 #include "MockInteractionNotification.h"
@@ -34,7 +35,7 @@ namespace
             ::hla::Interaction< Interaction > interaction( notification );
             hla::MockInteractionHandler* handler = new hla::MockInteractionHandler();
             MOCK_EXPECT( federate.RegisterInteraction ).once().with( name, mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
-            builder.Build( interaction );
+            BOOST_CHECK( builder.Build( interaction ) );
             mock::verify();
             mock::sequence s;
             BOOST_FOREACH( const std::string& parameter, parameters )
@@ -42,6 +43,16 @@ namespace
             MOCK_EXPECT( handler->End ).once().in( s );
             Interaction message;
             interaction.Send( message );
+        }
+        template< typename Interaction >
+        void CheckBuildFailure( const std::string& name )
+        {
+            ::hla::MockInteractionNotification< Interaction > notification;
+            MOCK_EXPECT( federate.RegisterInteraction ).once().with( name, mock::any, true, true ).throws( ::hla::HLAException("error") );
+            MOCK_EXPECT( logger.LogError ).once();
+            InteractionSender< Interaction > interaction( notification, builder );
+            BOOST_CHECK( !interaction.IsSupported() );
+            mock::verify();
         }
         MockFederate federate;
         dispatcher::MockLogger logger;
@@ -67,6 +78,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
                                                                         ( "TargetObjectIdentifier" )
                                                                         ( "WarheadType" );
     CheckBuild< interactions::MunitionDetonation >( name, parameters );
+    CheckBuildFailure< interactions::MunitionDetonation >( name );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_service_request, Fixture )

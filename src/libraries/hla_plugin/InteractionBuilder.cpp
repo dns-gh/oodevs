@@ -92,10 +92,28 @@ InteractionBuilder::~InteractionBuilder()
 }
 
 // -----------------------------------------------------------------------------
+// Name: InteractionBuilder::DoRegister
+// Created: AHC 2012-07-04
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::DoRegister( const std::string& name, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe ) const
+{
+    try
+    {
+        federate_.Register( ::hla::InteractionIdentifier( name ), interactionClass, publish, subscribe );
+    }
+    catch (const ::hla::HLAException& ex)
+    {
+        logger_.LogError("Failed to register interaction "+name+ " : " + ex.what() );
+        return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-11-04
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const
 {
     const std::string name = "MunitionDetonation";
     REGISTER( "ArticulatedPartData"       , &interactions::MunitionDetonation::articulatedPartData );
@@ -112,27 +130,27 @@ void InteractionBuilder::Build( ::hla::Interaction< interactions::MunitionDetona
     REGISTER( "RelativeDetonationLocation", &interactions::MunitionDetonation::relativeDetonationLocation );
     REGISTER( "TargetObjectIdentifier"    , &interactions::MunitionDetonation::targetObjectIdentifier );
     REGISTER( "WarheadType"               , &interactions::MunitionDetonation::warheadType );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_RequestService.NETN_RequestConvoy";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "RequestTimeOut", &interactions::NetnRequestConvoy::requestTimeOut );
     REGISTER( "TransportData" , &interactions::NetnRequestConvoy::transportData );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_OfferService.NETN_OfferConvoy";
     REGISTER( "IsOffering"        , &interactions::NetnOfferConvoy::isOffering );
@@ -141,183 +159,183 @@ void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnOfferConvo
     REGISTER( "TransportData"     , &interactions::NetnOfferConvoy::transportData );
     REGISTER( "OfferType"         , &interactions::NetnOfferConvoy::offerType );
     REGISTER( "ListOfTransporters", &interactions::NetnOfferConvoy::listOfTransporters );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_AcceptOffer";
     RegisterNetnService( interaction, name, logger_ );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_RejectOffer.NETN_RejectOfferConvoy";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "Reason", &interactions::NetnRejectOfferConvoy::reason );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_CancelService.NETN_CancelConvoy";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "Reason", &interactions::NetnCancelConvoy::reason );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ReadyToReceiveService";
     RegisterNetnService( interaction, name, logger_ );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ServiceStarted";
     RegisterNetnService( interaction, name, logger_ );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ConvoyEmbarkmentStatus";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "ListOfObjectEmbarked"   , &interactions::NetnConvoyEmbarkmentStatus::listOfObjectEmbarked );
     REGISTER( "TransportUnitIdentifier", &interactions::NetnConvoyEmbarkmentStatus::transportUnitIdentifier );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ConvoyDisembarkmentStatus";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "ListOfObjectDisembarked", &interactions::NetnConvoyDisembarkmentStatus::listOfObjectDisembarked );
     REGISTER( "TransportUnitIdentifier", &interactions::NetnConvoyDisembarkmentStatus::transportUnitIdentifier );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ConvoyDestroyedEntities";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "ListOfEmbarkedObjectDestroyed", &interactions::NetnConvoyDestroyedEntities::listOfEmbarkedObjectDestroyed );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ServiceComplete";
     RegisterNetnService( interaction, name, logger_ );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const
 {
     const std::string name = "NETN_Service.NETN_ServiceReceived";
     RegisterNetnService( interaction, name, logger_ );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: AHC 2012-02-06
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const
 {
     const std::string name = "ResupplyCancel";
     REGISTER( "ReceivingObject"           , &interactions::ResupplyCancel::receivingObject );
     REGISTER( "SupplyingObject"           , &interactions::ResupplyCancel::supplyingObject );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: AHC 2012-02-06
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const
 {
     const std::string name = "ResupplyOffer";
     REGISTER( "ReceivingObject"           , &interactions::ResupplyOffer::receivingObject );
     REGISTER( "SupplyingObject"           , &interactions::ResupplyOffer::supplyingObject );
     REGISTER( "SuppliesData"              , &interactions::ResupplyOffer::suppliesData );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: AHC 2012-02-06
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const
 {
     const std::string name = "ResupplyReceived";
     REGISTER( "ReceivingObject"           , &interactions::ResupplyReceived::receivingObject );
     REGISTER( "SupplyingObject"           , &interactions::ResupplyReceived::supplyingObject );
     REGISTER( "SuppliesData"              , &interactions::ResupplyReceived::suppliesData );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: AHC 2012-02-06
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const
 {
     const std::string name = "ServiceRequest";
     REGISTER( "ReceivingObject"           , &interactions::ServiceRequest::receivingObject );
     REGISTER( "ServicingObject"           , &interactions::ServiceRequest::servicingObject );
     REGISTER( "ServiceType"               , &interactions::ServiceRequest::serviceType );
     REGISTER( "SuppliesData"              , &interactions::ServiceRequest::suppliesData );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionBuilder::Build
 // Created: AHC 2012-02-07
 // -----------------------------------------------------------------------------
-void InteractionBuilder::Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const
 {
     const std::string name = "TransferControl";
     REGISTER( "OriginatingEntity"         , &interactions::TransferControl::originatingEntity );
@@ -326,5 +344,5 @@ void InteractionBuilder::Build( ::hla::Interaction< interactions::TransferContro
     REGISTER( "TransferType"              , &interactions::TransferControl::transferType );
     REGISTER( "TransferEntity"            , &interactions::TransferControl::transferEntity );
     REGISTER( "RecordSetData"             , &interactions::TransferControl::recordSetData );
-    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+    return DoRegister( name, interaction, true, true );
 }

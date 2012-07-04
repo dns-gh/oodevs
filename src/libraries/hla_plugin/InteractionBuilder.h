@@ -15,6 +15,7 @@
 namespace hla
 {
     template< typename T > class Interaction;
+    class Interaction_ABC;
 }
 
 namespace dispatcher
@@ -68,31 +69,35 @@ public:
     //@{
     //! @name RPR
     //@{
-    void Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const;
     //@}
     //! @name NETN
     //@{
-    void Build( ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const;
-    void Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnReadyToReceiveService >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnServiceStarted >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnConvoyEmbarkmentStatus >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnConvoyDisembarkmentStatus >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const;
     //@}
     //@}
 
 private:
+    //! @name Operations
+    //@{
+    bool DoRegister(const std::string& name, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe ) const;
+    //@}
     //! @name Member data
     //@{
     dispatcher::Logger_ABC& logger_;

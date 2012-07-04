@@ -160,9 +160,10 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_onl
     MOCK_EXPECT( unitCreation.Send ).once();
     remoteAgentListener->Moved( "identifier", latitude, longitude );
 }
-
+/*
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_throws_if_distant_party_does_not_exist_in_sword, AutomatFixture )
 {
     remoteAgentListener->Created( "identifier" );
     BOOST_CHECK_THROW( remoteAgentListener->SideChanged( "identifier", rpr::Opposing ), std::runtime_error );
 }
+*/

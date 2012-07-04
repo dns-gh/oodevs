@@ -45,7 +45,7 @@ namespace
     {
         std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
         if( !federate->Connect() )
-            throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "host", "localhost" ) + ":" + xis.attribute< std::string >( "port", "8989" ) + "'" );
+            throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "host", "default" ) + ":" + xis.attribute< std::string >( "port", "default" ) + "'" );
         const std::string name = xis.attribute< std::string >( "federation", "Federation" );
         const bool joined = federate->Join( name, xis.attribute< bool >( "time-constrained", true ), xis.attribute< bool >( "time-regulating", true ) );
         if( !joined )
@@ -141,7 +141,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , markingFactory_    ( new MarkingFactory( xis ) )
     , timeFactory_       ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_   ( new ::hla::SimpleTimeIntervalFactory() )
-    , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "" ), xis.attribute< std::string >( "port", "" ) ) )
     , federate_          ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , aggregateClass_    ( new HlaClass( *federate_, resolver,

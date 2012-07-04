@@ -14,6 +14,11 @@
 #include "InteractionBuilder.h"
 #include <memory>
 
+namespace hla
+{
+    template <typename T> class InteractionNotification_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -33,7 +38,10 @@ public:
     InteractionSender( ::hla::InteractionNotification_ABC< T >& receiver, const InteractionBuilder& builder )
         : interaction_( new ::hla::Interaction< T >( receiver ) )
     {
-        builder.Build( *interaction_ );
+        if(! builder.Build( *interaction_ ) )
+        {
+            interaction_.reset();
+        }
     }
 
     virtual ~InteractionSender() {}
@@ -43,7 +51,12 @@ public:
     //@{
     virtual void Send( const T& interaction )
     {
-        interaction_->Send( interaction );
+        if (IsSupported()) interaction_->Send( interaction );
+    }
+
+    virtual bool IsSupported() const
+    {
+        return interaction_.get() != NULL;
     }
     //@}
 

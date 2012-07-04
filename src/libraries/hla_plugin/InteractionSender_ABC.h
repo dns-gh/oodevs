@@ -35,6 +35,8 @@ public:
     //! @name Operations
     //@{
     virtual void Send( const Interaction& interaction ) = 0;
+    /// @return true if the interaction is supported
+    virtual bool IsSupported() const { return true; }
     //@}
 };
 
