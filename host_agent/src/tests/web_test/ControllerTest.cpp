@@ -87,6 +87,7 @@ namespace
         MOCK_METHOD( ParseMime, 0 );
         MOCK_METHOD( ParseForm, 0 );
         MOCK_METHOD( GetRemoteIp, 0 );
+        MOCK_METHOD( GetSid, 0 );
     };
 
     const boost::xpressive::sregex httpCodeRegex = boost::xpressive::sregex::compile( "^HTTP\\/1\\.1\\s+(\\d+)\\s+.+\r\n" );
