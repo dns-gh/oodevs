@@ -82,7 +82,9 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
     while ( nNbr-- )
     {
         file >> nID;
-        visionVolumes_.insert( PHY_Volume::FindVolume( nID ) );
+        const PHY_Volume* volume = PHY_Volume::FindVolume( nID );
+        if( volume )
+            visionVolumes_.insert( volume );
     }
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
@@ -115,14 +117,20 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bDead_
          << rPopulationDensity_;
     std::size_t size = visionVolumes_.size();
+    for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
+        if( !(*it) )
+            --size;
     file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {
-        unsigned id = (*it)->GetID();
-        file << id;
+        if( *it )
+        {
+            unsigned int id = (*it)->GetID();
+            file << id;
+        }
     }
-    unsigned last = pLastPosture_->GetID(),
-             current = pCurrentPosture_->GetID();
+    unsigned int last = ( pLastPosture_ ? pLastPosture_->GetID() : static_cast< unsigned int >( -1 ) );
+    unsigned int current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : static_cast< unsigned int >( -1 ) );
     file << last
          << current
          << rPostureCompletionPercentage_
