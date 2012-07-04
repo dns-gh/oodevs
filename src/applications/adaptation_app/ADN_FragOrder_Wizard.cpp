@@ -30,7 +30,9 @@ ADN_FragOrder_Wizard::ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vecto
     pFirstPage->SetCaptions( qApp->translate( "ADN_FragOrder_Wizard", "New fragmentary order creation" ), qApp->translate( "ADN_FragOrder_Wizard","Fragmentary orders" ) );
     pFirstPage_ = pFirstPage;
     secondPage_.reset( new ADN_FragOrder_WizardSecondPage( this ) );
+
     addPage( secondPage_.get() ,  qApp->translate( "ADN_FragOrder_Wizard", "Default assignation" ) );
+    setHelpEnabled( secondPage_.get(), false );
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_FragOrder_Wizard", "Creation completed" ),
         qApp->translate( "ADN_FragOrder_Wizard", "Click \"Done\" to create the new fragmentary order." ) );
 }
