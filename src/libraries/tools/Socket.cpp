@@ -55,7 +55,7 @@ namespace
 {
     const int bigSize = 1000;
     const int reclaimSize = 100;  
-    const int maxSize = 500000; // $$$$ RETEX Scipio CEPC performance tests
+    const int maxSize = 200000; // $$$$ RETEX Scipio CEPC performance tests : 500000 . RETEX EXE debut juillet: 200000...
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ bool Socket::HasAnsweredSinceLastTick()
 
 // -----------------------------------------------------------------------------
 // Name: Socket::IsQueueFlooded
-// Created: JSR 2012-03-13
+// Created: LDC 2012-03-13
 // -----------------------------------------------------------------------------
 bool Socket::IsQueueFlooded()
 {

@@ -360,9 +360,34 @@ void ClientsNetworker::OnNewTick()
     for( std::vector< std::string >::const_iterator it = errors.begin(); it != errors.end(); ++it )
     {
         MT_LOG_ERROR_MSG( "Client hasn't answered messages from last tick! Client should be checked or disconnected: " << *it );
+        std::map< std::string, int >::const_iterator itclients = unrespondingClients_.find( *it );
+        if( itclients == unrespondingClients_.end() )
+            unrespondingClients_[ *it ] = 1;
+        else
+            unrespondingClients_[ *it ] = unrespondingClients_[ *it ] + 1;
     }
+    std::vector< std::string > toRemove;
+    for( std::map< std::string, int >::iterator itclients = unrespondingClients_.begin(); itclients != unrespondingClients_.end(); ++itclients )
+    {
+        bool add = true;
+        for( std::vector< std::string >::const_iterator itErrors = errors.begin(); itErrors != errors.end() && add; ++itErrors )
+        {
+            if( *itErrors == itclients->first )
+                add = false;
+        }
+        if( add )
+            toRemove.push_back( itclients->first );
+    }
+    for( std::vector< std::string >::iterator itRemove = toRemove.begin(); itRemove != toRemove.end(); ++itRemove )
+        unrespondingClients_.erase( *itRemove );
     for( std::vector< std::string >::const_iterator it = disconnectList.begin(); it != disconnectList.end(); ++it )
     {
         ConnectionError( *it, "Message queue too big." );
+    }
+    int maxTicksNotResponding = 60; // $$$$ LDC 10 minutes for simulation in x1. Arbitrary. Ideally should read from debug.xml
+    for( std::map< std::string, int >::iterator itclients = unrespondingClients_.begin(); itclients != unrespondingClients_.end(); ++itclients )
+    {
+        if( itclients->second > maxTicksNotResponding )
+            ConnectionError( itclients->first, "Client has not answered for too many ticks" );
     }
 }

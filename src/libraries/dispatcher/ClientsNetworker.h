@@ -117,6 +117,7 @@ private:
     T_Clients clients_;
     T_Clients internals_;
     T_Broadcasters broadcasters_;
+    std::map< std::string, int > unrespondingClients_;
     //@}
 };
 
