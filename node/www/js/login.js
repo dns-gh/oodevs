@@ -224,4 +224,10 @@
     });
   });
 
+  $("#sign_in_form").keypress(function(e) {
+    if (e.which === 13) {
+      return $(".log_in").click();
+    }
+  });
+
 }).call(this);

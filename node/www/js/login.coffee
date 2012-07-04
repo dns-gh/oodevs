@@ -30,3 +30,7 @@ $(".log_in").click ->
             window.location.href = uri
         ->
             print_error "Invalid username/email password combination"
+
+$("#sign_in_form").keypress (e) ->
+    if e.which == 13
+        $(".log_in").click()
