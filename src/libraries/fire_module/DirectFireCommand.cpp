@@ -52,7 +52,7 @@ DirectFireCommand::~DirectFireCommand()
 // -----------------------------------------------------------------------------
 void DirectFireCommand::Execute( const wrapper::View& model ) const
 {
-    const wrapper::View& entity = model[ "entities"][ identifier_ ];
+    const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];
     const wrapper::View& enemy = model[ "knowledges" ][ id ][ enemy_ ];
     int nResult = role_.FirePion( model, entity, enemy, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, nComposanteFiredType_, mustReport_, ammoDotationClass_ );
@@ -66,7 +66,7 @@ void DirectFireCommand::Execute( const wrapper::View& model ) const
 // -----------------------------------------------------------------------------
 void DirectFireCommand::ExecutePaused( const wrapper::View& model ) const
 {
-    const wrapper::View& entity = model[ "entities"][ identifier_ ];
+    const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const unsigned int id = entity[ "knowledges" ];
     const wrapper::View& enemy = model[ "knowledges" ][ id ][ enemy_ ];
     role_.FirePionSuspended( entity, enemy, !mustReport_ );
