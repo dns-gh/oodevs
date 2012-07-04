@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -98,6 +99,7 @@ public class Handler extends HttpServlet {
             root.put("u_type", obj.get("type").toString());
             root.put("u_temporary", obj.get("temporary").toString());
             root.put("u_language", obj.get("language").toString());
+            root.put("sid", obj.get("sid").toString());
         }
         try {
             ctx.process(root, reply.getWriter());
@@ -113,13 +115,26 @@ public class Handler extends HttpServlet {
             exchange.addRequestHeader(name, tokens.nextElement());
     }
 
+    private static String GetSessionId(final HttpServletRequest req) {
+        final Cookie[] cookies = req.getCookies();
+        if (cookies != null)
+            for (final Cookie it : cookies)
+                if (it.getName().equals("sid"))
+                    return it.getValue();
+        final String[] params = req.getParameterValues("sid");
+        if (params != null)
+            for (final String it : params)
+                return it;
+        return null;
+    }
+
     private String isAuthenticated(final HttpServletRequest req) throws IOException {
         try {
+            final String sid = GetSessionId(req);
+            if (sid == null)
+                return null;
             final ContentExchange exchange = new ContentExchange(true);
-            String uri = "http://localhost:" + host_ + "/is_authenticated";
-            final String query = req.getQueryString();
-            if (query != null && !query.isEmpty())
-                uri += "?" + query;
+            final String uri = "http://localhost:" + host_ + "/is_authenticated?sid=" + sid;
             exchange.setURL(uri);
             tryAddHeader(exchange, req, "Remote-Address");
             client_.send(exchange);

@@ -7,10 +7,6 @@
   };
 
   raw_ajax = function(url, data, success, error, type) {
-    if (data == null) {
-      data = {};
-    }
-    data.sid = parse_parameters().sid;
     return $.ajax({
       cache: false,
       data: data,
@@ -207,7 +203,11 @@
       uri = get_url(window.location.pathname);
       first = true;
       uri_params = parse_parameters();
-      uri_params.sid = obj.sid;
+      delete uri_params.sid;
+      $.cookie("sid", obj.sid, {
+        expires: 7,
+        path: '/'
+      });
       for (k in uri_params) {
         v = uri_params[k];
         uri += first ? "?" : "&";

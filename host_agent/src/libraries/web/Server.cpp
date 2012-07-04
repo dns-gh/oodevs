@@ -45,12 +45,17 @@ typedef std::map< std::string, std::string > T_Parameters;
 typedef boost::asio::deadline_timer Timer;
 const int timeout_seconds = 10;
 
-boost::optional< std::string > GetHeader( const HttpServer::request& request, const std::string& name )
+T_Parameters ParseParameters( const std::string& input )
 {
-    BOOST_FOREACH( const HttpServer::request::header_type& header, request.headers )
-        if( boost::iequals( header.name, name ) )
-            return header.value;
-    return boost::none;
+    std::vector< std::string > tokens;
+    boost::algorithm::split( tokens, input, boost::is_any_of( "&" ) );
+    size_t pos;
+    T_Parameters reply;
+    BOOST_FOREACH( const std::string& item, tokens )
+        if( ( pos = item.find( '=' ) ) != std::string::npos )
+            reply.insert( std::make_pair( item.substr( 0, pos ),
+                          boost::network::uri::decoded( item.substr( pos+1 ) ) ) );
+    return reply;
 }
 
 T_Parameters ParseParameters( const boost::network::uri::uri& uri )
@@ -59,6 +64,16 @@ T_Parameters ParseParameters( const boost::network::uri::uri& uri )
     boost::network::uri::query_map( uri, reply );
     BOOST_FOREACH( T_Parameters::value_type& value, reply )
         value.second = boost::network::uri::decoded( value.second );
+    return reply;
+}
+
+T_Parameters ParseHeaders( const HttpServer::request& request )
+{
+    T_Parameters reply;
+    BOOST_FOREACH( const HttpServer::request::header_type& header, request.headers )
+        reply.insert( std::make_pair(
+                      boost::algorithm::to_lower_copy( header.name ),
+                      header.value ) );
     return reply;
 }
 
@@ -71,6 +86,17 @@ boost::optional< typename T::mapped_type > FindFrom( const T& data, const typena
     return it->second;
 }
 
+std::string FindSid( const T_Parameters& headers, const T_Parameters& parameters )
+{
+    boost::optional< std::string > opt = FindFrom( headers, "cookie" );
+    if( opt != boost::none )
+        if( ( opt = FindFrom( ParseParameters( *opt ), "sid" ) ) != boost::none )
+            return *opt;
+    if( ( opt = FindFrom( parameters, "sid" ) ) != boost::none )
+        return *opt;
+    return std::string();
+}
+
 const boost::xpressive::sregex portRegex = boost::xpressive::sregex::compile( ":\\d+$" );
 
 class WebRequest : public Request_ABC
@@ -79,8 +105,10 @@ public:
     WebRequest( const HttpServer::request& request )
         : request_   ( request )
         , uri_       ( "http://" + request_.source + request_.destination )
+        , headers_   ( ParseHeaders( request ) )
         , parameters_( ParseParameters( uri_ ) )
         , source_    ( boost::xpressive::regex_replace( request_.source, portRegex, "" ) )
+        , sid_       ( FindSid( headers_, parameters_ ) )
     {
         // NOTHING
     }
@@ -102,7 +130,7 @@ public:
 
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const
     {
-        return ::GetHeader( request_, name );
+        return FindFrom( headers_, boost::to_lower_copy( name ) );
     }
 
     virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ )
@@ -125,6 +153,11 @@ public:
         return source_;
     }
 
+    virtual std::string GetSid() const
+    {
+        return sid_;
+    }
+
     virtual const HttpServer::request& GetRequest() const
     {
         return request_;
@@ -133,8 +166,10 @@ public:
 private:
     const HttpServer::request& request_;
     const boost::network::uri::uri uri_;
+    const T_Parameters headers_;
     const T_Parameters parameters_;
     const std::string source_;
+    const std::string sid_;
 };
 
 template< void (*Callback)( HttpServer::connection_ptr, size_t, AsyncStream&, Timer& deadline ) >
@@ -183,7 +218,7 @@ public:
         , deadline_ ( server.get_service() )
         , size_     ( 0 )
     {
-        const boost::optional< std::string > opt = ::GetHeader( request, "Content-Length" );
+        const boost::optional< std::string > opt = GetHeader( "Content-Length" );
         if( opt != boost::none )
             size_ = boost::lexical_cast< size_t >( *opt );
     }
@@ -232,13 +267,7 @@ public:
         std::copy( std::istreambuf_iterator< char >( stream ),
                    std::istreambuf_iterator< char >(),
                    std::ostreambuf_iterator< char >( full ) );
-        std::vector< std::string > tokens;
-        boost::algorithm::split( tokens, full.str(), boost::is_any_of( "&" ) );
-        size_t pos;
-        BOOST_FOREACH( const std::string& item, tokens )
-            if( ( pos = item.find( '=' ) ) != std::string::npos )
-                form_.insert( std::make_pair( item.substr( 0, pos ),
-                              boost::network::uri::decoded( item.substr( pos+1 ) ) ) );
+        form_ = ParseParameters( full.str() );
     }
 
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const

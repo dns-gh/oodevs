@@ -11,8 +11,6 @@ get_url = (url) ->
     return window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + url
 
 raw_ajax = (url, data, success, error, type) ->
-    data = {} unless data?
-    data.sid = parse_parameters().sid
     $.ajax
         cache:    false
         data:     data,

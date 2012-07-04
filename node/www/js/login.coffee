@@ -20,7 +20,8 @@ $(".log_in").click ->
             uri = get_url window.location.pathname
             first = true
             uri_params = parse_parameters()
-            uri_params.sid = obj.sid
+            delete uri_params.sid
+            $.cookie "sid", obj.sid, expires: 7, path: '/'
             for k,v of uri_params
                 uri += if first then "?" else "&"
                 first = false

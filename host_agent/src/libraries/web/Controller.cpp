@@ -603,10 +603,7 @@ std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 {
     if( !secure_ )
         return "{}";
-    const boost::optional< std::string > opt = request.GetParameter( "sid" );
-    if( opt == boost::none )
-        return std::string();
-    return users_.IsAuthenticated( *opt, GetSource( request ) );
+    return users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -639,7 +636,6 @@ std::string Controller::UserLogin( Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::UserLogout( const Request_ABC& request )
 {
-    const std::string sid = RequireParameter< std::string >( "sid", request );
-    users_.Logout( sid );
+    users_.Logout( request.GetSid() );
     return WriteHttpReply( Ok );
 }

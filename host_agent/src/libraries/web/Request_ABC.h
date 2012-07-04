@@ -37,6 +37,7 @@ struct Request_ABC : public boost::noncopyable
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const = 0;
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const = 0;
     virtual std::string GetRemoteIp() const = 0;
+    virtual std::string GetSid() const = 0;
     //@}
 
     //! @name Mime methods
