@@ -21,7 +21,6 @@ namespace host
 {
     struct Sql_ABC;
     struct UuidFactory_ABC;
-    typedef boost::property_tree::ptree Tree;
 }
 
 namespace host
@@ -45,8 +44,8 @@ struct UserController : public web::UserController_ABC
     //! @name UserController_ABC Methods
     //@{
     virtual std::string Login( const std::string& user, const std::string& password, const std::string& source );
-    virtual bool IsAuthenticated( const std::string& token, const std::string& source );
-    virtual void Logout( const std::string& token );
+    virtual std::string IsAuthenticated( const std::string& token, const std::string& source );
+    virtual void        Logout( const std::string& token );
     //@}
 
 private:

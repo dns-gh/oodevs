@@ -98,14 +98,16 @@ private:
 
     //! @name User Methods
     //@{
-    std::string UserLogin      ( Request_ABC& request );
-    std::string UserLogout     ( const Request_ABC& request );
-    bool        IsAuthenticated( const Request_ABC& request );
+    std::string UserLogin          ( Request_ABC& request );
+    std::string UserLogout         ( const Request_ABC& request );
+    std::string UserIsAuthenticated( const Request_ABC& request );
+
     //@}
 
     //! @name Helpers
     //@{
-    std::string GetSource( const Request_ABC& request );
+    bool        IsAuthenticated( const Request_ABC& request );
+    std::string GetSource      ( const Request_ABC& request );
     //@}
 
 private:

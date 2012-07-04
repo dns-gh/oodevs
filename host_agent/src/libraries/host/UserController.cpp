@@ -186,13 +186,19 @@ void UserController::SetupDatabase()
 namespace
 {
 // -----------------------------------------------------------------------------
-// Name: MakeToken
-// Created: BAX 2012-06-28
+// Name: MakeUser
+// Created: BAX 2012-07-04
 // -----------------------------------------------------------------------------
-std::string MakeToken( const std::string& token )
+std::string MakeUser( const std::string& sid, const std::string& username, const std::string& name,
+                      const std::string& type, bool temporary, const std::string& lang )
 {
     Tree rpy;
-    rpy.put( "token", token );
+    rpy.put( "sid", sid );
+    rpy.put( "username", username );
+    rpy.put( "name", name );
+    rpy.put( "type", type );
+    rpy.put( "temporary", temporary );
+    rpy.put( "language", lang );
     return ToJson( rpy );
 }
 
@@ -213,7 +219,7 @@ std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Sql_ABC::T_T
     st->Bind( token );
     st->Next();
     db.Commit( *tr );
-    return MakeToken( token );
+    return token;
 }
 }
 
@@ -227,7 +233,8 @@ std::string UserController::Login( const std::string& username, const std::strin
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT     users.id, users.hash, tokens.token "
+            "SELECT     users.id, users.hash, users.name, users.type,"
+            "           users.temporary, users.language, tokens.token "
             "FROM       users "
             "LEFT JOIN  tokens "
             "ON         users.id = tokens.id_users "
@@ -241,11 +248,14 @@ std::string UserController::Login( const std::string& username, const std::strin
             return std::string();
         const int id = st->ReadInt();
         const std::string hash = st->ReadText();
+        const std::string name = st->ReadText();
+        const std::string type = st->ReadText();
+        const bool temporary = st->ReadBool();
+        const std::string lang = st->ReadText();
         if( !ValidatePassword( password, hash ) )
             return std::string();
-        if( st->IsColumnDefined() )
-            MakeToken( st->ReadText() );
-        return CreateToken( uuids_, db_, tr, id, source );
+        const std::string sid = st->IsColumnDefined() ? st->ReadText() : CreateToken( uuids_, db_, tr, id, source );
+        return MakeUser( sid, username, name, type, temporary, lang );
     }
     catch( const std::exception& err )
     {
@@ -259,30 +269,38 @@ std::string UserController::Login( const std::string& username, const std::strin
 // Name: UserController::IsAuthenticated
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-bool UserController::IsAuthenticated( const std::string& token, const std::string& source )
+std::string UserController::IsAuthenticated( const std::string& token, const std::string& source )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT COUNT( tokens.id ) "
+            "SELECT users.username, users.name, users.type, users.temporary, users.language "
             "FROM   tokens "
             "JOIN   users "
             "ON     users.id = tokens.id_users "
             "WHERE  tokens.source = ? "
             "AND    tokens.token  = ? "
+            "LIMIT  1 "
             );
         st->Bind( source );
         st->Bind( token );
-        st->Next();
-        return st->ReadBool();
+        bool valid = st->Next();
+        if( !valid )
+            return std::string();
+        const std::string username = st->ReadText();
+        const std::string name = st->ReadText();
+        const std::string type = st->ReadText();
+        const bool temporary = st->ReadBool();
+        const std::string lang = st->ReadText();
+        return MakeUser( token, username, name, type, temporary, lang );
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to authenticate token";
     }
-    return false;
+    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -296,7 +314,8 @@ void UserController::Logout( const std::string& token )
         Sql_ABC::T_Transaction tr = db_.Begin();
         Sql_ABC::T_Statement st = db_.Prepare( *tr, "DELETE FROM tokens WHERE token = ?" );
         st->Bind( token );
-        st->Next();
+        while( st->Next() )
+            continue;
         db_.Commit( *tr );
     }
     catch( const std::exception& err )

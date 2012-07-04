@@ -265,8 +265,12 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/list_exercises")      return ListExercises( request );
         if( uri == "/count_exercises" )    return CountExercises( request );
         // users
-        if( uri == "/is_authenticated" )   return WriteHttpReply( IsAuthenticated( request ) ? Ok : Unauthorized );
         if( uri == "/logout" )             return UserLogout( request );
+        if( uri == "/is_authenticated" )
+        {
+            const std::string user = UserIsAuthenticated( request );
+            return WriteHttpReply( user.empty() ? Unauthorized : Ok, user );
+        }
     }
     catch( const HttpException& err )
     {
@@ -592,17 +596,26 @@ std::string Controller::GetSource( const Request_ABC& request )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::isAuthenticated
+// Name: Controller::UserIsAuthenticated
+// Created: BAX 2012-07-02
+// -----------------------------------------------------------------------------
+std::string Controller::UserIsAuthenticated( const Request_ABC& request )
+{
+    if( !secure_ )
+        return std::string();
+    const boost::optional< std::string > opt = request.GetParameter( "sid" );
+    if( opt == boost::none )
+        return std::string();
+    return users_.IsAuthenticated( *opt, GetSource( request ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::IsAuthenticated
 // Created: BAX 2012-07-02
 // -----------------------------------------------------------------------------
 bool Controller::IsAuthenticated( const Request_ABC& request )
 {
-    if( !secure_ )
-        return true;
-    const boost::optional< std::string > opt = request.GetParameter( "sid" );
-    if( opt == boost::none )
-        return false;
-    return users_.IsAuthenticated( *opt, GetSource( request ) );
+    return !UserIsAuthenticated( request ).empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -614,7 +627,10 @@ std::string Controller::UserLogin( Request_ABC& request )
     request.ParseForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string password = RequireParameter< std::string >( "password", request );
-    return WriteHttpReply( users_.Login( username, password, GetSource( request ) ) );
+    const std::string user     = users_.Login( username, password, GetSource( request ) );
+    if( user.empty() )
+        return WriteHttpReply( Unauthorized );
+    return WriteHttpReply( Ok, user );
 }
 
 // -----------------------------------------------------------------------------

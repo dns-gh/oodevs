@@ -11,12 +11,10 @@
 #define USER_CONTROLLER_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/property_tree/ptree_fwd.hpp>
+#include <string>
 
 namespace web
 {
-    typedef boost::property_tree::ptree Tree;
-
 // =============================================================================
 /** @class  UserController_ABC
     @brief  UserController_ABC interface
@@ -34,8 +32,8 @@ struct UserController_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual std::string Login( const std::string& user, const std::string& password, const std::string& source ) = 0;
-    virtual bool IsAuthenticated( const std::string& token, const std::string& source ) = 0;
-    virtual void Logout( const std::string& token ) = 0;
+    virtual std::string IsAuthenticated( const std::string& token, const std::string& source ) = 0;
+    virtual void        Logout( const std::string& token ) = 0;
     //@}
 };
 }
