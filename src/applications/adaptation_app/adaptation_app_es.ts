@@ -11,6 +11,14 @@
         <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No PC defined for automat %1, database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC, database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtectionsListView</name>

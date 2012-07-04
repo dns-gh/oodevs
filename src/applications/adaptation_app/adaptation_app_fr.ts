@@ -11,6 +11,14 @@
         <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
         <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
     </message>
+    <message>
+        <source>No PC defined for automat %1, database cannot be saved.</source>
+        <translation>L&apos;automate %1 n&apos;a pas de PC, la base ne peut pas être sauvée.</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC, database cannot be saved.</source>
+        <translation>L&apos;automate %1 requiert au moins un PC, la base ne peut pas être sauvée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtectionsListView</name>
