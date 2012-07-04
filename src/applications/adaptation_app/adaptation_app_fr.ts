@@ -15,6 +15,14 @@
         <source>No geometry defined for object %1, database cannot be saved.</source>
         <translation>Pas de géométrie définie pour l&apos;objet %1, la base ne peut pas être sauvée.</translation>
     </message>
+    <message>
+        <source>No PC defined for automat %1, database cannot be saved.</source>
+        <translation>L&apos;automate %1 n&apos;a pas de PC, la base ne peut pas être sauvée.</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC, database cannot be saved.</source>
+        <translation>L&apos;automate %1 requiert au moins un PC, la base ne peut pas être sauvée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtectionsListView</name>

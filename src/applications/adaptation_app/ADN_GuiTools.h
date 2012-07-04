@@ -36,6 +36,8 @@ public:
     static bool MissingConvoyWarning();
     static bool MissingBreakdownWarning( const std::string& name );
     static bool MissingGeometry( const std::string& name );
+    static bool MissingPCOnAutomat( const std::string& name );
+    static bool BadAutomatComposition( const std::string& name );
 };
 
 #endif // __ADN_GuiTools_h_

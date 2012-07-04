@@ -49,8 +49,7 @@ public:
         ADN_Type_Int                                     max_;
     };
 
-    typedef ADN_Type_Vector_ABC<UnitInfos> T_UnitInfosVector;
-    typedef T_UnitInfosVector::iterator    IT_UnitInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UnitInfos>, UnitInfosVector );
 
 // *****************************************************************************
     class AutomatonInfos
@@ -70,6 +69,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadUnit( xml::xistream& input );
         void WriteArchive( xml::xostream& output, int nMosId );
+        bool IsValidDatabase() const;
 
     public:
         ADN_Type_String                                       strName_;
@@ -81,16 +81,16 @@ public:
         ADN_Type_Time                                         strengthRatioFeedbackTime_;
     };
 
-    typedef ADN_Type_Vector_ABC<AutomatonInfos>  T_AutomatonInfosVector;
-    typedef T_AutomatonInfosVector::iterator      IT_AutomatonInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<AutomatonInfos>, AutomatonInfosVector )
 
 // *****************************************************************************
 public:
     ADN_Automata_Data();
     virtual ~ADN_Automata_Data();
 
-    void                        FilesNeeded(T_StringList& l) const;
-    void                        Reset();
+    void FilesNeeded(T_StringList& l) const;
+    void Reset();
+    bool IsValidDatabase();
 
     T_AutomatonInfosVector&  GetAutomata();
     AutomatonInfos*          FindAutomaton( const std::string& strName );

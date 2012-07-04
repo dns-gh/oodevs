@@ -79,10 +79,12 @@ void ADN_AutomatLog_ListView::BuildHeaders()
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::BuildBody()
 {
-    // Automat
+    // Automats
     for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
+        if( automaton.vSubUnits_.empty() )
+            continue;
         ADN_Rich_ListViewItem* pAutomatItem = new ADN_Rich_ListViewItem( this, true );
         pAutomatItem->setText( eColumnTarget, automaton.strName_.GetData().c_str() );
 
@@ -91,80 +93,37 @@ void ADN_AutomatLog_ListView::BuildBody()
         pAutomatTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
         pAutomatTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
-        // Unit
-        uint nUnitInAutomat = 0;
+        // Total units and equipment
+        uint nUnitInAutomat = 1; // pc
         uint nCompInAutomat = 0;
-        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nUnitInAutomat == 0 || it2 != automaton.vSubUnits_.end(); )
+
+        // Units - PC
+        assert( automaton.ptrUnit_.GetData() != 0 );
+        ADN_Units_Data::UnitInfos* pUnit = automaton.ptrUnit_.GetData();
+        std::string pcName = pUnit->strName_.GetData();
+        nCompInAutomat += AddUnit( pAutomatItem, QString( "[PC] - %1" ).arg( pcName.c_str() ), *pUnit, 1 );
+
+        // Units - Not PC
+        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); ++it2 )
         {
-            ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
-            ADN_Units_Data::UnitInfos*    pUnit;
-            ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( pAutomatItem, true );
-
-            uint nUnit = 0;
-            /*if( nUnitInAutomat == 0 )
+            ADN_Automata_Data::UnitInfos* pUnitInfos = *it2;
+            assert( pUnitInfos->ptrUnit_.GetData() != 0 );
+            pUnit = pUnitInfos->ptrUnit_.GetData();
+            std::string pionName = pUnit->strName_.GetData();
+            uint quantity = pUnitInfos->min_.GetData();
+            if( quantity == 0 )
+                continue;
+            if( pionName == pcName )
             {
-                pUnit = automaton.ptrUnit_.GetData();
-                ++nUnit;
+                if( quantity == 1 )
+                    continue;
+                else if( quantity > 1 )
+                    --quantity;
             }
-            else*/
-            {
-                pUnitInfos = *it2;
-                assert( pUnitInfos->ptrUnit_.GetData() != 0 );
-                pUnit = pUnitInfos->ptrUnit_.GetData();
-                ++it2;
-                nUnit += pUnitInfos->min_.GetData();
-            }
-            ADN_Units_Data::UnitInfos& unit = *pUnit;
-            /*if( nUnitInAutomat == 0 )
-                pUnitItem->setText( eColumnTarget, QString( "[PC] - " ) + unit.strName_.GetData().c_str() );
-            else*/
-                pUnitItem->setText( eColumnTarget, unit.strName_.GetData().c_str() );
-            pUnitItem->setText( eColumnNbrUnit, QString::number( nUnit ) );
-            nUnitInAutomat += nUnit;
-
-            // Total Component/Dotation
-            ADN_Rich_ListViewItem* pUnitTotalItem = new ADN_Rich_ListViewItem( pUnitItem, true );
-            pUnitTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
-            pUnitTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
-
-            // Component
-            uint nCompInUnit = 0;
-            for( ADN_Units_Data::IT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
-            {
-                ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, true );
-                pCompItem->setText( eColumnTarget, (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
-                pCompItem->setText( eColumnNbrComp, QString::number( (*it3)->nNb_.GetData() ) );
-                nCompInUnit += (*it3)->nNb_.GetData();
-
-                // Consumption
-                ADN_Composantes_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->ptrComposante_.GetData()->consumptions_.vConsumptions_;
-                ADN_Composantes_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->resources_.categories_;
-                for( ADN_Composantes_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
-                {
-                    ADN_Composantes_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
-                    for( ; itCategory != categories.end(); ++itCategory )
-                        if( (*itCategory)->ptrCategory_.GetData() == (*itCompCons)->ptrCategory_.GetData() )
-                            break;
-                    if( itCategory != categories.end() )
-                        InsertCategory( *pCompItem, **itCategory, **itCompCons );
-                }
-                for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
-                    InsertCategory( *pCompItem, **it );
-                pCompItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-                pCompItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-                pCompItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, GetMinEngineStartedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-                AddEntryToTotal( compTotal_, unitTotal_, (*it3)->nNb_.GetData() );
-                ClearEntry( compTotal_ );
-            }
-            pUnitItem->setText( eColumnNbrComp, QString::number( nCompInUnit ) );
-            pUnitItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( unitTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-            pUnitItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( unitTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-            pUnitItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, GetMinEngineStartedAutonomy( unitTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-            AddEntryToTotal( unitTotal_, automatTotal_, nUnit );
-            FillTotalItem( *pUnitTotalItem, unitTotal_ );
-            ClearEntry( unitTotal_ );
-            nCompInAutomat += nCompInUnit * nUnit;
+            nCompInAutomat += AddUnit( pAutomatItem, pionName.c_str(), *pUnit, quantity );
+            nUnitInAutomat += quantity;
         }
+
         pAutomatItem->setText( eColumnNbrUnit, QString::number( nUnitInAutomat ) );
         pAutomatItem->setText( eColumnNbrComp, QString::number( nCompInAutomat ) );
         pAutomatItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( automatTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
@@ -176,10 +135,66 @@ void ADN_AutomatLog_ListView::BuildBody()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_AutomatLog_ListView::AddUnit
+// Created: ABR 2012-07-04
+// -----------------------------------------------------------------------------
+uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QString& name, const ADN_Units_Data::UnitInfos& unit, uint quantity )
+{
+    ADN_Rich_ListViewItem* pUnitItem = new ADN_Rich_ListViewItem( parent, true );
+
+    // Name/Quantity
+    pUnitItem->setText( eColumnTarget, name );
+    pUnitItem->setText( eColumnNbrUnit, QString::number( quantity ) );
+
+    // Total Component/Dotation
+    ADN_Rich_ListViewItem* pUnitTotalItem = new ADN_Rich_ListViewItem( pUnitItem, true );
+    pUnitTotalItem->setText( eColumnTarget, tools::translate( "ADN_AutomatLog_ListView", "Total" ) );
+    pUnitTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
+
+    // Component
+    uint nCompInUnit = 0;
+    for( ADN_Units_Data::CIT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
+    {
+        ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, true );
+        pCompItem->setText( eColumnTarget, (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
+        pCompItem->setText( eColumnNbrComp, QString::number( (*it3)->nNb_.GetData() ) );
+        nCompInUnit += (*it3)->nNb_.GetData();
+
+        // Consumption
+        ADN_Composantes_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->ptrComposante_.GetData()->consumptions_.vConsumptions_;
+        ADN_Composantes_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->resources_.categories_;
+        for( ADN_Composantes_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
+        {
+            ADN_Composantes_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
+            for( ; itCategory != categories.end(); ++itCategory )
+                if( (*itCategory)->ptrCategory_.GetData() == (*itCompCons)->ptrCategory_.GetData() )
+                    break;
+            if( itCategory != categories.end() )
+                InsertCategory( *pCompItem, **itCategory, **itCompCons );
+        }
+        for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
+            InsertCategory( *pCompItem, **it );
+        pCompItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+        pCompItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+        pCompItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, GetMinEngineStartedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+        AddEntryToTotal( compTotal_, unitTotal_, (*it3)->nNb_.GetData() );
+        ClearEntry( compTotal_ );
+    }
+    pUnitItem->setText( eColumnNbrComp, QString::number( nCompInUnit ) );
+    pUnitItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( unitTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+    pUnitItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( unitTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+    pUnitItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, GetMinEngineStartedAutonomy( unitTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+    AddEntryToTotal( unitTotal_, automatTotal_, quantity );
+    FillTotalItem( *pUnitTotalItem, unitTotal_ );
+    ClearEntry( unitTotal_ );
+    return ( quantity > 0 ) ? nCompInUnit * quantity : nCompInUnit;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_AutomatLog_ListView::InsertCategory
 // Created: SBO 2006-01-05
 // -----------------------------------------------------------------------------
-void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                         parent,
+void ADN_AutomatLog_ListView::InsertCategory( Q3ListViewItem&                        parent,
                                               ADN_Composantes_Data::CategoryInfos&   category,
                                               ADN_Composantes_Data::ConsumptionItem& conso )
 {

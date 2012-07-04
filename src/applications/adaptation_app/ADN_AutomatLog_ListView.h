@@ -13,9 +13,11 @@
 #include "ADN_ListView.h"
 #include "ADN_Data_ABC.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_Units_Data.h"
 #include <boost/noncopyable.hpp>
 
 class ADN_Automata_Data;
+class ADN_Rich_ListViewItem;
 
 // =============================================================================
 // Created: APE 2005-04-04
@@ -95,6 +97,7 @@ private:
 
     //! @name CategoryEntry tools
     //@{
+    uint AddUnit( ADN_Rich_ListViewItem* parent, const QString& name, const ADN_Units_Data::UnitInfos& unit, uint quantity );
     double GetMinMoveAutonomy         ( const T_CategoryEntry& entry ) const;
     double GetMinEngineStoppedAutonomy( const T_CategoryEntry& entry ) const;
     double GetMinEngineStartedAutonomy( const T_CategoryEntry& entry ) const;

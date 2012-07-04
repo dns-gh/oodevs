@@ -252,14 +252,14 @@
     <unit max-occurs="1" min-occurs="1" type="TRANS.Heavy transportation platoon"/>
   </automat>
   <automat decisional-model="Safety_Automat" id="171" name="SAFETY.Civil Protection" type="Automate Emergency">
-    <unit max-occurs="1" min-occurs="1" type="SAFETY.Militia"/>
+    <unit type="SAFETY.Militia"/>
     <unit type="SAFETY.Buses"/>
     <unit type="SAFETY.Firefigthers"/>
     <unit type="SAFETY.Public Works Vehicles"/>
     <unit type="SAFETY.Rescue Boats"/>
     <unit type="SAFETY.Decontamination Team"/>
-    <unit command-post="true" type="SAFETY.Ambulance"/>
-    <unit type="SAFETY.Police Unit"/>
+    <unit type="SAFETY.Ambulance"/>
+    <unit command-post="true" min-occurs="1" type="SAFETY.Police Unit"/>
     <unit type="SAFETY.Medical advanced post"/>
     <unit type="SAFETY.Rescue Helicopters"/>
   </automat>
@@ -273,4 +273,4 @@
     <unit command-post="true" min-occurs="1" type="SAFETY.Terrorists"/>
   </automat>
 </automats>
-<!-- signature="2398717864" -->
+<!-- signature="3412821813" -->

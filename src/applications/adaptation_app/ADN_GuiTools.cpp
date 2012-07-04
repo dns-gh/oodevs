@@ -94,3 +94,31 @@ bool ADN_GuiTools::MissingGeometry( const std::string& name )
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::MissingPCOnAutomat
+// Created: ABR 2012-07-04
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::MissingPCOnAutomat( const std::string& name )
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "No PC defined for automat %1, database cannot be saved." ).arg( name.c_str() ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::BadAutomatComposition
+// Created: ABR 2012-07-04
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::BadAutomatComposition( const std::string& name )
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "Automat %1 requires at least one PC, database cannot be saved." ).arg( name.c_str() ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}

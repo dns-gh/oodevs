@@ -14,8 +14,8 @@
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
+#include "ADN_GuiTools.h"
 #include "ADN_SaveFile_Exception.h"
-
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -220,6 +220,27 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output, int
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatonInfos::IsValidDatabase
+// Created: ABR 2012-07-04
+// -----------------------------------------------------------------------------
+bool ADN_Automata_Data::AutomatonInfos::IsValidDatabase() const
+{
+    if( vSubUnits_.empty() )
+        return ADN_GuiTools::MissingPCOnAutomat( strName_.GetData() );
+
+    const ADN_Units_Data::UnitInfos& pc = *ptrUnit_.GetData();
+    for( CIT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+    {
+        const ADN_Automata_Data::UnitInfos& unit = **it;
+        assert( unit.ptrUnit_.GetData() != 0 );
+        const ADN_Units_Data::UnitInfos& agent = *unit.ptrUnit_.GetData();
+        if( unit.min_.GetData() == 0 && pc.strName_.GetData() == agent.strName_.GetData() )
+            return ADN_GuiTools::BadAutomatComposition( strName_.GetData() );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data constructor
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
@@ -333,5 +354,17 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& 
         if( pAutomaton->ptrModel_.GetData() == &model )
             result << pAutomaton->strName_.GetData().c_str();
     }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_Data::IsValidDatabase
+// Created: ABR 2012-07-04
+// -----------------------------------------------------------------------------
+bool ADN_Automata_Data::IsValidDatabase()
+{
+    bool result = true;
+    for( CIT_AutomatonInfosVector it = vAutomata_.begin(); result && it != vAutomata_.end(); ++it )
+        result = result && ( *it )->IsValidDatabase();
     return result;
 }
