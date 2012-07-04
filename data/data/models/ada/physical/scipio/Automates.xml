@@ -13,16 +13,17 @@
     <unit max-occurs="2" min-occurs="2" type="ASS . Artillerie Animation LRM"/>
   </automat>
   <automat decisional-model="Masalife.Automate.ASS.Batterie Reco" id="661" name="ASS . Batterie Reco COBRA" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie COBRA"/>
-    <unit max-occurs="4" min-occurs="4" type="ASS . Equipe Reco COBRA"/>
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC BIE COBRA"/>
+    <unit max-occurs="4" min-occurs="4" type="ASS . Reco COBRA"/>
   </automat>
   <automat decisional-model="Masalife.Automate.ASS.Batterie Reco" id="662" name="ASS . Section Reco Mortier" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Equipe Reco Mortier"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Equipe Reco Mortier"/>
   </automat>
   <automat decisional-model="Masalife.Automate.ASS.COBRA" id="663" name="ASS . Batterie COBRA" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie COBRA"/>
-    <unit max-occurs="2" min-occurs="2" type="ASS . Station COBRA"/>
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC BIE COBRA"/>
+    <unit max-occurs="2" min-occurs="2" type="ASS . Section RADAR COBRA"/>
+    <unit max-occurs="2" min-occurs="2" type="ASS . Reco COBRA"/>
   </automat>
   <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="664" name="ASS . Batterie Mortier 120  4 pieces" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie Mortier 120"/>
@@ -1525,4 +1526,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="0551838590" -->
+<!-- signature="3233477006" -->
