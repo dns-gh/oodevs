@@ -144,7 +144,7 @@ void SvgLocationDrawer::VisitCircle( const geometry::Point2f& center, float radi
 {
     T_PointVector points;
     points.reserve( circle_.size() );
-    for( int i = 0; i < circle_.size(); ++i )
+    for( std::size_t i = 0; i < circle_.size(); ++i )
         points.push_back( center + radius * circle_[ i ] );
     DrawShape( points );
 }

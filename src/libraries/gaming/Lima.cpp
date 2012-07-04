@@ -103,7 +103,7 @@ void Lima::MultipleSelect( kernel::ActionController& controller, const std::vect
     std::vector< const Lima* > first;
     std::vector< const kernel::TacticalLine_ABC* > second;
     std::vector< const Entity_ABC* > third;
-    for( int i = 0; i < elements.size(); ++i )
+    for( std::size_t i = 0; i < elements.size(); ++i )
     {
         first.push_back( static_cast< const Lima* >( elements[ i ] ) );
         second.push_back( static_cast< const kernel::TacticalLine_ABC* >( elements[ i ] ) );

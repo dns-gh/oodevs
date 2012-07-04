@@ -328,7 +328,7 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     selected_ = 0;
     tooltiped_ = 0;
     kernel::ActionController::T_Selectables selectables;
-    for( int i = 0; i < entities_.size(); ++i )
+    for( std::size_t i = 0; i < entities_.size(); ++i )
     {
         const Entity_ABC& entity = *entities_[ i ];
         if( ShouldDisplay( entity ) && ( IsInside( entity, rectangle ) || IsInSelection( entity, topLeft ) ) )

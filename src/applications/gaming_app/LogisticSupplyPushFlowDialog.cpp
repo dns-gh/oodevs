@@ -864,7 +864,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( Q3ListViewItem* 
     selected_->Get< kernel::TacticalHierarchies >().Accept< SupplyStates >( visitor );
 
     T_SuppliesVector& supplies = it->second;
-    for( int i=0; i < supplies.size(); ++i )
+    for( std::size_t i=0; i < supplies.size(); ++i )
     {
         const QString& dotationName = supplies[i].objectName_;
         int available = 0;
@@ -1163,7 +1163,7 @@ void LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints()
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
 
-    for( int i=0; i < route.size(); ++i )
+    for( std::size_t i = 0; i < route.size(); ++i )
         if( route[i].isPoint() )
             routeDrawpoints_.push_back( route[i].point_ );
          else
@@ -1187,7 +1187,7 @@ void LogisticSupplyPushFlowDialog::Draw( const kernel::Location_ABC& /*location*
     if( startWaypointLocation_ || routeDrawpoints_.empty() )
         return;
 
-    for( int i=1; i < routeDrawpoints_.size(); ++i )
+    for( std::size_t i = 1; i < routeDrawpoints_.size(); ++i )
     {
         glColor4f( COLOR_ORANGE );
         glLineStipple( 1, tools.StipplePattern( -1 ) );

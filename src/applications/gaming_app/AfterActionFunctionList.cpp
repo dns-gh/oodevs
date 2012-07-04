@@ -256,7 +256,7 @@ QString AfterActionFunctionList::Title() const
 // -----------------------------------------------------------------------------
 int AfterActionFunctionList::GetIndex( actions::gui::Param_ABC* param ) const
 {
-    for( int i = 0; i < paramList_.size(); ++i )
+    for( std::size_t i = 0; i < paramList_.size(); ++i )
         if( paramList_[ i ].get() == param )
             return i;
     return -1;
