@@ -239,6 +239,7 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/peripherical-vision/next-step" ] = nNextPeriphericalVisionStep_;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
+    entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/sensor/activated", boost::bind( &RolePion_Perceiver::EnableSensors, this ), boost::bind( &RolePion_Perceiver::DisableSensors, this ) );
@@ -751,8 +752,7 @@ void RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // -----------------------------------------------------------------------------
 double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return GetMaxTheoreticalAgentPerceptionDistance() * owner_.Execute( *computer ).GetFactor();
+    return entity_[ "perceptions/max-agent-perception-distance" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -761,7 +761,7 @@ double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 // -----------------------------------------------------------------------------
 double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
 {
-    return entity_[ "perceptions/max-agent-perception-distance" ];
+    return entity_[ "perceptions/max-theoretical-agent-perception-distance" ];
 }
 
 // -----------------------------------------------------------------------------

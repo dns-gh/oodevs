@@ -380,6 +380,11 @@ namespace
         PreparePerceptionData        ( entity, surfacesAgent, surfacesObject, rMaxAgentPerceptionDistance, vMainPerceptionDirection );
         PrepareRadarData             ( entity, radars );
         {
+            wrapper::Effect effect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
+            effect = rMaxAgentPerceptionDistance;
+            effect.Post();
+        }
+        {
             wrapper::Effect effect( entity[ "perceptions/max-agent-perception-distance" ] );
             effect = rMaxAgentPerceptionDistance * GET_HOOK( ComputePerceptionDistanceFactor )( entity );
             effect.Post();

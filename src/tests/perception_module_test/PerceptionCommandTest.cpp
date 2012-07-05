@@ -113,6 +113,7 @@ namespace
         PerceptionFixture()
             : identifier           ( 42 )
             , maxPerceptionDistance( 100 )
+            , theoreticalDistance  ( 120 )
             , position             ( 0, 1 )
             , direction            ( 1, 0 )
             , agent                ( reinterpret_cast< MIL_Agent_ABC* >( 1337 ) )
@@ -126,6 +127,7 @@ namespace
             entity[ "is-prisoner" ] = false;
             entity[ "pion" ].SetUserData( agent );
             entity[ "perceptions/max-agent-perception-distance" ] = maxPerceptionDistance;
+            entity[ "perceptions/max-theoretical-agent-perception-distance" ] = theoreticalDistance;
             entity[ "perceptions/peripherical-vision/next-step" ] = 1;
             entity[ "perceptions/peripherical-vision/activated" ] = false;
             entity[ "perceptions/vision/mode" ] = "normal";
@@ -162,6 +164,7 @@ namespace
             MOCK_EXPECT( ComputePerceptionDistanceFactor ).returns( 1. );
             MOCK_EXPECT( GetCollidingPopulationDensity ).returns( 1. );
             ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+            ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
             ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "activated", false ) );
             ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", direction.rX_ )
                                                                                                    ( "y", direction.rY_ ) );
@@ -192,6 +195,7 @@ namespace
         }
         const size_t identifier;
         const double maxPerceptionDistance;
+        const double theoreticalDistance;
         const MT_Vector2D position;
         const MT_Vector2D direction;
         const MIL_Agent_ABC* agent;
@@ -361,6 +365,7 @@ BOOST_FIXTURE_TEST_CASE( next_peripherical_vision_step_is_updated_with_effect, P
     ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "next-step", 13 )
                                                                                      ( "activated", true ) );
     ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ] );
     ExpectNotifications();
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
@@ -396,6 +401,7 @@ BOOST_FIXTURE_TEST_CASE( direction_vision_mode_uses_vision_direction_as_main_per
     entity[ "perceptions/vision/location/y" ] = 43.;
     ExpectEffect( entity[ "perceptions/peripherical-vision" ] );
     ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 42. )
                                                                                            ( "y", 43. ) );
     ExpectNotifications();
@@ -415,6 +421,7 @@ BOOST_FIXTURE_TEST_CASE( location_vision_mode_computes_location_direction_as_mai
     entity[ "perceptions/vision/location/y" ] = 0;
     ExpectEffect( entity[ "perceptions/peripherical-vision" ] );
     ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
+    ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
     ExpectEffect( entity[ "perceptions/main-perception-direction" ], sword::test::MakeModel( "x", 0 )
                                                                                            ( "y", -1 ) );
     ExpectNotifications();
