@@ -822,152 +822,6 @@ bool RolePion_Perceiver::CanPerceive() const
 // =============================================================================
 // UPDATE
 // =============================================================================
-class sPerceptionRotation : public OnComponentFunctor_ABC
-{
-public:
-    sPerceptionRotation()
-        : rAngle_ ( std::numeric_limits< double >::max() )
-    {
-        // NOTHING
-    }
-
-    void operator()( PHY_ComposantePion& composante )//@TODO MGD See to add const
-    {
-        rAngle_ = std::min( rAngle_, composante.GetType().GetSensorRotationAngle() );
-    }
-
-    double GetAngle() const
-    {
-        return rAngle_ == std::numeric_limits< double >::max() ? 0. : rAngle_;
-    }
-
-private:
-    double rAngle_;
-};
-
-// -----------------------------------------------------------------------------
-struct sPerceptionDataSensors : private boost::noncopyable
-{
-public:
-    sPerceptionDataSensors( RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
-        : surfacesAgent_               ( surfacesAgent )
-        , surfacesObject_              ( surfacesObject )
-        , vOrigin_                     ( vOrigin )
-        , vDirection_                  ( vDirection )
-        , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
-        , rMaxObjectPerceptionDistance_( rMaxObjectPerceptionDistance )
-    {
-        // NOTHING
-    }
-
-    void operator()( const PHY_Sensor& sensor )
-    {
-        const PHY_SensorTypeAgent* pSensorTypeAgent = sensor.GetType().GetTypeAgent();
-        if( pSensorTypeAgent )
-        {
-            rMaxAgentPerceptionDistance_ = std::max( rMaxAgentPerceptionDistance_, pSensorTypeAgent->GetMaxDistance() );
-            PHY_PerceptionSurfaceAgent& surface = surfacesAgent_[ std::make_pair( pSensorTypeAgent, sensor.GetHeight() ) ];
-            if( !surface.IsInitialized() )
-                surface = PHY_PerceptionSurfaceAgent( *pSensorTypeAgent, vOrigin_, sensor.GetHeight() );
-            surface.AddDirection( vDirection_ );
-        }
-        const PHY_SensorTypeObject* pSensorTypeObject = sensor.GetType().GetTypeObject();
-        if( pSensorTypeObject )
-        {
-            rMaxObjectPerceptionDistance_ = std::max( rMaxObjectPerceptionDistance_, pSensorTypeObject->GetMaxDistance() );
-            PHY_PerceptionSurfaceObject& surface = surfacesObject_[ std::make_pair( pSensorTypeObject, sensor.GetHeight() ) ];
-            if( !surface.IsInitialized() )
-                surface = PHY_PerceptionSurfaceObject( *pSensorTypeObject, vOrigin_, sensor.GetHeight() );
-        }
-    }
-
-private:
-    RolePion_Perceiver::T_SurfaceAgentMap&  surfacesAgent_;
-    RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject_;
-    const MT_Vector2D&                          vOrigin_;
-    const MT_Vector2D&                          vDirection_;
-    double&                                   rMaxAgentPerceptionDistance_;
-    double&                                   rMaxObjectPerceptionDistance_;
-};
-
-// -----------------------------------------------------------------------------
-class sPerceptionDataComposantes : public OnComponentFunctor_ABC
-{
-public:
-    sPerceptionDataComposantes( MIL_Agent_ABC& pion, RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
-                                const MT_Vector2D& vMainPerceptionDirection, double rDirectionRotation,
-                                double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
-        : surfacesAgent_               ( surfacesAgent )
-        , surfacesObject_              ( surfacesObject )
-        , position_                    ( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
-        , direction_                   ( pion.GetRole< PHY_RoleInterface_Location >().GetDirection() )
-        , vMainPerceptionDirection_    ( vMainPerceptionDirection )
-        , nRotationIdx_                ( vMainPerceptionDirection != direction_ ? -1 : 0 ) // détection lockée
-        , rRotationAngle_              ( rDirectionRotation )
-        , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
-        , rMaxObjectPerceptionDistance_( rMaxObjectPerceptionDistance )
-        , transport_                   ( pion.RetrieveRole< transport::PHY_RoleAction_Loading >() )
-    {
-        // NOTHING
-    }
-
-    void operator()( PHY_ComposantePion& composante )
-    {
-        if( !composante.CanPerceive( transport_ ) )
-            return;
-        MT_Vector2D vComposantePerceptionDirection( vMainPerceptionDirection_ );
-        if( nRotationIdx_ == 0 )
-            vComposantePerceptionDirection = direction_;
-        else if( nRotationIdx_ > 0 )
-            vComposantePerceptionDirection.Rotate( ( ( 2 * ( nRotationIdx_ & 0x1 ) - 1 ) * ( ( nRotationIdx_ + 1 ) >> 1 ) ) * rRotationAngle_ );
-        ++nRotationIdx_;
-        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, position_, vComposantePerceptionDirection, rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
-        composante.ApplyOnSensors( dataFunctor );
-    }
-
-private:
-    RolePion_Perceiver::T_SurfaceAgentMap&  surfacesAgent_;
-    RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject_;
-    const MT_Vector2D&                          position_;
-    const MT_Vector2D&                          direction_;
-    const MT_Vector2D&                          vMainPerceptionDirection_;
-    double&                                     rMaxAgentPerceptionDistance_;
-    double&                                     rMaxObjectPerceptionDistance_;
-    int                                         nRotationIdx_;
-    const double                                rRotationAngle_;
-    const transport::PHY_RoleAction_Loading*    transport_;
-};
-
-
-// -----------------------------------------------------------------------------
-class sRadarDataComposantes : public OnComponentFunctor_ABC
-{
-
-public:
-    sRadarDataComposantes( MIL_Agent_ABC& pion, RolePion_Perceiver::T_RadarsPerClassMap& radars )
-        : radars_( radars )
-        , transport_( pion.RetrieveRole< transport::PHY_RoleAction_Loading >() )
-    {
-        // NOTHING
-    }
-
-    void operator()( PHY_ComposantePion& composante )//@TODO MGD Use same design for weaponAvailability
-    {
-        if( !composante.CanPerceive( transport_ ) )
-            return;
-        composante.ApplyOnRadars( *this );
-    }
-
-    void operator()( const PHY_RadarType& radarType )
-    {
-        radars_[ &radarType.GetClass() ].insert( &radarType );
-    }
-
-private:
-    RolePion_Perceiver::T_RadarsPerClassMap& radars_;
-    const transport::PHY_RoleAction_Loading* transport_;
-};
-
 namespace
 {
     template< typename T >
@@ -994,11 +848,6 @@ void RolePion_Perceiver::DisableAllPerceptions()
     Reset( pPerceptionRadar_ );
     Reset( pPerceptionAlat_ );
     Reset( pPerceptionFlyingShell_ );
-}
-
-namespace
-{
-    const float maxBlockPerceptionDistance = 100.f; // Distance under which we consider urban blocks for perception.
 }
 
 // -----------------------------------------------------------------------------
@@ -1054,7 +903,6 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vecto
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 {
-    lastPerceiverPosition_ = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( pPerceptionRecoPoint_ )
         pPerceptionRecoPoint_->Update();
    if( pPerceptionRecoLocalisation_ )
