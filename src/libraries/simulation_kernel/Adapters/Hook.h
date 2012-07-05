@@ -10,6 +10,8 @@
 #ifndef SWORD_HOOK_TOOLS_H
 #define SWORD_HOOK_TOOLS_H
 
+#include <core/Facade.h>
+
 #define DECLARE_HOOK( Hook, result, parameters ) \
     namespace \
     { \
