@@ -279,6 +279,20 @@ std::string Controller::DoGet( Request_ABC& request )
     return WriteHttpReply( NotFound, "Unknown URI" );
 }
 
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: SkipAuthentication
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+bool SkipAuthentication( const std::string& uri )
+{
+    if( uri == "/login" ) return true;
+    if( uri == "/update_login" ) return true;
+    return false;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Controller::DoPost
 // Created: BAX 2012-03-07
@@ -288,10 +302,11 @@ std::string Controller::DoPost( Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
-        if( uri != "/login" && !IsAuthenticated( request ) )
+        if( !SkipAuthentication( uri ) && !IsAuthenticated( request ) )
             return WriteHttpReply( Unauthorized, "Invalid authentication" );
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
+        if( uri == "/update_login" ) return UserUpdateLogin( request );
     }
     catch( const HttpException& err )
     {
@@ -638,4 +653,22 @@ std::string Controller::UserLogout( const Request_ABC& request )
 {
     users_.Logout( request.GetSid() );
     return WriteHttpReply( Ok );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UserUpdateLogin
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+std::string Controller::UserUpdateLogin( Request_ABC& request )
+{
+    request.ParseForm();
+    const std::string username = RequireParameter< std::string >( "username", request );
+    const std::string current  = RequireParameter< std::string >( "current" , request );
+    const std::string password = RequireParameter< std::string >( "password", request );
+    if( password.empty() || username.empty() )
+        return WriteHttpReply( BadRequest );
+    const std::string user = users_.UpdateLogin( username, current, password, GetSource( request ) );
+    if( user.empty() )
+        return WriteHttpReply( Unauthorized );
+    return WriteHttpReply( Ok, user );
 }
