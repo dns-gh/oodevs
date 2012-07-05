@@ -42,6 +42,25 @@ namespace hla
     private:
         T value_;
     };
+    template< typename T, typename SzT = unsigned long >
+    struct VectorWrapper
+    {
+    public:
+        typedef SzT SizeType;
+        typedef std::vector< T > VectorType;
+
+        explicit VectorWrapper( const VectorType& value )
+            : value_( value )
+        {}
+        template< typename Archive >
+        void Serialize( Archive& serializer ) const
+        {
+            serializer << static_cast< SizeType >( value_.size() );
+            serializer << value_;
+        }
+    private:
+        VectorType value_;
+    };
 
 // =============================================================================
 /** @class  AttributesSerializer

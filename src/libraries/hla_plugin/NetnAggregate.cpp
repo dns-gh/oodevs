@@ -36,7 +36,7 @@ NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_AB
     attributes_->Register( "Callsign", UnicodeString( callsign ) );
     attributes_->Register( "Status", Wrapper< int8 >( 1 ) ); // Active
     attributes_->Register( "Symbol", UnicodeString( symbol ) ); // APP6
-    attributes_->Register( "EmbeddedUnitList", Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
+    attributes_->Register( "EmbeddedUnitList", VectorWrapper< UniqueId >( std::vector< UniqueId >() ) );
     agent_.Register( *this );
 }
 

@@ -30,7 +30,7 @@ NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, 
 {
     attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
     attributes_->Register( "Callsign", UnicodeString( callsign ) );
-    attributes_->Register( "EmbeddedUnitList", Wrapper< std::vector< UniqueId > >( std::vector< UniqueId >() ) );
+    attributes_->Register( "EmbeddedUnitList", VectorWrapper< UniqueId >( std::vector< UniqueId >() ) );
 }
 
 // -----------------------------------------------------------------------------
