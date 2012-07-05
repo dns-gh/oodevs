@@ -77,7 +77,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( GetKnowledgeGroup, 0 );
     MOCK_METHOD( GetPion, 0 );
     MOCK_METHOD( GetMaxAgentPerceptionDistance, 0 );
-    MOCK_METHOD( GetMaxTheoreticalcAgentPerceptionDistance, 0 );
+    MOCK_METHOD( GetMaxTheoreticalAgentPerceptionDistance, 0 );
     MOCK_METHOD( GetMainPerceptionDirection, 1 );
 
     MOCK_METHOD( IsPeriphericalVisionEnabled, 0 );

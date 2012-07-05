@@ -469,7 +469,6 @@ void RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::EnableRecoPoint
 // Created: JVT 2004-10-21
@@ -753,14 +752,14 @@ void RolePion_Perceiver::DisableFlyingShellDetection( int id )
 double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
     std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return GetMaxTheoreticalcAgentPerceptionDistance() * owner_.Execute( *computer ).GetFactor();
+    return GetMaxTheoreticalAgentPerceptionDistance() * owner_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance
+// Name: RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance
 // Created: MMC 2011-05-11
 // -----------------------------------------------------------------------------
-double RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance() const
+double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
 {
     return entity_[ "perceptions/max-agent-perception-distance" ];
 }

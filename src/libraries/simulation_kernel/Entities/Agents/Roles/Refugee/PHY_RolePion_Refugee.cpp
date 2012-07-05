@@ -285,7 +285,7 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
 {
     float prevSatisf = securitySatisfaction_;
     securitySatisfaction_ = 0.5f;
-    nearbyUnitsAffinity.resetAffinitySum(   owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalcAgentPerceptionDistance(),
+    nearbyUnitsAffinity.resetAffinitySum(   owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalAgentPerceptionDistance(),
                                             owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     if( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
     {

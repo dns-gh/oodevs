@@ -616,10 +616,10 @@ double PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::PHY_RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance
+// Name: PHY_RolePion_Perceiver::PHY_RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance
 // Created: MMC 2011-05-11
 // -----------------------------------------------------------------------------
-double PHY_RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance() const
+double PHY_RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
 {
     return rMaxAgentPerceptionDistance_;
 }
