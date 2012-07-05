@@ -43,7 +43,13 @@ using namespace plugins::hla;
 
 namespace
 {
-
+    struct NullFactory : public HlaObjectFactory_ABC
+    {
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned int, rpr::ForceIdentifier, const rpr::EntityType&, const std::string& ) const
+        {
+            return std::auto_ptr< HlaObject_ABC >( 0 );
+        }
+    };
     std::auto_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
     {
         std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
@@ -83,25 +89,26 @@ namespace
         return federate;
     }
     template< typename Rpr, typename Netn >
-    std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( xml::xisubstream xis, CallsignResolver_ABC& resolver, const MarkingFactory_ABC& markingFactory )
+    std::auto_ptr< HlaObjectFactory_ABC > CreateFactory( bool isNetn, CallsignResolver_ABC& resolver, const MarkingFactory_ABC& markingFactory,
+            unsigned short siteID, unsigned short applicationID )
     {
-        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ) );
-        if( xis.attribute< bool >( "netn", true ) )
+        std::auto_ptr< HlaObjectFactory_ABC > result( new HlaObjectFactory< Rpr >( markingFactory, siteID, applicationID ) );
+        if( isNetn )
             return std::auto_ptr< HlaObjectFactory_ABC >( new NetnHlaObjectFactory< Netn >( result, resolver ) );
         return result;
     }
     template< typename Rpr, typename Netn >
-    std::auto_ptr< RemoteHlaObjectFactory_ABC > CreateRemoteFactory( xml::xisubstream xis )
+    std::auto_ptr< RemoteHlaObjectFactory_ABC > CreateRemoteFactory( bool isNetn )
     {
         std::auto_ptr< RemoteHlaObjectFactory_ABC > result( new RemoteHlaObjectFactory< Rpr >() );
-        if( xis.attribute< bool >( "netn", true ) )
+        if( isNetn )
             return std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NetnRemoteHlaObjectFactory< Netn >( result ) );
         return result;
     }
     template< typename Rpr, typename Netn >
-    std::auto_ptr< ClassBuilder_ABC > CreateClassBuilder( xml::xisubstream xis )
+    std::auto_ptr< ClassBuilder_ABC > CreateClassBuilder( bool isNetn )
     {
-        if( xis.attribute< bool >( "netn", true ) )
+        if( isNetn )
             return std::auto_ptr< ClassBuilder_ABC >( new Netn() );
         return std::auto_ptr< ClassBuilder_ABC >( new Rpr() );
     }
@@ -150,17 +157,38 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , nameFactory_       ( new HlaObjectNameFactory( xis.attribute< std::string >( "name", "SWORD" ),
                                 boost::lexical_cast< std::string >( MT_Random::GetInstance().rand32() ) ) )
     , aggregateClass_    ( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< AggregateEntity, NetnAggregate >( xis, callsignResolver, *markingFactory_ ),
-                                         CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
-                                         CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis ) ) )
+                                         CreateFactory< AggregateEntity, NetnAggregate >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
+                                         CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis.attribute< bool >( "netn", true ) ),
+                                         CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
     , surfaceVesselClass_( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis, callsignResolver, *markingFactory_ ),
-                                         CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
-                                         CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ) ) )
+                                         CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
+                                         CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis.attribute< bool >( "netn", true ) ),
+                                         CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
     , aircraftClass_     ( new HlaClass( *federate_, resolver, *nameFactory_,
-                                         CreateFactory< Aircraft, NetnAircraft >( xis, callsignResolver, *markingFactory_ ),
-                                         CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis ),
-                                         CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis ) ) )
+                                         CreateFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, xis.attribute<unsigned short>("dis-site",1), xis.attribute<unsigned short>("dis-application", 1) ),
+                                         CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis.attribute< bool >( "netn", true ) ),
+                                         CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis.attribute< bool >( "netn", true ) ) ) )
+    , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
+                                new HlaClass( *federate_, resolver, *nameFactory_,
+                                     std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
+                                     CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( false ),
+                                     CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( false )
+                                     )
+                                : 0 )
+    , rprSurfaceVesselClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
+                                new HlaClass( *federate_, resolver, *nameFactory_,
+                                     std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
+                                     CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( false ),
+                                     CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( false)
+                                     )
+                                : 0 )
+    , rprAircraftClass_ ( xis.attribute< bool >( "netn", true ) && xis.attribute< bool >( "netn-subscribe-rpr", true ) ?
+                                new HlaClass( *federate_, resolver, *nameFactory_,
+                                     std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
+                                     CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( false ),
+                                     CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false )
+                                    )
+                                : 0 )
 {
     subject_.Register( *this );
     CONNECT( controller, *this, control_end_tick );
@@ -193,6 +221,12 @@ void FederateFacade::Register( ClassListener_ABC& listener )
     aggregateClass_->Register( listener );
     surfaceVesselClass_->Register( listener );
     aircraftClass_->Register( listener );
+    if( rprAggregateClass_.get() )
+        rprAggregateClass_->Register( listener );
+    if( rprSurfaceVesselClass_.get() )
+        rprSurfaceVesselClass_->Register( listener );
+    if( rprAircraftClass_.get() )
+        rprAircraftClass_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,6 +238,12 @@ void FederateFacade::Unregister( ClassListener_ABC& listener )
     aircraftClass_->Unregister( listener );
     surfaceVesselClass_->Unregister( listener );
     aggregateClass_->Unregister( listener );
+    if( rprAggregateClass_.get() )
+        rprAggregateClass_->Unregister( listener );
+    if( rprSurfaceVesselClass_.get() )
+        rprSurfaceVesselClass_->Unregister( listener );
+    if( rprAircraftClass_.get() )
+        rprAircraftClass_->Unregister( listener );
 }
 
 // -----------------------------------------------------------------------------

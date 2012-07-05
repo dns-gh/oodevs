@@ -122,6 +122,12 @@
                         <description lang="fr" name="Utiliser les modules NETN"><![CDATA[]]>Active la souscription et la publication NETN.</description>
                     </descriptions>
                 </setting>
+                <setting attribute="@netn-subscribe-rpr" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Subscribe RPR in NETN "><![CDATA[]]>Enable subscription to RPR classes in NETN mode.</description>
+                        <description lang="fr" name="Sousccrire au RPR en NETN"><![CDATA[]]>Active la souscription aux classes RPR en mode NETN.</description>
+                    </descriptions>
+                </setting>
                 <setting attribute="@marking-with-identifier" type="boolean" default="true">
                     <descriptions>
                         <description lang="en" name="Unique Marking"><![CDATA[]]>Append an identifier to make Marking and AggregateMarking attributes to make them unique.</description>

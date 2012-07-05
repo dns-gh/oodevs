@@ -126,6 +126,9 @@ private:
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
     std::auto_ptr< HlaClass > aircraftClass_;
+    std::auto_ptr< HlaClass > rprAggregateClass_;
+    std::auto_ptr< HlaClass > rprSurfaceVesselClass_;
+    std::auto_ptr< HlaClass > rprAircraftClass_;
     //@}
 };
 

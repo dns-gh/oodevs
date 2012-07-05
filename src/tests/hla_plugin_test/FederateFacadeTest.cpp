@@ -54,6 +54,10 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, false, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", mock::any, false, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, false, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, false, true );
+
     MOCK_EXPECT( subject.Register ).once();
     MOCK_EXPECT( controller.Register ).once().in( s );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
@@ -90,7 +94,7 @@ namespace
             MOCK_EXPECT( subject.Unregister );
             MOCK_EXPECT( controller.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( controller.Unregister ).once();
-            MOCK_EXPECT( federate->RegisterClass ).exactly( 3 );
+            MOCK_EXPECT( federate->RegisterClass ).exactly( 6 );
             MOCK_EXPECT( federate->Connect ).once().returns( true );
         }
     };
