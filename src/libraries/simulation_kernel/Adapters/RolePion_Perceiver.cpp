@@ -680,7 +680,6 @@ void RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& radar
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::EnableRadar
 // Created: NLD 2005-05-02
@@ -768,17 +767,6 @@ double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 double RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance() const
 {
     return rMaxAgentPerceptionDistance_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::GetMaxObjectPerceptionDistance
-// Created: NLD 2004-11-30
-// -----------------------------------------------------------------------------
-inline
-double RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
-{
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxObjectPerceptionDistance_ * owner_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------

@@ -225,7 +225,6 @@ private:
     void PrepareRadarData();
     void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
-    double GetMaxObjectPerceptionDistance() const;
     void EnsurePerceptionRecoLocalisation();
     void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
     void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;

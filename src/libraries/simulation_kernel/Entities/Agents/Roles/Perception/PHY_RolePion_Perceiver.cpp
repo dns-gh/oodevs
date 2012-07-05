@@ -627,17 +627,6 @@ double PHY_RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance
-// Created: NLD 2004-11-30
-// -----------------------------------------------------------------------------
-inline
-double PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
-{
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxObjectPerceptionDistance_ * owner_.Execute( *computer ).GetFactor();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::CanPerceive
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
