@@ -115,18 +115,30 @@ UserController::~UserController()
 namespace
 {
 // -----------------------------------------------------------------------------
+// Name: Execute
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+size_t Execute( Statement_ABC& st )
+{
+    size_t count = 0;
+    while( st.Next() )
+        count++;
+    return count;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MakeTables
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
 void MakeTables( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
-    db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS revisions ("
+    Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS revisions ("
         "  id       INTEGER PRIMARY KEY"
         ", revision INTEGER"
         ", created  DATE"
-        ")" )->Next();
-    db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
+        ")" ) );
+    Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
         "  id           INTEGER PRIMARY KEY"
         ", username     TEXT"
         ", hash         TEXT"
@@ -135,14 +147,14 @@ void MakeTables( Sql_ABC& db )
         ", temporary    BOOLEAN"
         ", language     TEXT"
         ", created      DATE"
-        ")" )->Next();
-    db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
+        ")" ) );
+    Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
         ", id_users INTEGER"
         ", source   TEXT"
         ", token    TEXT"
         ", created  DATE"
-        ")" )->Next();
+        ")" ) );
     db.Commit( *tr );
 }
 
@@ -158,18 +170,18 @@ void MakeDefaultDatabase( Sql_ABC& db )
             "          ( revision, created )"
             "VALUES    ( ?, DATE('NOW') )" );
     st->Bind( 1 );
-    st->Next();
+    Execute( *st );
     st = db.Prepare( *tr,
         "INSERT INTO users"
         "          ( username, hash, name, type, temporary, language, created )"
         "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
     st->Bind( "admin@masagroup.net" );
     st->Bind( HashPassword( "admin" ) );
-    st->Bind( "Default Admin" );
+    st->Bind( "Default" );
     st->Bind( Convert( USER_TYPE_ADMINISTRATOR ) );
     st->Bind( false );
     st->Bind( "eng" );
-    st->Next();
+    Execute( *st );
     db.Commit( *tr );
 }
 
@@ -250,27 +262,61 @@ std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Transaction&
     st->Bind( user );
     st->Bind( source );
     st->Bind( token );
-    st->Next();
-    db.Commit( tr );
+    Execute( *st );
     return token;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DeleteToken
+// Name: DeleteTokenWithUserId
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+void DeleteTokenWithUserId( Sql_ABC& db, Transaction& tr, int id )
+{
+    Sql_ABC::T_Statement st = db.Prepare( tr, "DELETE FROM tokens WHERE id_users = ?" );
+    st->Bind( id );
+    Execute( *st );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DeleteTokenWithToken
 // Created: BAX 2012-07-04
 // -----------------------------------------------------------------------------
-void DeleteToken( Sql_ABC& db, Transaction& tr, const std::string& token )
+void DeleteTokenWithToken( Sql_ABC& db, Transaction& tr, const std::string& token )
 {
     Sql_ABC::T_Statement st = db.Prepare( tr, "SELECT id_users FROM tokens WHERE token = ?" );
     st->Bind( token );
+    while( st->Next() )
+        DeleteTokenWithUserId( db, tr, st->ReadInt() );
+}
+
+bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const std::string& source,
+                int& id, std::string& hash, std::string& name, std::string& type, bool& temporary,
+                std::string& lang, std::string& token )
+{
+    token.clear();
+    Sql_ABC::T_Statement st = db.Prepare( tr,
+        "SELECT     users.id, users.hash, users.name, users.type,"
+        "           users.temporary, users.language, tokens.token "
+        "FROM       users "
+        "LEFT JOIN  tokens "
+        "ON         users.id = tokens.id_users "
+        "AND        tokens.source  = ? "
+        "WHERE      users.username = ? "
+        );
+    st->Bind( source );
+    st->Bind( username );
     bool valid = st->Next();
     if( !valid )
-        return;
-    const int id = st->ReadInt();
-    st = db.Prepare( tr, "DELETE FROM tokens WHERE id_users = ?" );
-    st->Bind( id );
-    while( st->Next() )
-        continue;
+        return false;
+    id = st->ReadInt();
+    hash = st->ReadText();
+    name = st->ReadText();
+    type = st->ReadText();
+    temporary = st->ReadBool();
+    lang = st->ReadText();
+    if( st->IsColumnDefined() )
+        token = st->ReadText();
+    return true;
 }
 }
 
@@ -283,32 +329,16 @@ std::string UserController::Login( const std::string& username, const std::strin
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT     users.id, users.hash, users.name, users.type,"
-            "           users.temporary, users.language, tokens.token "
-            "FROM       users "
-            "LEFT JOIN  tokens "
-            "ON         users.id = tokens.id_users "
-            "AND        tokens.source  = ? "
-            "WHERE      users.username = ? "
-            );
-        st->Bind( source );
-        st->Bind( username );
-        bool valid = st->Next();
+        int id; std::string hash, name, type, lang, token; bool temporary;
+        bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, temporary, lang, token );
         if( !valid )
             return std::string();
-        const int id = st->ReadInt();
-        const std::string hash = st->ReadText();
-        const std::string name = st->ReadText();
-        const std::string type = st->ReadText();
-        const bool temporary = st->ReadBool();
-        const std::string lang = st->ReadText();
         if( !ValidatePassword( password, hash ) )
             return std::string();
-        if( st->IsColumnDefined() )
-            DeleteToken( db_, *tr, st->ReadText() );
-        st.reset();
+        if( !token.empty() )
+            DeleteTokenWithToken( db_, *tr, token );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
+        db_.Commit( *tr );
         return MakeUser( sid, username, name, type, temporary, lang );
     }
     catch( const std::exception& err )
@@ -366,7 +396,7 @@ void UserController::Logout( const std::string& token )
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        DeleteToken( db_, *tr, token );
+        DeleteTokenWithToken( db_, *tr, token );
         db_.Commit( *tr );
     }
     catch( const std::exception& err )
@@ -374,4 +404,40 @@ void UserController::Logout( const std::string& token )
         LOG_ERROR( log_ ) << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to logout";
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::UpdateLogin
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+std::string UserController::UpdateLogin( const std::string& username, const std::string& current, const std::string& password, const std::string& source )
+{
+    try
+    {
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        int id; std::string hash, name, type, lang, token; bool temporary;
+        bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, temporary, lang, token );
+        if( !valid )
+            return std::string();
+        if( !ValidatePassword( current, hash ) )
+            return std::string();
+        DeleteTokenWithUserId( db_, *tr, id );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr,
+            "UPDATE users "
+            "SET    hash = ?, temporary = ?"
+            "WHERE  id = ?" );
+        st->Bind( HashPassword( password ) );
+        st->Bind( false );
+        st->Bind( id );
+        Execute( *st );
+        const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
+        db_.Commit( *tr );
+        return MakeUser( sid, username, name, type, false, lang );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] Unable to update login";
+    }
+    return std::string();
 }

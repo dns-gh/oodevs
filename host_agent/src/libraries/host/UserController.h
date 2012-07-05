@@ -46,6 +46,7 @@ struct UserController : public web::UserController_ABC
     virtual std::string Login( const std::string& user, const std::string& password, const std::string& source );
     virtual std::string IsAuthenticated( const std::string& token, const std::string& source );
     virtual void        Logout( const std::string& token );
+    virtual std::string UpdateLogin( const std::string& user, const std::string& current, const std::string& password, const std::string& source );
     //@}
 
 private:

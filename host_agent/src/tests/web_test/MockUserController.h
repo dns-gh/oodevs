@@ -19,6 +19,7 @@ namespace mocks
         MOCK_METHOD( Login, 3 );
         MOCK_METHOD( IsAuthenticated, 2 );
         MOCK_METHOD( Logout, 1 );
+        MOCK_METHOD( UpdateLogin, 4 );
     };
 };
 
