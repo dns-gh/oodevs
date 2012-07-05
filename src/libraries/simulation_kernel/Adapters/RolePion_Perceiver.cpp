@@ -242,7 +242,6 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
-    AddListener< ToggleListener >( "perceptions/sensor/activated", boost::bind( &RolePion_Perceiver::EnableSensors, this ), boost::bind( &RolePion_Perceiver::DisableSensors, this ) );
     AddListener< ToggleListener >( "perceptions/radars/radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ) );
     AddListener< ToggleListener >( "perceptions/radars/tapping/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ) );
     AddListener< ToggleListener >( "perceptions/radars/tapping-radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tappingRadar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tappingRadar_ ) ) );
@@ -374,7 +373,7 @@ void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableSensors()
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,7 +382,7 @@ void RolePion_Perceiver::EnableSensors()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableSensors()
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -837,18 +836,9 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Know
 // Name: RolePion_Perceiver::ComputePerception
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vector2D& vPoint ) const
+const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vector2D& /*vPoint*/ ) const
 {
-    if( !CanPerceive() )
-        return PHY_PerceptionLevel::notSeen_;
-    const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-    {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( vPoint );
-        if( pBestPerceptionLevel_->IsBestLevel() )
-            return *pBestPerceptionLevel_;
-    }
-    return *pBestPerceptionLevel_;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1108,7 +1098,7 @@ MIL_Agent_ABC& RolePion_Perceiver::GetPion() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModeNormal()
 {
-    bHasChanged_ = true;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1117,7 +1107,7 @@ void RolePion_Perceiver::SetVisionModeNormal()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& /*vDirection*/ )
 {
-    bHasChanged_ = true;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1126,7 +1116,7 @@ void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& /*vDirection
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& /*vPoint*/ )
 {
-    bHasChanged_ = true;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1292,7 +1282,7 @@ void RolePion_Perceiver::NotifyIsUnLoadedInVab()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableFireObserver()
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1301,7 +1291,7 @@ void RolePion_Perceiver::EnableFireObserver()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableFireObserver()
 {
-    // NOTHING
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
