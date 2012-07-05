@@ -177,6 +177,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Perception_VisionNormale", boost::bind( &DEC_PerceptionFunctions::SetVisionModeNormal, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_ActiverObserveurTir", boost::bind( &DEC_PerceptionFunctions::EnableFireObserver, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_DesactiverObserveurTir", boost::bind( &DEC_PerceptionFunctions::DisableFireObserver, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::IsPointVisible, boost::ref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -91,6 +91,7 @@ DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( boost:
 
 // perception
 DECLARE_HOOK( GetPerceptionId, int, () )
+DECLARE_HOOK( IsPointVisible, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) )
 
 // fire
 DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) )
@@ -119,6 +120,7 @@ void RolePion_Decision::Initialize( core::Facade& facade )
     USE_HOOK( IsAgentMovingOnPath, facade );
     USE_HOOK( PathGetLastPointOfPath, facade );
     USE_HOOK( GetPerceptionId, facade );
+    USE_HOOK( IsPointVisible, facade );
     USE_HOOK( GetDangerosity, facade );
     USE_HOOK( GetMaxRangeToFireOn, facade );
     USE_HOOK( GetMinRangeToFireOn, facade );
@@ -668,6 +670,11 @@ namespace
         parameters[ "location/y" ] = location->rY_;
         facade.PostCommand( "vision", parameters );
     }
+    bool IsPointVisible( MIL_AgentPion& pion, const core::Model& model, MT_Vector2D* pPt )
+    {
+        const core::Model& entity = model[ "entities" ][ pion.GetID() ];
+        return GET_HOOK( IsPointVisible )( core::Convert( &entity ), pPt );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -703,6 +710,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void( const MT_Vector2D* ) >                  ( "DEC_Perception_VisionVerrouilleeSurPoint", &SwitchVisionMode< const MT_Vector2D* >, "location", _1 );
     RegisterCommand< void( boost::shared_ptr< MT_Vector2D > ) >    ( "DEC_Perception_VisionVerrouilleeSurPointPtr", &SwitchVisionMode< boost::shared_ptr< MT_Vector2D > >, "location", _1 );
     RegisterCommand< void() >                                      ( "DEC_Perception_VisionNormale", &SwitchVisionMode< boost::shared_ptr< MT_Vector2D > >, "normal", boost::make_shared< MT_Vector2D >() );
+    RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &IsPointVisible, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
 }
 
 namespace

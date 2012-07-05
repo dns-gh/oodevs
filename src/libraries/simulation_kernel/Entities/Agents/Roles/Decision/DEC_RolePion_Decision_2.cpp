@@ -280,8 +280,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_IdentifierToutesUnitesDansZone" ] =
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IdentifyAllAgentsInZone, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_ARadar" ] = &DEC_AgentFunctions::AgentHasRadar;
-    brain[ "DEC_Perception_PointEstVisible" ] =
-        boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::IsPointVisible, boost::ref( GetPion() ), _1 ) );
 
     // Gestion des renforts
     brain[ "DEC_Renforts" ] =
