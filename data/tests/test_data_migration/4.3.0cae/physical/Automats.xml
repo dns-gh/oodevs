@@ -248,7 +248,7 @@
     <unit min-occurs="1" type="HS - Chemical Recognition"/>
   </automat>
   <automat decisional-model="Battalion" id="264" name="Cavalry SQDN" type="Automate ABC">
-    <unit command-post="true" type="Cavalry SQDN HQ"/>
+    <unit command-post="true" min-occurs="1" type="Cavalry SQDN HQ"/>
   </automat>
   <automat decisional-model="Armored squadron" id="265" name="Cavalry TRP" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Cavalry TRP HQ (CFV)"/>
@@ -256,7 +256,7 @@
     <unit max-occurs="1" min-occurs="1" type="Mortar firing platoon"/>
   </automat>
   <automat decisional-model="Battalion" id="266" name="Combined Arms BN" type="Automate ABC">
-    <unit command-post="true" type="Combined Arms BN HQ"/>
+    <unit command-post="true" min-occurs="1" type="Combined Arms BN HQ"/>
   </automat>
   <automat decisional-model="Field battery" id="267" name="FA BTY (Paladin)" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="FA BTY HQ"/>
@@ -274,7 +274,7 @@
     <unit max-occurs="3" min-occurs="3" type="Tank PLT (M1)"/>
   </automat>
   <automat decisional-model="Battalion" id="271" name="Mech Infantry BN" type="Automate INF">
-    <unit command-post="true" type="Mech Infantry BN HQ"/>
+    <unit command-post="true" min-occurs="1" type="Mech Infantry BN HQ"/>
   </automat>
   <automat decisional-model="Armored squadron" id="272" name="Tank SQDN" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tank SQDN HQ"/>
@@ -292,7 +292,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GSHC CP (MDM)"/>
   </automat>
   <automat decisional-model="Transport Helicopter Squadron" id="276" name="General Support helicopter BN" type="Automate ALAT">
-    <unit command-post="true" type="GSHB CP"/>
+    <unit command-post="true" min-occurs="1" type="GSHB CP"/>
   </automat>
   <automat decisional-model="Transport Helicopter Squadron" id="277" name="General Support Helicopter CO (CH-47)" type="Automate ALAT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GSHC CP (HVY)"/>
@@ -342,7 +342,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Light Infantry CO HQ"/>
   </automat>
   <automat decisional-model="Battalion" id="289" name="Light Infantry BN" type="Automate INF">
-    <unit command-post="true" type="Light Infantry BN HQ"/>
+    <unit command-post="true" min-occurs="1" type="Light Infantry BN HQ"/>
   </automat>
   <automat decisional-model="Infantry company" id="290" name="OPFOR Light Infantry CO" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="OPFOR Light Infantry CO CP"/>
@@ -468,4 +468,4 @@
     <unit type="Firefighter - Fire Off-Road Support"/>
   </automat>
 </automats>
-<!-- signature="2085450990" -->
+<!-- signature="3720825858" -->
