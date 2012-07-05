@@ -53,7 +53,7 @@ int WriteMemory( void* dst, const void* src, size_t size )
    return VirtualProtect(dst, size, save, &done);
 }
 
-int PathExceptionFilter( bool patch )
+int PatchExceptionFilter( bool patch )
 {
     HMODULE hlib = GetModuleHandleA( "kernel32.dll" );
     if( !hlib )
@@ -103,7 +103,7 @@ typedef BOOL (WINAPI* MINIDUMPWRITEDUMP)(HANDLE process, DWORD pid, HANDLE file,
 
 void MakeDump( PEXCEPTION_POINTERS exception, MINIDUMP_TYPE type )
 {
-    PathExceptionFilter( false );
+    PatchExceptionFilter( false );
     SetUnhandledExceptionFilter( NULL );
     HMODULE dbghelp = LoadModule( L"dbghelp.dll" );
     if( !dbghelp )
@@ -148,5 +148,5 @@ int runtime::CrashHandlerInit()
     if( first != 1 )
         return 0;
     SetUnhandledExceptionFilter( TopLevelFilter );
-    return PathExceptionFilter( true );
+    return PatchExceptionFilter( true );
 }
