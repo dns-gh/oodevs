@@ -20,7 +20,7 @@ public class ProxyRequest extends HttpServletRequestWrapper {
         if (prefix.isEmpty())
             return prefix;
         if (!prefix.startsWith("/"))
-            prefix += "/";
+            prefix = "/" + prefix;
         if (prefix.endsWith("/"))
             prefix = prefix.substring(0, prefix.length() - 1);
         return prefix;
