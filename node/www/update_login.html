@@ -1,0 +1,44 @@
+[#ftl]
+<!DOCTYPE html>
+<html lang="en">
+    [#include "head.html"]
+    <body>
+        [#include "top_bar.html"]
+        <div class="container">
+            <div class="row">
+                <div class="hero-unit masa_header">
+                    <h1>MASA Sword</h1>
+                </div>
+                <div class="update_login_header">
+                    <p>Please change your password on first login</p>
+                </div>
+                <form action="login" method="post" class="form-horizontal update_login">
+                    <div class="control-group">
+                        <label class="control-label" for="current">Current</label>
+                        <div class="controls">
+                            <input type="password" class="input-xlarge" name="current" id="current"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="password">New Password</label>
+                        <div class="controls">
+                            <input type="password" class="input-xlarge" name="password" id="password"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="password_bis">Confirm</label>
+                        <div class="controls">
+                            <input type="password" class="input-xlarge" name="password_bis" id="password_bis"/>
+                        </div>
+                    </div>
+                    <div class="update_login_action">
+                        <a class="btn btn-large btn-inverse update_login">Change Password</a>
+                        <a class="btn btn-large btn-inverse cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    [#include "imports.html"]
+    <script src="js/update_login.js"></script>
+</html>
