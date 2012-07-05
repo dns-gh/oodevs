@@ -287,6 +287,18 @@ namespace
                         << xml::attribute( "logfiles", 100 )
                         << xml::attribute( "logsize", 1000000 )
                     << xml::end
+                    << xml::start( "dispatcherlog" )
+                        << xml::attribute( "logfiles", 15 )
+                        << xml::attribute( "logsize", 100000000 )
+                    << xml::end
+                    << xml::start( "sim" )
+                        << xml::attribute( "logfiles", 15 )
+                        << xml::attribute( "logsize", 100000000 )
+                    << xml::end
+                    << xml::start( "messages" )
+                        << xml::attribute( "logfiles", 15 )
+                        << xml::attribute( "logsize", 100000000 )
+                    << xml::end
                 << xml::end;
         }
         void Load( const tools::Loader_ABC&, const std::string& ) {}
