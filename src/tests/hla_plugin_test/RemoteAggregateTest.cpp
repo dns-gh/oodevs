@@ -15,7 +15,7 @@
 #include "hla_plugin/SilentEntity.h"
 #include "rpr/EntityType.h"
 #include "MockUpdateFunctor.h"
-#include "MockRemoteAgentListener.h"
+#include "MockObjectListener.h"
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 #include <vector>
@@ -29,15 +29,17 @@ namespace
     {
     public:
         Fixture()
-            : aggregate( "identifier", listener )
-        {}
+            : aggregate( "identifier" )
+        {
+            aggregate.Register( listener );
+        }
         ::hla::Deserializer Deserialize()
         {
             buffer.resize( serializer.GetSize() );
             serializer.CopyTo( &buffer[0] );
             return ::hla::Deserializer( &buffer[0], buffer.size() );
         }
-        MockRemoteAgentListener listener;
+        MockObjectListener listener;
         RemoteAggregate aggregate;
         ::hla::Serializer serializer;
         T_Buffer buffer;

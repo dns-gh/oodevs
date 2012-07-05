@@ -195,9 +195,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentListener.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockRemoteAgentSubject.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -289,6 +286,18 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockExtentResolver.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaClass.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassListener.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectListener.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObjectNameFactory.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,6 +14,8 @@
 #include "UniqueId.h"
 #include "SerializationTools.h"
 #include "AttributesSerializer.h"
+#include "ObjectListener_ABC.h"
+#include "ObjectListenerComposite.h"
 
 using namespace plugins::hla;
 
@@ -22,7 +24,8 @@ using namespace plugins::hla;
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
 NetnSurfaceVessel::NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& /*symbol*/ )
-    : aggregate_ ( aggregate )
+    : listeners_ ( new ObjectListenerComposite() )
+    , aggregate_ ( aggregate )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "UniqueID", UniqueId( uniqueIdentifier ) );
@@ -56,4 +59,43 @@ void NetnSurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updat
 void NetnSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnSurfaceVessel::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void NetnSurfaceVessel::SetIdentifier( const std::string& id )
+{
+    aggregate_->SetIdentifier( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnSurfaceVessel::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& NetnSurfaceVessel::GetIdentifier( ) const
+{
+    return aggregate_->GetIdentifier();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NetnSurfaceVessel::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void NetnSurfaceVessel::Register( ObjectListener_ABC& listener )
+{
+    aggregate_->Register( listener );
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnSurfaceVessel::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void NetnSurfaceVessel::Unregister( ObjectListener_ABC& listener )
+{
+    aggregate_->Unregister( listener );
+    listeners_->Unregister( listener ) ;
 }

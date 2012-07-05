@@ -13,6 +13,7 @@
 #include "ContextHandler_ABC.h"
 #include "UnitTypeResolver_ABC.h"
 #include "ExtentResolver_ABC.h"
+#include "HlaObject_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -90,11 +91,12 @@ void RemoteAgentController::Notify( const sword::AutomatCreation& message, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Created
+// Name: RemoteAgentController::RemoteCreated
 // Created: VPR 2011-09-07
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Created( const std::string& identifier )
+void RemoteAgentController::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
+    object.Register( *this );
     unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     message().set_type( sword::UnitMagicAction::unit_creation );
@@ -104,10 +106,10 @@ void RemoteAgentController::Created( const std::string& identifier )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteAgentController::Destroyed
+// Name: RemoteAgentController::RemoteDestroyed
 // Created: VPR 2011-09-07
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Destroyed( const std::string& /*identifier*/ )
+void RemoteAgentController::RemoteDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
@@ -244,6 +246,24 @@ unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) c
         return 0;
     }
     return itParty->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void RemoteAgentController::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void RemoteAgentController::LocalDestroyed( const std::string& /*identifier*/ )
+{
+    // NOTHING
 }
 
 

@@ -23,6 +23,8 @@ namespace plugins
 {
 namespace hla
 {
+class ObjectListener_ABC;
+
 // =============================================================================
 /** @class  HlaObject_ABC
     @brief  Hla object definition
@@ -42,6 +44,10 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const = 0;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer ) = 0;
+    virtual void SetIdentifier( const std::string& id ) = 0;
+    virtual const std::string& GetIdentifier() const = 0;
+    virtual void Register( ObjectListener_ABC& listener ) = 0;
+    virtual void Unregister( ObjectListener_ABC& listener ) = 0;
     //@}
 };
 

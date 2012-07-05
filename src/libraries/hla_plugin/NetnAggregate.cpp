@@ -13,6 +13,8 @@
 #include "UnicodeString.h"
 #include "UniqueId.h"
 #include "SerializationTools.h"
+#include "ObjectListener_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "AttributesSerializer.h"
 
 using namespace plugins::hla;
@@ -22,7 +24,8 @@ using namespace plugins::hla;
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
 NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol )
-    : aggregate_ ( aggregate )
+    : listeners_ ( new ObjectListenerComposite() )
+    , aggregate_ ( aggregate )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
@@ -100,4 +103,42 @@ void NetnAggregate::EmbarkmentChanged( bool mounted )
 {
     attributes_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
     attributes_->Update( "Status", Wrapper< int8 >( mounted ? 2 : 1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void NetnAggregate::SetIdentifier( const std::string& id )
+{
+    aggregate_->SetIdentifier( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& NetnAggregate::GetIdentifier( ) const
+{
+    return aggregate_->GetIdentifier();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void NetnAggregate::Register( ObjectListener_ABC& listener )
+{
+    aggregate_->Register( listener );
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void NetnAggregate::Unregister( ObjectListener_ABC& listener )
+{
+    aggregate_->Unregister( listener );
+    listeners_->Unregister( listener ) ;
 }

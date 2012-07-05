@@ -23,7 +23,7 @@ namespace plugins
 {
 namespace hla
 {
-    class RemoteAgentListener_ABC;
+    class ObjectListener_ABC;
 
 // =============================================================================
 /** @class  AttributesDeserializer
@@ -36,13 +36,13 @@ class AttributesDeserializer : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( ::hla::Deserializer_ABC&, const std::string&, RemoteAgentListener_ABC& ) > T_Notification;
+    typedef boost::function< void( ::hla::Deserializer_ABC&, const std::string&, ObjectListener_ABC& ) > T_Notification;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributesDeserializer( const std::string& identifier, RemoteAgentListener_ABC& listener );
+             AttributesDeserializer( const std::string& identifier, ObjectListener_ABC& listener );
     virtual ~AttributesDeserializer();
     //@}
 
@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     const std::string identifier_;
-    RemoteAgentListener_ABC& listener_;
+    ObjectListener_ABC& listener_;
     T_Notifications notifications_;
     //@}
 };

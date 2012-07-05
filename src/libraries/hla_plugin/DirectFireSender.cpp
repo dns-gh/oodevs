@@ -12,6 +12,7 @@
 #include "Omt13String.h"
 #include "Interactions.h"
 #include "InteractionSender_ABC.h"
+#include "HlaObject_ABC.h"
 #include "RemoteAgentResolver_ABC.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "LocalAgentResolver_ABC.h"
@@ -92,19 +93,19 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireSender::Created
+// Name: DirectFireSender::RemoteCreated
 // Created: SLI 2011-09-23
 // -----------------------------------------------------------------------------
-void DirectFireSender::Created( const std::string& /*identifier*/ )
+void DirectFireSender::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object)
 {
-    // NOTHING
+    object.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireSender::Destroyed
+// Name: DirectFireSender::RemoteDestroyed
 // Created: SLI 2011-09-23
 // -----------------------------------------------------------------------------
-void DirectFireSender::Destroyed( const std::string& /*identifier*/ )
+void DirectFireSender::RemoteDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
@@ -168,6 +169,24 @@ void DirectFireSender::UniqueIdChanged( const std::string& /*identifier*/, const
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
 void DirectFireSender::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void DirectFireSender::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void DirectFireSender::LocalDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }

@@ -15,6 +15,8 @@
 #include "AggregateMarking.h"
 #include "AttributesSerializer.h"
 #include "MarkingFactory_ABC.h"
+#include "ObjectListener_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
 
@@ -27,7 +29,9 @@ using namespace plugins::hla;
 SurfaceVessel::SurfaceVessel( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
                               unsigned short siteID, unsigned short applicationID )
-    : agent_     ( agent )
+    : identifier_( name )
+    , listeners_ ( new ObjectListenerComposite() )
+    , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
@@ -99,4 +103,40 @@ void SurfaceVessel::EquipmentChanged( unsigned int /*type*/, const rpr::EntityTy
 void SurfaceVessel::EmbarkmentChanged( bool /*mounted*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVessel::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void SurfaceVessel::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVessel::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& SurfaceVessel::GetIdentifier( ) const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVessel::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void SurfaceVessel::Register( ObjectListener_ABC& listener )
+{
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVessel::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void SurfaceVessel::Unregister( ObjectListener_ABC& listener )
+{
+    listeners_->Unregister( listener ) ;
 }

@@ -13,10 +13,10 @@
 #include "Agent_ABC.h"
 #include "HlaObjectFactory_ABC.h"
 #include "RemoteHlaObjectFactory_ABC.h"
-#include "RemoteAgentListener_ABC.h"
-#include "RemoteAgentListenerComposite.h"
+#include "ClassListenerComposite.h"
 #include "LocalAgentResolver_ABC.h"
 #include "ClassBuilder_ABC.h"
+#include "HlaObjectNameFactory_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <boost/foreach.hpp>
@@ -28,13 +28,14 @@ using namespace plugins::hla;
 // Name: HlaClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver,
+HlaClass::HlaClass( Federate_ABC& federate, LocalAgentResolver_ABC& resolver, const HlaObjectNameFactory_ABC& nameFactory,
                     std::auto_ptr< HlaObjectFactory_ABC > factory, std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory,
                     std::auto_ptr< ClassBuilder_ABC > builder )
     : resolver_         ( resolver )
+    , nameFactory_      ( nameFactory )
     , factory_          ( factory )
     , remoteFactory_    ( remoteFactory )
-    , pListeners_       ( new RemoteAgentListenerComposite() )
+    , pListeners_       ( new ClassListenerComposite() )
     , hlaClass_         ( new ::hla::Class< HlaObject_ABC >( *this, true ) )
 {
     builder->Build( federate, *hlaClass_ );
@@ -56,20 +57,26 @@ HlaClass::~HlaClass()
 void HlaClass::Created( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
 {
     T_Entity localEntity( factory_->Create( agent, name, identifier, force, type, symbol ).release() );
-    ::hla::ObjectIdentifier objectId = hlaClass_->Register( *localEntity, boost::lexical_cast< std::string >( identifier ) );
-    localEntities_[ objectId.ToString() ] = localEntity;
-    resolver_.Add( identifier, objectId.ToString() );
+    std::string objectName( nameFactory_.CreateName( boost::lexical_cast< std::string >( identifier ) ) );
+    ::hla::ObjectIdentifier objectId( hlaClass_->Register( *localEntity, objectName ) );
+    localEntity->SetIdentifier( objectName );
+    pListeners_->LocalCreated( objectId.ToString(), *this, *localEntity );
+    localEntities_[ objectName ] = localEntity;
+    hlaIdentifiers_[ objectName ] = objectId.ToLong();
+    resolver_.Add( identifier, objectName );
+    pListeners_->LocalCreated( objectName, *this, *localEntity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HlaClass::Create
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& /*objectName*/ )
+HlaObject_ABC& HlaClass::Create( const ::hla::ObjectIdentifier& objectID, const std::string& objectName )
 {
-    T_Entity& entity = remoteEntities_[ objectID.ToString() ];
-    entity.reset( remoteFactory_->Create( objectID.ToString(), *pListeners_ ).release() );
-    pListeners_->Created( objectID.ToString() );
+    T_Entity& entity = remoteEntities_[ objectName ];
+    hlaIdentifiers_[ objectName ] = objectID.ToLong();
+    entity.reset( remoteFactory_->Create( objectName ).release() );
+    pListeners_->RemoteCreated( objectName, *this, *entity );
     return *entity;
 }
 
@@ -82,7 +89,7 @@ void HlaClass::Destroy( HlaObject_ABC& object )
     BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
         if( &*entity.second == &object )
         {
-            pListeners_->Destroyed( entity.first );
+            pListeners_->RemoteDestroyed( entity.first );
             remoteEntities_.erase( entity.first );
             return;
         }
@@ -92,18 +99,20 @@ void HlaClass::Destroy( HlaObject_ABC& object )
 // Name: HlaClass::Register
 // Created: SLI 2011-08-29
 // -----------------------------------------------------------------------------
-void HlaClass::Register( RemoteAgentListener_ABC& listener )
+void HlaClass::Register( ClassListener_ABC& listener )
 {
     pListeners_->Register( listener );
     BOOST_FOREACH( const T_Entities::value_type& entity, remoteEntities_ )
-        listener.Created( entity.first );
+        listener.RemoteCreated( entity.first, *this, *entity.second );
+    BOOST_FOREACH( const T_Entities::value_type& entity, localEntities_ )
+        listener.LocalCreated( entity.first, *this, *entity.second );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HlaClass::Unregister
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void HlaClass::Unregister( RemoteAgentListener_ABC& listener )
+void HlaClass::Unregister( ClassListener_ABC& listener )
 {
     pListeners_->Unregister( listener );
 }

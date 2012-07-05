@@ -13,6 +13,7 @@
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextFactory_ABC.h"
 #include "CallsignResolver_ABC.h"
+#include "HlaObject_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/Logger_ABC.h"
@@ -51,16 +52,16 @@ UnitTeleporter::~UnitTeleporter()
 // Name: UnitTeleporter::Created
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-void UnitTeleporter::Created( const std::string& /*identifier*/ )
+void UnitTeleporter::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    // NOTHING
+    object.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitTeleporter::Destroyed
 // Created: SLI 2011-09-13
 // -----------------------------------------------------------------------------
-void UnitTeleporter::Destroyed( const std::string& /*identifier*/ )
+void UnitTeleporter::RemoteDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
@@ -170,6 +171,24 @@ void UnitTeleporter::UniqueIdChanged( const std::string& /*identifier*/, const s
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
 void UnitTeleporter::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void UnitTeleporter::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void UnitTeleporter::LocalDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }

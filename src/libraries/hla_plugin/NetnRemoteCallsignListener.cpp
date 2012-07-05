@@ -12,6 +12,7 @@
 #include "RemoteAgentSubject_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "ContextHandler_ABC.h"
+#include "HlaObject_ABC.h"
 #include "protocol/Simulation.h"
 
 using namespace plugins::hla;
@@ -85,19 +86,19 @@ void NetnRemoteCallsignListener::Notify( const sword::UnitCreation& message, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteCallsignListener::Created
+// Name: NetnRemoteCallsignListener::RemoteCreated
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void NetnRemoteCallsignListener::Created( const std::string& /*identifier*/ )
+void NetnRemoteCallsignListener::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    // NOTHING
+    object.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnRemoteCallsignListener::Destroyed
+// Name: NetnRemoteCallsignListener::RemoteDestroyed
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void NetnRemoteCallsignListener::Destroyed( const std::string& /*identifier*/ )
+void NetnRemoteCallsignListener::RemoteDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
@@ -143,6 +144,24 @@ void NetnRemoteCallsignListener::TypeChanged( const std::string& /*identifier*/,
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
 void NetnRemoteCallsignListener::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteCallsignListener::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void NetnRemoteCallsignListener::LocalDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }

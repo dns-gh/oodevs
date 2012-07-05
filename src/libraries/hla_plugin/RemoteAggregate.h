@@ -17,8 +17,9 @@ namespace plugins
 {
 namespace hla
 {
-    class RemoteAgentListener_ABC;
+    class ObjectListener_ABC;
     class AttributesDeserializer;
+    class ObjectListenerComposite;
 
 // =============================================================================
 /** @class  RemoteAggregate
@@ -31,7 +32,7 @@ class RemoteAggregate : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAggregate( const std::string& identifier, RemoteAgentListener_ABC& listener );
+             RemoteAggregate( const std::string& identifier );
     virtual ~RemoteAggregate();
     //@}
 
@@ -39,11 +40,17 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer );
+    virtual const std::string& GetIdentifier() const;
+    virtual void SetIdentifier( const std::string& id );
+    virtual void Register( ObjectListener_ABC& listener );
+    virtual void Unregister( ObjectListener_ABC& listener );
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::string identifier_;
+    std::auto_ptr< ObjectListenerComposite > listeners_;
     std::auto_ptr< AttributesDeserializer > attributes_;
     unsigned int numberOfSilentEntities_;
     //@}

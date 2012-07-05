@@ -14,6 +14,7 @@
 #include "ContextFactory_ABC.h"
 #include "ComponentTypes_ABC.h"
 #include "ComponentTypeVisitor_ABC.h"
+#include "HlaObject_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -116,19 +117,19 @@ void EquipmentUpdater::Notify( const sword::UnitAttributes& message, int /*conte
 }
 
 // -----------------------------------------------------------------------------
-// Name: EquipmentUpdater::Created
+// Name: EquipmentUpdater::RemoteCreated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::Created( const std::string& /*identifier*/ )
+void EquipmentUpdater::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    // NOTHING
+    object.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EquipmentUpdater::Destroyed
+// Name: EquipmentUpdater::RemoteDestroyed
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::Destroyed( const std::string& /*identifier*/ )
+void EquipmentUpdater::RemoteDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
@@ -240,6 +241,24 @@ void EquipmentUpdater::SendUpdate( const std::string& identifier )
     }
     if( message().parameters().elem( 0 ).value_size() > 0 )
         message.Send( publisher_, factory_.Create() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentUpdater::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void EquipmentUpdater::LocalDestroyed( const std::string& /*identifier*/ )
+{
+    // NOTHING
 }
 
 

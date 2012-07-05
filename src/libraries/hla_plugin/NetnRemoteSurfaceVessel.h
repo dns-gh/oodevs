@@ -18,7 +18,8 @@ namespace plugins
 namespace hla
 {
     class AttributesDeserializer;
-    class RemoteAgentListener_ABC;
+    class ObjectListener_ABC;
+    class ObjectListenerComposite;
 
 // =============================================================================
 /** @class  NetnRemoteSurfaceVessel
@@ -31,7 +32,7 @@ class NetnRemoteSurfaceVessel : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, RemoteAgentListener_ABC& listener, const std::string& identifier );
+             NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier );
     virtual ~NetnRemoteSurfaceVessel();
     //@}
 
@@ -39,11 +40,16 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer );
+    virtual void SetIdentifier( const std::string& id );
+    const std::string& GetIdentifier( ) const;
+    virtual void Register( ObjectListener_ABC& listener );
+    virtual void Unregister( ObjectListener_ABC& listener );
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< ObjectListenerComposite > listeners_;
     std::auto_ptr< HlaObject_ABC > vessel_;
     std::auto_ptr< AttributesDeserializer > attributes_;
     //@}

@@ -17,6 +17,8 @@
 #include "MockComponentTypes.h"
 #include "MockMessageController.h"
 #include "MockEntityTypeResolver.h"
+#include "MockHlaObject.h"
+#include "MockHlaClass.h"
 #include "tools/MessageHandler_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -28,19 +30,19 @@ namespace
     {
     public:
         Fixture()
-            : remoteAgentListener  ( 0 )
+            : remoteClassListener  ( 0 )
             , responseObserver     ( 0 )
             , unitAttributesHandler( 0 )
         {
             MOCK_EXPECT( factory.Create ).returns( 888 );
-            MOCK_EXPECT( subject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( subject.Register ).once().with( mock::retrieve( remoteClassListener ) );
             MOCK_EXPECT( subject.Unregister );
             MOCK_EXPECT( handler.Register ).once().with( mock::retrieve( responseObserver ) );
             MOCK_EXPECT( handler.Unregister );
             MOCK_EXPECT( messageController.Register ).once().with( mock::retrieve( unitAttributesHandler ) );
             MOCK_EXPECT( messageController.Unregister );
         }
-        RemoteAgentListener_ABC* remoteAgentListener;
+        ClassListener_ABC* remoteClassListener;
         ResponseObserver_ABC< sword::UnitCreation >* responseObserver;
         MockRemoteAgentSubject subject;
         MockContextHandler< sword::UnitCreation > handler;
@@ -62,7 +64,11 @@ namespace
             , unitId             ( 1337 )
             , agentTypeId        ( 42 )
             , componentTypeId    ( 43 )
+            , remoteAgentListener( 0 )
         {
+            BOOST_REQUIRE( remoteClassListener );
+            MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            remoteClassListener->RemoteCreated( "id", hlaClass, object );
             BOOST_REQUIRE( remoteAgentListener );
             BOOST_REQUIRE( responseObserver );
             BOOST_REQUIRE( unitAttributesHandler );
@@ -100,6 +106,9 @@ namespace
         const unsigned int unitId;
         const unsigned int agentTypeId;
         const unsigned int componentTypeId;
+        ObjectListener_ABC* remoteAgentListener;
+        MockHlaClass hlaClass;
+        MockHlaObject object;
     };
 }
 

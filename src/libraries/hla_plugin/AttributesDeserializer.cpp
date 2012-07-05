@@ -16,7 +16,7 @@ using namespace plugins::hla;
 // Name: AttributesDeserializer constructor
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-AttributesDeserializer::AttributesDeserializer( const std::string& identifier, RemoteAgentListener_ABC& listener )
+AttributesDeserializer::AttributesDeserializer( const std::string& identifier, ObjectListener_ABC& listener )
     : identifier_( identifier )
     , listener_  ( listener )
 {

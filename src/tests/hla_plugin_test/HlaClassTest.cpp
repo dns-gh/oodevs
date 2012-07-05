@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
+#include "MockObjectIdentifierFactory.h"
 #include "hla_plugin/HlaClass.h"
 #include "hla_plugin/HlaObject_ABC.h"
 #include "MockFederate.h"
@@ -17,9 +18,9 @@
 #include "MockRemoteHlaObjectFactory.h"
 #include "MockHlaObject.h"
 #include "MockLocalAgentResolver.h"
-#include "MockRemoteAgentListener.h"
-#include "MockObjectIdentifierFactory.h"
+#include "MockClassListener.h"
 #include "MockContextFactory.h"
+#include "MockHlaObjectNameFactory.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
 #include <hla/Class.h>
@@ -28,6 +29,7 @@
 #include <hla/ClassIdentifier.h>
 
 using namespace plugins::hla;
+
 
 namespace
 {
@@ -50,16 +52,17 @@ namespace
         MockClassBuilder* builder;
         MockHlaObjectFactory* hlaObjectFactory;
         MockRemoteHlaObjectFactory* remoteFactory;
-        MockRemoteAgentListener remoteListener;
+        MockClassListener remoteListener;
         MockLocalAgentResolver localResolver;
         MockContextFactory identifierFactory;
         hla::Class< HlaObject_ABC >* hlaObjectClass;
+        MockHlaObjectNameFactory objectNameFactory;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : hlaClass( federate, localResolver,
+            : hlaClass( federate, localResolver, objectNameFactory,
                         std::auto_ptr< HlaObjectFactory_ABC >( hlaObjectFactory ),
                         std::auto_ptr< RemoteHlaObjectFactory_ABC >( remoteFactory ),
                         std::auto_ptr< ClassBuilder_ABC >( builder ) )
@@ -69,13 +72,26 @@ namespace
         }
         HlaClass hlaClass;
     };
+
+    struct NUllObject : public HlaObject_ABC
+    {
+        virtual void Serialize( ::hla::UpdateFunctor_ABC& , bool  ) const {}
+        virtual void Deserialize( const ::hla::AttributeIdentifier& , ::hla::Deserializer_ABC&  ) {}
+        virtual void Register( ObjectListener_ABC&  ) {}
+        virtual void Unregister( ObjectListener_ABC&  ) {}
+        virtual void Attach( Agent_ABC* , unsigned long  ) {}
+        virtual void SetIdentifier( const std::string&  ) {}
+        virtual const std::string& GetIdentifier() const { static std::string DEFVAL("DEFINT"); return DEFVAL; }
+        virtual void ResetAttributes() {}
+    };
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_class_creates_instance_when_notified, RegisteredFixture )
 {
-    MOCK_EXPECT( hlaObjectFactory->Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( hlaObjectFactory->Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new NUllObject() ) );
+    MOCK_EXPECT( objectNameFactory.CreateName ).once().returns( "123" );
     MOCK_EXPECT( factory->CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
-    MOCK_EXPECT( localResolver.Add ).once().with( 123u, "42" );
+    MOCK_EXPECT( localResolver.Add ).once().with( 123u, "123" );
     hlaClass.Created( agent, 123, "name", rpr::Friendly, rpr::EntityType(), "symbol" );
     mock::verify();
     MOCK_EXPECT( factory->ReleaseIdentifier ).once().with( 42u );
@@ -84,19 +100,19 @@ BOOST_FIXTURE_TEST_CASE( hla_class_creates_instance_when_notified, RegisteredFix
 BOOST_FIXTURE_TEST_CASE( hla_class_creates_remote_instances, RegisteredFixture )
 {
     hlaClass.Register( remoteListener );
-    MOCK_EXPECT( remoteFactory->Create ).once().with( "42", mock::any ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
-    MOCK_EXPECT( remoteListener.Created ).once().with( "42" );
+    MOCK_EXPECT( remoteFactory->Create ).once().with( "name" ).returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
+    MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
     mock::verify();
-    MOCK_EXPECT( remoteListener.Destroyed ).once().with( "42" );
+    MOCK_EXPECT( remoteListener.RemoteDestroyed ).once().with( "name" );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_class_destroys_remote_instances, RegisteredFixture )
 {
     MOCK_EXPECT( remoteFactory->Create ).once().returns( std::auto_ptr< HlaObject_ABC >( new MockHlaObject() ) );
     hlaObjectClass->Create( ::hla::ObjectIdentifier( 42u ), "name" );
-    MOCK_EXPECT( remoteListener.Created ).once().with( "42" );
+    MOCK_EXPECT( remoteListener.RemoteCreated ).once().with( "name", mock::any, mock::any );
     hlaClass.Register( remoteListener );
-    MOCK_EXPECT( remoteListener.Destroyed ).once().with( "42" );
+    MOCK_EXPECT( remoteListener.RemoteDestroyed ).once().with( "name" );
     hlaObjectClass->Destroy( 42u );
 }

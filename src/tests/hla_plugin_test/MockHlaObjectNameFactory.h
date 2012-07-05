@@ -7,33 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_MockAggregate_h
-#define hla_plugin_MockAggregate_h
+#ifndef hla_plugin_MockHlaObjectNameFactory_h
+#define hla_plugin_MockHlaObjectNameFactory_h
 
-#include "hla_plugin/HlaObject_ABC.h"
-#include <hla/Deserializer.h>
+#include "hla_plugin/HlaObjectNameFactory_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MockHlaObject
-    @brief  Mock hla object
+/** @class  MockHlaObjectNameFactory
+    @brief  MockHlaObjectNameFactory
 */
-// Created: SLI 2011-07-26
+// Created: AHC 2012-03-23
 // =============================================================================
-MOCK_BASE_CLASS( MockHlaObject, HlaObject_ABC )
+MOCK_BASE_CLASS( MockHlaObjectNameFactory, HlaObjectNameFactory_ABC )
 {
-    MOCK_METHOD( Serialize, 2 )
-    MOCK_METHOD( Deserialize, 2 )
-    MOCK_METHOD( SetIdentifier, 1 )
-    MOCK_METHOD( GetIdentifier, 0 )
-    MOCK_METHOD( Register, 1 )
-    MOCK_METHOD( Unregister, 1 )
+    MOCK_METHOD( CreateName, 1 )
 };
 
 }
 }
 
-#endif // hla_plugin_MockAggregate_h
+#endif // hla_plugin_MockHlaObjectFactory_h

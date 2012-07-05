@@ -10,7 +10,8 @@
 #ifndef plugins_hla_UnitTeleporter_h
 #define plugins_hla_UnitTeleporter_h
 
-#include "RemoteAgentListener_ABC.h"
+#include "CLassListener_ABC.h"
+#include "ObjectListener_ABC.h"
 #include "ResponseObserver_ABC.h"
 #include <map>
 
@@ -40,8 +41,9 @@ namespace hla
 */
 // Created: SLI 2011-09-13
 // =============================================================================
-class UnitTeleporter : private RemoteAgentListener_ABC
-                     , private ResponseObserver_ABC< sword::UnitCreation >
+class UnitTeleporter : private ResponseObserver_ABC< sword::UnitCreation >
+                     , private ClassListener_ABC
+                     , private ObjectListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -55,8 +57,10 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Created( const std::string& identifier );
-    virtual void Destroyed( const std::string& identifier );
+    virtual void RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void RemoteDestroyed( const std::string& identifier );
+    virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void LocalDestroyed( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );

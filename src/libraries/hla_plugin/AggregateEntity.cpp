@@ -17,7 +17,9 @@
 #include "Formation.h"
 #include "Dimension.h"
 #include "AttributesSerializer.h"
+#include "ObjectListener_ABC.h"
 #include "MarkingFactory_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -31,7 +33,9 @@ using namespace plugins::hla;
 AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned int identifier,
                                   const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
                                   unsigned short siteID, unsigned short applicationID )
-    : agent_     ( agent )
+    : listeners_ ( new ObjectListenerComposite() )
+    , identifier_( name )
+    , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
@@ -130,4 +134,42 @@ void AggregateEntity::FormationChanged( bool isOnRoad )
 void AggregateEntity::EmbarkmentChanged( bool /*mounted*/ )
 {
     // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void AggregateEntity::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& AggregateEntity::GetIdentifier( ) const
+{
+    return identifier_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void AggregateEntity::Register( ObjectListener_ABC& listener )
+{
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void AggregateEntity::Unregister( ObjectListener_ABC& listener )
+{
+    listeners_->Unregister( listener ) ;
 }

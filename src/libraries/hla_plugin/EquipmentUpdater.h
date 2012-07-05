@@ -11,7 +11,8 @@
 #define plugins_hla_EquipmentUpdater_h
 
 #include "ResponseObserver_ABC.h"
-#include "RemoteAgentListener_ABC.h"
+#include "ClassListener_ABC.h"
+#include "ObjectListener_ABC.h"
 #include "tools/MessageObserver.h"
 #include <map>
 #pragma warning( push, 0 )
@@ -55,9 +56,10 @@ namespace hla
 */
 // Created: SLI 2011-09-29
 // =============================================================================
-class EquipmentUpdater : private RemoteAgentListener_ABC
-                       , private ResponseObserver_ABC< sword::UnitCreation >
+class EquipmentUpdater : private ResponseObserver_ABC< sword::UnitCreation >
                        , private tools::MessageObserver< sword::UnitAttributes >
+                       , private ClassListener_ABC
+                       , private ObjectListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -74,8 +76,10 @@ private:
     //@{
     virtual void Notify( const sword::UnitCreation& message, const std::string& identifier );
     virtual void Notify( const sword::UnitAttributes& message, int context );
-    virtual void Created( const std::string& identifier );
-    virtual void Destroyed( const std::string& identifier );
+    virtual void RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void RemoteDestroyed( const std::string& identifier );
+    virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void LocalDestroyed( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );

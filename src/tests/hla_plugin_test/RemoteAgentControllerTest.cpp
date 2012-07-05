@@ -19,6 +19,8 @@
 #include "MockExtentResolver.h"
 #include "MockUnitTypeResolver.h"
 #include "MockLogger.h"
+#include "MockHlaObject.h"
+#include "MockHlaClass.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -36,7 +38,7 @@ namespace
     public:
         Fixture()
             : automatCreationHandler( 0 )
-            , remoteAgentListener   ( 0 )
+            , remoteClassListener   ( 0 )
             , party                 ( 42u )
             , latitude              ( 1. )
             , longitude             ( 2. )
@@ -45,7 +47,7 @@ namespace
             MOCK_EXPECT( logger.LogInfo );
             MOCK_EXPECT( logger.LogError );
             MOCK_EXPECT( logger.LogWarning );
-            MOCK_EXPECT( remoteSubject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( remoteSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
             MOCK_EXPECT( automatCreation.Register ).once().with( mock::retrieve( automatCreationHandler ) );
             MOCK_EXPECT( automatCreation.Unregister );
             MOCK_EXPECT( remoteSubject.Unregister );
@@ -70,7 +72,7 @@ namespace
                 MOCK_EXPECT( team->GetKarma ).returns( kernel::Karma::friend_ );
         }
         MockRemoteAgentSubject remoteSubject;
-        RemoteAgentListener_ABC* remoteAgentListener;
+        ClassListener_ABC* remoteClassListener;
         ResponseObserver_ABC< sword::AutomatCreation >* automatCreationHandler;
         MockContextHandler< sword::AutomatCreation > automatCreation;
         MockContextHandler< sword::UnitCreation > unitCreation;
@@ -91,6 +93,9 @@ namespace
             : remoteController( remoteSubject, automatCreation, unitCreation, teamResolver, unitTypeResolver, logger, extentResolver )
         {
             BOOST_REQUIRE( automatCreationHandler );
+            BOOST_REQUIRE( remoteClassListener );
+            MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
             BOOST_REQUIRE( remoteAgentListener );
             automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "automat" );
         }
@@ -102,6 +107,9 @@ namespace
             return message;
         }
         RemoteAgentController remoteController;
+        ObjectListener_ABC* remoteAgentListener;
+        MockHlaClass hlaClass;
+        MockHlaObject object;
     };
 }
 
@@ -109,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
 {
     const rpr::EntityType entityType( "1 2" );
     const unsigned long agentTypeId = 4343;
-    remoteAgentListener->Created( "identifier" );
+    //remoteClassListener->RemoteCreated( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().with( mock::same( entityType ) ).returns( agentTypeId );
@@ -134,7 +142,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )
 {
-    remoteAgentListener->Created( "identifier" );
+    //remoteClassListener->RemoteCreated( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
@@ -148,7 +156,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_s
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_only_when_moving_inside_extent, AutomatFixture )
 {
-    remoteAgentListener->Created( "identifier" );
+    //remoteClassListener->RemoteCreated( "identifier" );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
@@ -163,7 +171,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_onl
 /*
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_throws_if_distant_party_does_not_exist_in_sword, AutomatFixture )
 {
-    remoteAgentListener->Created( "identifier" );
+    //remoteClassListener->RemoteCreated( "identifier" );
     BOOST_CHECK_THROW( remoteAgentListener->SideChanged( "identifier", rpr::Opposing ), std::runtime_error );
 }
 */

@@ -16,6 +16,8 @@
 #include "MockRemoteAgentSubject.h"
 #include "MockRemoteAgentResolver.h"
 #include "MockInteractionSender.h"
+#include "MockHlaObject.h"
+#include "MockHlaClass.h"
 #include "rpr/Coordinates.h"
 #include "protocol/Simulation.h"
 #include "tools/MessageController.h"
@@ -29,17 +31,17 @@ namespace
     {
     public:
         Fixture()
-            : remoteAgentListener( 0 )
+            : remoteClassListener( 0 )
         {
-            MOCK_EXPECT( remoteAgentSubject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( remoteAgentSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
             MOCK_EXPECT( remoteAgentSubject.Unregister );
         }
         MockRemoteAgentResolver remoteAgentResolver;
         MockLocalAgentResolver localAgentResolver;
         tools::MessageController< sword::SimToClient_Content > controller;
         MockRemoteAgentSubject remoteAgentSubject;
-        RemoteAgentListener_ABC* remoteAgentListener;
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
+        ClassListener_ABC* remoteClassListener;
     };
     class RegisteredFixture : public Fixture
     {
@@ -49,6 +51,9 @@ namespace
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
+            BOOST_REQUIRE( remoteClassListener );
+            MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            remoteClassListener->RemoteCreated( "id", hlaClass, object );
             startMessage.mutable_start_unit_fire()->mutable_firing_unit()->set_id( firingUnitIdentifier );
             stopMessage.mutable_stop_unit_fire();
         }
@@ -57,6 +62,9 @@ namespace
         sword::SimToClient_Content stopMessage;
         unsigned int fireIdentifier;
         unsigned int firingUnitIdentifier;
+        ObjectListener_ABC* remoteAgentListener;
+        MockHlaClass hlaClass;
+        MockHlaObject object;
     };
 }
 

@@ -11,6 +11,7 @@
 #include "RemoteAgentResolver.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextHandler_ABC.h"
+#include "HlaObject_ABC.h"
 #include "protocol/Simulation.h"
 
 using namespace plugins::hla;
@@ -62,19 +63,20 @@ unsigned int RemoteAgentResolver::Resolve( const std::string& identifier ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteAgentResolver::Created
+// Name: RemoteAgentResolver::RemoteCreated
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::Created( const std::string& identifier )
+void RemoteAgentResolver::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
     pendings_.insert( identifier );
+    object.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteAgentResolver::Destroyed
+// Name: RemoteAgentResolver::RemoteDestroyed
 // Created: SLI 2011-09-22
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::Destroyed( const std::string& identifier )
+void RemoteAgentResolver::RemoteDestroyed( const std::string& identifier )
 {
     identifiers_.right.erase( identifier );
 }
@@ -152,6 +154,24 @@ void RemoteAgentResolver::Notify( const sword::UnitCreation& message, const std:
         return;
     identifiers_.insert( T_Identifiers::value_type( message.unit().id(), identifier ) );
     pendings_.erase( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::LocalDestroyed( const std::string& /*identifier*/ )
+{
+    // NOTHING
 }
 
 

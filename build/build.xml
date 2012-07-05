@@ -231,6 +231,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
                   lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">

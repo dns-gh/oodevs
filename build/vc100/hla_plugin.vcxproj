@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\CallsignResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ClassListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DetonationFacade.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\EquipmentUpdater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -129,9 +131,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
-    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAircraft.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassListenerComposite.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ClassListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypes_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ComponentTypeVisitor_ABC.h" />
@@ -193,8 +197,11 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaFactories.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h" />
@@ -224,10 +231,10 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteCallsignListener.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnRemoteSurfaceVessel.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListenerComposite.h" />
-    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />

@@ -12,7 +12,7 @@
 #include "SerializationTools.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
-#include "RemoteAgentListener_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "AttributesDeserializer.h"
 #include "rpr/EntityType.h"
 #include <hla/AttributeIdentifier.h>
@@ -23,25 +23,25 @@ using namespace plugins::hla;
 
 namespace
 {
-    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         Spatial spatial;
         spatial.Deserialize( deserializer );
         listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
     }
-    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         int8 force;
         deserializer >> force;
         listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( force ) );
     }
-    void ReadMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         Marking marking;
         marking.Deserialize( deserializer );
         listener.NameChanged( identifier, marking.str() );
     }
-    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         rpr::EntityType type;
         type.Deserialize( deserializer );
@@ -54,8 +54,10 @@ namespace
 // Name: RemoteSurfaceVessel constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-RemoteSurfaceVessel::RemoteSurfaceVessel( const std::string& identifier, RemoteAgentListener_ABC& listener )
-    : attributes_( new AttributesDeserializer( identifier, listener ) )
+RemoteSurfaceVessel::RemoteSurfaceVessel( const std::string& identifier )
+    : identifier_( identifier )
+    , listeners_ ( new ObjectListenerComposite() )
+    , attributes_( new AttributesDeserializer( identifier, *listeners_ ) )
 {
     attributes_->Register( "Spatial"        , boost::bind( &ReadSpatial         , _1, _2, _3 ) );
     attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier , _1, _2, _3 ) );
@@ -88,4 +90,40 @@ void RemoteSurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool
 void RemoteSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer )
 {
     attributes_->Deserialize( identifier.ToString(), deserializer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteSurfaceVessel::GetIdentifier
+// Created: AHC 2012-07-05
+// -----------------------------------------------------------------------------
+const std::string& RemoteSurfaceVessel::GetIdentifier() const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteSurfaceVessel::SetIdentifier
+// Created: AHC 2012-07-05
+// -----------------------------------------------------------------------------
+void RemoteSurfaceVessel::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteSurfaceVessel::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void RemoteSurfaceVessel::Register( ObjectListener_ABC& listener )
+{
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteSurfaceVessel::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void RemoteSurfaceVessel::Unregister( ObjectListener_ABC& listener )
+{
+    listeners_->Unregister( listener ) ;
 }

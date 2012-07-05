@@ -16,7 +16,7 @@ namespace plugins
 {
 namespace hla
 {
-    class RemoteAgentListener_ABC;
+    class ClassListener_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentSubject_ABC
@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( RemoteAgentListener_ABC& listener ) = 0;
-    virtual void Unregister( RemoteAgentListener_ABC& listener ) = 0;
+    virtual void Register( ClassListener_ABC& listener ) = 0;
+    virtual void Unregister( ClassListener_ABC& listener ) = 0;
     //@}
 };
 

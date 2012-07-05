@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "SideChecker.h"
 #include "AgentSubject_ABC.h"
+#include "HlaObject_ABC.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "RemoteAgentResolver_ABC.h"
 
@@ -99,19 +100,19 @@ void SideChecker::SideChanged( const std::string& identifier, rpr::ForceIdentifi
 }
 
 // -----------------------------------------------------------------------------
-// Name: SideChecker::Created
+// Name: SideChecker::RemoteCreated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::Created( const std::string& /*identifier*/ )
+void SideChecker::RemoteCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    // NOTHING
+    object.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SideChecker::Destroyed
+// Name: SideChecker::RemoteDestroyed
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::Destroyed( const std::string& /*identifier*/ )
+void SideChecker::RemoteDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }
@@ -166,6 +167,24 @@ void SideChecker::UniqueIdChanged( const std::string& /*identifier*/, const std:
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
 void SideChecker::CallsignChanged( const std::string& /*identifier*/, const std::string& /*callsign*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SideChecker::LocalCreated
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void SideChecker::LocalCreated( const std::string& /*identifier*/, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SideChecker::LocalDestroyed
+// Created: AHC 2010-02-27
+// -----------------------------------------------------------------------------
+void SideChecker::LocalDestroyed( const std::string& /*identifier*/ )
 {
     // NOTHING
 }

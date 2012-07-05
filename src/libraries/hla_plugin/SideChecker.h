@@ -12,7 +12,8 @@
 
 #include "SideChecker_ABC.h"
 #include "AgentListener_ABC.h"
-#include "RemoteAgentListener_ABC.h"
+#include "ClassListener_ABC.h"
+#include "ObjectListener_ABC.h"
 #include <map>
 
 namespace plugins
@@ -31,7 +32,8 @@ namespace hla
 // =============================================================================
 class SideChecker : public SideChecker_ABC
                   , private AgentListener_ABC
-                  , private RemoteAgentListener_ABC
+                  , private ClassListener_ABC
+                  , private ObjectListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -50,8 +52,10 @@ private:
     //@{
     virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     virtual void SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
-    virtual void Created( const std::string& identifier );
-    virtual void Destroyed( const std::string& identifier );
+    virtual void RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void RemoteDestroyed( const std::string& identifier );
+    virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void LocalDestroyed( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );

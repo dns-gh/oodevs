@@ -3,32 +3,36 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_MockRemoteHlaObjectFactory_h
-#define hla_plugin_MockRemoteHlaObjectFactory_h
-
-#include "hla_plugin/RemoteHlaObjectFactory_ABC.h"
-#include "hla_plugin/HlaObject_ABC.h"
+#ifndef plugins_hla_HlaClass_ABC_h
+#define plugins_hla_HlaClass_ABC_h
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MockRemoteHlaObjectFactory
-    @brief  Mock remote hla object factory
+/** @class  HlaClass_ABC
+    @brief  HlaClass_ABC
 */
-// Created: SLI 2011-07-26
+// Created: AHC 2012-02-27
 // =============================================================================
-MOCK_BASE_CLASS( MockRemoteHlaObjectFactory, RemoteHlaObjectFactory_ABC )
+class HlaClass_ABC
 {
-    MOCK_METHOD( Create, 1 )
+public:
+    //! @name Constructors/Destructor
+    //@{
+    virtual ~HlaClass_ABC() {}
+    //@}
+
+    //! @name Operations
+    //@{
+    //@}
 };
 
 }
 }
-
-#endif // hla_plugin_MockRemoteHlaObjectFactory_h
+#endif // plugins_hla_HlaClass_ABC_h

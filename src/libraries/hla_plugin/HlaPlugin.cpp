@@ -43,6 +43,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
+#include "rpr/EntityIdentifier.h"
 #include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
@@ -181,6 +182,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
 {
     try
     {
+        rpr::EntityIdentifier federateID(pXis_->attribute< unsigned short >( "dis-site", 1 ),
+                pXis_->attribute< unsigned short >( "dis-application", 1 ), 0xFFFF );
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {

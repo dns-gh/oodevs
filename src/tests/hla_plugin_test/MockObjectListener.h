@@ -3,29 +3,28 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_MockRemoteAgentListener_h
-#define hla_plugin_MockRemoteAgentListener_h
+#ifndef hla_plugin_MockObjectListener_h
+#define hla_plugin_MockObjectListener_h
 
-#include "hla_plugin/RemoteAgentListener_ABC.h"
+#include "hla_plugin/ObjectListener_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MockRemoteAgentListener
-    @brief  Mock remote agent listener
+/** @class  MockObjectListener
+    @brief  Mock object MockObjectListener
 */
-// Created: SLI 2011-08-29
+// Created: AHC 2012-02-27
 // =============================================================================
-MOCK_BASE_CLASS( MockRemoteAgentListener, RemoteAgentListener_ABC )
+
+MOCK_BASE_CLASS( MockObjectListener, ObjectListener_ABC )
 {
-    MOCK_METHOD( Created, 1 )
-    MOCK_METHOD( Destroyed, 1 )
     MOCK_METHOD( Moved, 3 )
     MOCK_METHOD( SideChanged, 2 )
     MOCK_METHOD( NameChanged, 2 )
@@ -35,9 +34,6 @@ MOCK_BASE_CLASS( MockRemoteAgentListener, RemoteAgentListener_ABC )
     MOCK_METHOD( CallsignChanged, 2 )
     MOCK_METHOD( EmbeddedUnitListChanged, 2 )
 };
-
 }
-
 }
-
-#endif // hla_plugin_MockRemoteAgentListener_h
+#endif // hla_plugin_MockObjectListener_h

@@ -11,6 +11,8 @@
 #include "hla_plugin/RemoteAgentResolver.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockContextHandler.h"
+#include "MockHlaObject.h"
+#include "MockHlaClass.h"
 #include "protocol/Simulation.h"
 
 using namespace plugins::hla;
@@ -36,7 +38,7 @@ namespace
             return result;
         }
         MockRemoteAgentSubject remoteAgentSubject;
-        RemoteAgentListener_ABC* remoteAgentListener;
+        ClassListener_ABC* remoteAgentListener;
         MockContextHandler< sword::UnitCreation > unitCreation;
         ResponseObserver_ABC< sword::UnitCreation >* unitCreationObserver;
     };
@@ -44,15 +46,18 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( resolver_only_resolves_created_remote_agent, Fixture )
 {
+    MockHlaClass hlaClass;
+    MockHlaObject object;
     RemoteAgentResolver resolver( remoteAgentSubject, unitCreation );
     BOOST_REQUIRE( remoteAgentListener );
     BOOST_REQUIRE( unitCreationObserver );
     BOOST_CHECK_EQUAL( "", resolver.Resolve( 17 ) );
     unitCreationObserver->Notify( MakeCreationMessage( 17 ), "local" );
     BOOST_CHECK_EQUAL( "", resolver.Resolve( 17 ) );
-    remoteAgentListener->Created( "remote" );
+    MOCK_EXPECT( object.Register ).once();
+    remoteAgentListener->RemoteCreated( "remote", hlaClass, object );
     unitCreationObserver->Notify( MakeCreationMessage( 17 ), "remote" );
     BOOST_CHECK_EQUAL( "remote", resolver.Resolve( 17 ) );
-    remoteAgentListener->Destroyed( "remote" );
+    remoteAgentListener->RemoteDestroyed( "remote" );
     BOOST_CHECK_EQUAL( "", resolver.Resolve( 17 ) );
 }

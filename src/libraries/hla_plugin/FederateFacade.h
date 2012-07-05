@@ -45,7 +45,9 @@ namespace hla
     class RtiAmbassadorFactory_ABC;
     class LocalAgentResolver_ABC;
     class MarkingFactory_ABC;
+    class ClassListener_ABC;
     class HlaClass;
+    class HlaObjectNameFactory_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -69,8 +71,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( RemoteAgentListener_ABC& listener );
-    virtual void Unregister( RemoteAgentListener_ABC& listener );
+    virtual void Register( ClassListener_ABC& listener );
+    virtual void Unregister( ClassListener_ABC& listener );
     //@}
 
     //! @name Operations
@@ -120,6 +122,7 @@ private:
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
+    std::auto_ptr< HlaObjectNameFactory_ABC > nameFactory_;
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
     std::auto_ptr< HlaClass > aircraftClass_;

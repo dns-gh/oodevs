@@ -63,9 +63,10 @@ namespace hla
     class RemoteHlaObjectFactory : public RemoteHlaObjectFactory_ABC
     {
     public:
-        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( name, listener ) );
+            std::auto_ptr< HlaObject_ABC > retval( new T( name ) );
+            return retval;
         }
     };
     template< typename T >
@@ -75,10 +76,11 @@ namespace hla
         explicit NetnRemoteHlaObjectFactory( std::auto_ptr< RemoteHlaObjectFactory_ABC > factory )
             : factory_( factory )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name, RemoteAgentListener_ABC& listener ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( const std::string& name ) const
         {
-            std::auto_ptr< HlaObject_ABC > remote = factory_->Create( name, listener );
-            return std::auto_ptr< HlaObject_ABC >( new T( remote, listener, name ) );
+            std::auto_ptr< HlaObject_ABC > remote = factory_->Create( name );
+            std::auto_ptr< HlaObject_ABC > retval( new T( remote, name ) );
+            return retval;
         }
     private:
         std::auto_ptr< RemoteHlaObjectFactory_ABC > factory_;

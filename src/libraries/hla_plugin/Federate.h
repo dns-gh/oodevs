@@ -58,6 +58,7 @@ public:
     virtual void Register( const ::hla::InteractionIdentifier& interactionID, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe );
 
     virtual void Register( ::hla::FederateAmbassador_ABC& listener );
+
     //@}
 
 private:

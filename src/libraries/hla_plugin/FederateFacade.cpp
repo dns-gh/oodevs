@@ -29,11 +29,14 @@
 #include "RemoteAircraft.h"
 #include "NetnRemoteAircraft.h"
 #include "MarkingFactory.h"
+#include "HlaObjectNameFactory.h"
+#include "MT_Tools/MT_Random.h"
 #include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
 
 using namespace plugins::hla;
@@ -144,15 +147,17 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "" ), xis.attribute< std::string >( "port", "" ) ) )
     , federate_          ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , aggregateClass_    ( new HlaClass( *federate_, resolver,
+    , nameFactory_       ( new HlaObjectNameFactory( xis.attribute< std::string >( "name", "SWORD" ),
+                                boost::lexical_cast< std::string >( MT_Random::GetInstance().rand32() ) ) )
+    , aggregateClass_    ( new HlaClass( *federate_, resolver, *nameFactory_,
                                          CreateFactory< AggregateEntity, NetnAggregate >( xis, callsignResolver, *markingFactory_ ),
                                          CreateRemoteFactory< RemoteAggregate, NetnRemoteAggregate >( xis ),
                                          CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis ) ) )
-    , surfaceVesselClass_( new HlaClass( *federate_, resolver,
+    , surfaceVesselClass_( new HlaClass( *federate_, resolver, *nameFactory_,
                                          CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis, callsignResolver, *markingFactory_ ),
                                          CreateRemoteFactory< RemoteSurfaceVessel, NetnRemoteSurfaceVessel >( xis ),
                                          CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis ) ) )
-    , aircraftClass_     ( new HlaClass( *federate_, resolver,
+    , aircraftClass_     ( new HlaClass( *federate_, resolver, *nameFactory_,
                                          CreateFactory< Aircraft, NetnAircraft >( xis, callsignResolver, *markingFactory_ ),
                                          CreateRemoteFactory< RemoteAircraft, NetnRemoteAircraft >( xis ),
                                          CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis ) ) )
@@ -183,7 +188,7 @@ void FederateFacade::Notify( const sword::ControlEndTick& /*message*/, int /*con
 // Name: FederateFacade::Register
 // Created: VPR 2011-09-07
 // -----------------------------------------------------------------------------
-void FederateFacade::Register( RemoteAgentListener_ABC& listener )
+void FederateFacade::Register( ClassListener_ABC& listener )
 {
     aggregateClass_->Register( listener );
     surfaceVesselClass_->Register( listener );
@@ -194,7 +199,7 @@ void FederateFacade::Register( RemoteAgentListener_ABC& listener )
 // Name: FederateFacade::Unregister
 // Created: VPR 2011-09-07
 // -----------------------------------------------------------------------------
-void FederateFacade::Unregister( RemoteAgentListener_ABC& listener )
+void FederateFacade::Unregister( ClassListener_ABC& listener )
 {
     aircraftClass_->Unregister( listener );
     surfaceVesselClass_->Unregister( listener );

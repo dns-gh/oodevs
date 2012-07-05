@@ -10,7 +10,8 @@
 #ifndef plugins_hla_RemoteAgentController_h
 #define plugins_hla_RemoteAgentController_h
 
-#include "RemoteAgentListener_ABC.h"
+#include "ClassListener_ABC.h"
+#include "ObjectListener_ABC.h"
 #include "ResponseObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/shared_ptr.hpp>
@@ -54,7 +55,8 @@ namespace hla
 // Created: SLI 2011-09-01
 // =============================================================================
 class RemoteAgentController : private ResponseObserver_ABC< sword::AutomatCreation >
-                            , private RemoteAgentListener_ABC
+                            , private ClassListener_ABC
+                            , private ObjectListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -76,8 +78,10 @@ private:
 
     //! @name Operations
     //@{
-    virtual void Created( const std::string& identifier );
-    virtual void Destroyed( const std::string& identifier );
+    virtual void RemoteCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void RemoteDestroyed( const std::string& identifier );
+    virtual void LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object );
+    virtual void LocalDestroyed( const std::string& identifier );
     virtual void Moved( const std::string& identifier, double latitude, double longitude );
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side );
     virtual void NameChanged( const std::string& identifier, const std::string& name );

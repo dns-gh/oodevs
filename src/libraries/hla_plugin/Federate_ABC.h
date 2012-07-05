@@ -10,13 +10,16 @@
 #ifndef plugins_hla_Federate_ABC_h
 #define plugins_hla_Federate_ABC_h
 
+#include <hla/AttributeIdentifier.h>
 #include <boost/noncopyable.hpp>
 #include <string>
+#include <vector>
 
 namespace hla
 {
     class ClassIdentifier;
     class Class_ABC;
+    class ObjectIdentifier;
     class InteractionIdentifier;
     class Interaction_ABC;
     class FederateAmbassador_ABC;

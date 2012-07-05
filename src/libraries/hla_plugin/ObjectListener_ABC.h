@@ -2,44 +2,42 @@
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
-//
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_RemoteAgentListener_ABC_h
-#define plugins_hla_RemoteAgentListener_ABC_h
+#ifndef plugins_hla_ObjectListener_ABC_h
+#define plugins_hla_ObjectListener_ABC_h
 
-#include "rpr/ForceIdentifier.h"
+#include <rpr/ForceIdentifier.h>
+#include <string>
 
 namespace rpr
 {
-    class EntityType;
+class EntityType;
 }
 
 namespace plugins
 {
 namespace hla
 {
+
 // =============================================================================
-/** @class  RemoteAgentListener_ABC
-    @brief  Remote agent listener definition
+/** @class  ObjectListener_ABC
+    @brief  ObjectListener_ABC
 */
-// Created: SLI 2011-08-29
+// Created: AHC 2012-02-27
 // =============================================================================
-class RemoteAgentListener_ABC
+class ObjectListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteAgentListener_ABC() {}
-    virtual ~RemoteAgentListener_ABC() {}
+    virtual ~ObjectListener_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Created( const std::string& identifier ) = 0;
-    virtual void Destroyed( const std::string& identifier ) = 0;
     virtual void Moved( const std::string& identifier, double latitude, double longitude ) = 0;
     virtual void SideChanged( const std::string& identifier, rpr::ForceIdentifier side ) = 0;
     virtual void NameChanged( const std::string& identifier, const std::string& name ) = 0;
@@ -47,12 +45,9 @@ public:
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number ) = 0;
     virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId ) = 0;
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
-    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units ) = 0;
-
+    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& embeddedUnits ) = 0;
     //@}
 };
-
 }
 }
-
-#endif // plugins_hla_RemoteAgentListener_ABC_h
+#endif // plugins_hla_ObjectListener_ABC_h

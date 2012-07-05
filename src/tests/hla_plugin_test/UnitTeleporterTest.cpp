@@ -16,6 +16,8 @@
 #include "MockRemoteAgentSubject.h"
 #include "MockCallsignResolver.h"
 #include "MockLogger.h"
+#include "MockHlaObject.h"
+#include "MockHlaClass.h"
 #include "protocol/Simulation.h"
 
 using namespace plugins::hla;
@@ -29,10 +31,10 @@ namespace
             : unitId( 42 )
             , latitude( 1. )
             , longitude( 2. )
-            , remoteAgentListener( 0 )
+            , remoteClassListener( 0 )
             , unitCreationObserver( 0 )
         {
-            MOCK_EXPECT( agentSubject.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+            MOCK_EXPECT( agentSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
             MOCK_EXPECT( contextHandler.Register ).once().with( mock::retrieve( unitCreationObserver ) );
             MOCK_EXPECT( agentSubject.Unregister ).once();
             MOCK_EXPECT( contextHandler.Unregister ).once();
@@ -45,7 +47,7 @@ namespace
         MockContextHandler< sword::UnitCreation > contextHandler;
         dispatcher::MockSimulationPublisher publisher;
         MockContextFactory contextFactory;
-        RemoteAgentListener_ABC* remoteAgentListener;
+        ClassListener_ABC* remoteClassListener;
         ResponseObserver_ABC< sword::UnitCreation >* unitCreationObserver;
         sword::UnitCreation creationMessage;
         sword::ClientToSim teleportMessage;
@@ -57,6 +59,11 @@ namespace
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
 {
     UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, callsignResolver, logger );
+    ObjectListener_ABC* remoteAgentListener( 0 );
+    MockHlaClass hlaClass;
+    MockHlaObject object;
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+    remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
     BOOST_REQUIRE( remoteAgentListener );
     BOOST_REQUIRE( unitCreationObserver );
     unitCreationObserver->Notify( creationMessage, "identifier" );
@@ -78,6 +85,11 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_unit, Fixture )
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_only_when_unit_has_been_created, Fixture )
 {
     UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, callsignResolver, logger );
+    ObjectListener_ABC* remoteAgentListener( 0 );
+    MockHlaClass hlaClass;
+    MockHlaObject object;
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+    remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
     BOOST_REQUIRE( remoteAgentListener );
     BOOST_REQUIRE( unitCreationObserver );
     remoteAgentListener->Moved( "identifier", 1., 2. );
@@ -117,6 +129,12 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_load_embedded_units, Fixture)
     sword::ClientToSim loadMessage;
 
     UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, callsignResolver, logger );
+
+    ObjectListener_ABC* remoteAgentListener( 0 );
+    MockHlaClass hlaClass;
+    MockHlaObject object;
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
+    remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
     BOOST_REQUIRE( remoteAgentListener );
     BOOST_REQUIRE( unitCreationObserver );
     unitCreationObserver->Notify( creationMessage, "identifier" );

@@ -14,7 +14,7 @@
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
 #include "AttributesDeserializer.h"
-#include "RemoteAgentListener_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "rpr/EntityType.h"
 #include <hla/AttributeIdentifier.h>
 #include <hla/Deserializer_ABC.h>
@@ -24,37 +24,37 @@ using namespace plugins::hla;
 
 namespace
 {
-    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         Spatial spatial;
         spatial.Deserialize( deserializer );
         listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
     }
-    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         int8 force;
         deserializer >> force;
         listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( force ) );
     }
-    void ReadAggregateMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadAggregateMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         AggregateMarking marking;
         marking.Deserialize( deserializer );
         listener.NameChanged( identifier, marking.str() );
     }
-    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         rpr::EntityType type;
         type.Deserialize( deserializer );
         listener.TypeChanged( identifier, type );
     }
-    void ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, RemoteAgentListener_ABC& /*listener*/, unsigned int& numberOfSilentEntities )
+    void ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, unsigned int& numberOfSilentEntities )
     {
         uint16 number = 0;
         deserializer >> number;
         numberOfSilentEntities = number;
     }
-    void ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener, unsigned int numberOfSilentEntities )
+    void ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, unsigned int numberOfSilentEntities )
     {
         for( unsigned int i = 0; i < numberOfSilentEntities; ++i )
         {
@@ -69,9 +69,11 @@ namespace
 // Name: RemoteAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-RemoteAggregate::RemoteAggregate( const std::string& identifier, RemoteAgentListener_ABC& listener )
-    : numberOfSilentEntities_( 0 )
-    , attributes_            ( new AttributesDeserializer( identifier, listener ) )
+RemoteAggregate::RemoteAggregate( const std::string& identifier )
+    : identifier_( identifier )
+    , listeners_ ( new ObjectListenerComposite() )
+    , numberOfSilentEntities_( 0 )
+    , attributes_            ( new AttributesDeserializer( identifier, *listeners_ ) )
 {
     attributes_->Register( "Spatial"               , boost::bind( &ReadSpatial               , _1, _2, _3 ) );
     attributes_->Register( "ForceIdentifier"       , boost::bind( &ReadForceIdentifier       , _1, _2, _3 ) );
@@ -106,4 +108,40 @@ void RemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool /*u
 void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer )
 {
     attributes_->Deserialize( identifier.ToString(), deserializer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAggregate::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void RemoteAggregate::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAggregate::GetIdentifier
+// Created: AHC 2012-07-05
+// -----------------------------------------------------------------------------
+const std::string& RemoteAggregate::GetIdentifier() const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAggregate::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void RemoteAggregate::Register( ObjectListener_ABC& listener )
+{
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAggregate::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void RemoteAggregate::Unregister( ObjectListener_ABC& listener )
+{
+    listeners_->Unregister( listener ) ;
 }

@@ -10,7 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "NetnRemoteSurfaceVessel.h"
 #include "AttributesDeserializer.h"
-#include "RemoteAgentListener_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "UnicodeString.h"
 #include "UniqueId.h"
 #include <hla/AttributeIdentifier.h>
@@ -21,19 +21,19 @@ using namespace plugins::hla;
 
 namespace
 {
-    void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         UnicodeString callsign;
         callsign.Deserialize( deserializer );
         listener.CallsignChanged( identifier, callsign.str() );
     }
-    void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         UniqueId uniqueId;
         uniqueId.Deserialize( deserializer );
         listener.UniqueIdChanged( identifier, uniqueId.str() );
     }
-    void ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
     {
         std::vector< std::string > embeddedUnits;
         uint32 size;
@@ -53,9 +53,10 @@ namespace
 // Name: NetnRemoteSurfaceVessel constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnRemoteSurfaceVessel::NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, RemoteAgentListener_ABC& listener, const std::string& identifier )
-    : vessel_    ( vessel )
-    , attributes_( new AttributesDeserializer( identifier, listener ) )
+NetnRemoteSurfaceVessel::NetnRemoteSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier )
+    : listeners_ ( new ObjectListenerComposite() )
+    , vessel_    ( vessel )
+    , attributes_( new AttributesDeserializer( identifier, *listeners_ ) )
 {
     attributes_->Register( "Callsign", boost::bind( &ReadCallsign, _1, _2, _3 ) );
     attributes_->Register( "UniqueID", boost::bind( &ReadUniqueId, _1, _2, _3 ) );
@@ -88,4 +89,42 @@ void NetnRemoteSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& ide
 {
     vessel_->Deserialize( identifier, deserializer );
     attributes_->Deserialize( identifier.ToString(), deserializer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteSurfaceVessel::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void NetnRemoteSurfaceVessel::SetIdentifier( const std::string& id )
+{
+    vessel_->SetIdentifier( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteSurfaceVessel::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& NetnRemoteSurfaceVessel::GetIdentifier( ) const
+{
+    return vessel_->GetIdentifier();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteSurfaceVessel::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void NetnRemoteSurfaceVessel::Register( ObjectListener_ABC& listener )
+{
+    vessel_->Register( listener );
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnRemoteSurfaceVessel::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void NetnRemoteSurfaceVessel::Unregister( ObjectListener_ABC& listener )
+{
+    vessel_->Unregister( listener );
+    listeners_->Unregister( listener ) ;
 }

@@ -35,6 +35,8 @@ namespace hla
     class Agent_ABC;
     class AttributesSerializer;
     class MarkingFactory_ABC;
+    class ObjectListener_ABC;
+    class ObjectListenerComposite;
 
 // =============================================================================
 /** @class  AggregateEntity
@@ -58,6 +60,10 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer );
+    virtual void SetIdentifier( const std::string& id );
+    virtual const std::string& GetIdentifier() const;
+    virtual void Register( ObjectListener_ABC& listener );
+    virtual void Unregister( ObjectListener_ABC& listener );
     //@}
 
 private:
@@ -91,6 +97,8 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string identifier_;
+    std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC& agent_;
     T_Equipments equipments_;
     std::auto_ptr< AttributesSerializer > attributes_;

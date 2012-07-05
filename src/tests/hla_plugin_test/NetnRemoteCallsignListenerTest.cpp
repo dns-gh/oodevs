@@ -11,6 +11,8 @@
 #include "hla_plugin/NetnRemoteCallsignListener.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockCallsignResolver.h"
+#include "MockHlaObject.h"
+#include "MockHlaClass.h"
 #include "MockContextHandler.h"
 #include "protocol/Simulation.h"
 
@@ -22,10 +24,10 @@ namespace
     {
     public:
         Fixture()
-            : listener        ( 0 )
+            : classListener   ( 0 )
             , responseObserver( 0 )
         {
-            MOCK_EXPECT( subject.Register ).once().with( mock::retrieve( listener ) );
+            MOCK_EXPECT( subject.Register ).once().with( mock::retrieve( classListener ) );
             MOCK_EXPECT( subject.Unregister ).once();
             MOCK_EXPECT( handler.Register ).once().with( mock::retrieve( responseObserver ) );
             MOCK_EXPECT( handler.Unregister ).once();
@@ -33,7 +35,7 @@ namespace
         MockCallsignResolver resolver;
         MockRemoteAgentSubject subject;
         MockContextHandler< sword::UnitCreation > handler;
-        RemoteAgentListener_ABC* listener;
+        ClassListener_ABC* classListener;
         ResponseObserver_ABC< sword::UnitCreation >* responseObserver;
     };
     class RegisteredFixture : public Fixture
@@ -42,7 +44,9 @@ namespace
         RegisteredFixture()
             : callsignListener( resolver, subject, handler )
         {
-            BOOST_REQUIRE( listener );
+            BOOST_REQUIRE( classListener );
+            MOCK_EXPECT( object.Register ).once().with( mock::retrieve( listener ) );
+            classListener->RemoteCreated( "id", hlaClass, object );
             BOOST_REQUIRE( responseObserver );
         }
         sword::UnitCreation MakeCreation( unsigned int identifier )
@@ -52,6 +56,9 @@ namespace
             return message;
         }
         NetnRemoteCallsignListener callsignListener;
+        ObjectListener_ABC* listener;
+        MockHlaClass hlaClass;
+        MockHlaObject object;
     };
 }
 

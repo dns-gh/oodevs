@@ -14,6 +14,8 @@
 #include "Spatial.h"
 #include "AggregateMarking.h"
 #include "AttributesSerializer.h"
+#include "ObjectListener_ABC.h"
+#include "ObjectListenerComposite.h"
 #include "MarkingFactory_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include <boost/bind.hpp>
@@ -27,7 +29,9 @@ using namespace plugins::hla;
 Aircraft::Aircraft( Agent_ABC& agent, unsigned int identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
                               unsigned short siteID, unsigned short applicationID )
-    : agent_     ( agent )
+    :  identifier_( name )
+    , listeners_ ( new ObjectListenerComposite() )
+    , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
@@ -99,4 +103,40 @@ void Aircraft::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /
 void Aircraft::EmbarkmentChanged( bool /*mounted*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Aircraft::SetIdentifier
+// Created: AHC 2012-03-15
+// -----------------------------------------------------------------------------
+void Aircraft::SetIdentifier( const std::string& id )
+{
+    identifier_ = id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Aircraft::GetIdentifier
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+const std::string& Aircraft::GetIdentifier( ) const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Aircraft::Register
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void Aircraft::Register( ObjectListener_ABC& listener )
+{
+    listeners_->Register( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Aircraft::Unregister
+// Created: AHC 2012-02-27
+// -----------------------------------------------------------------------------
+void Aircraft::Unregister( ObjectListener_ABC& listener )
+{
+    listeners_->Unregister( listener ) ;
 }
