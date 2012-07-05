@@ -29,13 +29,13 @@ DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, boost::shared_ptr< s
 //-----------------------------------------------------------------------------
 void PathPointAdapter::Initialize( core::Facade& facade )
 {
-    USE_HOOK( GetPathDestPoint, facade);
-    USE_HOOK( GetPathDIAType, facade);
-    USE_HOOK( GetPathLimaPoint, facade);
-    USE_HOOK( GetPathPos, facade);
-    USE_HOOK( GetPathTypeLimaPoint, facade);
-    USE_HOOK( GetPathTypePoint, facade);
-    USE_HOOK( RemovePathPoint, facade);
+    USE_HOOK( GetPathDestPoint, facade );
+    USE_HOOK( GetPathDIAType, facade );
+    USE_HOOK( GetPathLimaPoint, facade );
+    USE_HOOK( GetPathPos, facade );
+    USE_HOOK( GetPathTypeLimaPoint, facade );
+    USE_HOOK( GetPathTypePoint, facade );
+    USE_HOOK( RemovePathPoint, facade );
 }
 
 //-----------------------------------------------------------------------------
