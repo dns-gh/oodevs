@@ -1,0 +1,117 @@
+[#ftl]
+<script type="text/template" id="node_settings_template">
+    <div class="modal fade">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>{{{name}}} Node Settings</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Max Sessions</label>
+                    <div class="controls">
+                        <input type="number" class="max_sessions" value="{{{max_sessions}}}"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Parallel Sessions</label>
+                    <div class="controls">
+                        <input type="number" class="parallel_sessions" value="{{{parallel_sessions}}}"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="btn" data-dismiss="modal">Apply</a>
+            <a class="btn btn-primary" data-dismiss="modal">Discard</a>
+        </div>
+    </div>
+</script>
+<div class="row">
+    <div class="span9">
+        <div id="node_error"></div>
+        <div id="node_settings"></div>
+        <form class="form-inline">
+            <div class="control-group">
+                <div class="controls">
+                    <input id="node_name" type="text" placeholder="Node name..."/>
+                    <a id="node_config" class="btn"><i class="icon-cog"></i></a>
+                    <a id="node_create" class="btn"><i class="icon-plus"></i> Create...</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="span9">
+        <div id="nodes" class="accordion">
+            [#-- auto-generated templates --]
+            <script type="text/template" id="node_error_template">
+                <div class="alert alert-error"><b>Error</b> {{content}}</div>
+            </script>
+            <script type="text/template" id="node_template">
+                <div id="id_{{{id}}}" class="node_row">
+                    <div class="node_settings"></div>
+                    <div class="node_header accordion-heading">
+                        <div class="btn-group node_buttons">
+                            <a title="Loading..." class="btn hide disabled spin_btn"></a>
+                            {{#is_option status running=""}}
+                            <a target="{{{id}}}" href="/{{{id}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
+                            {{/is_option}}
+                            {{#is_option status stopped=""}}
+                            <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                            {{/is_option}}
+                            <a title="Settings..." class="btn config{{#is_option status running=""}} disabled{{/is_option}}"><i class="icon-cog"></i></a>
+                            {{#is_option status running=""}}
+                            <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+                            {{/is_option}}
+                            {{#is_option status stopped=""}}
+                            <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                            {{/is_option}}
+                        </div>
+                        <span class="well {{{status}}}"></span>
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
+                    </div>
+                    <div id="collapse_{{{id}}}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <form class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label" for="url">URL</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">http://sword.server.com/{{name}}</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Sessions</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">{{{max_sessions}}} total</span>
+                                        <span class="uneditable-input read_only">0 played</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label"></label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">{{{parallel_sessions}}} parallel</span>
+                                        <span class="uneditable-input read_only">0 running</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Exercises</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">0 available</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Data</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">0 MB used</span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

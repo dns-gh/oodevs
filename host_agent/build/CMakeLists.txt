@@ -77,8 +77,13 @@ target_link_libraries( cloud_server
     host
     runtime
     web
-    ws2_32
 )
+if( WIN32 )
+    target_link_libraries( cloud_server
+        ws2_32
+        shlwapi
+    )
+endif()
 
 ################################################################################
 # runtime_test

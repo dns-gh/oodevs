@@ -19,6 +19,7 @@
 #include <host/Sql.h>
 #include <host/UserController.h>
 #include <host/UuidFactory.h>
+#include <runtime/CrashHandler.h>
 #include <runtime/Daemon.h>
 #include <runtime/Factory.h>
 #include <runtime/FileSystem.h>
@@ -451,5 +452,6 @@ int StartServer( int argc, const char* argv[], const Waiter& waiter )
 
 int main( int argc, const char* argv[] )
 {
+    CrashHandlerInit();
     return StartServer( argc, argv, &ConsoleWaiter );
 }
