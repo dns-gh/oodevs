@@ -401,8 +401,12 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
         message().mutable_parameters()->add_elem()->add_value()->mutable_agent()->set_id( id );
         message.Send( publisher_ );
         if( teleport )
-            TeleportToDestination( id, contextRequest.transportData.dataTransport.finalAppointment.location.Latitude(),
+            if( contextRequest.transportData.convoyType == NetnTransportStruct::E_Transport )
+                TeleportToDestination( id, contextRequest.transportData.dataTransport.finalAppointment.location.Latitude(),
                                        contextRequest.transportData.dataTransport.finalAppointment.location.Longitude(), publisher_ );
+            else
+                TeleportToDestination( id, contextRequest.transportData.dataDisembarkment.appointment.location.Latitude(),
+                                       contextRequest.transportData.dataDisembarkment.appointment.location.Longitude(), publisher_ );
     }
 }
 
