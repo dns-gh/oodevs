@@ -164,7 +164,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Usages
     {
         pUsagesPanel_ = new UsagesDockWidget( parent, controllers, staticModel );
-        pUsagesPanel_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Exercise, ePreparationMode_Terrain );
+        pUsagesPanel_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Exercise );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pUsagesPanel_ );
     }
     // ResourceNetwork panel
