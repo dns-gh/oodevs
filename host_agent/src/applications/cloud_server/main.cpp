@@ -33,6 +33,7 @@
 #define  CPPLOG_THREADING
 #include <cpplog/cpplog.hpp>
 
+#include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -266,7 +267,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     UuidFactory uuids;
     web::Client client;
     const proxy::Ssl ssl( cfg.ports.ssl, cfg.ssl.store, cfg.ssl.type, cfg.ssl.password );
-    const proxy::Config proxyConfig( cfg.root / "log", cfg.java, cfg.proxy.jar, cfg.ports.proxy, ssl );
+    const proxy::Config proxyConfig( cfg.root / "host", cfg.java, cfg.proxy.jar, cfg.ports.proxy, ssl );
     Proxy proxy( log, runtime, system, proxyConfig, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( pool, system );
@@ -277,7 +278,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
-    Sql db( cfg.root / "cloud.db" );
+    Sql db( cfg.root / "host" / "host_agent.db" );
     UserController users( log, uuids, db );
     web::Controller controller( log, agent, users, true );
     web::Server server( log, pool, controller, host->Get() );
@@ -395,8 +396,9 @@ void ConsoleWaiter()
 int StartServer( int argc, const char* argv[], const Waiter& waiter )
 {
     const Path root = GetRootDir( argc-1, argv+1 );
+    boost::filesystem::create_directories( root / "host" );
     cpplog::TeeLogger tee(
-        new cpplog::FileLogger( ( root / "log" / "host_agent.log" ).string(), true ), true,
+        new cpplog::FileLogger( ( root / "host" / "host_agent.log" ).string(), true ), true,
         new cpplog::StdErrLogger(), true );
     cpplog::BackgroundLogger log( tee );
     LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";
