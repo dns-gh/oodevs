@@ -256,9 +256,16 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << bSkipPreparation_;
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();
+    for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
+    {
+        if( !*it )
+            --size;
+    }
     file << size;
     for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {
+        if( !*it )
+            continue;
         unsigned int id = ( *it )->GetID();
         file << id;
     }

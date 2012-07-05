@@ -76,9 +76,16 @@ namespace boost
         void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
             std::size_t size = map.size();
+            for ( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
+            {
+                if( !it->first )
+                    --size;
+            }
             file << size;
             for( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
             {
+                if( !it->first )
+                    continue;
                 unsigned id = it->first->GetMosID();
                 file << id;
                 file << it->second;

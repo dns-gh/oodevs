@@ -39,10 +39,17 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
         {
-            const std::size_t size = set.size();
+            std::size_t size = set.size();
+            for ( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
+            {
+                if( !*it )
+                    --size;
+            }
             file << size;
             for( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
             {
+                if (!*it )
+                    continue;
                 const unsigned id = (*it)->GetID();
                 file << id;
             }
