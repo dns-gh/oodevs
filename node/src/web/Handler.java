@@ -86,7 +86,7 @@ public class Handler extends HttpServlet {
     private void serveTemplate(final HttpServletResponse reply, final HttpServletRequest request, final String target, final String user) throws IOException {
         reply.setStatus(HttpServletResponse.SC_OK);
         final Template ctx = cfg_.getTemplate(target);
-        final Map<String, String> root = new HashMap<String, String>();
+        final Map<String, Object> root = new HashMap<String, Object>();
         for (final Map.Entry<String, String[]> it : request.getParameterMap().entrySet())
             root.put(it.getKey(), it.getValue()[0]);
         root.put("uuid", uuid_);
@@ -94,11 +94,13 @@ public class Handler extends HttpServlet {
         root.put("type", type_);
         if (user != null) {
             final JSONObject obj = (JSONObject) JSONValue.parse(user);
-            root.put("u_username", obj.get("username").toString());
-            root.put("u_name", obj.get("name").toString());
-            root.put("u_type", obj.get("type").toString());
-            root.put("u_temporary", obj.get("temporary").toString());
-            root.put("u_language", obj.get("language").toString());
+            final Map<String, String> sub = new HashMap<String, String>();
+            sub.put("username", obj.get("username").toString());
+            sub.put("name", obj.get("name").toString());
+            sub.put("type", obj.get("type").toString());
+            sub.put("temporary", obj.get("temporary").toString());
+            sub.put("language", obj.get("language").toString());
+            root.put("user", sub);
             root.put("sid", obj.get("sid").toString());
         }
         try {
