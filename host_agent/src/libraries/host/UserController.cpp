@@ -28,6 +28,39 @@ using runtime::Utf8Convert;
 
 namespace
 {
+enum UserType
+{
+    USER_TYPE_ADMINISTRATOR,
+    USER_TYPE_MANAGER,
+    USER_TYPE_USER,
+    USER_TYPE_COUNT,
+};
+
+// -----------------------------------------------------------------------------
+// Name: Convert
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+const char* Convert( UserType type )
+{
+    switch( type )
+    {
+        case USER_TYPE_ADMINISTRATOR:   return "administrator";
+        case USER_TYPE_MANAGER:         return "manager";
+    }
+    return "user";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Convert
+// Created: BAX 2012-07-05
+// -----------------------------------------------------------------------------
+UserType Convert( const std::string& type )
+{
+    if( type == "administrator" )   return USER_TYPE_ADMINISTRATOR;
+    if( type == "manager" )         return USER_TYPE_MANAGER;
+    return USER_TYPE_USER;
+}
+
 // -----------------------------------------------------------------------------
 // Name: HashPassword
 // Created: BAX 2012-06-28
@@ -132,9 +165,9 @@ void MakeDefaultDatabase( Sql_ABC& db )
         "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
     st->Bind( "admin@masagroup.net" );
     st->Bind( HashPassword( "admin" ) );
-    st->Bind( "John Doe" );
-    st->Bind( "admin" );
-    st->Bind( true );
+    st->Bind( "Default Admin" );
+    st->Bind( Convert( USER_TYPE_ADMINISTRATOR ) );
+    st->Bind( false );
     st->Bind( "eng" );
     st->Next();
     db.Commit( *tr );
