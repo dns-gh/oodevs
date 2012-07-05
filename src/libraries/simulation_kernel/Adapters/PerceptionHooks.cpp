@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PerceptionHooks.h"
 #include "Hook.h"
+#include "RolePion_Perceiver.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_UrbanCache.h"
@@ -615,4 +616,5 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( IsObjectUniversal, facade );
     REGISTER_HOOK( CanComponentPerceive, facade );
     REGISTER_HOOK( GetTransporter, facade );
+    RolePion_Perceiver::Initialize( facade );
 }

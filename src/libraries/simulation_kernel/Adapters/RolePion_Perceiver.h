@@ -43,6 +43,7 @@ namespace detection
 namespace core
 {
     class Model;
+    class Facade;
 }
 
 namespace sword
@@ -50,7 +51,7 @@ namespace sword
     class ListenerHelper;
 
 // =============================================================================
-// @class  PHY_RolePion_Perceiver
+// @class  RolePion_Perceiver
 // Created: JVT 2004-08-03
 // Modified: JVT 2004-10-28
 // =============================================================================
@@ -64,6 +65,11 @@ class RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                          , public transport::LoadingChangeNotificationHandler_ABC
 {
 public:
+    //! @name Static Initializer
+    //@{
+    static void Initialize( core::Facade& facade );
+    //@}
+
     //! @name Constructors/Destructor
     //@{
              RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity );

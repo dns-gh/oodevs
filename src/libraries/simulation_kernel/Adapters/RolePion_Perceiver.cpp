@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "RolePion_Perceiver.h"
 #include "ListenerHelper.h"
+#include "Hook.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "MIL_UrbanCache.h"
 #include "Entities/MIL_Army.h"
@@ -69,6 +70,7 @@
 #include "simulation_terrain/TER_PopulationFlowVisitor_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+#include <core/Convert.h>
 #include <urban/model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <core/Model.h>
@@ -76,6 +78,7 @@
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/foreach.hpp>
+#include <boost/assign.hpp>
 
 using namespace detection;
 using namespace sword;
@@ -222,6 +225,19 @@ namespace
             notifications.push_back( notifier );
         }
     }
+}
+
+DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::Initialize
+// Created: SLI 2012-07-05
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::Initialize( core::Facade& facade )
+{
+    USE_HOOK( IsUsingActiveRadar, facade );
+    USE_HOOK( IsUsingSpecializedActiveRadar, facade );
 }
 
 // -----------------------------------------------------------------------------
@@ -646,7 +662,7 @@ void RolePion_Perceiver::DisableRecoUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsUsingActiveRadar() const
 {
-    return ( pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar() ) || pPerceptionFlyingShell_;
+    return GET_HOOK( IsUsingActiveRadar )( core::Convert( &entity_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -656,7 +672,8 @@ bool RolePion_Perceiver::IsUsingActiveRadar() const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
-    return ( pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass ) ) || pPerceptionFlyingShell_;
+    static const std::vector< std::string > translation = boost::assign::list_of( "radar" )( "tapping" )( "tapping-radar" );
+    return GET_HOOK( IsUsingSpecializedActiveRadar )( core::Convert( &entity_ ), translation.at( radarClass.GetID() ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
