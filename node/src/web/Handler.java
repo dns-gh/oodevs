@@ -83,7 +83,8 @@ public class Handler extends HttpServlet {
         return uri;
     }
 
-    private void serveTemplate(final HttpServletResponse reply, final HttpServletRequest request, final String target, final String user) throws IOException {
+    private void serveTemplate(final HttpServletResponse reply, final HttpServletRequest request, final String target, final JSONObject user)
+            throws IOException {
         reply.setStatus(HttpServletResponse.SC_OK);
         final Template ctx = cfg_.getTemplate(target);
         final Map<String, Object> root = new HashMap<String, Object>();
@@ -93,15 +94,14 @@ public class Handler extends HttpServlet {
         root.put("name", name_);
         root.put("type", type_);
         if (user != null) {
-            final JSONObject obj = (JSONObject) JSONValue.parse(user);
             final Map<String, String> sub = new HashMap<String, String>();
-            sub.put("username", obj.get("username").toString());
-            sub.put("name", obj.get("name").toString());
-            sub.put("type", obj.get("type").toString());
-            sub.put("temporary", obj.get("temporary").toString());
-            sub.put("language", obj.get("language").toString());
+            sub.put("username", user.get("username").toString());
+            sub.put("name", user.get("name").toString());
+            sub.put("type", user.get("type").toString());
+            sub.put("temporary", user.get("temporary").toString());
+            sub.put("language", user.get("language").toString());
             root.put("user", sub);
-            root.put("sid", obj.get("sid").toString());
+            root.put("sid", user.get("sid").toString());
         }
         try {
             ctx.process(root, reply.getWriter());
@@ -153,15 +153,24 @@ public class Handler extends HttpServlet {
         return null;
     }
 
-    @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
-        final String user = isAuthenticated(req);
-        String uri = user != null ? req.getRequestURI() : "login";
+    private void serve(String uri, final JSONObject user, final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())
             uri = type_ + "/index";
         final String target = identify(uri, res);
         serveTemplate(res, req, target, user);
+    }
+
+    @Override
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
+        final String user = isAuthenticated(req);
+        final JSONObject juser = user == null ? null : (JSONObject) JSONValue.parse(user);
+        if (user == null)
+            serve("login", null, req, res);
+        else if (Boolean.parseBoolean(juser.get("temporary").toString()))
+            serve("update_login", juser, req, res);
+        else
+            serve(req.getRequestURI(), juser, req, res);
     }
 }
