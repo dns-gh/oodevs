@@ -99,7 +99,6 @@ void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const 
 PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     : owner_                         ( pion )
     , rMaxAgentPerceptionDistance_   ( 0. )
-    , rMaxObjectPerceptionDistance_  ( 0. )
     , vSensorInfo_                   ()
     , nSensorMode_                   ( eNormal )
     , bPeriphericalVisionEnabled_    ( false )
@@ -220,7 +219,6 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
          & surfacesAgent_
          & surfacesObject_
          & rMaxAgentPerceptionDistance_
-         & rMaxObjectPerceptionDistance_
          & bFireObserver_;
 }
 
@@ -665,13 +663,12 @@ private:
 struct sPerceptionDataSensors : private boost::noncopyable
 {
 public:
-    sPerceptionDataSensors( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
+    sPerceptionDataSensors( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, double& rMaxAgentPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent )
         , surfacesObject_              ( surfacesObject )
         , vOrigin_                     ( vOrigin )
         , vDirection_                  ( vDirection )
         , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
-        , rMaxObjectPerceptionDistance_( rMaxObjectPerceptionDistance )
     {
         // NOTHING
     }
@@ -690,7 +687,6 @@ public:
         const PHY_SensorTypeObject* pSensorTypeObject = sensor.GetType().GetTypeObject();
         if( pSensorTypeObject )
         {
-            rMaxObjectPerceptionDistance_ = std::max( rMaxObjectPerceptionDistance_, pSensorTypeObject->GetMaxDistance() );
             PHY_PerceptionSurfaceObject& surface = surfacesObject_[ std::make_pair( pSensorTypeObject, sensor.GetHeight() ) ];
             if( !surface.IsInitialized() )
                 surface = PHY_PerceptionSurfaceObject( *pSensorTypeObject, vOrigin_, sensor.GetHeight() );
@@ -703,7 +699,6 @@ private:
     const MT_Vector2D&                          vOrigin_;
     const MT_Vector2D&                          vDirection_;
     double&                                   rMaxAgentPerceptionDistance_;
-    double&                                   rMaxObjectPerceptionDistance_;
 };
 
 // -----------------------------------------------------------------------------
@@ -712,7 +707,7 @@ class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 public:
     sPerceptionDataComposantes( MIL_Agent_ABC& pion, PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
                                 const MT_Vector2D& vMainPerceptionDirection, double rDirectionRotation,
-                                double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
+                                double& rMaxAgentPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent )
         , surfacesObject_              ( surfacesObject )
         , position_                    ( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
@@ -721,7 +716,6 @@ public:
         , nRotationIdx_                ( vMainPerceptionDirection != direction_ ? -1 : 0 ) // détection lockée
         , rRotationAngle_              ( rDirectionRotation )
         , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
-        , rMaxObjectPerceptionDistance_( rMaxObjectPerceptionDistance )
         , transport_                   ( pion.RetrieveRole< transport::PHY_RoleAction_Loading >() )
     {
         // NOTHING
@@ -737,7 +731,7 @@ public:
         else if( nRotationIdx_ > 0 )
             vComposantePerceptionDirection.Rotate( ( ( 2 * ( nRotationIdx_ & 0x1 ) - 1 ) * ( ( nRotationIdx_ + 1 ) >> 1 ) ) * rRotationAngle_ );
         ++nRotationIdx_;
-        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, position_, vComposantePerceptionDirection, rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
+        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, position_, vComposantePerceptionDirection, rMaxAgentPerceptionDistance_ );
         composante.ApplyOnSensors( dataFunctor );
     }
 
@@ -748,7 +742,6 @@ private:
     const MT_Vector2D&                          direction_;
     const MT_Vector2D&                          vMainPerceptionDirection_;
     double&                                     rMaxAgentPerceptionDistance_;
-    double&                                     rMaxObjectPerceptionDistance_;
     int                                         nRotationIdx_;
     const double                                rRotationAngle_;
     const transport::PHY_RoleAction_Loading*    transport_;
@@ -820,11 +813,10 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     surfacesAgent_.clear();
     surfacesObject_.clear();
     rMaxAgentPerceptionDistance_ = 0;
-    rMaxObjectPerceptionDistance_ = 0;
     sPerceptionRotation rotation;
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
     owner_.Execute( *componentComputer );
-    sPerceptionDataComposantes dataFunctor( owner_, surfacesAgent_, surfacesObject_, vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_, rMaxObjectPerceptionDistance_ );
+    sPerceptionDataComposantes dataFunctor( owner_, surfacesAgent_, surfacesObject_, vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_ );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     owner_.Execute( *dataComputer );
 }

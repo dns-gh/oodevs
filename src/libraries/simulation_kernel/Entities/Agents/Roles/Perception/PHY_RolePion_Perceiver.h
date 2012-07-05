@@ -247,7 +247,6 @@ private:
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
     double rMaxAgentPerceptionDistance_;
-    double rMaxObjectPerceptionDistance_;
 
     PHY_PerceptionView*             pPerceptionView_;
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;

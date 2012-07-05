@@ -218,8 +218,6 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity )
     : owner_                         ( pion )
     , entity_                        ( entity )
-    , rMaxAgentPerceptionDistance_   ( 0. )
-    , rMaxObjectPerceptionDistance_  ( 0. )
     , bRecordModeEnabled_            ( false )
     , bHasChanged_                   ( true )
     , bExternalMustChangePerception_ ( false )
@@ -240,7 +238,7 @@ RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity
     static unsigned int nNbr = 0;
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
     entity[ "perceptions/peripherical-vision/next-step" ] = nNextPeriphericalVisionStep_;
-    entity[ "perceptions/max-agent-perception-distance" ] = GetMaxTheoreticalcAgentPerceptionDistance();
+    entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/sensor/activated", boost::bind( &RolePion_Perceiver::EnableSensors, this ), boost::bind( &RolePion_Perceiver::DisableSensors, this ) );
@@ -362,9 +360,7 @@ void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this )
          & nNextPeriphericalVisionStep_
          & surfacesAgent_
-         & surfacesObject_
-         & rMaxAgentPerceptionDistance_
-         & rMaxObjectPerceptionDistance_;
+         & surfacesObject_;
 }
 
 // =============================================================================
@@ -757,16 +753,16 @@ void RolePion_Perceiver::DisableFlyingShellDetection( int id )
 double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
     std::auto_ptr< PerceptionDistanceComputer_ABC > computer( owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    return rMaxAgentPerceptionDistance_ * owner_.Execute( *computer ).GetFactor();
+    return GetMaxTheoreticalcAgentPerceptionDistance() * owner_.Execute( *computer ).GetFactor();
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance
+// Name: RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance
 // Created: MMC 2011-05-11
 // -----------------------------------------------------------------------------
 double RolePion_Perceiver::GetMaxTheoreticalcAgentPerceptionDistance() const
 {
-    return rMaxAgentPerceptionDistance_;
+    return entity_[ "perceptions/max-agent-perception-distance" ];
 }
 
 // -----------------------------------------------------------------------------

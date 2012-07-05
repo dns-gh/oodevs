@@ -138,7 +138,7 @@ namespace
                !( entity[ "is-transported" ] || entity[ "is-prisoner" ] );
     }
 
-    void UpdatePerceptionDataSensors( const wrapper::View& sensors, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
+    void UpdatePerceptionDataSensors( const wrapper::View& sensors, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, double& rMaxAgentPerceptionDistance )
     {
         for( std::size_t i = 0; i < sensors.GetSize(); ++i )
         {
@@ -159,7 +159,6 @@ namespace
             const SensorTypeObject* pSensorTypeObject = type->GetTypeObject();
             if( pSensorTypeObject )
             {
-                rMaxObjectPerceptionDistance = std::max( rMaxObjectPerceptionDistance, pSensorTypeObject->GetMaxDistance() );
                 PerceptionSurfaceObject& surface = surfacesObject[ std::make_pair( pSensorTypeObject, height ) ];
                 if( !surface.IsInitialized() )
                     surface = PerceptionSurfaceObject( *pSensorTypeObject, vOrigin, height );
@@ -168,7 +167,7 @@ namespace
     }
     void UpdatePerceptionDataComposantes( const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject,
                                           const MT_Vector2D& vMainPerceptionDirection, double rDirectionRotation,
-                                          double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
+                                          double& rMaxAgentPerceptionDistance )
         {
             const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
             const MT_Vector2D direction( entity[ "movement/direction/x" ], entity[ "movement/direction/y" ] );
@@ -184,7 +183,7 @@ namespace
                 else if( nRotationIdx > 0 )
                     vComposantePerceptionDirection.Rotate( ( ( 2 * ( nRotationIdx & 0x1 ) - 1 ) * ( ( nRotationIdx + 1 ) >> 1 ) ) * rDirectionRotation );
                 ++nRotationIdx;
-                UpdatePerceptionDataSensors( component[ "sensors" ], surfacesAgent, surfacesObject, position, vComposantePerceptionDirection, rMaxAgentPerceptionDistance, rMaxObjectPerceptionDistance );
+                UpdatePerceptionDataSensors( component[ "sensors" ], surfacesAgent, surfacesObject, position, vComposantePerceptionDirection, rMaxAgentPerceptionDistance );
             }
     }
     double ComputePerceptionRotation( const wrapper::View& entity )
@@ -229,11 +228,11 @@ namespace
     // Name: RolePion_Perceiver::PreparePerceptionData
     // Created: NLD 2004-08-20
     // -----------------------------------------------------------------------------
-    void PreparePerceptionData( const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance, MT_Vector2D& vMainPerceptionDirection )
+    void PreparePerceptionData( const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, double& rMaxAgentPerceptionDistance, MT_Vector2D& vMainPerceptionDirection )
     {
         ComputeMainPerceptionDirection( entity, vMainPerceptionDirection );
         const double rotation = ComputePerceptionRotation( entity );
-        UpdatePerceptionDataComposantes( entity, surfacesAgent, surfacesObject, vMainPerceptionDirection, rotation, rMaxAgentPerceptionDistance, rMaxObjectPerceptionDistance );
+        UpdatePerceptionDataComposantes( entity, surfacesAgent, surfacesObject, vMainPerceptionDirection, rotation, rMaxAgentPerceptionDistance );
     }
 
     // -----------------------------------------------------------------------------
@@ -376,10 +375,9 @@ namespace
     void Update( const wrapper::View& model, const wrapper::View& entity, T_SurfaceAgentMap& surfacesAgent, T_SurfaceObjectMap& surfacesObject, T_RadarsPerClassMap& radars )
     {
         double rMaxAgentPerceptionDistance = 0;
-        double rMaxObjectPerceptionDistance = 0;
         MT_Vector2D vMainPerceptionDirection;
         UpdatePeriphericalVisionState( model, entity );
-        PreparePerceptionData        ( entity, surfacesAgent, surfacesObject, rMaxAgentPerceptionDistance, rMaxObjectPerceptionDistance, vMainPerceptionDirection );
+        PreparePerceptionData        ( entity, surfacesAgent, surfacesObject, rMaxAgentPerceptionDistance, vMainPerceptionDirection );
         PrepareRadarData             ( entity, radars );
         {
             wrapper::Effect effect( entity[ "perceptions/max-agent-perception-distance" ] );
@@ -421,7 +419,7 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
     {
         CIT_PerceptionVector itPerception;
 
-        UrbanObjectVisitor urbanVisitor( observer, entity[ "perceptions/max-agent-perception-distance" ] ); // $$$$ _RC_ SLI 2012-06-06: put hook instead
+        UrbanObjectVisitor urbanVisitor( observer, entity[ "perceptions/max-agent-perception-distance" ] );
 
         const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
         GET_HOOK( GetUrbanObjectListWithinCircle )( position, maxBlockPerceptionDistance, &UrbanObjectVisitor::NotifyUrbanObject, &urbanVisitor );
@@ -497,7 +495,7 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
     T_SurfaceObjectMap surfacesObject;
     double maxDistance;
     MT_Vector2D vMainPerceptionDirection;
-    PreparePerceptionData( entity, surfacesAgent, surfacesObject, maxDistance, maxDistance, vMainPerceptionDirection );
+    PreparePerceptionData( entity, surfacesAgent, surfacesObject, maxDistance, vMainPerceptionDirection );
     PrepareRadarData( entity, radars );
     if( !CanPerceive( entity ) )
         return PerceptionLevel::notSeen_;

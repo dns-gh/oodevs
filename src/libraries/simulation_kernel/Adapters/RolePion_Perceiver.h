@@ -231,8 +231,6 @@ private:
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
-    double rMaxAgentPerceptionDistance_;
-    double rMaxObjectPerceptionDistance_;
 
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;
     PHY_PerceptionRecoPoint*        pPerceptionRecoPoint_;

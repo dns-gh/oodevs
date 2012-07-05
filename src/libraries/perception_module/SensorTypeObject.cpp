@@ -98,15 +98,6 @@ const PerceptionLevel& SensorTypeObject::ComputePerception( const wrapper::View&
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeObject::GetMaxDistance
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-double SensorTypeObject::GetMaxDistance() const
-{
-    return rMaxDistance_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: SensorTypeObject::GetType
 // Created: JVT 2005-04-12
 // -----------------------------------------------------------------------------
