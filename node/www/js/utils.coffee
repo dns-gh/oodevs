@@ -137,3 +137,14 @@ $(".sign_out").click ->
     ajax "/api/logout", {},
         ->  location.reload(),
         ->  location.reload()
+
+toggle_input_error = (el, txt) ->
+    el.val ''
+    root = el.parent().parent()
+    root.addClass "error"
+    msg = $ "<span class='help-inline'>" + txt + "</span>"
+    el.after msg
+    setTimeout ->
+            msg.empty()
+            root.removeClass "error"
+        , 3000

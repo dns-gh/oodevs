@@ -7,15 +7,22 @@
 #
 # *****************************************************************************
 
-error_template = Handlebars.compile $("#error_template").html()
-
-print_error = (text) ->
-    display_error "error_login", error_template, text
-
 $(".log_in").click ->
+    usr = $("#username")
+    pwd = $("#password")
+
+    err = false
+    if usr.val().length == 0
+        toggle_input_error usr, "Missing"
+        err = true
+    if pwd.val().length == 0
+        toggle_input_error pwd, "Missing"
+        err = true
+    return if err
+
     pajax "/api/login",
-        username: $("#username").val()
-        password: $("#password").val(),
+        username: usr.val()
+        password: pwd.val(),
         (obj) ->
             uri = get_url window.location.pathname
             first = true
@@ -30,7 +37,7 @@ $(".log_in").click ->
             uri += window.location.hash
             window.location.href = uri
         ->
-            print_error "Invalid username/email password combination"
+            toggle_input_error pwd, "Invalid"
 
 $("#sign_in_form").keypress (e) ->
     if e.which == 13
