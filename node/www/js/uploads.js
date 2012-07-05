@@ -204,10 +204,14 @@
     el.val('');
     root = el.parent().parent();
     root.addClass("error");
-    msg = $("<span class='help-inline'>" + txt + "</span>");
-    el.after(msg);
+    if (txt != null) {
+      msg = $("<span class='help-inline'>" + txt + "</span>");
+      el.after(msg);
+    }
     return setTimeout(function() {
-      msg.empty();
+      if (msg != null) {
+        msg.empty();
+      }
       return root.removeClass("error");
     }, 3000);
   };

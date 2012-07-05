@@ -142,9 +142,10 @@ toggle_input_error = (el, txt) ->
     el.val ''
     root = el.parent().parent()
     root.addClass "error"
-    msg = $ "<span class='help-inline'>" + txt + "</span>"
-    el.after msg
+    if txt?
+        msg = $ "<span class='help-inline'>" + txt + "</span>"
+        el.after msg
     setTimeout ->
-            msg.empty()
+            msg.empty() if msg?
             root.removeClass "error"
         , 3000
