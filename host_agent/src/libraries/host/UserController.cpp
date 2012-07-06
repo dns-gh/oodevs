@@ -67,10 +67,11 @@ UserType Convert( const std::string& type )
 // -----------------------------------------------------------------------------
 std::string HashPassword( const std::string& password )
 {
-    char salt[BCRYPT_HASHSIZE], hash[BCRYPT_HASHSIZE];
+    char salt[BCRYPT_HASHSIZE], hash[BCRYPT_HASHSIZE+1];
     bcrypt_gensalt( 4, salt );
     bcrypt_hashpw( password.c_str(), salt, hash );
-    return std::string( hash, sizeof hash );
+    hash[BCRYPT_HASHSIZE] = 0;
+    return std::string( hash );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,13 +80,12 @@ std::string HashPassword( const std::string& password )
 // -----------------------------------------------------------------------------
 bool ValidatePassword( const std::string& password, const std::string& hash )
 {
-    char output[BCRYPT_HASHSIZE];
-    if( hash.size() != sizeof output )
-        return false;
+    char output[BCRYPT_HASHSIZE+1];
     const int err = bcrypt_hashpw( password.c_str(), hash.c_str(), output );
     if( err )
         return false;
-    return !memcmp( hash.c_str(), output, sizeof output );
+    output[BCRYPT_HASHSIZE] = 0;
+    return hash == output;
 }
 }
 
