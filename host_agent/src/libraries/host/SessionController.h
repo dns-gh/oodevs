@@ -80,7 +80,7 @@ private:
     void Update();
     void UpdateSession( T_Session session );
     void Save( const Session_ABC& session ) const;
-    void Create( Session_ABC& session, bool isReload );
+    void Create( Session_ABC& session );
     //@}
 
     //! @name Private template helpers

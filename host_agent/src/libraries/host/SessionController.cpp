@@ -107,7 +107,7 @@ void SessionController::Reload( T_Predicate predicate )
             if( !ptr || !predicate( *ptr ) )
                 continue;
             sessions_.Attach( ptr );
-            Create( *ptr, true );
+            Create( *ptr );
         }
         catch( const std::exception& err )
         {
@@ -157,14 +157,12 @@ SessionController::T_Session SessionController::Get( const Uuid& id ) const
 // Name: SessionController::Create
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void SessionController::Create( Session_ABC& session, bool isReload )
+void SessionController::Create( Session_ABC& session )
 {
-    LOG_INFO( log_ ) << "[session] " << ( isReload ? "Reloaded " : "Added " )
+    LOG_INFO( log_ ) << "[session] "
                      << session.GetId() << " "
                      << session.GetName() << " "
                      << Utf8Convert( session.GetExercise() ) << " :" << session.GetPort();
-    if( !isReload )
-        session.Start( runtime_, apps_ );
     Save( session );
 }
 
@@ -177,7 +175,7 @@ SessionController::T_Session SessionController::Create( const Uuid& node, const 
     const Path output = system_.MakeAnyPath( root_ );
     boost::shared_ptr< Session_ABC > session = factory_.Make( output, node, name, exercise );
     sessions_.Attach( session );
-    Create( *session, false );
+    Create( *session );
     return session;
 }
 
