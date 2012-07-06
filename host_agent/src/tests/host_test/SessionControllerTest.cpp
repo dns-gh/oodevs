@@ -123,14 +123,9 @@ namespace
             const Tree tree = FromJson( text );
             boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, node, tree );
             if( path.empty() )
-            {
                 MOCK_EXPECT( sub.factory.Make4 ).once().with( mock::any, node, session->GetName(), session->GetExercise() ).returns( session );
-                MOCK_EXPECT( session->Start ).once().returns( true );
-            }
             else
-            {
                 MOCK_EXPECT( sub.factory.Make1 ).once().returns( session );
-            }
             MOCK_EXPECT( sub.system.WriteFile ).returns( true );
             MOCK_EXPECT( session->Stop ).once().returns( true );
             return session;
