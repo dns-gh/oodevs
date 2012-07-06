@@ -274,10 +274,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( void ) >( boost::bind( &DEC_PerceptionFunctions::IsStealth, boost::ref( GetPion() ) ) );
     brain[ "DEC_Perception_Furtivite" ] =
         boost::function< void( float ) >( boost::bind( &DEC_PerceptionFunctions::SetStealthFactor, boost::ref( GetPion() ), _1 ) );
-    // to remove
     brain[ "DEC_Detection_Distance" ] =
         boost::bind( &DEC_AgentFunctions::GetDetectionDistance, boost::ref( GetPion() ) );
-    brain[ "DEC_Agent_ARadar" ] = &DEC_AgentFunctions::AgentHasRadar;
 
     // Gestion des renforts
     brain[ "DEC_Renforts" ] =

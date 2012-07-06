@@ -76,6 +76,26 @@ namespace
             result = result || GET_PREVIOUS_HOOK( IsPointVisible )( entity, point );
         return result;
     }
+    DEFINE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
+    {
+        bool result = false;
+        try
+        {
+            RolePion_Perceiver perceiver;
+            result = perceiver.HasRadar( entity, radarType );
+        }
+        catch( std::exception& e )
+        {
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        }
+        catch( ... )
+        {
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in AgentHasRadar hook" );
+        }
+        if( GET_PREVIOUS_HOOK( AgentHasRadar ) )
+            result = result || GET_PREVIOUS_HOOK( AgentHasRadar )( entity, radarType );
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -513,4 +533,18 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
             return *pBestPerceptionLevel;
     }
     return *pBestPerceptionLevel;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::HasRadar
+// Created: SLI 2012-07-06
+// -----------------------------------------------------------------------------
+bool RolePion_Perceiver::HasRadar( const wrapper::View& entity, size_t radarType ) const
+{
+    const RadarClass* radar = RadarClass::Find( radarType );
+    if( !radar )
+        throw std::runtime_error( "Invalid radar in AgentHasTappingRadar" );
+    T_RadarsPerClassMap radars;
+    PrepareRadarData( entity, radars );
+    return !radars[ radar ].empty();
 }

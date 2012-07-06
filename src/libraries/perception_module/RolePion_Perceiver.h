@@ -57,6 +57,7 @@ public:
 
     //! @name Operations
     //@{
+    bool HasRadar( const wrapper::View& entity, size_t radarType ) const;
     const PerceptionLevel& ComputePerception( const wrapper::View& entity, const MT_Vector2D& vPoint ) const;
     void ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const;
     //@}
@@ -64,13 +65,6 @@ public:
 private:
     //! @name Types
     //@{
-    enum E_SensorMode
-    {
-        eNormal,    // la direction de détection est déterminée en fonction de la direction de déplacement
-        eDirection, // la direction de détection est fixe
-        ePoint      // la détection est fixées sur un point précis
-    };
-
     typedef std::vector< Perception_ABC* > T_PerceptionVector;
     typedef T_PerceptionVector::iterator IT_PerceptionVector;
     typedef T_PerceptionVector::const_iterator CIT_PerceptionVector;

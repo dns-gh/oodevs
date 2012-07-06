@@ -92,6 +92,7 @@ DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( boost:
 // perception
 DECLARE_HOOK( GetPerceptionId, int, () )
 DECLARE_HOOK( IsPointVisible, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) )
+DECLARE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
 
 // fire
 DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) )
@@ -684,6 +685,13 @@ namespace
         parameters[ "localization" ].SetUserData( localization );
         facade.PostCommand( "identify all agents in zone", parameters );
     }
+    bool AgentHasRadar( const core::Model& model, const DEC_Decision_ABC* agent, int typeRadar )
+    {
+        if( !agent )
+            throw std::runtime_error( "Invalid pion in AgentHasRadar" );
+        const core::Model& entity = model[ "entities" ][ agent->GetPion().GetID() ];
+        return GET_HOOK( AgentHasRadar )( core::Convert( &entity ), typeRadar );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -721,6 +729,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void() >                                      ( "DEC_Perception_VisionNormale", &SwitchVisionMode< boost::shared_ptr< MT_Vector2D > >, "normal", boost::make_shared< MT_Vector2D >() );
     RegisterCommand< void( const TER_Localisation* ) >             ( "DEC_Connaissances_IdentifierToutesUnitesDansZone", &IdentifyAllAgentsInZone, _1 );
     RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &IsPointVisible, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
+    RegisterFunction( "DEC_Agent_ARadar", boost::function< bool( const DEC_Decision_ABC*, int ) >( boost::bind( &AgentHasRadar, boost::cref( model_ ), _1, _2 ) ) );
 }
 
 namespace

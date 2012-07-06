@@ -428,3 +428,19 @@ BOOST_FIXTURE_TEST_CASE( location_vision_mode_computes_location_direction_as_mai
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
 }
+
+BOOST_FIXTURE_TEST_CASE( agent_has_radar_hook_checks_if_one_component_has_radar_type, ConfigurationFixture )
+{
+    {
+        core::Model entity;
+        entity[ "components" ].AddElement()[ "radars" ].AddElement()[ "type" ] = "my-radar";
+        MOCK_EXPECT( CanComponentPerceive ).returns( true );
+        BOOST_CHECK( AgentHasRadar( core::Convert( &entity ), 0 ) );
+    }
+    {
+        core::Model entity;
+        entity[ "components" ].AddElement()[ "radars" ];
+        MOCK_EXPECT( CanComponentPerceive ).returns( true );
+        BOOST_CHECK( !AgentHasRadar( core::Convert( &entity ), 0 ) );
+    }
+}
