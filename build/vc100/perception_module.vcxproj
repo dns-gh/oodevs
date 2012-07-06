@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ModuleFacade.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer.h" />
@@ -55,6 +56,7 @@
     <ClInclude Include="..\..\src\libraries\perception_module\ZURBPerceptionComputer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ModuleFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLevel.cpp" />

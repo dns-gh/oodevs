@@ -122,6 +122,9 @@
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionObserver.h">
       <Filter>Source Files\Perceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -201,6 +204,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionObserver.cpp">
       <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

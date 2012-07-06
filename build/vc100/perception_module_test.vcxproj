@@ -132,6 +132,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\perception_module_test\HooksTest.cpp" />
+    <ClCompile Include="..\..\src\tests\perception_module_test\IdentifyAgentsCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\PerceptionCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\perception_module_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
