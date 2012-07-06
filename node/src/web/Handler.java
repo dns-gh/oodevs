@@ -40,6 +40,7 @@ public class Handler extends HttpServlet {
     private final String name_;
     private final HttpClient client_;
     private final int host_;
+    private final boolean debug_;
 
     public Handler(final Agent.Configuration config) throws Exception {
         uuid_ = config.uuid;
@@ -64,6 +65,7 @@ public class Handler extends HttpServlet {
         client_.setTimeout(30 * 1000);
         client_.start();
         host_ = config.host;
+        debug_ = config.isDebug;
     }
 
     private String getContentType(final File file) {
@@ -93,6 +95,7 @@ public class Handler extends HttpServlet {
         root.put("uuid", uuid_);
         root.put("name", name_);
         root.put("type", type_);
+        root.put("debug", debug_);
         if (user != null) {
             final Map<String, String> sub = new HashMap<String, String>();
             sub.put("username", user.get("username").toString());
