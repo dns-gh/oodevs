@@ -7,7 +7,7 @@
 rootnode
 {
     connections = { skill.nodes.issueMoveToOrder },
-    feedbacks = { "orderIssued", "orderNotIssued" },
+    feedbacks   = { "orderIssued", "orderNotIssued" },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks and slots
@@ -51,7 +51,8 @@ rootnode
             else -- each order has been sent
                 Feedback( self.feedbacks.done )
             end
-         else 
+         else
+            meKnowledge:sendMessage( "No subordinate units to perform the mission" )
             Feedback( self.feedbacks.failed )
          end
     end
@@ -72,6 +73,5 @@ node "issueMoveToOrder"
                                          self.params.waypoints ) then
             Feedback( self.feedbacks.orderActionCompleted )
         end
-    end,
-
+    end
 }

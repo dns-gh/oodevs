@@ -5678,6 +5678,13 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="heureEmbarquement_" name="Landing time" optional="false" type="DateTime"/>
     </mission>
     <mission cdt-dia-behavior="commander.behaviors.MoveAlong" dia-type="commander.behaviors.MoveAlong" id="44503" mrt-dia-behavior="commander.behaviors.MoveAlong" name="SAFETY - MoveTo">
+      <description>
+        <doctrine><![CDATA[<P>To move to an objective in order to reach it.</P>]]></doctrine>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
+ - <b>Waypoints</b> (point, polygon, urban block): the path to move along,<BR>
+<P>* The commander agent issued order to make subordinates moving toward each waypoints (the order of traversal is defined by user).</P>
+<P>* The mission ends when all the subordinate agents have finished their mission.</P>]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -5961,4 +5968,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1605653345" -->
+<!-- signature="0324996723" -->
