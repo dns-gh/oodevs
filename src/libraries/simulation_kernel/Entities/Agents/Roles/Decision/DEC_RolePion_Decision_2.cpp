@@ -277,8 +277,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     // to remove
     brain[ "DEC_Detection_Distance" ] =
         boost::bind( &DEC_AgentFunctions::GetDetectionDistance, boost::ref( GetPion() ) );
-    brain[ "DEC_Connaissances_IdentifierToutesUnitesDansZone" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IdentifyAllAgentsInZone, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_ARadar" ] = &DEC_AgentFunctions::AgentHasRadar;
 
     // Gestion des renforts

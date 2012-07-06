@@ -675,6 +675,15 @@ namespace
         const core::Model& entity = model[ "entities" ][ pion.GetID() ];
         return GET_HOOK( IsPointVisible )( core::Convert( &entity ), pPt );
     }
+    void IdentifyAllAgentsInZone( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localization )
+    {
+        if( !localization )
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while identifying all agents in zone." );
+        core::Model parameters;
+        parameters[ "identifier" ] = pion.GetID();
+        parameters[ "localization" ].SetUserData( localization );
+        facade.PostCommand( "identify all agents in zone", parameters );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -710,6 +719,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void( const MT_Vector2D* ) >                  ( "DEC_Perception_VisionVerrouilleeSurPoint", &SwitchVisionMode< const MT_Vector2D* >, "location", _1 );
     RegisterCommand< void( boost::shared_ptr< MT_Vector2D > ) >    ( "DEC_Perception_VisionVerrouilleeSurPointPtr", &SwitchVisionMode< boost::shared_ptr< MT_Vector2D > >, "location", _1 );
     RegisterCommand< void() >                                      ( "DEC_Perception_VisionNormale", &SwitchVisionMode< boost::shared_ptr< MT_Vector2D > >, "normal", boost::make_shared< MT_Vector2D >() );
+    RegisterCommand< void( const TER_Localisation* ) >             ( "DEC_Connaissances_IdentifierToutesUnitesDansZone", &IdentifyAllAgentsInZone, _1 );
     RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &IsPointVisible, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
 }
 

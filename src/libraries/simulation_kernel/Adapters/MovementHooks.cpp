@@ -88,6 +88,14 @@ namespace
         BOOST_FOREACH( TER_Agent_ABC* agent, agents )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }
+    DEFINE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const TER_Localisation* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
+    {
+        const core::Model& rootNode = *core::Convert( root );
+        TER_Agent_ABC::T_AgentPtrVector agentsDetected;
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *localization, agentsDetected );
+        BOOST_FOREACH( TER_Agent_ABC* agent, agentsDetected )
+            callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
+    }
     DEFINE_HOOK( GetObjectListWithinCircle, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) )
     {
         TER_Object_ABC::T_ObjectVector objects; // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
@@ -524,6 +532,7 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetLimaOrders, facade );
     REGISTER_HOOK( GetLimas, facade );
     REGISTER_HOOK( GetAgentListWithinCircle, facade );
+    REGISTER_HOOK( GetAgentListWithinLocalisation, facade );
     REGISTER_HOOK( GetObjectListWithinCircle, facade );
     REGISTER_HOOK( GetConcentrationListWithinCircle, facade );
     REGISTER_HOOK( GetFlowListWithinCircle, facade );

@@ -17,6 +17,7 @@
 #include "ToggleObjectDetectionCommand.h"
 #include "ToggleRecognitionPointCommand.h"
 #include "VisionCommand.h"
+#include "IdentifyAgentCommand.h"
 #include "SensorType.h"
 #include "PerceptionLevel.h"
 #include "RadarClass.h"
@@ -85,6 +86,7 @@ ModuleFacade::ModuleFacade()
     wrapper::RegisterCommand< ToggleObjectDetectionCommand >    ( "toggle object detection", *this );
     wrapper::RegisterCommand< ToggleRecognitionPointCommand >   ( "toggle recognition point", *this );
     wrapper::RegisterCommand< VisionCommand >                   ( "vision", *this );
+    wrapper::RegisterCommand< IdentifyAgentCommand >            ( "identify all agents in zone", *this );
     PerceptionLevel::Initialize();
     RadarClass::Initialize();
 }

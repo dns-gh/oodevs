@@ -24,6 +24,7 @@ class MIL_PopulationFlow;
 class PHY_ComposantePion;
 class PHY_Volume;
 class DEC_Knowledge_Object;
+class TER_Localisation;
 
 #define REGISTERED_HOOKS( APPLY ) \
     APPLY( GetPerceptionId, 0, int, () ) \
@@ -32,6 +33,7 @@ class DEC_Knowledge_Object;
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
+    APPLY( GetAgentListWithinLocalisation, 4, void, ( const SWORD_Model* root, const TER_Localisation* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
     APPLY( GetObjectListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( MIL_Object_ABC* object, void* userData ), void* userData ) ) \
     APPLY( GetConcentrationListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationConcentration* concentration, void* userData ), void* userData ) ) \
     APPLY( GetFlowListWithinCircle, 4, void, ( const MT_Vector2D& vCenter, double rRadius, void (*callback)( const MIL_PopulationFlow* flow, void* userData ), void* userData ) ) \
@@ -135,7 +137,8 @@ namespace perception
                                                                       ( "toggle reco" )
                                                                       ( "toggle object detection" )
                                                                       ( "toggle recognition point" )
-                                                                      ( "vision" ) )
+                                                                      ( "vision" )
+                                                                      ( "identify all agents in zone" ) )
         {}
     };
 }
