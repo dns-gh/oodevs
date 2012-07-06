@@ -12,7 +12,7 @@
     <stages>
         <stage label="Extinguish mission test starts" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.Extinguish" main="true">
+                <skill name="agent.behaviors.skills.primitives.Extinguish" main="true">
                     <parameter name="fires">
                         <value>
                             <parameter>fires</parameter>

@@ -11,7 +11,7 @@
     <stages>
         <stage label="move to decontamination plot" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.GetDecontaminated" main="true">
+                <skill name="agent.behaviors.skills.primitives.GetDecontaminated" main="true">
                     <parameter name="decontaminationPlot">
                         <value>
                             <parameter>decontaminationPlot</parameter>

@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="resourceNode">
             <type>
-                <class name="ontology.classes.ResourceNode"/>
+                <class name="agent.ontology.classes.ResourceNode"/>
             </type>
         </parameter>
         <parameter name="quantity">
@@ -18,7 +18,7 @@
     <stages>
         <stage label="move toward ressource node" permanent="true">
             <skills>
-                <skill name="behaviors.skills.primitives.RestrainResourceProduction">
+                <skill name="agent.behaviors.skills.primitives.RestrainResourceProduction">
                     <parameter name="resourceNode">
                         <value>
                             <parameter>resourceNode</parameter>

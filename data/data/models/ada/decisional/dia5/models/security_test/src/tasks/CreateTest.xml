@@ -28,7 +28,7 @@
     <stages>
         <stage label="Starting works" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.Create" main="true">
+                <skill name="agent.behaviors.skills.primitives.Create" main="true">
                     <parameter name="waitForReinforcement">
                         <value>
                             <parameter>waitForReinforcement</parameter>

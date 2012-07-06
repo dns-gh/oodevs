@@ -17,7 +17,7 @@
     <stages>
         <stage label="Move toward victims" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.EnsureVictimsEvacuation" main="true">
+                <skill name="agent.behaviors.skills.primitives.EnsureVictimsEvacuation" main="true">
                     <parameter name="victimsUnits">
                         <value>
                             <parameter>victimsUnits</parameter>

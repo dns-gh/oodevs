@@ -13,7 +13,7 @@
     <stages>
         <stage label="Heal" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.Heal" main="true">
+                <skill name="agent.behaviors.skills.primitives.Heal" main="true">
                     <parameter name="woundedUnits">
                         <value>
                             <parameter>wounded</parameter>

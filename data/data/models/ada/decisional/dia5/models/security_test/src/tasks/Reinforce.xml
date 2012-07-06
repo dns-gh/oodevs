@@ -11,7 +11,7 @@
     <stages>
         <stage label="Reinforce" permanent="true">
             <skills>
-                <skill name="behaviors.skills.primitives.Reinforce">
+                <skill name="agent.behaviors.skills.primitives.Reinforce">
                     <parameter name="entity">
                         <value>
                             <parameter>agent</parameter>

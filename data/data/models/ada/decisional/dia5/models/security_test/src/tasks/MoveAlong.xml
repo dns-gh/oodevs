@@ -13,7 +13,7 @@
     <stages>
         <stage label="MoveAlong" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.MoveAlong" main="true">
+                <skill name="agent.behaviors.skills.MoveAlong" main="true">
                     <parameter name="entities">
                         <value>
                             <parameter>entities</parameter>

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CommitSuicideAttack" source-version="1.0.0">
     <parameters>
         <parameter name="targetAgent">
             <description>The target to launch projectile on.</description>
             <type>
-                <class name="ontology.classes.Agent"/>
+                <class name="agent.ontology.classes.Agent"/>
             </type>
         </parameter>
         <parameter name="quantity">
@@ -26,7 +26,7 @@
     <stages>
         <stage label="CommitSuicideAttack">
             <skills>
-                <skill name="behaviors.skills.CommitSuicideAttack" main="true">
+                <skill name="agent.behaviors.skills.CommitSuicideAttack" main="true">
                     <parameter name="targetAgent">
                         <value>
                             <parameter>targetAgent</parameter>

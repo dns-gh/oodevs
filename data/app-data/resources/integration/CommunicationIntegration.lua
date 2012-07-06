@@ -133,6 +133,17 @@ integration.communication.FollowMe = function( missionName, sender )
     DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
 end
 
+integration.communication.OrderMoveToFromCommander = function( missionName, waypoints )
+    local mission = DEC_CreerMissionPion( missionName )
+    local tempSimPoints = {}
+    for i = 1, #waypoints do
+        tempSimPoints[ i ] = DEC_AssignMissionPointListParameter( waypoints[ i ].source )
+    end
+    DEC_AssignMissionListParameter( mission, "waypoints", tempSimPoints )
+    DEC_AssignMissionBoolParameter( mission, "urgency", false )
+    DEC_DonnerMissionPion( mission ) -- Issue the mission
+end
+
 integration.communication.StartMissionAutomate = function( content )
   local mission = DEC_CreerMissionAutomate( content.entity.source, content.taskName )
   fillParameters( mission, content.params ) 

@@ -4,7 +4,7 @@
         <parameter name="crowds">
             <type>
                 <list>
-                    <class name="ontology.classes.Crowd"/>
+                    <class name="agent.ontology.classes.Crowd"/>
                 </list>
             </type>
         </parameter>
@@ -12,7 +12,7 @@
     <stages>
         <stage label="Moving to extract victims from crowds" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.ExtractVictims" main="true">
+                <skill name="agent.behaviors.skills.primitives.ExtractVictims" main="true">
                     <parameter name="victimsUnits">
                         <value>
                             <parameter>crowds</parameter>

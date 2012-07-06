@@ -6,19 +6,22 @@ local libPath = select(1,...)
 local role    = select(2,...)
 masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", libPath .. "/models/common/src", libPath .. "/models/security/src" } )
                                        
-integration.ontology = {
-    types = {
+integration.ontology = 
+{
+    types = 
+    {
         --- Type exists only the test library, necessary to test the tasks of the Unit
-        body = ontology.classes.CompanyBody,
-
-        point = ontology.classes.Position,
-        area = ontology.classes.Area,
-        urbanBlock = ontology.classes.UrbanBlock,
-        population = ontology.classes.Crowd,
-        object = ontology.classes.Object,
-        agent = ontology.classes.Teammate,
-        agentKnowledge = ontology.classes.NonTeammate,
-        resourceNetwork = ontology.classes.ResourceNode,
-        genObject = ontology.classes.PlannedWork,
+        body  = commander.ontology.MeKnowledge,
+        point = commander.ontology.Position,
+        
+        -- $$$ MIA: do not remove for now / " mission impossible" errors for commanders
+        area = agent.ontology.classes.Area,
+        urbanBlock = agent.ontology.classes.UrbanBlock,
+        population = agent.ontology.classes.Crowd,
+        object = agent.ontology.classes.Object,
+        agent = agent.ontology.classes.Teammate,
+        agentKnowledge = agent.ontology.classes.NonTeammate,
+        resourceNetwork = agent.ontology.classes.ResourceNode,
+        genObject = agent.ontology.classes.PlannedWork,
     }
 }

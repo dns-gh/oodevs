@@ -35,7 +35,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Militia">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Militia">
       <missions>
         <mission name="SAFETY - Alert urban blocks within area"/>
         <mission name="SAFETY - Go get decontaminated"/>
@@ -46,7 +46,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Transport">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Transport">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
@@ -56,7 +56,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Police">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Police">
       <missions>
         <mission name="SAFETY - Confine urban blocks within area"/>
         <mission name="SAFETY - Create and operate a decontamination site"/>
@@ -83,7 +83,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Ambulance">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Ambulance">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
@@ -95,7 +95,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Satefy_Public Work">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Satefy_Public Work">
       <missions>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
@@ -112,7 +112,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_NBC">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_NBC">
       <missions>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
@@ -126,7 +126,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Firefighter">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Firefighter">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Move toward"/>
@@ -147,7 +147,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Terrorist">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Terrorist">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
@@ -2700,7 +2700,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
       <missions>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
@@ -2745,7 +2745,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_Terrorist">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_Terrorist">
       <missions>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
@@ -2767,7 +2767,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="behaviors.roles.FlyingAgent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_FlyingAgent">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_FlyingAgent">
       <missions/>
       <fragorders/>
     </unit>
@@ -3974,8 +3974,10 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="behaviors.roles.Leader" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="Safety_Automat">
-      <missions/>
+    <automat dia-type="commander.Commander" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="Safety_Automat">
+      <missions>
+        <mission name="SAFETY - MoveTo"/>
+      </missions>
       <fragorders/>
     </automat>
   </automats>
@@ -4011,4 +4013,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0631277594" -->
+<!-- signature="1802835757" -->

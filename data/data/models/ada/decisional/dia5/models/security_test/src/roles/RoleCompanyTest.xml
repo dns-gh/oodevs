@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<role name="roles.RoleCompanyTest" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
-    <skills/>
-    <resources/>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="roles.RoleCompanyTest" source-version="1.0.0" extends="commander.Commander">
+    <body-type>
+        <class name="commander.ontology.MeKnowledge"/>
+    </body-type>
 </role>

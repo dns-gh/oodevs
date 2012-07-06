@@ -4,7 +4,7 @@
         <parameter name="resourceNodes">
             <type>
                 <list>
-                    <class name="ontology.classes.ResourceNode"/>
+                    <class name="agent.ontology.classes.ResourceNode"/>
                 </list>
             </type>
         </parameter>
@@ -20,7 +20,7 @@
     <stages>
         <stage label="production is on the way" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.EnhanceResourceProduction" main="true">
+                <skill name="agent.behaviors.skills.primitives.EnhanceResourceProduction" main="true">
                     <parameter name="resourceNodes">
                         <value>
                             <parameter>resourceNodes</parameter>

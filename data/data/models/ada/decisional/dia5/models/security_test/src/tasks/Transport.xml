@@ -17,7 +17,7 @@
     <stages>
         <stage label="Transport skill test start" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.Transport" main="true">
+                <skill name="agent.behaviors.skills.Transport" main="true">
                     <parameter name="entitiesToTransport">
                         <value>
                             <parameter>entitiesToTransport</parameter>

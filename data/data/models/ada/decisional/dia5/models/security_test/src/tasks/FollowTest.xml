@@ -4,7 +4,7 @@
         <parameter name="agents">
             <type>
                 <list>
-                    <class name="ontology.classes.Agent"/>
+                    <class name="agent.ontology.classes.Agent"/>
                 </list>
             </type>
         </parameter>
@@ -27,7 +27,7 @@
     <stages>
         <stage label="following agents" permanent="true">
             <skills>
-                <skill name="behaviors.skills.Follow">
+                <skill name="agent.behaviors.skills.Follow">
                     <parameter name="elementsToFollow">
                         <value>
                             <parameter>agents</parameter>

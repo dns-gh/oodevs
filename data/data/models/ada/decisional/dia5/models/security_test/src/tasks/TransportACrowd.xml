@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="crowd">
             <type>
-                <class name="ontology.classes.Crowd"/>
+                <class name="agent.ontology.classes.Crowd"/>
             </type>
         </parameter>
         <parameter name="loadingPosition">
@@ -20,7 +20,7 @@
     <stages>
         <stage label="transport Crowd test starts" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.TransportACrowd" main="true">
+                <skill name="agent.behaviors.skills.TransportACrowd" main="true">
                     <parameter name="crowd">
                         <value>
                             <parameter>crowd</parameter>

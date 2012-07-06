@@ -29,7 +29,7 @@
     <stages>
         <stage label="DecontaminateArea" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.DecontaminateAreas" main="true">
+                <skill name="agent.behaviors.skills.primitives.DecontaminateAreas" main="true">
                     <parameter name="equipNRBCProtection">
                         <value>
                             <parameter>equipNRBCProtection</parameter>

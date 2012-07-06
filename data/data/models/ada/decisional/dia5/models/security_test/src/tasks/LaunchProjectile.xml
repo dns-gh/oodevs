@@ -35,7 +35,7 @@
     <stages>
         <stage label="LaunchProjectile" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.LaunchProjectile" main="true">
+                <skill name="agent.behaviors.skills.primitives.LaunchProjectile" main="true">
                     <parameter name="target">
                         <value>
                             <parameter>target</parameter>

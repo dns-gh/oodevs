@@ -2185,7 +2185,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointDebarquement_" name="Debarking point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.MoveTo" dia-type="behaviors.tasks.MoveTo" id="4442" name="SAFETY - Move toward">
+    <mission dia-behavior="agent.behaviors.tasks.MoveTo" dia-type="agent.behaviors.tasks.MoveTo" id="4442" name="SAFETY - Move toward">
       <description>
         <doctrine><![CDATA[<P>To move to an objective in order to reach it.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
@@ -2217,7 +2217,7 @@ overwhelming force.]]></doctrine>
       </parameter>
       <parameter dia-name="urgency" name="Urgency" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Follow" dia-type="behaviors.tasks.Follow" id="4443" name="SAFETY - Follow">
+    <mission dia-behavior="agent.behaviors.tasks.Follow" dia-type="agent.behaviors.tasks.Follow" id="4443" name="SAFETY - Follow">
       <description>
         <doctrine><![CDATA[<P>To follow a set of motile agents (unit or crowd).</P>
 ]]></doctrine>
@@ -2251,7 +2251,7 @@ overwhelming force.]]></doctrine>
       </parameter>
       <parameter dia-name="minDistance" name="Minimum distance" optional="true" type="Integer"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.ConfineUrbanBlocksWithinArea" dia-type="behaviors.tasks.ConfineUrbanBlocksWithinArea" id="4444" name="SAFETY - Confine urban blocks within area">
+    <mission dia-behavior="agent.behaviors.tasks.ConfineUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.ConfineUrbanBlocksWithinArea" id="4444" name="SAFETY - Confine urban blocks within area">
       <description>
         <doctrine><![CDATA[<P><dfn>In case of an exterior threat (a fire, for instance), populations may be prevented from leaving the buildings they occupy. <dfn></P>
 <P>In SWORD, confining a urban block prevents population from leaving or entering it. <BR>
@@ -2277,7 +2277,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoConfineUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="SAFETY - Lift confinement on urban blocks  within area">
+    <mission dia-behavior="agent.behaviors.tasks.UndoConfineUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="SAFETY - Lift confinement on urban blocks  within area">
       <description>
         <doctrine><![CDATA[<P><dfn>In case of an exterior threat (a fire, for instance), populations may be prevented from leaving the buildings they occupy.<dfn> </P>
 <P>In SWORD, lift confinement on a urban block allow population to leave it or enter into it. This mission is the revert mission <BR>
@@ -2300,7 +2300,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.IncreaseResourceNodeProduction" dia-type="behaviors.tasks.IncreaseResourceNodeProduction" id="4446" name="SAFETY - Increase resource node production">
+    <mission dia-behavior="agent.behaviors.tasks.IncreaseResourceNodeProduction" dia-type="agent.behaviors.tasks.IncreaseResourceNodeProduction" id="4446" name="SAFETY - Increase resource node production">
       <description>
         <doctrine><![CDATA[<P><dfn>To provide basic needs and ressources for populations, where production is insufficient to give an entire population a <BR>
     comfortable standard of living.</dfn></P>
@@ -2323,7 +2323,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="resourceNode" name="Resource node" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="quantity" name="Quantity (default value is 100)" optional="true" type="Integer"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.EvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="SAFETY - Evacuate urban blocks within area ">
+    <mission dia-behavior="agent.behaviors.tasks.EvacuateUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="SAFETY - Evacuate urban blocks within area ">
       <description>
         <doctrine><![CDATA[<P><dfn>Emergency evacuation: removal of persons from a dangerous place due to a disaster or impending war.<dfn></P>
 <P>In SWORD, in case it is populated, acting on urban blocks in order to empty them from population.</P>]]></doctrine>
@@ -2347,7 +2347,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="SAFETY - Lift evacuation on urban blocks within area">
+    <mission dia-behavior="agent.behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="SAFETY - Lift evacuation on urban blocks within area">
       <description>
         <doctrine><![CDATA[<P><dfn>Emergency evacuation: removal of persons from a dangerous place due to a disaster or impending war.<dfn></P>
 <P>In SWORD, in case it is populated, acting on urban blocks in order to empty them from population.</P>]]></doctrine>
@@ -2370,7 +2370,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.EnsureVictimsEvacuation" dia-type="behaviors.tasks.EnsureVictimsEvacuation" id="4450" name="SAFETY - Ensure victims evacuation">
+    <mission dia-behavior="agent.behaviors.tasks.EnsureVictimsEvacuation" dia-type="agent.behaviors.tasks.EnsureVictimsEvacuation" id="4450" name="SAFETY - Ensure victims evacuation">
       <description>
         <doctrine><![CDATA[<P><dfn>To ensure evacuation of victims, with adapted device.<dfn></P>
 <P>In SWORD, to evacuate victims of victim units (such as refugees unit for instance) , using a specified evacuation unit <BR>
@@ -2403,7 +2403,7 @@ If those cases are encountered, the agent moves on to the next 'Victim unit', an
       <parameter dia-name="victimsUnits" max-occurs="unbounded" min-occurs="1" name="Victim units" optional="false" type="Agent"/>
       <parameter dia-name="medicalUnit" name="Medical unit (log)" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.ExtractVictimsFromCrowds" dia-type="behaviors.tasks.ExtractVictimsFromCrowds" id="4451" name="SAFETY - Extract victims from crowds">
+    <mission dia-behavior="agent.behaviors.tasks.ExtractVictimsFromCrowds" dia-type="agent.behaviors.tasks.ExtractVictimsFromCrowds" id="4451" name="SAFETY - Extract victims from crowds">
       <description>
         <doctrine><![CDATA[<P><dfn>To ensure evacuation of crowd victims, with adapted device.</P>
 <P>In SWORD, extracting victims from crowds allow user to prepare the evacuation operation.</dfn></P>]]></doctrine>
@@ -2436,7 +2436,7 @@ In that specific case, the agent decides to act on the next one.</P>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.AlertUrbanBlocksWithinArea" dia-type="behaviors.tasks.AlertUrbanBlocksWithinArea" id="4452" name="SAFETY - Alert urban blocks within area">
+    <mission dia-behavior="agent.behaviors.tasks.AlertUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.AlertUrbanBlocksWithinArea" id="4452" name="SAFETY - Alert urban blocks within area">
       <description>
         <doctrine><![CDATA[<P><dfn>To protect population from dangers.<BR>
 Alerting is to inform inhabitants about an impending danger, allowing the population to shelter from it. <BR>
@@ -2464,7 +2464,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" dia-type="behaviors.tasks.UndoAlertUrbanBlocksWithinArea" id="4453" name="SAFETY - Lift alert on urban blocks within area">
+    <mission dia-behavior="agent.behaviors.tasks.UndoAlertUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.UndoAlertUrbanBlocksWithinArea" id="4453" name="SAFETY - Lift alert on urban blocks within area">
       <description>
         <doctrine><![CDATA[<P><dfn>To protect  population from dangers. Lift alert on population is to inform it about the end of an impending danger.</dfn></P>
 <P> In SWORD, a population is alerted via the urban block it populates. This mission is the revert mission of the &quot;Alert <BR>
@@ -2485,7 +2485,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.ActivateResourceNodes" dia-type="behaviors.tasks.ActivateResourceNodes" id="4454" name="SAFETY - Enable resource nodes">
+    <mission dia-behavior="agent.behaviors.tasks.ActivateResourceNodes" dia-type="agent.behaviors.tasks.ActivateResourceNodes" id="4454" name="SAFETY - Enable resource nodes">
       <description>
         <doctrine><![CDATA[<P><dfn>To provide basic needs and ressources for populations, where production is insufficient to give an entire population a <BR>
     comfortable standard of living.</dfn></P>
@@ -2508,7 +2508,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="resourceNodes" max-occurs="unbounded" min-occurs="1" name="Resource nodes" optional="false" type="ResourceNetworkNode"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.DeactivateResourceNodes" dia-type="behaviors.tasks.DeactivateResourceNodes" id="4455" name="SAFETY - Disable resource nodes">
+    <mission dia-behavior="agent.behaviors.tasks.DeactivateResourceNodes" dia-type="agent.behaviors.tasks.DeactivateResourceNodes" id="4455" name="SAFETY - Disable resource nodes">
       <description>
         <doctrine><![CDATA[<P><dfn>To stop the supply of the population with essential resources in order to prevent from a disaster or to provoke a disaster.<dfn></P>
 <P>In SWORD, disabling an enabled node deactivates the resources transfert between nodes. It can be used to simulate a terrorist <BR>
@@ -2529,7 +2529,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="resourceNodes" max-occurs="unbounded" min-occurs="1" name="Resource nodes" optional="false" type="ResourceNetworkNode"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Patrol" dia-type="behaviors.tasks.Patrol" id="4456" name="SAFETY - Patrol">
+    <mission dia-behavior="agent.behaviors.tasks.Patrol" dia-type="agent.behaviors.tasks.Patrol" id="4456" name="SAFETY - Patrol">
       <description>
         <doctrine><![CDATA[<P><dfn>Patrolls are missions to gather information or to control rescue operations.<BR>
 Patrolling could ensure law, order and check crime in a given district.</dfn></P>
@@ -2556,7 +2556,7 @@ Patrolling could ensure law, order and check crime in a given district.</dfn></P
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Transport" dia-type="behaviors.tasks.Transport" id="4457" name="SAFETY - Transport units">
+    <mission dia-behavior="agent.behaviors.tasks.Transport" dia-type="agent.behaviors.tasks.Transport" id="4457" name="SAFETY - Transport units">
       <description>
         <doctrine><![CDATA[<P><dfn>To ensure evacuation of victims, with adapted device toward adapted structure. e.g. to transport victims to an Hospital or<BR>
      to a place to care for victims.<dfn></P>
@@ -2597,7 +2597,7 @@ In that specific case, the report &quot;unit cannot be loaded&quot; should be di
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.TransportACrowd" dia-type="behaviors.tasks.TransportACrowd" id="4459" name="SAFETY - Transport a crowd">
+    <mission dia-behavior="agent.behaviors.tasks.TransportACrowd" dia-type="agent.behaviors.tasks.TransportACrowd" id="4459" name="SAFETY - Transport a crowd">
       <description>
         <doctrine><![CDATA[<P><dfn>To ensure evacuation of victims, with adapted device toward adapted structure. e.g. to transport victims to an Hospital or to a<BR>
      place to care for victims.</dfn></P>
@@ -2636,7 +2636,7 @@ position )&quot; is displayed, and the mission ends.</P>]]></usage>
       </parameter>
       <parameter dia-name="loadingPosition" name="Loading position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.ExtinguishAFire" dia-type="behaviors.tasks.ExtinguishAFire" id="4460" name="SAFETY - Extinguish a fire">
+    <mission dia-behavior="agent.behaviors.tasks.ExtinguishAFire" dia-type="agent.behaviors.tasks.ExtinguishAFire" id="4460" name="SAFETY - Extinguish a fire">
       <description>
         <doctrine><![CDATA[<P><dfn>To fix, control and extinguish a fire that threats poulations or structures.<dfn></P>
 <P>In SWORD, extinguishing a fire can prevent from alerting or evacuating populations from urban blocks.<BR>
@@ -2676,7 +2676,7 @@ reinforcement should be ordered.</P>]]></usage>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.ExtinguishFiresWithinArea" dia-type="behaviors.tasks.ExtinguishFiresWithinArea" id="4461" name="SAFETY - Extinguish fires within area">
+    <mission dia-behavior="agent.behaviors.tasks.ExtinguishFiresWithinArea" dia-type="agent.behaviors.tasks.ExtinguishFiresWithinArea" id="4461" name="SAFETY - Extinguish fires within area">
       <description>
         <doctrine><![CDATA[<P><dfn>To fix, control and extinguish fires that threats poulations or structures.<dfn></P>
 <P>In SWORD, extinguishing fires can prevent from alerting or evacuating populations from urban blocks.<BR>
@@ -2708,7 +2708,7 @@ reinforcement should be ordered.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Decontaminate" dia-type="behaviors.tasks.Decontaminate" id="4462" name="SAFETY - Decontaminate">
+    <mission dia-behavior="agent.behaviors.tasks.Decontaminate" dia-type="agent.behaviors.tasks.Decontaminate" id="4462" name="SAFETY - Decontaminate">
       <description>
         <doctrine><![CDATA[<P><dfn>To depolluate or decontaminate in order to rehabilitate a site or a soil that has been polluted by industrial activities.<BR>
 The decontamination of a site reduces the risk of pollution to acceptable levels or make it disappear.</dfn></P>
@@ -2735,7 +2735,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CreateResourceNetWorkLinks" dia-type="behaviors.tasks.CreateResourceNetWorkLinks" id="44501" name="SAFETY - Connect urban block with resource nodes">
+    <mission dia-behavior="agent.behaviors.tasks.CreateResourceNetWorkLinks" dia-type="agent.behaviors.tasks.CreateResourceNetWorkLinks" id="44501" name="SAFETY - Connect urban block with resource nodes">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2743,7 +2743,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="resourceProducer" name="Urban block (producer)" optional="false" type="UrbanKnowledge"/>
       <parameter dia-name="resourceReceivers" max-occurs="unbounded" min-occurs="1" name="Resource nodes (receivers)" optional="false" type="ResourceNetworkNode"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CreateResourceNetWorkLinksWithinArea" dia-type="behaviors.tasks.CreateResourceNetWorkLinks_connectWithinarea" id="44502" name="SAFETY - Connect urban block with resource nodes within area">
+    <mission dia-behavior="agent.behaviors.tasks.CreateResourceNetWorkLinksWithinArea" dia-type="agent.behaviors.tasks.CreateResourceNetWorkLinks_connectWithinarea" id="44502" name="SAFETY - Connect urban block with resource nodes within area">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2803,7 +2803,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
       <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Create" id="4474" name="SAFETY - Perform construction works">
+    <mission dia-behavior="agent.behaviors.tasks.PerformWorks" dia-type="agent.behaviors.tasks.PerformWorks_Create" id="4474" name="SAFETY - Perform construction works">
       <description>
         <doctrine><![CDATA[<P><dfn>To construct something.</dfn></P>
 <P>In SWORD, to know how to create and build a set of planned objects that may be acted upon later on, or that may have an effect<BR>
@@ -2918,7 +2918,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_Resume" id="4475" name="SAFETY - Resume construction works">
+    <mission dia-behavior="agent.behaviors.tasks.PerformWorks" dia-type="agent.behaviors.tasks.PerformWorks_Resume" id="4475" name="SAFETY - Resume construction works">
       <description>
         <doctrine><![CDATA[<P><dfn>To resume construction of something.<dfn></P>
 <P>In SWORD, to know how to build a set of existing objects. This mission can be used to finish the construction of already <BR>
@@ -2956,7 +2956,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks3" id="4477" name="SAFETY - Light up fires">
+    <mission dia-behavior="agent.behaviors.tasks.PerformWorks" dia-type="agent.behaviors.tasks.PerformWorks3" id="4477" name="SAFETY - Light up fires">
       <description>
         <doctrine><![CDATA[<P><dfn>Arsonists or pyromaniac may start fires in order to attack installation or induce terror on population. </dfn></P>
 <P>In SWORD, to know how to create a set of planned fires on diferent locations. Thus, it is usually a mission performed by terrorist,<BR>
@@ -3065,7 +3065,7 @@ any physical capabilities consideration</P>
       </parameter>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CreateThenOperate" dia-type="behaviors.tasks.CreateThenOperate" id="4478" name="SAFETY - Create and operate a decontamination site">
+    <mission dia-behavior="agent.behaviors.tasks.CreateThenOperate" dia-type="agent.behaviors.tasks.CreateThenOperate" id="4478" name="SAFETY - Create and operate a decontamination site">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate an NBC decontamination site in order to ensure units decontamination.<dfn></P>
 <P>In SWORD, operating a decontamination site allows the agent to complete decontamination missions using that site. It is the <BR>
@@ -3171,7 +3171,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       </parameter>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CreateThenFilter" dia-type="behaviors.tasks.CreateThenFilter" id="4479" name="SAFETY - Create and operate a checkpoint (filter crowds)">
+    <mission dia-behavior="agent.behaviors.tasks.CreateThenFilter" dia-type="agent.behaviors.tasks.CreateThenFilter" id="4479" name="SAFETY - Create and operate a checkpoint (filter crowds)">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate a checkpoint in order to control and filter movements of any kinds of entity.<dfn></P>
 <P>In SWORD, creating and operating a Checkpoint allows the agent to filter crowds. Filtering crowds allows to detect hidden units <BR>
@@ -3280,7 +3280,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="intensity" name="Intensity (%, default is 100%)" optional="true" type="Integer"/>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE) " optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Filter" dia-type="behaviors.tasks.Filter2" id="4480" name="SAFETY - Operate a checkpoint (filter crowds)">
+    <mission dia-behavior="agent.behaviors.tasks.Filter" dia-type="agent.behaviors.tasks.Filter2" id="4480" name="SAFETY - Operate a checkpoint (filter crowds)">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate a checkpoint in order to control and filter movements of any kinds of entity<dfn></P>
 <P>In SWORD, checkpoints are object that can filter crowds. Using such an object allows the agent to filter crowds in order to detect<BR>
@@ -3306,7 +3306,7 @@ In that specific case, no specific reports is displayed.</P>]]></usage>
       <parameter dia-name="checkpoint" name="Checkpoint" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="intensity" name="Intensity (%)" optional="true" type="Integer"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Operate" dia-type="behaviors.tasks.Operate" id="4482" name="SAFETY - Operate a decontamination site">
+    <mission dia-behavior="agent.behaviors.tasks.Operate" dia-type="agent.behaviors.tasks.Operate" id="4482" name="SAFETY - Operate a decontamination site">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate an NBC decontamination site in order to ensure units decontamination. </dfn></P>
 <P>In SWORD, operating a decontamination site allows the agent to complete decontamination missions using that site. It is the <BR>
@@ -3326,7 +3326,7 @@ Note that no specific capabilities are requeried for the agent to operate a deco
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="system" name="Decontamination site" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.HealVictimsWithinCrowds" dia-type="behaviors.tasks.HealVictimsWithinCrowds" id="4483" name="SAFETY - Heal victims within crowds">
+    <mission dia-behavior="agent.behaviors.tasks.HealVictimsWithinCrowds" dia-type="agent.behaviors.tasks.HealVictimsWithinCrowds" id="4483" name="SAFETY - Heal victims within crowds">
       <description>
         <doctrine><![CDATA[<P><dfn>To bring immediate assistance and first aid on the spot in disasters.<dfn></P>
 <P>In SWORD, to heal on the spot wounded victims within a set of crowds.</P>]]></doctrine>
@@ -3357,7 +3357,7 @@ In that specific case, the agent decides to act on the next one.</P>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" dia-type="behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" id="4484" name="SAFETY - Attack urban blocks within area (with projectiles)">
+    <mission dia-behavior="agent.behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.LaunchProjectileOnUrbanBlocksWithinArea" id="4484" name="SAFETY - Attack urban blocks within area (with projectiles)">
       <description>
         <doctrine><![CDATA[<P><dfn>To perform a terrorism attack, exactions against installations and population.</dfn></P>
 <P>In SWORD, units and crowds can assault urban blocks (or other units and structures). Assaulting a urban block causes <BR>
@@ -3388,7 +3388,7 @@ current visited urban block,  it launches the projectile on it and decides to ac
       <parameter dia-name="quantity" name="Quantity" optional="true" type="Integer"/>
       <parameter dia-name="dotationType" name="Resource type" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CommitSuicideAttack" dia-type="behaviors.tasks.CommitSuicideAttack" id="4485" name="SAFETY - Commit a suicide attack (against units)">
+    <mission dia-behavior="agent.behaviors.tasks.CommitSuicideAttack" dia-type="agent.behaviors.tasks.CommitSuicideAttack" id="4485" name="SAFETY - Commit a suicide attack (against units)">
       <description>
         <doctrine><![CDATA[<P><dfn>Terrorists may perform suicide attacks intenting to kill and maim innocent people.<dfn></P>
 <P>In SWORD, to reach a specific unit and launch a bomb projectile on its own position, causing the death of the terrorist <BR>
@@ -3419,7 +3419,7 @@ current visited urban block,  it launches the projectile on it and decides to ac
       </parameter>
       <parameter dia-name="dotationType" name="Resource" optional="false" type="ResourceType"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.GoGetDecontaminated" dia-type="behaviors.tasks.GoGetDecontaminated" id="4486" name="SAFETY - Go get decontaminated">
+    <mission dia-behavior="agent.behaviors.tasks.GoGetDecontaminated" dia-type="agent.behaviors.tasks.GoGetDecontaminated" id="4486" name="SAFETY - Go get decontaminated">
       <description>
         <doctrine><![CDATA[<P><dfn>Units may be contaminated during a NBC incident. To avoid NBC contamination and intoxication of other units (contamination <BR>
     should spread around and contaminate other units), contaminated units should be decontaminated with appropriate means.</dfn></P>
@@ -3452,7 +3452,7 @@ agent asked first for being decontaminated, it should be the first to get decont
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.StayInCrowd" dia-type="behaviors.tasks.StayInCrowd" id="4487" name="SAFETY - Stay/hide within a crowd">
+    <mission dia-behavior="agent.behaviors.tasks.StayInCrowd" dia-type="agent.behaviors.tasks.StayInCrowd" id="4487" name="SAFETY - Stay/hide within a crowd">
       <description>
         <doctrine><![CDATA[<P>In SWORD, a mission in which one unit stays within a given crowd. This mission may be used by an agent to hide (terrorists),<BR>
 to monitor or to escort a crowd (police).</P>]]></doctrine>
@@ -3469,7 +3469,7 @@ to monitor or to escort a crowd (police).</P>]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="Crowd" optional="false" type="CrowdKnowledge"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Reinforce" dia-type="behaviors.tasks.Reinforce" id="4488" name="SAFETY - Reinforce">
+    <mission dia-behavior="agent.behaviors.tasks.Reinforce" dia-type="agent.behaviors.tasks.Reinforce" id="4488" name="SAFETY - Reinforce">
       <description>
         <doctrine><![CDATA[<P>In SWORD, a mission in which one unit augments the capability of another unit.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
@@ -3485,7 +3485,7 @@ to monitor or to escort a crowd (police).</P>]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="agent" name="Target unit" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.OrderToFollow" dia-type="behaviors.tasks.OrderToFollow" id="4489" name="SAFETY - Order to follow">
+    <mission dia-behavior="agent.behaviors.tasks.OrderToFollow" dia-type="agent.behaviors.tasks.OrderToFollow" id="4489" name="SAFETY - Order to follow">
       <description>
         <doctrine><![CDATA[<P>To visit a set of units and order them to follow</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
@@ -3505,7 +3505,7 @@ If there is no more agent to visit, subject remains next to the last visited.</P
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="units" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Deconstruct" dia-type="behaviors.tasks.Deconstruct" id="4493" name="SAFETY - Perform deconstruction works">
+    <mission dia-behavior="agent.behaviors.tasks.Deconstruct" dia-type="agent.behaviors.tasks.Deconstruct" id="4493" name="SAFETY - Perform deconstruction works">
       <description>
         <doctrine><![CDATA[<P><dfn>To deconstruct and remove works or installations.<dfn></P>
 <P>In SWORD, elements to remove a set of objects. They can be: building collapses, human constructions,  mines etc. Removing <BR>
@@ -3538,7 +3538,7 @@ If there is no more agent to visit, subject remains next to the last visited.</P
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PatrolWithinArea" dia-type="behaviors.tasks.PatrolWithinArea" id="4494" name="SAFETY - Patrol within area">
+    <mission dia-behavior="agent.behaviors.tasks.PatrolWithinArea" dia-type="agent.behaviors.tasks.PatrolWithinArea" id="4494" name="SAFETY - Patrol within area">
       <description>
         <doctrine><![CDATA[<P><dfn>Patrolls are missions to gather information or to control rescue operations.<BR>
 Patrolling could ensure law, order and check crime in a given district.<dfn></P>
@@ -3566,7 +3566,7 @@ Patrolling could ensure law, order and check crime in a given district.<dfn></P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.CreateThenFilter" dia-type="behaviors.tasks.CreateThenFilter2" id="4496" name="SAFETY - Create and operate a roadblock (filter crowds)">
+    <mission dia-behavior="agent.behaviors.tasks.CreateThenFilter" dia-type="agent.behaviors.tasks.CreateThenFilter2" id="4496" name="SAFETY - Create and operate a roadblock (filter crowds)">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate a roadblock in order to control and filter movements of any kinds of entity.<dfn></P>
 <P>In SWORD, creating and operating a roadblock allows the agent to filter crowds. Filtering crowds allows to detect hidden <BR>
@@ -3670,7 +3670,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       </parameter>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE)" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Filter" dia-type="behaviors.tasks.Filter" id="4497" name="SAFETY - Operate a road block (prevent crowds from crossing)">
+    <mission dia-behavior="agent.behaviors.tasks.Filter" dia-type="agent.behaviors.tasks.Filter" id="4497" name="SAFETY - Operate a road block (prevent crowds from crossing)">
       <description>
         <doctrine><![CDATA[<P><dfn>To operate a road block in order to control and filter movements of any kinds of entity</dfn>.</P>
 <P>In SWORD, road block are object that can block crowds and units. Using such an object allows the agent to prevents them from <BR>
@@ -3688,7 +3688,7 @@ In that specific case, no specific report is displayed.</P>]]></usage>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="checkpoint" name="Road block" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.DamageUrbanBlocksWithinArea" dia-type="behaviors.tasks.DamageUrbanBlocksWithinArea" id="4498" name="SAFETY - Damage urban blocks within area">
+    <mission dia-behavior="agent.behaviors.tasks.DamageUrbanBlocksWithinArea" dia-type="agent.behaviors.tasks.DamageUrbanBlocksWithinArea" id="4498" name="SAFETY - Damage urban blocks within area">
       <description>
         <doctrine><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Area</b> (polygon): the area inside which urban blocks must be damaged.</P>
@@ -3727,7 +3727,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_dike" id="4499" name="SAFETY - Build a dike">
+    <mission dia-behavior="agent.behaviors.tasks.PerformWorks" dia-type="agent.behaviors.tasks.PerformWorks_dike" id="4499" name="SAFETY - Build a dike">
       <description>
         <doctrine><![CDATA[<P><DFN>To construct a dike to protect sites from floods</DFN></P>
 <P>In SWORD, to know how to create and build an object that may prevent areas or sites from floods. As  the flood can't cover an <BR>
@@ -3831,7 +3831,7 @@ In that specific case, the agent decides to act on the next one.</P>
         </objects>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PerformWorks" dia-type="behaviors.tasks.PerformWorks_firebreak" id="4500" name="SAFETY - Build a firebreak">
+    <mission dia-behavior="agent.behaviors.tasks.PerformWorks" dia-type="agent.behaviors.tasks.PerformWorks_firebreak" id="4500" name="SAFETY - Build a firebreak">
       <description>
         <doctrine><![CDATA[<P><DFN>To construct a firebreak to protect sites from fires.<DFN></P>
 <P>In SWORD, to know how to create and build a firebreak object that may prenvents areas or sites from spreading fires.</P>]]></doctrine>
@@ -3934,7 +3934,7 @@ In that specific case, the agent decides to act on the next one.</P>
         </objects>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.LaunchProjectileOnACrowd" dia-type="behaviors.tasks.LaunchProjectileOnACrowd" id="4501" name="SAFETY - Disperse crowd (with projectile)">
+    <mission dia-behavior="agent.behaviors.tasks.LaunchProjectileOnACrowd" dia-type="agent.behaviors.tasks.LaunchProjectileOnACrowd" id="4501" name="SAFETY - Disperse crowd (with projectile)">
       <description>
         <doctrine><![CDATA[<P><DFN>To control, disperse, and arrest civilians who are involved in a riot, demonstration, or protest. Riot squads have long<BR>
      used less lethal weapons such as tear gas to disperse crowds and detain rioters.<DFN></P>
@@ -3971,7 +3971,7 @@ In that specific case, the agent decides to act on the next one.</P>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" dia-type="behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" id="4502" name="SAFETY - Extract victims from crowds within area">
+    <mission dia-behavior="agent.behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" dia-type="agent.behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" id="4502" name="SAFETY - Extract victims from crowds within area">
       <description>
         <doctrine><![CDATA[<P><dfn>To ensure evacuation of crowd victims, with adapted device.</dfn></P>
 <P>In SWORD, extracting victims from crowds allow user to prepare the evacuation operation. In this mission, the agent extracts <BR>
@@ -4001,7 +4001,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.PatrolAroundUrbanBlocksWithinAZone" dia-type="behaviors.tasks.PatrolAroundUrbanBlocksWithinAZone" id="4503" name="SAFETY - Patrol along urban blocks (within area)">
+    <mission dia-behavior="agent.behaviors.tasks.PatrolAroundUrbanBlocksWithinAZone" dia-type="agent.behaviors.tasks.PatrolAroundUrbanBlocksWithinAZone" id="4503" name="SAFETY - Patrol along urban blocks (within area)">
       <description>
         <doctrine><![CDATA[Patrolling could ensure law, order and check crime in a given district.<dfn></P>
 <P>In SWORD, patrolling consist of moving along a path defined by waypoints, indefinitely, allowing the agent to gather <BR>
@@ -5677,6 +5677,13 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="zoneEmbarquement_" name="Landing point" optional="false" type="Polygon"/>
       <parameter dia-name="heureEmbarquement_" name="Landing time" optional="false" type="DateTime"/>
     </mission>
+    <mission cdt-dia-behavior="commander.behaviors.MoveAlong" dia-type="commander.behaviors.MoveAlong" id="44503" mrt-dia-behavior="commander.behaviors.MoveAlong" name="SAFETY - MoveTo">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="waypoints" max-occurs="unbounded" min-occurs="1" name="waypoints" optional="false" type="Point"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="342" name="Crowd - move">
@@ -5954,4 +5961,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2051479518" -->
+<!-- signature="1605653345" -->

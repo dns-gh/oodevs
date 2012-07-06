@@ -4,7 +4,7 @@
         <parameter name="plannedWork">
             <description>The plannified work to create and operate.</description>
             <type>
-                <class name="ontology.classes.PlannedWork"/>
+                <class name="agent.ontology.classes.PlannedWork"/>
             </type>
         </parameter>
         <parameter name="removeWork">
@@ -29,7 +29,7 @@
     <stages>
         <stage label="CreateThenOperate" permanent="true">
             <skills>
-                <skill name="behaviors.skills.CreateThenOperate">
+                <skill name="agent.behaviors.skills.CreateThenOperate">
                     <parameter name="plannedWork">
                         <value>
                             <parameter>plannedWork</parameter>

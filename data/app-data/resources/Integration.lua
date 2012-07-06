@@ -76,7 +76,7 @@ include "integration/Teammate.lua"
 include "integration/Area.lua"
 include "integration/Fire.lua"
 include "integration/Object.lua"
-
+include "integration/Commander.lua"
 
 
 masalife.brain.core.options.feedbacks.checkParamDeclaration = false

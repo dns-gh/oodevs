@@ -20,7 +20,7 @@
     <stages>
         <stage label="Filter" permanent="true">
             <skills>
-                <skill name="behaviors.skills.primitives.Filter">
+                <skill name="agent.behaviors.skills.primitives.Filter">
                     <parameter name="checkpoint">
                         <value>
                             <parameter>checkpoint</parameter>
