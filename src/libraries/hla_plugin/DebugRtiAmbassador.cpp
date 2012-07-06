@@ -25,7 +25,7 @@ using namespace hla;
 // Name: DebugRtiAmbassador constructor
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-DebugRtiAmbassador::DebugRtiAmbassador( std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver )
+DebugRtiAmbassador::DebugRtiAmbassador( ::hla::RtiAmbassador_ABC* ambassador, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver )
     : ambassador_( ambassador )
     , logger_    ( logger )
     , resolver_  ( resolver )

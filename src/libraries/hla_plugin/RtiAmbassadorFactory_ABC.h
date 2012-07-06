@@ -42,9 +42,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< ::hla::RtiAmbassador_ABC > CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
+    virtual ::hla::RtiAmbassador_ABC* CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                         ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                         const std::string& host, const std::string& port ) const = 0;
+    virtual void DeleteAmbassador( ::hla::RtiAmbassador_ABC* ambassador ) const = 0;
     //@}
 };
 

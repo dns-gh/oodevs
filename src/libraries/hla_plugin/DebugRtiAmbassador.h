@@ -35,7 +35,7 @@ class DebugRtiAmbassador : public ::hla::RtiAmbassador_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugRtiAmbassador( std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver );
+             DebugRtiAmbassador( ::hla::RtiAmbassador_ABC* ambassador, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver );
     virtual ~DebugRtiAmbassador();
     //@}
 
@@ -115,7 +115,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
+    ::hla::RtiAmbassador_ABC* ambassador_;
     dispatcher::Logger_ABC& logger_;
     ObjectResolver_ABC& resolver_;
     bool ticking_;

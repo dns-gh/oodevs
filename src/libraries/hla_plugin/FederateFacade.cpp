@@ -148,6 +148,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
                                 const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver )
     : subject_           ( subject )
+    , rtiFactory_        ( rtiFactory )
     , markingFactory_    ( new MarkingFactory( xis ) )
     , timeFactory_       ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_   ( new ::hla::SimpleTimeIntervalFactory() )
@@ -201,6 +202,12 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
 FederateFacade::~FederateFacade()
 {
     subject_.Unregister( *this );
+    aircraftClass_.reset( 0 );
+    surfaceVesselClass_.reset( 0 );
+    aggregateClass_.reset( 0 );
+    destructor_.reset( 0 );
+    federate_.reset( 0 );
+    rtiFactory_.DeleteAmbassador( ambassador_ );
 }
 
 // -----------------------------------------------------------------------------

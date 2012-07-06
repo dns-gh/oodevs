@@ -11,6 +11,7 @@
 #define plugins_hla_DebugRtiAmbassadorFactory_h
 
 #include "RtiAmbassadorFactory_ABC.h"
+#include <map>
 
 namespace dispatcher
 {
@@ -40,17 +41,23 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< ::hla::RtiAmbassador_ABC > CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
+    virtual ::hla::RtiAmbassador_ABC* CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                         ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                         const std::string& host, const std::string& port ) const;
+    virtual void DeleteAmbassador( ::hla::RtiAmbassador_ABC* ambassador ) const;
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< ::hla::RtiAmbassador_ABC*, ::hla::RtiAmbassador_ABC* > T_AmbassadorMap;
+    //@}
     //! @name Member data
     //@{
     const RtiAmbassadorFactory_ABC& factory_;
     dispatcher::Logger_ABC& logger_;
     ObjectResolver_ABC& resolver_;
+    mutable T_AmbassadorMap ambassadors_;
     //@}
 };
 

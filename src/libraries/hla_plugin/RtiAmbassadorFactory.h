@@ -38,21 +38,24 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< ::hla::RtiAmbassador_ABC > CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
+    virtual ::hla::RtiAmbassador_ABC* CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                         ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                         const std::string& host, const std::string& port ) const;
+    virtual void DeleteAmbassador( ::hla::RtiAmbassador_ABC* ambassador ) const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef ::hla::RtiAmbassador_ABC* (*T_CreateAmbassador)( ::hla::TimeFactory_ABC&, ::hla::TimeIntervalFactory_ABC&, ::hla::RtiAmbassador_ABC::E_MessagePolicy, const std::string&, const std::string& );
+    typedef void (*T_DeleteAmbassador)( ::hla::RtiAmbassador_ABC* );
     //@}
 
 private:
     //! @name Member data
     //@{
     T_CreateAmbassador createAmbassador;
+    T_DeleteAmbassador deleteAmbassador;
     //@}
 };
 

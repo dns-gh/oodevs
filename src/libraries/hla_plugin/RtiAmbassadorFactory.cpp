@@ -60,7 +60,10 @@ RtiAmbassadorFactory::RtiAmbassadorFactory( xml::xisubstream configuration, xml:
         throw std::runtime_error( "failed to load protocol library: '" + library + "', reason '" + GetLastErrorMessage() + "'" );
     createAmbassador = (T_CreateAmbassador)GetProcAddress( module, "CreateAmbassador" );
     if( !createAmbassador )
-        throw std::runtime_error( "unable to find function createAmbassador function" );
+        throw std::runtime_error( "unable to find function CreateAmbassador function" );
+    deleteAmbassador = (T_DeleteAmbassador)GetProcAddress( module, "DeleteAmbassador" );
+    if( !deleteAmbassador )
+        throw std::runtime_error( "unable to find function DeleteAmbassador function" );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +79,18 @@ RtiAmbassadorFactory::~RtiAmbassadorFactory()
 // Name: RtiAmbassadorFactory::CreateAmbassador
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-std::auto_ptr< ::hla::RtiAmbassador_ABC > RtiAmbassadorFactory::CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
+::hla::RtiAmbassador_ABC* RtiAmbassadorFactory::CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                                   ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                                   const std::string& host, const std::string& port ) const
 {
-    return std::auto_ptr< ::hla::RtiAmbassador_ABC >( createAmbassador( timeFactory, timeIntervalFactory, policy, host, port ) );
+    return createAmbassador( timeFactory, timeIntervalFactory, policy, host, port );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassadorFactory::DeleteAmbassador
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+void RtiAmbassadorFactory::DeleteAmbassador( ::hla::RtiAmbassador_ABC* ambassador ) const
+{
+    deleteAmbassador( ambassador );
 }

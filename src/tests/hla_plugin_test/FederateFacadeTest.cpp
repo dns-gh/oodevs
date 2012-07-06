@@ -47,7 +47,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
 {
     xml::xistringstream xis( "<root/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "", "" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "", "" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Connect ).once().in( s ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).with( "Federation", true, true ).returns( true );
@@ -63,13 +63,14 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
     MOCK_EXPECT( subject.Unregister ).once();
     MOCK_EXPECT( controller.Unregister ).once().in( s );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
 {
     xml::xistringstream xis( "<root netn='false'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Connect ).once().returns( true );
     MOCK_EXPECT( federate->Join ).once().returns( true );
@@ -81,6 +82,7 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
     MOCK_EXPECT( subject.Unregister ).once();
     MOCK_EXPECT( controller.Unregister ).once();
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 namespace
@@ -105,34 +107,37 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildF
     xml::xistringstream xis( "<root name='name' federation='federation' host='host' port='1337'"
                              "      time-constrained='false' time-regulating='false' lookahead='3'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "host", "1337" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "host", "1337" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().with( mock::any, "name", 3 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().with( "federation", false, false ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation, BuildFixture )
 {
     xml::xistringstream xis( "<root name='name' creation='true' fom='fom'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "directory/fom" ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_absolute_fom, BuildFixture )
 {
     xml::xistringstream xis( "<root name='name' creation='true' fom='c:/fom'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->Create1 ).once().in( s ).with( "Federation", "c:/fom" ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_fom_modules, BuildFixture )
@@ -143,30 +148,32 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation_with_fom_modules, Buil
 
     xml::xistringstream xis( "<root name='name' creation='true' fom='c:/fom1;c:/fom2'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate->CreateV ).once().in( s ).with( "Federation", FOM_FILES ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_can_destroy_federation, BuildFixture )
 {
     xml::xistringstream xis( "<root destruction='true'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
     MOCK_EXPECT( federate->Destroy ).once().with( "Federation" ).returns( true );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, BuildFixture )
 {
     xml::xistringstream xis( "<root/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns(  new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver );
@@ -175,4 +182,5 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, BuildFixture )
     sword::SimToClient_Content message;
     message.mutable_control_end_tick()->set_current_tick( 3 );
     listener->Notify( message, 42 );
+    MOCK_EXPECT( rtiFactory.DeleteAmbassador ).once().calls( boost::bind( &::operator delete, _1 ) );
 }

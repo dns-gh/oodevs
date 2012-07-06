@@ -38,10 +38,25 @@ DebugRtiAmbassadorFactory::~DebugRtiAmbassadorFactory()
 // Name: DebugRtiAmbassadorFactory::CreateAmbassador
 // Created: SLI 2011-05-27
 // -----------------------------------------------------------------------------
-std::auto_ptr< ::hla::RtiAmbassador_ABC > DebugRtiAmbassadorFactory::CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
+::hla::RtiAmbassador_ABC* DebugRtiAmbassadorFactory::CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                                        ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                                        const std::string& host, const std::string& port ) const
 {
-    std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador = factory_.CreateAmbassador( timeFactory, timeIntervalFactory, policy, host, port );
-    return std::auto_ptr< ::hla::RtiAmbassador_ABC >( new DebugRtiAmbassador( ambassador, logger_, resolver_ ) );
+    ::hla::RtiAmbassador_ABC* ambassador = factory_.CreateAmbassador( timeFactory, timeIntervalFactory, policy, host, port );
+    ::hla::RtiAmbassador_ABC* retval = new DebugRtiAmbassador( ambassador, logger_, resolver_ );
+    ambassadors_[ retval ] = ambassador;
+    return retval;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassadorFactory::DeleteAmbassador
+// Created: AHC 2012-04-18
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassadorFactory::DeleteAmbassador( ::hla::RtiAmbassador_ABC* ambassador ) const
+{
+    T_AmbassadorMap::iterator it( ambassadors_.find( ambassador ) );
+    assert( ambassadors_.end() != it );
+    factory_.DeleteAmbassador( it->second );
+    ambassadors_.erase( it );
+    delete ambassador;
 }

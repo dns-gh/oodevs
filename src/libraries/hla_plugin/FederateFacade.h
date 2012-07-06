@@ -116,10 +116,11 @@ private:
     //! @name Member data
     //@{
     AgentSubject_ABC& subject_;
+    const RtiAmbassadorFactory_ABC& rtiFactory_;
     std::auto_ptr< MarkingFactory_ABC > markingFactory_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
-    std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
+    ::hla::RtiAmbassador_ABC* ambassador_;
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< HlaObjectNameFactory_ABC > nameFactory_;
