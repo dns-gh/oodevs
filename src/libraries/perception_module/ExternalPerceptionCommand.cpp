@@ -7,37 +7,44 @@
 //
 // *****************************************************************************
 
-#include "PerceptionCommand.h"
+#include "ExternalPerceptionCommand.h"
 #include "RolePion_Perceiver.h"
 #include "wrapper/View.h"
+#include "wrapper/Event.h"
 
 using namespace sword;
 using namespace sword::perception;
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionCommand constructor
+// Name: ExternalPerceptionCommand constructor
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-PerceptionCommand::PerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ExternalPerceptionCommand::ExternalPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
     : identifier_( parameters[ "identifier" ] )
+    , level_     ( parameters[ "level" ] )
+    , target_    ( parameters[ "target" ] )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionCommand::Execute
+// Name: ExternalPerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void PerceptionCommand::Execute( const wrapper::View& model ) const
+void ExternalPerceptionCommand::Execute( const wrapper::View& /*model*/ ) const
 {
-    RolePion_Perceiver().ExecutePerceptions( model, model[ "entities" ][ identifier_ ] );
+    wrapper::Event event( "external perception" );
+    event[ "identifier" ] = identifier_;
+    event[ "level" ] = level_;
+    event[ "target" ] = target_;
+    event.Post();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerceptionCommand::ExecutePaused
+// Name: ExternalPerceptionCommand::ExecutePaused
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void PerceptionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
+void ExternalPerceptionCommand::ExecutePaused( const wrapper::View& /*model*/ ) const
 {
     // NOTHING
 }

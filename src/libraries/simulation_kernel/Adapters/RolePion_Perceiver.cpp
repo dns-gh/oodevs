@@ -11,6 +11,7 @@
 #include "RolePion_Perceiver.h"
 #include "ListenerHelper.h"
 #include "Hook.h"
+#include "Sink.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
@@ -45,6 +46,7 @@
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include <core/Convert.h>
 #include <core/Model.h>
+#include <core/MakeModel.h>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
@@ -63,18 +65,20 @@ namespace sword
     template< typename Archive >
     void save_construct_data( Archive& archive, const RolePion_Perceiver* role, const unsigned int /*version*/ )
     {
+        const Sink* sink = &role->sink_;
         MIL_Agent_ABC* const pion = &role->owner_;
         const core::Model* const entity = &role->entity_;
-        archive << pion << entity;
+        archive << sink << pion << entity;
     }
 
     template< typename Archive >
     void load_construct_data( Archive& archive, RolePion_Perceiver* role, const unsigned int /*version*/ )
     {
+        Sink* sink;
         MIL_Agent_ABC* pion;
         core::Model* entity;
-        archive >> pion >> entity;
-        ::new( role )RolePion_Perceiver( *pion, *entity );
+        archive >> sink >> pion >> entity;
+        ::new( role )RolePion_Perceiver( *sink, *pion, *entity );
     }
 }
 
@@ -215,8 +219,10 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 // Name: RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-RolePion_Perceiver::RolePion_Perceiver( MIL_Agent_ABC& pion, core::Model& entity )
-    : owner_                         ( pion )
+RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, core::Model& entity )
+    : sink_                          ( sink )
+    , facade_                        ( sink.GetFacade() )
+    , owner_                         ( pion )
     , entity_                        ( entity )
     , bRecordModeEnabled_            ( false )
     , bHasChanged_                   ( true )
@@ -1003,9 +1009,11 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const UrbanObjectWrapper& /*obje
 // Name: RolePion_Perceiver::NotifytExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
+void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
-    owner_.GetKnowledge().GetKsPerception().NotifyExternalPerception( agent, level );
+    facade_.PostCommand( "external perception", core::MakeModel( "identifier", owner_.GetID() )
+                                                               ( "level", level.GetID() )
+                                                               ( "target", reinterpret_cast< size_t >( &agent ) ) );
 }
 
 // -----------------------------------------------------------------------------

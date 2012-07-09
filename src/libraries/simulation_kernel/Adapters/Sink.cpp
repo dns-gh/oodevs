@@ -25,6 +25,7 @@
 #include "MovementReportNameEventListener.h"
 #include "DirectFirePionEventListener.h"
 #include "DirectFirePionAttackEventListener.h"
+#include "ExternalPerceptionEventListener.h"
 #include "MovementReportEventListener.h"
 #include "MovementCallbackEventListener.h"
 #include "MovementCallbackEventListener.h"
@@ -165,6 +166,7 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new DirectFirePionEventListener( *model_, *facade_, factory ) );
     listeners_.push_back( new DirectFirePionAttackEventListener( *model_, *facade_, factory ) );
+    listeners_.push_back( new ExternalPerceptionEventListener( *model_, *facade_, factory ) );
     MovementHooks::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
     PerceptionHooks::Initialize( *facade_ );
@@ -352,7 +354,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& vPositio
         e.SendToLogger();
     }
     pion.RegisterRole( *new sword::RoleAction_Moving( pion ) );
-    pion.RegisterRole( *new sword::RolePion_Perceiver( pion, entity ) );
+    pion.RegisterRole( *new sword::RolePion_Perceiver( *this, pion, entity ) );
     pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );
     pion.RegisterRole( *new sword::RoleAdapter( pion, entity ) );
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );

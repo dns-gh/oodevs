@@ -140,7 +140,8 @@ namespace perception
                                                                       ( "toggle object detection" )
                                                                       ( "toggle recognition point" )
                                                                       ( "vision" )
-                                                                      ( "identify all agents in zone" ) )
+                                                                      ( "identify all agents in zone" ) 
+                                                                      ( "external perception" ) )
         {}
     };
 }
