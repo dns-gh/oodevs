@@ -63,16 +63,12 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , async_   ( pool )
 {
     system.MakePaths( root_ );
-    if( !system_.Exists( java_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
     if( !system_.IsFile( java_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is not a file" );
-    if( !system_.Exists( jar_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is missing" );
+        throw std::runtime_error( "'" + runtime::Utf8Convert( java_ ) + "' is not a java binary" );
     if( !system_.IsFile( jar_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
+        throw std::runtime_error( "'" + runtime::Utf8Convert( jar_ ) + "' is not a jar binary" );
     if( !system_.IsDirectory( web_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( web_ ) + " is not a directory" );
+        throw std::runtime_error( "'" + runtime::Utf8Convert( web_ ) + "' is not a directory" );
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Update, this ) );
 }
 

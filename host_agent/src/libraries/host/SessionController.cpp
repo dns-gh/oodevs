@@ -47,12 +47,10 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 {
     system_.MakePaths( root_ );
     if( !system_.IsDirectory( apps_ ) )
-        throw std::runtime_error( runtime::Utf8Convert( apps_ ) + " is not a directory" );
+        throw std::runtime_error( "'" + runtime::Utf8Convert( apps_ ) + "' is not a directory" );
     const Path app = apps_ / "simulation_app.exe";
-    if( !system_.Exists( app ) )
-        throw std::runtime_error( Utf8Convert( app ) + " is missing" );
     if( !system_.IsFile( app ) )
-        throw std::runtime_error( Utf8Convert( app ) + " is not a file" );
+        throw std::runtime_error( "'" + Utf8Convert( app ) + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Update, this ) );
 }
 
