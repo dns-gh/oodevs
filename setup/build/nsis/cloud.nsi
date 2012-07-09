@@ -16,6 +16,7 @@ Name "Sword Cloud"
 OutFile "${DISTDIR}\sword_cloud_${PLATFORM}_setup.exe"
 InstallDir "$PROGRAMFILES\$(^Name)"
 InstallDirRegKey HKLM "Software\MASA Group\$(^Name)" "Install_Dir"
+RequestExecutionLevel admin
 
 ;--------------------------------
 Function .onInit
@@ -24,6 +25,13 @@ Function .onInit
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "Another installation is in progress"
         Abort
+    UserInfo::GetAccountType
+    pop $0
+    ${If} $0 != "admin"
+        MessageBox mb_iconstop "Administrator rights are required to run this installer"
+        SetErrorLevel 740 ;ERROR_ELEVATION_REQUIRED
+    Quit
+    ${EndIf}    
 FunctionEnd
 
 ;--------------------------------
@@ -37,6 +45,10 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 Section $(^Name)
     SectionIn RO
     SetShellVarContext all
+
+    ; set permissions
+    CreateDirectory "$INSTDIR"
+    nsExec::Exec 'icacls "$INSTDIR" /t /C /grant Everyone:(OI)(CI)F'
 
     SetOutPath "$INSTDIR\bin"
 
