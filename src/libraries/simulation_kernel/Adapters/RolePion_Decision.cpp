@@ -994,10 +994,8 @@ namespace
     double ComputeDistance( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MIL_Agent_ABC& target )
     {
         const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
-        const MT_Vector2D& p1 = targetLocation.GetPosition();
-        const MT_Vector3D vTargetPosition( p1.rX_, p1.rY_, targetLocation.GetAltitude() );
-        const MT_Vector2D& p2 = pKnowledge->GetPosition();
-        const MT_Vector3D vDataPosition( p2.rX_, p2.rY_, pKnowledge->GetAltitude() );
+        const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
+        const MT_Vector3D vDataPosition( pKnowledge->GetPosition().rX_, pKnowledge->GetPosition().rY_, pKnowledge->GetAltitude() );
         return vTargetPosition.Distance( vDataPosition );
     }
     double GetPotentialAttrition( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position )
