@@ -63,13 +63,19 @@ public:
     //@{
     QSize sizeHint() const;
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
+
+    void ActivateSelection( bool activate );
     //@}
+
+signals:
+    void ListViewFocusIn( gui::HierarchyListView_ABC* );
 
 protected slots:
     //! @name Slots
     //@{
     virtual void OnSelectionChange();
     virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
+    virtual bool CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const;
     void OnRequestCenter();
     void Update();
     //@}
@@ -85,11 +91,11 @@ protected:
     virtual void NotifyUpdated( const kernel::Symbol_ABC& symbol );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
-    virtual void focusInEvent( QFocusEvent* );
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
     virtual void ClearSelection();
     static void SetVisible( Q3ListViewItem* item, bool visible );
     void UpdateItem( ValuedListItem* item );
+    virtual void focusInEvent( QFocusEvent* event );
     //@}
 
 private:
@@ -102,6 +108,7 @@ private:
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    virtual bool CanDrop( const kernel::Entity_ABC* entity, QPoint position ) const;
     //@}
 
 protected:
@@ -118,6 +125,7 @@ private:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTimer*                                   timer_;
     QPoint                                    dragStartPosition_;
+    bool                                      activated_;
     //@}
 };
 

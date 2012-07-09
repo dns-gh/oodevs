@@ -8,8 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "PopulationsLayer.h"   
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "PopulationsLayer.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"

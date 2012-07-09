@@ -15,7 +15,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
@@ -83,7 +82,7 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     SymbolIcon icon( symbolName, levelName );
     icon.SetColor( strategy_.FindColor( entity ) );
     icon.SetSize( size );
-    if( const kernel::CommunicationHierarchies* pHierarchy = entity.Retrieve< kernel::CommunicationHierarchies >() )
+    if( const kernel::TacticalHierarchies* pHierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const kernel::Diplomacies_ABC* pDiplomacy = pHierarchy->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
             icon.SetKarmaFactor( pDiplomacy->GetKarma() );
     return icons_.GetSymbol( icon );
@@ -98,7 +97,7 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QPixma
     if( !IsCommandPost( entity ) )
         return pixmap;
 
-    if( const kernel::CommunicationHierarchies* pHierarchy = entity.Retrieve< kernel::CommunicationHierarchies >() )
+    if( const kernel::TacticalHierarchies* pHierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const kernel::Diplomacies_ABC* pDiplomacy = pHierarchy->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
         {
             const kernel::Karma& karma= pDiplomacy->GetKarma();

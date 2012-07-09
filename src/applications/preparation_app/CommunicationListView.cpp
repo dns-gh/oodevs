@@ -15,8 +15,10 @@
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_gui/ValuedDragObject.h" // LTO
@@ -159,13 +161,14 @@ void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::Valu
 // -----------------------------------------------------------------------------
 bool CommunicationListView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
 {
-    const Automat_ABC*        automat = dynamic_cast< const Automat_ABC* >       ( &entity );
-    const Ghost_ABC*          ghost   = dynamic_cast< const Ghost_ABC* >         ( &entity );
-    const KnowledgeGroup_ABC* group   = dynamic_cast< const KnowledgeGroup_ABC* >( &superior );
+    const Automat_ABC*        automat   = dynamic_cast< const Automat_ABC* >       ( &entity );
+    const Formation_ABC*      formation = dynamic_cast< const Formation_ABC* >     ( &entity );
+    const Ghost_ABC*          ghost     = dynamic_cast< const Ghost_ABC* >         ( &entity );
+    const KnowledgeGroup_ABC* group     = dynamic_cast< const KnowledgeGroup_ABC* >( &superior );
     if( ghost && ghost->GetGhostType() != eGhostType_Automat )
         return false;
-    if( ( automat || ghost ) && group )
-        return &entity.Get< CommunicationHierarchies >().GetTop() == &superior.Get< CommunicationHierarchies >().GetTop();
+    if( ( automat || ghost || formation ) && group )
+        return &entity.Get< TacticalHierarchies >().GetTop() == &superior.Get< CommunicationHierarchies >().GetTop();
     else if( const KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const KnowledgeGroup_ABC* >( &entity ) )
     {
         const Entity_ABC* com = &knowledgegroup->Get< CommunicationHierarchies >().GetTop();
@@ -222,6 +225,28 @@ void CommunicationListView::NotifyContextMenu( const kernel::Automat_ABC& /*agen
     menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
+namespace
+{
+    void Update( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& group, bool& result )
+    {
+        if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* > ( &entity ) )
+        {
+            kernel::CommunicationHierarchies& hierarchy = const_cast< kernel::CommunicationHierarchies& >( automat->Get< kernel::CommunicationHierarchies >() );
+            if( &hierarchy.GetTop() == &group.Get< kernel::CommunicationHierarchies >().GetTop() )
+            {
+                static_cast< AutomatCommunications& >( hierarchy ).ChangeSuperior( const_cast< Entity_ABC& >( group ) );
+                result = true;
+            }
+        }
+        else if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* > ( &entity ) )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > children = formation->Get< TacticalHierarchies >().CreateSubordinateIterator();
+            while( children.HasMoreElements() )
+                Update( children.NextElement(), group, result );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::Drop
 // Created: SBO 2006-09-26
@@ -229,19 +254,18 @@ void CommunicationListView::NotifyContextMenu( const kernel::Automat_ABC& /*agen
 // -----------------------------------------------------------------------------
 bool CommunicationListView::Drop( const Entity_ABC& draggedEntity, const Entity_ABC& target )
 {
-    const Automat_ABC*        automat = dynamic_cast< const Automat_ABC* >       ( &draggedEntity );
-    const Ghost_ABC*          ghost   = dynamic_cast< const Ghost_ABC* >         ( &draggedEntity );
-    const KnowledgeGroup_ABC* group   = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
+    const Automat_ABC*        automat   = dynamic_cast< const Automat_ABC* >       ( &draggedEntity );
+    const Ghost_ABC*          ghost     = dynamic_cast< const Ghost_ABC* >         ( &draggedEntity );
+    const Formation_ABC*      formation = dynamic_cast< const Formation_ABC* >     ( &draggedEntity );
+    const KnowledgeGroup_ABC* group     = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
     if( ghost && ghost->GetGhostType() != eGhostType_Automat )
         return false;
-    if( ( automat || ghost ) && group )
+    if( ( automat || formation || ghost ) && group )
     {
-        // moving an automat or ghost under knowledgegroup
-        CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( draggedEntity.Get< CommunicationHierarchies >() );
-        if( &com.GetTop() != &target.Get< CommunicationHierarchies >().GetTop() )
-            return false;
-        static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( target ) );
-        return true;
+        // moving an automat or ghost or formation under knowledgegroup
+        bool result = false;
+        ::Update( draggedEntity, target, result );
+        return result;
     }
     else
     {

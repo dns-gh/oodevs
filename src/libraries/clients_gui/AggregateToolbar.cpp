@@ -35,20 +35,21 @@ namespace
 // Name: AggregateToolbar constructor
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
-AggregateToolbar::AggregateToolbar( QWidget* parent, kernel::Controller& controller,
+AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
                                     AutomatsLayer& automatsLayer, FormationLayer& formationsLayer )
-    : Q3HBox( parent, "AggregateToolbar" )
+    : QHBoxLayout()
     , controller_     ( controller )
     , automatsLayer_  ( automatsLayer )
     , formationsLayer_( formationsLayer )
 {
-    QToolButton* btn = new QToolButton( this );
+    QToolButton* btn = new QToolButton();
     btn->setAutoRaise( true );
     btn->setPopupDelay( 0 );
     btn->setIconSet( MAKE_ICON( aggregate ) );
     btn->setPopupMode( QToolButton::MenuButtonPopup );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Aggregate all automats" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Aggregate() ) );
+    addWidget( btn );
 
     menu_ = new kernel::ContextMenu( btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
@@ -56,21 +57,24 @@ AggregateToolbar::AggregateToolbar( QWidget* parent, kernel::Controller& control
     btn->setPopup( menu_ );
     connect( menu_, SIGNAL( activated( int ) ), SLOT( Aggregate( int ) ) );
 
-    btn = new QToolButton( this );
+    btn = new QToolButton();
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_ICON( desaggregate ) );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Disaggregate all" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( DisaggregateAll() ) );
+    addWidget( btn );
 
     QIcon dndIcon;
     dndIcon.addPixmap( MAKE_PIXMAP( dnd_lock ), QIcon::Normal, QIcon::On );
     dndIcon.addPixmap( MAKE_PIXMAP( dnd_unlock ), QIcon::Normal, QIcon::Off );
-    btn = new QToolButton( this );
+    btn = new QToolButton();
     btn->setIcon( dndIcon );
     btn->setToggleButton( true );
     btn->setAutoRaise( true );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Lock/Unlock drag-and-drop" ) );
     connect( btn, SIGNAL( toggled( bool ) ), SLOT( OnLockDragAndDropToggled( bool ) ) );
+    addWidget( btn );
+
     controller_.Register( *this );
 }
 

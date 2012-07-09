@@ -29,6 +29,7 @@ namespace kernel
     class HierarchyLevel_ABC;
     class Ghost_ABC;
     class GlTools_ABC;
+    class KnowledgeGroup_ABC;
 }
 
 class AutomatDecisions;
@@ -109,6 +110,7 @@ private:
     bool Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
     bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
     bool Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target );
     void AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root );
     void UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}

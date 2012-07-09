@@ -41,6 +41,12 @@ private slots:
     //@}
 
 private:
+    //! @name Operation
+    //@{
+    virtual Q3DragObject* dragObject();
+    //@}
+
+private:
     //! @name Helpers
     //@{
     virtual void viewportResizeEvent( QResizeEvent* e );

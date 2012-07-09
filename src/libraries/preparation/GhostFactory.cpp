@@ -75,11 +75,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
-    if( prototype.ghostType_ == eGhostType_Agent )
-    {
-        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    }
-    else
+    if( prototype.ghostType_ == eGhostType_Automat )
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
         const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
@@ -106,13 +102,8 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
-    if( result->GetGhostType() == eGhostType_Agent )
+    if( result->GetGhostType() == eGhostType_Automat )
     {
-        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    }
-    else
-    {
-        assert( result->GetGhostType() == eGhostType_Automat );
         result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
         result->Attach( *new LogisticLevelAttritube( controllers_, xis, *result, true, dico ) );
@@ -138,7 +129,6 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     if( result->GetGhostType() == eGhostType_Agent )
     {
         result->Attach< Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
-        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     }
     else
     {

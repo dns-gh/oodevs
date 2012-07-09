@@ -77,6 +77,8 @@ private:
     bool ApplyShowFilter( gui::ValuedListItem* item ) const;
 
     bool Accept( const ProfileHierarchies_ABC& hierarchy ) const;
+
+    virtual Q3DragObject* dragObject();
     //@}
 
 private:

@@ -310,3 +310,12 @@ bool UserProfileUnitControls::Accept( const ProfileHierarchies_ABC& hierarchy ) 
              dynamic_cast< const kernel::Formation_ABC* >( &entity ) ||
              ( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) && static_cast< const kernel::Ghost_ABC* >( &entity )->GetGhostType() == eGhostType_Automat ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::dragObject
+// Created: JSR 2012-07-09
+// -----------------------------------------------------------------------------
+Q3DragObject* UserProfileUnitControls::dragObject()
+{
+     return 0;
+}

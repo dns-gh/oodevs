@@ -81,3 +81,12 @@ void UserProfilePopulationControls::OnContextMenuRequested( Q3ListViewItem*, con
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationControls::dragObject
+// Created: JSR 2012-07-09
+// -----------------------------------------------------------------------------
+Q3DragObject* UserProfilePopulationControls::dragObject()
+{
+    return 0;
+}

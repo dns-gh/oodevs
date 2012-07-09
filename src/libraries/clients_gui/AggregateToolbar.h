@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: LGY 2011-10-14
 // =============================================================================
-class AggregateToolbar : public Q3HBox
+class AggregateToolbar : public QHBoxLayout
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                        , public tools::ElementObserver_ABC< kernel::Formation_ABC >
@@ -43,7 +43,7 @@ class AggregateToolbar : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateToolbar( QWidget* parent, kernel::Controller& controller, AutomatsLayer& automatsLayer,
+             AggregateToolbar( kernel::Controller& controller, AutomatsLayer& automatsLayer,
                                FormationLayer& formationsLayer );
     virtual ~AggregateToolbar();
     //@}

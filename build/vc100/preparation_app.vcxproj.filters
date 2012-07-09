@@ -520,6 +520,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\TerrainExportDialog.cpp">
       <Filter>Source Files\Dialogs\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\ListViewsPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\OrbatDockWidget.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -966,6 +972,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\TerrainExportDialog.h">
       <Filter>Source Files\Dialogs\Urban</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\OrbatDockWidget.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\ListViewsPanel.h">
+      <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>

@@ -33,10 +33,11 @@ class RichListView : public Q3ListView
 public:
     explicit RichListView( QWidget* parent, const char* name = 0 )
         : Q3ListView( parent, name )
-        , readOnlyModes_  ( 0 )
-        , creationBlocked_( false )
-        , readOnly_       ( false )
-        , dndLocked_      ( false )
+        , creationBlocked_   ( false )
+        , readOnly_          ( false )
+        , readOnlyModes_     ( 0 )
+        , dndLocked_         ( false )
+        , contextMenuBlocked_( false )
     {
         // NOTHING
     }
@@ -55,6 +56,16 @@ public:
     bool IsCreationBlocked() const
     {
         return creationBlocked_;
+    }
+
+    void SetContextMenuBlocked( bool contextMenuBlocked )
+    {
+        contextMenuBlocked_ = contextMenuBlocked;
+    }
+
+    bool IsContextMenuBlocked() const
+    {
+        return contextMenuBlocked_;
     }
 
     void DeleteTail( ValuedListItem* item )
@@ -214,6 +225,7 @@ private:
     int     readOnlyModes_;
     bool    creationBlocked_;
     bool    readOnly_;
+    bool    contextMenuBlocked_;
     bool    dndLocked_;
 };
 

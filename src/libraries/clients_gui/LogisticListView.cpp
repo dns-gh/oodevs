@@ -318,22 +318,6 @@ void LogisticListView::NotifyDeletedInternal( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticListView::viewportDragMoveEvent
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void LogisticListView::viewportDragMoveEvent( QDragMoveEvent* pEvent )
-{
-    const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent );
-    if( !entity )
-    {
-        pEvent->ignore();
-        return;
-    }
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    pEvent->accept( CanDrop( entity, position ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticListView::Drop
 // Created: ABR 2011-09-15
 // -----------------------------------------------------------------------------
@@ -345,8 +329,8 @@ bool LogisticListView::Drop( const Entity_ABC& entity, ValuedListItem& target )
     if( target.IsA< const LogisticLevel >() )
         result = Drop( entity, *target.GetValueNoCheck< const LogisticLevel >() );
     target.Select( controllers_.actions_ );
-    ValuedListItem* item = FindItem( &entity, firstChild() );
-    item->Select( controllers_.actions_ );
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+        item->Select( controllers_.actions_ );
     return result;
 }
 
