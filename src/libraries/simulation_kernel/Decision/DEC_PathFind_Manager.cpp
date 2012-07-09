@@ -117,7 +117,6 @@ void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
         if( it->get() == pPath )
         {
             requests.erase( it );
-            condition_.notify_all();
             break;
         }
     }
