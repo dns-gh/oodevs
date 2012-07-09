@@ -92,26 +92,26 @@ public:
 
     //@{
     virtual void NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
-    bool NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level );
-    bool NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
-    bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
-    void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
-    void NotifyPerceptionUrban( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
+    virtual void NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
+    virtual bool NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
+    virtual void NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level );
+    virtual bool NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
+    virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
+    virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
+    virtual void NotifyPerceptionUrban( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
     //@}
 
     //! @name Operations
     //@{
-    void                       Update            ( bool bIsDead );
-    void                       Clean             ();
-    void                       ExecutePerceptions();
-    const PHY_PerceptionLevel& ComputePerception ( const MT_Vector2D& vPoint             ) const;
-    const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Object& knowledge ) const;
+    virtual void                       Update            ( bool bIsDead );
+    virtual void                       Clean             ();
+    virtual void                       ExecutePerceptions();
+    virtual const PHY_PerceptionLevel& ComputePerception ( const MT_Vector2D& vPoint             ) const;
+    virtual const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Object& knowledge ) const;
 
-    void SetVisionModeNormal   ();
-    void SetVisionModeDirection( const MT_Vector2D& vDirection );
-    void SetVisionModePoint    ( const MT_Vector2D& vPoint );
+    virtual void SetVisionModeNormal   ();
+    virtual void SetVisionModeDirection( const MT_Vector2D& vDirection );
+    virtual void SetVisionModePoint    ( const MT_Vector2D& vPoint );
     virtual bool IsUsingActiveRadar() const;
     virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
     
@@ -129,75 +129,75 @@ public:
 
     //! @name Perceptions
     //@{
-    void EnableSensors ();
-    void DisableSensors();
+    virtual void EnableSensors ();
+    virtual void DisableSensors();
 
-    bool  HasDelayedPerceptions          () const;
-    void  EnableRecoAlat                 ( const TER_Localisation& localisation );
-    void  DisableRecoAlat                ();
-    void  EnableCoupDeSonde              ();
-    void  DisableCoupDeSonde             ();
-    int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
-    void  DisableRecoPoint               ( int );
-    int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
-    int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
-    int   EnableRecoUrbanBlock           ( UrbanObjectWrapper* pUrbanBlock );
-    void  DisableRecoUrbanBlock          ( int );
-    int   EnableControlLocalisation      ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
-    void  DisableRecoLocalisation        ( int );
-    int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
-    void  DisableSurveillanceLocalisation( int );
-    int   EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent );
-    void  DisableRecoObjects             ( int );
+    virtual bool  HasDelayedPerceptions          () const;
+    virtual void  EnableRecoAlat                 ( const TER_Localisation& localisation );
+    virtual void  DisableRecoAlat                ();
+    virtual void  EnableCoupDeSonde              ();
+    virtual void  DisableCoupDeSonde             ();
+    virtual int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
+    virtual void  DisableRecoPoint               ( int );
+    virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
+    virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
+    virtual int   EnableRecoUrbanBlock           ( UrbanObjectWrapper* pUrbanBlock );
+    virtual void  DisableRecoUrbanBlock          ( int );
+    virtual int   EnableControlLocalisation      ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
+    virtual void  DisableRecoLocalisation        ( int );
+    virtual int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
+    virtual void  DisableSurveillanceLocalisation( int );
+    virtual int   EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent );
+    virtual void  DisableRecoObjects             ( int );
     virtual void EnableFireObserver();
     virtual void DisableFireObserver();
 
     // Radars
-    int   EnableRadarOnLocalisation      ( const PHY_RadarClass& radarClass, const TER_Localisation& localisation );
-    void  DisableRadarOnLocalisation     ( const PHY_RadarClass& radarClass, int );
-    void  EnableRadar                    ( const PHY_RadarClass& radarClass );
-    void  DisableRadar                   ( const PHY_RadarClass& radarClass );
+    virtual int   EnableRadarOnLocalisation      ( const PHY_RadarClass& radarClass, const TER_Localisation& localisation );
+    virtual void  DisableRadarOnLocalisation     ( const PHY_RadarClass& radarClass, int );
+    virtual void  EnableRadar                    ( const PHY_RadarClass& radarClass );
+    virtual void  DisableRadar                   ( const PHY_RadarClass& radarClass );
 
-    int   EnableFlyingShellDetection     ( const TER_Localisation& localisation );
-    void  DisableFlyingShellDetection    ( int );
+    virtual int   EnableFlyingShellDetection     ( const TER_Localisation& localisation );
+    virtual void  DisableFlyingShellDetection    ( int );
 
     // Rens
-    void  EnableRecordMode ();
-    void  DisableRecordMode();
+    virtual void  EnableRecordMode ();
+    virtual void  DisableRecordMode();
 
-    void DisableAllPerceptions();
+    virtual void DisableAllPerceptions();
     //@}
 
     //! @name Accessors
     //@{
-    const T_SurfaceAgentMap&  GetSurfacesAgent () const;
-    const T_SurfaceObjectMap& GetSurfacesObject() const;
-    const T_RadarSet&         GetRadars        ( const PHY_RadarClass& radarClass );
+    virtual const T_SurfaceAgentMap&  GetSurfacesAgent () const;
+    virtual const T_SurfaceObjectMap& GetSurfacesObject() const;
+    virtual const T_RadarSet&         GetRadars        ( const PHY_RadarClass& radarClass );
     //@}
 
     //! @name Tools
     //@{
-    const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
-    MIL_Agent_ABC& GetPion() const;
-    double GetMaxAgentPerceptionDistance() const;
-    double GetMaxTheoreticalAgentPerceptionDistance() const;
-    void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const;
+    virtual const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    virtual MIL_Agent_ABC& GetPion() const;
+    virtual double GetMaxAgentPerceptionDistance() const;
+    virtual double GetMaxTheoreticalAgentPerceptionDistance() const;
+    virtual void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const;
 
-    bool IsPeriphericalVisionEnabled() const;
-    bool IsKnown( const MIL_Agent_ABC& agent ) const;
-    bool IsIdentified( const MIL_Agent_ABC& agent ) const;
-    bool IsKnown( const MIL_Object_ABC& object ) const;
-    bool IsIdentified( const MIL_Object_ABC& object ) const;
-    bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
-    bool IsIdentified( const UrbanObjectWrapper& object ) const;
+    virtual bool IsPeriphericalVisionEnabled() const;
+    virtual bool IsKnown( const MIL_Agent_ABC& agent ) const;
+    virtual bool IsIdentified( const MIL_Agent_ABC& agent ) const;
+    virtual bool IsKnown( const MIL_Object_ABC& object ) const;
+    virtual bool IsIdentified( const MIL_Object_ABC& object ) const;
+    virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
+    virtual bool IsIdentified( const UrbanObjectWrapper& object ) const;
     virtual bool IsFireObserver() const;
     //@}
 
     //! @name Network
     //@{
-    void SendDebugState  () const;
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendDebugState  () const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:
