@@ -11,6 +11,7 @@
 #define __GhostCommandPostAttributes_h_
 
 #include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace xml
 {
@@ -31,6 +32,7 @@ namespace kernel
 // Created: ABR 2012-07-09
 // =============================================================================
 class GhostCommandPostAttributes : public kernel::CommandPostAttributes_ABC
+                                 , public kernel::Serializable_ABC
 {
 
 public:
@@ -44,6 +46,11 @@ public:
     //! @name CommandPostAttributes_ABC operations
     //@{
     virtual bool IsCommandPost() const;
+    //@}
+
+    //! @name Serializable_ABC operations
+    //@{
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:
