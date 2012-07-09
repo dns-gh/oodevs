@@ -47,7 +47,7 @@ UrbanTemplateType::UrbanTemplateType( xml::xistream& xis, const ObjectTypes& typ
         >> xml::start( "usages" )
         >> xml::list( "usage", *this, &UrbanTemplateType::ReadUsage )
         >> xml::end;
-    color_.alpha_ = static_cast< int >( 100 * alpha + 0.5f );
+    color_.alpha_ = static_cast< int >( 255 * alpha + 0.5f );
 }
 
 // -----------------------------------------------------------------------------
