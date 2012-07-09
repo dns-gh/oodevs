@@ -28,6 +28,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "icons.h"
@@ -445,6 +446,8 @@ bool TacticalListView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
     if( const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &entity ) )
         return ( ghost->GetGhostType() == eGhostType_Automat && dynamic_cast< const Formation_ABC* >( &superior ) != 0 )
             || ( ghost->GetGhostType() == eGhostType_Agent && dynamic_cast< const Team_ABC* >( &superior ) != 0 );
+    if( dynamic_cast< const KnowledgeGroup_ABC* >( &entity ) )
+        return dynamic_cast< const Formation_ABC* >( &superior ) != 0;
     return false;
 }
 
@@ -478,6 +481,10 @@ bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
     const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &item );
     if( ghost )
         return Drop( *ghost, target );
+
+    const KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( &item );
+    if( knowledgeGroup )
+        return Drop( *knowledgeGroup, target );
 
     return false;
 }
@@ -578,5 +585,21 @@ bool TacticalListView::Drop( const kernel::Ghost_ABC& item, const kernel::Entity
     if( automat && item.GetGhostType() == eGhostType_Agent )
         return ChangeSuperior( item, target );
 
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: LGY 2012-06-28
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target )
+{
+    if( const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &target ) )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > children = item.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+            ChangeSuperior( children.NextElement(), *formation );
+        return true;
+    }
     return false;
 }

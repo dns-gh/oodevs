@@ -13,7 +13,6 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
@@ -21,6 +20,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -98,7 +98,7 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // -----------------------------------------------------------------------------
 void Agent::InitializeSymbol() const
 {
-    kernel::App6Symbol::SetKarma( symbol_, Get< CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+    kernel::App6Symbol::SetKarma( symbol_, Get< TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 
 // -----------------------------------------------------------------------------

@@ -101,7 +101,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         agent.GetType().GetDecisionalModel().GetName() );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
-        AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );;
+        AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );
 
         const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
         const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();

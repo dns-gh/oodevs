@@ -41,6 +41,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     , profile_    ( profile )
     , symbols_    ( symbols )
     , selected_   ( controllers_ )
+    , activated_  ( true )
 {
     viewport()->installEventFilter( new ListItemToolTip( viewport(), *this ) );
 
@@ -189,7 +190,7 @@ void HierarchyListView_ABC::OnSelectionChange()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int )
 {
-    if( item && !IsReadOnly() )
+    if( item && !IsReadOnly() && !IsContextMenuBlocked() )
         static_cast< ValuedListItem* >( item )->ContextMenu( controllers_.actions_, pos );
 }
 
@@ -223,14 +224,17 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
     if( item )
     {
         selected_ = element;
-        if( item != selectedItem() )
+        if( activated_ )
         {
-            blockSignals( true );
-            selectAll( false );
-            setSelected( item, true );
-            blockSignals( false );
+            if( item != selectedItem() )
+            {
+                blockSignals( true );
+                selectAll( false );
+                setSelected( item, true );
+                blockSignals( false );
+            }
+            ensureItemVisible( selectedItem() );
         }
-        ensureItemVisible( selectedItem() );
     }
 }
 
@@ -240,6 +244,8 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 {
+    if( !activated_ )
+        return;
     ValuedListItem* item = FindItem( &element, firstChild() );
     if( item )
         ensureItemVisible( item );
@@ -301,21 +307,6 @@ void HierarchyListView_ABC::UpdateItem( ValuedListItem* root )
             SetVisible( root, profile_.IsVisible( entity ) );
         }
         root = static_cast< ValuedListItem* >( root->nextSibling() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::focusInEvent
-// Created: AGE 2006-11-22
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
-{
-    ListView< HierarchyListView_ABC >::focusInEvent( event );
-    if( selected_ )
-    {
-        ValuedListItem* item = FindItem( &*selected_, firstChild() );
-        if( item )
-            item->Select( controllers_.actions_ );
     }
 }
 
@@ -391,7 +382,11 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
         if( !targetItem || !Drop( *entity, *targetItem ) )
             pEvent->ignore();
         else
+        {
             pEvent->accept();
+            setFocus();
+            entity->Select( controllers_.actions_ );
+        }
     }
     else
         pEvent->ignore();
@@ -444,4 +439,35 @@ bool HierarchyListView_ABC::CanDrop( const kernel::Entity_ABC* entity, QPoint po
     if( entity->GetId() == target->GetId() )
         return false;
     return CanChangeSuperior( *entity, *target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::ActivateSelection
+// Created: JSR 2012-07-06
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::ActivateSelection( bool activate )
+{
+    if( activate && !activated_ )
+    {
+        activated_ = true;
+        SetContextMenuBlocked( false );
+        setSelectionMode( Q3ListView::Single );
+    }
+    else if( !activate && activated_ )
+    {
+        activated_ = false;
+        ClearSelection();
+        setSelectionMode( Q3ListView::NoSelection );
+        SetContextMenuBlocked( true );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::focusInEvent
+// Created: LGY 2012-06-29
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
+{
+    ListView< HierarchyListView_ABC >::focusInEvent( event );
+    emit ListViewFocusIn( this );
 }

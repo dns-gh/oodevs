@@ -39,7 +39,7 @@ class Profile;
 */
 // Created: SBO 2007-03-05
 // =============================================================================
-class OrbatToolbar : public Q3HBox
+class OrbatToolbar : public QFrame
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public tools::ElementObserver_ABC< Simulation >

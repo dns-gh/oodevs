@@ -35,7 +35,7 @@ AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Contro
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies destructor
+// Name: AutomatCommunications destructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
 AutomatCommunications::~AutomatCommunications()

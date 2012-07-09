@@ -12,7 +12,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -42,7 +42,7 @@ AgentsLayer::~AgentsLayer()
 // -----------------------------------------------------------------------------
 void AgentsLayer::Select( const Entity_ABC& entity, bool control, bool shift )
 {
-    const Entity_ABC* superior = entity.Get< CommunicationHierarchies >().GetSuperior();
+    const Entity_ABC* superior = entity.Get< TacticalHierarchies >().GetSuperior();
     if( shift && superior )
     {
         controllers_.actions_.SetSelected( *superior, control );

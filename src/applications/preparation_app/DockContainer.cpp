@@ -9,30 +9,24 @@
 
 #include "preparation_app_pch.h"
 #include "DockContainer.h"
-
-#include "TacticalListView.h"
-#include "CommunicationListView.h"
-#include "ObjectListView.h"
-#include "PopulationListView.h"
-#include "LogisticListView.h"
-#include "InhabitantListView.h"
-#include "PreparationProfile.h"
 #include "PropertiesPanel.h"
 #include "CreationPanels.h"
 #include "LivingAreaPanel.h"
+#include "OrbatDockWidget.h"
 #include "ResourceNetworkDialog.h"
 #include "UrbanInfosDockWidget.h"
-#include "UrbanListView.h"
 #include "UsagesDockWidget.h"
-#include "preparation/Model.h"
 #include "preparation/StaticModel.h"
-#include "preparation/FormationModel.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/FormationModel.h"
+#include "preparation/Model.h"
 #include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/ExtensionsPanel.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/SearchListView.h"
+#include "clients_gui/ListView.h"
 #include "clients_gui/RichDockWidget.h"
+#include "clients_gui/SearchListView.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -52,79 +46,15 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                               gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
                               gui::GlProxy& glProxy, ColorController& colorController, gui::TerrainProfilerLayer& terrainProfileLayer )
-    : pCreationPanel_    ( 0 )
-    , pLivingAreaPanel_  ( 0 )
+    : pCreationPanel_  ( 0 )
+    , pLivingAreaPanel_( 0 )
 {
     // Agent list panel
     {
-        gui::RichDockWidget* pListDockWnd = new gui::RichDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ) );
+        gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
+                                                                 automats, formation, icons, modelBuilder, factory, model, staticModel, listViews_, symbols );
         pListDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
-        Q3VBox* box = new Q3VBox( pListDockWnd );
-        pListDockWnd->setWidget( box );
-
-        gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
-        gui::SearchListView_ABC* searchListView = 0;
-        QTabWidget* pListsTabWidget = new QTabWidget( box );
-        {
-            QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
-            pListsTabWidget->addTab( pAgentsTabWidget, tools::translate( "DockContainer", "Units" ) );
-            // Tactical
-            {
-                searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_, staticModel.types_ );
-                searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-                listViews_.push_back( searchListView );
-                searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
-                pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Tactical" ) );
-            }
-            // Communication
-            {
-                searchListView = new gui::SearchListView< CommunicationListView >( pListsTabWidget, controllers, factory, icons, modelBuilder );
-                searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-                listViews_.push_back( searchListView );
-                searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
-                pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Communication" ) );
-            }
-            // Logistic
-            {
-                searchListView = new gui::SearchListView< LogisticListView >( pListsTabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
-                searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-                listViews_.push_back( searchListView );
-                searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
-                pAgentsTabWidget->addTab( searchListView, tools::translate( "DockContainer", "Logistic" ) );
-            }
-        }
-        // Objects
-        {
-            searchListView = new gui::SearchListView< ObjectListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-            listViews_.push_back( searchListView );
-            searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
-            pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Objects" ) );
-        }
-        // Urban
-        {
-            searchListView = new gui::SearchListView< UrbanListView >( pListsTabWidget, controllers, factory, modelBuilder, symbols, staticModel );
-            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-            listViews_.push_back( searchListView );
-            pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Urban" ) );
-        }
-        // Crowds
-        {
-            searchListView = new gui::SearchListView< PopulationListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-            listViews_.push_back( searchListView );
-            searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
-            pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Crowds" ) );
-        }
-        // Populations
-        {
-            searchListView = new gui::SearchListView< InhabitantListView >( pListsTabWidget, controllers, factory, modelBuilder );
-            searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
-            listViews_.push_back( searchListView );
-            searchListView->GetRichListView()->SetReadOnlyModes( ePreparationMode_Terrain );
-            pListsTabWidget->addTab( searchListView, tools::translate( "DockContainer","Populations" ) );
-        }
     }
     // Properties panel
     {

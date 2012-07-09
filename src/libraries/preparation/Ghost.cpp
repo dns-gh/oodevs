@@ -25,7 +25,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -157,7 +157,7 @@ Ghost::~Ghost()
 // -----------------------------------------------------------------------------
 void Ghost::InitializeSymbol() const
 {
-    kernel::App6Symbol::SetKarma( symbol_, Get< kernel::CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+    kernel::App6Symbol::SetKarma( symbol_, Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 
 // -----------------------------------------------------------------------------

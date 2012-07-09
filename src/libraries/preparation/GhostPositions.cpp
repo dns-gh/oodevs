@@ -11,7 +11,6 @@
 #include "GhostPositions.h"
 #include "MoveableProxy.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"

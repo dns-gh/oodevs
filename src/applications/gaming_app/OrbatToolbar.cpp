@@ -26,7 +26,7 @@
 // -----------------------------------------------------------------------------
 OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
                             gui::AutomatsLayer& automats, gui::FormationLayer& formations )
-    : Q3HBox( parent )
+    : QFrame( parent )
     , controllers_( controllers )
     , filter_     ( filter )
     , entity_     ( controllers_ )
@@ -37,9 +37,11 @@ OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, P
     setMinimumWidth( 150 );
     setMaximumWidth( 440 );
 
-    pAggregateToolbar_ = new gui::AggregateToolbar( this, controllers.controller_, automats, formations );
+    QGridLayout* toolbarBox = new QGridLayout( this );
+    pAggregateToolbar_ = new gui::AggregateToolbar( controllers.controller_, automats, formations );
+    toolbarBox->addLayout( pAggregateToolbar_, 0, 0, 1, 1, Qt::AlignLeft );
 
-    filterBtn_ = new QToolButton( this );
+    filterBtn_ = new QToolButton();
     filterBtn_->setAutoRaise( true );
     QFont font;
     font.setPixelSize( 14 );
@@ -52,6 +54,7 @@ OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, P
     QToolTip::add( filterBtn_, tr( "Remove filter" ) );
     connect( filterBtn_, SIGNAL( clicked() ), SLOT( OnClearFilter() ) );
     filterBtn_->hide();
+    toolbarBox->addWidget( filterBtn_, 0, 1, 1, 1, Qt::AlignRight );
 
     controllers_.Register( *this );
 }

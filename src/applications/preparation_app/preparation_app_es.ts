@@ -241,6 +241,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Units</source>
         <translation type="unfinished">Unidades</translation>
     </message>
@@ -261,24 +269,16 @@
         <translation type="unfinished">Objetos</translation>
     </message>
     <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Populations</source>
         <translation type="unfinished">Poblaciones</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -237,30 +237,6 @@
 <context>
     <name>DockContainer</name>
     <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Groupes de connaissance</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>ORBAT</source>
         <translation>ODB</translation>
     </message>
@@ -273,12 +249,36 @@
         <translation>Création</translation>
     </message>
     <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation>Tactique</translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation>Groupes de connaissance</translation>
+    </message>
+    <message>
         <source>Logistic</source>
         <translation>Logistique</translation>
     </message>
     <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
         <source>Urban</source>
         <translation>Zone urbaine</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>

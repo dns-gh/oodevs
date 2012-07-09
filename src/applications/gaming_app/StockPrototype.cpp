@@ -17,7 +17,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: StockPrototype constructor
-// Created: JSR 2011-03-04
+// Created: BCI 2011-03-31
 // -----------------------------------------------------------------------------
 StockPrototype::StockPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, actions::parameters::ParameterList*& attributesList )
     : StockPrototype_ABC( parent, resolver )
@@ -28,7 +28,7 @@ StockPrototype::StockPrototype( QWidget* parent, const tools::Resolver_ABC< kern
 
 // -----------------------------------------------------------------------------
 // Name: StockPrototype destructor
-// Created: JSR 2011-03-04
+// Created: BCI 2011-03-31
 // -----------------------------------------------------------------------------
 StockPrototype::~StockPrototype()
 {
@@ -37,7 +37,7 @@ StockPrototype::~StockPrototype()
 
 // -----------------------------------------------------------------------------
 // Name: StockPrototype::Commit
-// Created: JSR 2011-03-04
+// Created: BCI 2011-03-31
 // -----------------------------------------------------------------------------
 void StockPrototype::Commit( const kernel::Team_ABC& )
 {

@@ -338,8 +338,8 @@ bool LogisticListView::Drop( const Entity_ABC& entity, ValuedListItem& target )
     if( target.IsA< const LogisticLevel >() )
         result = Drop( entity, *target.GetValueNoCheck< const LogisticLevel >() );
     target.Select( controllers_.actions_ );
-    ValuedListItem* item = FindItem( &entity, firstChild() );
-    item->Select( controllers_.actions_ );
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+        item->Select( controllers_.actions_ );
     return result;
 }
 

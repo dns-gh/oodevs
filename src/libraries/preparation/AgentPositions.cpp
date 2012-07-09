@@ -12,7 +12,6 @@
 #include "MoveableProxy.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
