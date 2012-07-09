@@ -23,7 +23,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentComposante )
 DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
     : pType_               ( 0 )
     , bCanFire_            ( false )
-    , bCanFireWhenUnloaded_( false )
     , bMajor_              ( false )
     , nMajorScore_         ( 0 )
 {
@@ -37,7 +36,6 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
 DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante )
     : pType_               ( &composante.GetType() )
     , bCanFire_            ( composante.CanFire() )
-    , bCanFireWhenUnloaded_( composante.CanFireWhenUnloaded() )
     , bMajor_              ( composante.IsMajor() )
     , nMajorScore_         ( composante.GetMajorScore() )
 {
@@ -65,7 +63,6 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
     nMosID.set_id( nMosIDoid );
     pType_ = PHY_ComposanteTypePion::Find( nMosID );
     file >> bCanFire_
-         >> bCanFireWhenUnloaded_
          >> bMajor_
          >> nMajorScore_;
 }
@@ -80,7 +77,6 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
     int equipmenttype_val = type.id();
     file << equipmenttype_val
          << bCanFire_
-         << bCanFireWhenUnloaded_
          << bMajor_
          << nMajorScore_;
 }

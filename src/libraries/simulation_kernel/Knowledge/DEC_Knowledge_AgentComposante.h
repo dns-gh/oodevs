@@ -62,7 +62,6 @@ private:
     //@{
     const PHY_ComposanteType_ABC* pType_;
     bool bCanFire_;
-    bool bCanFireWhenUnloaded_;
     bool bMajor_;
     unsigned int nMajorScore_;
     //@}
