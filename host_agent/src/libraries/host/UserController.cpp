@@ -10,14 +10,12 @@
 #include "UserController.h"
 
 #include "cpplog/cpplog.hpp"
+#include "Crypt_ABC.h"
 #include "PropertyTree.h"
 #include "runtime/Utf8.h"
 #include "Sql_ABC.h"
 #include "UuidFactory_ABC.h"
 
-extern "C" {
-#include <bcrypt/bcrypt.h>
-}
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
@@ -60,33 +58,6 @@ UserType Convert( const std::string& type )
     if( type == "manager" )         return USER_TYPE_MANAGER;
     return USER_TYPE_USER;
 }
-
-// -----------------------------------------------------------------------------
-// Name: HashPassword
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-std::string HashPassword( const std::string& password )
-{
-    char salt[BCRYPT_HASHSIZE], hash[BCRYPT_HASHSIZE+1];
-    bcrypt_gensalt( 4, salt );
-    bcrypt_hashpw( password.c_str(), salt, hash );
-    hash[BCRYPT_HASHSIZE] = 0;
-    return std::string( hash );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ValidatePassword
-// Created: BAX 2012-06-28
-// -----------------------------------------------------------------------------
-bool ValidatePassword( const std::string& password, const std::string& hash )
-{
-    char output[BCRYPT_HASHSIZE+1];
-    const int err = bcrypt_hashpw( password.c_str(), hash.c_str(), output );
-    if( err )
-        return false;
-    output[BCRYPT_HASHSIZE] = 0;
-    return hash == output;
-}
 }
 
 // -----------------------------------------------------------------------------
@@ -94,9 +65,11 @@ bool ValidatePassword( const std::string& password, const std::string& hash )
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
 UserController::UserController( cpplog::BaseLogger& log,
+                                const Crypt_ABC& crypt,
                                 UuidFactory_ABC& uuids,
                                 Sql_ABC& db )
     : log_  ( log )
+    , crypt_( crypt )
     , uuids_( uuids )
     , db_   ( db )
 {
@@ -162,7 +135,7 @@ void MakeTables( Sql_ABC& db )
 // Name: MakeDefaultDatabase
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void MakeDefaultDatabase( Sql_ABC& db )
+void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
     Sql_ABC::T_Statement st = db.Prepare( *tr,
@@ -176,7 +149,7 @@ void MakeDefaultDatabase( Sql_ABC& db )
         "          ( username, hash, name, type, temporary, language, created )"
         "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
     st->Bind( "admin@masagroup.net" );
-    st->Bind( HashPassword( "admin" ) );
+    st->Bind( crypt.Hash( "admin" ) );
     st->Bind( "Default" );
     st->Bind( Convert( USER_TYPE_ADMINISTRATOR ) );
     st->Bind( false );
@@ -203,13 +176,13 @@ int GetRevision( Sql_ABC& db )
 // Name: MigrateDatabase
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-void MigrateDatabase( Sql_ABC& db )
+void MigrateDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
 {
     int rev = GetRevision( db );
     switch( rev )
     {
         case 0:
-            MakeDefaultDatabase( db );
+            MakeDefaultDatabase( crypt, db );
             break;
         case 1:
             break;
@@ -225,7 +198,7 @@ void MigrateDatabase( Sql_ABC& db )
 void UserController::SetupDatabase()
 {
     MakeTables( db_ );
-    MigrateDatabase( db_ );
+    MigrateDatabase( crypt_, db_ );
 }
 
 namespace
@@ -333,7 +306,7 @@ std::string UserController::Login( const std::string& username, const std::strin
         bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, temporary, lang, token );
         if( !valid )
             return std::string();
-        if( !ValidatePassword( password, hash ) )
+        if( !crypt_.Validate( password, hash ) )
             return std::string();
         if( !token.empty() )
             DeleteTokenWithToken( db_, *tr, token );
@@ -419,14 +392,14 @@ std::string UserController::UpdateLogin( const std::string& username, const std:
         bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, temporary, lang, token );
         if( !valid )
             return std::string();
-        if( !ValidatePassword( current, hash ) )
+        if( !crypt_.Validate( current, hash ) )
             return std::string();
         DeleteTokenWithUserId( db_, *tr, id );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
             "UPDATE users "
             "SET    hash = ?, temporary = ?"
             "WHERE  id = ?" );
-        st->Bind( HashPassword( password ) );
+        st->Bind( crypt_.Hash( password ) );
         st->Bind( false );
         st->Bind( id );
         Execute( *st );

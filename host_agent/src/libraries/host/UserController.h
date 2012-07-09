@@ -19,6 +19,7 @@ namespace cpplog
 
 namespace host
 {
+    struct Crypt_ABC;
     struct Sql_ABC;
     struct UuidFactory_ABC;
 }
@@ -36,6 +37,7 @@ struct UserController : public web::UserController_ABC
     //! @name Constructors/Destructor
     //@{
              UserController( cpplog::BaseLogger& log,
+                             const Crypt_ABC& crypt,
                              UuidFactory_ABC& uuids,
                              Sql_ABC& db );
     virtual ~UserController();
@@ -59,6 +61,7 @@ private:
     //! @name Private members
     //@{
     cpplog::BaseLogger& log_;
+    const Crypt_ABC& crypt_;
     UuidFactory_ABC& uuids_;
     Sql_ABC& db_;
     //@}

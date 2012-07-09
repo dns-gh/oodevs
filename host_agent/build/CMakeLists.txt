@@ -116,6 +116,7 @@ file( GLOB files
 )
 add_executable_target( host_test ${files} )
 set_target_folder( host_test tests )
+add_target_external_library( host_test bcrypt-${platform}_d bcrypt-${platform} )
 target_link_libraries( host_test
     host
     runtime

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include <host/Agent.h>
+#include <host/Crypt.h>
 #include <host/Node.h>
 #include <host/NodeController.h>
 #include <host/Package.h>
@@ -279,8 +280,9 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
+    Crypt crypt;
     Sql db( cfg.root / "host" / "host_agent.db" );
-    UserController users( log, uuids, db );
+    UserController users( log, crypt, uuids, db );
     web::Controller controller( log, agent, users, true );
     web::Server server( log, pool, controller, host->Get() );
     server.Listen();
