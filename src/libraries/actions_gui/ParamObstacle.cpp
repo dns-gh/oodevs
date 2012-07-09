@@ -45,20 +45,23 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
 {
-    location_           = static_cast< ParamLocation* > ( AddElement( "location",   tr( "Obstacle location" ).ascii() ) );
+    location_           = static_cast< ParamLocation* > ( AddElement( "location",   tr( "Construction location" ).ascii() ) );
     density_            = static_cast< ParamFloat* >    ( AddElement( "float",      tr( "Density per 100 square meter" ).ascii() ) );
     tc2_                = static_cast< ParamAutomat* >  ( AddElement( "automat",    tr( "TC2" ).ascii() ) );
     timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).ascii() ) );
     mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).ascii() ) );
     altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).ascii() ) );
+    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).ascii() ) );
 
     density_            ->SetKeyName( "density" );
     altitudeModifier_   ->SetKeyName( "altitude_modifier" );
     timeLimit_          ->SetKeyName( "time_limit" );
     mining_             ->SetKeyName( "obstacle_mining" );
+    lodging_            ->SetKeyName( "lodging" );
 
     altitudeModifier_->SetLimit( 0, std::numeric_limits< int >::max() );
     altitudeModifier_->SetSuffix( kernel::Units::meters.AsString() );
+    lodging_->SetLimit( 0, std::numeric_limits< int >::max() );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,6 +102,7 @@ void ParamObstacle::RemoveFromController()
     altitudeModifier_->RemoveFromController();
     timeLimit_->RemoveFromController();
     mining_->RemoveFromController();
+    lodging_->RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -186,6 +190,14 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
         layout->addWidget( miningBox );
     }
 
+    // Lodging
+    {
+        QGroupBox* lodgingBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( lodging_ )->BuildInterface( parent ) );
+        lodgingBox->layout()->setMargin( 0 );
+        lodgingBox->layout()->setSpacing( 0 );
+        layout->addWidget( lodgingBox );
+    }
+
     connect( typeCombo_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     OnTypeChanged();
     return group_;
@@ -236,6 +248,8 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
             altitudeModifier_->CommitTo( *param );
         if( type->HasTimeLimitedCapacity() )
             timeLimit_->CommitTo( *param );
+        if( type->HasLodgingCapacity() )
+            lodging_->CommitTo( *param );
         if( type->CanBeValorized() )
             mining_->CommitTo( *param );
         location_->CommitTo( *param );
@@ -270,6 +284,8 @@ void ParamObstacle::OnTypeChanged()
     timeLimit_->Hide();
     mining_->RemoveFromController();
     mining_->Hide();
+    lodging_->RemoveFromController();
+    lodging_->Hide();
 
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
@@ -291,12 +307,17 @@ void ParamObstacle::OnTypeChanged()
         timeLimit_->RegisterIn( controller_ );
         timeLimit_->Show();
     }
-
     if( type->CanBeValorized() )
     {
         mining_->RegisterIn( controller_ );
         mining_->Show();
     }
+    if( type->HasLodgingCapacity() )
+    {
+        lodging_->RegisterIn( controller_ );
+        lodging_->Show();
+    }
+
     location_->RemoveFromController();
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     location_->RegisterIn( controller_ );

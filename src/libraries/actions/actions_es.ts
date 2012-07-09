@@ -89,6 +89,10 @@
         <source>Time limit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
@@ -164,11 +168,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Obstacle location</source>
+        <source>Resource</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resource</source>
+        <source>Construction location</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

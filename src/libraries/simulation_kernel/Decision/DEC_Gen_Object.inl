@@ -98,11 +98,11 @@ const std::string& DEC_Gen_Object::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Gen_Object::GetAltitudeMofider
+// Name: DEC_Gen_Object::GetAltitudeModifier
 // Created: MMC 2012-04-20
 // -----------------------------------------------------------------------------
 inline
-int DEC_Gen_Object::GetAltitudeMofider() const
+int DEC_Gen_Object::GetAltitudeModifier() const
 {
     return altitudeModifier_;
 }
@@ -125,4 +125,14 @@ inline
 bool DEC_Gen_Object::GetMining() const
 {
     return mining_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetLodging
+// Created: MMC 2012-07-04
+// -----------------------------------------------------------------------------
+inline
+int DEC_Gen_Object::GetLodging() const
+{
+    return lodging_;
 }

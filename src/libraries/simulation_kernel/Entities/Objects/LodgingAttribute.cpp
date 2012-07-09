@@ -155,9 +155,18 @@ LodgingAttribute& LodgingAttribute::operator=( const LodgingAttribute& rhs )
 // -----------------------------------------------------------------------------
 bool LodgingAttribute::Update( const LodgingAttribute& rhs )
 {
-    if( capacity_ != rhs.capacity_ )
+    return Update( rhs.capacity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LodgingAttribute::Update
+// Created: MMC 2012-07-04
+// -----------------------------------------------------------------------------
+bool LodgingAttribute::Update( unsigned int capacity )
+{
+    if( capacity_ != capacity )
     {
-        capacity_ = rhs.capacity_;
+        capacity_ = capacity;
         NotifyAttributeUpdated( eOnUpdate );
         return true;
     }

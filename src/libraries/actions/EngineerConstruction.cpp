@@ -58,7 +58,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     : Parameter< std::string >( parameter )
     , type_( &types.Get( message.type() ) )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).ascii(), "location", false ), converter, message.position() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).ascii(), "location", false ), converter, message.position() ) );
     SetValue( type_->GetName() );
     SetParameters( message, entities, controller );
 }
@@ -93,6 +93,11 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
     {
         const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).ascii(), "integer", false );
         AddParameter( *new Numeric( param, message.time_limit() ) );
+    }
+    if( message.lodging() > 0 )
+    {
+        const OrderParameter param( tools::translate( "ActionParameter", "Lodging" ).ascii(), "integer", false );
+        AddParameter( *new Quantity( param, message.lodging() ) );
     }
 }
 
@@ -146,7 +151,7 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).ascii(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
 }
@@ -221,6 +226,8 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
             static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );
         else if( keyName == "time_limit" && type == "time" )
             static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_time_limit, boost::ref( message ), _1 )  );
+        else if( keyName == "lodging" && type == "quantity" )
+            static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_lodging, boost::ref( message ), _1 ) );
     }
 }
 

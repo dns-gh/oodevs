@@ -62,9 +62,10 @@ public:
     const std::string& GetName() const;
     const MIL_Automate* GetTC2() const;
     bool HasCapacity( const std::string& capacity ) const;
-    int GetAltitudeMofider() const;
+    int GetAltitudeModifier() const;
     int GetTimeLimit() const;
     bool GetMining() const;
+    int GetLodging() const;
     //@}
 
     //! @name Operations
@@ -95,6 +96,7 @@ private:
     int altitudeModifier_;
     int timeLimit_;
     bool mining_;
+    int lodging_;
     //@}
 };
 

@@ -673,6 +673,7 @@ message PlannedWork {
    optional int32                             altitude_modifier = 9; //!< The altitude modifier
    optional int32                             time_limit        = 10; //!< The time limited object time
    optional bool                              mining            = 11; //!< The mine improvement
+   optional int32                             lodging           = 12; //!< The lodging capacity
 }
 
 /** @struct PlannedWorkList

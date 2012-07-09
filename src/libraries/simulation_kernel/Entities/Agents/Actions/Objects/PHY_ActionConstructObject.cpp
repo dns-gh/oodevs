@@ -16,6 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/AltitudeModifierAttribute.h"
 #include "Entities/Objects/ConstructionAttribute.h"
+#include "Entities/Objects/LodgingAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/TimeLimitedAttribute.h"
@@ -49,16 +50,6 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost
             attribute->Set( 0. );//default construction is set to 100%
             attribute->NotifyBuildByGen();
         }
-        MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
-        if( mineAttribute )
-            mineAttribute->Set( pGenObject->GetMining() ? 1. : 0. ); //default valorization is set to 100%
-        TimeLimitedAttribute* timeLimitedAttribute = pObject_->RetrieveAttribute< TimeLimitedAttribute >();
-        if( timeLimitedAttribute )
-            timeLimitedAttribute->SetLifeTime( static_cast< unsigned int >( pGenObject->GetTimeLimit() ) );
-        AltitudeModifierAttribute* altitudeModifierAttribute = pObject_->RetrieveAttribute< AltitudeModifierAttribute >();
-        if( altitudeModifierAttribute )
-            if( pGenObject->GetAltitudeMofider() > 0 )
-                altitudeModifierAttribute->SetHeight( static_cast< unsigned int >( pGenObject->GetAltitudeMofider() ) );
     }
     Callback( role_.GetInitialReturnCode() );
 }

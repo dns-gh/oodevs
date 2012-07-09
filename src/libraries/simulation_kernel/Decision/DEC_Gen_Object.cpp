@@ -57,6 +57,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , altitudeModifier_  ( msg.has_altitude_modifier() ? msg.altitude_modifier() : 0 )
     , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
     , mining_            ( msg.has_mining() ? msg.mining() : false )
+    , lodging_           ( msg.has_lodging() ? msg.lodging() : 0 )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -87,6 +88,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , altitudeModifier_  ( msg.has_altitude_modifier() ? msg.altitude_modifier() : 0 )
     , timeLimit_         ( msg.has_time_limit() ? msg.time_limit() : 0 )
     , mining_            ( msg.has_mining() ? msg.mining() : false )
+    , lodging_           ( msg.has_lodging() ? msg.lodging() : 0 )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
@@ -116,6 +118,7 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, TER_Localisation* location, bo
     , pTC2_              ( 0 )
     , altitudeModifier_  ( 0 )
     , timeLimit_         ( 0 )
+    , lodging_           ( 0 )
     , mining_            ( false )
 {
     if( type_.empty() )
@@ -139,6 +142,7 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , altitudeModifier_  ( rhs.altitudeModifier_ )
     , timeLimit_         ( rhs.timeLimit_ )
     , mining_            ( rhs.mining_ )
+    , lodging_           ( 0 )
 {
     // NOTHING
 }
@@ -170,6 +174,7 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     altitudeModifier_   = rhs.altitudeModifier_;
     timeLimit_          = rhs.timeLimit_;
     mining_             = rhs.mining_;
+    lodging_            = rhs.lodging_;
     return *this;
 }
 
@@ -191,6 +196,7 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
     msg.set_altitude_modifier( altitudeModifier_ );
     msg.set_time_limit( timeLimit_ );
     msg.set_mining( mining_ );
+    msg.set_lodging( lodging_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +228,8 @@ void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> const_cast< MIL_Automate*& >( pTC2_ )
          >> altitudeModifier_
          >> timeLimit_
-         >> mining_;
+         >> mining_
+         >> lodging_;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,5 +249,6 @@ void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << const_cast< MIL_Automate*& >( pTC2_ )
          << altitudeModifier_
          << timeLimit_
-         << mining_;
+         << mining_
+         << lodging_;
 }

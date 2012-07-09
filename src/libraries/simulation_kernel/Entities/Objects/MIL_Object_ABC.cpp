@@ -22,8 +22,13 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Objects/ActivableCapacity.h"
+#include "Entities/Objects/AltitudeModifierAttribute.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
+#include "Entities/Objects/LodgingAttribute.h"
 #include "Entities/Objects/LogisticAttribute.h"
+#include "Entities/Objects/MineAttribute.h"
+#include "Entities/Objects/TimeLimitedAttribute.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -124,9 +129,13 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
 {
-    ObstacleAttribute& attribute = GetAttribute< ObstacleAttribute >();
-    attribute.SetActivationTime( genObject.GetActivationTime() );
-    attribute.SetActivityTime( genObject.GetMinesActivityTime() );
+    ActivableCapacity* activableCapacity = Retrieve< ActivableCapacity >();
+    if( activableCapacity && ( genObject.GetActivationTime() > 0 || genObject.GetMinesActivityTime() > 0 ) )
+    {
+        ObstacleAttribute& obstacleAttribute = GetAttribute< ObstacleAttribute >();
+        obstacleAttribute.SetActivationTime( genObject.GetActivationTime() );
+        obstacleAttribute.SetActivityTime( genObject.GetMinesActivityTime() );
+    }
     const MIL_Automate* tc2 = genObject.GetTC2();
     if( tc2 )
     {
@@ -134,7 +143,14 @@ void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
         if( logSuperior )
             GetAttribute< LogisticAttribute, LogisticAttribute >() = LogisticAttribute( *logSuperior );
     }
-    // $$$$ LDC FIXME genObject.getDensity should be handled here except this happens AFTER Finalize which already changed the capacity that uses density...
+    if( genObject.GetAltitudeModifier() > 0 )
+        GetAttribute< AltitudeModifierAttribute >().SetHeight( static_cast< unsigned int >( genObject.GetAltitudeModifier() ) );
+    if( genObject.GetLodging() > 0 )
+        GetAttribute< LodgingAttribute >().Update( genObject.GetLodging() );
+    if( genObject.GetMining() )
+        GetAttribute< MineAttribute >() .Set( 1. );
+    if( genObject.GetTimeLimit() > 0 )
+        GetAttribute< TimeLimitedAttribute >().SetLifeTime( genObject.GetTimeLimit() );
 }
 
 // -----------------------------------------------------------------------------

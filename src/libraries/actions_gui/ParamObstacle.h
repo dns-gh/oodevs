@@ -97,6 +97,7 @@ private:
     ParamQuantity*                                      altitudeModifier_;
     ParamTime*                                          timeLimit_;
     ParamBool*                                          mining_;
+    ParamQuantity*                                      lodging_;
     //@}
 };
 

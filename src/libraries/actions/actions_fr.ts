@@ -89,6 +89,10 @@
         <source>Time limit</source>
         <translation>Durée de vie</translation>
     </message>
+    <message>
+        <source>Lodging</source>
+        <translation>Hébergement</translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
@@ -144,10 +148,6 @@
         <translation>Valeur</translation>
     </message>
     <message>
-        <source>Obstacle location</source>
-        <translation>Position d&apos;obstacle</translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation>Position</translation>
     </message>
@@ -170,6 +170,10 @@
     <message>
         <source>Resource</source>
         <translation>Ressource</translation>
+    </message>
+    <message>
+        <source>Construction location</source>
+        <translation>Position de la construction</translation>
     </message>
 </context>
 <context>

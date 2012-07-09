@@ -135,10 +135,6 @@
         <translation type="unfinished">Type de cible de démolition:</translation>
     </message>
     <message>
-        <source>Obstacle location</source>
-        <translation>Position de l&apos;obstacle</translation>
-    </message>
-    <message>
         <source>Density per 100 square meter</source>
         <translation>Densité par 100 mètres carrés</translation>
     </message>
@@ -161,6 +157,14 @@
     <message>
         <source>Time limit</source>
         <translation>Durée de vie</translation>
+    </message>
+    <message>
+        <source>Lodging</source>
+        <translation>Hébergement</translation>
+    </message>
+    <message>
+        <source>Construction location</source>
+        <translation>Position de la construction</translation>
     </message>
 </context>
 </TS>

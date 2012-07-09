@@ -64,6 +64,7 @@ public:
     //@{
     LodgingAttribute& operator=( const LodgingAttribute& ); //!< Assignment operator
     bool Update( const LodgingAttribute& rhs );
+    bool Update( unsigned int capacity );
     //@}
 
     //! @name Operations

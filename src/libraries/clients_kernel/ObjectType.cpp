@@ -208,6 +208,15 @@ bool ObjectType::HasTimeLimitedCapacity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::HasLodgingCapacity
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool ObjectType::HasLodgingCapacity() const
+{
+    return( capacities_.find( "lodging" ) != capacities_.end() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::IsUrban
 // Created: SLG 2011-01-06
 // -----------------------------------------------------------------------------
