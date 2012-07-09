@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Admin" password="" supervision="true">
+<profiles model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Admin" password="" role="" supervision="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -30,13 +30,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Vert" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="White Cell" password="" role="environment" supervision="false">
+  <profile name="White Cell" password="" role="environment" supervision="true">
     <rights>
       <readonly>
         <side id="1"/>
@@ -73,17 +67,13 @@
   <profile name="Bleu_INF_NonSuper" password="" role="anibas" supervision="false">
     <rights>
       <readonly/>
-      <readwrite>
-        <formation id="10"/>
-      </readwrite>
+      <readwrite/>
     </rights>
   </profile>
   <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false">
     <rights>
       <readonly/>
-      <readwrite>
-        <formation id="92"/>
-      </readwrite>
+      <readwrite/>
     </rights>
   </profile>
   <profile name="Superviseur scipio" password="" role="supervisor" supervision="true">
@@ -97,4 +87,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="3141921028" -->
+<!-- signature="1764234738" -->

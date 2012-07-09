@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party color="0x647dff" id="1" name="Bleu" type="friend">
       <objects>
@@ -10,7 +10,10 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
             <construction completion="1"/>
           </attributes>
         </object>
@@ -32,8 +35,8 @@
         </object>
       </objects>
       <tactical>
-        <formation color="0x647dff" id="16" level="ii" name="GTIA">
-          <automat color="0x647dff" engaged="false" id="17" knowledge-group="18" name="SGTIA PIA [17]" type="SGTIA PIA">
+        <formation color="0x647dff" id="16" level="ii" name="GTIA" nature="sfgpucr">
+          <automat color="0x647dff" engaged="false" id="17" knowledge-group="18" name="SGTIA PIA [17]" nature="sfgpucr" type="SGTIA PIA">
             <unit color="0x647dff" command-post="true" id="19" name="PC SGTIA" position="29TNF3211855747" type="PC SGTIA">
               <extensions>
                 <entry key="DiffusionList" value=""/>
@@ -69,7 +72,7 @@
               <entry key="NomLong" value="SGTIAPIA17.GTIA.B"/>
             </extensions>
           </automat>
-          <automat color="0x647dff" engaged="true" id="59" knowledge-group="18" name="SGTIA PIA [59]" type="SGTIA PIA">
+          <automat color="0x647dff" engaged="true" id="59" knowledge-group="18" name="SGTIA PIA [59]" nature="sfgpucr" type="SGTIA PIA">
             <unit color="0x647dff" command-post="true" id="60" name="PC SGTIA" position="29TNF4223255107" type="PC SGTIA"/>
             <unit color="0x647dff" command-post="false" id="61" name="PIA Dominante ABC" position="29TNF4274654622" type="PIA Dominante ABC"/>
             <unit color="0x647dff" command-post="false" id="62" name="PIA Dominante INF" position="29TNF4225954110" type="PIA Dominante INF"/>
@@ -109,8 +112,8 @@
     <party color="0xff0000" id="33" name="Rouge" type="friend">
       <objects/>
       <tactical>
-        <formation color="0xff0000" id="34" level="ii" name="Formation [34]">
-          <automat color="0xff0000" engaged="true" id="35" knowledge-group="36" name="SGTIA INF dominante lourde [35]" type="SGTIA INF dominante lourde">
+        <formation color="0xff0000" id="34" level="ii" name="Formation [34]" nature="sfgpuciz">
+          <automat color="0xff0000" engaged="true" id="35" knowledge-group="36" name="SGTIA INF dominante lourde [35]" nature="sfgpuciz" type="SGTIA INF dominante lourde">
             <unit color="0xff0000" command-post="true" id="37" name="INF . Section CDT CIE quaternaire AMX10P" position="29TNF3868657091" type="INF . Section CDT CIE quaternaire AMX10P"/>
             <unit color="0xff0000" command-post="false" id="38" name="GEN . Section CBT + EBG" position="29TNF3920056607" type="GEN . Section CBT + EBG"/>
             <unit color="0xff0000" command-post="false" id="39" name="ABC . Peloton LECLERC CDP SOFF" position="29TNF3871356095" type="ABC . Peloton LECLERC CDP SOFF"/>
@@ -118,18 +121,18 @@
             <unit color="0xff0000" command-post="false" id="41" name="INF . Section CBT quaternaire AMX10P CDS SOFF" position="29TNF3918757105" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
             <unit color="0xff0000" command-post="false" id="42" name="INF . Section CBT quaternaire AMX10P CDS SOFF" position="29TNF3940756612" type="INF . Section CBT quaternaire AMX10P CDS SOFF"/>
             <unit color="0xff0000" command-post="false" id="43" name="INF . Groupe INF MO81 AMX10P" position="29TNF3921356109" type="INF . Groupe INF MO81 AMX10P"/>
-            <unit color="0xff0000" command-post="false" id="44" name="CIRCU . Peloton Transport Blindes CL50" position="29TNF3871855889" type="CIRCU . Peloton Transport Blindes CL50"/>
+            <unit color="0xff0000" command-post="false" id="316" name="CIRCU . Peloton Transport Blindes CL50" position="29TNF3871855889" type="TRAIN . Peloton Transport Blindes CL50"/>
           </automat>
-          <automat color="0xff0000" engaged="true" id="48" knowledge-group="36" name="CIV . DPRE [48]" type="CIV . DPRE">
+          <automat color="0xff0000" engaged="true" id="48" knowledge-group="36" name="CIV . DPRE [48]" nature="sfgpumr" type="CIV . DPRE">
             <unit color="0xff0000" command-post="true" id="49" name="Refugies" position="29TNF3826954651" type="Refugies"/>
           </automat>
-          <automat color="0xff0000" engaged="true" id="51" knowledge-group="36" logistic-level="logistic-base" name="ONG [51]" type="ONG">
+          <automat color="0xff0000" engaged="true" id="51" knowledge-group="36" logistic-level="logistic-base" name="ONG [51]" nature="sfgpumo" type="ONG">
             <unit color="0xff0000" command-post="false" id="52" name="ONG Soutien LOG" position="29TNF3791654821" type="ONG Soutien LOG"/>
             <unit color="0xff0000" command-post="false" id="53" name="ONG Intervention" position="29TNF3843054336" type="ONG Intervention"/>
             <unit color="0xff0000" command-post="true" id="54" name="ONG PC" position="29TNF3794353824" type="ONG PC"/>
             <unit color="0xff0000" command-post="false" id="55" name="ONG Transport" position="29TNF3743054309" type="ONG Transport"/>
           </automat>
-          <automat color="0xff0000" engaged="true" id="56" knowledge-group="36" name="CIV . Journalistes [56]" type="CIV . Journalistes">
+          <automat color="0xff0000" engaged="true" id="56" knowledge-group="36" name="CIV . Journalistes [56]" nature="sfgpumi" type="CIV . Journalistes">
             <unit color="0xff0000" command-post="true" id="57" name="Journalistes" position="29TNF3900854587" type="Journalistes"/>
           </automat>
         </formation>
@@ -159,4 +162,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0759508015" -->
+<!-- signature="2414164886" -->

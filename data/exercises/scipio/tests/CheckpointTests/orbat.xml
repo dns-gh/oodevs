@@ -4,14 +4,9 @@
     <party color="0x647dff" id="1051" name="BadGuys" type="friend">
       <objects/>
       <tactical>
-        <formation color="0x647dff" id="1187" level="ii" logistic-level="logistic-base" name="Formation Each Automat Type [1187]" nature="sfgpuc">
+        <formation color="0x647dff" id="1187" level="ii" logistic-level="logistic-base" name="Formation Each Automat Type [1187]" nature="sfgpuss">
           <automat color="0x647dff" engaged="true" id="1214" knowledge-group="1189" logistic-level="logistic-base" name="LOG . TC2 LOG" nature="sfgpuss" type="LOG . TC2 LOG">
             <unit color="0x647dff" command-post="true" id="1215" name="LOG . TC2" position="31TBN9504902979" type="LOG . TC2"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1216" knowledge-group="1189" name="ASA . Batterie HAWK" nature="sfgpucdhh" type="ASA . Batterie HAWK">
-            <unit color="0x647dff" command-post="true" id="1217" name="ASA . PC Batterie HAWK" position="31TBN9331002049" type="ASA . PC Batterie HAWK"/>
-            <unit color="0x647dff" command-post="false" id="1218" name="ASA . Section de Tir HAWK" position="31TBN9379501534" type="ASA . Section de Tir HAWK"/>
-            <unit color="0x647dff" command-post="false" id="1219" name="ASA . Section de Tir HAWK" position="31TBN9327901050" type="ASA . Section de Tir HAWK"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="1220" knowledge-group="1189" name="JOINT . Groupe Chalands Marine" nature="sfgpuup" type="JOINT . Groupe Chalands Marine">
             <unit color="0x647dff" command-post="true" id="1221" name="JOINT . PC Marine" position="31TBN9301903960" type="JOINT . PC Marine"/>
@@ -24,7 +19,7 @@
             <unit color="0x647dff" command-post="false" id="1228" name="JOINT . 2 CTM" position="31TBN9298102756" type="JOINT . 2 CTM"/>
             <unit color="0x647dff" command-post="false" id="1229" name="JOINT . 2 CTM" position="31TBN9248702978" type="JOINT . 2 CTM"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="1230" knowledge-group="1189" name="INF . Section AC AMX10P" nature="sfgpucaaaw" type="INF . Section AC AMX10P">
+          <automat color="0x647dff" engaged="true" id="1230" knowledge-group="1189" name="INF . Section AC AMX10P" nature="sfgpucaaat" type="INF . Section AC AMX10P">
             <unit color="0x647dff" command-post="true" id="1231" name="INF . Section AC AMX10P" position="31TBN9217502685" type="INF . Section AC AMX10P"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="1232" knowledge-group="1189" name="HUMUS - INF . Compagnie" nature="sfgpucim" type="HUMUS - INF . Compagnie">
@@ -57,7 +52,7 @@
             <unit color="0x647dff" command-post="false" id="1258" name="GEN . Groupe Chantier" position="31TBN9145401844" type="GEN . Groupe Chantier"/>
             <unit color="0x647dff" command-post="false" id="1259" name="GEN . Section Equipt Montagne" position="31TBN9093501861" type="GEN . Section Equipt Montagne"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="1260" knowledge-group="1189" name="CIRCU . Peloton Circulation sur P4" nature="sfgpuulm" type="CIRCU . Peloton Circulation sur P4">
+          <automat color="0x647dff" engaged="true" id="1260" knowledge-group="1189" name="CIRCU . Peloton Circulation sur P4" nature="sfgpusz" type="CIRCU . Peloton Circulation sur P4">
             <unit color="0x647dff" command-post="true" id="1261" name="CIRCU . PC sur P4" position="31TBN9185105149" type="CIRCU . PC sur P4"/>
             <unit color="0x647dff" command-post="false" id="1262" name="CIRCU . Patrouille P4" position="31TBN9233604634" type="CIRCU . Patrouille P4"/>
             <unit color="0x647dff" command-post="false" id="1263" name="CIRCU . Patrouille P4" position="31TBN9181904151" type="CIRCU . Patrouille P4"/>
@@ -66,10 +61,10 @@
           </automat>
           <automat color="0x647dff" engaged="true" id="1270" knowledge-group="1189" name="ASS . Batterie de Tir AUF1" nature="sfgpucfhe" type="ASS . Batterie de Tir AUF1">
             <unit color="0x647dff" command-post="true" id="1271" name="ASS . PC Batterie ASS" position="31TBN9018104751" type="ASS . PC Batterie ASS"/>
-            <unit color="0x647dff" command-post="false" id="1272" name="ASS . Section de Tir AUF1 CDS OFF" position="31TBN9066604236" type="ASS . Section de Tir AUF1 CDS OFF"/>
-            <unit color="0x647dff" command-post="false" id="1273" name="ASS . Section de Tir AUF1 CDS SOFF" position="31TBN9014903753" type="ASS . Section de Tir AUF1 CDS SOFF"/>
+            <unit color="0x647dff" command-post="false" id="1441" name="ASS . Section de Tir AUF1 CDS OFF" position="31TBN9066604236" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="1442" name="ASS . Section de Tir AUF1 CDS SOFF" position="31TBN9014903753" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="1274" knowledge-group="1189" name="ALAT - Ssgpt Mixte" nature="sfgpucvr" type="ALAT - Ssgpt Mixte">
+          <automat color="0x647dff" engaged="true" id="1274" knowledge-group="1189" name="ALAT - Ssgpt Mixte" nature="sfgpucvra" type="ALAT - Ssgpt Mixte">
             <unit color="0x647dff" command-post="true" id="1275" name="ALAT - PC Escadrille" position="31TBN9097706128" type="ALAT - PC Escadrille"/>
             <unit color="0x647dff" command-post="false" id="1276" name="ALAT - Patrouille 2HAC" position="31TBN9146205613" type="ALAT - Patrouille 2HAC"/>
             <unit color="0x647dff" command-post="false" id="1277" name="ALAT - Patrouille 2HAM" position="31TBN9094605129" type="ALAT - Patrouille 2HAM"/>
@@ -106,7 +101,7 @@
             <unit color="0x647dff" command-post="false" id="1304" name="ABC . PLT AMX 10 RC CDP SOFF" position="31TBN9169201749" type="ABC . PLT AMX 10 RC CDP SOFF"/>
             <unit color="0x647dff" command-post="false" id="1305" name="INF . Section CBT VAB CDS SOFF" position="31TBN9188401243" type="INF . Section CBT VAB CDS SOFF"/>
             <unit color="0x647dff" command-post="false" id="1306" name="GEN . Section CBT + MPG" position="31TBN9166100751" type="GEN . Section CBT + MPG"/>
-            <unit color="0x647dff" command-post="false" id="1307" name="CIRCU . Peloton Transport Blindes CL100" position="31TBN9115400560" type="CIRCU . Peloton Transport Blindes CL100"/>
+            <unit color="0x647dff" command-post="false" id="1443" name="CIRCU . Peloton Transport Blindes CL100" position="31TBN9115400560" type="TRAIN . Peloton Transport Blindes CL100"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="1308" knowledge-group="1189" name="TRANS . Section RAC3" nature="sfgpuus" type="TRANS . Section RAC3">
             <unit color="0x647dff" command-post="true" id="1309" name="TRANS . PC" position="31TBN8997503590" type="TRANS . PC"/>
@@ -125,7 +120,7 @@
             <unit color="0x647dff" command-post="true" id="1322" name="ONG PC" position="31TBN9007600567" type="ONG PC"/>
             <unit color="0x647dff" command-post="false" id="1323" name="ONG Transport" position="31TBN8959101081" type="ONG Transport"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="1324" knowledge-group="1189" name="MILICE" nature="sfgpuc" type="MILICE">
+          <automat color="0x647dff" engaged="true" id="1324" knowledge-group="1189" name="MILICE" nature="sfgpuci" type="MILICE">
             <unit color="0x647dff" command-post="true" id="1325" name="MILICE . PICK UP CDT" position="31TBN8947304258" type="MILICE . PICK UP CDT"/>
             <unit color="0x647dff" command-post="false" id="1326" name="MILICE . PICK UP 14,5" position="31TBN8995803743" type="MILICE . PICK UP 14,5"/>
             <unit color="0x647dff" command-post="false" id="1327" name="MILICE . PICK UP 23/2" position="31TBN8944203259" type="MILICE . PICK UP 23/2"/>
@@ -138,6 +133,15 @@
           <automat color="0x647dff" engaged="true" id="1333" knowledge-group="1189" name="CIV . DPRE" nature="sfgpumr" type="CIV . DPRE">
             <unit color="0x647dff" command-post="true" id="1334" name="Refugies" position="31TBN8885903430" type="Refugies"/>
           </automat>
+          <automat color="0x647dff" engaged="true" id="1433" knowledge-group="1189" name="ASA . Batterie HAWK" nature="sfgpucdm" type="ASA . Section SATCP MISTRAL">
+            <unit color="0x647dff" command-post="true" id="1434" name="ASA . PC Batterie HAWK" position="31TBN9331002049" type="ASA . PC Section MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1435" name="ASA . Section de Tir HAWK" position="31TBN9379501534" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1436" name="ASA . Section de Tir HAWK" position="31TBN9327901050" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1437" name="ASA . Piece MISTRAL" position="31TBN9346501644" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1438" name="ASA . Piece MISTRAL" position="31TBN9355001592" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1439" name="ASA . Piece MISTRAL" position="31TBN9354701492" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1440" name="ASA . Piece MISTRAL" position="31TBN9345801444" type="ASA . Piece MISTRAL"/>
+          </automat>
         </formation>
       </tactical>
       <communication>
@@ -147,7 +151,6 @@
       <inhabitants/>
       <logistics>
         <logistic-base id="1214">
-          <subordinate id="1216"/>
           <subordinate id="1220"/>
           <subordinate id="1230"/>
           <subordinate id="1232"/>
@@ -164,6 +167,7 @@
           <subordinate id="1319"/>
           <subordinate id="1324"/>
           <subordinate id="1333"/>
+          <subordinate id="1433"/>
         </logistic-base>
         <logistic-base id="1187">
           <subordinate id="1214"/>
@@ -917,4 +921,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2004297580" -->
+<!-- signature="1185630781" -->
