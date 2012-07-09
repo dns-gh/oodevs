@@ -1125,6 +1125,9 @@
     <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h">
       <Filter>Source Files\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\CriticalIntelligenceDialog.h">
+      <Filter>Source Files\Dialogs\Magic actions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1190,9 +1193,6 @@
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\ChangeLogisticLinksDialog.h">
-      <Filter>Source Files\Dialogs\Magic actions</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\CriticalIntelligenceDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\EquipmentTransferDialog.h">

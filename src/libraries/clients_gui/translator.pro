@@ -15,6 +15,7 @@ ConsistencyDialog_ABC.cpp \
 ConstructionPrototype_ABC.cpp \
 ComboTableItem.cpp \
 CoordinateSystemsPanel.cpp \
+CriticalIntelligenceDialog.cpp \
 CrossingSitePrototype_ABC.cpp \
 DelayPrototype_ABC.cpp \
 DensityWidget.cpp \

@@ -15,6 +15,7 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 
 namespace kernel
 {
@@ -78,7 +79,7 @@ private:
     //@{
     const kernel::AgentType& type_;
     mutable std::string symbol_;
-    QString criticalIntelligence_;
+    kernel::CriticalIntelligence criticalIntelligence_;
     //@}
 };
 

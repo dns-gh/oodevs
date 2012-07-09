@@ -303,6 +303,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CriticalIntelligenceDialog</name>
+    <message>
+        <source>Change critical intelligence</source>
+        <translation>Modifier le renseignement critique</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
     <name>gui::CrossingSitePrototype_ABC</name>
     <message>
         <source>Crossing site</source>

@@ -50,6 +50,7 @@ public:
     //@{
     void Clear();
     virtual void Hide();
+    PropertiesTable* GetTable() const; 
     //@}
 
 private:
@@ -89,7 +90,6 @@ private:
     T_SubWidgets subWidgets_;
     PropertiesTable* table_;
     TableItemDisplayer& displayer_;
-    Q3VBox* globalLayout;
     //@}
 };
 

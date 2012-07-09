@@ -44,7 +44,9 @@ public:
     {
         BeginEditor( parent );
         tools::VirtualTemplate< EditorFactory_ABC >::Call( value );
-        return EndEditor();
+        QWidget* result = EndEditor();
+
+        return result;
     }
     //@}
 

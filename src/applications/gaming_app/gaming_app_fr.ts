@@ -532,20 +532,8 @@ Reason: %3
         <translation>Modifier le renseignement critique</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
         <source>Magic orders</source>
         <translation>Actions magiques</translation>
-    </message>
-    <message>
-        <source>Critical intelligence:</source>
-        <translation>Renseignement critique</translation>
     </message>
 </context>
 <context>

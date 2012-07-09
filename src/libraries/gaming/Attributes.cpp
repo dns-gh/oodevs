@@ -217,7 +217,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         bRefugeesManaged_ = message.refugees_managed() != 0;
 
     if( message.has_critical_intelligence() )
-        criticalIntelligence_ = message.critical_intelligence();
+        criticalIntelligence_ = message.critical_intelligence().c_str();
 
     if( message.has_satisfaction() )
     {

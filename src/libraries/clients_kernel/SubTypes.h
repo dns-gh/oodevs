@@ -25,10 +25,10 @@ namespace kernel
     typedef StrongType< base, name##_ > name;
 
     DECLARE_SUBTYPE( LogisticBaseSuperior, const Entity_ABC* );
-
     DECLARE_SUBTYPE( TeamKarma, const Karma* );
-
     DECLARE_SUBTYPE( EntityLogisticLevel, const LogisticLevel* );
+    DECLARE_SUBTYPE( CriticalIntelligence, QString );
+
 }
 
 #endif // __SubTypes_h_

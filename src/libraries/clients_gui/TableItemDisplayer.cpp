@@ -95,12 +95,13 @@ void TableItemDisplayer::DisplayFormatted( const QString& formatted )
 // -----------------------------------------------------------------------------
 void TableItemDisplayer::EndDisplay()
 {
-    if( !item_ )
+    if( !item_ || !item_->table() )
         throw std::runtime_error( __FUNCTION__ );
 
     static_cast< PropertyTableItem* >( item_ )->SetColor( color_ );
+    QFontMetrics fm( item_->table()->font() );
+    message_ = fm.elidedText( message_, Qt::ElideRight,item_->table()->columnWidth( 1 ) );
     item_->setText( message_ );
-
     item_ = 0;
 }
 

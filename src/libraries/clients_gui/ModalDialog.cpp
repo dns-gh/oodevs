@@ -18,7 +18,8 @@ ModalDialog::ModalDialog( QWidget *parent, const char *name, Qt::WindowFlags f /
     : QDialog( parent, name, true, f )
 {
     QShortcut* s = new QShortcut( QKeySequence( Qt::Key_F1 ), this );
-    connect( s, SIGNAL( activated() ), parent, SLOT( ShowHelp() ) );
+    if( parent )
+        connect( s, SIGNAL( activated() ), parent, SLOT( ShowHelp() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -859,6 +859,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\CriticalIntelligenceDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1746,6 +1749,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.h">
       <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\CriticalIntelligenceDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

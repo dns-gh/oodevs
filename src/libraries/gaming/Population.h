@@ -16,6 +16,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/SubTypes.h"
 
 namespace kernel
 {
@@ -84,6 +85,7 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::PopulationType& GetType() const;
+    kernel::CriticalIntelligence& GetCriticalIntelligence();
     //@}
 
 private:
@@ -115,7 +117,7 @@ private:
     const unsigned int male_;
     const unsigned int female_;
     const unsigned int children_;
-    kernel::OptionalValue< std::string > criticalIntelligence_;
+    kernel::CriticalIntelligence criticalIntelligence_;
     kernel::OptionalValue< unsigned int > armedIndividuals_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;

@@ -65,6 +65,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::MaterialCompositionType** >
                     , public tools::Caller< kernel::RoofShapeType** >
                     , public tools::Caller< kernel::UrbanBlockColor* >
+                    , public tools::Caller< kernel::CriticalIntelligence* >
 {
 public:
     //! @name Constructors/Destructor
@@ -93,12 +94,14 @@ public:
     virtual void Call( kernel::MaterialCompositionType** const& value );
     virtual void Call( kernel::RoofShapeType** const& value );
     virtual void Call( kernel::UrbanBlockColor* const& value );
+    virtual void Call( kernel::CriticalIntelligence* const& value );
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    bool IsUpdating() const;
     //@}
 
 private:

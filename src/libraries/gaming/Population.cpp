@@ -39,7 +39,7 @@ Population::Population( const sword::CrowdCreation& message, Controllers& contro
     , female_              ( static_cast< unsigned int >( 100 * message.repartition().female() + 0.5f ) )
     , children_            ( static_cast< unsigned int >( 100 * message.repartition().children() + 0.5f ) )
     , nDomination_         ( 0, false )
-    , criticalIntelligence_( "", false )
+    , criticalIntelligence_( "" )
     , armedIndividuals_    ( 0, false )
 {
     if( name_.isEmpty() )
@@ -228,7 +228,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
     if( message.has_domination() )
         nDomination_ = message.domination();
     if( message.has_critical_intelligence() )
-        criticalIntelligence_ = message.critical_intelligence();
+        criticalIntelligence_ = message.critical_intelligence().c_str();
     if( message.has_armed_individuals() )
         armedIndividuals_ = static_cast< unsigned int >( 100 * message.armed_individuals() + 0.5f );
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
@@ -382,6 +382,15 @@ void Population::Accept( LocationVisitor_ABC& visitor ) const
 const PopulationType& Population::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetCriticalIntelligence
+// Created: ABR 2012-07-05
+// -----------------------------------------------------------------------------
+kernel::CriticalIntelligence& Population::GetCriticalIntelligence()
+{
+    return criticalIntelligence_;
 }
 
 // -----------------------------------------------------------------------------

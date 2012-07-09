@@ -301,6 +301,21 @@
     </message>
 </context>
 <context>
+    <name>gui::CriticalIntelligenceDialog</name>
+    <message>
+        <source>Change critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+</context>
+<context>
     <name>gui::CrossingSitePrototype_ABC</name>
     <message>
         <source>Crossing site</source>

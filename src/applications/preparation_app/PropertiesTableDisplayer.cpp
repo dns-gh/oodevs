@@ -165,3 +165,12 @@ void PropertiesTableDisplayer::Call( const kernel::UrbanBlockColor& value )
 {
     AddToDisplay( QString( "<color red=\"%1\" green=\"%2\" blue=\"%3\" />" ).arg( value.red_ ).arg( value.green_ ).arg( value.blue_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: ABR 2012-06-04
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::CriticalIntelligence& value )
+{
+    AddToDisplay( value() );
+}
