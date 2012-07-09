@@ -55,7 +55,6 @@
 #include <core/Model.h>
 #include <core/UserData.h>
 #include <core/EventListener_ABC.h>
-#include <core/MergeVisitor.h>
 #include <boost/foreach.hpp>
 
 using namespace sword;
