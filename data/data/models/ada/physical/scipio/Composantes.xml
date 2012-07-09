@@ -34456,27 +34456,24 @@
     <weapon-systems/>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="2" construction-time-factor="10m" destruction-time-factor="25m" devalorization-time="10m" initial-construction-time="20m" initial-destruction-time="40m" non-bypassed-speed="5" type="anti tank obstacle"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="firing post"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="checkpoint"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="safe zone"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="prisoners camp"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="refugees camp"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="installation"/>
+      <object destruction-time-factor="25m" initial-destruction-time="40m" type="anti tank obstacle"/>
+      <object construction-time-factor="1s" initial-construction-time="4h" type="refugees camp"/>
+      <object construction-time-factor="1h" initial-construction-time="1s" type="installation"/>
       <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="ressource network element"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="trail"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="platform"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="logistic support area"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="logistic area"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="landing area (helicopter)"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="landing area"/>
-      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="1s" initial-destruction-time="1s" type="urban block"/>
-      <object bypass-gain-factor="1" bypassed-speed="2" destruction-time-factor="15m" devalorization-time="5m" initial-destruction-time="40m" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="2" destruction-time-factor="10m" devalorization-time="15m" initial-destruction-time="50m" non-bypassed-speed="5" type="barricade"/>
-      <object bypass-gain-factor="1" bypassed-speed="2" destruction-time-factor="10m" devalorization-time="10m" initial-destruction-time="60m" non-bypassed-speed="5" type="landslide"/>
-      <object bypass-gain-factor="1" bypassed-speed="1" destruction-time-factor="30m" devalorization-time="30m" initial-destruction-time="100m" non-bypassed-speed="5" type="road destruction"/>
-      <object bypass-gain-factor="1" bypassed-speed="2" destruction-time-factor="15m" devalorization-time="5m" initial-destruction-time="40m" non-bypassed-speed="5" type="mined area (scattered)"/>
-      <object bypass-gain-factor="1" bypassed-speed="2" destruction-time-factor="15m" devalorization-time="5m" initial-destruction-time="40m" non-bypassed-speed="5" type="mined area (linear)"/>
+      <object construction-time-factor="1m" initial-construction-time="12h" type="trail"/>
+      <object construction-time-factor="1m" initial-construction-time="1h" type="platform"/>
+      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="4h" initial-destruction-time="1s" type="logistic area"/>
+      <object construction-time-factor="1s" initial-construction-time="2h" type="landing area (helicopter)"/>
+      <object construction-time-factor="1s" destruction-time-factor="1s" initial-construction-time="12h" initial-destruction-time="1s" type="landing area"/>
+      <object construction-time-factor="1h" initial-construction-time="1m" type="urban block"/>
+      <object destruction-time-factor="10m" initial-destruction-time="50m" type="barricade"/>
+      <object destruction-time-factor="10m" initial-destruction-time="60m" type="landslide"/>
+      <object destruction-time-factor="30m" initial-destruction-time="100m" type="road destruction"/>
+      <object destruction-time-factor="15m" initial-destruction-time="40m" type="mined area (scattered)"/>
+      <object destruction-time-factor="20m" initial-destruction-time="40m" type="mined area (linear)"/>
+      <object initial-construction-time="60m" type="metro station"/>
+      <object initial-construction-time="60m" type="sewer entry"/>
+      <object destruction-time-factor="30m" initial-destruction-time="100m" type="bridge destruction"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -35441,4 +35438,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2713223497" -->
+<!-- signature="0334798542" -->
