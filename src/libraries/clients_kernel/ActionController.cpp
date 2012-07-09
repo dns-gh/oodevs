@@ -191,7 +191,9 @@ void ActionController::AddToSelection( const T_Selectables& selectables )
         assert( selectionner );
         if( !selectionner )
             continue;
-        selectedMap_[ selectionner ].push_back( *it );
+        T_Selectables& vect = selectedMap_[ selectionner ];
+        if( std::find( vect.begin(), vect.end(), *it ) == vect.end() )
+            vect.push_back( *it );
     }
 }
 
