@@ -15,6 +15,7 @@
 #include "Decision/DEC_KnowledgeFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PerceptionFunctions.h"
+#include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Entities/Agents/Actions/Moving/PHY_ActionMove.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePion.h"
@@ -237,6 +238,10 @@ void RolePion_Decision::RegisterKnowledge()
 {
     RegisterFunction( "DEC_ConnaissanceAgent_AttritionPotentielle",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPotentialAttrition, boost::cref( GetPion() ), _1, _2 ) ) );
+    RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion );
+    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,6 +253,8 @@ void RolePion_Decision::RegisterAgentKnowledgeFunctions()
     RegisterFunction( "DEC_Agent_RapportDeForceLocal", &DEC_AgentFunctions::GetRapForLocalAgent );
     RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDangereuses", boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
+        boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -150,8 +150,6 @@ void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ConnaissanceAgent_Altitude" ] = &DEC_KnowledgeAgentFunctions::DEC_ConnaissanceAgent_Altitude;
     brain[ "DEC_ConnaissanceAgent_NatureAtlas" ] = &DEC_KnowledgeAgentFunctions::GetNatureAtlas;
     brain[ "DEC_ConnaissanceAgent_NiveauPerceptionMax" ] = &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup;
-    brain[ "DEC_ConnaissanceAgent_DangerositeSurPion" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion;
-    brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] = &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge;
     brain[ "DEC_ConnaissanceAgent_EstValide" ] = &DEC_KnowledgeAgentFunctions::IsKnowledgeValid;
     brain[ "DEC_ConnaissanceAgent_EstEnMouvement" ] = &DEC_KnowledgeAgentFunctions::IsMoving;
     brain[ "DEC_ConnaissanceAgent_SEstRendu" ] = &DEC_KnowledgeAgentFunctions::IsSurrendered;

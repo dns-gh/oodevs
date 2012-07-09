@@ -18,6 +18,8 @@
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_KnowledgeAgentFunctions.h" // $$$$ MCO 2012-06-29: TMP
+#include "Decision/DEC_UrbanObjectFunctions.h" // $$$$ MCO 2012-06-29: TMP
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -96,7 +98,7 @@ DECLARE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType
 DECLARE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
 
 // fire
-DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) )
+DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) )
 DECLARE_HOOK( GetMaxRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
 DECLARE_HOOK( GetMinRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 DECLARE_HOOK( GetMaxRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
@@ -953,12 +955,50 @@ void RolePion_Decision::RegisterFire()
 
 namespace
 {
-    double GetDangerosity( const MIL_AgentPion& agent, const core::Model& model, const DEC_Knowledge_Agent& target, float rDistBtwSourceAndTarget, bool checkAmmo )
+    double rMaxDangerosityDegradationByRelevance_        = 0.2; // 20% // $$$$ MCO 2012-06-12: see DEC_Workspace::LoadDecisional for init // $$$$ MCO 2012-06-29: TODO
+    double rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
+    double rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
+    void DegradeDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, double& dangerosity ) // $$$$ MCO 2012-06-12: ^c^v DEC_Knowledge_Agent::DegradeDangerosity
+    {
+        // Pertinence
+        dangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByRelevance_ * pKnowledge->GetRelevance() ) + rMaxDangerosityDegradationByRelevance_ ) );
+        // Operational state
+        const double rOpState = pKnowledge->GetOperationalState();
+        if( rOpState == 0. ) // Unit is dead
+            dangerosity = 0;
+        else
+            dangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByOpState_ * rOpState ) + rMaxDangerosityDegradationByOpState_) );
+        // Source is neutralized
+        if( pKnowledge->GetAgentKnown().IsNeutralized() )
+            dangerosity *= 1 - rMaxDangerosityDegradationByNeutralizedState_;
+    }
+    double ComputeDangerosity( const MIL_AgentPion& agent, const core::Model& model, const DEC_Knowledge_Agent& target, double distance, bool checkAmmo )
     {
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
         const core::Model& knowledge = model[ "knowledges" ][ id ][ target.GetAgentKnown().GetID() ];
-        return GET_HOOK( GetDangerosity )( core::Convert( &entity ), core::Convert( &knowledge ), &CanMajorFire, rDistBtwSourceAndTarget, checkAmmo );
+        return GET_HOOK( GetDangerosity )( core::Convert( &entity ), core::Convert( &knowledge ), &CanMajorFire, distance, checkAmmo );
+    }
+    double ComputeDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const core::Model& model, const MIL_Agent_ABC& target, double distance, bool bUseAmmo )
+    {
+        const core::Model& firer = model[ "entities" ][ pKnowledge->GetAgentKnown().GetID() ];
+        const core::Model& target2 = model[ "entities" ][ target.GetID() ];
+        return GET_HOOK( GetDangerosity )( core::Convert( &firer ), core::Convert( &target2 ), &IsMajor, distance, bUseAmmo );
+    }
+    double ComputeDistance( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position )
+    {
+        const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0 );
+        const MT_Vector3D targetPosition( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
+        return sourcePosition.Distance( targetPosition );
+    }
+    double ComputeDistance( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MIL_Agent_ABC& target )
+    {
+        const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D& p1 = targetLocation.GetPosition();
+        const MT_Vector3D vTargetPosition( p1.rX_, p1.rY_, targetLocation.GetAltitude() );
+        const MT_Vector2D& p2 = pKnowledge->GetPosition();
+        const MT_Vector3D vDataPosition( p2.rX_, p2.rY_, pKnowledge->GetAltitude() );
+        return vTargetPosition.Distance( vDataPosition );
     }
     double GetPotentialAttrition( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position )
     {
@@ -970,12 +1010,25 @@ namespace
             || agent.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
             return 0;
         // Fight score
-        const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0);
-        const MT_Vector3D targetPosition  ( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
-        const float rDistBtwSourceAndTarget = static_cast< float >( sourcePosition.Distance( targetPosition ) );
-        double rDangerosity = GetDangerosity( agent, model, *pTargetKnowledge, rDistBtwSourceAndTarget, false );
-        //DegradeDangerosity( rDangerosity );//@TODO MGD before commit
-        return rDangerosity;
+        const double distance = ComputeDistance( pTargetKnowledge, position );
+        double dangerosity = ComputeDangerosity( agent, model, *pTargetKnowledge, distance, false );
+        //DegradeDangerosity( dangerosity );//@TODO MGD before commit
+        return dangerosity;
+    }
+    double GetDangerosity( const MIL_AgentPion& target, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+    {
+        if( ! pKnowledge || ! pKnowledge->IsValid() )
+            return 0;
+        // For DIA, the dangerosity value is 1 <= dangerosity <= 2 // $$$$ MCO 2012-06-29: is it ?
+        if( pKnowledge->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_
+            ||  pKnowledge->IsAFriend( target.GetArmy() ) == eTristate_True
+            ||  pKnowledge->IsSurrendered() )
+            return 1;
+        // Target is dead ....
+        const double distance = ComputeDistance( pKnowledge, target );
+        double dangerosity = ComputeDangerosity( pKnowledge, model, target, distance, false );
+        DegradeDangerosity( pKnowledge, dangerosity );
+        return 1 + dangerosity;
     }
 }
 
@@ -987,6 +1040,12 @@ void RolePion_Decision::RegisterKnowledge()
 {
     RegisterFunction( "DEC_ConnaissanceAgent_AttritionPotentielle",
         boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &GetPotentialAttrition, boost::cref( GetPion() ), boost::cref( model_ ), _1, _2 ) ) );
+    RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
+        boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &GetDangerosity, boost::cref( GetPion() ), boost::cref( model_ ), _1 ) ) );
+    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion ); // $$$$ MCO 2012-06-29: TODO
+    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge ); // $$$$ MCO 2012-06-29: TODO
+    RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
+        boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) ); // $$$$ MCO 2012-06-29: TODO
 }
 
 namespace

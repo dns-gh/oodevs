@@ -252,9 +252,9 @@ namespace
     }
 }
 
-DEFINE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) )
+DEFINE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) )
 {
-    return GetMax( firer, filter, boost::bind( &WeaponType::GetDangerosity, _1, firer, target, rDistBtwSourceAndTarget, checkAmmo ) );
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetDangerosity, _1, firer, target, distance, checkAmmo ) );
 }
 DEFINE_HOOK( GetMaxRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
 {
