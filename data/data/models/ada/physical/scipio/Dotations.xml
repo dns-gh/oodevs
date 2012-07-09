@@ -377,7 +377,7 @@
   <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="18" id-nature="3" name="ART FUM DREB" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1315  310 0210" codeLFRIL="" codeNNO="1315 14 527 1536" id="19" id-nature="3" name="CPLT 81 EXPL MLE F2" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1315  310 0210" codeLFRIL="" codeNNO="1315 14 527 1536" d-type="true" id="19" id-nature="3" name="CPLT 81 EXPL MLE F2" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1335,10 +1335,10 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1315 317 0010" codeLFRIL="" codeNNO="1315 14 266 3970" id="59" id-nature="3" name="CPLT 81 OFUM PH" nature="Solide" package-mass="0.038" package-size="6" package-volume="0.055" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1315 317 0010" codeLFRIL="" codeNNO="1315 14 266 3970" d-type="true" id="59" id-nature="3" name="CPLT 81 OFUM PH" nature="Solide" package-mass="0.038" package-size="6" package-volume="0.055" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1315 314 0030" codeLFRIL="" codeNNO="1315 14 348 7513" id="60" id-nature="3" name="CPLT 81 OECL F1" nature="Solide" package-mass="0.036" package-size="6" package-volume="0.055" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1315 314 0030" codeLFRIL="" codeNNO="1315 14 348 7513" d-type="true" id="60" id-nature="3" name="CPLT 81 OECL F1" nature="Solide" package-mass="0.036" package-size="6" package-volume="0.055" type="Obus">
     <indirect-fire intervention-type="3" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315  956 0010" codeLFRIL="" codeNNO="1315 14 417 3265" d-type="true" id="61" id-nature="3" name="CPLT 120 OFUM PH F1" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
@@ -2250,7 +2250,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="00010048" codeLFRIL="" codeNNO="1111110020048" id="103" id-nature="3" name="CPLT EXPL 82" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010048" codeLFRIL="" codeNNO="1111110020048" d-type="true" id="103" id-nature="3" name="CPLT EXPL 82" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2281,7 +2281,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="00010049" codeLFRIL="" codeNNO="1111110020049" id="104" id-nature="3" name="CPLT EXPL 60" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010049" codeLFRIL="" codeNNO="1111110020049" d-type="true" id="104" id-nature="3" name="CPLT EXPL 60" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2601,4 +2601,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="143" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="144" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="0172834885" -->
+<!-- signature="0140378605" -->
