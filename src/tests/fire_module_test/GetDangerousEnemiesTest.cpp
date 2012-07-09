@@ -49,7 +49,7 @@ BOOST_FIXTURE_TEST_CASE( get_dangerous_enemies_retrieves_nothing_when_entity_has
 
 BOOST_FIXTURE_TEST_CASE( get_dangerous_enemies_returns_enemy, Fixture )
 {
-    model[ "enemies" ][ 1242 ].AddElement() = 43;
+    model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ];
     int userData;
     MOCK_EXPECT( callback ).once().with( enemy, &userData );

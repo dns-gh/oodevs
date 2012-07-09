@@ -20,7 +20,7 @@ namespace
             ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", 4 ) );
             commands.Start( "direct fire command",
                 core::MakeModel( "identifier", 42 )
-                    ( "enemy", 43 )
+                    ( "enemy", 51 )
                     ( "percentage", 7 )
                     ( "mode", 0 )
                     ( "dotation", 0 ) );

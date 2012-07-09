@@ -82,20 +82,20 @@ void RolePion_Composantes::serialize( Archive& file, const unsigned int )
 
 namespace
 {
-    void AddSensor( core::Model& component, const PHY_Sensor& sensor )
+    void AddSensor( core::Model& sensors, const PHY_Sensor& sensor )
     {
-        core::Model& s = component[ "sensors" ].AddElement();
+        core::Model& s = sensors.AddElement();
         s[ "height" ] = sensor.GetHeight();
         s[ "type" ] = sensor.GetType().GetName();
     }
-    void AddRadar( core::Model& component, const PHY_RadarType& radar )
+    void AddRadar( core::Model& radars, const PHY_RadarType& radar )
     {
-        core::Model& s = component[ "radars" ].AddElement();
-        s[ "type" ] = radar.GetName();
+        core::Model& r = radars.AddElement();
+        r[ "type" ] = radar.GetName();
     }
-    void AddWeapon( core::Model& component, const PHY_Weapon& weapon )
+    void AddWeapon( core::Model& weapons, const PHY_Weapon& weapon )
     {
-        core::Model& w = component[ "weapons" ].AddElement();
+        core::Model& w = weapons.AddElement();
         w[ "type" ] = weapon.GetType().GetName();
         w[ "fired-ammo" ] = 0;
         w[ "next-time" ] = 0;
@@ -115,18 +115,18 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
     component[ "score" ] = composante.GetMajorScore();
     component[ "radars" ];
     component[ "sensors" ];
-    component[ "type/sensor-rotation-angle" ] = composante.GetType().GetSensorRotationAngle();
+    component[ "type/sensor-rotation-angle" ] = composante.GetType().GetSensorRotationAngle(); // $$$$ MCO 2012-07-09: type/ ?!
     components_[ &composante ] = &component;
     {
-        boost::function< void( const PHY_Sensor& ) > visitor = boost::bind( &AddSensor, boost::ref( component ), _1 );
+        boost::function< void( const PHY_Sensor& ) > visitor = boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 );
         composante.ApplyOnSensors( visitor );
     }
     {
-        boost::function< void( const PHY_RadarType& ) > visitor = boost::bind( &AddRadar, boost::ref( component ), _1 );
+        boost::function< void( const PHY_RadarType& ) > visitor = boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1 );
         composante.ApplyOnRadars( visitor );
     }
     {
-        boost::function< void( const PHY_ComposantePion&, const PHY_Weapon& ) > visitor = boost::bind( &AddWeapon, boost::ref( component ), _2 );
+        boost::function< void( const PHY_ComposantePion&, const PHY_Weapon& ) > visitor = boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 );
         composante.ApplyOnWeapons( visitor );
     }
     PHY_RolePion_Composantes::NotifyComposanteAdded( composante );

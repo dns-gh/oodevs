@@ -414,7 +414,7 @@ namespace
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
-        parameters[ "enemy" ] = pEnemy->GetAgentKnown().GetID();
+        parameters[ "enemy" ] = pEnemy->GetID();
         parameters[ "percentage" ] = percentage;
         parameters[ "mode" ] = firingMode;
         parameters[ "dotation" ] = ammoDotationClass;
@@ -762,7 +762,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetAgentKnown().GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH, dotation ? dotation->GetName().c_str() : 0 );
     }
     double GetMinRangeToFireOnEnemy( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
@@ -771,7 +771,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetAgentKnown().GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
         const double range = GET_HOOK( GetMinRangeToFireOn )( Convert( &entity ), Convert( &knowledge ), &CanFire, rWantedPH );
         if( range == std::numeric_limits< double >::max() )
             return -1;
@@ -783,7 +783,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetAgentKnown().GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOnWithPosture )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH );
     }
     double GetMinRangeToFireOnEnemyActualPosture( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
@@ -792,7 +792,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetAgentKnown().GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
         const double range = GET_HOOK( GetMinRangeToFireOnWithPosture )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH );
         if( range == std::numeric_limits< double >::max() )
             return -1;
@@ -808,7 +808,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetAgentKnown().GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFireWhenUnloaded, rWantedPH, 0 );
     }
     bool True( const SWORD_Model* /*component*/ )
@@ -819,10 +819,9 @@ namespace
     {
         if( ! enemy || ! enemy->IsValid() )
             return -1;
-        if( enemy->GetComposantes().empty() ) // $$$$ MCO 2012-06-06: a knowledge has either all or none of the components
-            return 0;
-        const core::Model& firer = model[ "entities" ][ enemy->GetAgentKnown().GetID() ];
         const core::Model& target = model[ "entities" ][ agent.GetID() ];
+        const unsigned int id = target[ "knowledges" ];
+        const core::Model& firer = model[ "knowledges" ][ id ][ enemy->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &firer ), core::Convert( &target ), &True, rWantedPH, 0 );
     }
     double GetMaxRangeToFire( const MIL_Agent_ABC& agent, const core::Model& model, float rWantedPH )
@@ -973,16 +972,18 @@ namespace
     }
     double ComputeDangerosity( const MIL_AgentPion& agent, const core::Model& model, const DEC_Knowledge_Agent& target, double distance, bool checkAmmo )
     {
-        const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target.GetAgentKnown().GetID() ];
-        return GET_HOOK( GetDangerosity )( core::Convert( &entity ), core::Convert( &knowledge ), &CanMajorFire, distance, checkAmmo );
+        const core::Model& firer = model[ "entities" ][ agent.GetID() ];
+        const unsigned int knowledges = firer[ "knowledges" ];
+        const core::Model& enemy = model[ "knowledges" ][ knowledges ][ target.GetID() ];
+        return GET_HOOK( GetDangerosity )( core::Convert( &firer ), core::Convert( &enemy ), &CanMajorFire, distance, checkAmmo );
     }
     double ComputeDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const core::Model& model, const MIL_Agent_ABC& target, double distance, bool bUseAmmo )
     {
-        const core::Model& firer = model[ "entities" ][ pKnowledge->GetAgentKnown().GetID() ];
-        const core::Model& target2 = model[ "entities" ][ target.GetID() ];
-        return GET_HOOK( GetDangerosity )( core::Convert( &firer ), core::Convert( &target2 ), &IsMajor, distance, bUseAmmo );
+        const core::Model& enemy = model[ "entities" ][ target.GetID() ];
+        const unsigned int knowledges = enemy[ "knowledges" ];
+        const core::Model& firer = model[ "knowledges" ][ knowledges ][ pKnowledge->GetID() ];
+        //const core::Model& firer = model[ "entities" ][ pKnowledge->GetAgentKnown().GetID() ];
+        return GET_HOOK( GetDangerosity )( core::Convert( &firer ), core::Convert( &enemy ), &IsMajor, distance, bUseAmmo );
     }
     double ComputeDistance( boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position )
     {
@@ -1018,14 +1019,20 @@ namespace
             return 0;
         // For DIA, the dangerosity value is 1 <= dangerosity <= 2 // $$$$ MCO 2012-06-29: is it ?
         if( pKnowledge->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_
-            ||  pKnowledge->IsAFriend( target.GetArmy() ) == eTristate_True
-            ||  pKnowledge->IsSurrendered() )
+            || pKnowledge->IsAFriend( target.GetArmy() ) == eTristate_True
+            || pKnowledge->IsSurrendered() )
             return 1;
         // Target is dead ....
         const double distance = ComputeDistance( pKnowledge, target );
         double dangerosity = ComputeDangerosity( pKnowledge, model, target, distance, false );
         DegradeDangerosity( pKnowledge, dangerosity );
         return 1 + dangerosity;
+    }
+    double GetDangerosityOnPion( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const core::Model& model, const DEC_Decision_ABC* pTarget )
+    {
+        if( ! pTarget )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        return GetDangerosity( pTarget->GetPion(), model, pKnowledge );
     }
 }
 
@@ -1039,7 +1046,8 @@ void RolePion_Decision::RegisterKnowledge()
         boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &GetPotentialAttrition, boost::cref( GetPion() ), boost::cref( model_ ), _1, _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
         boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &GetDangerosity, boost::cref( GetPion() ), boost::cref( model_ ), _1 ) ) );
-    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion ); // $$$$ MCO 2012-06-29: TODO
+    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion",
+        boost::function< double( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &GetDangerosityOnPion, _1, boost::cref( model_ ), _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge ); // $$$$ MCO 2012-06-29: TODO
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
         boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) ) ); // $$$$ MCO 2012-06-29: TODO

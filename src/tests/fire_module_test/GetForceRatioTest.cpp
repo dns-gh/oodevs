@@ -27,7 +27,7 @@ BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_default_max_ratio_when_no_enemy
 BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_some_ratio, sword::fire::ModuleFixture )
 {
     model[ "tick" ] = 1;
-    model[ "enemies" ][ 1242 ].AddElement() = 43;
+    model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ];
     entity[ "fire/force-ratio/feedback-time" ] = 0.1;
     entity[ "knowledges" ] = 1242;

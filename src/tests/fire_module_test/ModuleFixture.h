@@ -18,7 +18,7 @@
     APPLY( InitializeDotations, 1, void, ( const char* xml ) ) \
     APPLY( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDuration ) ) \
     APPLY( InitializeDecisional, 2, void, ( const char* xml, double tickDuration ) ) \
-    APPLY( GetDangerosity, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) ) \
+    APPLY( GetDangerosity, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) ) \
     APPLY( GetMaxRangeToFireOn, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) ) \
     APPLY( GetMinRangeToFireOn, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
     APPLY( GetMaxRangeToFire, 3, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
@@ -63,7 +63,7 @@ namespace fire
             : HookFixture( "fire_module", boost::assign::list_of( "direct fire command" ) )
             , entity   ( model[ "entities" ][ 42 ] )
             , firer    ( core::Convert( &entity ) )
-            , target   ( model[ "knowledges" ][ 1242 ][ 43 ] )
+            , target   ( model[ "knowledges" ][ 1242 ][ 51 ] )
             , enemy    ( core::Convert( &target ) )
             , posture_1( 1 )
             , posture_2( 2 )

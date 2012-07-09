@@ -212,7 +212,7 @@ void Sink::ApplyEffects()
 
 namespace
 {
-    void UpdateKnowledge( core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
+    void UpdateKnowledge( const core::Model& entity, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
     {
         knowledge[ "agent" ].SetUserData( agent );
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
@@ -220,11 +220,16 @@ namespace
         knowledge[ "dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
         components.ClearElements();
-        BOOST_FOREACH( const DEC_Knowledge_AgentComposante& composante, agent->GetComposantes() )
+        const core::Model& components2 = entity[ "components" ];
+        const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();
+        for( std::size_t i = 0; i < composantes.size(); ++i )
         {
+            assert( components2.GetSize() == composantes.size() );
             core::Model& component = components.AddElement();
-            component[ "volume" ] = composante.GetType().GetVolume().GetID();
-            component[ "score" ] = composante.GetMajorScore();
+            component[ "volume" ] = composantes[ i ].GetType().GetVolume().GetID();
+            component[ "score" ] = composantes[ i ].GetMajorScore();
+            component[ "major" ] = composantes[ i ].IsMajor();
+            component[ "weapons" ] = components2.GetElement( i )[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
         }
     }
     void UpdateKnowledgeRelations( core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group, boost::shared_ptr< DEC_Knowledge_Agent > knowledge )
@@ -233,12 +238,12 @@ namespace
         if( army && ! knowledge->IsRefugee() && ! knowledge->IsSurrendered() )
         {
             if( knowledge->IsAnEnemy( group.GetArmy() ) == eTristate_True )
-                enemies.AddElement() = knowledge->GetAgentKnown().GetID();
+                enemies.AddElement() = knowledge->GetID();
             else if( knowledge->IsAFriend( group.GetArmy() ) == eTristate_True )
-                friends.AddElement() = knowledge->GetAgentKnown().GetID();
+                friends.AddElement() = knowledge->GetID();
         }
     }
-    void UpdateKnowledgeGroupBlackBoard( core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
+    void UpdateKnowledgeGroupBlackBoard( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
         enemies.ClearElements();
         friends.ClearElements();
@@ -247,18 +252,18 @@ namespace
         BOOST_FOREACH( const T_Agent& agent, blackboard.GetKnowledgeAgents() )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agent.second;
-            UpdateKnowledge( knowledges[ knowledge->GetAgentKnown().GetID() ], knowledge );
+            UpdateKnowledge( entities[ knowledge->GetAgentKnown().GetID() ], knowledges[ knowledge->GetID() ], knowledge );
             UpdateKnowledgeRelations( enemies, friends, group, knowledge );
         }
     }
-    void UpdateKnowledgeGroup( core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
+    void UpdateKnowledgeGroup( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
         const unsigned int id = group.GetId();
-        UpdateKnowledgeGroupBlackBoard( knowledges[ id ], enemies[ id ], friends[ id ], group );
+        UpdateKnowledgeGroupBlackBoard( entities, knowledges[ id ], enemies[ id ], friends[ id ], group );
         BOOST_FOREACH( const MIL_KnowledgeGroup* subgroup, group.GetKnowledgeGroups() )
-            UpdateKnowledgeGroup( knowledges, enemies, friends, *subgroup );
+            UpdateKnowledgeGroup( entities, knowledges, enemies, friends, *subgroup );
     }
-    void UpdateKnowledges( core::Model& knowledges, core::Model& enemies, core::Model& friends )
+    void UpdateKnowledges( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends )
     {
         const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
         for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
@@ -266,7 +271,7 @@ namespace
             typedef std::map< unsigned int, MIL_KnowledgeGroup* > T_Groups;
             const T_Groups& groups = it.NextElement().GetKnowledgeGroups();
             for( T_Groups::const_iterator it = groups.begin(); it != groups.end(); ++it )
-                UpdateKnowledgeGroup( knowledges, enemies, friends, *it->second );
+                UpdateKnowledgeGroup( entities, knowledges, enemies, friends, *it->second );
         }
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
@@ -301,8 +306,8 @@ void Sink::UpdateModel( unsigned int tick, int duration )
 {
     (*model_)[ "tick" ] = tick;
     (*model_)[ "step" ] = duration;
-    UpdateKnowledges( (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
     core::Model& entities = (*model_)[ "entities" ];
+    UpdateKnowledges( entities, (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
     for( tools::Iterator< const MIL_AgentPion& > it = factory_.CreateIterator(); it.HasMoreElements(); )
     {
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
