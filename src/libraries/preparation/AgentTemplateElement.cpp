@@ -10,10 +10,10 @@
 #include "preparation_pch.h"
 #include "AgentTemplateElement.h"
 #include "AgentsModel.h"
-#include "CommandPostAttributes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "preparation/ColorController.h"
 #include <xeumeuleu/xml.hpp>
@@ -25,7 +25,7 @@ namespace
 {
     bool IsCommandPost( const kernel::Entity_ABC& entity )
     {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
             return pAttributes->IsCommandPost();
         return false;
     }

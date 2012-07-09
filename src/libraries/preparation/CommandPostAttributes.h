@@ -10,10 +10,9 @@
 #ifndef __CommandPostAttributes_h_
 #define __CommandPostAttributes_h_
 
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -33,10 +32,9 @@ namespace xml
 */
 // Created: SBO 2007-03-27
 // =============================================================================
-class CommandPostAttributes : public kernel::Extension_ABC
+class CommandPostAttributes : public kernel::CommandPostAttributes_ABC
                             , public kernel::Drawable_ABC
                             , public kernel::Serializable_ABC
-                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -56,7 +54,7 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsCommandPost() const;
+    virtual bool IsCommandPost() const;
     //@}
 
 private:

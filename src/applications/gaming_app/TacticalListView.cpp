@@ -19,11 +19,11 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
-#include "gaming/CommandPostAttributes.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
@@ -37,7 +37,7 @@ namespace
 {
     bool IsCommandPost( const Entity_ABC& entity )
     {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+        if( const CommandPostAttributes_ABC* pAttributes = entity.Retrieve< CommandPostAttributes_ABC >() )
             return pAttributes->IsCommandPost();
         return false;
     }

@@ -17,9 +17,9 @@
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "Preparation/Formation.h"
-#include "preparation/CommandPostAttributes.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
@@ -39,7 +39,7 @@ namespace
 {
     bool IsCommandPost( const kernel::Entity_ABC& entity )
     {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+        if( const CommandPostAttributes_ABC* pAttributes = entity.Retrieve< CommandPostAttributes_ABC >() )
             return pAttributes->IsCommandPost();
         return false;
     }

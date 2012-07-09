@@ -15,6 +15,7 @@
 #include "AutomatHierarchies.h"
 #include "AutomatCommunications.h"
 #include "Color.h"
+#include "GhostCommandPostAttributes.h"
 #include "Ghost.h"
 #include "GhostHierarchies.h"
 #include "GhostPositions.h"
@@ -75,6 +76,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     if( prototype.ghostType_ == eGhostType_Agent )
     {
         result->Attach< kernel::CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, false, controllers_.controller_, dico ) );
     }
     else
     {
@@ -105,6 +107,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     if( result->GetGhostType() == eGhostType_Agent )
     {
         result->Attach< kernel::CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dico ) );
     }
     else
     {
@@ -134,6 +137,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     {
         result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
         result->Attach< kernel::CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dico ) );
     }
     else
     {

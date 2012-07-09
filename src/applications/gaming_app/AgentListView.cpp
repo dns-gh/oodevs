@@ -20,6 +20,7 @@
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/AgentTypes.h"
@@ -28,7 +29,6 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Attributes.h"
-#include "gaming/CommandPostAttributes.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
 
@@ -101,7 +101,7 @@ void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListIt
     const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( const CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
+    else if( const kernel::CommandPostAttributes_ABC* commandPost = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
         item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     // LTO begin
     else if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP

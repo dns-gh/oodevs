@@ -245,6 +245,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ChangePopulationDisplay.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h" />
