@@ -76,3 +76,12 @@ void GhostCommandPostAttributes::Update( const bool& commandPost )
     if( const kernel::Symbol_ABC* symbol = entity_.Retrieve< kernel::TacticalHierarchies >() )
         controller_.Update( *symbol );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GhostCommandPostAttributes::SerializeAttributes
+// Created: ABR 2012-07-09
+// -----------------------------------------------------------------------------
+void GhostCommandPostAttributes::SerializeAttributes( xml::xostream& xos ) const
+{
+    xos << xml::attribute( "command-post", isPc_ );
+}
