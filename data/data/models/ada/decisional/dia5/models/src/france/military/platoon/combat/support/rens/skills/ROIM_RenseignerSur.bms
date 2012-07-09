@@ -1,6 +1,6 @@
 rootnode
 {
-    connections = { skill.links.moveAndTakePosition, skill.links.moveAlong, skill.nodes.CR },
+    connections = { skill.links.moveAndTakePosition, skill.nodes.CR },
   
     done = function( self, additionnalParams )
         for _, pion in pairs( self.pionsFriends ) do
@@ -47,7 +47,7 @@ rootnode
                 self.destination = self.initPos
             end
 
-            Activate( skill.links.moveAndTakePosition, 1, { entity = self.initPos } )
+            Activate( skill.links.moveAndTakePosition, 1, { entity = self.destination } )
         else
             Activate( skill.links.moveAndTakePosition, 1, { entity = self.itinerary } )
         end
