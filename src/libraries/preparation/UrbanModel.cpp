@@ -269,7 +269,7 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
 void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent )
 {
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
-    if( !Find( pTerrainObject->GetId() ) )
+    if( pTerrainObject.get() && !Find( pTerrainObject->GetId() ) )
     {
         kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );

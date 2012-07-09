@@ -72,7 +72,15 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
     UrbanObject* pTerrainObject = new UrbanObject( xis, controllers_, idManager_, staticModel_.objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), staticModel_.accommodationTypes_, options_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
+    try
+    {
+        pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, dictionary, hierarchies->GetLevel(), *pTerrainObject, staticModel_.coordinateConverter_ ) );
+    }
+    catch( std::exception& )
+    {
+        delete pTerrainObject;
+        return 0;
+    }
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis, controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( xis, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
     if( hierarchies->GetLevel() == eUrbanLevelBlock )
