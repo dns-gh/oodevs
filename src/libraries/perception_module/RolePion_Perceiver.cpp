@@ -96,6 +96,44 @@ namespace
             result = result || GET_PREVIOUS_HOOK( AgentHasRadar )( entity, radarType );
         return result;
     }
+    DEFINE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
+    {
+        if( !target || !point )
+            return 0.;
+        double energy = 0.;
+        try
+        {
+            const sword::wrapper::View view( entity );
+            for( std::size_t i = 0; i < view[ "components" ].GetSize(); ++i )
+            {
+                const wrapper::View& component = view[ "components" ].GetElement( i );
+                if( !GET_HOOK( CanComponentPerceive )( entity, component ) )
+                    continue;
+                for( std::size_t j = 0; j < component[ "sensors" ].GetSize(); ++j )
+                {
+                    const wrapper::View& sensor = component[ "sensors" ].GetElement( j );
+                    const SensorType* type = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
+                    if( !type )
+                        throw std::runtime_error( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
+                    const SensorTypeAgent* pSensorTypeAgent = type->GetTypeAgent();
+                    const double height = sensor[ "height" ];
+                    if( pSensorTypeAgent )
+                        energy = std::max( energy, pSensorTypeAgent->RayTrace( *point, *target, height ) );
+                }
+            }
+        }
+        catch( std::exception& e )
+        {
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        }
+        catch( ... )
+        {
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in GetPerception hook" );
+        }
+        if( GET_PREVIOUS_HOOK( GetPerception ) )
+            energy = std::max( energy, GET_PREVIOUS_HOOK( GetPerception )( entity, point, target ) );
+        return energy;
+    }
 }
 
 // -----------------------------------------------------------------------------

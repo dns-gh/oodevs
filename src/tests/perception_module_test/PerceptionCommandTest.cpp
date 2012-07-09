@@ -444,3 +444,25 @@ BOOST_FIXTURE_TEST_CASE( agent_has_radar_hook_checks_if_one_component_has_radar_
         BOOST_CHECK( !AgentHasRadar( core::Convert( &entity ), 0 ) );
     }
 }
+
+BOOST_FIXTURE_TEST_CASE( get_perception_hook_between_two_points_returns_max_perception_energy, ConfigurationFixture )
+{
+    core::Model entity;
+    {
+        core::Model& sensor = entity[ "components" ].AddElement()[ "sensors" ].AddElement();
+        sensor[ "type" ] = "sensor-type";
+        sensor[ "height" ] = 0.;
+    }
+    {
+        core::Model& sensor = entity[ "components" ].AddElement()[ "sensors" ].AddElement();
+        sensor[ "type" ] = "sensor-type";
+        sensor[ "height" ] = 0.;
+    }
+    MT_Vector2D point;
+    MT_Vector2D target( 0, 10 );
+    MOCK_EXPECT( CanComponentPerceive ).returns( true );
+    MOCK_EXPECT( GetAltitude ).returns( 0 );
+    MOCK_EXPECT( ComputeRayTrace ).once().returns( 42. );
+    MOCK_EXPECT( ComputeRayTrace ).once().returns( 43. );
+    BOOST_CHECK_EQUAL( 43., GetPerception( core::Convert( &entity ), &point, &target ) );
+}

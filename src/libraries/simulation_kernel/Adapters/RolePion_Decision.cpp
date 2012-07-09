@@ -93,6 +93,7 @@ DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( boost:
 DECLARE_HOOK( GetPerceptionId, int, () )
 DECLARE_HOOK( IsPointVisible, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) )
 DECLARE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
+DECLARE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
 
 // fire
 DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), float rDistBtwSourceAndTarget, bool checkAmmo ) )
@@ -122,6 +123,7 @@ void RolePion_Decision::Initialize( core::Facade& facade )
     USE_HOOK( PathGetLastPointOfPath, facade );
     USE_HOOK( GetPerceptionId, facade );
     USE_HOOK( IsPointVisible, facade );
+    USE_HOOK( GetPerception, facade );
     USE_HOOK( GetDangerosity, facade );
     USE_HOOK( GetMaxRangeToFireOn, facade );
     USE_HOOK( GetMinRangeToFireOn, facade );
@@ -692,6 +694,11 @@ namespace
         const core::Model& entity = model[ "entities" ][ agent->GetPion().GetID() ];
         return GET_HOOK( AgentHasRadar )( core::Convert( &entity ), typeRadar );
     }
+    double GetPerception( const MIL_AgentPion& pion, const core::Model& model, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget )
+    {
+        const core::Model& entity = model[ "entities" ][ pion.GetID() ];
+        return GET_HOOK( GetPerception )( core::Convert( &entity ), pPoint.get(), pTarget.get() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -730,6 +737,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void( const TER_Localisation* ) >             ( "DEC_Connaissances_IdentifierToutesUnitesDansZone", &IdentifyAllAgentsInZone, _1 );
     RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &IsPointVisible, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
     RegisterFunction( "DEC_Agent_ARadar", boost::function< bool( const DEC_Decision_ABC*, int ) >( boost::bind( &AgentHasRadar, boost::cref( model_ ), _1, _2 ) ) );
+    RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &GetPerception, boost::cref( GetPion() ), boost::cref( model_ ), _1, _2 ) ) );
 }
 
 namespace

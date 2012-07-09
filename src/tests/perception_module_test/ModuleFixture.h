@@ -30,7 +30,8 @@ class TER_Localisation;
     APPLY( GetPerceptionId, 0, int, () ) \
     APPLY( InitializePerceptionTypes, 1, void, ( const char* xml ) ) \
     APPLY( IsPointVisible, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) ) \
-    APPLY( AgentHasRadar, 2, bool, ( const SWORD_Model* entity, size_t radarType ) )
+    APPLY( AgentHasRadar, 2, bool, ( const SWORD_Model* entity, size_t radarType ) ) \
+    APPLY( GetPerception, 3, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
