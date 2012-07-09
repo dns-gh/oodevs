@@ -33,8 +33,6 @@ namespace
                     >> xml::list( "point", boost::bind( &ReadPoint, _1, boost::ref( positions ), boost::ref( converter ) ) )
                 >> xml::end;
         }
-        if( positions.empty() )
-            throw std::runtime_error( "UrbanPositions cannot be created with empty location" );
         return positions;
     }
 }
