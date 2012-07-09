@@ -11,5 +11,13 @@ This implementation returns 'true' if all the agents subordinate to the company 
                 </type>
             </return>
         </method>
+        <method name="getPosition">
+            <description>Returns the sim position of this element. Used for integration.</description>
+            <return>
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

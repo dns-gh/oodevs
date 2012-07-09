@@ -3,9 +3,9 @@
 -- --------------------------------------------------------------------------------
 method "issueMoveToOrder" (
     function( self, missionName, subordinate, waypoints )
-        F_Pion_SeteEtatEchelon( subordinate.source, eEtatEchelon_First )
+        integration.ListenFrontElement( subordinate )
         integration.SendMessage( "Commander_MoveTo", subordinate, 
-          { missionName = missionName, waypoints = waypoints }, { type = "dynamic" } )
+            { missionName = missionName, waypoints = waypoints }, { type = "dynamic" } )
         return true
     end )
 

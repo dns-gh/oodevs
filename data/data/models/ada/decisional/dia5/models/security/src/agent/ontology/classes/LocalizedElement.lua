@@ -5,7 +5,7 @@ method "reachIt" ( masalife.brain.integration.startStopAction(
 { 
     start = function( self, pathType )
         DEC_Trace( "Start movement toward objective ")
-        return integration.startMoveToIt( self, pathType ) 
+        return integration.startMoveToIt( self, pathType )
     end,
     started = function( self, pathType )
         return integration.updateMoveToIt( self, pathType )
@@ -13,7 +13,7 @@ method "reachIt" ( masalife.brain.integration.startStopAction(
     stop = function( self )
         DEC_Trace( " Objective reached" )
         return integration.deselectMoveToIt( self )
-    end,
+    end
 } ) )
 
 -- --------------------------------------------------------------------------------

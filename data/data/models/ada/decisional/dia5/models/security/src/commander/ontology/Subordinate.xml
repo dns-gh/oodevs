@@ -16,5 +16,13 @@
                 </type>
             </return>
         </method>
+        <method name="getPosition">
+            <description>Returns the sim position. Used for integration layer.</description>
+            <return>
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>
