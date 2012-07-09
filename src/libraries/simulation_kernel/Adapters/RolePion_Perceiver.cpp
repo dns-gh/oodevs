@@ -940,63 +940,63 @@ bool RolePion_Perceiver::IsIdentified( const UrbanObjectWrapper& object ) const
 // Name: RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
+void RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& /*flyingShell*/ ) const
 {
-    MIL_Report::PostEvent( owner_, MIL_Report::eReport_IndirectFireObservation, flyingShell );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
+void RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& /*agent*/, const PHY_PerceptionLevel& /*level*/, bool /*bPerceptionRecorded*/ )
 {
-    owner_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bPerceptionRecorded );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-bool RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
+bool RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& /*agent*/, const PHY_PerceptionLevel& /*level*/ )
 {
-    return owner_.GetKnowledge().GetKsPerception().NotifyPerception( agent, level, bRecordModeEnabled_ );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level )
+void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& /*object*/, const PHY_PerceptionLevel& /*level*/ )
 {
-    owner_.GetKnowledge().GetKsPerception().NotifyPerception( object, level, bRecordModeEnabled_ );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-bool RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
+bool RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& /*concentration*/, const PHY_PerceptionLevel& /*level*/ )
 {
-    return owner_.GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-bool RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
+bool RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& /*flow*/, const PHY_PerceptionLevel& /*level*/, const T_PointVector& /*shape*/ )
 {
-    return owner_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifyPerceptionUrban
 // Created: MGD 2009-11-20
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyPerceptionUrban( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level ) const
+void RolePion_Perceiver::NotifyPerceptionUrban( const UrbanObjectWrapper& /*object*/, const PHY_PerceptionLevel& /*level*/ ) const
 {
-    owner_.GetKnowledge().GetKsPerception().NotifyPerception( object, level );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
