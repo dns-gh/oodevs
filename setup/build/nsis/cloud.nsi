@@ -11,6 +11,7 @@
 !define PROXY "..\..\..\proxy"
 !define NODE "..\..\..\node"
 !define SWORD "..\..\out\${PLATFORM}"
+!define EXTERNAL "..\..\external"
 
 Name "Sword Cloud"
 OutFile "${DISTDIR}\sword_cloud_${PLATFORM}_setup.exe"
@@ -107,11 +108,21 @@ Section $(^Name)
     ; VCRedist
     SetOutPath $TEMP
     File "${SWORD}\vcredist_${PLATFORM}.exe"
-    ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
+    nsExec::Exec '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
 
+    ; JRE
+!if ${PLATFORM} == "vc100_x64"
+    !define JRE "jre-6u33-windows-x64.exe"
+!else
+    !define JRE "jre-6u33-windows-i586.exe"
+!endif
+    File "${EXTERNAL}\${JRE}"
+    nsExec::ExecToLog '"${JRE}" /s'
+    Delete "${JRE}"
+
     ; service    
-    nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --register'
+    nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --java "$WINDIR\system32\java.exe" --register'
     nsExec::Exec 'net start "Sword Cloud"'
 SectionEnd
 

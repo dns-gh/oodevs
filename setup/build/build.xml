@@ -10,10 +10,10 @@
         <update name="vcredist" package="vcredist"/>
     </target>
 
-    <target name="package" depends="configure">
+    <target name="package">
         <nsis name="cloud"/>
     </target>
 
-    <target name="all" depends="package" />
+    <target name="all" depends="configure,package" />
 
 </project>
