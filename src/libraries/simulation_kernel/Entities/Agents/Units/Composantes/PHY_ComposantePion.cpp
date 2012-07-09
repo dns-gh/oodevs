@@ -483,7 +483,7 @@ double PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante& 
 double PHY_ComposantePion::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const
 {
     assert( pType_ );
-    return bLoadable_ && CanFireWhenUnloaded() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH, 0 ) : 0.;
+    return CanFireWhenUnloaded() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH, 0 ) : 0.;
 }
 
 // -----------------------------------------------------------------------------

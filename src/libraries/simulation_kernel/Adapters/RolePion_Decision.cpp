@@ -800,8 +800,7 @@ namespace
     }
     bool CanFireWhenUnloaded( const SWORD_Model* component )
     {
-        const PHY_ComposantePion& comp = (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >();
-        return comp.IsLoadable() && comp.CanFireWhenUnloaded();
+        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFireWhenUnloaded();
     }
     double GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
     {
