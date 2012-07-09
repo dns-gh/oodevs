@@ -45,7 +45,7 @@ private:
     virtual void EndDisplay() ;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     QString      message_;

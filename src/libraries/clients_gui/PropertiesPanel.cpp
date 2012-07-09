@@ -85,8 +85,5 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 {
     if( selected_ && selected_->GetId() == element.GetId() )
-    {
         NotifySelected( 0 );
-        setWidget( table_ );
-    }
 }

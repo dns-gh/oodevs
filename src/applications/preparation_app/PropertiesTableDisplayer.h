@@ -45,6 +45,7 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< kernel::MaterialCompositionType >
                                , public tools::Caller< kernel::RoofShapeType >
                                , public tools::Caller< kernel::UrbanBlockColor >
+                               , public tools::Caller< kernel::CriticalIntelligence >
 {
 public:
     //! @name Constructors/Destructor
@@ -67,6 +68,7 @@ public:
     virtual void Call( const kernel::MaterialCompositionType& value );
     virtual void Call( const kernel::RoofShapeType& value );
     virtual void Call( const kernel::UrbanBlockColor& value );
+    virtual void Call( const kernel::CriticalIntelligence& value );
     //@}
 
 private:

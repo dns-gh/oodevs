@@ -10,9 +10,9 @@
 #ifndef __CriticalIntelligenceDialog_h_
 #define __CriticalIntelligenceDialog_h_
 
+#include "clients_gui/CriticalIntelligenceDialog.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -37,14 +37,11 @@ class StaticModel;
 */
 // Created: LGY 2011-05-27
 // =============================================================================
-class CriticalIntelligenceDialog : public QDialog
-                                 , private boost::noncopyable
+class CriticalIntelligenceDialog : public gui::CriticalIntelligenceDialog
                                  , public tools::Observer_ABC
                                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                                  , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,23 +56,22 @@ public:
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
-private slots:
+private:
     //! @name Slots
     //@{
-    void Validate();
-    void Reject();
+    virtual void OnAccept();
+    virtual void OnReject();
+    virtual void OnShow();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     actions::ActionsModel& actionsModel_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QLineEdit* value_;
     //@}
 };
 

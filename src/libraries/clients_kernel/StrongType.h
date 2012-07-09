@@ -37,6 +37,7 @@ public:
     operator const T&() const;
     operator T&();
     T operator->() const;
+    T operator()() const;
     //@}
 
     //! @name Operators
@@ -118,6 +119,16 @@ StrongType< T, U >::operator T&()
 // -----------------------------------------------------------------------------
 template< typename T, typename U >
 T StrongType< T, U >::operator->() const
+{
+    return value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StrongType::operator==
+// Created: SBO 2007-03-27
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+T StrongType< T, U >::operator()() const
 {
     return value_;
 }

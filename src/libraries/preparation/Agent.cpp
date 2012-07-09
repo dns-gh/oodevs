@@ -144,10 +144,10 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "name", name_.ascii() );
-    if( criticalIntelligence_ != "" )
+    if( criticalIntelligence_() != "" )
     {
         xos << xml::start( "critical-intelligence" )
-                << xml::attribute( "content", criticalIntelligence_.ascii() )
+                << xml::attribute( "content", criticalIntelligence_().ascii() )
             << xml::end;
     }
 }

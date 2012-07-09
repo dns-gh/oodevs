@@ -132,7 +132,6 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_SUBPROPERTY( message, nDirection_, direction, heading, "Info", updated );
     UPDATE_PROPERTY( message, nRawOpState_, raw_operational_state, "Info", updated );
     UPDATE_PROPERTY( message, nSpeed_, speed, "Info", updated );
-    UPDATE_PROPERTY( message, criticalIntelligence_, critical_intelligence, "Info", updated );
     UPDATE_PROPERTY( message, bUnderground_, underground, "Info", updated );
 
     if( message.has_neutralized() )
@@ -259,6 +258,12 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     if( message.has_transported_crowd() )
         crowdTransported_ = message.transported_crowd();
+
+    if( message.has_critical_intelligence() )
+    {
+        criticalIntelligence_ = message.critical_intelligence().c_str();
+        updated.insert( "Info" );
+    }
 
     BOOST_FOREACH( const std::string& content, updated )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );

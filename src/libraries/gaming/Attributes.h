@@ -14,6 +14,7 @@
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
 #include "tools/Resolver_ABC.h"
@@ -121,7 +122,7 @@ public:
     const kernel::Team_ABC* surrenderedTo_;
     unsigned int knowledgeGroupJammed_;
     std::map< std::string, std::string > extensions_;
-    kernel::OptionalValue< std::string > criticalIntelligence_;
+    kernel::CriticalIntelligence criticalIntelligence_;
     float fLodgingSatisfactionPercent_;
     float fSecuritySatisfactionPercent_;
     float fHealthSatisfactionPercent_;

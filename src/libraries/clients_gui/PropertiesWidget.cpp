@@ -251,7 +251,13 @@ void PropertiesWidget::NotifyDeleted( const kernel::DictionaryUpdated& message )
 // -----------------------------------------------------------------------------
 void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, const QString& name, PropertiesWidget& parent )
 {
-    if( selected_ && message.GetEntity().GetId() == selected_->GetId() )
+    for( T_SubWidgets::iterator it = subWidgets_.begin(); it != subWidgets_.end(); ++it )
+        if( *it && ( *it )->GetTable() )
+        ( *it )->GetTable()->SetUpdating( true );
+
+    QStringList path = QStringList::split( '/', name );
+    CIT_SubCategories it = categories_.find( path.front() );
+    if( it != categories_.end() )
     {
         QStringList path = QStringList::split( '/', name );
         CIT_SubCategories it = categories_.find( path.front() );
@@ -278,6 +284,9 @@ void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, con
                 table_->Update( name );
         }
     }
+
+    for( T_SubWidgets::iterator it = subWidgets_.begin(); it != subWidgets_.end(); ++it )
+        ( *it )->GetTable()->SetUpdating( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,4 +317,13 @@ void PropertiesWidget::ClearPath( const QString& name )
 void PropertiesWidget::NotifySelected( const kernel::Entity_ABC* entity )
 {
     selected_ = entity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::GetTable
+// Created: ABR 2012-07-06
+// -----------------------------------------------------------------------------
+PropertiesTable* PropertiesWidget::GetTable() const
+{
+    return table_;
 }

@@ -530,18 +530,6 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Critical intelligence:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>

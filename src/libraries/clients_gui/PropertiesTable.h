@@ -47,6 +47,8 @@ public:
     void Update( const QString& name );
     virtual void Hide();
     virtual void Call( kernel::Property_ABC* const& property );
+    void SetUpdating( bool updating );
+    bool IsUpdating() const;
     //@}
 
 public slots:
@@ -76,10 +78,11 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::EditorFactory_ABC& factory_;
-    TableItemDisplayer& itemDisplayer_;
-    T_PropertyRows rows_;
-    unsigned int row_;
+    kernel::EditorFactory_ABC&  factory_;
+    TableItemDisplayer&         itemDisplayer_;
+    T_PropertyRows              rows_;
+    unsigned int                row_;
+    bool                        updating_;
     //@}
 };
 

@@ -40,6 +40,7 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
     , factory_( factory )
     , itemDisplayer_( displayer )
     , row_( 0 )
+    , updating_( false )
 {
     setSelectionMode( Q3Table::SingleRow );
     setNumCols( 2 );
@@ -132,7 +133,6 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         Q3TableItem* item = new LeftAlignedTableItem( this );
         item->setText( name );
         setItem( row_, 0, item );
-        //setText( row_, 0, name );
         setFixedHeight( contentsHeight () + 4 );
     }
     else
@@ -196,4 +196,22 @@ void PropertiesTable::Update( const QString& name )
     CIT_PropertyRows it = rows_.find( name );
     if( it != rows_.end() )
         updateCell( it->second, 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::SetUpdating
+// Created: ABR 2012-07-06
+// -----------------------------------------------------------------------------
+void PropertiesTable::SetUpdating( bool updating )
+{
+    updating_ = updating;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::IsUpdating() const
+// Created: ABR 2012-07-06
+// -----------------------------------------------------------------------------
+bool PropertiesTable::IsUpdating() const
+{
+    return updating_;
 }

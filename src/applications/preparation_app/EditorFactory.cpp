@@ -21,6 +21,8 @@
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
+#include "clients_gui/CriticalIntelligenceDialog.h"
+#include "clients_gui/PropertiesTable.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/InfrastructureType.h"
@@ -258,7 +260,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 {
-    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
     {
         delete modalDialog_;
         NBCAgentEditor* editor = new NBCAgentEditor( modalDialog_, parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
@@ -273,7 +275,7 @@ void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( DotationsItem** const& value )
 {
-    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
     {
         delete modalDialog_;
         DotationsEditor* dotationsEditor = new DotationsEditor( modalDialog_, parent_, staticModel_ );
@@ -288,7 +290,7 @@ void EditorFactory::Call( DotationsItem** const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 {
-    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
     {
         delete modalDialog_;
         PositionEditor* positionEditor = new PositionEditor( modalDialog_, parent_, controllers_, staticModel_.coordinateConverter_ );
@@ -303,7 +305,7 @@ void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( PopulationRepartition** const& value )
 {
-    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
     {
         delete modalDialog_;
         PopulationRepartitionEditor* populationRepartitionEditor = new PopulationRepartitionEditor( modalDialog_, parent_, controllers_.controller_ );
@@ -384,4 +386,32 @@ void EditorFactory::Call( kernel::UrbanBlockColor* const& value )
             object->UpdateTemplate( staticModel_.objectTypes_ );
         controllers_.controller_.Update( *value );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2012-07-04
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::CriticalIntelligence* const& value )
+{
+    if( !IsUpdating() && ( !modalDialog_ || !modalDialog_->isActiveWindow() ) )
+    {
+        delete modalDialog_;
+        gui::CriticalIntelligenceDialog* intelligenceDialog = new gui::CriticalIntelligenceDialog( modalDialog_, parent_, controllers_ );
+        intelligenceDialog->SetValue( *value );
+        intelligenceDialog->show();
+        result_ = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::IsUpdating
+// Created: ABR 2012-07-06
+// -----------------------------------------------------------------------------
+bool EditorFactory::IsUpdating() const
+{
+    if( gui::PropertiesTable* table = dynamic_cast< gui::PropertiesTable* >( parent_ ) )
+        if( table->IsUpdating() )
+            return true;
+    return false;
 }

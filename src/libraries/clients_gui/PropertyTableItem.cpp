@@ -62,6 +62,8 @@ QWidget* PropertyTableItem::createEditor() const
         static_cast< QLineEdit* >( editor )->setAlignment( Qt::AlignRight );
     else if( editor->inherits( "QAbstractSpinBox" ) )
         static_cast< QAbstractSpinBox* >( editor )->setAlignment( Qt::AlignRight );
+    else if( editor->inherits( "QTextEdit" ) )
+        static_cast< QTextEdit* >( editor )->setAlignment( Qt::AlignRight );
     else if( editor->inherits( "QComboBox" ) )
     {
         // Seems to be not possible without setting the combo editable which is laggy and crappy.
@@ -78,6 +80,13 @@ void PropertyTableItem::setContentFromEditor( QWidget* w )
     property_.SetValueFromEditor( w );
     displayer_.SetItem( this );
     property_.Display( displayer_ );
+    w->clearFocus();
+    table()->clearFocus();
+
+    //if( w && w->nextInFocusChain() && w->nextInFocusChain()->nextInFocusChain() )
+    //    w->nextInFocusChain()->nextInFocusChain()->setFocus();
+    //if( w && w->previousInFocusChain() )
+    //    w->previousInFocusChain()->setFocus();
 }
 
 // -----------------------------------------------------------------------------
