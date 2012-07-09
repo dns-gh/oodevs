@@ -359,7 +359,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    result->Attach< CommandPostAttributes_ABC >( *new ::CommandPostAttributes( *result, controllers_.controller_, type, dico ) );
+    result->Attach< CommandPostAttributes_ABC >( *new ::CommandPostAttributes( *result, controllers_.controller_, type, dico, ghost.Get< CommandPostAttributes_ABC >().IsCommandPost() ) );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
     result->Polish();
     return result;

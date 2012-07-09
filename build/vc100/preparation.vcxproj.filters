@@ -559,6 +559,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\CircleFormation.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\GhostCommandPostAttributes.cpp">
+      <Filter>Source Files\Model\Ghosts\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -1052,6 +1055,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\CircleFormation.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\GhostCommandPostAttributes.h">
+      <Filter>Source Files\Model\Ghosts\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
