@@ -127,8 +127,7 @@ namespace movement
     APPLY( ConvertSpeedMosToSim, 1, double, ( double speed ) ) \
     APPLY( GetLandTypeName, 1, const char*, ( const TerrainData& terrain ) ) \
     APPLY( VisitKnowledgeObjects, 3, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) ) \
-    APPLY( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
-    APPLY( IsUnderground, 1, bool, ( const SWORD_Model* entity ) ) // $$$$ MCO 2012-07-02: the module should not be aware of this
+    APPLY( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( AddPathPoint, 2, void, ( unsigned int entity, boost::shared_ptr< sword::movement::PathPoint > point ) ) \

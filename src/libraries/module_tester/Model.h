@@ -13,7 +13,7 @@
 #include "NullModelVisitor.h"
 #include <core/Convert.h>
 #include <core/ModelPrinter.h>
-#include <turtle/check.hpp>
+#include <turtle/detail/check.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #ifdef _MSC_VER

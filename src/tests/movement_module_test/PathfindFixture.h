@@ -82,6 +82,7 @@ namespace movement
             entity[ "identifier" ] = identifier; // $$$$ _RC_ SLI 2012-03-09: smell?
             entity[ "can-fly" ] = false;
             entity[ "is-autonomous" ] = false;
+            entity[ "is-underground" ] = false; // $$$$ MCO 2012-07-09: module should not be aware of this "is-underground" feature
             entity[ "danger/x" ] = 1;
             entity[ "danger/y" ] = 0;
             entity[ "is-deployed" ] = false;
@@ -122,7 +123,6 @@ namespace movement
         {
             TerrainPathfinder pathfind;
             MOCK_EXPECT( UsePathDebug ).returns( false );
-            MOCK_EXPECT( IsUnderground ).returns( false );
             MOCK_EXPECT( IsDestinationTrafficable ).returns( true );
             MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
             MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );

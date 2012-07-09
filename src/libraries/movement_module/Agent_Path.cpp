@@ -453,8 +453,6 @@ namespace
     }
 }
 
-DECLARE_HOOK( IsUnderground, bool, ( const SWORD_Model* entity ) ) // $$$$ MCO 2012-07-02: the module should not be aware of this
-
 // -----------------------------------------------------------------------------
 // Name: Agent_Path::Execute
 // Created: AGE 2005-02-25
@@ -478,7 +476,9 @@ void Agent_Path::Execute( TerrainPathfinder& pathfind )
     PathResult::E_State nPathState = GetState();
     if( nPathState == Path_ABC::eImpossible )
         SendEvent( entity_[ "identifier" ],
-            GET_HOOK( IsUnderground )( entity_ ) ? MIL_Report::eReport_NotActivatedUndergroundNetwork : MIL_Report::eReport_DifficultTerrain );
+            entity_[ "is-underground" ] // $$$$ MCO 2012-07-09: module should not be aware of the "is-underground" feature
+                ? MIL_Report::eReport_NotActivatedUndergroundNetwork
+                : MIL_Report::eReport_DifficultTerrain );
 
 #ifndef NDEBUG
     for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )

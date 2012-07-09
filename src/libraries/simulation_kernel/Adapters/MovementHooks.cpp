@@ -178,11 +178,6 @@ namespace
     {
         return MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread();
     }
-    DEFINE_HOOK( IsUnderground, bool, ( const SWORD_Model* entity ) )
-    {
-        const PHY_RoleAction_MovingUnderground* role = GET_PION( entity ).RetrieveRole< PHY_RoleAction_MovingUnderground >();
-        return role && role->IsUnderground();
-    }
     DEFINE_HOOK( FindObjectType, unsigned int, ( const char* type ) )
     {
         return MIL_ObjectFactory::FindType( type ).GetID();
@@ -545,7 +540,6 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetObjectKnownId, facade );
     REGISTER_HOOK( GetObjectRealName, facade );
     REGISTER_HOOK( GetPathfindCurrentThread, facade );
-    REGISTER_HOOK( IsUnderground, facade );
     REGISTER_HOOK( GetSpeedWithReinforcement, facade );
     REGISTER_HOOK( GetSpeedWithReinforcementObject, facade );
     REGISTER_HOOK( GetWorldWeldValue, facade );
