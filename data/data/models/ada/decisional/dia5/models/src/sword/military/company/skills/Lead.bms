@@ -179,6 +179,7 @@ activate = function( self )
 
     if not self.params.noCoordination then
 
+        DEC_Trace( "Heloooooooooooooooo" )
         local fuseau = meKnowledge:getFuseau()
         
 

@@ -35,7 +35,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Militia">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.Militia">
       <missions>
         <mission name="SAFETY - Alert urban blocks within area"/>
         <mission name="SAFETY - Go get decontaminated"/>
@@ -46,7 +46,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Transport">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.Transport">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
@@ -56,7 +56,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Police">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.Police">
       <missions>
         <mission name="SAFETY - Confine urban blocks within area"/>
         <mission name="SAFETY - Create and operate a decontamination site"/>
@@ -83,7 +83,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Ambulance">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.Ambulance">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
@@ -95,7 +95,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Satefy_Public Work">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Satefy.Public Work">
       <missions>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
@@ -112,7 +112,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_NBC">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.NBC">
       <missions>
         <mission name="SAFETY - Follow"/>
         <mission name="SAFETY - Move toward"/>
@@ -126,7 +126,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Firefighter">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.Firefighter">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Move toward"/>
@@ -147,7 +147,7 @@
       </missions>
       <fragorders/>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_Terrorist">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.Terrorist">
       <missions>
         <mission name="SAFETY - Go get decontaminated"/>
         <mission name="SAFETY - Follow"/>
@@ -2700,76 +2700,51 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
-      <missions>
-        <mission name="SAFETY - Follow"/>
-        <mission name="SAFETY - Move toward"/>
-        <mission name="SAFETY - Confine urban blocks within area"/>
-        <mission name="SAFETY - Lift confinement on urban blocks  within area"/>
-        <mission name="SAFETY - Increase resource node production"/>
-        <mission name="SAFETY - Evacuate urban blocks within area "/>
-        <mission name="SAFETY - Lift evacuation on urban blocks within area"/>
-        <mission name="SAFETY - Ensure victims evacuation"/>
-        <mission name="SAFETY - Extract victims from crowds"/>
-        <mission name="SAFETY - Alert urban blocks within area"/>
-        <mission name="SAFETY - Lift alert on urban blocks within area"/>
-        <mission name="SAFETY - Enable resource nodes"/>
-        <mission name="SAFETY - Disable resource nodes"/>
-        <mission name="SAFETY - Patrol"/>
-        <mission name="SAFETY - Transport units"/>
-        <mission name="SAFETY - Transport a crowd"/>
-        <mission name="SAFETY - Extinguish a fire"/>
-        <mission name="SAFETY - Extinguish fires within area"/>
-        <mission name="SAFETY - Decontaminate"/>
-        <mission name="SAFETY - Perform construction works"/>
-        <mission name="SAFETY - Resume construction works"/>
-        <mission name="SAFETY - Create and operate a decontamination site"/>
-        <mission name="SAFETY - Create and operate a checkpoint (filter crowds)"/>
-        <mission name="SAFETY - Light up fires"/>
-        <mission name="SAFETY - Operate a decontamination site"/>
-        <mission name="SAFETY - Operate a checkpoint (filter crowds)"/>
-        <mission name="SAFETY - Heal victims within crowds"/>
-        <mission name="SAFETY - Go get decontaminated"/>
-        <mission name="SAFETY - Attack urban blocks within area (with projectiles)"/>
-        <mission name="SAFETY - Commit a suicide attack (against units)"/>
-        <mission name="SAFETY - Stay/hide within a crowd"/>
-        <mission name="SAFETY - Order to follow"/>
-        <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Perform deconstruction works"/>
-        <mission name="SAFETY - Patrol within area"/>
-        <mission name="SAFETY - Operate a road block (prevent crowds from crossing)"/>
-        <mission name="SAFETY - Create and operate a roadblock (filter crowds)"/>
-        <mission name="SAFETY - Build a dike"/>
-        <mission name="SAFETY - Build a firebreak"/>
-        <mission name="SAFETY - Disperse crowd (with projectile)"/>
-      </missions>
-      <fragorders/>
-    </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_Terrorist">
-      <missions>
-        <mission name="SAFETY - Follow"/>
-        <mission name="SAFETY - Move toward"/>
-        <mission name="SAFETY - Enable resource nodes"/>
-        <mission name="SAFETY - Disable resource nodes"/>
-        <mission name="SAFETY - Patrol"/>
-        <mission name="SAFETY - Light up fires"/>
-        <mission name="SAFETY - Attack urban blocks within area (with projectiles)"/>
-        <mission name="SAFETY - Commit a suicide attack (against units)"/>
-        <mission name="SAFETY - Increase resource node production"/>
-        <mission name="SAFETY - Operate a decontamination site"/>
-        <mission name="SAFETY - Transport units"/>
-        <mission name="SAFETY - Operate a checkpoint (filter crowds)"/>
-        <mission name="SAFETY - Stay/hide within a crowd"/>
-        <mission name="SAFETY - Order to follow"/>
-        <mission name="SAFETY - Reinforce"/>
-        <mission name="SAFETY - Perform deconstruction works"/>
-        <mission name="SAFETY - Damage urban blocks within area"/>
-      </missions>
-      <fragorders/>
-    </unit>
-    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety_FlyingAgent">
+    <unit dia-type="agent.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="Safety.FlyingAgent">
       <missions/>
       <fragorders/>
+    </unit>
+    <unit dia-type="sword.military.platoon.roles.Platoon" file="BMPion.bms " masalife="true" name="Military.Infantry platoon">
+      <missions>
+        <mission name="Masalife.COMMON - Move to">
+          <fragorder name="Switch posture"/>
+        </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="sword.military.platoon.roles.Platoon" file="BMPion.bms " masalife="true" name="Military.Armored platoon">
+      <missions>
+        <mission name="Masalife.COMMON - Move to">
+          <fragorder name="Switch posture"/>
+        </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </unit>
   </units>
   <automats>
@@ -3974,11 +3949,53 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="commander.Commander" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="Safety_Automat">
+    <automat dia-type="commander.Commander" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="Safety.Automat">
       <missions>
         <mission name="SAFETY - MoveTo"/>
       </missions>
       <fragorders/>
+    </automat>
+    <automat dia-type="sword.military.company.roles.Company" file="BMAutomat.bms" masalife="true" name="Military.Infantry company">
+      <missions>
+        <mission name="Masalife.COMMON - Move to">
+          <fragorder name="Switch posture"/>
+        </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radio silence lifted"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="sword.military.company.roles.Company" file="BMAutomat.bms" masalife="true" name="Military.Armored squadron">
+      <missions>
+        <mission name="Masalife.COMMON - Move to">
+          <fragorder name="Switch posture"/>
+        </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+      </fragorders>
     </automat>
   </automats>
   <crowd>
@@ -4013,4 +4030,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1802835757" -->
+<!-- signature="1817937731" -->

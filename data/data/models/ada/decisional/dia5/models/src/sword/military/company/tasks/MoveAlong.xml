@@ -1,73 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.tasks.MoveAlong" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.ReachingEffect">
+    <description>For the commander agent, to order subordinates to follow a path defined as an ordered set of 'objectives' by the user. </description>
     <parameters>
         <parameter name="objectives">
+            <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent’s path.</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Reachable"/>
                 </list>
             </type>
         </parameter>
-        <parameter name="companyTask">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="mainTasks">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="supportTasks">
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="defaultTask">
-            <description>La mission que l'on donne par défaut aux pions.</description>
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <description>La mission que l'on donne aux pions de SE pour aider un pion de PE en difficulté.</description>
-            <type>
-                <simple name="string"/>
-            </type>
-        </parameter>
     </parameters>
     <stages>
-        <stage label="Progression sur itinéraire" disable-when-done="true">
+        <stage label="move to destination" disable-when-done="true">
+            <description>Issue the 'sword.military.platoon.tasks.MoveAlong' mission to subordinates.</description>
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
                     <parameter name="noCoordination">
                         <value>
-                            <boolean>true</boolean>
+                            <boolean>false</boolean>
                         </value>
                     </parameter>
                     <parameter name="companyTask">
                         <value>
-                            <parameter>companyTask</parameter>
+                            <string>sword.military.company.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <parameter>mainTasks</parameter>
+                            <string>sword.military.platoon.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <parameter>supportTasks</parameter>
+                            <string>sword.military.platoon.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <parameter>taskForSupporting</parameter>
+                            <string>sword.military.platoon.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <parameter>defaultTask</parameter>
+                            <string>sword.military.platoon.tasks.MoveAlong</string>
                         </value>
                     </parameter>
                 </skill>

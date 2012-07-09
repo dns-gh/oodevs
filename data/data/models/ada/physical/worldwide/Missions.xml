@@ -4023,6 +4023,24 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="sword.military.platoon.tasks.MoveAlong" dia-type="sword.military.platoon.tasks.MoveAlong" id="44504" name="Masalife.COMMON - Move to">
+      <description>
+        <doctrine><![CDATA[<P>To move to an objective using a defined route</P>]]></doctrine>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
+ - <b>Route</b> (path): the path to move along,<BR>
+<P>* The agent moves toward each waypoints defining the route. If a visited waypoint is not reachable,<BR>
+     the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a <BR>
+     close position (the closest position from the center). Average speed depends on physical capabilities regarding to terrain<BR>
+      properties.</P>
+<P>* Upon reaching a waypoint, the agent moves to the next one and so on, until the final one is reached.</P>
+<P>* When there is no more waypoints to visit, the agent stays next to the last one and the mission ends.</P>]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" name="Route" optional="false" type="Path"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -5691,6 +5709,13 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="waypoints" max-occurs="unbounded" min-occurs="1" name="waypoints" optional="false" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="sword.military.company.tasks.MoveAlong" dia-type="sword.military.company.tasks.MoveAlong" id="44505" mrt-dia-behavior="sword.military.company.tasks.MoveAlong" name="Masalife.COMMON - Move to">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" name="Route" optional="false" type="Path"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="342" name="Crowd - move">
@@ -5968,4 +5993,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0324996723" -->
+<!-- signature="0964569309" -->

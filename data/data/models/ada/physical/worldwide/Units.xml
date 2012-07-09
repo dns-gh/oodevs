@@ -3140,7 +3140,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Safety_Militia" id="99" name="SAFETY.Militia" type="Pion Emergency">
+  <unit decisional-model="Safety.Militia" id="99" name="SAFETY.Militia" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/police/law enforcement"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SAFETY.Police Car"/>
@@ -3161,7 +3161,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="Safety_Transport" id="100" name="SAFETY.Buses" type="Pion Emergency">
+  <unit decisional-model="Safety.Transport" id="100" name="SAFETY.Buses" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/firefighter"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SAFETY.Bus"/>
@@ -3182,7 +3182,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="Safety_Firefighter" id="101" name="SAFETY.Firefigthers" type="Pion Emergency">
+  <unit decisional-model="Safety.Firefighter" id="101" name="SAFETY.Firefigthers" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/firefighter/operation/fire suppression"/>
     <equipments>
       <equipment count="2" crew="8" major="true" type="SAFETY.FireFighter Truck"/>
@@ -3203,7 +3203,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height=">1m"/>
   </unit>
-  <unit decisional-model="Safety_NBC" id="102" name="SAFETY.Decontamination Team" type="Pion NBC">
+  <unit decisional-model="Safety.NBC" id="102" name="SAFETY.Decontamination Team" type="Pion NBC">
     <nature atlas-nature="None" level="oo" nature-app6="emergency/nbc/biological/recon equipped"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="NBC.RSV decontamination"/>
@@ -3230,7 +3230,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="Satefy_Public Work" id="103" name="SAFETY.Public Works Vehicles" type="Pion Emergency">
+  <unit decisional-model="Satefy.Public Work" id="103" name="SAFETY.Public Works Vehicles" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/public safety"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="SAFETY.Public Works Vehicle"/>
@@ -3251,7 +3251,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="Safety_Transport" id="104" name="SAFETY.Rescue Boats" type="Pion Emergency">
+  <unit decisional-model="Safety.Transport" id="104" name="SAFETY.Rescue Boats" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SAFETY.Rescue Boat"/>
@@ -3272,7 +3272,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height=">1m"/>
   </unit>
-  <unit decisional-model="Safety_Police" id="105" name="SAFETY.Police Unit" type="Pion Emergency">
+  <unit decisional-model="Safety.Police" id="105" name="SAFETY.Police Unit" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/police/operation/police"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SAFETY.Police Car"/>
@@ -3293,7 +3293,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="Safety_Ambulance" id="106" name="SAFETY.Ambulance" type="Pion Emergency">
+  <unit decisional-model="Safety.Ambulance" id="106" name="SAFETY.Ambulance" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/medical/evacuation/ambulance"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SAFETY.Ambulance"/>
@@ -3314,7 +3314,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
-  <unit decisional-model="Safety_Ambulance" id="107" name="SAFETY.Medical advanced post" type="Pion Emergency">
+  <unit decisional-model="Safety.Ambulance" id="107" name="SAFETY.Medical advanced post" type="Pion Emergency">
     <nature atlas-nature="Log" level="none" nature-app6="emergency/medical/operation"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="SAFETY.Ambulance"/>
@@ -3382,7 +3382,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Safety_Terrorist" id="110" name="SAFETY.Terrorists" type="Pion ASY">
+  <unit decisional-model="Safety.Terrorist" id="110" name="SAFETY.Terrorists" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/nbc/radiological"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="SAFETY.Terrorist"/>
@@ -3432,7 +3432,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Safety_FlyingAgent" id="112" name="SAFETY.Rescue Helicopters" type="Pion Emergency">
+  <unit can-fly="true" decisional-model="Safety.FlyingAgent" id="112" name="SAFETY.Rescue Helicopters" type="Pion Emergency">
     <nature atlas-nature="Helicoptere" level="none" nature-app6="emergency/medical/evacuation/helicopter"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="SAFETY.Rescue Helicopter"/>
@@ -3453,5 +3453,49 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height=">1m"/>
   </unit>
+  <unit decisional-model="Military.Infantry platoon" id="113" name="MILITARY.Infantry platoon" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="9" crew="1" loadable="true" type="INF.Infantry Soldiers"/>
+      <equipment count="2" crew="2" loadable="true" type="INF.SRAW soldier"/>
+      <equipment count="3" crew="1" loadable="true" type="INF.VSRAW soldier"/>
+      <equipment count="1" crew="1" loadable="true" type="INF.MANPAD Team"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="0758818396" -->
+<!-- signature="0514463528" -->

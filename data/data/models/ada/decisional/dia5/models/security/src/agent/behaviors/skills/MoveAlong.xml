@@ -3,7 +3,7 @@
     <description>To follow a path defined as an ordered set of entities by the user. The skill performs by activating the MoveToward skill with one entity at a time, in the specified order. </description>
     <parameters>
         <parameter name="entities">
-            <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent’s path</description>
+            <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent’s path.</description>
             <type>
                 <list>
                     <class name="agent.world.Destination"/>
