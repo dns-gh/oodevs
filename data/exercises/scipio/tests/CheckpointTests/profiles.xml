@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <profiles model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Admin" password="" role="" supervision="false">
+  <profile name="Admin" password="" role="supervisor" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
-        <side id="1051"/>
-        <side id="1052"/>
         <side id="1053"/>
+        <side id="1052"/>
+        <side id="1051"/>
+        <automat id="1335"/>
+        <automat id="1363"/>
+        <automat id="1352"/>
+        <automat id="1342"/>
+        <automat id="1214"/>
+        <automat id="1433"/>
+        <automat id="1333"/>
+        <automat id="1324"/>
+        <automat id="1319"/>
+        <automat id="1312"/>
+        <automat id="1308"/>
+        <automat id="1299"/>
+        <automat id="1293"/>
+        <automat id="1288"/>
+        <automat id="1282"/>
+        <automat id="1274"/>
+        <automat id="1270"/>
+        <automat id="1260"/>
+        <automat id="1241"/>
+        <automat id="1232"/>
+        <automat id="1230"/>
+        <automat id="1220"/>
       </readwrite>
     </rights>
   </profile>
 </profiles>
-<!-- signature="4256653780" -->
+<!-- signature="2473714460" -->

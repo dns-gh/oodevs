@@ -65,7 +65,7 @@
             <unit color="0x647dff" command-post="false" id="108" name="Patrouille . EI 12,7" position="29TNF3532359783" type="ABC . Patrouille EI 12,7"/>
           </automat>
         </formation>
-        <formation color="0x647dff" id="110" level="xxxx" name="Artillerie [110]" nature="sfgpu">
+        <formation color="0x647dff" id="110" level="xxxx" name="Artillerie [110]" nature="sfgpucfhe">
           <automat color="0x647dff" engaged="true" id="111" knowledge-group="7" name="ASS . Batterie de Tir AUF1 [111]" nature="sfgpucfhe" type="ASS . Batterie de Tir AUF1">
             <unit color="0x647dff" command-post="true" id="112" name="PC . Batterie ASS" position="29TNF3028963569" type="ASS . PC Batterie ASS"/>
             <unit color="0x647dff" command-post="false" id="115" name="Section . CDT CIE INF VAB" position="29TNF3148663497" type="INF . Section CDT CIE VAB"/>
@@ -1987,4 +1987,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4162560843" -->
+<!-- signature="0932010539" -->

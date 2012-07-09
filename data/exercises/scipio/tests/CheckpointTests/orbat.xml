@@ -2,335 +2,6 @@
 <orbat model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party color="0x647dff" id="1051" name="BadGuys" type="friend">
-      <objects/>
-      <tactical>
-        <formation color="0x647dff" id="1187" level="ii" logistic-level="logistic-base" name="Formation Each Automat Type [1187]" nature="sfgpuss">
-          <automat color="0x647dff" engaged="true" id="1214" knowledge-group="1189" logistic-level="logistic-base" name="LOG . TC2 LOG" nature="sfgpuss" type="LOG . TC2 LOG">
-            <unit color="0x647dff" command-post="true" id="1215" name="LOG . TC2" position="31TBN9504902979" type="LOG . TC2"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1220" knowledge-group="1189" name="JOINT . Groupe Chalands Marine" nature="sfgpuup" type="JOINT . Groupe Chalands Marine">
-            <unit color="0x647dff" command-post="true" id="1221" name="JOINT . PC Marine" position="31TBN9301903960" type="JOINT . PC Marine"/>
-            <unit color="0x647dff" command-post="false" id="1222" name="JOINT . CDIC + 2 CTM" position="31TBN9350403446" type="JOINT . CDIC + 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1223" name="JOINT . CDIC + 2 CTM" position="31TBN9298702962" type="JOINT . CDIC + 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1224" name="JOINT . CDIC + 2 CTM" position="31TBN9250203477" type="JOINT . CDIC + 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1225" name="JOINT . CDIC + 2 CTM" position="31TBN9351903945" type="JOINT . CDIC + 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1226" name="JOINT . 2 CTM" position="31TBN9371103439" type="JOINT . 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1227" name="JOINT . 2 CTM" position="31TBN9348802946" type="JOINT . 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1228" name="JOINT . 2 CTM" position="31TBN9298102756" type="JOINT . 2 CTM"/>
-            <unit color="0x647dff" command-post="false" id="1229" name="JOINT . 2 CTM" position="31TBN9248702978" type="JOINT . 2 CTM"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1230" knowledge-group="1189" name="INF . Section AC AMX10P" nature="sfgpucaaat" type="INF . Section AC AMX10P">
-            <unit color="0x647dff" command-post="true" id="1231" name="INF . Section AC AMX10P" position="31TBN9217502685" type="INF . Section AC AMX10P"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1232" knowledge-group="1189" name="HUMUS - INF . Compagnie" nature="sfgpucim" type="HUMUS - INF . Compagnie">
-            <unit color="0x647dff" command-post="true" id="1233" name="HUMUS - INF . PC" position="31TBN9215301985" type="HUMUS - INF . PC"/>
-            <unit color="0x647dff" command-post="false" id="1234" name="HUMUS - INF . Grp mortier 82" position="31TBN9263801470" type="HUMUS - INF . Grp mortier 82"/>
-            <unit color="0x647dff" command-post="false" id="1235" name="HUMUS - INF . Section BTR60" position="31TBN9212200987" type="HUMUS - INF . Section BTR60"/>
-            <unit color="0x647dff" command-post="false" id="1236" name="HUMUS - INF . Section BMP1" position="31TBN9163701502" type="HUMUS - INF . Section BMP1"/>
-            <unit color="0x647dff" command-post="false" id="1237" name="HUMUS - ABC . Peloton T55" position="31TBN9265401969" type="HUMUS - ABC . Peloton T55"/>
-            <unit color="0x647dff" command-post="false" id="1238" name="HUMUS - INF . Groupe AC" position="31TBN9284501464" type="HUMUS - INF . Groupe AC"/>
-            <unit color="0x647dff" command-post="false" id="1239" name="HUMUS - INF . Section GAZ66" position="31TBN9262200971" type="HUMUS - INF . Section GAZ66"/>
-            <unit color="0x647dff" command-post="false" id="1240" name="HUMUS - INF . Section ZIL 131" position="31TBN9211500780" type="HUMUS - INF . Section ZIL 131"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1241" knowledge-group="1189" name="GEN . Compagnie Appui generique" nature="sfgpuce" type="GEN . Compagnie Appui generique">
-            <unit color="0x647dff" command-post="true" id="1242" name="GEN . PC Cie APP" position="31TBN9124103316" type="GEN . PC Cie APP"/>
-            <unit color="0x647dff" command-post="false" id="1243" name="GEN . Groupe OT" position="31TBN9172602801" type="GEN . Groupe OT"/>
-            <unit color="0x647dff" command-post="false" id="1244" name="GEN . Groupe MATS" position="31TBN9120902317" type="GEN . Groupe MATS"/>
-            <unit color="0x647dff" command-post="false" id="1245" name="GEN . Demi Groupe MFRD CDT" position="31TBN9072402832" type="GEN . Demi Groupe MFRD CDT"/>
-            <unit color="0x647dff" command-post="false" id="1246" name="GEN . Demi Groupe MFRD" position="31TBN9174103300" type="GEN . Demi Groupe MFRD"/>
-            <unit color="0x647dff" command-post="false" id="1247" name="GEN . Groupe Enfouisseur" position="31TBN9193302794" type="GEN . Groupe Enfouisseur"/>
-            <unit color="0x647dff" command-post="false" id="1248" name="GEN . Groupe Disperseur" position="31TBN9171002302" type="GEN . Groupe Disperseur"/>
-            <unit color="0x647dff" command-post="false" id="1249" name="GEN . Groupe EFA CDT" position="31TBN9120302111" type="GEN . Groupe EFA CDT"/>
-            <unit color="0x647dff" command-post="false" id="1250" name="GEN . Groupe EFA" position="31TBN9070802333" type="GEN . Groupe EFA"/>
-            <unit color="0x647dff" command-post="false" id="1251" name="GEN . Groupe PAA" position="31TBN9051702839" type="GEN . Groupe PAA"/>
-            <unit color="0x647dff" command-post="false" id="1252" name="GEN . Groupe PAA CDT" position="31TBN9074003331" type="GEN . Groupe PAA CDT"/>
-            <unit color="0x647dff" command-post="false" id="1253" name="GEN . Groupe MLF CDT" position="31TBN9124703522" type="GEN . Groupe MLF CDT"/>
-            <unit color="0x647dff" command-post="false" id="1254" name="GEN . Groupe MLF" position="31TBN9195503500" type="GEN . Groupe MLF"/>
-            <unit color="0x647dff" command-post="false" id="1255" name="GEN . Section Aide au Deploiement" position="31TBN9220003044" type="GEN . Section Aide au Deploiement"/>
-            <unit color="0x647dff" command-post="false" id="1256" name="GEN . Section Equipement Plage" position="31TBN9218402528" type="GEN . Section Equipement Plage"/>
-            <unit color="0x647dff" command-post="false" id="1257" name="GEN . Section Equipement Zone Poser" position="31TBN9191002088" type="GEN . Section Equipement Zone Poser"/>
-            <unit color="0x647dff" command-post="false" id="1258" name="GEN . Groupe Chantier" position="31TBN9145401844" type="GEN . Groupe Chantier"/>
-            <unit color="0x647dff" command-post="false" id="1259" name="GEN . Section Equipt Montagne" position="31TBN9093501861" type="GEN . Section Equipt Montagne"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1260" knowledge-group="1189" name="CIRCU . Peloton Circulation sur P4" nature="sfgpusz" type="CIRCU . Peloton Circulation sur P4">
-            <unit color="0x647dff" command-post="true" id="1261" name="CIRCU . PC sur P4" position="31TBN9185105149" type="CIRCU . PC sur P4"/>
-            <unit color="0x647dff" command-post="false" id="1262" name="CIRCU . Patrouille P4" position="31TBN9233604634" type="CIRCU . Patrouille P4"/>
-            <unit color="0x647dff" command-post="false" id="1263" name="CIRCU . Patrouille P4" position="31TBN9181904151" type="CIRCU . Patrouille P4"/>
-            <unit color="0x647dff" command-post="false" id="1264" name="CIRCU . Patrouille P4" position="31TBN9133404665" type="CIRCU . Patrouille P4"/>
-            <unit color="0x647dff" command-post="false" id="1265" name="CIRCU . Patrouille P4" position="31TBN9235105133" type="CIRCU . Patrouille P4"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1270" knowledge-group="1189" name="ASS . Batterie de Tir AUF1" nature="sfgpucfhe" type="ASS . Batterie de Tir AUF1">
-            <unit color="0x647dff" command-post="true" id="1271" name="ASS . PC Batterie ASS" position="31TBN9018104751" type="ASS . PC Batterie ASS"/>
-            <unit color="0x647dff" command-post="false" id="1441" name="ASS . Section de Tir AUF1 CDS OFF" position="31TBN9066604236" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
-            <unit color="0x647dff" command-post="false" id="1442" name="ASS . Section de Tir AUF1 CDS SOFF" position="31TBN9014903753" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1274" knowledge-group="1189" name="ALAT - Ssgpt Mixte" nature="sfgpucvra" type="ALAT - Ssgpt Mixte">
-            <unit color="0x647dff" command-post="true" id="1275" name="ALAT - PC Escadrille" position="31TBN9097706128" type="ALAT - PC Escadrille"/>
-            <unit color="0x647dff" command-post="false" id="1276" name="ALAT - Patrouille 2HAC" position="31TBN9146205613" type="ALAT - Patrouille 2HAC"/>
-            <unit color="0x647dff" command-post="false" id="1277" name="ALAT - Patrouille 2HAM" position="31TBN9094605129" type="ALAT - Patrouille 2HAM"/>
-            <unit color="0x647dff" command-post="false" id="1278" name="ALAT - Patrouille 2HAM" position="31TBN9046105644" type="ALAT - Patrouille 2HAM"/>
-            <unit color="0x647dff" command-post="false" id="1279" name="ALAT - Patrouille 2HAH" position="31TBN9147806112" type="ALAT - Patrouille 2HAH"/>
-            <unit color="0x647dff" command-post="false" id="1280" name="ALAT - Patrouille 1HM SOFF" position="31TBN9167005606" type="ALAT - Patrouille 1HM SOFF"/>
-            <unit color="0x647dff" command-post="false" id="1281" name="ALAT - Patrouille 1HM SOFF" position="31TBN9144705114" type="ALAT - Patrouille 1HM SOFF"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1282" knowledge-group="1189" name="ABC . Escadron de Chars LECLERC" nature="sfgpucath" type="ABC . Escadron de Chars LECLERC">
-            <unit color="0x647dff" command-post="true" id="1283" name="ABC . Peloton LECLERC CDT ESC" position="31TBN9434503017" type="ABC . Peloton LECLERC CDT ESC"/>
-            <unit color="0x647dff" command-post="false" id="1284" name="ABC . Peloton LECLERC CDP OFF" position="31TBN9483002502" type="ABC . Peloton LECLERC CDP OFF"/>
-            <unit color="0x647dff" command-post="false" id="1285" name="ABC . Peloton LECLERC CDP OFF" position="31TBN9431402019" type="ABC . Peloton LECLERC CDP OFF"/>
-            <unit color="0x647dff" command-post="false" id="1286" name="ABC . Peloton LECLERC CDP SOFF" position="31TBN9382902534" type="ABC . Peloton LECLERC CDP SOFF"/>
-            <unit color="0x647dff" command-post="false" id="1287" name="ABC . Peloton d appui direct" position="31TBN9484603002" type="ABC . Peloton d appui direct"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1288" knowledge-group="1189" name="NRBC . Section Decontamination" nature="sfgpuuad" type="NRBC . Section Decontamination">
-            <unit color="0x647dff" command-post="true" id="1289" name="NRBC . PC deconta" position="31TBN9454504563" type="NRBC . PC deconta"/>
-            <unit color="0x647dff" command-post="false" id="1290" name="NRBC . Equipe decontamination" position="31TBN9503004048" type="NRBC . Equipe decontamination"/>
-            <unit color="0x647dff" command-post="false" id="1291" name="NRBC . Equipe decontamination" position="31TBN9451303565" type="NRBC . Equipe decontamination"/>
-            <unit color="0x647dff" command-post="false" id="1292" name="NRBC . Equipe decontamination" position="31TBN9402804080" type="NRBC . Equipe decontamination"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1293" knowledge-group="1189" name="RENS . Module RBRR" nature="sfgpujpb" type="RENS . Module RBRR">
-            <unit color="0x647dff" command-post="true" id="1294" name="RENS . PC RBRR" position="31TBN9342205600" type="RENS . PC RBRR"/>
-            <unit color="0x647dff" command-post="false" id="1295" name="RENS . Patrouille Recherche Blindee" position="31TBN9390705085" type="RENS . Patrouille Recherche Blindee"/>
-            <unit color="0x647dff" command-post="false" id="1296" name="RENS . Patrouille Recherche Moto" position="31TBN9339104602" type="RENS . Patrouille Recherche Moto"/>
-            <unit color="0x647dff" command-post="false" id="1297" name="RENS . Patrouille Recherche Nautique" position="31TBN9290605117" type="RENS . Patrouille Recherche Nautique"/>
-            <unit color="0x647dff" command-post="false" id="1298" name="RENS . Patrouille Recherche Radar" position="31TBN9392305584" type="RENS . Patrouille Recherche Radar"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1299" knowledge-group="1189" name="SGTIA ABC AMX10RC" nature="sfgpucawm" type="SGTIA ABC AMX10RC">
-            <unit color="0x647dff" command-post="true" id="1300" name="ABC . PC" position="31TBN9119201765" type="ABC . PC"/>
-            <unit color="0x647dff" command-post="false" id="1301" name="ABC . Patrouille EI 12,7" position="31TBN9167701250" type="ABC . Patrouille EI 12,7"/>
-            <unit color="0x647dff" command-post="false" id="1302" name="ABC . PLT AMX 10 RC CDP OFF" position="31TBN9116000767" type="ABC . PLT AMX 10 RC CDP OFF"/>
-            <unit color="0x647dff" command-post="false" id="1303" name="ABC . PLT AMX 10 RC CDP SOFF" position="31TBN9067501282" type="ABC . PLT AMX 10 RC CDP SOFF"/>
-            <unit color="0x647dff" command-post="false" id="1304" name="ABC . PLT AMX 10 RC CDP SOFF" position="31TBN9169201749" type="ABC . PLT AMX 10 RC CDP SOFF"/>
-            <unit color="0x647dff" command-post="false" id="1305" name="INF . Section CBT VAB CDS SOFF" position="31TBN9188401243" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit color="0x647dff" command-post="false" id="1306" name="GEN . Section CBT + MPG" position="31TBN9166100751" type="GEN . Section CBT + MPG"/>
-            <unit color="0x647dff" command-post="false" id="1443" name="CIRCU . Peloton Transport Blindes CL100" position="31TBN9115400560" type="TRAIN . Peloton Transport Blindes CL100"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1308" knowledge-group="1189" name="TRANS . Section RAC3" nature="sfgpuus" type="TRANS . Section RAC3">
-            <unit color="0x647dff" command-post="true" id="1309" name="TRANS . PC" position="31TBN8997503590" type="TRANS . PC"/>
-            <unit color="0x647dff" command-post="false" id="1310" name="TRANS . Groupe LAN" position="31TBN9046003075" type="TRANS . Groupe LAN"/>
-            <unit color="0x647dff" command-post="false" id="1311" name="TRANS . Groupe RAC3" position="31TBN8994402592" type="TRANS . Groupe RAC3"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1312" knowledge-group="1189" name="ASY . Terroristes" nature="sfgpuc" type="ASY . Terroristes">
-            <unit color="0x647dff" command-post="false" id="1313" name="Terroriste IED" position="31TBN8987102355" type="Terroriste IED"/>
-            <unit color="0x647dff" command-post="false" id="1314" name="Terroriste Sniper" position="31TBN9035601840" type="Terroriste Sniper"/>
-            <unit color="0x647dff" command-post="true" id="1315" name="Terroriste Sniper et IED" position="31TBN8984001356" type="Terroriste Sniper et IED"/>
-            <unit color="0x647dff" command-post="false" id="1316" name="Terroriste RPG" position="31TBN8935501871" type="Terroriste RPG"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1319" knowledge-group="1189" logistic-level="logistic-base" name="ONG" nature="sfgpumo" type="ONG">
-            <unit color="0x647dff" command-post="false" id="1320" name="ONG Soutien LOG" position="31TBN9010801565" type="ONG Soutien LOG"/>
-            <unit color="0x647dff" command-post="false" id="1321" name="ONG Intervention" position="31TBN9059301050" type="ONG Intervention"/>
-            <unit color="0x647dff" command-post="true" id="1322" name="ONG PC" position="31TBN9007600567" type="ONG PC"/>
-            <unit color="0x647dff" command-post="false" id="1323" name="ONG Transport" position="31TBN8959101081" type="ONG Transport"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1324" knowledge-group="1189" name="MILICE" nature="sfgpuci" type="MILICE">
-            <unit color="0x647dff" command-post="true" id="1325" name="MILICE . PICK UP CDT" position="31TBN8947304258" type="MILICE . PICK UP CDT"/>
-            <unit color="0x647dff" command-post="false" id="1326" name="MILICE . PICK UP 14,5" position="31TBN8995803743" type="MILICE . PICK UP 14,5"/>
-            <unit color="0x647dff" command-post="false" id="1327" name="MILICE . PICK UP 23/2" position="31TBN8944203259" type="MILICE . PICK UP 23/2"/>
-            <unit color="0x647dff" command-post="false" id="1328" name="MILICE . PICK UP 10 Miliciens" position="31TBN8895703774" type="MILICE . PICK UP 10 Miliciens"/>
-            <unit color="0x647dff" command-post="false" id="1329" name="MILICE . PICK UP 5 Miliciens" position="31TBN8997404242" type="MILICE . PICK UP 5 Miliciens"/>
-            <unit color="0x647dff" command-post="false" id="1330" name="MILICE . PICK UP BM8" position="31TBN9016603736" type="MILICE . PICK UP BM8"/>
-            <unit color="0x647dff" command-post="false" id="1331" name="MILICE . PICK UP MO60" position="31TBN8994203244" type="MILICE . PICK UP MO60"/>
-            <unit color="0x647dff" command-post="false" id="1332" name="MILICE . PICK UP SA7" position="31TBN8943503053" type="MILICE . PICK UP SA7"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1333" knowledge-group="1189" name="CIV . DPRE" nature="sfgpumr" type="CIV . DPRE">
-            <unit color="0x647dff" command-post="true" id="1334" name="Refugies" position="31TBN8885903430" type="Refugies"/>
-          </automat>
-          <automat color="0x647dff" engaged="true" id="1433" knowledge-group="1189" name="ASA . Batterie HAWK" nature="sfgpucdm" type="ASA . Section SATCP MISTRAL">
-            <unit color="0x647dff" command-post="true" id="1434" name="ASA . PC Batterie HAWK" position="31TBN9331002049" type="ASA . PC Section MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1435" name="ASA . Section de Tir HAWK" position="31TBN9379501534" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1436" name="ASA . Section de Tir HAWK" position="31TBN9327901050" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1437" name="ASA . Piece MISTRAL" position="31TBN9346501644" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1438" name="ASA . Piece MISTRAL" position="31TBN9355001592" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1439" name="ASA . Piece MISTRAL" position="31TBN9354701492" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1440" name="ASA . Piece MISTRAL" position="31TBN9345801444" type="ASA . Piece MISTRAL"/>
-          </automat>
-        </formation>
-      </tactical>
-      <communication>
-        <knowledge-group id="1189" name="Groupe de connaissance [1189]" type="Standard"/>
-      </communication>
-      <populations/>
-      <inhabitants/>
-      <logistics>
-        <logistic-base id="1214">
-          <subordinate id="1220"/>
-          <subordinate id="1230"/>
-          <subordinate id="1232"/>
-          <subordinate id="1241"/>
-          <subordinate id="1260"/>
-          <subordinate id="1270"/>
-          <subordinate id="1274"/>
-          <subordinate id="1282"/>
-          <subordinate id="1288"/>
-          <subordinate id="1293"/>
-          <subordinate id="1299"/>
-          <subordinate id="1308"/>
-          <subordinate id="1312"/>
-          <subordinate id="1319"/>
-          <subordinate id="1324"/>
-          <subordinate id="1333"/>
-          <subordinate id="1433"/>
-        </logistic-base>
-        <logistic-base id="1187">
-          <subordinate id="1214"/>
-        </logistic-base>
-      </logistics>
-    </party>
-    <party color="0x4bbedc" id="1052" name="GoodGuys" type="friend">
-      <objects/>
-      <tactical>
-        <formation color="0x4bbedc" id="1107" level="ii" logistic-level="logistic-base" name="Formation [1107]" nature="sfgpusm">
-          <automat color="0x4bbedc" engaged="true" id="1335" knowledge-group="1109" name="LOG . Secteur transport" nature="sfgpust" type="LOG . Secteur transport">
-            <unit color="0x4bbedc" command-post="true" id="1336" name="LOG . PC LOG BLD Secteur Transport" position="31TBM8906095274" type="LOG . PC LOG BLD Secteur Transport"/>
-            <unit color="0x4bbedc" command-post="false" id="1337" name="LOG . Peloton Transport VTLR (PT)" position="31TBM8954594759" type="LOG . Peloton Transport VTLR (PT)"/>
-            <unit color="0x4bbedc" command-post="false" id="1338" name="LOG . Peloton Ravitaillement (PR)" position="31TBM8902894276" type="LOG . Peloton Ravitaillement (PR)"/>
-            <unit color="0x4bbedc" command-post="false" id="1339" name="LOG . Peloton Transport TRM 10000" position="31TBM8854394791" type="LOG . Peloton Transport TRM 10000"/>
-            <unit color="0x4bbedc" command-post="false" id="1340" name="GLAISE - LOG . Peloton transport Kamaz 5320" position="31TBM8956095258" type="GLAISE - LOG . Peloton transport Kamaz 5320"/>
-            <unit color="0x4bbedc" command-post="false" id="1341" name="LOG . Peloton Transport BLIAT" position="31TBM8975294753" type="LOG . Peloton Transport BLIAT"/>
-          </automat>
-          <automat color="0x4bbedc" engaged="true" id="1342" knowledge-group="1109" name="LOG . Secteur EVASAN" nature="sfgpusm" type="LOG . Secteur EVASAN">
-            <unit color="0x4bbedc" command-post="true" id="1343" name="LOG . PC LOG BLD Secteur Sante" position="31TBM8838494578" type="LOG . PC LOG BLD Secteur Sante"/>
-            <unit color="0x4bbedc" command-post="false" id="1344" name="LOG . Groupe VS J5" position="31TBM8886994063" type="LOG . Groupe VS J5"/>
-            <unit color="0x4bbedc" command-post="false" id="1345" name="LOG . Groupe VS VAB" position="31TBM8835393580" type="LOG . Groupe VS VAB"/>
-            <unit color="0x4bbedc" command-post="false" id="1346" name="LOG . Equipe HM EVASAN" position="31TBM8786894095" type="LOG . Equipe HM EVASAN"/>
-            <unit color="0x4bbedc" command-post="false" id="1347" name="GLAISE - LOG . Equipe HM EVASAN" position="31TBM8888594562" type="GLAISE - LOG . Equipe HM EVASAN"/>
-            <unit color="0x4bbedc" command-post="false" id="1348" name="GLAISE - LOG . Groupe VS 469 SAN" position="31TBM8907694057" type="GLAISE - LOG . Groupe VS 469 SAN"/>
-            <unit color="0x4bbedc" command-post="false" id="1349" name="GLAISE - LOG . Groupe VS SAN" position="31TBM8885393564" type="GLAISE - LOG . Groupe VS SAN"/>
-            <unit color="0x4bbedc" command-post="false" id="1350" name="LOG . Groupe VS J5 BLIAT" position="31TBM8834693373" type="LOG . Groupe VS J5 BLIAT"/>
-            <unit color="0x4bbedc" command-post="false" id="1351" name="LOG . Equipe HM EVASAN BLIAT" position="31TBM8785293596" type="LOG . Equipe HM EVASAN BLIAT"/>
-          </automat>
-          <automat color="0x4bbedc" engaged="true" id="1352" knowledge-group="1109" name="LOG . Secteur munitions" nature="sfgpuss5" type="LOG . Secteur munitions">
-            <unit color="0x4bbedc" command-post="true" id="1353" name="LOG . PC LOG BLD secteur munition" position="31TBM8942594415" type="LOG . PC LOG BLD secteur munition"/>
-            <unit color="0x4bbedc" command-post="false" id="1354" name="LOG . Groupe Munitions SOFF TT - D" position="31TBM8991093900" type="LOG . Groupe Munitions SOFF TT - D"/>
-            <unit color="0x4bbedc" command-post="false" id="1355" name="LOG . Groupe Munitions OFF TT- D" position="31TBM8939493417" type="LOG . Groupe Munitions OFF TT- D"/>
-            <unit color="0x4bbedc" command-post="false" id="1356" name="LOG . Groupe Munitions OFF TD" position="31TBM8890993932" type="LOG . Groupe Munitions OFF TD"/>
-            <unit color="0x4bbedc" command-post="false" id="1357" name="LOG . Groupe Munitions SOFF TD" position="31TBM8992694399" type="LOG . Groupe Munitions SOFF TD"/>
-            <unit color="0x4bbedc" command-post="false" id="1358" name="GLAISE - LOG . Groupe Munitions SOFF TT - D" position="31TBM9011793894" type="GLAISE - LOG . Groupe Munitions SOFF TT - D"/>
-            <unit color="0x4bbedc" command-post="false" id="1359" name="GLAISE - LOG . Groupe Munitions OFF TT - D" position="31TBM8989493401" type="GLAISE - LOG . Groupe Munitions OFF TT - D"/>
-            <unit color="0x4bbedc" command-post="false" id="1360" name="GLAISE - LOG . Groupe Munitions OFF TD" position="31TBM8938793210" type="GLAISE - LOG . Groupe Munitions OFF TD"/>
-            <unit color="0x4bbedc" command-post="false" id="1361" name="GLAISE - LOG . Groupe Munitions SOFF TD" position="31TBM8889393433" type="GLAISE - LOG . Groupe Munitions SOFF TD"/>
-            <unit color="0x4bbedc" command-post="false" id="1362" name="LOG . Groupe Munitions BLIAT" position="31TBM8870193938" type="LOG . Groupe Munitions BLIAT"/>
-          </automat>
-          <automat color="0x4bbedc" engaged="true" id="1363" knowledge-group="1109" name="LOG . Secteur triage" nature="sfgpusm" type="LOG . Secteur triage">
-            <unit color="0x4bbedc" command-post="true" id="1364" name="LOG . PC LOG BLD Secteur Sante" position="31TBM8887493520" type="LOG . PC LOG BLD Secteur Sante"/>
-            <unit color="0x4bbedc" command-post="false" id="1365" name="LOG . Section Triage modulaire" position="31TBM8935993005" type="LOG . Section Triage modulaire"/>
-            <unit color="0x4bbedc" command-post="false" id="1366" name="GLAISE - LOG . Section Triage Modulaire" position="31TBM8884292522" type="GLAISE - LOG . Section Triage Modulaire"/>
-          </automat>
-          <lima name="Lima 1185">
-            <point>31TBM7861890937</point>
-            <point>31TCM0138984083</point>
-            <point>31TCM1633082796</point>
-            <point>31TCM3201585678</point>
-          </lima>
-          <lima name="Lima 1186">
-            <point>31TBN7984707164</point>
-            <point>31TBN9815308428</point>
-            <point>31TCN2036503432</point>
-            <point>31TCN3353904756</point>
-          </lima>
-          <limit name="Limite 1183">
-            <point>31TBN8392609593</point>
-            <point>31TBM8282284257</point>
-          </limit>
-          <limit name="Limite 1184">
-            <point>31TCN2785406674</point>
-            <point>31TCM2474779668</point>
-          </limit>
-        </formation>
-      </tactical>
-      <communication>
-        <knowledge-group id="1109" name="Groupe de connaissance [1109]" type="Standard"/>
-      </communication>
-      <populations>
-        <population attitude="calme" id="1378" name="Foule standard [1 378]" position="31TBM8601992772" type="Foule standard">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1379" name="Refugies a pied [1 379]" position="31TBM8689892157" type="Refugies a pied">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1380" name="Refugies en VHL [1 380]" position="31TBM8733391938" type="Refugies en VHL">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1381" name="Manifestants [1 381]" position="31TBM8691891849" type="Manifestants">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1382" name="Manifestants armes [1 382]" position="31TBM8646691995" type="Manifestants armes">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <armed-individuals value="0.5"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1383" name="Foule de femmes et d'enfants [1 383]" position="31TBM8727391456" type="Foule de femmes et d'enfants">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <repartition children="0.3" female="0.7" male="0"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1384" name="Foule mixte [1 384]" position="31TBM8665791519" type="Foule mixte">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <repartition children="0.1" female="0.45" male="0.45"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1385" name="Foule armée [1 385]" position="31TBM8579391664" type="Foule armée">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <armed-individuals value="0.5"/>
-          <repartition children="0" female="0.35" male="0.65"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-        <population attitude="calme" id="1386" name="Foule manipulée [1 386]" position="31TBM8783991513" type="Foule manipulée">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
-          <armed-individuals value="0.25"/>
-          <repartition children="0.1" female="0.45" male="0.45"/>
-          <adhesions>
-            <adhesion party="1051" value="0"/>
-            <adhesion party="1052" value="0"/>
-            <adhesion party="1053" value="0"/>
-          </adhesions>
-        </population>
-      </populations>
-      <inhabitants/>
-      <logistics>
-        <logistic-base id="1107">
-          <subordinate id="1335"/>
-          <subordinate id="1342"/>
-          <subordinate id="1352"/>
-          <subordinate id="1363"/>
-        </logistic-base>
-      </logistics>
-    </party>
-    <party color="0x6ee6e6" id="1053" name="NeutralGuys" type="friend">
       <objects>
         <object id="1388" name="abattis [1 388]" type="abattis">
           <shape type="point">
@@ -866,6 +537,335 @@
         </object>
       </objects>
       <tactical>
+        <formation color="0x647dff" id="1187" level="ii" logistic-level="logistic-base" name="Formation Each Automat Type [1187]" nature="sfgpuss">
+          <automat color="0x647dff" engaged="true" id="1214" knowledge-group="1189" logistic-level="logistic-base" name="LOG . TC2 LOG" nature="sfgpuss" type="LOG . TC2 LOG">
+            <unit color="0x647dff" command-post="true" id="1215" name="LOG . TC2" position="31TBN9504902979" type="LOG . TC2"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1220" knowledge-group="1189" name="JOINT . Groupe Chalands Marine" nature="sfgpuup" type="JOINT . Groupe Chalands Marine">
+            <unit color="0x647dff" command-post="true" id="1221" name="JOINT . PC Marine" position="31TBN9301903960" type="JOINT . PC Marine"/>
+            <unit color="0x647dff" command-post="false" id="1222" name="JOINT . CDIC + 2 CTM" position="31TBN9350403446" type="JOINT . CDIC + 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1223" name="JOINT . CDIC + 2 CTM" position="31TBN9298702962" type="JOINT . CDIC + 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1224" name="JOINT . CDIC + 2 CTM" position="31TBN9250203477" type="JOINT . CDIC + 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1225" name="JOINT . CDIC + 2 CTM" position="31TBN9351903945" type="JOINT . CDIC + 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1226" name="JOINT . 2 CTM" position="31TBN9371103439" type="JOINT . 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1227" name="JOINT . 2 CTM" position="31TBN9348802946" type="JOINT . 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1228" name="JOINT . 2 CTM" position="31TBN9298102756" type="JOINT . 2 CTM"/>
+            <unit color="0x647dff" command-post="false" id="1229" name="JOINT . 2 CTM" position="31TBN9248702978" type="JOINT . 2 CTM"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1230" knowledge-group="1189" name="INF . Section AC AMX10P" nature="sfgpucaaat" type="INF . Section AC AMX10P">
+            <unit color="0x647dff" command-post="true" id="1231" name="INF . Section AC AMX10P" position="31TBN9217502685" type="INF . Section AC AMX10P"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1232" knowledge-group="1189" name="HUMUS - INF . Compagnie" nature="sfgpucim" type="HUMUS - INF . Compagnie">
+            <unit color="0x647dff" command-post="true" id="1233" name="HUMUS - INF . PC" position="31TBN9215301985" type="HUMUS - INF . PC"/>
+            <unit color="0x647dff" command-post="false" id="1234" name="HUMUS - INF . Grp mortier 82" position="31TBN9263801470" type="HUMUS - INF . Grp mortier 82"/>
+            <unit color="0x647dff" command-post="false" id="1235" name="HUMUS - INF . Section BTR60" position="31TBN9212200987" type="HUMUS - INF . Section BTR60"/>
+            <unit color="0x647dff" command-post="false" id="1236" name="HUMUS - INF . Section BMP1" position="31TBN9163701502" type="HUMUS - INF . Section BMP1"/>
+            <unit color="0x647dff" command-post="false" id="1237" name="HUMUS - ABC . Peloton T55" position="31TBN9265401969" type="HUMUS - ABC . Peloton T55"/>
+            <unit color="0x647dff" command-post="false" id="1238" name="HUMUS - INF . Groupe AC" position="31TBN9284501464" type="HUMUS - INF . Groupe AC"/>
+            <unit color="0x647dff" command-post="false" id="1239" name="HUMUS - INF . Section GAZ66" position="31TBN9262200971" type="HUMUS - INF . Section GAZ66"/>
+            <unit color="0x647dff" command-post="false" id="1240" name="HUMUS - INF . Section ZIL 131" position="31TBN9211500780" type="HUMUS - INF . Section ZIL 131"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1241" knowledge-group="1189" name="GEN . Compagnie Appui generique" nature="sfgpuce" type="GEN . Compagnie Appui generique">
+            <unit color="0x647dff" command-post="true" id="1242" name="GEN . PC Cie APP" position="31TBN9124103316" type="GEN . PC Cie APP"/>
+            <unit color="0x647dff" command-post="false" id="1243" name="GEN . Groupe OT" position="31TBN9172602801" type="GEN . Groupe OT"/>
+            <unit color="0x647dff" command-post="false" id="1244" name="GEN . Groupe MATS" position="31TBN9120902317" type="GEN . Groupe MATS"/>
+            <unit color="0x647dff" command-post="false" id="1245" name="GEN . Demi Groupe MFRD CDT" position="31TBN9072402832" type="GEN . Demi Groupe MFRD CDT"/>
+            <unit color="0x647dff" command-post="false" id="1246" name="GEN . Demi Groupe MFRD" position="31TBN9174103300" type="GEN . Demi Groupe MFRD"/>
+            <unit color="0x647dff" command-post="false" id="1247" name="GEN . Groupe Enfouisseur" position="31TBN9193302794" type="GEN . Groupe Enfouisseur"/>
+            <unit color="0x647dff" command-post="false" id="1248" name="GEN . Groupe Disperseur" position="31TBN9171002302" type="GEN . Groupe Disperseur"/>
+            <unit color="0x647dff" command-post="false" id="1249" name="GEN . Groupe EFA CDT" position="31TBN9120302111" type="GEN . Groupe EFA CDT"/>
+            <unit color="0x647dff" command-post="false" id="1250" name="GEN . Groupe EFA" position="31TBN9070802333" type="GEN . Groupe EFA"/>
+            <unit color="0x647dff" command-post="false" id="1251" name="GEN . Groupe PAA" position="31TBN9051702839" type="GEN . Groupe PAA"/>
+            <unit color="0x647dff" command-post="false" id="1252" name="GEN . Groupe PAA CDT" position="31TBN9074003331" type="GEN . Groupe PAA CDT"/>
+            <unit color="0x647dff" command-post="false" id="1253" name="GEN . Groupe MLF CDT" position="31TBN9124703522" type="GEN . Groupe MLF CDT"/>
+            <unit color="0x647dff" command-post="false" id="1254" name="GEN . Groupe MLF" position="31TBN9195503500" type="GEN . Groupe MLF"/>
+            <unit color="0x647dff" command-post="false" id="1255" name="GEN . Section Aide au Deploiement" position="31TBN9220003044" type="GEN . Section Aide au Deploiement"/>
+            <unit color="0x647dff" command-post="false" id="1256" name="GEN . Section Equipement Plage" position="31TBN9218402528" type="GEN . Section Equipement Plage"/>
+            <unit color="0x647dff" command-post="false" id="1257" name="GEN . Section Equipement Zone Poser" position="31TBN9191002088" type="GEN . Section Equipement Zone Poser"/>
+            <unit color="0x647dff" command-post="false" id="1258" name="GEN . Groupe Chantier" position="31TBN9145401844" type="GEN . Groupe Chantier"/>
+            <unit color="0x647dff" command-post="false" id="1259" name="GEN . Section Equipt Montagne" position="31TBN9093501861" type="GEN . Section Equipt Montagne"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1260" knowledge-group="1189" name="CIRCU . Peloton Circulation sur P4" nature="sfgpusz" type="CIRCU . Peloton Circulation sur P4">
+            <unit color="0x647dff" command-post="true" id="1261" name="CIRCU . PC sur P4" position="31TBN9185105149" type="CIRCU . PC sur P4"/>
+            <unit color="0x647dff" command-post="false" id="1262" name="CIRCU . Patrouille P4" position="31TBN9233604634" type="CIRCU . Patrouille P4"/>
+            <unit color="0x647dff" command-post="false" id="1263" name="CIRCU . Patrouille P4" position="31TBN9181904151" type="CIRCU . Patrouille P4"/>
+            <unit color="0x647dff" command-post="false" id="1264" name="CIRCU . Patrouille P4" position="31TBN9133404665" type="CIRCU . Patrouille P4"/>
+            <unit color="0x647dff" command-post="false" id="1265" name="CIRCU . Patrouille P4" position="31TBN9235105133" type="CIRCU . Patrouille P4"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1270" knowledge-group="1189" name="ASS . Batterie de Tir AUF1" nature="sfgpucfhe" type="ASS . Batterie de Tir AUF1">
+            <unit color="0x647dff" command-post="true" id="1271" name="ASS . PC Batterie ASS" position="31TBN9018104751" type="ASS . PC Batterie ASS"/>
+            <unit color="0x647dff" command-post="false" id="1441" name="ASS . Section de Tir AUF1 CDS OFF" position="31TBN9066604236" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
+            <unit color="0x647dff" command-post="false" id="1442" name="ASS . Section de Tir AUF1 CDS SOFF" position="31TBN9014903753" type="ASS . Section de Tir AUF1 CDS SOFF Pour SIC"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1274" knowledge-group="1189" name="ALAT - Ssgpt Mixte" nature="sfgpucvra" type="ALAT - Ssgpt Mixte">
+            <unit color="0x647dff" command-post="true" id="1275" name="ALAT - PC Escadrille" position="31TBN9097706128" type="ALAT - PC Escadrille"/>
+            <unit color="0x647dff" command-post="false" id="1276" name="ALAT - Patrouille 2HAC" position="31TBN9146205613" type="ALAT - Patrouille 2HAC"/>
+            <unit color="0x647dff" command-post="false" id="1277" name="ALAT - Patrouille 2HAM" position="31TBN9094605129" type="ALAT - Patrouille 2HAM"/>
+            <unit color="0x647dff" command-post="false" id="1278" name="ALAT - Patrouille 2HAM" position="31TBN9046105644" type="ALAT - Patrouille 2HAM"/>
+            <unit color="0x647dff" command-post="false" id="1279" name="ALAT - Patrouille 2HAH" position="31TBN9147806112" type="ALAT - Patrouille 2HAH"/>
+            <unit color="0x647dff" command-post="false" id="1280" name="ALAT - Patrouille 1HM SOFF" position="31TBN9167005606" type="ALAT - Patrouille 1HM SOFF"/>
+            <unit color="0x647dff" command-post="false" id="1281" name="ALAT - Patrouille 1HM SOFF" position="31TBN9144705114" type="ALAT - Patrouille 1HM SOFF"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1282" knowledge-group="1189" name="ABC . Escadron de Chars LECLERC" nature="sfgpucath" type="ABC . Escadron de Chars LECLERC">
+            <unit color="0x647dff" command-post="true" id="1283" name="ABC . Peloton LECLERC CDT ESC" position="31TBN9434503017" type="ABC . Peloton LECLERC CDT ESC"/>
+            <unit color="0x647dff" command-post="false" id="1284" name="ABC . Peloton LECLERC CDP OFF" position="31TBN9483002502" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit color="0x647dff" command-post="false" id="1285" name="ABC . Peloton LECLERC CDP OFF" position="31TBN9431402019" type="ABC . Peloton LECLERC CDP OFF"/>
+            <unit color="0x647dff" command-post="false" id="1286" name="ABC . Peloton LECLERC CDP SOFF" position="31TBN9382902534" type="ABC . Peloton LECLERC CDP SOFF"/>
+            <unit color="0x647dff" command-post="false" id="1287" name="ABC . Peloton d appui direct" position="31TBN9484603002" type="ABC . Peloton d appui direct"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1288" knowledge-group="1189" name="NRBC . Section Decontamination" nature="sfgpuuad" type="NRBC . Section Decontamination">
+            <unit color="0x647dff" command-post="true" id="1289" name="NRBC . PC deconta" position="31TBN9454504563" type="NRBC . PC deconta"/>
+            <unit color="0x647dff" command-post="false" id="1290" name="NRBC . Equipe decontamination" position="31TBN9503004048" type="NRBC . Equipe decontamination"/>
+            <unit color="0x647dff" command-post="false" id="1291" name="NRBC . Equipe decontamination" position="31TBN9451303565" type="NRBC . Equipe decontamination"/>
+            <unit color="0x647dff" command-post="false" id="1292" name="NRBC . Equipe decontamination" position="31TBN9402804080" type="NRBC . Equipe decontamination"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1293" knowledge-group="1189" name="RENS . Module RBRR" nature="sfgpujpb" type="RENS . Module RBRR">
+            <unit color="0x647dff" command-post="true" id="1294" name="RENS . PC RBRR" position="31TBN9342205600" type="RENS . PC RBRR"/>
+            <unit color="0x647dff" command-post="false" id="1295" name="RENS . Patrouille Recherche Blindee" position="31TBN9390705085" type="RENS . Patrouille Recherche Blindee"/>
+            <unit color="0x647dff" command-post="false" id="1296" name="RENS . Patrouille Recherche Moto" position="31TBN9339104602" type="RENS . Patrouille Recherche Moto"/>
+            <unit color="0x647dff" command-post="false" id="1297" name="RENS . Patrouille Recherche Nautique" position="31TBN9290605117" type="RENS . Patrouille Recherche Nautique"/>
+            <unit color="0x647dff" command-post="false" id="1298" name="RENS . Patrouille Recherche Radar" position="31TBN9392305584" type="RENS . Patrouille Recherche Radar"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1299" knowledge-group="1189" name="SGTIA ABC AMX10RC" nature="sfgpucawm" type="SGTIA ABC AMX10RC">
+            <unit color="0x647dff" command-post="true" id="1300" name="ABC . PC" position="31TBN9119201765" type="ABC . PC"/>
+            <unit color="0x647dff" command-post="false" id="1301" name="ABC . Patrouille EI 12,7" position="31TBN9167701250" type="ABC . Patrouille EI 12,7"/>
+            <unit color="0x647dff" command-post="false" id="1302" name="ABC . PLT AMX 10 RC CDP OFF" position="31TBN9116000767" type="ABC . PLT AMX 10 RC CDP OFF"/>
+            <unit color="0x647dff" command-post="false" id="1303" name="ABC . PLT AMX 10 RC CDP SOFF" position="31TBN9067501282" type="ABC . PLT AMX 10 RC CDP SOFF"/>
+            <unit color="0x647dff" command-post="false" id="1304" name="ABC . PLT AMX 10 RC CDP SOFF" position="31TBN9169201749" type="ABC . PLT AMX 10 RC CDP SOFF"/>
+            <unit color="0x647dff" command-post="false" id="1305" name="INF . Section CBT VAB CDS SOFF" position="31TBN9188401243" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0x647dff" command-post="false" id="1306" name="GEN . Section CBT + MPG" position="31TBN9166100751" type="GEN . Section CBT + MPG"/>
+            <unit color="0x647dff" command-post="false" id="1443" name="CIRCU . Peloton Transport Blindes CL100" position="31TBN9115400560" type="TRAIN . Peloton Transport Blindes CL100"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1308" knowledge-group="1189" name="TRANS . Section RAC3" nature="sfgpuus" type="TRANS . Section RAC3">
+            <unit color="0x647dff" command-post="true" id="1309" name="TRANS . PC" position="31TBN8997503590" type="TRANS . PC"/>
+            <unit color="0x647dff" command-post="false" id="1310" name="TRANS . Groupe LAN" position="31TBN9046003075" type="TRANS . Groupe LAN"/>
+            <unit color="0x647dff" command-post="false" id="1311" name="TRANS . Groupe RAC3" position="31TBN8994402592" type="TRANS . Groupe RAC3"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1312" knowledge-group="1189" name="ASY . Terroristes" nature="sfgpuc" type="ASY . Terroristes">
+            <unit color="0x647dff" command-post="false" id="1313" name="Terroriste IED" position="31TBN8987102355" type="Terroriste IED"/>
+            <unit color="0x647dff" command-post="false" id="1314" name="Terroriste Sniper" position="31TBN9035601840" type="Terroriste Sniper"/>
+            <unit color="0x647dff" command-post="true" id="1315" name="Terroriste Sniper et IED" position="31TBN8984001356" type="Terroriste Sniper et IED"/>
+            <unit color="0x647dff" command-post="false" id="1316" name="Terroriste RPG" position="31TBN8935501871" type="Terroriste RPG"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1319" knowledge-group="1189" logistic-level="logistic-base" name="ONG" nature="sfgpumo" type="ONG">
+            <unit color="0x647dff" command-post="false" id="1320" name="ONG Soutien LOG" position="31TBN9010801565" type="ONG Soutien LOG"/>
+            <unit color="0x647dff" command-post="false" id="1321" name="ONG Intervention" position="31TBN9059301050" type="ONG Intervention"/>
+            <unit color="0x647dff" command-post="true" id="1322" name="ONG PC" position="31TBN9007600567" type="ONG PC"/>
+            <unit color="0x647dff" command-post="false" id="1323" name="ONG Transport" position="31TBN8959101081" type="ONG Transport"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1324" knowledge-group="1189" name="MILICE" nature="sfgpuci" type="MILICE">
+            <unit color="0x647dff" command-post="true" id="1325" name="MILICE . PICK UP CDT" position="31TBN8947304258" type="MILICE . PICK UP CDT"/>
+            <unit color="0x647dff" command-post="false" id="1326" name="MILICE . PICK UP 14,5" position="31TBN8995803743" type="MILICE . PICK UP 14,5"/>
+            <unit color="0x647dff" command-post="false" id="1327" name="MILICE . PICK UP 23/2" position="31TBN8944203259" type="MILICE . PICK UP 23/2"/>
+            <unit color="0x647dff" command-post="false" id="1328" name="MILICE . PICK UP 10 Miliciens" position="31TBN8895703774" type="MILICE . PICK UP 10 Miliciens"/>
+            <unit color="0x647dff" command-post="false" id="1329" name="MILICE . PICK UP 5 Miliciens" position="31TBN8997404242" type="MILICE . PICK UP 5 Miliciens"/>
+            <unit color="0x647dff" command-post="false" id="1330" name="MILICE . PICK UP BM8" position="31TBN9016603736" type="MILICE . PICK UP BM8"/>
+            <unit color="0x647dff" command-post="false" id="1331" name="MILICE . PICK UP MO60" position="31TBN8994203244" type="MILICE . PICK UP MO60"/>
+            <unit color="0x647dff" command-post="false" id="1332" name="MILICE . PICK UP SA7" position="31TBN8943503053" type="MILICE . PICK UP SA7"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1333" knowledge-group="1189" name="CIV . DPRE" nature="sfgpumr" type="CIV . DPRE">
+            <unit color="0x647dff" command-post="true" id="1334" name="Refugies" position="31TBN8885903430" type="Refugies"/>
+          </automat>
+          <automat color="0x647dff" engaged="true" id="1433" knowledge-group="1189" name="ASA . Batterie HAWK" nature="sfgpucdm" type="ASA . Section SATCP MISTRAL">
+            <unit color="0x647dff" command-post="true" id="1434" name="ASA . PC Batterie HAWK" position="31TBN9331002049" type="ASA . PC Section MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1435" name="ASA . Section de Tir HAWK" position="31TBN9379501534" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1436" name="ASA . Section de Tir HAWK" position="31TBN9327901050" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1437" name="ASA . Piece MISTRAL" position="31TBN9346501644" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1438" name="ASA . Piece MISTRAL" position="31TBN9355001592" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1439" name="ASA . Piece MISTRAL" position="31TBN9354701492" type="ASA . Piece MISTRAL"/>
+            <unit color="0x647dff" command-post="false" id="1440" name="ASA . Piece MISTRAL" position="31TBN9345801444" type="ASA . Piece MISTRAL"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1189" name="Groupe de connaissance [1189]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="1214">
+          <subordinate id="1220"/>
+          <subordinate id="1230"/>
+          <subordinate id="1232"/>
+          <subordinate id="1241"/>
+          <subordinate id="1260"/>
+          <subordinate id="1270"/>
+          <subordinate id="1274"/>
+          <subordinate id="1282"/>
+          <subordinate id="1288"/>
+          <subordinate id="1293"/>
+          <subordinate id="1299"/>
+          <subordinate id="1308"/>
+          <subordinate id="1312"/>
+          <subordinate id="1319"/>
+          <subordinate id="1324"/>
+          <subordinate id="1333"/>
+          <subordinate id="1433"/>
+        </logistic-base>
+        <logistic-base id="1187">
+          <subordinate id="1214"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party color="0x4bbedc" id="1052" name="GoodGuys" type="friend">
+      <objects/>
+      <tactical>
+        <formation color="0x4bbedc" id="1107" level="ii" logistic-level="logistic-base" name="Formation [1107]" nature="sfgpusm">
+          <automat color="0x4bbedc" engaged="true" id="1335" knowledge-group="1109" name="LOG . Secteur transport" nature="sfgpust" type="LOG . Secteur transport">
+            <unit color="0x4bbedc" command-post="true" id="1336" name="LOG . PC LOG BLD Secteur Transport" position="31TBM8906095274" type="LOG . PC LOG BLD Secteur Transport"/>
+            <unit color="0x4bbedc" command-post="false" id="1337" name="LOG . Peloton Transport VTLR (PT)" position="31TBM8954594759" type="LOG . Peloton Transport VTLR (PT)"/>
+            <unit color="0x4bbedc" command-post="false" id="1338" name="LOG . Peloton Ravitaillement (PR)" position="31TBM8902894276" type="LOG . Peloton Ravitaillement (PR)"/>
+            <unit color="0x4bbedc" command-post="false" id="1339" name="LOG . Peloton Transport TRM 10000" position="31TBM8854394791" type="LOG . Peloton Transport TRM 10000"/>
+            <unit color="0x4bbedc" command-post="false" id="1340" name="GLAISE - LOG . Peloton transport Kamaz 5320" position="31TBM8956095258" type="GLAISE - LOG . Peloton transport Kamaz 5320"/>
+            <unit color="0x4bbedc" command-post="false" id="1341" name="LOG . Peloton Transport BLIAT" position="31TBM8975294753" type="LOG . Peloton Transport BLIAT"/>
+          </automat>
+          <automat color="0x4bbedc" engaged="true" id="1342" knowledge-group="1109" name="LOG . Secteur EVASAN" nature="sfgpusm" type="LOG . Secteur EVASAN">
+            <unit color="0x4bbedc" command-post="true" id="1343" name="LOG . PC LOG BLD Secteur Sante" position="31TBM8838494578" type="LOG . PC LOG BLD Secteur Sante"/>
+            <unit color="0x4bbedc" command-post="false" id="1344" name="LOG . Groupe VS J5" position="31TBM8886994063" type="LOG . Groupe VS J5"/>
+            <unit color="0x4bbedc" command-post="false" id="1345" name="LOG . Groupe VS VAB" position="31TBM8835393580" type="LOG . Groupe VS VAB"/>
+            <unit color="0x4bbedc" command-post="false" id="1346" name="LOG . Equipe HM EVASAN" position="31TBM8786894095" type="LOG . Equipe HM EVASAN"/>
+            <unit color="0x4bbedc" command-post="false" id="1347" name="GLAISE - LOG . Equipe HM EVASAN" position="31TBM8888594562" type="GLAISE - LOG . Equipe HM EVASAN"/>
+            <unit color="0x4bbedc" command-post="false" id="1348" name="GLAISE - LOG . Groupe VS 469 SAN" position="31TBM8907694057" type="GLAISE - LOG . Groupe VS 469 SAN"/>
+            <unit color="0x4bbedc" command-post="false" id="1349" name="GLAISE - LOG . Groupe VS SAN" position="31TBM8885393564" type="GLAISE - LOG . Groupe VS SAN"/>
+            <unit color="0x4bbedc" command-post="false" id="1350" name="LOG . Groupe VS J5 BLIAT" position="31TBM8834693373" type="LOG . Groupe VS J5 BLIAT"/>
+            <unit color="0x4bbedc" command-post="false" id="1351" name="LOG . Equipe HM EVASAN BLIAT" position="31TBM8785293596" type="LOG . Equipe HM EVASAN BLIAT"/>
+          </automat>
+          <automat color="0x4bbedc" engaged="true" id="1352" knowledge-group="1109" name="LOG . Secteur munitions" nature="sfgpuss5" type="LOG . Secteur munitions">
+            <unit color="0x4bbedc" command-post="true" id="1353" name="LOG . PC LOG BLD secteur munition" position="31TBM8942594415" type="LOG . PC LOG BLD secteur munition"/>
+            <unit color="0x4bbedc" command-post="false" id="1354" name="LOG . Groupe Munitions SOFF TT - D" position="31TBM8991093900" type="LOG . Groupe Munitions SOFF TT - D"/>
+            <unit color="0x4bbedc" command-post="false" id="1355" name="LOG . Groupe Munitions OFF TT- D" position="31TBM8939493417" type="LOG . Groupe Munitions OFF TT- D"/>
+            <unit color="0x4bbedc" command-post="false" id="1356" name="LOG . Groupe Munitions OFF TD" position="31TBM8890993932" type="LOG . Groupe Munitions OFF TD"/>
+            <unit color="0x4bbedc" command-post="false" id="1357" name="LOG . Groupe Munitions SOFF TD" position="31TBM8992694399" type="LOG . Groupe Munitions SOFF TD"/>
+            <unit color="0x4bbedc" command-post="false" id="1358" name="GLAISE - LOG . Groupe Munitions SOFF TT - D" position="31TBM9011793894" type="GLAISE - LOG . Groupe Munitions SOFF TT - D"/>
+            <unit color="0x4bbedc" command-post="false" id="1359" name="GLAISE - LOG . Groupe Munitions OFF TT - D" position="31TBM8989493401" type="GLAISE - LOG . Groupe Munitions OFF TT - D"/>
+            <unit color="0x4bbedc" command-post="false" id="1360" name="GLAISE - LOG . Groupe Munitions OFF TD" position="31TBM8938793210" type="GLAISE - LOG . Groupe Munitions OFF TD"/>
+            <unit color="0x4bbedc" command-post="false" id="1361" name="GLAISE - LOG . Groupe Munitions SOFF TD" position="31TBM8889393433" type="GLAISE - LOG . Groupe Munitions SOFF TD"/>
+            <unit color="0x4bbedc" command-post="false" id="1362" name="LOG . Groupe Munitions BLIAT" position="31TBM8870193938" type="LOG . Groupe Munitions BLIAT"/>
+          </automat>
+          <automat color="0x4bbedc" engaged="true" id="1363" knowledge-group="1109" name="LOG . Secteur triage" nature="sfgpusm" type="LOG . Secteur triage">
+            <unit color="0x4bbedc" command-post="true" id="1364" name="LOG . PC LOG BLD Secteur Sante" position="31TBM8887493520" type="LOG . PC LOG BLD Secteur Sante"/>
+            <unit color="0x4bbedc" command-post="false" id="1365" name="LOG . Section Triage modulaire" position="31TBM8935993005" type="LOG . Section Triage modulaire"/>
+            <unit color="0x4bbedc" command-post="false" id="1366" name="GLAISE - LOG . Section Triage Modulaire" position="31TBM8884292522" type="GLAISE - LOG . Section Triage Modulaire"/>
+          </automat>
+          <lima name="Lima 1185">
+            <point>31TBM7861890937</point>
+            <point>31TCM0138984083</point>
+            <point>31TCM1633082796</point>
+            <point>31TCM3201585678</point>
+          </lima>
+          <lima name="Lima 1186">
+            <point>31TBN7984707164</point>
+            <point>31TBN9815308428</point>
+            <point>31TCN2036503432</point>
+            <point>31TCN3353904756</point>
+          </lima>
+          <limit name="Limite 1183">
+            <point>31TBN8392609593</point>
+            <point>31TBM8282284257</point>
+          </limit>
+          <limit name="Limite 1184">
+            <point>31TCN2785406674</point>
+            <point>31TCM2474779668</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1109" name="Groupe de connaissance [1109]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="1378" name="Foule standard [1 378]" position="31TBM8601992772" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1379" name="Refugies a pied [1 379]" position="31TBM8689892157" type="Refugies a pied">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1380" name="Refugies en VHL [1 380]" position="31TBM8733391938" type="Refugies en VHL">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1381" name="Manifestants [1 381]" position="31TBM8691891849" type="Manifestants">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1382" name="Manifestants armes [1 382]" position="31TBM8646691995" type="Manifestants armes">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.5"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1383" name="Foule de femmes et d'enfants [1 383]" position="31TBM8727391456" type="Foule de femmes et d'enfants">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <repartition children="0.3" female="0.7" male="0"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1384" name="Foule mixte [1 384]" position="31TBM8665791519" type="Foule mixte">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <repartition children="0.1" female="0.45" male="0.45"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1385" name="Foule armée [1 385]" position="31TBM8579391664" type="Foule armée">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.5"/>
+          <repartition children="0" female="0.35" male="0.65"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1386" name="Foule manipulée [1 386]" position="31TBM8783991513" type="Foule manipulée">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <armed-individuals value="0.25"/>
+          <repartition children="0.1" female="0.45" male="0.45"/>
+          <adhesions>
+            <adhesion party="1051" value="0"/>
+            <adhesion party="1052" value="0"/>
+            <adhesion party="1053" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="1107">
+          <subordinate id="1335"/>
+          <subordinate id="1342"/>
+          <subordinate id="1352"/>
+          <subordinate id="1363"/>
+        </logistic-base>
+      </logistics>
+    </party>
+    <party color="0x6ee6e6" id="1053" name="NeutralGuys" type="friend">
+      <objects/>
+      <tactical>
         <formation color="0x6ee6e6" id="1211" level="ii" name="Formation [1211]" nature=""/>
       </tactical>
       <communication>
@@ -921,4 +921,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1185630781" -->
+<!-- signature="0171519824" -->

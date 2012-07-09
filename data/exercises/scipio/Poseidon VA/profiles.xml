@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <profiles model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Admin" password="" role="" supervision="false">
+  <profile name="Admin" password="" role="supervisor" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -87,4 +87,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="1764234738" -->
+<!-- signature="2062112090" -->
