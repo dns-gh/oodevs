@@ -15,6 +15,7 @@
 #include "actions/Army.h"
 #include "actions/Point.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/GlSelector.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -50,13 +51,14 @@ using namespace actions;
 // Name: UnitMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
+UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
     , profile_( profile )
+    , selector_( selector )
     , selectedEntity_( controllers )
     , magicMove_( false )
 {
@@ -297,6 +299,7 @@ void UnitMagicOrdersInterface::Move()
         controllers_.Register( *magicMoveLocation_ );
     magicMove_ = true;
     magicMoveLocation_->StartPoint();
+    selector_.SetFocus();
 }
 
 // -----------------------------------------------------------------------------

@@ -220,3 +220,15 @@ void GlSelector::InitializePasses()
     widget2d_->AddPass( *fog );
     widget2d_->AddPass( *main );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlSelector::SetFocus
+// Created: ABR 2012-07-10
+// -----------------------------------------------------------------------------
+void GlSelector::SetFocus()
+{
+    if( widget2d_ )
+        widget2d_->setFocus();
+    else if( widget3d_ )
+        widget3d_->setFocus();
+}

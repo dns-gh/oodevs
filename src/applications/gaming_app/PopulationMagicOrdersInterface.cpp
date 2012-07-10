@@ -16,6 +16,7 @@
 #include "actions/Point.h"
 #include "actions/Quantity.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/GlSelector.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
@@ -71,13 +72,14 @@ namespace
 // Name: PopulationMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation, ParametersLayer& layer, const Profile_ABC& profile )
+PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation, ParametersLayer& layer, const Profile_ABC& profile, gui::GlSelector& selector )
     : QObject( parent )
     , controllers_   ( controllers )
     , actionsModel_  ( actionsModel )
     , static_        ( staticModel )
     , simulation_    ( simulation )
     , profile_       ( profile )
+    , selector_      ( selector )
     , selectedEntity_( controllers )
     , magicMove_     ( false )
 {
@@ -150,6 +152,7 @@ void PopulationMagicOrdersInterface::Move()
         controllers_.Register( *magicMoveLocation_ );
     magicMove_ = true;
     magicMoveLocation_->StartPoint();
+    selector_.SetFocus();
 }
 
 // -----------------------------------------------------------------------------
