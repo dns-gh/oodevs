@@ -466,3 +466,19 @@ BOOST_FIXTURE_TEST_CASE( get_perception_hook_between_two_points_returns_max_perc
     MOCK_EXPECT( ComputeRayTrace ).once().returns( 43. );
     BOOST_CHECK_EQUAL( 43., GetPerception( core::Convert( &entity ), &point, &target ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( compute_knowledge_object_perception_hook_returns_perception_level, PerceptionFixture )
+{
+    MOCK_RESET( CreateEffect );
+    MOCK_RESET( PostEffect );
+    DEC_Knowledge_Object* object = reinterpret_cast< DEC_Knowledge_Object* >( 43 );
+    MOCK_EXPECT( GetKnowledgeObjectType ).returns( 0u );
+    {
+        MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( true );
+        BOOST_CHECK_EQUAL( 3u, ComputeKnowledgeObjectPerception( core::Convert( &entity ), object ) );
+    }
+    {
+        MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( false );
+        BOOST_CHECK_EQUAL( 0u, ComputeKnowledgeObjectPerception( core::Convert( &entity ), object ) );
+    }
+}

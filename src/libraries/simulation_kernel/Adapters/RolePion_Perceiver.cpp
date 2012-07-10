@@ -204,6 +204,7 @@ namespace
 
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
+DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::Initialize
@@ -213,6 +214,7 @@ void RolePion_Perceiver::Initialize( core::Facade& facade )
 {
     USE_HOOK( IsUsingActiveRadar, facade );
     USE_HOOK( IsUsingSpecializedActiveRadar, facade );
+    USE_HOOK( ComputeKnowledgeObjectPerception, facade );
 }
 
 // -----------------------------------------------------------------------------
@@ -827,16 +829,7 @@ void RolePion_Perceiver::ExecutePerceptions()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Object& knowledge ) const
 {
-    if( !CanPerceive() )
-        return PHY_PerceptionLevel::notSeen_;
-    const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-    {
-        pBestPerceptionLevel_ = &(**itPerception).Compute( knowledge );
-        if( pBestPerceptionLevel_->IsBestLevel() )
-            return *pBestPerceptionLevel_;
-    }
-    return *pBestPerceptionLevel_;
+    return PHY_PerceptionLevel::FindPerceptionLevel( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &entity_ ), &knowledge ) );
 }
 
 // -----------------------------------------------------------------------------

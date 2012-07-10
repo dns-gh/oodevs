@@ -31,6 +31,8 @@
 #include <map>
 #include <set>
 #include <boost/foreach.hpp>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 using namespace sword;
 using namespace sword::perception;
@@ -75,6 +77,26 @@ namespace
         if( GET_PREVIOUS_HOOK( IsPointVisible ) )
             result = result || GET_PREVIOUS_HOOK( IsPointVisible )( entity, point );
         return result;
+    }
+    DEFINE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+    {
+        size_t level = PerceptionLevel::notSeen_.GetID();
+        try
+        {
+            RolePion_Perceiver perceiver;
+            level = perceiver.ComputePerception( entity, *object ).GetID();
+        }
+        catch( std::exception& e )
+        {
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        }
+        catch( ... )
+        {
+            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in ComputeKnowledgeObjectPerception hook" );
+        }
+        if( GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception ) )
+            level = std::max( level, GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception )( entity, object ) );
+        return level;
     }
     DEFINE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
     {
@@ -401,6 +423,8 @@ namespace
         }
         const T& surfaces_;
     };
+    typedef Surfaces< SurfacesAgent_ABC, SurfacesAgentVisitor_ABC, T_SurfaceAgentMap > T_SurfacesAgents;
+    typedef Surfaces< SurfacesObject_ABC, SurfacesObjectVisitor_ABC, T_SurfaceObjectMap > T_SurfacesObjects;
 
     // -----------------------------------------------------------------------------
     // Name: RolePion_Perceiver::UpdatePeriphericalVisionState
@@ -471,7 +495,7 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
     PerceptionObserver observer( entity, entity[ "perceptions/record-mode" ] );
     PerceptionView perceptionView( entity, observer );
     T_PerceptionVector activePerceptions;
-    activePerceptions.push_back( &perceptionView );
+    activePerceptions.push_back( &perceptionView ); // $$$$ _RC_ SLI 2012-07-10: add all active perceptions
     T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
@@ -499,13 +523,13 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
                                           &AddedKnowledgesVisitor::AddPopulationConcentration, &AddedKnowledgesVisitor::AddPopulationFlow,
                                           &knowledgesVisitor );
 
-        const Surfaces< SurfacesAgent_ABC, SurfacesAgentVisitor_ABC, T_SurfaceAgentMap > surfacesAgent( surfacesAgent );
+        const T_SurfacesAgents surfacesAgent( surfacesAgent );
         ListInCircleVisitor< wrapper::View > agentVisitor( perceivableAgents );
         GET_HOOK( GetAgentListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
         for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
             (**itPerception).Execute( entity, surfacesAgent, perceivableAgents );
 
-        const Surfaces< SurfacesObject_ABC, SurfacesObjectVisitor_ABC, T_SurfaceObjectMap > surfacesObject( surfacesObject );
+        const T_SurfacesObjects surfacesObject( surfacesObject );
         ListInCircleVisitor< MIL_Object_ABC* > objectVisitor( perceivableObjects );
         GET_HOOK( GetObjectListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< MIL_Object_ABC* >::Add, &objectVisitor );
         for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
@@ -541,18 +565,24 @@ namespace
         virtual void NotifyPerception( const MIL_PopulationFlow*, const PerceptionLevel&, const std::vector< MT_Vector2D >& ) {}
         virtual void NotifyPerception( const MIL_PopulationConcentration*, const PerceptionLevel& ) {}
     };
+    template< typename Result, typename Map, typename Drop >
+    boost::shared_ptr< Result > CreateSurfaces( const Map& surfaces, const Drop& )
+    {
+        return boost::shared_ptr< Result >( new Result( surfaces ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::ComputePerception
-// Created: SLI 2012-06-21
+// Created: SLI 2012-07-10
 // -----------------------------------------------------------------------------
-const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const MT_Vector2D& vPoint ) const
+template< typename Target, typename Constructor >
+const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const
 {
     NullObserver observer;
     PerceptionView perceptionView( entity, observer );
     T_PerceptionVector activePerceptions;
-    activePerceptions.push_back( &perceptionView );
+    activePerceptions.push_back( &perceptionView ); // $$$$ _RC_ SLI 2012-07-10: add all active perceptions
     T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
@@ -562,15 +592,33 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
     PrepareRadarData( entity, radars );
     if( !CanPerceive( entity ) )
         return PerceptionLevel::notSeen_;
-    const Surfaces< SurfacesAgent_ABC, SurfacesAgentVisitor_ABC, T_SurfaceAgentMap > surfaces( surfacesAgent );
+    Constructor::result_type surfaces = surfaceConstructor( surfacesAgent, surfacesObject );
     const PerceptionLevel* pBestPerceptionLevel = &PerceptionLevel::notSeen_;
     for( CIT_PerceptionVector itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
     {
-        pBestPerceptionLevel = &(**itPerception).Compute( entity, surfaces, vPoint );
+        pBestPerceptionLevel = &(**itPerception).Compute( entity, *surfaces, target );
         if( pBestPerceptionLevel->IsBestLevel() )
             return *pBestPerceptionLevel;
     }
     return *pBestPerceptionLevel;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::ComputePerception
+// Created: SLI 2012-06-21
+// -----------------------------------------------------------------------------
+const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const MT_Vector2D& vPoint ) const
+{
+    return ComputePerception( entity, vPoint, boost::bind( &CreateSurfaces< T_SurfacesAgents, T_SurfaceAgentMap, T_SurfaceObjectMap >, _1, _2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::ComputePerception
+// Created: SLI 2012-07-10
+// -----------------------------------------------------------------------------
+const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const DEC_Knowledge_Object& object ) const
+{
+    return ComputePerception( entity, object, boost::bind( &CreateSurfaces< T_SurfacesObjects, T_SurfaceObjectMap, T_SurfaceAgentMap >, _2, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
