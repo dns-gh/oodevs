@@ -1212,6 +1212,94 @@
 			<xs:enumeration value="automat"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="phantom_profile">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Base type for phantom logistic relationship.</xs:documentation>
+			<xs:documentation xml:lang="fr">Type de base pour les relation logistique des fantôme.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="profile" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the logistic superior of the current automat phantom.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit le supérieur logistique de l'automate fantôme.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="write" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identify the profile that can write this phantom.</xs:documentation>
+							<xs:documentation xml:lang="fr">Identifie le profile qui possède les droits en ecriture sur ce fantôme.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="read" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identify the profile that can read this phantom.</xs:documentation>
+							<xs:documentation xml:lang="fr">Identifie le profile qui possède les droits en lecture sur ce fantôme.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="phantom_logistic">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Base type for phantom logistic relationship.</xs:documentation>
+			<xs:documentation xml:lang="fr">Type de base pour les relation logistique des fantôme.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="superior" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the logistic superior of the current automat phantom.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit le supérieur logistique de l'automate fantôme.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the logistic superior.</xs:documentation>
+							<xs:documentation xml:lang="fr">Identifiant du superieur logistique.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subordinate" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines a logistic subordinate of the current automat phantom.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit un subordonné logistique de l'automate fantôme.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the subordinate (automat).</xs:documentation>
+							<xs:documentation xml:lang="fr">Identifiant de l'automate subordonné</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="quotas" type="resourcesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines quotas granted to this logistic phantom.</xs:documentation>
+					<xs:documentation xml:lang="fr">Définit les quotas alloués à cette automate fantôme.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="phantom_phantom">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Base type for agent phantom under a phantom automat.</xs:documentation>
+			<xs:documentation xml:lang="fr">Type de base pour les fantôme agent sous un fantôme automate.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the name of the phantom.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le nom du fantôme</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="position" type="utmCoordinatesType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the position of the phantom as UTM coordinates.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit la géolocalisation du fantôme en coordonnées UTM.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
 	<xs:complexType name="phantom_agent">
 		<xs:complexContent>
 			<xs:extension base="entityType">
@@ -1261,6 +1349,12 @@
 						<xs:documentation xml:lang="fr">Surdéfinit le symbole</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
+				<xs:attribute name="command-post" type="xs:boolean" use="optional" default="false">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines whether unit stands as a command-post.</xs:documentation>
+						<xs:documentation xml:lang="fr">Vrai si l'unité est un poste de commande.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -1271,6 +1365,17 @@
 					<xs:documentation xml:lang="en">Base type for automat phantom.</xs:documentation>
 					<xs:documentation xml:lang="fr">Type de base pour les fantôme automate.</xs:documentation>
 				</xs:annotation>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="phantom" type="phantom_phantom" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="logistic" type="phantom_logistic" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="profiles" type="phantom_profile" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:attribute name="logistic-level" type="logisticLevelType" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines the logistic level, if any.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit le niveau logistique, le cas échéant.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="knowledge-group" type="xs:nonNegativeInteger" use="required">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines reference to existing knowledge group which phantom automat belongs to. Not present in agent automat</xs:documentation>
