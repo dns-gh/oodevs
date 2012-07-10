@@ -287,6 +287,10 @@
         <source>Infrastructure/Role</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Crowd</name>

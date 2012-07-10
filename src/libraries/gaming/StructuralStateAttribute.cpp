@@ -85,6 +85,6 @@ void StructuralStateAttribute::UpdateData( const T& message )
     if( message.has_structure() )
     {
         structuralState_ = message.structure().state();
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info/StructuralState" ) ) );
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info" ) ) );
     }
 }
