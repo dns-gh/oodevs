@@ -2709,6 +2709,7 @@
         <mission name="Masalife.COMMON - Move to">
           <fragorder name="Switch posture"/>
         </mission>
+        <mission name="Masalife.COMMON - Follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2730,6 +2731,7 @@
         <mission name="Masalife.COMMON - Move to">
           <fragorder name="Switch posture"/>
         </mission>
+        <mission name="Masalife.COMMON - Follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3960,6 +3962,7 @@
         <mission name="Masalife.COMMON - Move to">
           <fragorder name="Switch posture"/>
         </mission>
+        <mission name="Masalife.COMMON - Follow"/>
       </missions>
       <fragorders>
         <fragorder name="Cancel maneuver"/>
@@ -3981,6 +3984,7 @@
         <mission name="Masalife.COMMON - Move to">
           <fragorder name="Switch posture"/>
         </mission>
+        <mission name="Masalife.COMMON - Follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4030,4 +4034,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1817937731" -->
+<!-- signature="2267733588" -->

@@ -11,6 +11,13 @@
             <unit command-post="false" id="332" name="MILITARY.Infantry platoon" position="29TNF3379058347" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="333" name="MILITARY.Infantry platoon" position="29TNF3403958492" type="MILITARY.Infantry platoon"/>
           </automat>
+          <automat engaged="true" id="346" knowledge-group="329" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="347" name="MILITARY.Infantry platoon" position="29TNF3326554247" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="348" name="MILITARY.Infantry platoon" position="29TNF3351854175" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="349" name="MILITARY.Infantry platoon" position="29TNF3347554330" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="350" name="MILITARY.Infantry platoon" position="29TNF3347354072" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="351" name="MILITARY.Infantry platoon" position="29TNF3372054289" type="MILITARY.Infantry platoon"/>
+          </automat>
           <limit name="Limit 346">
             <point>29TNF3350060185</point>
             <point>29TNF3259858644</point>
@@ -123,4 +130,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3939703703" -->
+<!-- signature="2456953075" -->

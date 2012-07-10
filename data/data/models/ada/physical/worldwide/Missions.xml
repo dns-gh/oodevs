@@ -891,7 +891,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -966,7 +966,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -977,7 +976,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1052,7 +1051,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -1063,7 +1061,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1138,7 +1136,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -1149,7 +1146,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1224,7 +1221,6 @@ overwhelming force.]]></doctrine>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -2837,7 +2833,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Works" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2912,7 +2908,6 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="waitForReinforcement" name="Wait for reinforcement (default value is FALSE)" optional="true" type="Boolean"/>
@@ -2985,7 +2980,7 @@ any physical capabilities consideration</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Fires locations" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3060,7 +3055,6 @@ any physical capabilities consideration</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="instantaneously" name="Instantaneously (default value is FALSE)" optional="true" type="Boolean"/>
@@ -3091,7 +3085,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Decontamination site location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3166,7 +3160,6 @@ In that specific case, the mission ends with the report &quot;work impossible, n
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE)" optional="true" type="Boolean"/>
@@ -3199,7 +3192,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Checkpoint location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3274,7 +3267,6 @@ In that specific case, the mission ends with the report &quot;work impossible, n
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="intensity" name="Intensity (%, default is 100%)" optional="true" type="Integer"/>
@@ -3590,7 +3582,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Roadblock location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3665,7 +3657,6 @@ In that specific case, the mission ends with the report &quot;work impossible, n
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="removeWork" name="Remove installation (default value is TRUE)" optional="true" type="Boolean"/>
@@ -3752,7 +3743,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" name="Dike location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3827,7 +3818,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -3855,7 +3845,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Firebreak location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3930,7 +3920,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -4028,6 +4017,7 @@ In that specific case, the agent decides to act on the next one.</P>
         <doctrine><![CDATA[<P>To move to an objective using a defined route</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Route</b> (path): the path to move along,<BR>
+ - <i>Area of responsability<i>: the right and left boundaries inside which the agent perform the mission. <BR>
 <P>* The agent moves toward each waypoints defining the route. If a visited waypoint is not reachable,<BR>
      the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a <BR>
      close position (the closest position from the center). Average speed depends on physical capabilities regarding to terrain<BR>
@@ -4040,6 +4030,30 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" name="Route" optional="false" type="Path"/>
+    </mission>
+    <mission dia-behavior="sword.military.platoon.tasks.Follow" dia-type="sword.military.platoon.tasks.Follow" id="44507" name="Masalife.COMMON - Follow">
+      <description>
+        <doctrine><![CDATA[<P>To follow a set of motile agents (units or crowds).</P>]]></doctrine>
+        <usage><![CDATA[
+<P>This mission needs the following parameters: <BR>
+ - <b>Agents</b> (agent, agentknowledge, crowd): the set of entities to follow,<BR>
+ - <i>Area of responsability</i>: the right and left boundaries inside which the agent perform the mission. <BR>
+<P>* The agent chooses a position to stay as close as possible to the given agents. The chosen position changes dynamically <BR>
+    if the followed agents moves.</P>
+<P>* The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</P>]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Entities" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Automat"/>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -4696,7 +4710,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4771,7 +4785,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="zone_" name="Aera" optional="false" type="Polygon"/>
@@ -4786,7 +4799,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4861,7 +4874,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </mission>
@@ -4872,7 +4884,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4947,7 +4959,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
@@ -4975,7 +4986,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -5050,7 +5061,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
       <parameter dia-name="zoneRegroupement_" name="Meeting point" optional="false" type="Polygon"/>
@@ -5714,8 +5724,8 @@ In that specific case, the agent decides to act on the next one.</P>
         <doctrine><![CDATA[<P>To move to an objective using a defined route</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Route</b> (path): the path to move along.<BR>
-<P>* The commander agent issued "moveTo" orders to make subordinates moving toward each waypoints of the route (the order of<BR>
-     traversal is defined by user).</P>
+ - <b>Area of responsability<b>: the right and left boundaries inside which the subodinates perform their mission. <BR>
+<P>* The commander agent issues a "moveTo" order to each subordinate with the route as parameter.</P>
 <P>* The mission ends when all the subordinate agents have finished their mission.</P>]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -5723,6 +5733,21 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objectives" name="Route" optional="false" type="Path"/>
+    </mission>
+    <mission cdt-dia-behavior="sword.military.company.tasks.Follow" dia-type="sword.military.company.tasks.Follow" id="44506" mrt-dia-behavior="sword.military.company.tasks.Follow" name="Masalife.COMMON - Follow">
+      <description>
+        <doctrine><![CDATA[<P>To follow a set of motile agents (units or crowds).</P>]]></doctrine>
+        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
+ - <b>Agents</b> (agent, agentknowledge, crowd): the set of entities to follow,<BR>
+ - <b>Area of responsability</b>: the right and left boundaries inside which the subordinates perform their mission. <BR>
+<P>* The commander agent issues a "follow" order to each subordinate with the set of "Agents" as parameter.</P>
+<P>* The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</P>]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Agents" optional="false" type="Agent"/>
     </mission>
   </automats>
   <populations>
@@ -5879,7 +5904,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
+          <parameter type="Crowd dispersion smoke"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -5954,7 +5979,6 @@ In that specific case, the agent decides to act on the next one.</P>
           <parameter type="Destruction Bomb"/>
           <parameter type="Medical camp"/>
           <parameter type="Emergency services HQ"/>
-          <parameter type="Crowd dispersion smoke"/>
         </objects>
       </parameter>
     </fragorder>
@@ -6001,4 +6025,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3901223213" -->
+<!-- signature="2504971627" -->

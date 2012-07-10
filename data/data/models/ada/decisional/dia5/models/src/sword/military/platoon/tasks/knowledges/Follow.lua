@@ -7,7 +7,7 @@ local result =
     fillParameters = function( self, companyTask, params )
         local objectives = companyTask:getEntitiesToSupport( params )
         if next( objectives ) then
-             return { objective = objectives[next( objectives )] }
+             return { objectives = objectives }
         end
     end
 }

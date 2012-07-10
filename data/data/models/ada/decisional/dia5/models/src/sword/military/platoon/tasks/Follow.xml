@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.Follow" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Follow">
+    <description>For the agent to know how to follow a set of moving agents or crowds. The agent chooses the best positions to stay close to a maximum of the given entities.</description>
     <parameters>
         <parameter name="objectives">
-            <description>L'élément à suivre.</description>
+            <description>The entities to follow.</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Reachable"/>
@@ -11,7 +12,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Suivre." permanent="true">
+        <stage label="follow" permanent="true">
             <skills>
                 <skill name="sword.military.platoon.skills.primitives.StayClose">
                     <parameter name="entities">

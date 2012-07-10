@@ -2,6 +2,6 @@ return
 {
 
     getEntitiesToSupport = function( self, params )
-        return { params.objective }
+        return params.objectives
     end
 }

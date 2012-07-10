@@ -436,7 +436,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Element a suivre" optional="false" type="LocationComposite">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Elements a suivre" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
           <parameter type="Agent"/>
@@ -2603,7 +2603,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a suivre" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE COMMUNES Stationner" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4635,4 +4635,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1630667953" -->
+<!-- signature="2517654690" -->
