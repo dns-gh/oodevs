@@ -1523,43 +1523,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Number of units: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of urban blocs: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of objects: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of knowledge groups: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load level: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Detail: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of profiles: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of populations: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of crowds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1632,6 +1596,82 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Formations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of urban blocs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of knowledge groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain memory size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max automats in a knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max units in a knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average automats by knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average units by knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single station load level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multi station load level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single station</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multi station</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single station load level: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multi station load level: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -47,26 +47,41 @@ private:
     void UpdateDisplay();
     //@}
 
+    //! @name Types
+    //@{
+    enum E_PerformanceData
+    {
+        ePerformanceData_Profiles = 0,
+        ePerformanceData_Units,
+        ePerformanceData_Populations,
+        ePerformanceData_Crowds,
+        ePerformanceData_UrbanBlocs,
+        ePerformanceData_Objects,
+        ePerformanceData_knowledgeGroups,
+        ePerformanceData_TerrainMemorySize,
+        ePerformanceData_TerrainSize,
+        ePerformanceData_MaxAutomatsKG,
+        ePerformanceData_MaxUnitsKG,
+        ePerformanceData_AvgAutomatsKG,
+        ePerformanceData_AvgUnitsKG,
+        ePerformanceData_SingleStationLoadLevel,
+        ePerformanceData_MultiStationLoadLevel,
+        eNbrPerformanceData
+    };
+    //@}
+
     Model& model_;
     const StaticModel& staticModel_;
-    QProgressBar* progressValue_;
+    QProgressBar* progressValueSingle_;
+    QProgressBar* progressValueMulti_;
+    QStandardItemModel* dataModel_;
 
-    QLabel* units_;
-    QLabel* urbanBlocs_;
-    QLabel* objects_;
-    QLabel* populations_;
-    QLabel* crowds_;
-    QLabel* knowledges_;
-    QLabel* loadLevel_;
-    QLabel* limitValue_;
-    QLabel* limitLine_;
-    QLabel* terrainLoad_;
-    QLabel* terrainSize_;
-    QLabel* profiles_;
-    QLabel* maxAutomatsKG_;
-    QLabel* maxUnitsKG_;
-    QLabel* avgAutomatKG_;
-    QLabel* avgUnitsKG_;
+    QLabel* loadLevelSingle_;
+    QLabel* loadLevelMulti_;
+    QLabel* limitValueSingle_;
+    QLabel* limitValueMulti_;
+    QLabel* limitLineSingle_;
+    QLabel* limitLineMulti_;
     QTextEdit* textEdit_;
 
     const int progressLimit_;

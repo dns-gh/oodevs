@@ -1526,34 +1526,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Performance de l&apos;exercice</translation>
     </message>
     <message>
-        <source>Number of units: </source>
-        <translation>Nombre de pions: </translation>
-    </message>
-    <message>
-        <source>Number of urban blocs: </source>
-        <translation>Nombre de blocs urbains: </translation>
-    </message>
-    <message>
-        <source>Number of objects: </source>
-        <translation>Nombre d&apos;objets: </translation>
-    </message>
-    <message>
-        <source>Terrain size: </source>
-        <translation>Taille du terrain: </translation>
-    </message>
-    <message>
-        <source>Number of knowledge groups: </source>
-        <translation>Nombre de groupes de connaissance: </translation>
-    </message>
-    <message>
-        <source>Load level: </source>
-        <translation>Niveau de charge de l&apos;exercice: </translation>
-    </message>
-    <message>
-        <source>Number of profiles: </source>
-        <translation>Nombre de profils: </translation>
-    </message>
-    <message>
         <source>Max automats in a knowledge group: </source>
         <translation>Maximum d&apos;automates dans un groupe de connaissance: </translation>
     </message>
@@ -1626,16 +1598,84 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Populations: </translation>
     </message>
     <message>
-        <source>Number of populations: </source>
-        <translation>Nombre de populations: </translation>
-    </message>
-    <message>
-        <source>Number of crowds: </source>
-        <translation>Nombre de foules: </translation>
-    </message>
-    <message>
         <source>Formations: </source>
         <translation>Formations: </translation>
+    </message>
+    <message>
+        <source>Number of profiles</source>
+        <translation>Nombre de profils</translation>
+    </message>
+    <message>
+        <source>Number of units</source>
+        <translation>Nombre de pions</translation>
+    </message>
+    <message>
+        <source>Number of populations</source>
+        <translation>Nombre de populations</translation>
+    </message>
+    <message>
+        <source>Number of crowds</source>
+        <translation>Nombre de foules</translation>
+    </message>
+    <message>
+        <source>Number of urban blocs</source>
+        <translation>Nombre de blocs urbains</translation>
+    </message>
+    <message>
+        <source>Number of objects</source>
+        <translation>Nombre d&apos;objets</translation>
+    </message>
+    <message>
+        <source>Number of knowledge groups</source>
+        <translation>Nombre de groupes de connaissance</translation>
+    </message>
+    <message>
+        <source>Terrain memory size</source>
+        <translation>Taille mémoire du terrain</translation>
+    </message>
+    <message>
+        <source>Terrain size</source>
+        <translation>Taille du terrain</translation>
+    </message>
+    <message>
+        <source>Max automats in a knowledge group</source>
+        <translation>Maximum d&apos;automates dans un groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Max units in a knowledge group</source>
+        <translation>Maximum de pions dans un groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Average automats by knowledge group</source>
+        <translation>Moyenne d&apos;automates par groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Average units by knowledge group</source>
+        <translation>Moyenne de pions par groupe de connaissance</translation>
+    </message>
+    <message>
+        <source>Single station load level</source>
+        <translation>Niveau de charge de l&apos;exercice en mono poste</translation>
+    </message>
+    <message>
+        <source>Multi station load level</source>
+        <translation>Niveau de charge de l&apos;exercice en multi poste</translation>
+    </message>
+    <message>
+        <source>Single station</source>
+        <translation>Mono poste</translation>
+    </message>
+    <message>
+        <source>Multi station</source>
+        <translation>Multi poste</translation>
+    </message>
+    <message>
+        <source>Single station load level: </source>
+        <translation>Niveau de charge de l&apos;exercice en mono poste: </translation>
+    </message>
+    <message>
+        <source>Multi station load level: </source>
+        <translation>Niveau de charge de l&apos;exercice en multi poste: </translation>
     </message>
 </context>
 <context>
