@@ -20,6 +20,7 @@ namespace xml
 
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;
+class MT_Vector2D;
 
 namespace sword
 {
@@ -51,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC&   target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC& target, double rSensorHeight ) const;
     const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const;
     //@}
 
@@ -68,6 +69,8 @@ private:
     double GetPopulationFactor        ( double rDensity ) const;
     double GetSourceFactor            ( const wrapper::View& source ) const;
     void     InitializePopulationFactors( xml::xistream& xis );
+    template< typename Object >
+    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const Object& target, bool(*intersectWithCircle) ( const Object& object, const MT_Vector2D& center, double radius ) ) const;
     //@}
     //! @name Hepers
     //@{

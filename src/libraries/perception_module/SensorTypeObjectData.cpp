@@ -140,14 +140,15 @@ double SensorTypeObjectData::GetSourceFactor( const wrapper::View& source ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorTypeObject::ComputePerception
-// Created: NLD 2004-09-07
+// Name: SensorTypeObjectData::ComputePerception
+// Created: SLI 2012-07-10
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& source, const MIL_Object_ABC& target, double /*rSensorHeight*/ ) const
+template< typename Object >
+const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const Object& target, bool(*intersectWithCircle) ( const Object& object, const MT_Vector2D& center, double radius ) ) const
 {
-    const double     rDistanceMaxModificator = GetSourceFactor( source );
-    const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
-    if( rDistanceMaxModificator == 0. || !GET_HOOK( ObjectIntersectWithCircle )( target, vSourcePos, rDD_ * rDistanceMaxModificator ) )
+    const double rDistanceMaxModificator = GetSourceFactor( perceiver );
+    const MT_Vector2D vSourcePos( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] );
+    if( rDistanceMaxModificator == 0. || !intersectWithCircle( target, vSourcePos, rDD_ * rDistanceMaxModificator ) )
         return PerceptionLevel::notSeen_;
     return PerceptionLevel::identified_;
 }
@@ -156,13 +157,18 @@ const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::V
 // Name: SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& source, const DEC_Knowledge_Object& target, double /*rSensorHeight*/ ) const
+const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const MIL_Object_ABC& target, double /*rSensorHeight*/ ) const
 {
-    const double     rDistanceMaxModificator = GetSourceFactor( source );
-    const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
-    if( rDistanceMaxModificator == 0. || !GET_HOOK( KnowledgeObjectIntersectWithCircle )( target, vSourcePos, rDD_ * rDistanceMaxModificator ) )
-        return PerceptionLevel::notSeen_;
-    return PerceptionLevel::identified_;
+    return ComputePerception< MIL_Object_ABC >( perceiver, target, GET_HOOK( ObjectIntersectWithCircle ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorTypeObject::ComputePerception
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+const PerceptionLevel& SensorTypeObjectData::ComputePerception( const wrapper::View& perceiver, const DEC_Knowledge_Object& target, double /*rSensorHeight*/ ) const
+{
+    return ComputePerception< DEC_Knowledge_Object >( perceiver, target, GET_HOOK( KnowledgeObjectIntersectWithCircle ) );
 }
 
 // -----------------------------------------------------------------------------
