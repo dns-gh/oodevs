@@ -16,6 +16,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -37,6 +38,7 @@ namespace actions
 
 namespace gui
 {
+    class GlSelector;
     class LocationCreator;
     class ParametersLayer;
 }
@@ -57,13 +59,14 @@ class UnitMagicOrdersInterface : public QObject
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                , public tools::ElementObserver_ABC< kernel::Team_ABC >
                                , public gui::ShapeHandler_ABC
+                               , private boost::noncopyable
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector );
     virtual ~UnitMagicOrdersInterface();
     //@}
 
@@ -89,12 +92,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UnitMagicOrdersInterface( const UnitMagicOrdersInterface& );            //!< Copy constructor
-    UnitMagicOrdersInterface& operator=( const UnitMagicOrdersInterface& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddMagic( const QString& label, int id,           kernel::ContextMenu* menu );
@@ -124,6 +121,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
+    gui::GlSelector& selector_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;
     gui::LocationCreator* magicMoveLocation_;

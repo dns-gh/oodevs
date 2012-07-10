@@ -368,7 +368,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setWindowTitle( tr( "Creation" ) );
 
-    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, *pProfile_ );
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, *pProfile_, *selector_ );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );

@@ -25,6 +25,7 @@ namespace kernel
 
 class MapLayer_ABC;
 class EventStrategy_ABC;
+class QStackedWidget;
 
 namespace gui
 {
@@ -64,6 +65,8 @@ public:
     void AddIcon( const char** xpm, int x, int y );
     void AddLayer( Layer_ABC& layer );
     void RemoveLayer( Layer_ABC& layer );
+
+    void SetFocus();
     //@}
 
 signals:

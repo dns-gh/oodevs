@@ -14,6 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -32,6 +33,7 @@ namespace actions
 
 namespace gui
 {
+    class GlSelector;
     class LocationCreator;
     class ParametersLayer;
 }
@@ -48,13 +50,14 @@ class PopulationMagicOrdersInterface : public QObject
                                      , public tools::Observer_ABC
                                      , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                                      , public gui::ShapeHandler_ABC
+                                     , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector );
     virtual ~PopulationMagicOrdersInterface();
     //@}
 
@@ -75,12 +78,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationMagicOrdersInterface( const PopulationMagicOrdersInterface& );            //!< Copy constructor
-    PopulationMagicOrdersInterface& operator=( const PopulationMagicOrdersInterface& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     int AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
@@ -97,6 +94,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
+    gui::GlSelector& selector_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;
     gui::LocationCreator* magicMoveLocation_;

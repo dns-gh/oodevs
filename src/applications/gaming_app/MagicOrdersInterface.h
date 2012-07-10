@@ -10,6 +10,8 @@
 #ifndef __MagicOrdersInterface_h_
 #define __MagicOrdersInterface_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Controllers;
@@ -19,6 +21,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlSelector;
     class ParametersLayer;
 }
 
@@ -35,20 +38,13 @@ class StaticModel;
 */
 // Created: SBO 2007-05-04
 // =============================================================================
-class MagicOrdersInterface
+class MagicOrdersInterface : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile, gui::GlSelector& selector );
     virtual ~MagicOrdersInterface();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MagicOrdersInterface( const MagicOrdersInterface& );            //!< Copy constructor
-    MagicOrdersInterface& operator=( const MagicOrdersInterface& ); //!< Assignment operator
     //@}
 };
 
