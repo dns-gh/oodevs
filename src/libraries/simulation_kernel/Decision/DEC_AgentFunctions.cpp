@@ -22,6 +22,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -739,6 +740,24 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPC( const MI
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetCommunicationPionsWithPC
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithPC( const MIL_Agent_ABC& callerAgent )
+{
+    return DEC_AutomateFunctions::GetCommunicationPionsWithPC( callerAgent.GetAutomate() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetCommunicationPionsWithoutPC
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithoutPC( const MIL_Agent_ABC& callerAgent )
+{
+    return DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( callerAgent.GetAutomate() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
@@ -1212,6 +1231,33 @@ void DEC_AgentFunctions::DisableCrowdEffect( const DEC_Decision_ABC* pAgent, boo
 {
     if( pAgent )
         pAgent->GetPion().GetRole< PHY_RoleInterface_Population >().DisableCrowdEffect( disable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsJammed
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsJammed( DEC_Decision_ABC* pAgent )
+{
+    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsJammed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInEmissionBlackout
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInEmissionBlackout( DEC_Decision_ABC* pAgent )
+{
+    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsInEmissionBlackout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInReceptionBlackout
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInReceptionBlackout( DEC_Decision_ABC* pAgent )
+{
+    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsInReceptionBlackout();
 }
 
 // -----------------------------------------------------------------------------

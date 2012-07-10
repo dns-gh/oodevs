@@ -124,6 +124,7 @@ public:
     virtual bool GetbOrdreTenir() const;
     virtual void SetbOrdreTenir( bool value );
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
+    virtual std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithPC();
     bool GetbPasserSurLC() const;
     void SetbPasserSurLC( bool value );
     DEC_Decision_ABC* GetpionEnEscorte() const;
@@ -186,6 +187,7 @@ private:
     virtual bool IsNeutralized() const;
     virtual bool IsMoving() const;
     virtual bool IsContaminated() const;
+    virtual bool IsJammed() const;
     virtual const MT_Vector2D* GetPosition() const;
     virtual bool IsPC() const;
     virtual bool IsTransported() const;

@@ -281,7 +281,6 @@ void PHY_RolePion_Communications::ActivatePartialBlackout()
     bHasChanged_ = true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::DeactivateBlackout
 // Created: NLD 2004-11-08
@@ -313,6 +312,33 @@ MIL_KnowledgeGroup& PHY_RolePion_Communications::GetKnowledgeGroup() const
     if( pJammingKnowledgeGroup_ == 0 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", owner_.GetID() ) );
     return *pJammingKnowledgeGroup_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::IsJammed
+// Created: MMC 2012-07-02
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::IsJammed() const
+{
+    return !jammers_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::IsInEmissionBlackout
+// Created: MMC 2012-07-02
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications:: IsInEmissionBlackout() const
+{
+    return bBlackoutEmmittedActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::IsInReceptionBlackout
+// Created: MMC 2012-07-02
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Communications::IsInReceptionBlackout() const
+{
+    return bBlackoutReceivedActivated_;
 }
 
 // -----------------------------------------------------------------------------

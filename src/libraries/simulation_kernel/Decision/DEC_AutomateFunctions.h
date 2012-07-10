@@ -33,6 +33,11 @@ public:
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPC( const MIL_Automate& callerAutomate );
     static std::vector< DEC_Decision_ABC* > GetAutomatPionsWithPC( DEC_Decision_ABC* pAutomate );
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC( const MIL_Automate& callerAutomate );
+
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithPC( const MIL_Automate& callerAutomate );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationAutomatPionsWithPC( DEC_Decision_ABC* pAutomate );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithoutPC( const MIL_Automate& callerAutomate );
+    
     static DEC_Decision_ABC* GetPionPC( const MIL_Automate& callerAutomate );
     static DEC_Decision_ABC* GetPionPCOfAutomate( DEC_Decision_ABC* pAutomate );
     static std::vector< DEC_Decision_ABC* > GetPionsMelee( const MIL_Automate& callerAutomate );

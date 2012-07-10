@@ -209,6 +209,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Automate_PionsMelee" ] = boost::bind( &DEC_AutomateFunctions::GetPionsMelee, boost::cref( GetAutomate() ) );
     brain[ "DEC_Automate_PionsGenie" ] = boost::bind( &DEC_AutomateFunctions::GetPionsGenie, boost::cref( GetAutomate() ) );
     brain[ "DEC_AutomateSuperieur_EstEmbraye" ] = boost::bind( &DEC_AutomateFunctions::IsParentAutomateEngaged, boost::cref( GetAutomate() ) );
+    brain[ "DEC_Automate_PionsAvecPCCommunication" ] = boost::bind( &DEC_AutomateFunctions::GetCommunicationPionsWithPC, boost::ref( GetAutomate() ) );;
+    brain[ "DEC_Automate_PionsSansPCCommunication" ] = boost::bind( &DEC_AutomateFunctions::GetCommunicationPionsWithoutPC, boost::ref( GetAutomate() ) );
 
     // State
     brain[ "DEC_Automate_EstEmbraye" ] = boost::bind( &DEC_AutomateFunctions::IsEngaged, this );

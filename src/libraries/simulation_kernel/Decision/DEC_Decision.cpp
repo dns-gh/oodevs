@@ -85,8 +85,13 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain.Register( "DEC_Agent_Position", &DEC_Decision_ABC::GetPosition );
     brain.Register( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
     brain.Register( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
+    brain.Register( "DEC_Agent_EstBrouille", &DEC_Decision_ABC::IsJammed );
+    brain.Register( "DEC_Agent_EstEnSilenceRadioEmission", &DEC_Decision_ABC::IsInEmissionBlackout );
+    brain.Register( "DEC_Agent_EstEnSilenceRadioReception", &DEC_Decision_ABC::IsInReceptionBlackout );
     brain.Register( "DEC_Pion_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
+    brain.Register( "DEC_Pion_PionsAvecPCCommunication", &DEC_Decision_ABC::GetCommunicationPionsWithPC );
     brain.Register( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
+    brain.Register( "DEC_Automate_PionsAvecPCCommunication", &DEC_Decision_ABC::GetCommunicationPionsWithPC );
     brain[ "DEC_Automate_PionsDeAutomateSansPC" ] = &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC;
     brain[ "DEC_Automate_PionsDeAutomateAvecPC" ] = &DEC_AutomateFunctions::GetAutomatPionsWithPC;
     brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );

@@ -137,13 +137,18 @@ public:
     static float GetIlluminatingRange( const MIL_Agent_ABC&  callerAgent );
     static bool IsImmobilized( DEC_Decision_ABC* pAgent );
     static void DisableCrowdEffect( const DEC_Decision_ABC* agent, bool disable );
-
+    static bool IsJammed( DEC_Decision_ABC* pAgent );
+    static bool IsInEmissionBlackout( DEC_Decision_ABC* pAgent );
+    static bool IsInReceptionBlackout( DEC_Decision_ABC* pAgent );
+    
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );
 
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC( const MIL_Agent_ABC& callerAgent );
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPC( const MIL_Agent_ABC& callerAgent );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithPC( const MIL_Agent_ABC& callerAgent );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithoutPC( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* GetPionPC( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* GetPionPCOfAutomate( const DEC_Decision_ABC* automat );
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPCOfAutomate( const DEC_Decision_ABC* automat );

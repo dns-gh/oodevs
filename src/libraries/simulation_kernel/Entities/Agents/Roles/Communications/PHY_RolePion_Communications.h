@@ -97,6 +97,9 @@ public:
     //! @name Accessors
     //@{
     MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    bool IsJammed() const;
+    bool IsInEmissionBlackout() const;
+    bool IsInReceptionBlackout() const;
     //@}
 
     //! @name Serialization
