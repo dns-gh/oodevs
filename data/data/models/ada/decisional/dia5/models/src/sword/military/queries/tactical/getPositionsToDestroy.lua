@@ -1,4 +1,4 @@
-local radius = 100 -- in meters. Defined the radius of cricle in witch we need 
+local radius = 100 -- in meters. Defined the radius of circle in witch we need 
                    -- to find terrain poisition to destroy elements
 queryImplementation "getPositionsToDestroy"
 {
@@ -20,10 +20,12 @@ queryImplementation "getPositionsToDestroy"
 
         -- check if position allow units to destroy each element
         for _, element in pairs( params.elementsToDestroy ) do
-            for _, res in pairs ( allRes ) do
-                if res:isDestroyingFor( element ) then
-                    if not exists( newResult, res ) then
-                        newResult[ #newResult + 1 ] = res
+            if element:isValid() then
+                for _, res in pairs ( allRes ) do
+                    if res:isDestroyingFor( element ) then
+                        if not exists( newResult, res ) then
+                            newResult[ #newResult + 1 ] = res
+                        end
                     end
                 end
             end
