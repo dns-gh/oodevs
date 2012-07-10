@@ -31,8 +31,12 @@ Function .onInit
     ${If} $0 != "admin"
         MessageBox mb_iconstop "Administrator rights are required to run this installer"
         SetErrorLevel 740 ;ERROR_ELEVATION_REQUIRED
-    Quit
-    ${EndIf}    
+        Quit
+    ${EndIf}
+    ReadEnvStr $0 JAVA_HOME
+    IfFileExists "$0\bin\java.exe" +3 0
+        MessageBox mb_iconstop "Unable to locate Java. Please set JAVA_HOME environment variable."
+        Quit
 FunctionEnd
 
 ;--------------------------------
@@ -100,7 +104,7 @@ Section $(^Name)
 
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
-    !insertmacro CreateInternetShortcut "$SMPROGRAMS\$(^Name)\Cluster" "http://localhost:8080/"    
+    !insertmacro CreateInternetShortcut "$SMPROGRAMS\$(^Name)\Cluster" "http://localhost:8080/"
 
     ; registry
     WriteRegStr HKLM "Software\MASA Group\$(^Name)" "Install_Dir" "$INSTDIR"
@@ -111,18 +115,8 @@ Section $(^Name)
     nsExec::Exec '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
 
-    ; JRE
-!if ${PLATFORM} == "vc100_x64"
-    !define JRE "jre-6u33-windows-x64.exe"
-!else
-    !define JRE "jre-6u33-windows-i586.exe"
-!endif
-    File "${EXTERNAL}\${JRE}"
-    nsExec::ExecToLog '"${JRE}" /s'
-    Delete "${JRE}"
-
-    ; service    
-    nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --java "$WINDIR\system32\java.exe" --register'
+    ; service
+    nsExec::Exec '"$INSTDIR\bin\cloud_server.exe" --register'
     nsExec::Exec 'net start "Sword Cloud"'
 SectionEnd
 
