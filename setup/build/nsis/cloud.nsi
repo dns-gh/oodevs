@@ -13,9 +13,15 @@
 !define SWORD "..\..\out\${PLATFORM}"
 !define EXTERNAL "..\..\external"
 
+!if ${PLATFORM} == "vc100_x64"
+!define PRG $PROGRAMFILES64
+!else
+!define PRG $PROGRAMFILES
+!endif
+
 Name "Sword Cloud"
 OutFile "${DISTDIR}\sword_cloud_${PLATFORM}_setup.exe"
-InstallDir "$PROGRAMFILES\$(^Name)"
+InstallDir "${PRG}\$(^Name)"
 InstallDirRegKey HKLM "Software\MASA Group\$(^Name)" "Install_Dir"
 RequestExecutionLevel admin
 
