@@ -772,15 +772,6 @@ double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
     return entity_[ "perceptions/max-theoretical-agent-perception-distance" ];
 }
 
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::CanPerceive
-// Created: NLD 2004-08-20
-// -----------------------------------------------------------------------------
-bool RolePion_Perceiver::CanPerceive() const
-{
-    return !owner_.IsDead() && !owner_.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() && bExternalCanPerceive_;
-}
-
 // =============================================================================
 // UPDATE
 // =============================================================================

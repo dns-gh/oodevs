@@ -207,7 +207,6 @@ private:
     //@{
     bool HasChanged() const;
     bool HasRadarStateChanged() const;
-    bool CanPerceive() const;
     void EnsurePerceptionRecoLocalisation();
     void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
     void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;
