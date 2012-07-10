@@ -132,6 +132,9 @@ public:
     static bool CanIlluminate( DEC_Decision_ABC* pAgent );
     static float GetIlluminatingRange( const MIL_Agent_ABC&  callerAgent );
     static bool IsImmobilized( DEC_Decision_ABC* pAgent );
+    static bool IsJammed( DEC_Decision_ABC* pAgent );
+    static bool IsInEmissionBlackout( DEC_Decision_ABC* pAgent );
+    static bool IsInReceptionBlackout( DEC_Decision_ABC* pAgent );
     
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );
@@ -139,6 +142,8 @@ public:
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC( const MIL_Agent_ABC& callerAgent );
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPC( const MIL_Agent_ABC& callerAgent );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithPC( const MIL_Agent_ABC& callerAgent );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithoutPC( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* GetPionPC( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* GetPionPCOfAutomate( const DEC_Decision_ABC* automat );
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPCOfAutomate( const DEC_Decision_ABC* automat );

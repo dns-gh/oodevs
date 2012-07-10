@@ -114,9 +114,13 @@ public:
     virtual void ClearPlotsRavitaillement();
 
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
+    virtual std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithPC();
     virtual bool IsNeutralized() const;
     virtual bool IsMoving() const;
     virtual bool IsContaminated() const;
+    virtual bool IsJammed() const;
+    virtual bool IsInReceptionBlackout() const;
+    virtual bool IsInEmissionBlackout() const;
     virtual const MT_Vector2D* GetPosition() const;
     virtual void SetStateVariable( const std::string& name, float value );
     virtual bool IsPC() const;

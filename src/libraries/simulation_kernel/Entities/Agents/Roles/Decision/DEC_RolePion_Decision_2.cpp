@@ -455,11 +455,15 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_TempsPourDegagerUnObjet" ] =
         boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::EstimatedWorkTime, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_EstRendu" ] = &DEC_ActionFunctions::IsSurrendered;
+    brain[ "DEC_Agent_EstBrouille" ] = &DEC_AgentFunctions::IsJammed;
+    brain[ "DEC_Agent_EstEnSilenceRadioEmission" ] = &DEC_AgentFunctions::IsInEmissionBlackout;
+    brain[ "DEC_Agent_EstEnSilenceRadioReception" ] = &DEC_AgentFunctions::IsInReceptionBlackout;
 
     // NBC
     brain[ "DEC_Agent_EstAgentNBC" ] = boost::bind( &DEC_AgentFunctions::IsAgentNBC , boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstContamine" ] = boost::bind( &DEC_AgentFunctions::IsContaminated , boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstEmpoisonne" ] = boost::bind( &DEC_AgentFunctions::IsIntoxicated , boost::cref( GetPion() ) );
+
     brain[ "DEC_Agent_MettreTenueProtectionNBC" ] = boost::bind( &DEC_AgentFunctions::WearNbcProtectionSuit, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_EnleverTenueProtectionNBC" ] = boost::bind( &DEC_AgentFunctions::RemoveNbcProtectionSuit, boost::ref( GetPion() ) );
     brain[ "DEC_ConnaissanceObjet_DemandeDeDecontamination" ] =
@@ -792,6 +796,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     // Hierarchie
     brain[ "DEC_Pion_PionsAvecPC" ] = boost::bind( &DEC_AgentFunctions::GetPionsWithPC, boost::ref( GetPion() ) );
     brain[ "DEC_Pion_PionsSansPC" ] = boost::bind( &DEC_AgentFunctions::GetPionsWithoutPC, boost::ref( GetPion() ) );
+    brain[ "DEC_Pion_PionsAvecPCCommunication" ] = boost::bind( &DEC_AgentFunctions::GetCommunicationPionsWithPC, boost::ref( GetPion() ) );
+    brain[ "DEC_Pion_PionsSansPCCommunication" ] = boost::bind( &DEC_AgentFunctions::GetCommunicationPionsWithoutPC, boost::ref( GetPion() ) );
     brain[ "DEC_Pion_PionPC" ] = boost::bind( &DEC_AgentFunctions::GetPionPC, boost::cref( GetPion() ) );
     brain[ "DEC_Pion_ChangeAutomate" ] =
         boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::ChangeAutomate, boost::ref( GetPion() ), _1 ) );

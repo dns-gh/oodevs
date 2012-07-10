@@ -15,12 +15,14 @@
 #include "DEC_GeometryFunctions.h"
 #include "DotationComputer_ABC.h"
 #include "OnComponentComputer_ABC.h"
+
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
@@ -722,6 +724,24 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPC( const MI
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetCommunicationPionsWithPC
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithPC( const MIL_Agent_ABC& callerAgent )
+{
+    return DEC_AutomateFunctions::GetCommunicationPionsWithPC( callerAgent.GetAutomate() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetCommunicationPionsWithoutPC
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithoutPC( const MIL_Agent_ABC& callerAgent )
+{
+    return DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( callerAgent.GetAutomate() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
@@ -1114,6 +1134,33 @@ float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent
 bool DEC_AgentFunctions::IsImmobilized( DEC_Decision_ABC* pAgent )
 {
     return pAgent && pAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().IsImmobilized();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsJammed
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsJammed( DEC_Decision_ABC* pAgent )
+{
+    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsJammed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInEmissionBlackout
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInEmissionBlackout( DEC_Decision_ABC* pAgent )
+{
+    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsInEmissionBlackout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInReceptionBlackout
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInReceptionBlackout( DEC_Decision_ABC* pAgent )
+{
+    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsInReceptionBlackout();
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "DEC_RolePion_Decision.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
@@ -909,6 +910,15 @@ bool DEC_RolePion_Decision::IsContaminated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::IsJammed
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+bool DEC_RolePion_Decision::IsJammed() const
+{
+    return GetPion().GetRole< PHY_RolePion_Communications >().IsJammed();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetPosition
 // Created: LDC 2009-06-19
 // -----------------------------------------------------------------------------
@@ -1116,4 +1126,13 @@ const std::string& DEC_RolePion_Decision::GetDIAType() const
 std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC()
 {
     return DEC_AgentFunctions::GetPionsWithPC( GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetCommunicationPionsWithPC
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetCommunicationPionsWithPC()
+{
+    return DEC_AgentFunctions::GetCommunicationPionsWithPC( GetPion() );
 }

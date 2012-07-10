@@ -568,6 +568,16 @@ std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetPionsWithPC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: std::vector< DEC_Decision_ABC* > DEC_Decision::GetCommunicationPionsWithPC
+// Created: LDC 2009-07-13
+// -----------------------------------------------------------------------------
+template< class T >
+std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetCommunicationPionsWithPC()
+{
+    throw std::runtime_error( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::IsNeutralized
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
@@ -593,6 +603,36 @@ bool DEC_Decision< T >::IsMoving() const
 // -----------------------------------------------------------------------------
 template< class T >
 bool DEC_Decision< T >::IsContaminated() const
+{
+    throw std::runtime_error( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsJammed
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsJammed() const
+{
+    throw std::runtime_error( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsInReceptionBlackout
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsInReceptionBlackout() const
+{
+    throw std::runtime_error( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsInEmissionBlackout
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsInEmissionBlackout() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }

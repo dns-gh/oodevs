@@ -135,6 +135,7 @@ public:
     template< typename T > T GetScalarVariable( const std::string& name );
 
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC() = 0;
+    virtual std::vector< DEC_Decision_ABC* > GetCommunicationPionsWithPC() = 0;
     virtual bool IsNeutralized() const = 0;
     virtual bool IsMoving() const = 0;
     virtual bool IsContaminated() const = 0;
@@ -146,6 +147,9 @@ public:
     virtual double GetMajorOperationalState() const = 0;
     virtual bool IsAutomateEngaged() const = 0;
     virtual bool IsDead() const = 0;
+    virtual bool IsJammed() const = 0;
+    virtual bool IsInReceptionBlackout() const = 0;
+    virtual bool IsInEmissionBlackout() const = 0;
     virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const = 0;
     virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const = 0;
     //@}
