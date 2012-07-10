@@ -54,7 +54,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Construction resource:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Mining:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Development resource:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Bypass:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Breaching:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Reserved obstacle activated:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Activation time:" ) )

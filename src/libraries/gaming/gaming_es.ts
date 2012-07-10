@@ -1034,10 +1034,6 @@
         <translation>Ubicación:</translation>
     </message>
     <message>
-        <source>Bypass:</source>
-        <translation>Bypass:</translation>
-    </message>
-    <message>
         <source>Development resource:</source>
         <translation>Dotación de desarrollo:</translation>
     </message>
@@ -1191,6 +1187,10 @@
     </message>
     <message>
         <source>Obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breaching:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

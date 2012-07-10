@@ -53,7 +53,7 @@ BypassAttribute::~BypassAttribute()
 void BypassAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ );
+             .Display( tools::translate( "Object", "Breaching:" ), rBypassConstructionPercentage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void BypassAttribute::Display( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ );
+    displayer.Display( tools::translate( "Object", "Breaching:" ), rBypassConstructionPercentage_ );
 }
 
 // -----------------------------------------------------------------------------

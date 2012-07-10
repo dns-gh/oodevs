@@ -109,10 +109,10 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Double >( avoidable, tr( "Distance" ), vInfosConnectors[ eAvoidableCapacity_Distance ], tr( "m" ), eGreaterEqualZero );
 
         // Bypassable
-        ADN_GroupBox* bypassable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bypassable" ), capacitiesGroup );
+        ADN_GroupBox* bypassable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Breachable" ), capacitiesGroup );
         vInfosConnectors[ eBypassableCapacityPresent ] = & bypassable->GetConnector();
         // Distance
-        builder.AddField< ADN_EditLine_Double >( bypassable, tr( "Bypass Speed" ), vInfosConnectors[ eBypassableCapacity_Speed ], tr( "km/h" ), eGreaterEqualZero );
+        builder.AddField< ADN_EditLine_Double >( bypassable, tr( "Speed on breached object" ), vInfosConnectors[ eBypassableCapacity_Speed ], tr( "km/h" ), eGreaterEqualZero );
 
         // Activable
         ADN_GroupBox* activable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Activable" ), capacitiesGroup );

@@ -889,16 +889,8 @@ Arrêt moteur allumé</translation>
         <translation>Coefficient du temps de destruction</translation>
     </message>
     <message>
-        <source>Speed when bypassed</source>
-        <translation>Vitesse sur obj. contourné</translation>
-    </message>
-    <message>
         <source>km/h</source>
         <translation>km/h</translation>
-    </message>
-    <message>
-        <source>Speed when not bypassed</source>
-        <translation>Vitesse sur obj. non contourné</translation>
     </message>
     <message>
         <source>Log</source>
@@ -931,10 +923,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Demining time</source>
         <translation>Temps de dévalorisation</translation>
-    </message>
-    <message>
-        <source>Bypass coefficient</source>
-        <translation>Coefficient de contournement</translation>
     </message>
     <message>
         <source>Code NNO</source>
@@ -1161,10 +1149,6 @@ Arrêt moteur allumé</translation>
         <translation>Durée de déminage</translation>
     </message>
     <message>
-        <source>Bypass factor</source>
-        <translation>Coefficient de contournement</translation>
-    </message>
-    <message>
         <source>Equipment_%1.htm</source>
         <translation>Equipement_%1.htm</translation>
     </message>
@@ -1211,6 +1195,18 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Equipment category:</source>
         <translation>Catégorie d&apos;équipement</translation>
+    </message>
+    <message>
+        <source>Breaching factor</source>
+        <translation>Coefficient de brechage</translation>
+    </message>
+    <message>
+        <source>Speed on breached object</source>
+        <translation>Vitesse sur objet breché</translation>
+    </message>
+    <message>
+        <source>Speed on non breached object</source>
+        <translation>Vitesse sur objet non breché</translation>
     </message>
 </context>
 <context>
@@ -3206,10 +3202,6 @@ du tireur</translation>
         <translation>Distance</translation>
     </message>
     <message>
-        <source>Bypass Speed</source>
-        <translation>Vitesse de contournement</translation>
-    </message>
-    <message>
         <source>Max Animator: </source>
         <translation>Animateurs max : </translation>
     </message>
@@ -3252,10 +3244,6 @@ du tireur</translation>
     <message>
         <source>Buildable</source>
         <translation>Constructible</translation>
-    </message>
-    <message>
-        <source>Bypassable</source>
-        <translation>Contournable</translation>
     </message>
     <message>
         <source>Constructor</source>
@@ -3552,6 +3540,14 @@ du tireur</translation>
     <message>
         <source>Neutral</source>
         <translation>Neutre</translation>
+    </message>
+    <message>
+        <source>Speed on breached object</source>
+        <translation>Vitesse sur objet breché</translation>
+    </message>
+    <message>
+        <source>Breachable</source>
+        <translation>Brechable</translation>
     </message>
 </context>
 <context>

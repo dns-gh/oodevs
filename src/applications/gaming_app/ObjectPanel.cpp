@@ -55,7 +55,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::findTranslation( "Object", "Construction resource:" ) )
                 .AddSpinBox( tools::findTranslation( "Object", "Mining:" ), 0, 100, 1 )
                 .AddLabel( tools::findTranslation( "Object", "Development resource:" ) )
-                .AddSpinBox( tools::findTranslation( "Object", "Bypass:" ), 0, 100, 1 )
+                .AddSpinBox( tools::findTranslation( "Object", "Breaching:" ), 0, 100, 1 )
                 .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
                 .AddCheckBox( tools::findTranslation( "Object", "Obstacle activated:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Activation time:" ) )
@@ -103,7 +103,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     Displayer_ABC& infos = GetBuilder().Group( tools::findTranslation( "Object", "Information" ) );
     construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Construction:" ) ) );
     valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Mining:" ) ) );
-    contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Bypass:" ) ) );
+    contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Breaching:" ) ) );
     
     QHBoxLayout* pHBox  = new QHBoxLayout();
     pLayout_->addLayout( pHBox );

@@ -489,10 +489,6 @@
         <translation>Construcción :</translation>
     </message>
     <message>
-        <source>Bypass:</source>
-        <translation>Paso :</translation>
-    </message>
-    <message>
         <source>Info/Identifier</source>
         <translation>Info/Identificador</translation>
     </message>
@@ -614,6 +610,10 @@
     </message>
     <message>
         <source>Obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breaching:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

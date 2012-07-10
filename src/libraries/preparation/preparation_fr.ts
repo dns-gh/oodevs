@@ -493,10 +493,6 @@
         <translation>Construction :</translation>
     </message>
     <message>
-        <source>Bypass:</source>
-        <translation>Contournement :</translation>
-    </message>
-    <message>
         <source>Info/Identifier</source>
         <translation>Info/Identifiant</translation>
     </message>
@@ -615,6 +611,10 @@
     <message>
         <source>Obstacle activated:</source>
         <translation>Obstacle activé :</translation>
+    </message>
+    <message>
+        <source>Breaching:</source>
+        <translation>Brechage:</translation>
     </message>
 </context>
 <context>

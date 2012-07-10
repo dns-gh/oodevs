@@ -890,16 +890,8 @@ estacionado con motor encendido</translation>
         <translation>Coeficiente de tiempo de destrucción</translation>
     </message>
     <message>
-        <source>Speed when bypassed</source>
-        <translation>Velocidad cuando es evitado</translation>
-    </message>
-    <message>
         <source>km/h</source>
         <translation>km/h</translation>
-    </message>
-    <message>
-        <source>Speed when not bypassed</source>
-        <translation>Velocidad cuando no es evitado</translation>
     </message>
     <message>
         <source>Log</source>
@@ -932,10 +924,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Demining time</source>
         <translation>Tiempo de desminado</translation>
-    </message>
-    <message>
-        <source>Bypass coefficient</source>
-        <translation>Coeficiente de bypass</translation>
     </message>
     <message>
         <source>Code NNO</source>
@@ -1162,10 +1150,6 @@ estacionado con motor encendido</translation>
         <translation>Duración de desminado</translation>
     </message>
     <message>
-        <source>Bypass factor</source>
-        <translation>Factor de derivación(bypass)</translation>
-    </message>
-    <message>
         <source>Equipment_%1.htm</source>
         <translation>Equipo_%1.htm</translation>
     </message>
@@ -1211,6 +1195,18 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Equipment category:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breaching factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed on breached object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed on non breached object</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3202,14 +3198,6 @@ tirador</translation>
         <translation>m</translation>
     </message>
     <message>
-        <source>Bypassable</source>
-        <translation>Sobrepasable(bypass)</translation>
-    </message>
-    <message>
-        <source>Bypass Speed</source>
-        <translation>Velocidad de sobrepaso(bypass)</translation>
-    </message>
-    <message>
         <source>km/h</source>
         <translation>km/h</translation>
     </message>
@@ -3552,6 +3540,14 @@ tirador</translation>
     <message>
         <source>Neutral</source>
         <translation>Neutral</translation>
+    </message>
+    <message>
+        <source>Speed on breached object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breachable</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

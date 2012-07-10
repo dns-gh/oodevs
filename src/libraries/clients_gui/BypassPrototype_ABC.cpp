@@ -20,7 +20,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::BypassPrototype_ABC", "Bypass parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::BypassPrototype_ABC", "Breaching parameters" ) )
 {
     // NOTHING
 }

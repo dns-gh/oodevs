@@ -1034,10 +1034,6 @@
         <translation>Position:</translation>
     </message>
     <message>
-        <source>Bypass:</source>
-        <translation>Contournement:</translation>
-    </message>
-    <message>
         <source>Development resource:</source>
         <translation>Dotation de valorisation:</translation>
     </message>
@@ -1192,6 +1188,10 @@
     <message>
         <source>Obstacle activated:</source>
         <translation>Obstacle activé:</translation>
+    </message>
+    <message>
+        <source>Breaching:</source>
+        <translation>Brechage:</translation>
     </message>
 </context>
 <context>

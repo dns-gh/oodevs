@@ -193,11 +193,11 @@ void ADN_Composantes_GUI::Build()
     // ExtinguishingTime
     builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Extinguishing time" ), vInfoObjectsConnectors[eHasExtinguishingTime], vInfoObjectsConnectors[eExtinguishingTime] );
     // CoeffCircTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Bypass coefficient" ), vInfoObjectsConnectors[eHasCoeffCircTime], vInfoObjectsConnectors[eCoeffCircTime], 0, eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Breaching factor" ), vInfoObjectsConnectors[eHasCoeffCircTime], vInfoObjectsConnectors[eCoeffCircTime], 0, eGreaterEqualZero );
     // SpeedCirc
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Speed when bypassed" ), vInfoObjectsConnectors[eHasSpeedCirc], vInfoObjectsConnectors[eSpeedCirc], tr( "km/h" ) );
+    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Speed on breached object" ), vInfoObjectsConnectors[eHasSpeedCirc], vInfoObjectsConnectors[eSpeedCirc], tr( "km/h" ) );
     // SpeedNotCirc
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Speed when not bypassed" ), vInfoObjectsConnectors[eHasSpeedNotCirc], vInfoObjectsConnectors[eSpeedNotCirc], tr( "km/h" ) );
+    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Speed on non breached object" ), vInfoObjectsConnectors[eHasSpeedNotCirc], vInfoObjectsConnectors[eSpeedNotCirc], tr( "km/h" ) );
     pListObjects->SetItemConnectors( vInfoObjectsConnectors );
 
     // Log page.
@@ -521,11 +521,11 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
             if( object.bExtinguishingTime_.GetData() )
                 builder.ListItem( tr( "Extinguishing duration" ), object.extinguishingTime_.GetData().c_str() );
             if( object.bCoeffCircTime_.GetData() )
-                builder.ListItem( tr( "Bypass factor" ), object.rCoeffCirc_.GetData() );
+                builder.ListItem( tr( "Breaching factor" ), object.rCoeffCirc_.GetData() );
             if( object.bSpeedCirc_.GetData() )
-                builder.ListItem( tr( "Speed when bypassed" ), object.rSpeedCirc_.GetData(), tr( "km/h" ) );
+                builder.ListItem( tr( "Speed on breached object" ), object.rSpeedCirc_.GetData(), tr( "km/h" ) );
             if( object.bSpeedNotCirc_.GetData() )
-                builder.ListItem( tr( "Speed when not bypassed" ), object.rSpeedNotCirc_.GetData(), tr( "km/h" ) );
+                builder.ListItem( tr( "Speed on non breached object" ), object.rSpeedNotCirc_.GetData(), tr( "km/h" ) );
             builder.EndList();
         }
 

@@ -195,8 +195,8 @@
 <context>
     <name>gui::BypassPrototype_ABC</name>
     <message>
-        <source>Bypass parameters</source>
-        <translation>Paramètres de contournement</translation>
+        <source>Breaching parameters</source>
+        <translation>Paramètres de brechage</translation>
     </message>
 </context>
 <context>
