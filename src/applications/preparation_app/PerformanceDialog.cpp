@@ -28,57 +28,74 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     , staticModel_        ( staticModel )
     , progressValueSingle_( new QProgressBar( this ) )
     , progressValueMulti_ ( new QProgressBar( this ) )
-    , units_              ( new QLabel( this ) )
-    , urbanBlocs_         ( new QLabel( this ) )
-    , objects_            ( new QLabel( this ) )
-    , populations_        ( new QLabel( this ) )
-    , crowds_             ( new QLabel( this ) )
-    , terrainLoad_        ( new QLabel( this ) )
-    , knowledges_         ( new QLabel( this ) )
     , loadLevelSingle_    ( new QLabel( this ) )
     , loadLevelMulti_     ( new QLabel( this ) )
     , limitValueSingle_   ( new QLabel( this ) )
     , limitValueMulti_    ( new QLabel( this ) )
     , limitLineSingle_    ( new QLabel( this ) )
     , limitLineMulti_     ( new QLabel( this ) )
-    , terrainSize_        ( new QLabel( this ) )
-    , profiles_           ( new QLabel( this ) )
-    , maxAutomatsKG_      ( new QLabel( this ) )
-    , maxUnitsKG_         ( new QLabel( this ) )
-    , avgAutomatKG_       ( new QLabel( this ) )
-    , avgUnitsKG_         ( new QLabel( this ) )
     , textEdit_           ( new QTextEdit( this ) )
     , progressLimit_      ( 40 )
 {
     setCaption( tr( "Performance dialog" ) );
     setFixedSize( 600, 700 );
 
-    QGridLayout* layout = new QGridLayout( this, 17, 3 );
+    dataModel_ = new QStandardItemModel();
+    dataModel_->setColumnCount( 2 );
+    dataModel_->setRowCount( eNbrPerformanceData );
+    dataModel_->setItem( ePerformanceData_Profiles              , 0, new QStandardItem( tr( "Number of profiles" ) ) );
+    dataModel_->setItem( ePerformanceData_Units                 , 0, new QStandardItem( tr( "Number of units" ) ) );
+    dataModel_->setItem( ePerformanceData_Populations           , 0, new QStandardItem( tr( "Number of populations" ) ) );
+    dataModel_->setItem( ePerformanceData_Crowds                , 0, new QStandardItem( tr( "Number of crowds" ) ) );
+    dataModel_->setItem( ePerformanceData_UrbanBlocs            , 0, new QStandardItem( tr( "Number of urban blocs" ) ) );
+    dataModel_->setItem( ePerformanceData_Objects               , 0, new QStandardItem( tr( "Number of objects" ) ) );
+    dataModel_->setItem( ePerformanceData_knowledgeGroups       , 0, new QStandardItem( tr( "Number of knowledge groups" ) ) );
+    dataModel_->setItem( ePerformanceData_TerrainMemorySize     , 0, new QStandardItem( tr( "Terrain memory size" ) ) );
+    dataModel_->setItem( ePerformanceData_TerrainSize           , 0, new QStandardItem( tr( "Terrain size" ) ) );
+    dataModel_->setItem( ePerformanceData_MaxAutomatsKG         , 0, new QStandardItem( tr( "Max automats in a knowledge group" ) ) );
+    dataModel_->setItem( ePerformanceData_MaxUnitsKG            , 0, new QStandardItem( tr( "Max units in a knowledge group" ) ) );
+    dataModel_->setItem( ePerformanceData_AvgAutomatsKG         , 0, new QStandardItem( tr( "Average automats by knowledge group" ) ) );
+    dataModel_->setItem( ePerformanceData_AvgUnitsKG            , 0, new QStandardItem( tr( "Average units by knowledge group" ) ) );
+    dataModel_->setItem( ePerformanceData_SingleStationLoadLevel, 0, new QStandardItem( tr( "Single station load level" ) ) );
+    dataModel_->setItem( ePerformanceData_MultiStationLoadLevel , 0, new QStandardItem( tr( "Multi station load level" ) ) );
+
+    for( int i=0; i < dataModel_->rowCount(); ++i )
+    {
+        dataModel_->setItem( i, 1, new QStandardItem() );
+        dataModel_->item( i, 0 )->setEditable( false );
+        dataModel_->item( i, 1 )->setEditable( false );
+        dataModel_->item( i, 1 )->setTextAlignment( Qt::AlignRight );
+    }
+
+    QFont boldFont = dataModel_->item( ePerformanceData_SingleStationLoadLevel, 0 )->font();
+    boldFont.setBold( true );
+    for( int i=0; i < dataModel_->columnCount(); ++i )
+    {
+        dataModel_->item( ePerformanceData_SingleStationLoadLevel, i )->setFont( boldFont );
+        dataModel_->item( ePerformanceData_MultiStationLoadLevel, i )->setFont( boldFont );
+    }
+
+    QTableView* dataTable = new QTableView( this );
+    dataTable->setModel( dataModel_ );
+    dataTable->horizontalHeader()->setVisible( false );
+    dataTable->verticalHeader()->setVisible( false );
+    dataTable->setColumnWidth( 0, 308 );
+    dataTable->setColumnWidth( 1, 130 );
+    dataTable->verticalHeader()->setDefaultSectionSize( 21 );
+    dataTable->setAlternatingRowColors( true );
+
+    QGridLayout* layout = new QGridLayout( this, 4, 3 );
     layout->setSpacing( 10 );
     layout->setMargin( 15 );
     layout->setColumnMinimumWidth( 0, 500 );
     layout->setAlignment( Qt::AlignHCenter );
+    layout->addWidget( dataTable, 0, 0, 2, 1 );
     layout->addWidget( new QLabel( tr( "Single station" ), this ), 0, 1 );
     layout->addWidget( new QLabel( tr( "Multi station" ), this ), 0, 2 );
-    layout->addWidget( progressValueSingle_ , 1, 1, 14, 1, Qt::AlignHCenter );
-    layout->addWidget( progressValueMulti_ , 1, 2, 14, 2, Qt::AlignHCenter );
-    layout->addWidget( profiles_, 0, 0 );
-    layout->addWidget( units_, 1, 0 );
-    layout->addWidget( populations_, 2, 0 );
-    layout->addWidget( crowds_, 3, 0 );
-    layout->addWidget( urbanBlocs_, 4, 0 );
-    layout->addWidget( objects_, 5, 0 );
-    layout->addWidget( knowledges_, 6, 0 );
-    layout->addWidget( terrainLoad_, 7, 0 );
-    layout->addWidget( terrainSize_, 8, 0 );
-    layout->addWidget( maxAutomatsKG_, 9, 0 );
-    layout->addWidget( maxUnitsKG_, 10, 0 );
-    layout->addWidget( avgAutomatKG_, 11, 0 );
-    layout->addWidget( avgUnitsKG_, 12, 0 );
-    layout->addWidget( loadLevelSingle_ , 13, 0 );
-    layout->addWidget( loadLevelMulti_ , 14, 0 );
-    layout->addWidget( new QLabel( "<b>" + tr( "Detail: " ) + "<\b>" ), 15, 0, 1, 2 );
-    layout->addWidget( textEdit_, 16, 0, 1, 3 );
+    layout->addWidget( progressValueSingle_, 1, 1, 1, 1, Qt::AlignHCenter );
+    layout->addWidget( progressValueMulti_, 1, 2, 1, 1, Qt::AlignHCenter );
+    layout->addWidget( new QLabel( "<b>" + tr( "Detail: " ) + "<\b>" ), 2, 0, 1, 2 );
+    layout->addWidget( textEdit_, 3, 0, 1, 2 );
 
     textEdit_->setReadOnly( true );
     textEdit_->setLineWrapMode( QTextEdit::NoWrap );
@@ -139,29 +156,28 @@ namespace
 void PerformanceDialog::UpdateDisplay()
 {
     const PerformanceIndicator::Values& values =  model_.performanceIndicator_.ComputeValues();
-    profiles_       ->setText( tr( "Number of profiles: " )                 + locale().toString( values.profiles_ ) );
-    units_          ->setText( tr( "Number of units: " )                    + locale().toString( values.units_ ) );
-    populations_    ->setText( tr( "Number of populations: " )              + locale().toString( values.populations_ ) );
-    crowds_         ->setText( tr( "Number of crowds: " )                   + locale().toString( values.crowds_ ) );
-    urbanBlocs_     ->setText( tr( "Number of urban blocs: " )              + locale().toString( values.blocs_ ) );
-    objects_        ->setText( tr( "Number of objects: " )                  + locale().toString( values.objects_ ) );
-    knowledges_     ->setText( tr( "Number of knowledge groups: " )         + locale().toString( values.knowledgeGroups_ ) );
-    terrainLoad_    ->setText( tr( "Terrain memory size: " )                + locale().toString( values.terrainLoad_, 'f', 3 ) + " Mo" ) ;
-    terrainSize_    ->setText( tr( "Terrain size: " )                       + locale().toString( values.terrainWidth_ ) + " km x "
-                                                                            + locale().toString( values.terrainHeight_ ) + " km" );
-    maxAutomatsKG_  ->setText( tr( "Max automats in a knowledge group: " )  + locale().toString( values.maxAutomatsKG_ ) );
-    maxUnitsKG_     ->setText( tr( "Max units in a knowledge group:" )      + locale().toString( values.maxUnitsKG_ ) );
-    avgAutomatKG_   ->setText( tr( "Average automats by knowledge group: " )+ locale().toString( values.avgAutomatsKG_ ) );
-    avgUnitsKG_     ->setText( tr( "Average units by knowledge group: " )   + locale().toString( values.avgUnitsKG_ ) );
-    loadLevelSingle_->setText( "<b>" + tr( "Single station load level: " )  + locale().toString( static_cast< unsigned int >( values.performance_ ) ) + " / " + locale().toString( values.limit_ ) + "<\b>" );
-    loadLevelMulti_ ->setText( "<b>" + tr( "Multi station load level: " )   + locale().toString( static_cast< unsigned int >( values.performance_ ) ) + " / " + locale().toString( values.limit_ ) + "<\b>" );
+    dataModel_->item( ePerformanceData_Profiles                 , 1 )->setText( locale().toString( values.profiles_ ) );
+    dataModel_->item( ePerformanceData_Units                    , 1 )->setText( locale().toString( values.units_ ) );
+    dataModel_->item( ePerformanceData_Populations              , 1 )->setText( locale().toString( values.populations_ ) );
+    dataModel_->item( ePerformanceData_Crowds                   , 1 )->setText( locale().toString( values.crowds_ ) );
+    dataModel_->item( ePerformanceData_UrbanBlocs               , 1 )->setText( locale().toString( values.blocs_ ) );
+    dataModel_->item( ePerformanceData_Objects                  , 1 )->setText( locale().toString( values.objects_ ) );
+    dataModel_->item( ePerformanceData_knowledgeGroups          , 1 )->setText( locale().toString( values.knowledgeGroups_ ) );
+    dataModel_->item( ePerformanceData_TerrainMemorySize        , 1 )->setText( locale().toString( values.terrainLoad_, 'f', 2 ) + " Mo" );
+    dataModel_->item( ePerformanceData_TerrainSize              , 1 )->setText( locale().toString( values.terrainWidth_ ) + " km x " + locale().toString( values.terrainHeight_ ) + " km" );
+    dataModel_->item( ePerformanceData_MaxAutomatsKG            , 1 )->setText( locale().toString( values.maxAutomatsKG_ ) );
+    dataModel_->item( ePerformanceData_MaxUnitsKG               , 1 )->setText( locale().toString( values.maxUnitsKG_ )  );
+    dataModel_->item( ePerformanceData_AvgAutomatsKG            , 1 )->setText( locale().toString( values.avgAutomatsKG_ ) );
+    dataModel_->item( ePerformanceData_AvgUnitsKG               , 1 )->setText( locale().toString( values.avgUnitsKG_ ) );
+    dataModel_->item( ePerformanceData_SingleStationLoadLevel   , 1 )->setText( locale().toString( static_cast< unsigned int >( values.performance_ ) ) + " / " + locale().toString( values.limit_ ) );
+    dataModel_->item( ePerformanceData_MultiStationLoadLevel    , 1 )->setText( locale().toString( static_cast< unsigned int >( values.performance_ ) ) + " / " + locale().toString( values.limit_ ) );
+
     limitValueSingle_->setText( "<b>" + locale().toString( values.limit_ ) + "<\b>" );
     limitValueMulti_->setText( "<b>" + locale().toString( values.limit_ ) + "<\b>" );
     limitLineSingle_->move( progressValueSingle_->pos().x() - 3,
                       progressValueSingle_->pos().y() + progressValueSingle_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLineSingle_->size().height() / 2 - 6 );
     limitValueSingle_->move( progressValueSingle_->pos().x() + progressValueSingle_->size().width() + 6,
                        progressValueSingle_->pos().y() + progressValueSingle_->size().height() * ( 100 - progressLimit_ ) / 100 - limitValueSingle_->size().height() / 2 );
-
     limitLineMulti_->move( progressValueMulti_->pos().x() - 3,
                      progressValueMulti_->pos().y() + progressValueMulti_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLineMulti_->size().height() / 2 - 6 );
     limitValueMulti_->move( progressValueMulti_->pos().x() + progressValueMulti_->size().width() + 6,
