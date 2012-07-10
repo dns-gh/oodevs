@@ -12,6 +12,12 @@
 
     <target name="package">
         <nsis name="cloud"/>
+        <zip destfile="${dist.dir}/sword_cloud_${platform}_debug.zip">
+            <mappedresources>
+                <fileset dir="../../host_agent/out/${platform}/RelWithDebInfo" includes="**/*.pdb"/>
+                <flattenmapper/>
+           </mappedresources>
+        </zip>        
     </target>
 
     <target name="all" depends="configure,package" />
