@@ -715,6 +715,8 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void() >                                      ( "DEC_Perception_DesactiverSenseurs", &TogglePerception, "sensor", false );
     RegisterCommand< void() >                                      ( "DEC_Perception_ActiverObserveurTir", &TogglePerception, "fire-observer", true );
     RegisterCommand< void() >                                      ( "DEC_Perception_DesactiverObserveurTir", &TogglePerception, "fire-observer", false );
+    RegisterCommand< void() >                                      ( "DEC_Perception_ActiverModeEnregistrement", &TogglePerception, "record-mode", true );
+    RegisterCommand< void() >                                      ( "DEC_Perception_DesactiverModeEnregistrement", &TogglePerception, "record-mode", false );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_ActiverRadar", &ToggleRadar, true, _1 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverRadar", &ToggleRadar, false, _1 );
     RegisterCommand< int( int, const TER_Localisation* ) >         ( "DEC_Perception_ActiverRadarSurLocalisation", &EnableLocalizedRadar< const TER_Localisation* >, _1, _2 );

@@ -492,7 +492,7 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const
 {
-    PerceptionObserver observer( entity, entity[ "perceptions/record-mode" ] );
+    PerceptionObserver observer( entity, entity[ "perceptions/record-mode/activated" ] );
     PerceptionView perceptionView( entity, observer );
     T_PerceptionVector activePerceptions;
     activePerceptions.push_back( &perceptionView ); // $$$$ _RC_ SLI 2012-07-10: add all active perceptions

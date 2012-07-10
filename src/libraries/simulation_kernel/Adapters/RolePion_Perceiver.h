@@ -245,7 +245,6 @@ private:
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;
 
-    bool bRecordModeEnabled_;
     bool bHasChanged_;
     bool bExternalMustChangePerception_;
     bool bExternalMustChangeRadar_;

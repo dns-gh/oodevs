@@ -153,6 +153,7 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "is-pc" ] = pion.IsPC();
     entity_[ "perceptions/peripherical-vision/activated" ] = false;
     entity_[ "perceptions/scan/activated" ] = false;
+    entity_[ "perceptions/record-mode/activated" ] = false;
     entity_[ "perceptions/sensor/activated" ] = true;
     entity_[ "perceptions/radars/radar/activated" ] = false;
     entity_[ "perceptions/radars/tapping/activated" ] = false;

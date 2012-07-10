@@ -41,17 +41,19 @@ IdentifyAgentCommand::~IdentifyAgentCommand()
 
 struct AgentVisitor : private boost::noncopyable
 {
-    explicit AgentVisitor( wrapper::Effect& effect )
-        : effect_( effect )
+    AgentVisitor( wrapper::Effect& effect, bool recordMode )
+        : effect_    ( effect )
+        , recordMode_( recordMode )
     {}
     static void Add( const SWORD_Model* agent, void* userData )
     {
         wrapper::Node notification = static_cast< AgentVisitor* >( userData )->effect_.AddElement();
         notification[ "target" ] = reinterpret_cast< size_t >( wrapper::View( agent )[ "pion" ].GetUserData() );
         notification[ "level" ] = PerceptionLevel::identified_.GetID();
-        notification[ "recorded" ] = false;
+        notification[ "recorded" ] = static_cast< AgentVisitor* >( userData )->recordMode_;
     }
     wrapper::Effect& effect_;
+    bool recordMode_;
 };
 
 // -----------------------------------------------------------------------------
@@ -62,7 +64,7 @@ void IdentifyAgentCommand::Execute( const wrapper::View& model ) const
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     wrapper::Effect effect( entity[ "perceptions/notifications/agents-in-zone" ] );
-    AgentVisitor visitor( effect );
+    AgentVisitor visitor( effect, entity[ "perceptions/record-mode/activated" ] );
     GET_HOOK( GetAgentListWithinLocalisation )( model, localization_, &AgentVisitor::Add, &visitor );
     effect.Post();
 }

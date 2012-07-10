@@ -182,6 +182,8 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Connaissances_IdentifierToutesUnitesDansZone", boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IdentifyAllAgentsInZone, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_ARadar", &DEC_AgentFunctions::AgentHasRadar );
     RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::GetPerception, boost::cref( GetPion() ), _1, _2 ) ) );
+    RegisterFunction( "DEC_Perception_ActiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_DesactiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( GetPion() ) ) );
 }
 
 // -----------------------------------------------------------------------------

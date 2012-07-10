@@ -226,7 +226,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , facade_                        ( sink.GetFacade() )
     , owner_                         ( pion )
     , entity_                        ( entity )
-    , bRecordModeEnabled_            ( false )
     , bHasChanged_                   ( true )
     , bExternalMustChangePerception_ ( false )
     , bExternalMustChangeRadar_      ( false )
@@ -248,7 +247,7 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     entity[ "perceptions/peripherical-vision/next-step" ] = nNextPeriphericalVisionStep_;
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
-    entity[ "perceptions/record-mode" ] = bRecordModeEnabled_;
+    AddListener< ToggleListener >( "perceptions/record-mode/activated", boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) );
     AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/radars/radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ) );
     AddListener< ToggleListener >( "perceptions/radars/tapping/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ) );
@@ -1006,7 +1005,7 @@ void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent, const P
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableRecordMode()
 {
-    bRecordModeEnabled_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1015,7 +1014,6 @@ void RolePion_Perceiver::EnableRecordMode()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecordMode()
 {
-    bRecordModeEnabled_ = false;
     owner_.GetKnowledge().GetKsPerception().MakePerceptionsAvailable();
 }
 
