@@ -20,7 +20,7 @@ queryImplementation "getPositionsToDestroy"
 
         -- check if position allow units to destroy each element
         for _, element in pairs( params.elementsToDestroy ) do
-            if element:isValid() then -- la cible n'est plus connue dans certains cas
+            if element:isValid() then
                 for _, res in pairs ( allRes ) do
                     if res:isDestroyingFor( element ) then
                         if not exists( newResult, res ) then
