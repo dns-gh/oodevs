@@ -16,7 +16,7 @@
 namespace boost
 {
     template< typename T > class shared_ptr;
-namespace filesystem3
+namespace filesystem
 {
     class path;
 }
@@ -53,7 +53,7 @@ struct Runtime_ABC : public boost::noncopyable
                                                     const std::vector< std::string >& args,
                                                     const std::string& run,
                                                     const std::string& log ) const = 0;
-    virtual boost::filesystem3::path GetModuleFilename() const = 0;
+    virtual boost::filesystem::path GetModuleFilename() const = 0;
     //@}
 };
 }

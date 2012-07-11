@@ -16,7 +16,7 @@
 
 namespace boost
 {
-namespace filesystem3
+namespace filesystem
 {
     class path;
 }
@@ -35,7 +35,7 @@ namespace runtime
 
 namespace host
 {
-    typedef boost::filesystem3::path Path;
+    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }

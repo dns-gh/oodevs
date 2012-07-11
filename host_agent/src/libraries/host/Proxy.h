@@ -43,7 +43,7 @@ namespace web
 
 namespace host
 {
-    typedef boost::filesystem3::path Path;
+    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
 namespace proxy
 {

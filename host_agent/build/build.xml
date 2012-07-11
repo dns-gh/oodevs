@@ -38,7 +38,7 @@
 
     <target name="configure" description="retrieve dependencies">
         <update name="bcrypt"/>
-        <update name="boost" version="1.48"/>
+        <update name="boost" version="1.50"/>
         <update name="cpp-netlib"/>
         <update name="libarchive"/>
         <update name="sqlite"/>

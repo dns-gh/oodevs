@@ -21,7 +21,7 @@ struct sqlite3_stmt;
 
 namespace host
 {
-    typedef boost::filesystem3::path Path;
+    typedef boost::filesystem::path Path;
 }
 
 namespace host

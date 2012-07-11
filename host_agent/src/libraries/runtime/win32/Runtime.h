@@ -42,7 +42,7 @@ public:
                                                     const std::vector< std::string >& args,
                                                     const std::string& run,
                                                     const std::string& log ) const;
-    virtual boost::filesystem3::path GetModuleFilename() const;
+    virtual boost::filesystem::path GetModuleFilename() const;
     //@}
 
 private:

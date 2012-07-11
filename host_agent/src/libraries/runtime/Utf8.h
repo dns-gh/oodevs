@@ -12,7 +12,7 @@
 
 namespace boost
 {
-namespace filesystem3
+namespace filesystem
 {
     class path;
 }
@@ -36,7 +36,7 @@ std::string  Utf8Convert( const std::wstring& text );
 // Name: Utf8Convert
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-std::string  Utf8Convert( const boost::filesystem3::path& path );
+std::string  Utf8Convert( const boost::filesystem::path& path );
 }
 
 #endif

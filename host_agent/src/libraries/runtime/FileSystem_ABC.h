@@ -19,7 +19,7 @@ namespace boost
 {
     template< typename T > class shared_ptr;
     template< typename T > class function;
-namespace filesystem3
+namespace filesystem
 {
     class path;
 }
@@ -27,7 +27,7 @@ namespace filesystem3
 
 namespace runtime
 {
-    typedef boost::filesystem3::path Path;
+    typedef boost::filesystem::path Path;
 // =============================================================================
 /** @class  Unpacker_ABC
     @brief  Unpacker_ABC interface
