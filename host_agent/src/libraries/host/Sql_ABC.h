@@ -52,6 +52,7 @@ struct Sql_ABC : public boost::noncopyable
     virtual T_Transaction Begin  ( bool write = true ) = 0;
     virtual T_Statement   Prepare( const Transaction& tr, const std::string& sql ) = 0;
     virtual void          Commit ( Transaction& tr ) = 0;
+    virtual int64_t       LastId () const = 0;
     //@}
 };
 
