@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/Objects.xsd">
-  <object name="Crowd dispersion smoke" point-size="50" type="mines">
+  <object name="Mine Cluster" point-size="50" type="mines">
     <geometries>
       <geometry symbol="G*MPOMC---****X" type="point"/>
     </geometries>
@@ -858,4 +858,4 @@
     <time-limited/>
   </object>
 </objects>
-<!-- signature="1625501538" -->
+<!-- signature="0245130670" -->
