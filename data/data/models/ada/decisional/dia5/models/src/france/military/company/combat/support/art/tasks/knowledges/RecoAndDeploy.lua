@@ -32,6 +32,9 @@ return
               for _, area in pairs( subAreas ) do
                   areasKn[#areasKn + 1] = CreateKnowledge( sword.military.world.Area, area )
               end
+              if #subAreas == 0 then
+                  areasKn[#areasKn + 1] = objective -- cas ou la zone est hors limite
+              end
           else                                              -- nb de zones  >= nb de pions
               areasKn[#areasKn + 1] = CreateKnowledge( sword.military.world.Area, objective.source )
           end

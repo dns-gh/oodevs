@@ -27,6 +27,9 @@ return
                     for _, area in pairs( subAreas ) do
                         myself.leadData.entities[#myself.leadData.entities + 1] = CreateKnowledge( sword.military.world.Area, area )
                     end
+                    if #subAreas == 0 then
+                        myself.leadData.entities[#myself.leadData.entities + 1] = entity -- cas ou la zone est hors limite
+                    end
                     myself.leadData.nbObj = myself.leadData.nbObj + #subAreas - 1
                 else
                     myself.leadData.entities[#myself.leadData.entities + 1] = entity

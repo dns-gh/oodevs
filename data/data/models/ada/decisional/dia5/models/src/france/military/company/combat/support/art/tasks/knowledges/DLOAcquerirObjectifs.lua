@@ -24,6 +24,9 @@ return
             for _, area in pairs( subAreas ) do
                 myself.leadData.zonesAcquisition[#myself.leadData.zonesAcquisition + 1] = CreateKnowledge( sword.military.world.Area, area )
             end
+            if #subAreas == 0 then
+                myself.leadData.zonesAcquisition[#myself.leadData.zonesAcquisition + 1] = objective -- cas ou la zone est hors limite
+            end
         end
         myself.leadData.deployPositionIndex = myself.leadData.deployPositionIndex % #myself.leadData.zonesAcquisition + 1
         return myself.leadData.zonesAcquisition[ myself.leadData.deployPositionIndex ]

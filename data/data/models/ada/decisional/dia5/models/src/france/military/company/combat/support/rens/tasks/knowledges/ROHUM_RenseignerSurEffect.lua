@@ -18,7 +18,9 @@ return
       for _, area in pairs( subAreas ) do
           myself.leadData.area[#myself.leadData.area + 1] = CreateKnowledge( sword.military.world.Area, area )
       end
-      
+      if #subAreas == 0 then
+          myself.leadData.area[#myself.leadData.area + 1] = area -- cas ou la zone est hors limite
+      end
       myself.leadData.areaIndex = myself.leadData.areaIndex % #myself.leadData.area + 1
       return myself.leadData.area[ myself.leadData.areaIndex ]
     end,
