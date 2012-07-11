@@ -271,6 +271,10 @@ std::string Controller::DoGet( Request_ABC& request )
             const std::string user = UserIsAuthenticated( request );
             return WriteHttpReply( user.empty() ? Unauthorized : Ok, user );
         }
+        if( uri == "/list_users" )         return ListUsers( request );
+        if( uri == "/count_users" )        return CountUsers( request );
+        if( uri == "/get_user" )           return GetUser( request );
+        if( uri == "/delete_user" )        return DeleteUser( request );
     }
     catch( const HttpException& err )
     {
@@ -307,6 +311,7 @@ std::string Controller::DoPost( Request_ABC& request )
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
         if( uri == "/update_login" ) return UserUpdateLogin( request );
+        if( uri == "/create_user" )  return CreateUser( request );
     }
     catch( const HttpException& err )
     {
@@ -671,4 +676,66 @@ std::string Controller::UserUpdateLogin( Request_ABC& request )
     if( user.empty() )
         return WriteHttpReply( Unauthorized );
     return WriteHttpReply( Ok, user );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::ListUsers
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string Controller::ListUsers( const Request_ABC& request )
+{
+    const int offset = GetParameter( "offset", request, 0 );
+    const int limit = GetParameter( "limit", request, 10 );
+    return WriteHttpReply( users_.ListUsers( offset, limit ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::CountUsers
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string Controller::CountUsers( const Request_ABC& request )
+{
+    return WriteHttpReply( users_.CountUsers() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::GetUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string Controller::GetUser( const Request_ABC& request )
+{
+    const std::string id = RequireParameter< std::string >( "id", request );
+    return WriteHttpReply( users_.GetUser( boost::lexical_cast< int >( id ) ) );
+}
+
+namespace
+{
+bool ToBool( const std::string& value )
+{
+    return value == "1" || value == "true";
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::CreateUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string Controller::CreateUser( Request_ABC& request )
+{
+    request.ParseForm();
+    const std::string username = RequireParameter< std::string >( "username", request );
+    const std::string name = RequireParameter< std::string >( "name", request );
+    const std::string password = RequireParameter< std::string >( "password", request );
+    const std::string temporary = RequireParameter< std::string >( "temporary", request );
+    return WriteHttpReply( users_.CreateUser( username, name, password, ToBool( temporary ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::DeleteUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string Controller::DeleteUser( const Request_ABC& request )
+{
+    const std::string id = RequireParameter< std::string >( "id", request );
+    return WriteHttpReply( users_.DeleteUser( request.GetSid(), boost::lexical_cast< int >( id ) ) );
 }

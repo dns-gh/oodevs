@@ -102,6 +102,11 @@ private:
     std::string UserLogout         ( const Request_ABC& request );
     std::string UserIsAuthenticated( const Request_ABC& request );
     std::string UserUpdateLogin    ( Request_ABC& request );
+    std::string ListUsers          ( const Request_ABC& request );
+    std::string CountUsers         ( const Request_ABC& request );
+    std::string GetUser            ( const Request_ABC& request );
+    std::string CreateUser         ( Request_ABC& request );
+    std::string DeleteUser         ( const Request_ABC& request );
     //@}
 
     //! @name Helpers
