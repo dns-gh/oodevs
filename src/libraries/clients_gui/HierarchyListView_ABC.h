@@ -95,6 +95,7 @@ protected:
     virtual void ClearSelection();
     static void SetVisible( Q3ListViewItem* item, bool visible );
     void UpdateItem( ValuedListItem* item );
+    bool IsActivated() const;
     virtual void focusInEvent( QFocusEvent* event );
     //@}
 

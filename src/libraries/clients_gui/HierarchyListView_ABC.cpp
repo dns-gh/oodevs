@@ -467,6 +467,15 @@ void HierarchyListView_ABC::ActivateSelection( bool activate )
 }
 
 // -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::IsActivated
+// Created: JSR 2012-07-11
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::IsActivated() const
+{
+    return activated_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::focusInEvent
 // Created: LGY 2012-06-29
 // -----------------------------------------------------------------------------
