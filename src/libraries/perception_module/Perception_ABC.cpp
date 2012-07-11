@@ -26,7 +26,7 @@ const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper
 // Name: Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void Perception_ABC::Execute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
+void Perception_ABC::Execute( const wrapper::View& /*model*/, const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_AgentPtrVector& /*perceivableAgents*/ )
 {
     // NOTHING
 }
@@ -90,6 +90,15 @@ const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
 void Perception_ABC::Execute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const T_ConstPopulationConcentrationVector& /*perceivableConcentrations*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Perception_ABC::FinalizePerception
+// Created: SLI 2012-07-10
+// -----------------------------------------------------------------------------
+void Perception_ABC::FinalizePerception( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/ )
 {
     // NOTHING
 }

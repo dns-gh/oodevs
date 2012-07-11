@@ -136,7 +136,7 @@ namespace
 // Name: PerceptionView::Execute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-void PerceptionView::Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents )
+void PerceptionView::Execute( const wrapper::View& /*model*/, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents )
 {
     if( IsEnabled( perceiver ) )
     {

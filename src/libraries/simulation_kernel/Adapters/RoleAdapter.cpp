@@ -172,6 +172,8 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "perceptions/vision/location/y" ] = 1;
     entity_[ "perceptions/main-perception-direction/x" ] = 0;
     entity_[ "perceptions/main-perception-direction/y" ] = 1;
+    entity_[ "perceptions/drill-blow/width" ] = pion.GetType().GetUnitType().GetCoupDeSondeWidth ();
+    entity_[ "perceptions/drill-blow/length" ] = pion.GetType().GetUnitType().GetCoupDeSondeLength ();
     entity_[ "fire/force-ratio/feedback-time" ] = pion.GetType().GetFeedbackTime();
 }
 

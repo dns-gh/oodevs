@@ -142,6 +142,7 @@ namespace
             entity[ "movement/direction/y" ] = direction.rY_;
             entity[ "movement/height" ] = 0;
             entity[ "perceptions/sensor/activated" ] = true;
+            entity[ "perceptions/scan/activated" ] = false;
             entity[ "perceptions/record-mode/activated" ] = false;
             core::Model& component = entity[ "components"].AddElement();
             component[ "type/sensor-rotation-angle" ] = 3;

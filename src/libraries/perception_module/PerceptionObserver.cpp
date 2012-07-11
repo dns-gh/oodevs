@@ -20,8 +20,8 @@ using namespace sword::perception;
 // Name: PerceptionObserver constructor
 // Created: SLI 2012-06-19
 // -----------------------------------------------------------------------------
-PerceptionObserver::PerceptionObserver( const wrapper::View& perceiver, bool recordModeEnabled )
-    : recordModeEnabled_         ( recordModeEnabled )
+PerceptionObserver::PerceptionObserver( const wrapper::View& perceiver )
+    : recordModeEnabled_         ( perceiver[ "perceptions/record-mode/activated" ] )
     , agentNotifications_        ( perceiver[ "perceptions/notifications/agents" ] )
     , objectNotifications_       ( perceiver[ "perceptions/notifications/objects" ] )
     , urbanBlockNotifications_   ( perceiver[ "perceptions/notifications/urban-blocks" ] )

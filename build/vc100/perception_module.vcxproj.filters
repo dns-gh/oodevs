@@ -128,6 +128,12 @@
     <ClInclude Include="..\..\src\libraries\perception_module\ExternalPerceptionCommand.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\ListInCircleVisitor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -213,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\perception_module\ExternalPerceptionCommand.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.cpp">
+      <Filter>Source Files\Perceptions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

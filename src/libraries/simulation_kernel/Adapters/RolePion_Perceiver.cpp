@@ -232,7 +232,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , bExternalCanPerceive_          ( true )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
-    , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( 0 )
     , pPerceptionRecoLocalisation_   ( 0 )
     , pPerceptionRecoUrbanBlock_     ( 0 )
@@ -248,7 +247,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     entity[ "perceptions/max-agent-perception-distance" ] = 0;
     entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     AddListener< ToggleListener >( "perceptions/record-mode/activated", boost::bind( &RolePion_Perceiver::EnableRecordMode, this ), boost::bind( &RolePion_Perceiver::DisableRecordMode, this ) );
-    AddListener< ToggleListener >( "perceptions/scan/activated", boost::bind( &RolePion_Perceiver::EnableCoupDeSonde, this ), boost::bind( &RolePion_Perceiver::DisableCoupDeSonde, this ) );
     AddListener< ToggleListener >( "perceptions/radars/radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::radar_ ) ) );
     AddListener< ToggleListener >( "perceptions/radars/tapping/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tapping_ ) ) );
     AddListener< ToggleListener >( "perceptions/radars/tapping-radar/activated", boost::bind( &RolePion_Perceiver::EnableRadar, this, boost::ref( PHY_RadarClass::tappingRadar_ ) ), boost::bind( &RolePion_Perceiver::DisableRadar, this, boost::ref( PHY_RadarClass::tappingRadar_ ) ) );
@@ -399,10 +397,7 @@ void RolePion_Perceiver::DisableSensors()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableCoupDeSonde()
 {
-    if( pPerceptionCoupDeSonde_ )
-        return;
-    pPerceptionCoupDeSonde_ = new PHY_PerceptionCoupDeSonde( *this );
-    activePerceptions_.push_back( pPerceptionCoupDeSonde_ );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -412,11 +407,7 @@ void RolePion_Perceiver::EnableCoupDeSonde()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableCoupDeSonde()
 {
-    if( !pPerceptionCoupDeSonde_ )
-        return;
-    activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionCoupDeSonde_ ) );
-    delete pPerceptionCoupDeSonde_;
-    pPerceptionCoupDeSonde_ = 0;
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -791,7 +782,6 @@ namespace
 void RolePion_Perceiver::DisableAllPerceptions()
 {
     activePerceptions_.clear();
-    Reset( pPerceptionCoupDeSonde_ );
     Reset( pPerceptionRecoPoint_ );
     Reset( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionRecoUrbanBlock_ );

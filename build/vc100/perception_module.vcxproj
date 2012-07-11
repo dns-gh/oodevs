@@ -21,10 +21,12 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\perception_module\ExternalPerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.h" />
+    <ClInclude Include="..\..\src\libraries\perception_module\ListInCircleVisitor.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ModuleFacade.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionComputer_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionLevel.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionObserver.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\PerceptionObserver_ABC.h" />
@@ -61,6 +63,7 @@
     <ClCompile Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ModuleFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp" />
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionObserver.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionSurfaceAgent.cpp" />

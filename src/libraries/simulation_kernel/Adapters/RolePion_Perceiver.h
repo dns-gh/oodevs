@@ -234,7 +234,6 @@ private:
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
 
-    PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;
     PHY_PerceptionRecoPoint*        pPerceptionRecoPoint_;
     PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
     PHY_PerceptionRecoUrbanBlock*   pPerceptionRecoUrbanBlock_;

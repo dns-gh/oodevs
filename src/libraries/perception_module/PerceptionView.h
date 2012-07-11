@@ -31,14 +31,17 @@ namespace perception
 class PerceptionView : public Perception_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              PerceptionView( const wrapper::View& entity, PerceptionObserver_ABC& observer );
     virtual ~PerceptionView();
+    //@}
 
     //! @name Execution
     //@{
     virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const;
 
-    virtual void                   Execute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
+    virtual void                   Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
     virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target );
 
     virtual void                   Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
@@ -72,11 +75,14 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const size_t identifier_;
     PerceptionObserver_ABC& observer_;
     T_PerceptionTickMap perceptionsBuffer_;
     T_PerceptionTickMap perceptionsUnderway_;
     bool wasInCity_;
+    //@}
 };
 
 }

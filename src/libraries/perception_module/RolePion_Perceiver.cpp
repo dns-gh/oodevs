@@ -9,6 +9,7 @@
 
 #include "RolePion_Perceiver.h"
 #include "PerceptionView.h"
+#include "PerceptionCoupDeSonde.h"
 #include "PerceptionLevel.h"
 #include "SurfacesAgent_ABC.h"
 #include "SurfacesAgentVisitor_ABC.h"
@@ -22,6 +23,7 @@
 #include "PerceptionObserver.h"
 #include "PerceptionSurfaceAgent.h"
 #include "PerceptionSurfaceObject.h"
+#include "ListInCircleVisitor.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Event.h"
@@ -33,6 +35,8 @@
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include <boost/shared_ptr.hpp>
+#include <vector>
 
 using namespace sword;
 using namespace sword::perception;
@@ -156,33 +160,6 @@ namespace
             energy = std::max( energy, GET_PREVIOUS_HOOK( GetPerception )( entity, point, target ) );
         return energy;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver constructor
-// Created: NLD 2004-08-19
-// -----------------------------------------------------------------------------
-RolePion_Perceiver::RolePion_Perceiver()
-    //: pPerceptionCoupDeSonde_     ( 0 )
-    //, pPerceptionRecoPoint_       ( 0 )
-    //, pPerceptionRecoLocalisation_( 0 )
-    //, pPerceptionRecoUrbanBlock_  ( 0 )
-    //, pPerceptionRadar_           ( 0 )
-    //, pPerceptionAlat_            ( 0 )
-    //, pPerceptionSurveillance_    ( 0 )
-    //, pPerceptionRecoObjects_     ( 0 )
-    //, pPerceptionFlyingShell_     ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver destructor
-// Created: NLD 2004-08-20
-// -----------------------------------------------------------------------------
-RolePion_Perceiver::~RolePion_Perceiver()
-{
-    // NOTHING
 }
 
 // =============================================================================
@@ -399,18 +376,6 @@ namespace
         Perception_ABC::T_ConstPopulationConcentrationVector& perceivableConcentrations_;
         Perception_ABC::T_ConstPopulationFlowVector& perceivableFlows_;
     };
-    template< typename T >
-    struct ListInCircleVisitor : private boost::noncopyable
-    {
-        explicit ListInCircleVisitor( std::vector< T >& list )
-            : list_( list )
-        {}
-        static void Add( T data, void* userData )
-        {
-            static_cast< ListInCircleVisitor< T >* >( userData )->list_.push_back( data );
-        }
-        std::vector< T >& list_;
-    };
     template< typename Visitable, typename Visitor, typename T >
     struct Surfaces : public Visitable
     {
@@ -449,7 +414,6 @@ namespace
         effect.Post();
     }
 
-
     // -----------------------------------------------------------------------------
     // Name: RolePion_Perceiver::Update
     // Created: NLD 2004-08-30
@@ -484,6 +448,23 @@ namespace
         //    if( pPerceptionRecoObjects_ )
         //        pPerceptionRecoObjects_->Update();
     }
+
+    typedef boost::shared_ptr< Perception_ABC > T_Perception;
+    typedef std::vector< T_Perception > T_PerceptionVector;
+
+    template< typename Type >
+    void AddActivePerception( const std::string& sensor, T_PerceptionVector& activeperceptions, const wrapper::View& entity, PerceptionObserver_ABC& observer )
+    {
+        if( entity[ "perceptions" ][ sensor ][ "activated" ] )
+            activeperceptions.push_back( boost::shared_ptr< Type >( new Type( entity, observer ) ) );
+    }
+    T_PerceptionVector CreateActivePerceptions( const wrapper::View& entity, PerceptionObserver_ABC& observer )
+    {
+        T_PerceptionVector activePerceptions;
+        AddActivePerception< PerceptionView >( "sensor", activePerceptions, entity, observer );
+        AddActivePerception< PerceptionCoupDeSonde >( "scan", activePerceptions, entity, observer );
+        return activePerceptions;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -492,10 +473,8 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const
 {
-    PerceptionObserver observer( entity, entity[ "perceptions/record-mode/activated" ] );
-    PerceptionView perceptionView( entity, observer );
-    T_PerceptionVector activePerceptions;
-    activePerceptions.push_back( &perceptionView ); // $$$$ _RC_ SLI 2012-07-10: add all active perceptions
+    PerceptionObserver observer( entity );
+    T_PerceptionVector activePerceptions = CreateActivePerceptions( entity, observer );
     T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
@@ -504,8 +483,6 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
 
     if( CanPerceive( entity ) )
     {
-        CIT_PerceptionVector itPerception;
-
         UrbanObjectVisitor urbanVisitor( observer, entity[ "perceptions/max-agent-perception-distance" ] );
 
         const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
@@ -526,27 +503,27 @@ void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const w
         const T_SurfacesAgents surfacesAgent( surfacesAgent );
         ListInCircleVisitor< wrapper::View > agentVisitor( perceivableAgents );
         GET_HOOK( GetAgentListWithinCircle )( model, position, maxPerceptionDistance, &ListInCircleVisitor< const SWORD_Model* >::Add, &agentVisitor );
-        for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
-            (**itPerception).Execute( entity, surfacesAgent, perceivableAgents );
+        BOOST_FOREACH( T_Perception activePerception, activePerceptions )
+            activePerception->Execute( model, entity, surfacesAgent, perceivableAgents );
 
         const T_SurfacesObjects surfacesObject( surfacesObject );
         ListInCircleVisitor< MIL_Object_ABC* > objectVisitor( perceivableObjects );
         GET_HOOK( GetObjectListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< MIL_Object_ABC* >::Add, &objectVisitor );
-        for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
-            (**itPerception).Execute( entity, surfacesObject, perceivableObjects );
+        BOOST_FOREACH( T_Perception activePerception, activePerceptions )
+            activePerception->Execute( entity, surfacesObject, perceivableObjects );
 
         ListInCircleVisitor< const MIL_PopulationConcentration* > concentrationVisitor( perceivableConcentrations );
         GET_HOOK( GetConcentrationListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< const MIL_PopulationConcentration* >::Add, &concentrationVisitor );
-        for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
-            (**itPerception).Execute( entity, surfacesAgent, perceivableConcentrations );
+        BOOST_FOREACH( T_Perception activePerception, activePerceptions )
+            activePerception->Execute( entity, surfacesAgent, perceivableConcentrations );
 
         ListInCircleVisitor< const MIL_PopulationFlow* > flowVisitor( perceivableFlows );
         GET_HOOK( GetFlowListWithinCircle )( position, maxPerceptionDistance, &ListInCircleVisitor< const MIL_PopulationFlow* >::Add, &flowVisitor );
-        for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
-            (**itPerception).Execute( entity, surfacesAgent, perceivableFlows );
+        BOOST_FOREACH( T_Perception activePerception, activePerceptions )
+            activePerception->Execute( entity, surfacesAgent, perceivableFlows );
 
-        for( itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
-            (**itPerception).FinalizePerception( entity, surfacesAgent );
+        BOOST_FOREACH( T_Perception activePerception, activePerceptions )
+            activePerception->FinalizePerception( entity, surfacesAgent );
     }
     observer.NotifyPerception( entity, PerceptionLevel::identified_, false );
     const SWORD_Model* transporter = GET_HOOK( GetTransporter )( model, entity );
@@ -580,9 +557,7 @@ template< typename Target, typename Constructor >
 const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const
 {
     NullObserver observer;
-    PerceptionView perceptionView( entity, observer );
-    T_PerceptionVector activePerceptions;
-    activePerceptions.push_back( &perceptionView ); // $$$$ _RC_ SLI 2012-07-10: add all active perceptions
+    T_PerceptionVector activePerceptions = CreateActivePerceptions( entity, observer );
     T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
@@ -594,9 +569,9 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
         return PerceptionLevel::notSeen_;
     Constructor::result_type surfaces = surfaceConstructor( surfacesAgent, surfacesObject );
     const PerceptionLevel* pBestPerceptionLevel = &PerceptionLevel::notSeen_;
-    for( CIT_PerceptionVector itPerception = activePerceptions.begin(); itPerception != activePerceptions.end(); ++itPerception )
+    BOOST_FOREACH( T_Perception activePerception, activePerceptions )
     {
-        pBestPerceptionLevel = &(**itPerception).Compute( entity, *surfaces, target );
+        pBestPerceptionLevel = &activePerception->Compute( entity, *surfaces, target );
         if( pBestPerceptionLevel->IsBestLevel() )
             return *pBestPerceptionLevel;
     }

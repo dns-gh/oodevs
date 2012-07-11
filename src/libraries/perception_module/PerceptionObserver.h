@@ -34,7 +34,7 @@ class PerceptionObserver : public PerceptionObserver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionObserver( const wrapper::View& perceiver, bool recordModeEnabled );
+    explicit PerceptionObserver( const wrapper::View& perceiver );
     virtual ~PerceptionObserver();
     //@}
 
