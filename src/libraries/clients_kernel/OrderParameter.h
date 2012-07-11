@@ -58,9 +58,9 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetName() const;
-    std::string GetType() const;
-    std::string GetKeyName() const;
+    const std::string& GetName() const;
+    const std::string& GetType() const;
+    const std::string& GetKeyName() const;
     void SetName( const std::string& name );
     void SetOptional( bool optional );
     void SetMinMaxOccurs( unsigned int min, unsigned int max );

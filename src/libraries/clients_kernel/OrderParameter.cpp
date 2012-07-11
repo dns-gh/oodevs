@@ -76,7 +76,7 @@ OrderParameter::~OrderParameter()
 // Name: OrderParameter::GetName
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-std::string OrderParameter::GetName() const
+const std::string& OrderParameter::GetName() const
 {
     return name_;
 }
@@ -85,7 +85,7 @@ std::string OrderParameter::GetName() const
 // Name: OrderParameter::GetType
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------
-std::string OrderParameter::GetType() const
+const std::string& OrderParameter::GetType() const
 {
     return type_;
 }
@@ -94,7 +94,7 @@ std::string OrderParameter::GetType() const
 // Name: OrderParameter::GetKeyName
 // Created: MMC 2012-05-15
 // -----------------------------------------------------------------------------
-std::string OrderParameter::GetKeyName() const
+const std::string& OrderParameter::GetKeyName() const
 {
     return keyName_;
 }
