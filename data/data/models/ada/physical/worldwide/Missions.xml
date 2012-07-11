@@ -891,7 +891,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -976,7 +976,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1061,7 +1061,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -1146,7 +1146,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2833,7 +2833,7 @@ The decontamination of a site reduces the risk of pollution to acceptable levels
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Works" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2980,7 +2980,7 @@ any physical capabilities consideration</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Fires locations" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3085,7 +3085,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Decontamination site location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3192,7 +3192,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Checkpoint location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3582,7 +3582,7 @@ In that specific case, the mission ends with the report &quot;work impossible, n
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Roadblock location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3743,7 +3743,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" name="Dike location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3845,7 +3845,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Firebreak location" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3928,7 +3928,7 @@ In that specific case, the agent decides to act on the next one.</P>
         <doctrine><![CDATA[<P><DFN>To control, disperse, and arrest civilians who are involved in a riot, demonstration, or protest. Riot squads have long<BR>
      used less lethal weapons such as tear gas to disperse crowds and detain rioters.<DFN></P>
 <P>In SWORD, a mission in which the agent launches a dispersion grenade that creates a specific object (a time limited object <BR>
-    such as a crowd dispersion smoke). Such an object is used to decrease number of healthy humans within the given crowd.</P>]]></doctrine>
+    such as a Mine Cluster). Such an object is used to decrease number of healthy humans within the given crowd.</P>]]></doctrine>
         <usage><![CDATA[<P>This mission needs the following parameters: <BR>
  - <b>Crowd</b>: the crowd that must be dispersed,<BR>
  - <b>Resource type</b>: the type of resource (grenade) to use,<BR>
@@ -4710,7 +4710,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4799,7 +4799,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4884,7 +4884,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4986,7 +4986,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -5904,7 +5904,7 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Crowd dispersion smoke"/>
+          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -6025,4 +6025,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2504971627" -->
+<!-- signature="1913989794" -->
