@@ -170,6 +170,7 @@ on_node_click = ->
     if !validate_input_node name, name.val().length
         return
     node_view.create name: name.val()
+    name.val ''
 
 on_node_config = (container, name, max, parallel) ->
     container.html node_settings
@@ -180,9 +181,14 @@ on_node_config = (container, name, max, parallel) ->
 on_node_config $("#node_settings"), "", 64, 8
 
 $("#node_create").click on_node_click
+
 $("#node_config").click ->
     on_node_config $("#node_settings"),
         $("#node_name").val(),
         $("#node_settings .max_sessions").val(),
         $("#node_settings .parallel_sessions").val()
     $("#node_settings .modal").modal "show"
+
+$(".create_form").keypress (e) ->
+    if e.which == 13
+        $("#node_create").click()

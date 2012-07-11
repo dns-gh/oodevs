@@ -528,9 +528,10 @@
     if (!validate_input_node(name, name.val().length)) {
       return;
     }
-    return node_view.create({
+    node_view.create({
       name: name.val()
     });
+    return name.val('');
   };
 
   on_node_config = function(container, name, max, parallel) {
@@ -548,6 +549,12 @@
   $("#node_config").click(function() {
     on_node_config($("#node_settings"), $("#node_name").val(), $("#node_settings .max_sessions").val(), $("#node_settings .parallel_sessions").val());
     return $("#node_settings .modal").modal("show");
+  });
+
+  $(".create_form").keypress(function(e) {
+    if (e.which === 13) {
+      return $("#node_create").click();
+    }
   });
 
 }).call(this);
