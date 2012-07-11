@@ -10,6 +10,7 @@
 #ifndef EVENT_H__
 #define EVENT_H__
 
+#include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/thread/condition_variable.hpp>
 

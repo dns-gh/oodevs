@@ -18,9 +18,10 @@
 #include "runtime/Utf8.h"
 
 #include <boost/bind.hpp>
-
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
+#include <boost/thread.hpp>
+
 #include <windows.h>
 
 using namespace runtime;

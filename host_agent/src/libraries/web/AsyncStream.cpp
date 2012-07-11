@@ -19,6 +19,7 @@
 #   pragma warning( pop )
 #endif
 
+#include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/optional.hpp>
 #include <boost/thread/condition_variable.hpp>
