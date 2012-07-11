@@ -29,6 +29,16 @@
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 
+#define TRY try {
+#define CATCH } \
+    catch( std::exception& e ) \
+    { \
+        BOOST_ERROR( e.what() ); \
+    } catch( ... ) \
+    { \
+        BOOST_ERROR( "unknown exception" ); \
+    }
+
 namespace core
 {
     struct ConfigureFixture
@@ -54,7 +64,9 @@ namespace core
 
         static void SWORD_PostEffect( SWORD_Model* effect, const SWORD_Model* target )
         {
-            PostEffect( effect, core::Convert( target )->Context() );
+            TRY
+                PostEffect( effect, core::Convert( target )->Context() );
+            CATCH
         }
         MOCK_STATIC_METHOD( PostEffect, 2, void( SWORD_Model* effect, const std::string& target ), PostEffect )
         void ExpectEffect( const core::Model& target, const sword::test::ModelBuilder& effect ) // $$$$ MCO 2012-04-11: invert parameters to match PostEffect
@@ -85,16 +97,22 @@ namespace core
         #define DECLARE_GET_SET( TYPE_NAME, TYPE ) \
         static int SWORD_Get##TYPE_NAME ( const SWORD_Model* node, TYPE* value ) \
         { \
-            BOOST_REQUIRE( node ); \
-            BOOST_REQUIRE( value ); \
-            *value = *core::Convert( node ); \
-            return true; \
+            TRY \
+                BOOST_REQUIRE( node ); \
+                BOOST_REQUIRE( value ); \
+                *value = *core::Convert( node ); \
+                return true; \
+            CATCH \
+                return false; \
         } \
         static int SWORD_Set##TYPE_NAME ( SWORD_Model* node, TYPE value ) \
         { \
-            BOOST_REQUIRE( node ); \
-            *core::Convert( node ) = value; \
-            return true; \
+            TRY \
+                BOOST_REQUIRE( node ); \
+                *core::Convert( node ) = value; \
+                return true; \
+            CATCH \
+                return false; \
         }
         DECLARE_GET_SET( Int8,   int8_t )
         DECLARE_GET_SET( Int16,  int16_t )
@@ -110,87 +128,125 @@ namespace core
 
         static int SWORD_GetBool( const SWORD_Model* node, int* value )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( value );
-            *value = *core::Convert( node );
-            return true;
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( value );
+                *value = *core::Convert( node );
+                return true;
+            CATCH
+                return false;
         }
         static int SWORD_GetText( const SWORD_Model* node, const char** value, size_t* size )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( value );
-            BOOST_REQUIRE( size );
-            const std::string& text = *Convert( node );
-            *value = text.c_str();
-            *size = text.size();
-            return true;
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( value );
+                BOOST_REQUIRE( size );
+                const std::string& text = *Convert( node );
+                *value = text.c_str();
+                *size = text.size();
+                return true;
+            CATCH
+                return false;
         }
         static int SWORD_SetText( SWORD_Model* node, const char* value, size_t size )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( value );
-            *Convert( node ) = std::string( value, size );
-            return true;
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( value );
+                *Convert( node ) = std::string( value, size );
+                return true;
+            CATCH
+                return false;
         }
         static int SWORD_CopyValue( const SWORD_Model* from, SWORD_Model* to )
         {
-            BOOST_REQUIRE( from );
-            BOOST_REQUIRE( to );
-            *Convert( to ) = *Convert( from );
-            return true;
+            TRY
+                BOOST_REQUIRE( from );
+                BOOST_REQUIRE( to );
+                *Convert( to ) = *Convert( from );
+                return true;
+            CATCH
+                return false;
         }
-
         static int SWORD_GetSize( const SWORD_Model* node, size_t* size )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( size );
-            *size = core::Convert( node )->GetSize();
-            return true;
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( size );
+                *size = core::Convert( node )->GetSize();
+                return true;
+            CATCH
+                return false;
         }
         static const SWORD_Model* SWORD_GetElement( const SWORD_Model* node, size_t index )
         {
-            BOOST_REQUIRE( node );
-            return core::Convert( &core::Convert( node )->GetElement( index ) );
+            TRY
+                BOOST_REQUIRE( node );
+                return core::Convert( &core::Convert( node )->GetElement( index ) );
+            CATCH
+                return 0;
         }
         static SWORD_Model* SWORD_AddElement( SWORD_Model* parent )
         {
-            BOOST_REQUIRE( parent );
-            return core::Convert( &core::Convert( parent )->AddElement() );
+            TRY
+                BOOST_REQUIRE( parent );
+                return core::Convert( &core::Convert( parent )->AddElement() );
+            CATCH
+                return 0;
         }
         static const SWORD_Model* SWORD_GetChild( const SWORD_Model* node, const char* key )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( key );
-            return core::Convert( &(*core::Convert( node ))[ key ] );
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( key );
+                return core::Convert( &(*core::Convert( node ))[ key ] );
+            CATCH
+                return 0;
         }
         static SWORD_Model* SWORD_SetChild( SWORD_Model* node, const char* key )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( key );
-            return core::Convert( &(*core::Convert( node ))[ key ] );
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( key );
+                return core::Convert( &(*core::Convert( node ))[ key ] );
+            CATCH
+                return 0;
         }
         static const SWORD_Model* SWORD_GetChildInt( const SWORD_Model* parent, unsigned int key )
         {
-            BOOST_REQUIRE( parent );
-            return core::Convert( &(*core::Convert( parent ))[ key ] );
+            TRY
+                BOOST_REQUIRE( parent );
+                return core::Convert( &(*core::Convert( parent ))[ key ] );
+            CATCH
+                return 0;
         }
         static SWORD_Model* SWORD_SetChildInt( SWORD_Model* parent, unsigned int key )
         {
-            BOOST_REQUIRE( parent );
-            return core::Convert( &(*core::Convert( parent ))[ key ] );
+            TRY
+                BOOST_REQUIRE( parent );
+                return core::Convert( &(*core::Convert( parent ))[ key ] );
+            CATCH
+                return 0;
         }
         static int SWORD_GetUserData( const SWORD_Model* node, void** value )
         {
-            BOOST_REQUIRE( node );
-            BOOST_REQUIRE( value );
-            (*value) = core::Convert( node )->GetData();
-            return true;
+            TRY
+                BOOST_REQUIRE( node );
+                BOOST_REQUIRE( value );
+                (*value) = core::Convert( node )->GetData();
+                return true;
+            CATCH
+                return false;
         }
         static int SWORD_SetUserData( SWORD_Model* node, const void* value )
         {
-            BOOST_REQUIRE( node );
-            core::Convert( node )->SetUserData( value );
-            return true;
+            TRY
+                BOOST_REQUIRE( node );
+                core::Convert( node )->SetUserData( value );
+                return true;
+            CATCH
+                return false;
         }
         MOCK_STATIC_METHOD( SWORD_Log, 2, void( SWORD_LogLevel level, const char* message ), Log )
 
