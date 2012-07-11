@@ -32,13 +32,16 @@ return
               for _, area in pairs( subAreas ) do
                   areasKn[#areasKn + 1] = CreateKnowledge( sword.military.world.Area, area )
               end
+              if #subAreas == 0 then
+                  areasKn[#areasKn + 1] = objective -- cas ou la zone est hors limite
+              end
           else                                              -- nb de zones  >= nb de pions
               areasKn[#areasKn + 1] = CreateKnowledge( sword.military.world.Area, objective.source )
           end
       end
        -- Distribtion des sous-zones aux pions
        if #params.objectives <= nbFront then                -- nb de zone <= nb de pions: chaque pion recoit une sous-zone
-           result[#result+1] = areasKn[ myself.leadData.deployPositionIndex ]     
+           result[#result+1] = areasKn[ myself.leadData.deployPositionIndex ]
            myself.leadData.deployPositionIndex = myself.leadData.deployPositionIndex + 1 
            myself.leadData.NombreTotalSitesAConstruire = myself.leadData.NombreTotalSitesAConstruire + 2 -- On ajoute 2 à la liste des sites (2 sites par zone)
        else                                                 -- nb de zone > nb de pions: chaque pion recoit une ou plusieurs sous-zone
