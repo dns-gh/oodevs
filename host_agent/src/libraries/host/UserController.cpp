@@ -113,10 +113,10 @@ void MakeTables( Sql_ABC& db )
         ")" ) );
     Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
         "  id           INTEGER PRIMARY KEY"
-        ", username     TEXT"
-        ", hash         TEXT"
+        ", username     TEXT UNIQUE NOT NULL"
+        ", hash         TEXT NOT NULL"
         ", name         TEXT"
-        ", type         TEXT"
+        ", type         TEXT NOT NULL"
         ", temporary    BOOLEAN"
         ", language     TEXT"
         ", created      DATE"
@@ -124,11 +124,33 @@ void MakeTables( Sql_ABC& db )
     Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
         ", id_users INTEGER"
-        ", source   TEXT"
-        ", token    TEXT"
+        ", source   TEXT NOT NULL"
+        ", token    TEXT UNIQUE NOT NULL"
         ", created  DATE"
         ")" ) );
     db.Commit( *tr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::CreateUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+void CreateUser( Sql_ABC& db, Transaction& tr, const Crypt_ABC& crypt,
+                 const std::string& username, const std::string& name,
+                 const std::string& password, UserType type,
+                 bool temporary, const std::string& lang )
+{
+    Sql_ABC::T_Statement st = db.Prepare( tr,
+            "INSERT into users"
+            "          ( username, hash, name, type, temporary, language, created )"
+            "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
+    st->Bind( username );
+    st->Bind( crypt.Hash( password ) );
+    st->Bind( name );
+    st->Bind( Convert( type ) );
+    st->Bind( temporary );
+    st->Bind( lang );
+    Execute( *st );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,17 +166,9 @@ void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
             "VALUES    ( ?, DATE('NOW') )" );
     st->Bind( 1 );
     Execute( *st );
-    st = db.Prepare( *tr,
-        "INSERT INTO users"
-        "          ( username, hash, name, type, temporary, language, created )"
-        "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
-    st->Bind( "admin@masagroup.net" );
-    st->Bind( crypt.Hash( "admin" ) );
-    st->Bind( "Default" );
-    st->Bind( Convert( USER_TYPE_ADMINISTRATOR ) );
-    st->Bind( false );
-    st->Bind( "eng" );
-    Execute( *st );
+    st.reset();
+    CreateUser( db, *tr, crypt, "admin@masagroup.net", "Default", "admin",
+                USER_TYPE_ADMINISTRATOR, false, "eng" );
     db.Commit( *tr );
 }
 
@@ -204,19 +218,55 @@ void UserController::SetupDatabase()
 namespace
 {
 // -----------------------------------------------------------------------------
-// Name: MakeUser
+// Name: PutUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+void PutUser( Tree& dst, Statement_ABC& st )
+{
+    dst.put( "username", st.ReadText() );
+    dst.put( "name", st.ReadText() );
+    dst.put( "type", st.ReadText() );
+    dst.put( "temporary", st.ReadBool() );
+    dst.put( "language", st.ReadText() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PutUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+void PutUser( Tree& dst, const std::string& username, const std::string& name,
+              const std::string& type, bool temporary, const std::string& lang )
+{
+    dst.put( "username", username );
+    dst.put( "name", name );
+    dst.put( "type", type );
+    dst.put( "temporary", temporary );
+    dst.put( "language", lang );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MakeToken
 // Created: BAX 2012-07-04
 // -----------------------------------------------------------------------------
-std::string MakeUser( const std::string& sid, const std::string& username, const std::string& name,
-                      const std::string& type, bool temporary, const std::string& lang )
+std::string MakeToken( const std::string& sid, Statement_ABC& st )
 {
     Tree rpy;
     rpy.put( "sid", sid );
-    rpy.put( "username", username );
-    rpy.put( "name", name );
-    rpy.put( "type", type );
-    rpy.put( "temporary", temporary );
-    rpy.put( "language", lang );
+    PutUser( rpy, st );
+    return ToJson( rpy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MakeToken
+// Created: BAX 2012-07-04
+// -----------------------------------------------------------------------------
+std::string MakeToken( const std::string& sid, const std::string& username,
+                       const std::string& name, const std::string& type,
+                       bool temporary, const std::string& lang )
+{
+    Tree rpy;
+    rpy.put( "sid", sid );
+    PutUser( rpy, username, name, type, temporary, lang );
     return ToJson( rpy );
 }
 
@@ -312,7 +362,7 @@ std::string UserController::Login( const std::string& username, const std::strin
             DeleteTokenWithToken( db_, *tr, token );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
         db_.Commit( *tr );
-        return MakeUser( sid, username, name, type, temporary, lang );
+        return MakeToken( sid, username, name, type, temporary, lang );
     }
     catch( const std::exception& err )
     {
@@ -342,15 +392,8 @@ std::string UserController::IsAuthenticated( const std::string& token, const std
             );
         st->Bind( source );
         st->Bind( token );
-        bool valid = st->Next();
-        if( !valid )
-            return std::string();
-        const std::string username = st->ReadText();
-        const std::string name = st->ReadText();
-        const std::string type = st->ReadText();
-        const bool temporary = st->ReadBool();
-        const std::string lang = st->ReadText();
-        return MakeUser( token, username, name, type, temporary, lang );
+        if( st->Next() )
+            return MakeToken( token, *st );
     }
     catch( const std::exception& err )
     {
@@ -405,7 +448,7 @@ std::string UserController::UpdateLogin( const std::string& username, const std:
         Execute( *st );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
         db_.Commit( *tr );
-        return MakeUser( sid, username, name, type, false, lang );
+        return MakeToken( sid, username, name, type, false, lang );
     }
     catch( const std::exception& err )
     {
@@ -413,4 +456,118 @@ std::string UserController::UpdateLogin( const std::string& username, const std:
         LOG_ERROR( log_ ) << "[sql] Unable to update login";
     }
     return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::ListUsers
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string UserController::ListUsers( int offset, int limit ) const
+{
+    Sql_ABC::T_Transaction tr = db_.Begin( false );
+    Sql_ABC::T_Statement st = db_.Prepare( *tr,
+        "SELECT id, username, name, type, temporary, language "
+        "FROM users "
+        "LIMIT ? OFFSET ?" );
+    st->Bind( limit );
+    st->Bind( offset );
+    std::string json;
+    while( st->Next() )
+    {
+        Tree tree;
+        tree.put( "id", st->ReadInt() );
+        PutUser( tree, *st );
+        json += ToJson( tree ) + ",";
+    }
+    return "[" + json.substr( 0, json.size() - 1 ) + "]";
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::CountUsers
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string UserController::CountUsers() const
+{
+    Sql_ABC::T_Transaction tr = db_.Begin( false );
+    Sql_ABC::T_Statement st = db_.Prepare( *tr,
+            "SELECT DISTINCT id FROM users" );
+    const size_t size = Execute( *st );
+    Tree tree;
+    tree.put( "count", size );
+    return ToJson( tree );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::GetUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string UserController::GetUser( int id ) const
+{
+    Sql_ABC::T_Transaction tr = db_.Begin( false );
+    Sql_ABC::T_Statement st = db_.Prepare( *tr,
+        "SELECT username, name, type, temporary, language "
+        "FROM users "
+        "WHERE id = ?" );
+    st->Bind( id );
+    while( st->Next() )
+    {
+        Tree tree;
+        tree.put( "id", id );
+        PutUser( tree, *st );
+        return ToJson( tree );
+    }
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::CreateUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string UserController::CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary )
+{
+    Sql_ABC::T_Transaction tr = db_.Begin();
+    const UserType type = USER_TYPE_ADMINISTRATOR;
+    const std::string lang = "eng";
+    ::CreateUser( db_, *tr, crypt_, username, name, password, type, temporary, lang );
+    db_.Commit( *tr );
+    tr.reset();
+    Tree tree;
+    tree.put( "id", db_.LastId() );
+    PutUser( tree, username, name, Convert( type ), temporary, lang );
+    return ToJson( tree );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserController::DeleteUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+std::string UserController::DeleteUser( const std::string& token, int id )
+{
+    Sql_ABC::T_Transaction tr = db_.Begin();
+    Sql_ABC::T_Statement st = db_.Prepare( *tr,
+        "SELECT     users.username, users.name, users.type, users.temporary, users.language, tokens.token "
+        "FROM       users "
+        "LEFT JOIN  tokens "
+        "ON         tokens.id_users = users.id "
+        "AND        tokens.token    = ? "
+        "WHERE      users.id = ?" );
+    st->Bind( token );
+    st->Bind( id );
+    bool valid = st->Next();
+    if( !valid )
+        return std::string();
+
+    Tree tree;
+    tree.put( "id", id );
+    PutUser( tree, *st );
+    // check whether we are not deleting ourselves, which is forbidden
+    if( st->IsColumnDefined() )
+        return std::string();
+
+    DeleteTokenWithUserId( db_, *tr, id );
+    st = db_.Prepare( *tr, "DELETE FROM users WHERE users.id = ?" );
+    st->Bind( id );
+    Execute( *st );
+    db_.Commit( *tr );
+    return ToJson( tree );
 }
