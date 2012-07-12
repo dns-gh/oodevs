@@ -600,8 +600,16 @@ void ModelConsistencyChecker::CheckCommandPosts()
         unsigned int commandPostCount = 0;
         while( itChild.HasMoreElements() )
         {
-            if( IsCommandPost( itChild.NextElement() ) )
+            const Entity_ABC& entity = itChild.NextElement();
+            if( IsCommandPost( entity ) )
                 ++commandPostCount;
+            else
+            {
+                const kernel::DictionaryExtensions* ext = entity.Retrieve< kernel::DictionaryExtensions>();
+                if( ext && ext->IsEnabled() )
+                    if( !ext->GetValue( "TypePC" ).empty() || !ext->GetValue( "TypeSIOC" ).empty() )
+                        AddError( eBadCPExtensions, &entity );
+            }
         }
         if( commandPostCount == 0 )
             AddError( eNoCommandPost, &automat );

@@ -25,7 +25,8 @@ namespace
     bool IsError( E_ConsistencyCheck type )
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
-            || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError;
+            || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
+            || type == eBadCPExtensions;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
@@ -114,6 +115,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eUnknownInfrastructure]            = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure \"%1\". It will be deleted at next save." );
     errorDescriptions_[ eUnknownResourceNetwork]           = tools::translate( "ModelConsistencyDialog", "Unknown resource network type \"%1\". Related networks will deleted at next save." );
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found. The orbat.xml file will be created after the first save." );
+    errorDescriptions_[ eBadCPExtensions ]                 = tools::translate( "ModelConsistencyDialog", "CP type or SIOC type extensions defined for a non CP unit." );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 

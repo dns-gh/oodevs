@@ -54,7 +54,8 @@ enum E_ConsistencyCheck
     eUnknownInfrastructure           = 0x0008 << 20,
     eUnknownResourceNetwork          = 0x0009 << 20,
     eNoOrbat                         = 0x000a << 20,
-    eOthers                          = 0x000b << 20,
+    eBadCPExtensions                 = 0x000b << 20,
+    eOthers                          = 0x000c << 20,
 };
 
 #endif // __ConsistencyErrorTypes_h_

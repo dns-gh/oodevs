@@ -13,6 +13,7 @@ DotationsEditor.cpp \
 EditorFactory.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
+ExtensionsPanel.cpp \
 FileLoaderObserver.cpp \
 FileToolbar.cpp \
 FilterCommand.cpp \

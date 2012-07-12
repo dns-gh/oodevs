@@ -88,6 +88,7 @@ public:
 
     //! @name Accessors
     //@{
+    virtual const std::string& GetLevel() const;
     virtual const std::string& GetSymbol() const;
     virtual const std::string GetLevelSymbol() const;
     //@}

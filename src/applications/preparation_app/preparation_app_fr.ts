@@ -447,6 +447,17 @@
     </message>
 </context>
 <context>
+    <name>ExtensionsPanel</name>
+    <message>
+        <source>Delete CP extensions</source>
+        <translation>Supprimer les extensions PC</translation>
+    </message>
+    <message>
+        <source>Fill empty CP extensions</source>
+        <translation>Renseigner les extensions vides des PCs</translation>
+    </message>
+</context>
+<context>
     <name>FileToolbar</name>
     <message>
         <source>Standard</source>
@@ -1468,6 +1479,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>The profile &quot;%1&quot; contains more than 12 automats and/or crowds.</source>
         <translation>Le profil &quot;%1&quot; contient plus de 12 automates et/ou foules.</translation>
+    </message>
+    <message>
+        <source>CP type or SIOC type extensions defined for a non CP unit.</source>
+        <translation>Extensions Type PC ou Type SIOC définies pour un pion non PC.</translation>
     </message>
 </context>
 <context>

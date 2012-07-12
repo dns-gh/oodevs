@@ -447,6 +447,17 @@
     </message>
 </context>
 <context>
+    <name>ExtensionsPanel</name>
+    <message>
+        <source>Delete CP extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill empty CP extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileToolbar</name>
     <message>
         <source>Standard</source>
@@ -1462,6 +1473,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>The profile &quot;%1&quot; contains more than 12 automats and/or crowds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CP type or SIOC type extensions defined for a non CP unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

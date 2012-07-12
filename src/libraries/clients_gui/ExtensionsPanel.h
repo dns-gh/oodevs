@@ -73,6 +73,8 @@ protected slots:
     virtual void OnActivationChanged( bool );
     virtual void Commit();
     virtual void OnChangeNationality() {}
+    virtual void OnDeleteCPExtensions() {}
+    virtual void OnFillEmptyCPExtensions() {}
     //@}
 
 private:
