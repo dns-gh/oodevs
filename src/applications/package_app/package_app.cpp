@@ -23,7 +23,7 @@ namespace
     {
         char buffer[ MAX_PATH ];
         if( GetModuleFileNameA( GetModuleHandle( "BugTrap.dll" ), buffer, MAX_PATH ) )
-            SetCurrentDirectory( boost::filesystem::path( buffer, boost::filesystem::native ).branch_path().native_file_string().c_str() );
+            SetCurrentDirectory( boost::filesystem::path( buffer, boost::filesystem::native ).branch_path().string().c_str() );
     }
 
     void Execute( const std::string& commandLine )

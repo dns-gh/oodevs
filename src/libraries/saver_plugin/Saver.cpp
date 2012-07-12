@@ -40,7 +40,7 @@ Saver::Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config&
     , currentFolder_     ( 0 )
     , hasCheckpoint_     ( config.HasCheckpoint() )
 {
-    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << bfs::path( recorderDirectory_, bfs::native ).native_file_string() );
+    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << bfs::path( recorderDirectory_, bfs::native ).string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,13 +358,13 @@ void Saver::UpdateFragments()
                                 wrapper << *it;
                             stream.close();
                         }
-                        if( it->path().leaf() == Saver::currentFolderName_ )
+                        if( it->path().filename() == Saver::currentFolderName_ )
                             CopyFromCurrentToFolder();
                         else
-                            currentFolder_ = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
+                            currentFolder_ = boost::lexical_cast< unsigned int >( it->path().filename() ) + 1;
                     }
                     else
-                        currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1 );
+                        currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->path().filename() ) + 1 );
                 }
                 catch( const std::exception & )
                 {

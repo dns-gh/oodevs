@@ -79,7 +79,7 @@ namespace
                 bfs::path p( child );
                 for( int i = it.level(); i >= 0; --i )
                 {
-                    entry.push_front( p.leaf().c_str() );
+                    entry.push_front( p.filename().string().c_str() );
                     p = p.parent_path();
                 }
                 result.append( entry.join( "/" ) );
@@ -99,7 +99,7 @@ namespace
 
     std::string BuildPropagationDir( const std::string& root, const std::string& path )
     {
-        return ( bfs::path( root, bfs::native ) / path ).native_directory_string();
+        return ( bfs::path( root, bfs::native ) / path ).string();
     }
 }
 // -----------------------------------------------------------------------------

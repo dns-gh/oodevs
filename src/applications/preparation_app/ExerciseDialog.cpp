@@ -244,14 +244,14 @@ namespace
     {
         try
         {
-            bfs::path file( filename );
+            bfs::path file( filename.toStdString() );
             if( !file.is_complete() )
                 return filename;
-            list.append( file.leaf().c_str() );
+            list.append( file.filename().string().c_str() );
             bfs::path dest = bfs::path( config.BuildExerciseChildFile( "scripts") ) / "resources";
             bfs::create_directories( dest );
-            bfs::copy_file( file, dest / file.leaf() );
-            return MakeRelativePath( ( dest / file.leaf() ).native_file_string().c_str(), config );
+            bfs::copy_file( file, dest / file.filename() );
+            return MakeRelativePath( ( dest / file.filename() ).string().c_str(), config );
         }
         catch( ... )
         {

@@ -92,7 +92,7 @@ void GeoStoreManager::LoadTerrainFiles()
                 spatialDb_->GetTable( bfs::basename( *it ) );
             else
             {
-                TerrainFileReader terrainFile( ( *it ).string(), *trans_ );
+                TerrainFileReader terrainFile( it->path().string(), *trans_ );
                 spatialDb_->CreateTable( terrainFile );
             }
         }

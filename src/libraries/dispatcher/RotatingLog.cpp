@@ -36,10 +36,10 @@ RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string
     bfs::path pathFileName( filename_ );
     std::string pathName = pathFileName.parent_path().string();
     if( pathName.empty() )
-        fileNameNoExtension_ = pathFileName.stem();
+        fileNameNoExtension_ = pathFileName.stem().string();
     else
-        fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem();
-    extension_ = pathFileName.extension();
+        fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem().string();
+    extension_ = pathFileName.extension().string();
 }
 
 // -----------------------------------------------------------------------------

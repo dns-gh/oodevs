@@ -285,7 +285,7 @@ void ScenarioLauncherPage::OnStart()
         if( ! resources.empty() )
         {
             std::string file = *resources.begin();
-            file = ( bfs::path( config_.GetExerciseDir( exerciseName.ascii() ), bfs::native ) / file ).native_file_string();
+            file = ( bfs::path( config_.GetExerciseDir( exerciseName.ascii() ), bfs::native ) / file ).string();
             interpreter_.Interprete( MakeLink( file ).c_str() );
         }
     }

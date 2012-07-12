@@ -417,7 +417,7 @@ void Model::UpdateName( const std::string& orbat )
         name_ = "";
     else
     {
-        std::string file = bfs::path( orbat, bfs::native ).leaf();
+        std::string file = bfs::path( orbat, bfs::native ).filename().string();
         file = file.substr( 0, file.find_last_of( '.' ) );
         name_ = file.c_str();
     }

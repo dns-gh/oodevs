@@ -97,7 +97,7 @@ void SessionList::ReadComments( const QString& session )
     try
     {
         std::string date, name, comment;
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.ascii(), session.ascii() ) ) / "session.xml" ).native_file_string() );
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.ascii(), session.ascii() ) ) / "session.xml" ).string() );
         *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
         if( xis->has_child( "name" ) )

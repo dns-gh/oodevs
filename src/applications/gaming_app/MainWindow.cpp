@@ -693,7 +693,7 @@ namespace
                 >> xml::optional >> xml::start( "meta" );
         if( xis.has_child( "name" ) )
             xis >> xml::content( "name", name );
-        return ( !name.empty() ) ? name.c_str() : bfs::path( filename, bfs::native ).parent_path().leaf().c_str();
+        return ( !name.empty() ) ? name.c_str() : bfs::path( filename, bfs::native ).parent_path().filename().string().c_str();
     }
 }
 

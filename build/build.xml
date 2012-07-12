@@ -1826,7 +1826,6 @@
         <update name="terrain" package="terraintools_${platform}.zip"/>
         <update name="qt"/>
         <update name="boost"/>
-        <update name="boost" package="geometry" todir="${include.dir}"/>
         <update name="masalife/brain" version="${masalife.version}"/>
         <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
         <update name="masalife/brain" version="${masalife.version}" package="directia.core.bml" todir="${models.dir}/directia.core" clean="true"/>

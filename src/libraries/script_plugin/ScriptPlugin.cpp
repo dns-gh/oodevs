@@ -192,7 +192,7 @@ void ScriptPlugin::LoadScripts()
         {
             const bfs::path& file = *it;
             if( !bfs::is_directory( file ) && bfs::extension( file ) == ".lua" )
-                LoadScript( file.native_file_string() );
+                LoadScript( file.string() );
         }
     }
     const std::vector< std::string >& orderFiles = config_.GetStartupOrderFiles();
@@ -292,7 +292,7 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
     std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
     std::ifstream file( templateFile.c_str() );
     const bfs::path dest( config_.BuildExerciseChildFile( "StartupOrders.lua" ), bfs::native );
-    std::ofstream destFile( dest.file_string().c_str() );
+    std::ofstream destFile( dest.string().c_str() );
     std::string line;
     while( destFile.good() && std::getline( file, line ) )
     {
@@ -310,7 +310,7 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
             }
         }
     }
-    return dest.file_string();
+    return dest.string();
 }
 
 // -----------------------------------------------------------------------------

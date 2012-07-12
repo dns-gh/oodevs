@@ -15,6 +15,7 @@
 #include "tools/InputBinaryStream.h"
 #include "protocol/Protocol.h"
 #include <boost/filesystem/operations.hpp>
+#include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 
 namespace bfs = boost::filesystem;
@@ -232,10 +233,10 @@ void MessageLoader::ScanData()
                     bool doAdd = false;
                     {
                         boost::mutex::scoped_lock lock( dataAccessMutex_ );
-                        doAdd = bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().leaf() ) == fragmentsInfos_.end();
+                        doAdd = bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
                     }
                     if( doAdd )
-                        AddFolder( it->path().leaf() );
+                        AddFolder( it->path().filename().string() );
                 }
                 catch( const std::exception & )
                 {

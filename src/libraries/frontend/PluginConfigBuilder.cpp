@@ -54,7 +54,7 @@ PluginConfigBuilder& PluginConfigBuilder::BuildFromXml()
         tools::DefaultLoader loader( observer );
         bfs::recursive_directory_iterator end;
         for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
-            if( it->path().leaf() == "plugin.xml" )
+            if( it->path().filename() == "plugin.xml" )
             {
                 try
                 {

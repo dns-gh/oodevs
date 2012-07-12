@@ -70,7 +70,7 @@ int WorkingSession::GetExercise() const
 void WorkingSession::LoadExercise( const tools::ExerciseConfig& config, QuerySessionData& database )
 {
     bfs::path p( config.GetExerciseFile(), bfs::native );
-    exercise_.first = p.parent_path().filename();
+    exercise_.first = p.parent_path().filename().string();
     if( ! exercise_.first.empty() )
     {
         exercise_.second = database.FindExercise( exercise_.first );
@@ -89,7 +89,7 @@ void WorkingSession::LoadExercise( const tools::ExerciseConfig& config, QuerySes
 void WorkingSession::LoadSession( const tools::SessionConfig& config, QuerySessionData& database )
 {
     bfs::path p( config.GetSessionDir(), bfs::native );
-    session_.first = p.filename();
+    session_.first = p.filename().string();
     session_.second = database.FindSession( session_.first, GetExercise() );
     if( session_.second < 0 )
         session_.second = database.CreateSession( session_.first, GetExercise() );

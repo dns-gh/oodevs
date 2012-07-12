@@ -246,18 +246,18 @@ void TerrainLayer::LoadGraphics()
             DataFactory factory;
             ShapeCollector collector( factory );
             collector.LoadGraphicDirectory( graphicsDirectory_ );
-            collector.Finalize( aggregated.native_file_string() );
+            collector.Finalize( aggregated.string() );
         }
         if( bfs::exists( aggregated ) )
         {
             if( gl::HasVBO() )
             {
-                layer_.reset( new MyLayer< RawShapeLayer >  ( *this, aggregated.native_file_string() ) );
+                layer_.reset( new MyLayer< RawShapeLayer >  ( *this, aggregated.string() ) );
                 layer_->Initialize( world_ );
             }
             else
             {
-                noVBOlayer_.reset( new MyLayer< NoVBOShapeLayer >( *this, aggregated.native_file_string() ) );
+                noVBOlayer_.reset( new MyLayer< NoVBOShapeLayer >( *this, aggregated.string() ) );
                 noVBOlayer_->Initialize( world_ );
             }
         }

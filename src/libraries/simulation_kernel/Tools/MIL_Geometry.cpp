@@ -12,7 +12,10 @@
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include "simulation_terrain/TER_Localisation.h"
 #pragma warning( push, 0 )
+#pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>
+#include <boost/geometry/geometries/geometries.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
 #pragma warning( pop )
 
 namespace bg = boost::geometry;
@@ -97,13 +100,13 @@ void MIL_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertic
 namespace
 {
     template< typename T >
-    T PrivateIntersectionArea( const bg::polygon< bg::point_xy< T > >& poly1, const bg::polygon< bg::point_xy< T > >& poly2 )
+    T PrivateIntersectionArea( const bg::model::polygon< bg::model::d2::point_xy< T > >& poly1, const bg::model::polygon< bg::model::d2::point_xy< T > >& poly2 )
     {
-        std::vector< bg::polygon< bg::point_xy< T > > > polygonResult;
-        bg::intersection_inserter< bg::polygon< bg::point_xy< T > > >( poly2, poly1, std::back_inserter( polygonResult ) );
+        std::vector< bg::model::polygon< bg::model::d2::point_xy< T > > > polygonResult;
+        bg::intersection( poly2, poly1, polygonResult );
         double intersectArea = 0;
-        for( std::vector< bg::polygon< bg::point_xy< T > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
-            intersectArea += area( *it );
+        for( std::vector< bg::model::polygon< bg::model::d2::point_xy< T > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
+            intersectArea += bg::area( *it );
         return static_cast< T >( intersectArea );
     }
 }
@@ -114,22 +117,22 @@ namespace
 // -----------------------------------------------------------------------------
 double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 )
 {
-    bg::polygon< bg::point_xy< double > > poly1;
-    bg::polygon< bg::point_xy< double > > poly2;
+    bg::model::polygon< bg::model::d2::point_xy< double > > poly1;
+    bg::model::polygon< bg::model::d2::point_xy< double > > poly2;
     {
         CT_PointVector& vertices1 = localisation1.GetPoints();
-        std::vector< bg::point_xy< double > > vectorTemp;
+        std::vector< bg::model::d2::point_xy< double > > vectorTemp;
         for( CIT_PointVector it = vertices1.begin(); it != vertices1.end(); ++it )
-            vectorTemp.push_back( bg::point_xy< double >( it->rX_, it->rY_ ) );
-        bg::assign( poly1, vectorTemp );
+            vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
+        bg::assign_points( poly1, vectorTemp );
         bg::correct( poly1 );
     }
     {
         CT_PointVector& vertices2 = localisation2.GetPoints();
-        std::vector< bg::point_xy< double > > vectorTemp;
+        std::vector< bg::model::d2::point_xy< double > > vectorTemp;
         for( CIT_PointVector it = vertices2.begin(); it != vertices2.end(); ++it )
-            vectorTemp.push_back( bg::point_xy< double >( it->rX_, it->rY_ ) );
-        bg::assign( poly2, vectorTemp );
+            vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
+        bg::assign_points( poly2, vectorTemp );
         bg::correct( poly2 );
     }
     return PrivateIntersectionArea( poly1, poly2 );

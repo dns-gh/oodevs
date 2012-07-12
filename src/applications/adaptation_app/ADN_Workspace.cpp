@@ -349,15 +349,15 @@ namespace
         {
             if( bfs::is_directory( *it ) )
             {
-                bfs::path dest( to / it->leaf() );
+                bfs::path dest( to / it->path().filename() );
                 if( !bfs::exists( dest ) )
                     bfs::create_directories( dest );
                 CopyUnsavedFiles( *it, dest );
             }
             else
             {
-                if( !bfs::exists( to / it->leaf() ) )
-                    bfs::copy_file( *it, to / it->leaf() );
+                if( !bfs::exists( to / it->path().filename() ) )
+                    bfs::copy_file( *it, to / it->path().filename() );
             }
         }
     }

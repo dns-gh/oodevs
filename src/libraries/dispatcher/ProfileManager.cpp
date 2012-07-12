@@ -142,7 +142,7 @@ namespace
 {
     std::string GetCheckPointFileName( const std::string& directory )
     {
-        return ( bfs::path( directory, bfs::native ) / bfs::path( "profiles.xml", bfs::native ) ).native_file_string();
+        return ( bfs::path( directory, bfs::native ) / bfs::path( "profiles.xml", bfs::native ) ).string();
     }
 }
 

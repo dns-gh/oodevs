@@ -23,12 +23,6 @@
 
 namespace mock
 {
-    template< typename S >
-    boost::function< S > make_function( mock::function< S >& e )
-    {
-        return boost::function< S >( e );
-    }
-
     namespace detail
     {
         template< typename Expected >

@@ -84,7 +84,7 @@ namespace
             {
                 bool founded = false;
                 for( Q3ListViewItemIterator iterator = *files; iterator.current() && !founded; ++iterator )
-                    if( std::string( iterator.current()->text( 0 ).ascii() ).find( it->path().leaf() ) != std::string::npos )
+                    if( std::string( iterator.current()->text( 0 ).ascii() ).find( it->path().filename().string() ) != std::string::npos )
                         founded = true;
                 if( founded )
                     continue;
@@ -122,13 +122,13 @@ namespace frontend
     {
         const std::string dir = config.GetExerciseDir( name );
         bfs::create_directories( dir );
-        const std::string filename( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string() );
+        const std::string filename( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, false );
         tools::WriteXmlCrc32Signature( filename );
     }
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
     {
-        const std::string filename( ( bfs::path( config.GetExerciseDir( name ), bfs::native ) / "exercise.xml" ).native_file_string() );
+        const std::string filename( ( bfs::path( config.GetExerciseDir( name ), bfs::native ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, true );
         tools::WriteXmlCrc32Signature( filename );
     }
@@ -139,8 +139,8 @@ namespace frontend
         bfs::create_directories( dirTo );
         // Copy exercise.xml and linked file
         {
-            const std::string filenameFrom( ( dirFrom / "exercise.xml" ).native_file_string() );
-            const std::string filenameTo( ( dirTo / "exercise.xml" ).native_file_string() );
+            const std::string filenameFrom( ( dirFrom / "exercise.xml" ).string() );
+            const std::string filenameTo( ( dirTo / "exercise.xml" ).string() );
             xml::xifstream xis( filenameFrom );
             xml::xofstream xos( filenameTo );
             xis >> xml::start( "exercise" );

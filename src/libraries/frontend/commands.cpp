@@ -28,7 +28,7 @@ namespace
     {
         if( bfs::exists( path ) && bfs::is_directory( path ) )
         {
-            result.push_back( path.leaf() );
+            result.push_back( path.filename().string() );
             bfs::remove_all( path );
         }
     }
@@ -56,7 +56,7 @@ namespace frontend
                     bfs::path p( child );
                     for( int i = it.level(); i >= 0; --i )
                     {
-                        entry.push_front( p.leaf().c_str() );
+                        entry.push_front( p.filename().string().c_str() );
                         p = p.parent_path();
                     }
                     result.append( entry.join( "/" ) );
@@ -79,7 +79,7 @@ namespace frontend
             {
                 const bfs::path child = *it;
                 if( v( child ) )
-                    result.append( child.leaf().c_str() );
+                    result.append( child.filename().string().c_str() );
             }
             return result;
         }
@@ -191,26 +191,26 @@ namespace frontend
 
         bool IsValidScript( const bfs::path& child )
         {
-            // std::string file( child.leaf().c_str() );
+            // std::string file( child.filename().c_str() );
             return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".lua" ) == 0;
         }
 
         QStringList ListScripts( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "scripts" ).native_directory_string() );
+            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "scripts" ).string() );
             return ListDirectories( dir, &IsValidScript );
         }
 
         bool IsValidOrder( const bfs::path& child )
         {
             return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0;
-            // std::string file( child.leaf().c_str() );
+            // std::string file( child.filename().c_str() );
             // return std::string( file, file.find_last_of( '.' ) ).compare( ".ord" ) == 0;
         }
 
         QStringList ListOrders( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "orders" ).native_directory_string() );
+            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "orders" ).string() );
             return ListDirectories( dir, &IsValidOrder );
         }
 
@@ -223,18 +223,18 @@ namespace frontend
 
         QStringList ListPropagations( const tools::GeneralConfig& config )
         {
-            std::string  dir( ( bfs::path( config.GetRootDir(), bfs::native ) / "data/propagations" ).native_directory_string() );
+            std::string  dir( ( bfs::path( config.GetRootDir(), bfs::native ) / "data/propagations" ).string() );
             return ListDirectories( dir, &IsValidPropagation );
         }
 
         bool IsOther( const bfs::path& child )
         {
-            return bfs::is_directory( child ) && child.leaf() != "sessions" && child.leaf() != ".svn";
+            return bfs::is_directory( child ) && child.filename() != "sessions" && child.filename() != ".svn";
         }
 
         QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            std::string dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) ).native_directory_string() );
+            std::string dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) ).string() );
             return ListDirectoriesNoRecursive( dir, &IsOther );
         }
 
@@ -276,13 +276,13 @@ namespace frontend
         {
             bfs::path p = bfs::path( destination, bfs::native ) / outputName;
             p = Normalize( p );
-            if( p.leaf() == "." )
+            if( p.filename() == "." )
                 return;
             zip::izipstream file( archive, inputName, std::ios_base::in | std::ios_base::binary );
             if( file.good() )
             {
                 bfs::create_directories( p.branch_path() );
-                std::ofstream output( p.native_file_string().c_str(), std::ios_base::out | std::ios_base::binary );
+                std::ofstream output( p.string().c_str(), std::ios_base::out | std::ios_base::binary );
                 Copy( file, output );
             }
         }

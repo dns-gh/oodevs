@@ -348,7 +348,7 @@ namespace
 
     void CopyFile( const bfs::path& root, const std::string& name, zip::ozipfile& zos )
     {
-        std::string filename( root.file_string() );
+        std::string filename( root.string() );
         std::ifstream file( filename.c_str(), std::ifstream::in | std::ifstream::binary );
         if( file.good() )
         {
@@ -365,12 +365,12 @@ namespace
             const bfs::path child = *it;
             if( bfs::is_regular_file( child ) )
             {
-                const std::string& file( child.filename() );
+                const std::string& file( child.filename().string() );
                 CopyFile( ( root / file.c_str() ), name + "/" + file, zos );
             }
-            else if( recursive && bfs::is_directory( child ) && child.leaf() != ".svn" )
+            else if( recursive && bfs::is_directory( child ) && child.filename() != ".svn" )
             {
-                BrowseDirectory( child, name + "/" + child.filename(), zos, recursive );
+                BrowseDirectory( child, name + "/" + child.filename().string(), zos, recursive );
             }
         }
     }
@@ -459,8 +459,8 @@ bool ExportWidget::BrowseClicked()
     if( filename.isEmpty() )
         return false;
     const bfs::path file = bfs::path( std::string( filename.ascii() ), bfs::native );
-    package_.first = file.parent_path().directory_string();
-    package_.second = file.leaf().c_str();
+    package_.first = file.parent_path().string();
+    package_.second = file.filename().string();
     if( bfs::exists( file ) )
         return QMessageBox::question( this, tools::translate( "ExportWidget", "Overwrite File?" ),
                             tools::translate( "ExportWidget", "A file called %1 already exists. Do you want to overwrite it?" ).arg( filename ),

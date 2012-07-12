@@ -137,7 +137,7 @@ void TerrainFeatureSearcher::NotifyUpdated( const kernel::ModelLoaded& model )
     {
         const bfs::path dump = bfs::path( graphicsDirectory, bfs::native ) / "shapes.dump";
         if( bfs::exists( dump ) )
-            pendingSourceFile_ = dump.native_file_string();
+            pendingSourceFile_ = dump.string();
     }
 }
 

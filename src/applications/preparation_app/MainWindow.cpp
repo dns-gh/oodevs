@@ -421,11 +421,11 @@ void MainWindow::MigrateExercises()
         {
             try
             {
-                std::cout << "Loading exercise " << dirPath.leaf() << "...\n";
-                config_.LoadExercise( child.file_string() );
+                std::cout << "Loading exercise " << dirPath.filename() << "...\n";
+                config_.LoadExercise( child.string() );
                 staticModel_.Load( config_ );
                 LoadExercise();
-                std::cout << "Saving exercise " << dirPath.leaf() << "...\n";
+                std::cout << "Saving exercise " << dirPath.filename() << "...\n";
                 needsSaving_ = true;
                 Save();
             }
@@ -626,7 +626,7 @@ void MainWindow::SaveAs()
         bfs::create_directories( exerciseDirectory );
         bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.ascii() ) );
         bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
-        config_.LoadExercise( exerciseFile.native_file_string() );
+        config_.LoadExercise( exerciseFile.string() );
         model_.exercise_.SetName( name );
     }
     else

@@ -312,7 +312,7 @@ void LicenseDialog::InstallLicense( HWND hWnd )
                 bfs::path sourceFile( szFileName );
                 bfs::path destFile( szAppPath );
                 destFile.remove_filename();
-                destFile /= sourceFile.leaf();
+                destFile /= sourceFile.filename();
                 if( bfs::exists( destFile) )
                     bfs::remove( destFile );
                 bfs::copy_file( sourceFile, destFile );
@@ -343,7 +343,7 @@ void LicenseDialog::ReadTranslations()
             filePath /= bfs::path( "resources/locales" ) / bfs::path( "license_gui_" + language + ".ts" );
             if( bfs::exists( filePath) )
             {
-                xml::xifstream xis( filePath.native_file_string() );
+                xml::xifstream xis( filePath.string() );
                 xis >> xml::start( "TS" )
                       >> xml::start( "context" )
                         >> xml::list( "message", *this, &LicenseDialog::ReadTranslation );

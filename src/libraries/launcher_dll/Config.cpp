@@ -40,7 +40,7 @@ namespace
             return regDir.ascii();
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
-        return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();
+        return ( bfs::path( myDocuments, bfs::native ) / appName ).string();
     }
 }
 

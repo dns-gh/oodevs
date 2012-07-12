@@ -172,7 +172,7 @@ void ExerciseConfig::ReadOrder( xml::xistream& xis )
 void ExerciseConfig::SetExerciseName( const std::string& file )
 {
     bfs::path p( file, bfs::native );
-    exerciseName_ = p.branch_path().leaf();
+    exerciseName_ = p.branch_path().filename().string();
     GeneralConfig::LoadExercise( file );
 }
 
@@ -433,7 +433,7 @@ std::string ExerciseConfig::GetPopulationFile() const
     // $$$$ AGE 2008-03-13: JJJJJJCCCCCCRRRRRRR
     if( population_.empty() )
         return population_;
-    return BuildPopulationChildFile( ( bfs::path( population_, bfs::native ) / "model" / "population.xml" ).native_file_string() );
+    return BuildPopulationChildFile( ( bfs::path( population_, bfs::native ) / "model" / "population.xml" ).string() );
 }
 
 // -----------------------------------------------------------------------------

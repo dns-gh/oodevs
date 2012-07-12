@@ -30,10 +30,12 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include <spatialcontainer/TerrainData.h>
 #pragma warning( push, 0 )
+#pragma warning( disable: 4702 )
 #include <boost/geometry/geometry.hpp>
-#include <boost/geometry/geometries/cartesian2d.hpp>
+#include <boost/geometry/geometries/geometries.hpp>
+#include <boost/geometry/multi/geometries/multi_geometries.hpp> 
+#include <boost/geometry/algorithms/union.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
-#include <boost/geometry/multi/multi.hpp>
 #pragma warning( pop )
 
 BOOST_GEOMETRY_REGISTER_POINT_2D(MT_Vector2D, double, cs::cartesian, rX_, rY_)
@@ -294,19 +296,19 @@ void MIL_BurningCells::Update( MIL_Object_ABC& object, unsigned int time )
 
     //update localisation
     namespace bg = boost::geometry;
-    typedef bg::polygon< MT_Vector2D > polygon_2d;
-    typedef bg::multi_polygon< polygon_2d > multi_polygon_2d;
-    typedef bg::box< MT_Vector2D > box_2d;
+    typedef bg::model::polygon< MT_Vector2D > polygon_2d;
+    typedef bg::model::multi_polygon< polygon_2d > multi_polygon_2d;
+    typedef bg::model::box< MT_Vector2D > box_2d;
     int cellSize = MIL_FireClass::GetCellSize();
     const BurningCellsVector& cells = burningCellsByObjects_[ object.GetID() ];
     polygon_2d poly;
-    bg::assign( poly, object.GetLocalisation().GetPoints() );
+    bg::assign_points( poly, object.GetLocalisation().GetPoints() );
     for( ; lastCellIndexIncludedInLocalization_<cells.size(); ++lastCellIndexIncludedInLocalization_ )
     {
         MIL_BurningCell& cell = *cells[ lastCellIndexIncludedInLocalization_ ];
         box_2d cellBox( MT_Vector2D( cell.origin_.X(), cell.origin_.Y() ), MT_Vector2D( cell.origin_.X() + cellSize, cell.origin_.Y() + cellSize ) );
         multi_polygon_2d ps;
-        bg::union_inserter< polygon_2d >( cellBox, poly, std::back_inserter( ps ) );
+        bg::union_( cellBox, poly, ps );
         polygon_2d hull;
         bg::convex_hull( ps, hull );
         poly = hull;

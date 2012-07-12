@@ -149,7 +149,7 @@ namespace
 // -----------------------------------------------------------------------------
 void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
 {
-    bfs::path odbPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "orbat" ) + ".csv" ).filename() ) );
+    bfs::path odbPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "orbat" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( odbPath.string().c_str() );
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
@@ -217,7 +217,7 @@ void CsvExport::Write( std::ofstream& file, const std::string& separator, const 
 // -----------------------------------------------------------------------------
 void CsvExport::WriteResources( boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path resourcesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "resources" ) + ".csv" ).filename() ) );
+    bfs::path resourcesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "resources" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( resourcesPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
@@ -238,7 +238,7 @@ void CsvExport::WriteResources( boost::filesystem::path& path, const std::string
 // -----------------------------------------------------------------------------
 void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path stocksPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "stocks" ) + ".csv" ).filename() ) );
+    bfs::path stocksPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "stocks" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( stocksPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
@@ -266,7 +266,7 @@ void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& s
 // -----------------------------------------------------------------------------
 void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path weatherPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "weather" ) + ".csv" ).filename() ) );
+    bfs::path weatherPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "weather" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( weatherPath.string().c_str() );
     file << tools::translate( "CsvExport", "WIND SPEED" ) << separator << tools::translate( "CsvExport", "WIND DIRECTION" ) << separator
          << tools::translate( "CsvExport", "TEMPERATURE" ) << separator <<  tools::translate( "CsvExport", "CLOUDS FLOOR" ) << separator
@@ -298,7 +298,7 @@ void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& 
 // -----------------------------------------------------------------------------
 void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path diplomacyPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diplomacy" ) + ".csv" ).filename() ) );
+    bfs::path diplomacyPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diplomacy" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( diplomacyPath.string().c_str() );
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
@@ -328,7 +328,7 @@ void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string
 // -----------------------------------------------------------------------------
 void CsvExport::WriteProfiles( boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path profilesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "profiles" ) + ".csv" ).filename() ) );
+    bfs::path profilesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "profiles" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( profilesPath.string().c_str() );
     ProfilesModel::T_Profiles profiles;
     model_.profiles_.Visit( profiles );
@@ -369,7 +369,7 @@ void CsvExport::WriteProfiles( std::ofstream& file, const std::string& separator
 // -----------------------------------------------------------------------------
 void CsvExport::WriteLogistic( boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path logisticPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "logistic" ) + ".csv" ).filename() ) );
+    bfs::path logisticPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "logistic" ).toStdString() + ".csv" ).filename() ) );
     std::ofstream file( logisticPath.string().c_str() );
     tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
     while( itTC2.HasMoreElements() )

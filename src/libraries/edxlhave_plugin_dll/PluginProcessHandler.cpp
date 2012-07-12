@@ -37,7 +37,7 @@ class PluginProcessHandler::PluginConfig
 public:
     PluginProcessHandler::PluginConfig( const std::string& data, const std::string& session, dispatcher::Logger_ABC& logger )
         : data_ ( data )
-        , exercise_ ( bfs::path( bfs::path( session, bfs::native ).parent_path().parent_path().parent_path() ).native_directory_string() )
+        , exercise_ ( bfs::path( bfs::path( session, bfs::native ).parent_path().parent_path().parent_path() ).string() )
         , session_ ( session )
         , logger_ ( logger )
     {
@@ -59,7 +59,7 @@ public:
 
     std::string GetExerciseName() const
     {
-        return bfs::path( exercise_, bfs::native ).leaf();
+        return bfs::path( exercise_, bfs::native ).filename().string();
     }
     
     std::string GetSessionDir() const 
@@ -369,7 +369,7 @@ void PluginProcessHandler::LoadPluginConfig( xml::xistream& xis, const PluginCon
     AddArgument( "--edxl.ssl=" + std::string( use_ssl ? "true" : "false" ) );
     AddArgument( "--log=" + std::string( use_log ? "true" : "false" ) );
     if( use_log )
-        AddArgument( "--log.file=\"" + bfs::path( config.GetSessionDir() + "/edxlhave_app.log" ).native_file_string() + "\"" );
+        AddArgument( "--log.file=\"" + bfs::path( config.GetSessionDir() + "/edxlhave_app.log" ).string() + "\"" );
 }
 
 // -----------------------------------------------------------------------------

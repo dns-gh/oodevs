@@ -221,7 +221,7 @@ void FilterCommand::ComputePath()
                 for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr && !founded; ++dir_it )
                     if( !bfs::is_directory( dir_it->path() ) )
                     {
-                        std::string file = dir_it->path().leaf();
+                        std::string file = dir_it->path().filename().string();
                         size_t pos = file.rfind( ".exe" );
                         if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
                         {

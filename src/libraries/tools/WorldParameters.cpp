@@ -121,7 +121,7 @@ namespace
 {
     std::string BuildChildPath( const std::string& parent, const std::string& child )
     {
-        return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
+        return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).string();
     }
 }
 

@@ -253,7 +253,7 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
         MT_LOG_INFO_MSG( MT_FormatString( "SetServiceStatus failed, error code = %d", GetLastError() ).c_str() );
     }
 
-    std::vector< char > appName = MakeArg( pInstance_->path_.leaf() );
+    std::vector< char > appName = MakeArg( pInstance_->path_.filename().string() );
     std::vector< char > arg = MakeArg( std::string( "--launcher-port=" + pInstance_->port_ ) );
     std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg[ 0 ] );
 

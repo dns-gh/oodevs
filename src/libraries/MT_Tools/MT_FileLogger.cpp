@@ -35,8 +35,8 @@ MT_FileLogger::MT_FileLogger( const char* strFileName , unsigned int maxFiles, i
     , sizeInBytes_( sizeInBytes )
 {
     bfs::path pathFileName( fileName_ );
-    fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem();
-    fileNameExtension_ = pathFileName.extension();
+    fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem().string();
+    fileNameExtension_ = pathFileName.extension().string();
     filesCount_ = GetOldestFile();
     std::string startFileName = GetFileName( filesCount_ );
     sizeCount_ = static_cast< int >( OpenNewOfstream( startFileName, bClearPreviousLog ) );

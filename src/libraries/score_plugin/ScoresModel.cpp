@@ -20,6 +20,7 @@
 #include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>

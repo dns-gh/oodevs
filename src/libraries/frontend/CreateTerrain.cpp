@@ -34,7 +34,7 @@ namespace
         std::string directory = GetDirectory().ascii();
         if( directory == "noValue" )
             directory = ( bfs::current_path().branch_path() / "Terrain" / "applications" ).string();
-        return bfs::path( bfs::path( directory ) / "generation_app.exe" ).native_file_string();
+        return bfs::path( bfs::path( directory ) / "generation_app.exe" ).string();
     }
 }
 

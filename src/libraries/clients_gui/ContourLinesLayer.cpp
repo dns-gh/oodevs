@@ -13,6 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/DetectionMap.h"
+#include <boost/bind.hpp>
 #include <deque>
 
 using namespace kernel;

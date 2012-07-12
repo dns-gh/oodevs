@@ -54,7 +54,7 @@ namespace
     {
         static const std::string filename = "drawings.xml";
         if( config.HasCheckpoint() )
-            return ( bfs::path( config.GetCheckpointDirectory(), bfs::native ) / bfs::path( filename, bfs::native ) ).native_file_string();
+            return ( bfs::path( config.GetCheckpointDirectory(), bfs::native ) / bfs::path( filename, bfs::native ) ).string();
         return config.BuildExerciseChildFile( filename );
     }
 }
@@ -82,9 +82,9 @@ void DrawingsModel::Load( const dispatcher::Config& config )
             }
             tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
             if( error == tools::eXmlCrc32SignatureError_Invalid )
-                MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).leaf() << " is invalid." )
+                MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).filename() << " is invalid." )
             else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-                MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
+                MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).filename() << " is not signed." )
         }
     }
     catch( std::exception& )
@@ -191,7 +191,7 @@ void DrawingsModel::Save( const std::string& directory ) const
             notDiffused.insert( &drawing );
     }
 
-    std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).native_file_string();
+    std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).string();
     {
         xml::xofstream xos( filename );
         xos << xml::start( "shapes" )

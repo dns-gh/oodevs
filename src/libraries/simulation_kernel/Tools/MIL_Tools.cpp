@@ -82,9 +82,9 @@ void MIL_Tools::CheckXmlCrc32Signature( const std::string& filename )
 {
     tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
     if( error == tools::eXmlCrc32SignatureError_Invalid )
-        MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).leaf() << " is invalid." )
+        MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).filename() << " is invalid." )
     else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-        MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
+        MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).filename() << " is not signed." )
 }
 
 //-----------------------------------------------------------------------------

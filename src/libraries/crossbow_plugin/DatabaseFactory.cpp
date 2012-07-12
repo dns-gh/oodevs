@@ -49,7 +49,7 @@ namespace
 {
     bool IsFileDatabase( const bfs::path& p )
     {
-        const std::string extension( p.extension() );
+        const std::string extension( p.extension().string() );
         return extension == "mdb" || extension == "gdb";
     }
 

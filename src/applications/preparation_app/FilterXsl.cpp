@@ -44,14 +44,14 @@ namespace
     {
         const std::string extension = type;
         bfs::path output( bfs::path( bfs::path( directory ) / bfs::path( input ).filename() ) );
-        return output.replace_extension( extension ).native_file_string();
+        return output.replace_extension( extension ).string();
     }
     std::string MakeXsl( const std::string& file, const tools::ExerciseConfig& config, const std::string& lang = "" )
     {
         const std::string extension( lang.empty() ? "" : "_" + lang );
         const std::string xsl( file + extension + ".xsl" );
-        bfs::path filter( config.BuildPhysicalChildFile( ( bfs::path( "Filters" ) / xsl ).native_file_string() ) );
-        return filter.native_file_string();
+        bfs::path filter( config.BuildPhysicalChildFile( ( bfs::path( "Filters" ) / xsl ).string() ) );
+        return filter.string();
     }
     std::string ResolveXslFile( const std::string& xsl, const std::string& lang, const tools::ExerciseConfig& config )
     {

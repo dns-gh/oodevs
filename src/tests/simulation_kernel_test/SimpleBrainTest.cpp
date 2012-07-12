@@ -59,21 +59,12 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     DEC_PopulationDecision decision( population, 100, 100 );
 }
 
-namespace mock
-{
-    template< typename S >
-    boost::function< S > make_function( mock::function< S >& e )
-    {
-        return boost::function< S >( e );
-    }
-}
-
 class DEC_TestPopulationDecision;
 
 namespace
 {
-    MOCK_FUNCTOR( NotifyCallFromScript, void( const std::string& ) );
-    MOCK_FUNCTOR( NotifyMissionCallFromScript, void( boost::shared_ptr< MIL_Mission_ABC > ) );
+    MOCK_FUNCTION( NotifyCallFromScript, 1, void( const std::string& ), NotifyCallFromScript );
+    MOCK_FUNCTION( NotifyMissionCallFromScript, 1, void( boost::shared_ptr< MIL_Mission_ABC > ), NotifyMissionCallFromScript );
     boost::shared_ptr< MIL_Mission_ABC > GetRawMission( DEC_TestPopulationDecision* pAgent );
 }
 
@@ -113,8 +104,8 @@ public:
 protected:
     virtual void RegisterUserFunctions( directia::brain::Brain& brain )
     {
-        brain[ "DEC_TestBehaviorCalled" ] = mock::make_function( NotifyCallFromScript );
-        brain[ "DEC_TestMissionCalled" ] = mock::make_function( NotifyMissionCallFromScript );
+        brain[ "DEC_TestBehaviorCalled" ] = &NotifyCallFromScript;
+        brain[ "DEC_TestMissionCalled" ] = &NotifyMissionCallFromScript;
         brain[ "DEC_GetRawMission" ] = &GetRawMission;
         directia::tools::binders::ScriptRef initFunction = brain[ "InitTaskParameter" ];
         bool isMasalife = false;

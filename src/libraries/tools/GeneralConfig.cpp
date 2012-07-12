@@ -72,7 +72,7 @@ void GeneralConfig::ResolveRelativePath( const std::string& root, std::string& p
     const bfs::path r( root, bfs::native );
     const bfs::path p( path, bfs::native );
     if( !p.has_root_directory() )
-        path = ( r / p ).native_file_string();
+        path = ( r / p ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void GeneralConfig::Parse( int argc, char** argv )
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::BuildChildPath( const std::string& parent, const std::string& child )
 {
-    return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
+    return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ std::string GeneralConfig::BuildChildPath( const std::string& parent, const std:
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::BuildDirectoryFile( const std::string& directory, const std::string& file )
 {
-    return ( bfs::path( directory, bfs::native ) / bfs::path( file, bfs::native ) ).native_file_string();
+    return ( bfs::path( directory, bfs::native ) / bfs::path( file, bfs::native ) ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ std::string GeneralConfig::GetExercisesDir() const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetExerciseDir( const std::string& exercise ) const
 {
-    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) ).native_directory_string();
+    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ std::string GeneralConfig::GetExerciseDir( const std::string& exercise ) const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetExerciseFile( const std::string& exercise ) const
 {
-    return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / exerciseConfigFile_ ).native_file_string();
+    return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / exerciseConfigFile_ ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ std::string GeneralConfig::GetExerciseFile( const std::string& exercise ) const
 std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
 {
     // $$$$ NLD 2007-01-29: trucs en dur
-    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "physical" ).native_file_string();
+    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "physical" ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset, const std::string& physical ) const
 {
-    return ( bfs::path( GetPhysicalsDir( dataset ) ) / bfs::path( physical, bfs::native ) ).native_file_string();
+    return ( bfs::path( GetPhysicalsDir( dataset ) ) / bfs::path( physical, bfs::native ) ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +200,7 @@ std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset, const st
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const std::string& physical ) const
 {
-    return ( bfs::path( GetPhysicalsDir( dataset ), bfs::native ) / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
+    return ( bfs::path( GetPhysicalsDir( dataset ), bfs::native ) / bfs::path( physical, bfs::native ) / "physical.xml" ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +210,7 @@ std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const st
 std::string GeneralConfig::GetDecisionalFile( const std::string& dataset ) const
 {
     // $$$$ NLD 2007-01-29:
-    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "decisional/decisional.xml" ).native_file_string();
+    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "decisional/decisional.xml" ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ std::string GeneralConfig::GetTerrainsDir() const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetTerrainDir( const std::string& terrain ) const
 {
-    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) ).native_directory_string();
+    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ std::string GeneralConfig::GetTerrainDir( const std::string& terrain ) const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 {
-    return ( bfs::path( GetTerrainDir( terrain ), bfs::native ) / terrainConfigFile_ ).native_file_string();
+    return ( bfs::path( GetTerrainDir( terrain ), bfs::native ) / terrainConfigFile_ ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +255,7 @@ std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetUrbanFile( const std::string& terrain ) const
 {
-    return ( bfs::path( GetTerrainDir( terrain ), bfs::native ) / "urban" / "urban.xml" ).native_file_string();
+    return ( bfs::path( GetTerrainDir( terrain ), bfs::native ) / "urban" / "urban.xml" ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +264,7 @@ std::string GeneralConfig::GetUrbanFile( const std::string& terrain ) const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetSessionsDir( const std::string& exercise ) const
 {
-    return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / "sessions" ).native_directory_string();
+    return ( bfs::path( GetExerciseDir( exercise ), bfs::native ) / "sessions" ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ std::string GeneralConfig::GetSessionsDir( const std::string& exercise ) const
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::BuildSessionDir( const std::string& exercise, const std::string& session ) const
 {
-    return ( bfs::path( GetSessionsDir( exercise ), bfs::native ) / bfs::path( session, bfs::native ) ).native_directory_string();
+    return ( bfs::path( GetSessionsDir( exercise ), bfs::native ) / bfs::path( session, bfs::native ) ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -300,7 +300,7 @@ std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) c
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise, const std::string& session ) const
 {
-    return ( bfs::path( BuildSessionDir( exercise, session ), bfs::native ) / "checkpoints" ).native_directory_string();
+    return ( bfs::path( BuildSessionDir( exercise, session ), bfs::native ) / "checkpoints" ).string();
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise, const
 void GeneralConfig::LoadExercise( const std::string& file )
 {
     bfs::path p( file, bfs::native );
-    exercisesDir_ = p.branch_path().branch_path().native_directory_string();
+    exercisesDir_ = p.branch_path().branch_path().string();
 }
 
 // -----------------------------------------------------------------------------
