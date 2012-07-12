@@ -27,6 +27,7 @@ rootnode
             meKnowledge:RC( eRC_ObstacleEnAttenteActivation, additionalParams.element.source )
         end
         self.nextTargetIndex = self.nextTargetIndex + 1
+        myself.obstacleToActivate = true
         if self.nextTargetIndex > #self.params.entities then
             self.alltry = true
         end
@@ -68,6 +69,7 @@ rootnode
         self.toImprove = nil
         self.alltry = #self.params.entities == 0
         self.objectsToActivate = {}
+        myself.obstacleToActivate = false
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -93,6 +95,7 @@ rootnode
                 end
             end
             self.objectsToActivate = nil
+            myself.obstacleToActivate = false
             Feedback( self.feedbacks.done )
             return
         end
