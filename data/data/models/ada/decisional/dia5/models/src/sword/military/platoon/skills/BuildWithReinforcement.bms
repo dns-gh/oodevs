@@ -79,6 +79,7 @@ rootnode
         self.toImprove = nil
         self.alltry = #self.params.entities == 0
         self.objectsToActivate = {}
+        myself.obstacleToActivate = false
     end,
 
     activate = function( self )
