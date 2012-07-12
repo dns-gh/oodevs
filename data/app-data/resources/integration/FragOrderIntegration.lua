@@ -173,11 +173,16 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "france.military.platoon.tasks.RejoindreAToutPrix" then
     mission.objectif = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
   elseif orderType == "france.military.platoon.tasks.DeposerUnite" then
-    local targetPoint = self.source:GetpointCible_()
-    mission.unite = CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() )
-    if targetPoint ~= nil then
-        mission.position = CreateKnowledge( integration.ontology.types.point, targetPoint )
-    end
+        local targetPoint = self.source:GetpointCible_()
+        mission.unite = CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() )
+        if myself.CRCaptureSomeone and myself.CRCaptureSomeone[ mission.unite.source ] then
+            if targetPoint ~= nil then
+                mission.position = CreateKnowledge( integration.ontology.types.point, targetPoint )
+            end
+        else  
+            integration.cleanFragOrder( self )
+            return
+        end
   elseif orderType == "france.military.platoon.tasks.Observer" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
   elseif orderType == "france.military.platoon.tasks.Orienter" then
@@ -319,6 +324,7 @@ integration.startFragOrderTask = function( self )
         mission.nbrAmbulances = self.source:GetnbrAmbulances_()
     else
         integration.cleanFragOrder( self )
+        return
     end
   elseif orderType == "Rep_OrderConduite_Pion_TransfererVSRAM" then
     if integration.isLogisticTypeUnit( ) then
@@ -328,6 +334,7 @@ integration.startFragOrderTask = function( self )
         mission.nbrAmbulances = self.source:GetnbrAmbulances_()
     else
         integration.cleanFragOrder( self )
+        return
     end
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
     if integration.isLogisticTypeUnit( ) then
@@ -336,6 +343,7 @@ integration.startFragOrderTask = function( self )
         mission.nbrAmbulances = self.source:GetnbrAmbulances_()
     else
         integration.cleanFragOrder( self )
+        return
     end
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then
@@ -344,6 +352,7 @@ integration.startFragOrderTask = function( self )
         mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
     else
         integration.cleanFragOrder( self )
+        return
     end
   elseif orderType == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then   
@@ -353,6 +362,7 @@ integration.startFragOrderTask = function( self )
         mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
     else
         integration.cleanFragOrder( self )
+        return
     end
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then     
@@ -361,15 +371,21 @@ integration.startFragOrderTask = function( self )
         mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
     else
         integration.cleanFragOrder( self )
+        return
     end
   elseif orderType == "france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" then
-    local obstacles = {}
-    local obstaclesList = self.source:GetObjectKnowledge_()
-    for _, obstacle in pairs( obstaclesList ) do
-        obstacles[#obstacles + 1] = CreateKnowledge( integration.ontology.types.object, obstacle )
+    if myself.obstacleToActivate then  -- les unités qui ont construits des obstacles à activer sont les seules à recevoir l'ODC
+        local obstacles = {}
+        local obstaclesList = self.source:GetObjectKnowledge_()
+        for _, obstacle in pairs( obstaclesList ) do
+            obstacles[#obstacles + 1] = CreateKnowledge( integration.ontology.types.object, obstacle )
+        end
+        mission.obstacles = obstacles
+        obstacles = nil
+    else
+        integration.cleanFragOrder( self )
+        return
     end
-    mission.obstacles = obstacles
-    obstacles = nil
   elseif orderType == "Rep_OrderConduite_RecupererTransporteurs" then
     DEC_RecupererTransporteursSansDelai()
     integration.cleanFragOrder( self )
