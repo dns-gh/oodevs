@@ -35,7 +35,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Park" disable-when-done="true">
+        <stage label="Stationner" disable-when-done="true">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
                     <parameter name="companyTask">
