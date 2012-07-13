@@ -200,20 +200,27 @@
   });
 
   toggle_input_error = function(el, txt) {
-    var msg, root;
+    var msg, reset_error, root;
     el.val('');
     root = el.parent().parent();
+    if (root.hasClass("error")) {
+      return;
+    }
     root.addClass("error");
     if (txt != null) {
       msg = $("<span class='help-inline'>" + txt + "</span>");
       el.after(msg);
     }
-    return setTimeout(function() {
+    reset_error = function() {
       if (msg != null) {
         msg.empty();
       }
       return root.removeClass("error");
-    }, 3000);
+    };
+    el.focus(function() {
+      return reset_error();
+    });
+    return setTimeout(reset_error, 3000);
   };
 
   package_template = Handlebars.compile($("#package_template").html());

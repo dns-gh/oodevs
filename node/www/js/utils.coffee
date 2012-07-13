@@ -141,11 +141,13 @@ $(".sign_out").click ->
 toggle_input_error = (el, txt) ->
     el.val ''
     root = el.parent().parent()
+    return if root.hasClass "error"
     root.addClass "error"
     if txt?
         msg = $ "<span class='help-inline'>" + txt + "</span>"
         el.after msg
-    setTimeout ->
-            msg.empty() if msg?
-            root.removeClass "error"
-        , 3000
+    reset_error = ->
+        msg.empty() if msg?
+        root.removeClass "error"
+    el.focus -> reset_error()
+    setTimeout reset_error, 3000
