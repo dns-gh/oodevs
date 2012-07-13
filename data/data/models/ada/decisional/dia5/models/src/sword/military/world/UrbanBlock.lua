@@ -336,4 +336,14 @@ return
         res[ #res + 1 ] = self:getMyPosition()
         return res
     end,
+    isManeuverObstacle = function( self )
+        return false
+    end,
+    isActifManeuverObstacle = function( self )
+        return false
+    end,
+    canBuildItNow = function( self )
+        local objectType = self:getType()
+        return integration.canBuildNowObjectType( objectType, self:getLocalisation() ) and integration.hasEnoughtDotationForObjectType( objectType )
+    end,
 }

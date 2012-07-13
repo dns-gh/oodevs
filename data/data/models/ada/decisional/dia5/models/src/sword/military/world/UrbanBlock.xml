@@ -541,6 +541,28 @@ Par défaut, toute position est une position potentielle de couverture.</descrip
                 </type>
             </return>
         </method>
+        <method name="isActifManeuverObstacle" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isManeuverObstacle" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBuildItNow" abstract="false">
+            <description>Indicate the capacity to build this object</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isSafeguardingFor">
