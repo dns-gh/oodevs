@@ -25,6 +25,9 @@
                     [#if pg == "nodes"]
                     [#include "/cluster/nodes.html"]
                     [/#if]
+                    [#if pg == "users"]
+                    [#include "/cluster/users.html"]
+                    [/#if]
                 </div>
             </div>
         </div>
@@ -32,5 +35,8 @@
     [#include "../imports.html"]
     [#if pg == "nodes"]
     <script src="js/nodes.js"></script>
+    [/#if]
+    [#if pg == "users"]
+    <script src="js/users.js"></script>
     [/#if]
 </html>
