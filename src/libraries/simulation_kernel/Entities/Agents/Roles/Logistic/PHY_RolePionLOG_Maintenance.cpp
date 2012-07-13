@@ -514,6 +514,8 @@ struct sIsPriorityEqual
 inline
 void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& consign )
 {
+    if( !consign.HasValidComposanteState() )
+        return;
     IT_MaintenanceConsigns itTact = consigns_.begin();
     for( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first ) // TODO || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )

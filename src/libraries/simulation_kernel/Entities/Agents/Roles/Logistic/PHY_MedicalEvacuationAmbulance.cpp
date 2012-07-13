@@ -89,6 +89,9 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
     assert( pCompAmbulance_ );
     assert( std::find( consigns_.begin(), consigns_.end(), &consign ) == consigns_.end() );
 
+    if( !consign.HasValidHumanState() )
+        return false;
+
     if( !pCompAmbulance_->GetType().CanEvacuateCasualty( consign.GetHumanState().GetHuman() ) )
         return false;
 
@@ -134,7 +137,8 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingTo()
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
     {
         (**itConsign).EnterStateEvacuationGoingTo();
-        vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
+        if( (**itConsign).HasValidHumanState() )
+            vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
     }
     vHumansBarycenter /= static_cast< double >( consigns_.size() );
 
@@ -190,7 +194,8 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingFrom()
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
     {
         (**itConsign).EnterStateEvacuationGoingFrom();
-        vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
+        if( (**itConsign).HasValidHumanState() )
+            vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
     }
     vHumansBarycenter /= static_cast< double >( consigns_.size() );
 
