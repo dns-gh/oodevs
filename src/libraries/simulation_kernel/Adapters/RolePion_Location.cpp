@@ -28,7 +28,6 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_Tools.h"
 #include <core/Model.h>
-#include <core/ModelListener_ABC.h>
 #include <boost/make_shared.hpp>
 #include <boost/lambda/lambda.hpp>
 
@@ -102,7 +101,7 @@ namespace
         virtual void SendFullState( client::UnitAttributes& message )
         {
             const MT_Vector2D position( position_[ "x" ], position_[ "y" ] );
-            message().set_altitude( (unsigned int)( *height_ + MIL_Tools::GetAltitude( position ) ) );
+            message().set_altitude( static_cast< unsigned int >( *height_ + MIL_Tools::GetAltitude( position ) ) );
         }
     private:
         bool modified_;

@@ -32,7 +32,6 @@ class MIL_AgentPion;
 namespace core
 {
     class Model;
-    class ModelListener_ABC;
 }
 
 namespace sword
