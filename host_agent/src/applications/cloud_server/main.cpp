@@ -13,7 +13,6 @@
 #include <host/NodeController.h>
 #include <host/Package.h>
 #include <host/PortFactory.h>
-#include <host/PropertyTree.h>
 #include <host/Proxy.h>
 #include <host/Session.h>
 #include <host/SessionController.h>
@@ -25,6 +24,7 @@
 #include <runtime/Factory.h>
 #include <runtime/FileSystem.h>
 #include <runtime/Pool.h>
+#include <runtime/PropertyTree.h>
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Scoper.h>
 #include <runtime/Utf8.h>
@@ -45,6 +45,7 @@
 
 using namespace host;
 using namespace runtime;
+using namespace property_tree;
 typedef runtime::Daemon::T_Waiter Waiter;
 
 namespace

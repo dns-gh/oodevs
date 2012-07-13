@@ -11,6 +11,7 @@
 
 #include "cpplog/cpplog.hpp"
 #include "Agent_ABC.h"
+#include "Reply.h"
 #include "Request_ABC.h"
 #include "UserController_ABC.h"
 
@@ -73,23 +74,7 @@ static const HttpCode httpCodes[] =
     { 501, "Not Implemented" },
 };
 
-// -----------------------------------------------------------------------------
-// Name: HttpStatusCode enumeration
-// Created: BAX 2012-02-28
-// -----------------------------------------------------------------------------
-enum HttpStatusCode
-{
-    Ok,
-    BadRequest,
-    Unauthorized,
-    Forbidden,
-    NotFound,
-    InternalServerError,
-    NotImplemented,
-    HttpStatusCode_Count,
-};
-
-BOOST_STATIC_ASSERT( COUNT_OF( httpCodes ) == HttpStatusCode_Count );
+BOOST_STATIC_ASSERT( COUNT_OF( httpCodes ) == HTTP_STATUS_COUNT );
 
 // -----------------------------------------------------------------------------
 // Name: HttpException class
@@ -98,7 +83,7 @@ BOOST_STATIC_ASSERT( COUNT_OF( httpCodes ) == HttpStatusCode_Count );
 class HttpException : public std::exception
 {
 public:
-    HttpException( HttpStatusCode code, const std::string& error )
+    HttpException( HttpStatus code, const std::string& error )
         : error_( error )
         , code_ ( code )
     {
@@ -115,14 +100,14 @@ public:
         return error_.c_str();
     }
 
-    HttpStatusCode GetCode() const
+    HttpStatus GetCode() const
     {
         return code_;
     }
 
 private:
     const std::string error_;
-    const HttpStatusCode code_;
+    const HttpStatus code_;
     HttpException& operator=( const HttpException& );
 };
 
@@ -130,7 +115,7 @@ private:
 // Name: WriteHttpReply
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( HttpStatusCode code, const std::string& content = std::string() )
+std::string WriteHttpReply( HttpStatus code, const std::string& content = std::string() )
 {
     const HttpCode& status = httpCodes[ code ];
     return ( boost::format(
@@ -153,7 +138,7 @@ std::string WriteHttpReply( HttpStatusCode code, const std::string& content = st
 // -----------------------------------------------------------------------------
 std::string WriteHttpReply( const Reply& reply )
 {
-    return WriteHttpReply( reply.valid ? Ok : InternalServerError, reply.data );
+    return WriteHttpReply( reply.status, reply.data );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +157,7 @@ T GetParameter( const std::string& name, const Request_ABC& data, const T& value
     }
     catch( const boost::bad_lexical_cast& /*err*/ )
     {
-        throw HttpException( BadRequest, "invalid parameter \"" + name + "\"=\""  + *option + "\"" );
+        throw HttpException( BAD_REQUEST, "invalid parameter \"" + name + "\"=\""  + *option + "\"" );
     }
 }
 
@@ -181,7 +166,7 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
 {
     const boost::optional< T > value = request.GetParameter( name );
     if( value == boost::none )
-        throw HttpException( BadRequest, "missing " + name + " parameter" );
+        throw HttpException( BAD_REQUEST, "missing " + name + " parameter" );
     return *value;
 }
 
@@ -195,7 +180,7 @@ Uuid Convert( const std::string& uuid )
     }
     catch( const std::runtime_error& /*err*/ )
     {
-        throw HttpException( BadRequest, "invalid \"uuid\" " + uuid );
+        throw HttpException( BAD_REQUEST, "invalid \"uuid\" " + uuid );
     }
 }
 
@@ -233,7 +218,7 @@ std::string Controller::DoGet( Request_ABC& request )
     try
     {
         if( uri != "/is_authenticated" && !IsAuthenticated( request ) )
-            return WriteHttpReply( Unauthorized, "Invalid authentication" );
+            return WriteHttpReply( UNAUTHORIZED, "Invalid authentication" );
         if( uri == "/get_cluster" )        return GetCluster( request );
         if( uri == "/start_cluster" )      return StartCluster( request );
         if( uri == "/stop_cluster" )       return StopCluster( request );
@@ -268,8 +253,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/logout" )             return UserLogout( request );
         if( uri == "/is_authenticated" )
         {
-            const std::string user = UserIsAuthenticated( request );
-            return WriteHttpReply( user.empty() ? Unauthorized : Ok, user );
+            return UserIsAuthenticated( request );
         }
         if( uri == "/list_users" )         return ListUsers( request );
         if( uri == "/count_users" )        return CountUsers( request );
@@ -280,7 +264,7 @@ std::string Controller::DoGet( Request_ABC& request )
     {
         return WriteHttpReply( err.GetCode(), err.what() );
     }
-    return WriteHttpReply( NotFound, "Unknown URI" );
+    return WriteHttpReply( NOT_FOUND, "Unknown URI" );
 }
 
 namespace
@@ -307,7 +291,7 @@ std::string Controller::DoPost( Request_ABC& request )
     try
     {
         if( !SkipAuthentication( uri ) && !IsAuthenticated( request ) )
-            return WriteHttpReply( Unauthorized, "Invalid authentication" );
+            return WriteHttpReply( UNAUTHORIZED, "Invalid authentication" );
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
         if( uri == "/update_login" ) return UserUpdateLogin( request );
@@ -317,7 +301,7 @@ std::string Controller::DoPost( Request_ABC& request )
     {
         return WriteHttpReply( err.GetCode(), err.what() );
     }
-    return WriteHttpReply( NotFound, "Unknown URI" );
+    return WriteHttpReply( NOT_FOUND, "Unknown URI" );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +419,7 @@ std::string ListDispatch( const Request_ABC& request, const T& functor )
     std::vector< std::string > tokens;
     boost::algorithm::split( tokens, join, boost::is_any_of( "," ) );
     if( tokens.empty() )
-        throw HttpException( BadRequest, "missing items" );
+        throw HttpException( BAD_REQUEST, "missing items" );
     std::vector< size_t > list;
     BOOST_FOREACH( const std::string& item, tokens )
         list.push_back( boost::lexical_cast< size_t >( item ) );
@@ -583,9 +567,10 @@ std::string Controller::CountExercises( const Request_ABC& request )
 
 namespace
 {
-void OnUploadCache( Reply& reply, Agent_ABC& agent, const Uuid& id, std::istream& stream )
+void OnUploadCache( boost::shared_ptr< Reply >& reply, Agent_ABC& agent, const Uuid& id, std::istream& stream )
 {
-    reply = agent.UploadCache( id, stream );
+    const Reply r = agent.UploadCache( id, stream );
+    reply.reset( new Reply( r.status, r.data ) );
 }
 }
 
@@ -597,10 +582,12 @@ std::string Controller::UploadCache( Request_ABC& request )
 {
     const std::string id = RequireParameter< std::string >( "id", request );
     LOG_INFO( log_ ) << "[web] /upload_cache id: " << id;
-    Reply reply( "Unable to find mime part 'cache'", false );
-    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
+    boost::shared_ptr< Reply > ptr;
+    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( ptr ), boost::ref( agent_ ), Convert( id ), _1 ) );
     request.ParseMime();
-    return WriteHttpReply( reply );
+    if( !ptr )
+        return WriteHttpReply( NOT_FOUND );
+    return WriteHttpReply( *ptr );
 }
 
 // -----------------------------------------------------------------------------
@@ -622,8 +609,8 @@ std::string Controller::GetSource( const Request_ABC& request )
 std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 {
     if( !secure_ )
-        return "{}";
-    return users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+        return WriteHttpReply( OK );
+    return WriteHttpReply( users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -632,7 +619,7 @@ std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 bool Controller::IsAuthenticated( const Request_ABC& request )
 {
-    return !UserIsAuthenticated( request ).empty();
+    return users_.IsAuthenticated( request.GetSid(), GetSource( request ) ).status == OK;
 }
 
 // -----------------------------------------------------------------------------
@@ -644,10 +631,7 @@ std::string Controller::UserLogin( Request_ABC& request )
     request.ParseForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string password = RequireParameter< std::string >( "password", request );
-    const std::string user     = users_.Login( username, password, GetSource( request ) );
-    if( user.empty() )
-        return WriteHttpReply( Unauthorized );
-    return WriteHttpReply( Ok, user );
+    return WriteHttpReply( users_.Login( username, password, GetSource( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -657,7 +641,7 @@ std::string Controller::UserLogin( Request_ABC& request )
 std::string Controller::UserLogout( const Request_ABC& request )
 {
     users_.Logout( request.GetSid() );
-    return WriteHttpReply( Ok );
+    return WriteHttpReply( OK );
 }
 
 // -----------------------------------------------------------------------------
@@ -671,11 +655,8 @@ std::string Controller::UserUpdateLogin( Request_ABC& request )
     const std::string current  = RequireParameter< std::string >( "current" , request );
     const std::string password = RequireParameter< std::string >( "password", request );
     if( password.empty() || username.empty() )
-        return WriteHttpReply( BadRequest );
-    const std::string user = users_.UpdateLogin( username, current, password, GetSource( request ) );
-    if( user.empty() )
-        return WriteHttpReply( Unauthorized );
-    return WriteHttpReply( Ok, user );
+        return WriteHttpReply( BAD_REQUEST );
+    return WriteHttpReply( users_.UpdateLogin( username, current, password, GetSource( request ) ) );
 }
 
 // -----------------------------------------------------------------------------

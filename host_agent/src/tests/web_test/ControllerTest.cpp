@@ -10,11 +10,13 @@
 #include "web_test.h"
 
 #include "cpplog/cpplog.hpp"
-#include "MockUserController.h"
 #include "web/Agent_ABC.h"
 #include "web/Controller.h"
 #include "web/Observer_ABC.h"
+#include "web/Reply.h"
 #include "web/Request_ABC.h"
+
+#include "MockUserController.h"
 
 #include <boost/bind.hpp>
 #include <boost/bind/apply.hpp>

@@ -9,9 +9,9 @@
 #include "Proxy.h"
 
 #include "cpplog/cpplog.hpp"
-#include "PropertyTree.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
+#include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
 #include "web/Client_ABC.h"
@@ -24,6 +24,7 @@
 
 using namespace host;
 using namespace host::proxy;
+using namespace property_tree;
 using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;

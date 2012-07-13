@@ -9,8 +9,8 @@
 
 #include "host_test.h"
 
-#include "host/PropertyTree.h"
 #include "host/NodeController.h"
+#include "runtime/PropertyTree.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -29,6 +29,7 @@
 
 using namespace host;
 using namespace mocks;
+using namespace property_tree;
 
 namespace
 {

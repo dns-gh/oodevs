@@ -11,15 +11,16 @@
 
 #include "cpplog/cpplog.hpp"
 #include "Node_ABC.h"
-#include "PropertyTree.h"
 #include "Proxy_ABC.h"
 #include "runtime/FileSystem_ABC.h"
+#include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
+using namespace property_tree;
 using runtime::Utf8Convert;
 using runtime::Async;
 using runtime::FileSystem_ABC;

@@ -10,7 +10,7 @@
 #include "host_test.h"
 
 #include "host/Node.h"
-#include "host/PropertyTree.h"
+#include "runtime/PropertyTree.h"
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -27,6 +27,7 @@
 
 using namespace host;
 using namespace mocks;
+using namespace property_tree;
 
 namespace
 {

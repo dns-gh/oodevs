@@ -10,7 +10,7 @@
 #include "host_test.h"
 
 #include "host/Package.h"
-#include "host/PropertyTree.h"
+#include "runtime/PropertyTree.h"
 #include "runtime/Async.h"
 
 #include <boost/assign/list_of.hpp>
@@ -24,8 +24,9 @@
 #include "MockPool.h"
 
 using namespace host;
-using runtime::Async;
 using namespace mocks;
+using namespace property_tree;
+using runtime::Async;
 
 namespace
 {

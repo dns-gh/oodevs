@@ -18,26 +18,13 @@
 
 namespace web
 {
+    struct Reply;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
-// =============================================================================
-/** @class  Reply
-    @brief  Reply struct definition
-*/
-// Created: BAX 2012-03-07
-// =============================================================================
-struct Reply
-{
-    std::string data;
-    bool valid;
-    Reply( const std::string& data, bool valid = true )
-        : data ( data )
-        , valid( valid )
-    {
-        // NOTHING
-    }
-};
+}
 
+namespace web
+{
 // =============================================================================
 /** @class  Agent_ABC
     @brief  Agent_ABC interface

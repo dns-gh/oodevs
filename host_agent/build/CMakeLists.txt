@@ -133,6 +133,7 @@ add_target_external_library( host_test bcrypt-${platform}_d bcrypt-${platform} )
 target_link_libraries( host_test
     host
     runtime
+    web
 )
 add_test_target( host_test host )
 

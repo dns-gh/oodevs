@@ -9,10 +9,10 @@
 
 #include "host_test.h"
 
-#include "host/PropertyTree.h"
 #include "host/Session.h"
 #include "runtime/Event.h"
 #include "runtime/Pool.h"
+#include "runtime/PropertyTree.h"
 
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -26,8 +26,9 @@
 #include "MockRuntime.h"
 
 using namespace host;
-using namespace runtime;
 using namespace mocks;
+using namespace property_tree;
+using namespace runtime;
 
 namespace
 {

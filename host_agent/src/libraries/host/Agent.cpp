@@ -12,13 +12,14 @@
 #include "cpplog/cpplog.hpp"
 #include "Node_ABC.h"
 #include "NodeController_ABC.h"
-#include "PropertyTree.h"
 #include "Session_ABC.h"
 #include "SessionController_ABC.h"
+#include "web/Reply.h"
 
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -26,11 +27,6 @@ using namespace host;
 namespace
 {
 #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
-
-Reply MakeReply( const Tree& tree )
-{
-    return Reply( ToJson( tree ) );
-}
 
 template< typename T >
 T Clip( T value, T min, T max )
@@ -52,25 +48,25 @@ bool IsNode( const Session_ABC& session, const Uuid& id )
 template< typename T >
 Reply List( const T& list )
 {
-    std::string json;
+    std::vector< Tree > next;
     BOOST_FOREACH( const typename T::value_type& value, list )
-        json += ToJson( value->GetProperties() ) + ",";
-    return Reply( "[" + json.substr( 0, json.size() - 1 ) + "]" );
+        next.push_back( value->GetProperties() );
+    return Reply( next );
 }
 
 Reply Count( size_t count )
 {
     Tree tree;
     tree.put( "count", count );
-    return MakeReply( tree );
+    return Reply( tree );
 }
 
 template< typename T >
 Reply Create( T ptr, const std::string& name )
 {
     if( !ptr )
-        return Reply( "unable to create new " + name, false );
-    return MakeReply( ptr->GetProperties() );
+        return Reply( web::INTERNAL_SERVER_ERROR );
+    return Reply( ptr->GetProperties() );
 }
 
 template< typename T, typename U >
@@ -78,15 +74,15 @@ Reply Dispatch( T& controller, const U& member, const Uuid& id, const std::strin
 {
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
-        return Reply( "unable to " + action + " " + boost::lexical_cast< std::string >( id ), false );
-    return MakeReply( ptr->GetProperties() );
+        return Reply( web::NOT_FOUND );
+    return Reply( ptr->GetProperties() );
 }
 
 template< typename T, typename U >
 Reply ClusterDispatch( T* controller, const U& member, const Uuid& id, const std::string& action )
 {
     if( !controller )
-        return Reply( "Cluster not enabled", false );
+        return Reply( web::INTERNAL_SERVER_ERROR, "Missing cluster" );
     return Dispatch( *controller, member, id, action );
 }
 }
@@ -199,13 +195,13 @@ Reply Agent::DeleteNode( const Uuid& id )
         boost::lock_guard< boost::mutex > lock( access_ );
         ptr = nodes_.Delete( id );
         if( !ptr )
-            return Reply( "unable to find node " + boost::lexical_cast< std::string >( id ), false );
+            return Reply( web::NOT_FOUND );
         invalid = sessions_.List( boost::bind( &IsNode, _1, id ), 0, INT_MAX );
     }
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )
         sessions_.Delete( ptr->GetId() );
-    return MakeReply( ptr->GetProperties() );
+    return Reply( ptr->GetProperties() );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +228,7 @@ Reply Agent::StopNode( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::GetInstall( const Uuid& id ) const
 {
-    return MakeReply( nodes_.GetInstall( id ) );
+    return Reply( nodes_.GetInstall( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +237,7 @@ Reply Agent::GetInstall( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 {
-    return MakeReply( nodes_.DeleteInstall( id, list ) );
+    return Reply( nodes_.DeleteInstall( id, list ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +246,7 @@ Reply Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 // -----------------------------------------------------------------------------
 Reply Agent::UploadCache( const Uuid& id, std::istream& src )
 {
-    return MakeReply( nodes_.UploadCache( id, src ) );
+    return Reply( nodes_.UploadCache( id, src ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +255,7 @@ Reply Agent::UploadCache( const Uuid& id, std::istream& src )
 // -----------------------------------------------------------------------------
 Reply Agent::GetCache( const Uuid& id ) const
 {
-    return MakeReply( nodes_.GetCache( id ) );
+    return Reply( nodes_.GetCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +264,7 @@ Reply Agent::GetCache( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteCache( const Uuid& id )
 {
-    return MakeReply( nodes_.DeleteCache( id ) );
+    return Reply( nodes_.DeleteCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +273,7 @@ Reply Agent::DeleteCache( const Uuid& id )
 // -----------------------------------------------------------------------------
 Reply Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
-    return MakeReply( nodes_.InstallFromCache( id, list ) );
+    return Reply( nodes_.InstallFromCache( id, list ) );
 }
 
 // -----------------------------------------------------------------------------

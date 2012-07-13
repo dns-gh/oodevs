@@ -12,16 +12,17 @@
 
 #include <boost/property_tree/ptree.hpp>
 
-namespace host
+namespace property_tree
 {
-    typedef boost::property_tree::ptree Tree;
-    std::string ToJson( const Tree& tree, bool isPretty = false );
-    Tree FromJson( const std::string& data );
-    std::string ToXml( const Tree& tree );
-    Tree FromXml( const std::string& data );
+    typedef boost::property_tree::ptree T_Tree;
+
+    std::string ToJson( const T_Tree& T_Tree, bool isPretty = false );
+    T_Tree FromJson( const std::string& data );
+    std::string ToXml( const T_Tree& tree );
+    T_Tree FromXml( const std::string& data );
 
     template< typename T >
-    T Get( const Tree& tree, const std::string& key, const T& def = T() )
+    T Get( const T_Tree& tree, const std::string& key, const T& def = T() )
     {
         const boost::optional< T > data = tree.get_optional< T >( key );
         return data == boost::none ? def : *data;

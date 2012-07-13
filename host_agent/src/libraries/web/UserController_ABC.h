@@ -15,6 +15,11 @@
 
 namespace web
 {
+    struct Reply;
+}
+
+namespace web
+{
 // =============================================================================
 /** @class  UserController_ABC
     @brief  UserController_ABC interface
@@ -31,15 +36,15 @@ struct UserController_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual std::string Login( const std::string& user, const std::string& password, const std::string& source ) = 0;
-    virtual std::string IsAuthenticated( const std::string& token, const std::string& source ) = 0;
-    virtual void        Logout( const std::string& token ) = 0;
-    virtual std::string UpdateLogin( const std::string& user, const std::string& current, const std::string& password, const std::string& source ) = 0;
-    virtual std::string ListUsers( int offset, int limit ) const = 0;
-    virtual std::string CountUsers() const = 0;
-    virtual std::string GetUser( int id ) const = 0;
-    virtual std::string CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary ) = 0;
-    virtual std::string DeleteUser( const std::string& token, int id ) = 0;
+    virtual Reply Login( const std::string& user, const std::string& password, const std::string& source ) = 0;
+    virtual Reply IsAuthenticated( const std::string& token, const std::string& source ) = 0;
+    virtual void  Logout( const std::string& token ) = 0;
+    virtual Reply UpdateLogin( const std::string& user, const std::string& current, const std::string& password, const std::string& source ) = 0;
+    virtual Reply ListUsers( int offset, int limit ) const = 0;
+    virtual Reply CountUsers() const = 0;
+    virtual Reply GetUser( int id ) const = 0;
+    virtual Reply CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary ) = 0;
+    virtual Reply DeleteUser( const std::string& token, int id ) = 0;
     //@}
 };
 }

@@ -10,7 +10,8 @@
 #include "host_test.h"
 
 #include "host/Agent.h"
-#include "host/PropertyTree.h"
+#include "runtime/PropertyTree.h"
+#include "web/Reply.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -28,6 +29,7 @@
 
 using namespace host;
 using namespace mocks;
+using namespace property_tree;
 
 namespace
 {
@@ -66,7 +68,10 @@ namespace
 
     void CheckReply( const Reply& reply, const std::string& expected, bool valid = true )
     {
-        BOOST_CHECK_EQUAL( reply.valid, valid );
+        if( valid )
+            BOOST_CHECK_EQUAL( reply.status, web::OK );
+        else
+            BOOST_CHECK( reply.status != web::OK );
         BOOST_CHECK_EQUAL( reply.data, expected );
     }
 
@@ -250,7 +255,8 @@ BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Create ).once().returns( boost::shared_ptr< MockSession >() );
-    CheckReply( agent.CreateSession( defaultNode, "exercise", "name" ), "unable to create new session", false );
+    const web::Reply rpy = agent.CreateSession( defaultNode, "exercise", "name" );
+    BOOST_CHECK( rpy.status != web::OK );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )

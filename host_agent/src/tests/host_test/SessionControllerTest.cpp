@@ -9,8 +9,8 @@
 
 #include "host_test.h"
 
-#include "host/PropertyTree.h"
 #include "host/SessionController.h"
+#include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
 
 #include <boost/assign/list_of.hpp>
@@ -29,8 +29,9 @@
 #include "MockSession.h"
 
 using namespace host;
-using runtime::Utf8Convert;
 using namespace mocks;
+using namespace property_tree;
+using runtime::Utf8Convert;
 
 namespace
 {

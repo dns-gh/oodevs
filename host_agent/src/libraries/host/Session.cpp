@@ -11,10 +11,10 @@
 
 #include "Node_ABC.h"
 #include "PortFactory_ABC.h"
-#include "PropertyTree.h"
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
+#include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
 #include "runtime/Utf8.h"
@@ -26,6 +26,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
+using namespace property_tree;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
