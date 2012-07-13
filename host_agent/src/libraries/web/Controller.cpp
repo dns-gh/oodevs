@@ -135,7 +135,7 @@ std::string WriteHttpReply( HttpStatusCode code, const std::string& content = st
     const HttpCode& status = httpCodes[ code ];
     return ( boost::format(
         "HTTP/1.1 %1% %2%\r\n"
-        "Content-Type: text/plain;charset=UTF-8\r\n"
+        "Content-Type: text/plain; charset=utf-8\r\n"
         "Content-Length: %3%\r\n"
         "Connection: close\r\n"
         "\r\n"
