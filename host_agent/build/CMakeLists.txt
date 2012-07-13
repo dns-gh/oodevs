@@ -16,8 +16,19 @@ if( WIN32 )
     add_definitions( -DWINVER=0x0600 )
 endif()
 
+set( Boost_USE_STATIC_LIBS ON )
 set( BOOST_INCLUDEDIR ${MASA_INCLUDE} )
-find_package( Boost REQUIRED )
+set( BOOST_LIBRARYDIR ${MASA_LIB} )
+find_package( Boost COMPONENTS
+    chrono
+    date_time
+    filesystem
+    iostreams
+    regex
+    system
+    thread
+    unit_test_framework
+    REQUIRED )
 set( ZLIB_ROOT ${MASA_INCLUDE}/zlib ${MASA_LIB} )
 find_package( ZLIB REQUIRED )
 
@@ -66,13 +77,15 @@ file( GLOB files
 )
 add_executable_target( cloud_server ${files} )
 set_target_folder( cloud_server applications )
-add_target_external_library( cloud_server archive_static_d archive_static )
-add_target_external_library( cloud_server bcrypt-${platform}_d bcrypt-${platform} )
-add_target_external_library( cloud_server cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
-add_target_external_library( cloud_server cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
-add_target_external_library( cloud_server cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
-add_target_external_library( cloud_server libsqlite3-${platform}_d libsqlite3-${platform} )
-add_target_external_library( cloud_server zlibd zlib )
+if( MSVC )
+    add_target_external_library( cloud_server archive_static_d archive_static )
+    add_target_external_library( cloud_server bcrypt-${platform}_d bcrypt-${platform} )
+    add_target_external_library( cloud_server cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+    add_target_external_library( cloud_server cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
+    add_target_external_library( cloud_server cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+    add_target_external_library( cloud_server libsqlite3-${platform}_d libsqlite3-${platform} )
+    add_target_external_library( cloud_server zlibd zlib )
+endif()
 target_link_libraries( cloud_server
     host
     runtime
