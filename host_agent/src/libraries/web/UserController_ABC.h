@@ -13,6 +13,11 @@
 #include <boost/noncopyable.hpp>
 #include <string>
 
+namespace boost
+{
+    template< typename T > class optional;
+}
+
 namespace web
 {
     struct Reply;
@@ -45,7 +50,7 @@ struct UserController_ABC : public boost::noncopyable
     virtual Reply GetUser( int id ) const = 0;
     virtual Reply CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary ) = 0;
     virtual Reply DeleteUser( const std::string& token, int id ) = 0;
-    virtual Reply UpdateUser( int id, const std::string& username, const std::string& name, bool temporary ) = 0;
+    virtual Reply UpdateUser( const std::string& token, int id, const std::string& user, const std::string& name, bool temporary, const boost::optional< std::string >& password ) = 0;
     //@}
 };
 }

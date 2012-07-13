@@ -729,8 +729,8 @@ std::string Controller::DeleteUser( const Request_ABC& request )
 std::string Controller::UpdateUser( const Request_ABC& request )
 {
     const int id = RequireParameter< int >( "id", request );
-    const std::string username = RequireParameter< std::string >( "username", request );
+    const std::string user = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    return WriteHttpReply( users_.UpdateUser( id, username, name, ToBool( temporary ) ) );
+    return WriteHttpReply( users_.UpdateUser( request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
 }

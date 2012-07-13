@@ -625,20 +625,46 @@ Reply UserController::DeleteUser( const std::string& token, int id )
 // Name: UserController::UpdateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::UpdateUser( int id, const std::string& username, const std::string& name, bool temporary )
+Reply UserController::UpdateUser( const std::string& token, int id,
+                                  const std::string& username,
+                                  const std::string& name, bool temporary,
+                                  const boost::optional< std::string >& password )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "UPDATE users "
-            "SET    username = ?, name = ?, temporary = ? "
-            "WHERE  users.id = ?" );
+            "UPDATE     users "
+            "SET        username = ?, name = ?, temporary = ? "
+            "WHERE      users.id = ?" );
         st->Bind( username );
         st->Bind( name );
         st->Bind( temporary );
         st->Bind( id );
         Execute( *st );
+        if( password )
+        {
+            st = db_.Prepare( *tr,
+                "SELECT id "
+                "FROM   tokens "
+                "WHERE  id_users = ? "
+                "AND    token = ? " );
+            st->Bind( id );
+            st->Bind( token );
+            const bool found = st->Next();
+            // you cannot update your password without your current password
+            if( found )
+                return Reply( web::FORBIDDEN );
+
+            DeleteTokenWithUserId( db_, *tr, id );
+            st = db_.Prepare( *tr,
+                "UPDATE users "
+                "SET    hash = ? "
+                "WHERE  users.id = ?" );
+            st->Bind( crypt_.Hash( *password ) );
+            st->Bind( id );
+            Execute( *st );
+        }
         st.reset();
         std::string dummy, type, lang;
         bool done = FetchUser( db_, *tr, username, dummy, id, dummy, dummy, type, temporary, lang, dummy );
