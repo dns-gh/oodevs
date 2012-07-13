@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Parameter</source>
-        <translation>Parametro</translation>
+        <translation>Parámetro</translation>
     </message>
 </context>
 <context>
@@ -161,7 +161,7 @@
     </message>
     <message>
         <source>Parameter</source>
-        <translation>Parametro</translation>
+        <translation>Parámetro</translation>
     </message>
     <message>
         <source>%1 (item %2)</source>
