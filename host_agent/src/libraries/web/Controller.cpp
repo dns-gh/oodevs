@@ -164,10 +164,10 @@ T GetParameter( const std::string& name, const Request_ABC& data, const T& value
 template< typename T >
 T RequireParameter( const std::string& name, const Request_ABC& request )
 {
-    const boost::optional< T > value = request.GetParameter( name );
+    const boost::optional< std::string > value = request.GetParameter( name );
     if( value == boost::none )
         throw HttpException( BAD_REQUEST, "missing " + name + " parameter" );
-    return *value;
+    return boost::lexical_cast< T >( *value );
 }
 
 Uuid Convert( const std::string& uuid )
@@ -685,8 +685,8 @@ std::string Controller::CountUsers( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetUser( const Request_ABC& request )
 {
-    const std::string id = RequireParameter< std::string >( "id", request );
-    return WriteHttpReply( users_.GetUser( boost::lexical_cast< int >( id ) ) );
+    const int id = RequireParameter< int >( "id", request );
+    return WriteHttpReply( users_.GetUser( id ) );
 }
 
 namespace
@@ -717,6 +717,6 @@ std::string Controller::CreateUser( Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteUser( const Request_ABC& request )
 {
-    const std::string id = RequireParameter< std::string >( "id", request );
-    return WriteHttpReply( users_.DeleteUser( request.GetSid(), boost::lexical_cast< int >( id ) ) );
+    const int id = RequireParameter< int >( "id", request );
+    return WriteHttpReply( users_.DeleteUser( request.GetSid(), id ) );
 }
