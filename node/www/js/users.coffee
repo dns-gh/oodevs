@@ -14,24 +14,28 @@ user_error_template = Handlebars.compile $("#user_error_template").html()
 print_error = (text) ->
     display_error "user_error", user_error_template, text
 
+pop_settings = (data) ->
+    ui = $ "#user_settings"
+    ui.html user_settings data
+    mod = ui.find ".modal"
+    mod.modal "show"
+    return [ui, mod]
+
 class UserItem extends Backbone.Model
     view: UserItemView
 
     sync: (method, model, options) =>
         if method == "create"
-            params =
-                username:  model.get "username"
-                name:      model.get "name"
-                password:  model.get "password"
-                temporary: model.get "temporary"
-                type:      "administrator"
-            return pajax "/api/create_user", params,
+            return pajax "/api/create_user", model.attributes,
                 options.success, options.error
         if method == "read"
             return ajax "/api/get_user", id: model.id,
                 options.success, options.error
         if method == "delete"
             return ajax "/api/delete_user", id: model.id,
+                options.success, options.error
+        if method == "update"
+            return ajax "/api/update_user", model.attributes,
                 options.success, options.error
         return Backbone.sync method, model, options
 
@@ -45,7 +49,9 @@ class UserList extends Backbone.Collection
         return Backbone.sync method, model, options
 
     comparator: (lhs, rhs) =>
-        return text_compare lhs.get("name"), rhs.get("name")
+        return -1 if lhs.id < rhs.id
+        return  1 if lhs.id > rhs.id
+        return  0
 
 class UserItemView extends Backbone.View
     tagName: "tr"
@@ -56,7 +62,7 @@ class UserItemView extends Backbone.View
 
     events:
         "click .delete" : "delete"
-        "click .config" : "config"
+        "click .edit"   : "edit"
 
     render: =>
         $(@el).empty()
@@ -73,11 +79,33 @@ class UserItemView extends Backbone.View
             @toggle_load()
             print_error "Unable to delete user " + @model.get "username"
 
-    config: (evt) =>
+    edit: (evt) =>
         if $(evt.currentTarget).hasClass "disabled"
             return
-        on_user_modal $(@el).find(".user_settings"), @model.attributes
-        $(@el).find(".user_settings").modal "show"
+        [ui, mod] = pop_settings @model.attributes
+        ui.find(".add").click (e) =>
+            user = ui.find "#username"
+            name = ui.find "#name"
+            tmp  = ui.find "#temporary"
+            err  = false
+            if !user.val().length
+                toggle_input_error user, "Missing"
+                err = true
+            if !name.val().length
+                toggle_input_error name, "Missing"
+                err = true
+            return if err
+            mod.modal "hide"
+            data =
+                username:   user.val()
+                name:       name.val()
+                temporary:  tmp.is ":checked"
+            @toggle_load()
+            @model.save data,
+                wait: true
+                error: =>
+                    @toggle_load()
+                    print_error "Unable to update user " + @model.get "username"
 
     toggle_load: =>
         for it in $(@el).find ".btn"
@@ -115,7 +143,9 @@ class UserListView extends Backbone.View
     create: (data) =>
         item = new UserItem
         item.set data
-        @model.create item, wait: true, error: => print_error "Unable to create user " + item.get "username"
+        @model.create item,
+            wait: true
+            error: => print_error "Unable to create user " + item.get "username"
 
     delta: =>
         next = new UserList
@@ -134,14 +164,8 @@ class UserListView extends Backbone.View
 
 user_view = new UserListView
 
-on_user_modal = (container) ->
-    container.html user_settings()
-
 $("#user_create").click ->
-    ui = $("#user_settings")
-    on_user_modal ui
-    mod = ui.find(".modal")
-    mod.modal "show"
+    [ui, mod] = pop_settings pwd: true
     ui.find(".add").click (e) ->
         user = ui.find "#username"
         name = ui.find "#name"
@@ -171,3 +195,4 @@ $("#user_create").click ->
             name: name.val()
             password: pwd.val()
             temporary: tmp.is ":checked"
+            type: "administrator"
