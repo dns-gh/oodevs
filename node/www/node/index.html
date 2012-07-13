@@ -28,31 +28,27 @@
                     <p class="footer">&copy; MASA Group 2012</p>
                 </div>
                 <div class="span9">
-                    [#switch pg]
-                    [#case "sessions"]
+                    [#if pg == "sessions"]
                     [#include "/node/sessions.html"]
-                    [#break]
-                    [#case "packages"]
+                    [/#if]
+                    [#if pg == "packages"]
                     [#include "/node/packages.html"]
-                    [#break]
-                    [#case "uploads"]
+                    [/#if]
+                    [#if pg == "uploads"]
                     [#include "/node/uploads.html"]
-                    [#break]
-                    [/#switch]
+                    [/#if]
                 </div>
             </div>
         </div>
         [#include "../imports.html"]
-        [#switch pg]
-        [#case "sessions"]
+        [#if pg == "sessions"]
         <script src="js/sessions.js"></script>
-        [#break]
-        [#case "packages"]
+        [/#if]
+        [#if pg == "packages"]
         <script src="js/packages.js"></script>
-        [#break]
-        [#case "uploads"]
+        [/#if]
+        [#if pg == "uploads"]
         <script src="js/uploads.js"></script>
-        [#break]
-        [/#switch]
+        [/#if]
     </body>
 </html>
