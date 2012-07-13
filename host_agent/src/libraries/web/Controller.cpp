@@ -608,8 +608,6 @@ std::string Controller::GetSource( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 {
-    if( !secure_ )
-        return WriteHttpReply( OK );
     return WriteHttpReply( users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
 }
 
@@ -619,6 +617,8 @@ std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 bool Controller::IsAuthenticated( const Request_ABC& request )
 {
+    if( !secure_ )
+        return true;
     return users_.IsAuthenticated( request.GetSid(), GetSource( request ) ).status == OK;
 }
 
