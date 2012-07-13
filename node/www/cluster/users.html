@@ -98,6 +98,9 @@
     <td>{{name}}</td>
     <td class="action">
         <a class="btn edit"><i class="icon-edit"></i> Edit </a>
-        <a class="btn delete{{#equal id "${user.id}" }} disabled{{/equal}}"><i class="icon-trash"></i> </a>
+        {{#equal id "${user.id}" }}
+        {{else}}
+        <a class="btn delete"><i class="icon-trash"></i> </a>
+        {{/equal}}
     </td>
 </script>
