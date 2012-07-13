@@ -179,6 +179,8 @@ void MIL_PopulationMission::load( MIL_CheckPointInArchive& file, const unsigned 
     {
         TER_Localisation localisation;
         file >> localisation;
+        sword::Location tmp;
+        symbolLocation_ = tmp;
         NET_ASN_Tools::WriteLocation( localisation, *symbolLocation_ );
     }
 }
