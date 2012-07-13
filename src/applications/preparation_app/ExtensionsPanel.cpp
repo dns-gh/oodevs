@@ -219,6 +219,10 @@ namespace
                                 ext->SetValue( "TypeSIOC", "SIR" );
                             else if( typeAndLevel.second == "x" || typeAndLevel.second == "xx" )
                                 ext->SetValue( "TypeSIOC", "SICF" );
+                            else if( typeAndLevel.second == "c" || typeAndLevel.second == "b" ||
+                                     typeAndLevel.second == "o" || typeAndLevel.second == "oo" ||
+                                     typeAndLevel.second == "ooo" )
+                                ext->SetValue( "TypeSIOC", "SITEL" );
                         }
                     }
                 }
