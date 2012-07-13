@@ -159,3 +159,6 @@ toggle_input_error = (el, txt) ->
         root.removeClass "error"
     el.focus -> reset_error()
     setTimeout reset_error, 3000
+
+is_disabled = (evt) ->
+    return $(evt.currentTarget).hasClass "disabled"

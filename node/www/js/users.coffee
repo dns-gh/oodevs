@@ -107,15 +107,15 @@ class UserItemView extends Backbone.View
         $(@el).find(".delete")?.after spin
         spin.hide()
 
-    delete: =>
+    delete: (evt) =>
+        return if is_disabled evt
         @toggle_load()
         @model.destroy wait: true, error: =>
             @toggle_load()
             print_error "Unable to delete user " + @model.get "username"
 
     edit: (evt) =>
-        if $(evt.currentTarget).hasClass "disabled"
-            return
+        return if is_disabled evt
         other = $(@el).find(".delete").length
         data = $.extend {}, @model.attributes
         data.other = true if other

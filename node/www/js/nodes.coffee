@@ -92,8 +92,7 @@ class NodeItemView extends Backbone.View
                 @toggle_load()
 
     config: (evt) =>
-        if $(evt.currentTarget).hasClass "disabled"
-            return
+        return if is_disabled evt
         on_node_config $(@el).find(".node_settings"),
             @model.get("name"),
             @model.get("max_sessions"),
