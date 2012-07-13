@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __Application_h_
-#define __Application_h_
+#ifndef __preparation_Application_h_
+#define __preparation_Application_h_
 
-#include "clients_kernel/Application_ABC.h"
+#include "clients_gui/Application_ABC.h"
 
 namespace kernel
 {
@@ -29,45 +29,31 @@ class Config;
 */
 // Created: SBO 2006-07-05
 // =============================================================================
-class Application : public Application_ABC
+class Application : public gui::Application_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int& argc, char** argv, const QString& license );
+             Application( int& argc, char** argv );
     virtual ~Application();
     //@}
 
-    //! @name Operations
+    //! @name gui::Application_ABC operations
     //@{
-    virtual bool notify( QObject* receiver, QEvent* e );
-    bool Initialize();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Application( const Application& );            //!< Copy constructor
-    Application& operator=( const Application& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    bool Initialize( int argc, char** argv );
-    void DisplayError( const QString& text ) const;
+    virtual int Run();
+    virtual void CreateTranslators();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FileLoaderObserver > observer_;
-    std::auto_ptr< Config > config_;
+    std::auto_ptr< FileLoaderObserver >  observer_;
+    std::auto_ptr< Config >              config_;
     std::auto_ptr< kernel::Controllers > controllers_;
-    std::auto_ptr< StaticModel > staticModel_;
-    std::auto_ptr< Model > model_;
-    MainWindow* mainWindow_;
-    const QString license_;
+    std::auto_ptr< StaticModel >         staticModel_;
+    std::auto_ptr< Model >               model_;
+    MainWindow*                          mainWindow_;
     //@}
 };
 
-#endif // __Application_h_
+#endif // __preparation_Application_h_

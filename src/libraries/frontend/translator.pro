@@ -16,4 +16,4 @@ SessionConfigPanel.cpp \
 SpawnCommand.cpp \
 StartExercise.cpp \
 
-TRANSLATIONS = frontend_fr.ts frontend_es.ts
+TRANSLATIONS = frontend_fr.ts frontend_es.ts frontend_ar.ts

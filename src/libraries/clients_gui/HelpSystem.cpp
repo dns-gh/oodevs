@@ -19,15 +19,6 @@
 
 using namespace gui;
 
-namespace
-{
-    QString ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: HelpSystem constructor
 // Created: AGE 2008-08-18
@@ -35,7 +26,7 @@ namespace
 HelpSystem::HelpSystem( QWidget* root, const std::string& config )
     : QObject( root )
     , root_  ( root )
-    , locale_( ReadLang() )
+    , locale_( tools::readLang().c_str() )
 {
     try
     {

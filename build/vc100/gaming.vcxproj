@@ -559,6 +559,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\MeteoModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\libraries\gaming\gaming_ar.ts" />
     <None Include="..\..\src\libraries\gaming\Sector.inl" />
     <None Include="..\..\src\libraries\gaming\LogisticConsigns.inl" />
     <None Include="..\..\src\libraries\gaming\gaming_es.ts" />

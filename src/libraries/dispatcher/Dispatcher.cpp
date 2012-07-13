@@ -22,10 +22,6 @@
 #include "clients_kernel/Tools.h"
 #include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
-#pragma warning( push, 0 )
-#include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
-#pragma warning( pop )
 
 #pragma warning( disable: 4355 )
 
@@ -56,20 +52,6 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     handler_->Add( clientsNetworker_ );
     handler_->AddHandler( model_ );
-    int argc = 0;
-    qapp_.reset( new Application_ABC( argc, 0 ) );
-    AddTranslations();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Dispatcher::AddTranslations
-// Created: HBD 2010-06-28
-// -----------------------------------------------------------------------------
-void Dispatcher::AddTranslations()
-{
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    QString locale = settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    qapp_->AddTranslator( locale, "messenger" );
 }
 
 // $$$$ AGE 2008-07-16: Les plugins / MessageHandlers doivent être enregistrés dans un certain ordre

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="fr" sourcelanguage="en">
 <context>
     <name>Localisation</name>
     <message>
@@ -47,7 +47,7 @@
     </message>
     <message>
         <source>Received</source>
-        <translation type="unfinished"></translation>
+        <translation>Reçu</translation>
     </message>
 </context>
 </TS>

@@ -16,7 +16,6 @@
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
@@ -32,10 +31,17 @@ using namespace license_gui;
 
 namespace
 {
-    QString ReadLang()
+    std::string ReadLang()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+        QString language = settings.value( "/Common/Language", "en" ).value< QString >();
+        if( language.count( "fr" ) )
+            return "fr";
+        else if( language.count( "es" ) )
+            return "es";
+        else if( language.count( "ar" ) )
+            return "ar";
+        return "en";
     }
 }
 
@@ -339,7 +345,7 @@ void LicenseDialog::ReadTranslations()
         {
             bfs::path filePath( szAppPath );
             filePath.remove_filename();
-            const std::string language = ReadLang().ascii();
+            const std::string language = ReadLang();
             filePath /= bfs::path( "resources/locales" ) / bfs::path( "license_gui_" + language + ".ts" );
             if( bfs::exists( filePath) )
             {

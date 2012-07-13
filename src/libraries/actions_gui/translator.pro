@@ -12,4 +12,4 @@ ParamHumanWoundList.cpp \
 ParamObstacle.cpp \
 ParamResourceNetworkNode.cpp \
 
-TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts
+TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts actions_gui_ar.ts

@@ -34,3 +34,12 @@ ADN_ProgressIndicator_ABC::ADN_ProgressIndicator_ABC()
 ADN_ProgressIndicator_ABC::~ADN_ProgressIndicator_ABC()
 {
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ProgressIndicator_ABC::SetVisible
+// Created: ABR 2012-07-13
+// -----------------------------------------------------------------------------
+void ADN_ProgressIndicator_ABC::SetVisible( bool visible )
+{
+    static_cast< ADN_App* >( qApp )->GetMainWindow()->statusBar()->setVisible( visible );
+}

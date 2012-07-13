@@ -5,6 +5,7 @@ ActivityTimePrototype_ABC.cpp \
 AddRasterDialog.cpp \
 AggregateToolbar.cpp \
 AltitudeModifierPrototype_ABC.cpp \
+Application_ABC.cpp \
 AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
@@ -99,4 +100,4 @@ WeatherListView.cpp \
 WeatherPanel.cpp \
 WeatherWidget.cpp \
 
-TRANSLATIONS = clients_gui_fr.ts clients_gui_es.ts
+TRANSLATIONS = clients_gui_fr.ts clients_gui_es.ts clients_gui_ar.ts

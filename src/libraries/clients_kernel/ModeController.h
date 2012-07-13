@@ -14,6 +14,7 @@
 #include "ModeController_ABC.h"
 #include "ModesObserver_ABC.h"
 #include "DisplayableModesObserver_ABC.h"
+#include "Tools.h"
 
 class QMainWindow;
 

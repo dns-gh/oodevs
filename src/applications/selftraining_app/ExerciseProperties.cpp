@@ -18,15 +18,6 @@
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    QString ReadLang()
-    {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ExerciseProperties constructor
 // Created: SBO 2010-11-12
@@ -35,7 +26,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
     : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
     , config_         ( config )
     , fileLoader_     ( fileLoader )
-    , language_       ( ReadLang() )
+    , language_       ( tools::readLang().c_str() )
     , parametersLabel_( 0 )
     , briefingText_   ( 0 )
     , terrainList_    ( 0 )

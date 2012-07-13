@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS>
-    <context>
+<TS version="2.0" language="fr" sourcelanguage="en">
+<context>
     <name>Application</name>
       <message>
         <source>SWORD</source>

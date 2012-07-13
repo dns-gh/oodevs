@@ -2206,6 +2206,9 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.inl">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </None>
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">

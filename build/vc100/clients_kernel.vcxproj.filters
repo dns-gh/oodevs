@@ -76,9 +76,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -507,9 +504,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -1228,6 +1222,9 @@
     </None>
     <None Include="..\..\src\libraries\clients_kernel\ModeController.inl">
       <Filter>Source Files\kernel</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_ar.ts">
+      <Filter>Translations</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

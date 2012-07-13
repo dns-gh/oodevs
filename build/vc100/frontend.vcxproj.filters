@@ -302,6 +302,9 @@
     <None Include="..\..\src\libraries\frontend\frontend_fr.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\frontend\frontend_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h">

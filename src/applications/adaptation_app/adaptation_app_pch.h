@@ -27,7 +27,6 @@
 #include <QtCore/qpoint.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
 #include <QtCore/qtranslator.h>
 #include <Qtcore/qtimer.h>
 

@@ -10,8 +10,7 @@
 #ifndef __ADN_App_h_
 #define __ADN_App_h_
 
-#include "clients_kernel/Application_ABC.h"
-#include <boost/noncopyable.hpp>
+#include "clients_gui/Application_ABC.h"
 
 class ADN_MainWindow;
 class ADN_Config;
@@ -21,25 +20,33 @@ class ADN_Config;
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_App : public Application_ABC
-              , private boost::noncopyable
+class ADN_App : public gui::Application_ABC
 {
 
 public:
-             ADN_App( int argc, char** argv );
+             ADN_App( int argc, char** argv, const std::string& licenseName );
     virtual ~ADN_App();
 
-    bool Initialize( const std::string& inputFile, const std::string& outputFile, bool nosymbols, bool noreadonly, int argc, char ** argv );
+    //! @name gui::Application_ABC operations
+    //@{
+    virtual int Run();
+    virtual void CreateTranslators();
+    //@}
 
-public:
+    //! @name Accessors
+    //@{
     ADN_MainWindow* GetMainWindow();
-
-public:
-    static ADN_App* pApplication_;
+    const std::string& GetOutputFile() const;
+    //@}
 
 private:
-    ADN_MainWindow* pMainWindow_;
-    ADN_Config*     config_;
+    //! @name Member data
+    //@{
+    ADN_MainWindow*             mainWindow_;
+    std::auto_ptr< ADN_Config > config_;
+    std::string                 inputFile_;
+    std::string                 outputFile_;
+    //@}
 };
 
 //-----------------------------------------------------------------------------
@@ -49,7 +56,17 @@ private:
 inline
 ADN_MainWindow* ADN_App::GetMainWindow()
 {
-    return pMainWindow_;
+    return mainWindow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_App::GetOutputFile
+// Created: ABR 2012-07-12
+// -----------------------------------------------------------------------------
+inline
+const std::string& ADN_App::GetOutputFile() const
+{
+    return outputFile_;
 }
 
 #endif // __ADN_App_h_

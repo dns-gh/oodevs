@@ -16,24 +16,50 @@
 #include "ADN_Exception_ABC.h"
 #include "ADN_Config.h"
 #pragma warning( push, 1 )
-#pragma warning( disable : 4512 )
+#pragma warning( disable: 4127 4512 4511 )
 #include <boost/algorithm/string.hpp>
+#include <boost/program_options.hpp>
 #pragma warning( pop )
 
-ADN_App* ADN_App::pApplication_ = 0;
+namespace po = boost::program_options;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_App constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-ADN_App::ADN_App( int argc, char** argv )
-    : Application_ABC( argc, argv )
-    , pMainWindow_( 0 )
-    , config_( new ADN_Config() )
+ADN_App::ADN_App( int argc, char** argv, const std::string& licenseName )
+    : gui::Application_ABC( argc, argv )
 {
-    if( pApplication_ )
-        throw std::runtime_error( "Singleton already initialized" );
-    pApplication_ = this;
+    // License
+    CheckLicense( "sword" );
+    if( IsInvalidLicense() )
+        return;
+
+    // Application_ABC initialization
+    Initialize();
+
+    // Data
+    config_.reset( new ADN_Config() );
+
+    // GUI
+    mainWindow_ = new ADN_MainWindow( *config_, argc , argv );
+    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
+
+    // Command line options
+    po::options_description desc( "Allowed options" );
+    desc.add_options()
+        ( "input,i" , po::value< std::string >( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
+        ( "output,o", po::value< std::string >( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
+        ( "nosymbols,n", "turn off unit symbols view" )
+        ( "noreadonly", "disable read-only protection" )
+        ;
+    po::variables_map vm;
+    po::store( po::parse_command_line( argc, argv, desc ), vm );
+    po::notify( vm );
+
+    // Initialize
+    ADN_Workspace::GetWorkspace().SetOptions( vm.count( "nosymbols" ) == 0, vm.count( "noreadonly" ) != 0 );
+    mainWindow_->Build();
 }
 
 //-----------------------------------------------------------------------------
@@ -42,144 +68,86 @@ ADN_App::ADN_App( int argc, char** argv )
 //-----------------------------------------------------------------------------
 ADN_App::~ADN_App()
 {
-    if( pMainWindow_ != 0 )
-    {
-        pMainWindow_->hide();
-
-        // Don't delete the main window to speed up the closing of the application.
-        // Restore the next line if checking for memory leaks.
-        // delete pMainWindow_;
-    }
-
-    pApplication_ = 0;
-}
-
-//$$$$ C DEGUEU !
-// -----------------------------------------------------------------------------
-// Name: SIM_App::IsAlreadyWrapped
-// Created: MCO 2005-02-22
-// -----------------------------------------------------------------------------
-bool IsAlreadyWrapped( const std::string& content )
-{
-    return content.find( "WARNING" ) != std::string::npos || content.find( "ERROR" ) != std::string::npos || content.find( "INFO" ) != std::string::npos;
+    // NOTHING
+    //if( pMainWindow_ != 0 )
+    //    pMainWindow_->hide();
+    // Don't delete the main window to speed up the closing of the application.
+    // Restore the next line if checking for memory leaks.
+    // delete pMainWindow_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_App::Wrap
-// Created: MCO 2005-02-21
+// Name: ADN_App::CreateTranslators
+// Created: ABR 2012-07-13
 // -----------------------------------------------------------------------------
-std::string Wrap( const std::string& content, const std::string& prefix )
+void ADN_App::CreateTranslators()
 {
-    std::string result;
-    std::stringstream input( content );
-    std::string line;
-    bool bFirst = true;
-    while( std::getline( input, line ) )
-    {
-        if( ! bFirst )
-            result += '\n';
-        else
-            bFirst = false;
-        if( ! IsAlreadyWrapped( line ) )
-            result += prefix;
-        result += line;
-    }
-    return result;
+    AddTranslator( "qt" );
+    AddTranslator( "adaptation_app" );
+    AddTranslator( "ENT" );
+    AddTranslator( "clients_gui" );
+    AddTranslator( "clients_gui_app6" );
+    ADN_Tr::InitTranslations();
+    ENT_Tr::InitTranslations();
 }
 
 namespace
 {
-    QString ReadLang()
+    //$$$$ C DEGUEU !
+    bool IsAlreadyWrapped( const std::string& content )
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+        return content.find( "WARNING" ) != std::string::npos || content.find( "ERROR" ) != std::string::npos || content.find( "INFO" ) != std::string::npos;
     }
 
-    bool TransformLang( std::string& language )
+    std::string Wrap( const std::string& content, const std::string& prefix )
     {
-        if( language != "fr" && language != "en" && language != "es" )
+        std::string result;
+        std::stringstream input( content );
+        std::string line;
+        bool bFirst = true;
+        while( std::getline( input, line ) )
         {
-            language = boost::algorithm::to_lower_copy( language );
-            if( language.find( "fr" ) != std::string::npos )
-                language = "fr";
-            else if( language.find( "es" ) != std::string::npos )
-                language = "es";
+            if( !bFirst )
+                result += '\n';
             else
-                language = "en";
-            return true;
+                bFirst = false;
+            if( !IsAlreadyWrapped( line ) )
+                result += prefix;
+            result += line;
         }
-        return false;
+        return result;
     }
-
-    class Locale : public QLocale
-    {
-    public:
-        Locale( const std::string& locale )
-            : QLocale( locale == "en" ? QLocale::English : locale == "fr" ? QLocale::French : QLocale::Spanish, locale == "en" ? QLocale::UnitedStates : locale == "fr" ? QLocale::France: QLocale::Spain )
-        {
-            // NOTHING
-        }
-
-        virtual ~Locale(){}
-    };
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_App::Initialize
-// Created: JDY 03-06-19
-//-----------------------------------------------------------------------------
-bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile, bool nosymbols, bool noreadonly, int argc, char** argv )
+// -----------------------------------------------------------------------------
+// Name: ADN_App::Run
+// Created: ABR 2012-07-12
+// -----------------------------------------------------------------------------
+int ADN_App::Run()
 {
-    const QString locale = ReadLang();
-    AddTranslator( locale, "qt" );
-    AddTranslator( locale, "adaptation" );
-    AddTranslator( locale, "adaptation_app" );
-    AddTranslator( locale, "ENT" );
-    AddTranslator( locale, "clients_gui_sword" );
-    AddTranslator( locale, "clients_gui" );
-    AddTranslator( locale, "clients_gui_app6" );
-
-    // Initialize all the translations.
-    ADN_Tr::InitTranslations();
-    ENT_Tr::InitTranslations();
-
-    // Set default locale
-    std::string localeStr = locale.toStdString();
-    TransformLang( localeStr );
-    QLocale::setDefault( Locale( localeStr ) );
-
-    // Create and set the application's main window.
-    pMainWindow_ = new ADN_MainWindow( *config_, argc , argv );
-    ADN_Workspace::GetWorkspace().SetOptions( !nosymbols, noreadonly );
-    pMainWindow_->Build();
-    setMainWidget( pMainWindow_ );
-    pMainWindow_->showMaximized();
-
-    // Make sure that once the last window is closed, the application quits.
-    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
-
     try
     {
-        if( !inputFile.empty() )
-            pMainWindow_->OpenProject( inputFile, true );
-        if( !outputFile.empty() )
+        if( !inputFile_.empty() )
+            mainWindow_->OpenProject( inputFile_, true );
+        if( !outputFile_.empty() )
         {
-            pMainWindow_->SaveProjectAs( outputFile );
-            return false;
+            mainWindow_->SaveProjectAs( outputFile_ );
+            return EXIT_SUCCESS;
         }
     }
     catch( ADN_Exception_ABC& e )
     {
-        if( outputFile.empty() )
-            QMessageBox::critical( pMainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+        if( outputFile_.empty() )
+            QMessageBox::critical( mainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
         else
         {
             std::stringstream ss;
             ss << e.GetExceptionTitle().c_str() << std::endl << e.GetExceptionMessage().c_str() << std::endl;
-
             MT_LOG_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
         }
-        return false;
+        return EXIT_FAILURE;
     }
-    return true;
+    //mainWindow_->show();
+    mainWindow_->showMaximized();
+    return exec();
 }

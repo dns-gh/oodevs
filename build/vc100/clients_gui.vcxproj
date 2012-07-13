@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\AddRasterDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\AggregateToolbar.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Application_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ClearButton.cpp" />
@@ -386,6 +387,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2421,10 +2423,13 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_app6;%(Outputs)</Outputs>
       <SubType>Designer</SubType>
     </CustomBuild>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_app6_ar.ts" />
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_ar.ts" />
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />
+    <None Include="..\..\src\libraries\clients_gui\resources_gradients_ar.ts" />
     <None Include="..\..\src\libraries\clients_gui\SearchListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />
@@ -2484,34 +2489,6 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_es.ts">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./clients_gui_sword;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./clients_gui_sword;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./clients_gui_sword;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_sword;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_fr.ts">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./clients_gui_sword;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./clients_gui_sword;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./clients_gui_sword;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_sword;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_es.ts">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"

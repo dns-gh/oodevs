@@ -361,7 +361,7 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
             if( !node->FindResourceNode( resource.GetName() ) )
             {
                 ContextMenu* resourceMenu = new ContextMenu( subMenu );
-                subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
+                subMenu->insertItem( QString::fromUtf8( resource.GetName().c_str() ), resourceMenu );
                 resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
             }
             ++resourceId;

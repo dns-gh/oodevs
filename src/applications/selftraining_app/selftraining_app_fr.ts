@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="fr" sourcelanguage="en">
 <context>
     <name>Application</name>
     <message>
@@ -30,10 +30,6 @@
     <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
-    </message>
-    <message>
-        <source>sword-ot@masagroup.net</source>
-        <translation>sword-ot@masagroup.net</translation>
     </message>
     <message>
         <source>Unhandled error</source>
@@ -227,19 +223,19 @@
     <name>ExerciseProperties</name>
     <message>
         <source>Exercise parameters:</source>
-        <translation>Paramètres d&apos;exercice:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Terrain:</source>
-        <translation>Terrain:</translation>
+        <translation type="unfinished">Terrain:</translation>
     </message>
     <message>
         <source>Model:</source>
-        <translation>Modèle:</translation>
+        <translation type="unfinished">Modèle:</translation>
     </message>
     <message>
         <source>No briefing available</source>
-        <translation>Aucun briefing</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

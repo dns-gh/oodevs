@@ -58,4 +58,4 @@ UrbanMenuManager.cpp \
 UrbanPositions.cpp \
 WeatherModel.cpp \
 
-TRANSLATIONS = preparation_fr.ts preparation_es.ts
+TRANSLATIONS = preparation_fr.ts preparation_es.ts preparation_ar.ts

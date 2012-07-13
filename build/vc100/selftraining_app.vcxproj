@@ -28,6 +28,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -710,7 +711,10 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\applications\selftraining_app\selftraining_app_es.ts" />
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_ar.ts" />
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_es.ts">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\..\src\applications\selftraining_app\selftraining_app_fr.ts" />
     <CustomBuild Include="..\..\src\applications\selftraining_app\translator.pro">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"

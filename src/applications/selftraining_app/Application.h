@@ -10,6 +10,8 @@
 #ifndef __Application_h_
 #define __Application_h_
 
+#include "clients_gui/Application_ABC.h"
+
 namespace frontend
 {
     class LauncherClient;
@@ -35,9 +37,9 @@ class Launcher;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class Application : public QApplication
+class Application : public gui::Application_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -46,12 +48,15 @@ public:
     virtual ~Application();
     //@}
 
-    //! @name Operations
+    //! @name gui::Application_ABC operations
     //@{
-    void Initialize();
-    void CreateTranslators();
-    void DeleteTranslators();
-    void SetLauncherRootDir( const std::string& directory );
+    virtual int Run();
+    virtual void CreateTranslators();
+    //@}
+
+    //! @name Accessors
+    //@{
+    Launcher& GetLauncher() const;
     //@}
 
 private slots:
@@ -61,32 +66,24 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Application( const Application& );            //!< Copy constructor
-    Application& operator=( const Application& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void AddTranslator( const std::string file, const QString& locale );
+    virtual void InitializeStyle();
     virtual bool notify( QObject* emitter, QEvent* event );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Config > config_;
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC > fileLoaderObserver_;
-    std::auto_ptr< tools::Loader_ABC > fileLoader_;
-    std::auto_ptr< kernel::Controllers > controllers_;
-    std::auto_ptr< Launcher > launcher_;
-    std::auto_ptr< frontend::LauncherClient > launcherClient_;
-    std::vector< QTranslator* > translators_;
-    Q3MainWindow* mainWindow_;
-    QTimer* timer_;
+    std::auto_ptr< Config >                             config_;
+    std::auto_ptr< tools::RealFileLoaderObserver_ABC >  fileLoaderObserver_;
+    std::auto_ptr< tools::Loader_ABC >                  fileLoader_;
+    std::auto_ptr< kernel::Controllers >                controllers_;
+    std::auto_ptr< Launcher >                           launcher_;
+    std::auto_ptr< frontend::LauncherClient >           launcherClient_;
+    std::auto_ptr< QTimer >                             timer_;
+    Q3MainWindow*                                       mainWindow_;
     //@}
-
 };
 
 #endif // __Application_h_

@@ -187,6 +187,7 @@ ADN_Workspace::~ADN_Workspace()
 void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
 {
     pUndoStack_ = new QtUndoStack( & mainwindow );
+    pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
@@ -225,6 +226,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
+    pProgressIndicator_->SetVisible( false );
     connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), &mainwindow, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
 }
 
@@ -245,6 +247,7 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
 {
     if( bVisible )
     {
+        pProgressIndicator_->SetVisible( true );
         pProgressIndicator_->Reset( tr( "Reseting project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
     }
@@ -260,7 +263,10 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
     projectData_->Reset();
 
     if( bVisible )
+    {
         pProgressIndicator_->Reset( tr( "Project reseted" ) );
+        pProgressIndicator_->SetVisible( false );
+    }
 
     GetUndoStack().clear();
 }
@@ -275,6 +281,7 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
 
     // load configuration file
     // Must load it first
+    pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading project..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
@@ -293,6 +300,7 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetDataABC().Initialize();
     ResetProgressIndicator();
+    pProgressIndicator_->SetVisible( false );
 
     GetModels().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
     GetMissions().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
@@ -431,6 +439,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     {
         // saving in temporary files activated
         dirInfos.UseTempDirectory( true );
+        pProgressIndicator_->SetVisible( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
@@ -466,6 +475,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
         CopyUnsavedFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ) );
     pProgressIndicator_->Increment( "" );
+    pProgressIndicator_->SetVisible( false );
 
     GetUndoStack().clear();
     // Save is ended

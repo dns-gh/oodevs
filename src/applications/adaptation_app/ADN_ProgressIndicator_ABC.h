@@ -11,6 +11,8 @@
 #define __ADN_ProgressIndicator_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "ADN_App.h"
+#include "ADN_MainWindow.h"
 
 // =============================================================================
 /** @class  ADN_ProgressIndicator_ABC
@@ -28,12 +30,17 @@ public:
     virtual ~ADN_ProgressIndicator_ABC();
     //@}
 
-    //! @name Operations
+    //! @name Abstract operations
     //@{
     virtual void SetNbrOfSteps( int n ) = 0;
     virtual void Increment( int n = 1 ) = 0;
     virtual void Increment( const char* szText, int n = 1 ) = 0;
     virtual void Reset( const char* szMsg = 0) = 0;
+    //@}
+
+    //! @name Operations
+    //@{
+    void SetVisible( bool visible );
     //@}
 };
 

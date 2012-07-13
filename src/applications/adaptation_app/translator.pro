@@ -206,4 +206,4 @@ ADN_Wizard_FirstPage_Default.inl \
 ADN_Workspace.cpp \
 qtundo.cpp \
 
-TRANSLATIONS = adaptation_app_fr.ts adaptation_app_es.ts
+TRANSLATIONS = adaptation_app_fr.ts adaptation_app_es.ts adaptation_app_ar.ts

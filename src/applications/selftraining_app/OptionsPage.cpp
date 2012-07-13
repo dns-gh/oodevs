@@ -1,9 +1,9 @@
-// *****************************************************************************
+﻿// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Math�matiques Appliqu�es SA (MASA)
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
@@ -14,6 +14,7 @@
 #include "MessageDialog.h"
 #include "clients_gui/Tools.h"
 #include "Config.h"
+#include "Launcher.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -24,31 +25,6 @@
 
 namespace bfs = boost::filesystem;
 
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-
-    bool TransformLang( std::string& language )
-    {
-        if( language != "fr" && language != "en" && language != "es" )
-        {
-            language = boost::algorithm::to_lower_copy( language );
-            if( language.find( "fr" ) != std::string::npos )
-                language = "fr";
-            else if( language.find( "es" ) != std::string::npos )
-                language = "es";
-            else
-                language = "en";
-            return true;
-        }
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
@@ -57,18 +33,13 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     : ContentPage( pages, previous, eButtonBack | eButtonApply )
     , parent_            ( parent )
     , config_            ( config )
-    , selectedLanguage_  ( ReadLang() )
+    , selectedLanguage_  ( tools::readLang() )
     , selectedDataDir_   ( "" )
     , selectedProfile_   ( 0 )
     , hasChanged_        ( false )
     , languageHasChanged_( false )
 {
     setName( "OptionsPage" );
-    if( TransformLang( selectedLanguage_ ) )
-    {
-        hasChanged_ = true;
-        EnableButton( eButtonApply, true );
-    }
     Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setMargin( 10 );
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, mainBox );
@@ -76,9 +47,10 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     // Language
     languageLabel_ = new QLabel( box );
     languageCombo_ = new QComboBox( box );
-    languages_[ "en" ] = "English";
-    languages_[ "fr" ] = "Fran�ais";
-    languages_[ "es" ] = "Espa�ol";
+    languages_[ "en" ] = QString::fromUtf8( "English" );
+    languages_[ "fr" ] = QString::fromUtf8( "Français" );
+    languages_[ "es" ] = QString::fromUtf8( "Español" );
+    languages_[ "ar" ] = QString::fromUtf8( "العربية" );
     BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
     {
         languageCombo_->insertItem( lang.second );
@@ -265,11 +237,16 @@ void OptionsPage::OnApply()
 {
     CreateDataDirectory();
     assert( hasChanged_ );
+    Application& application = static_cast< Application& >( *qApp );
     if( languageHasChanged_ )
-        static_cast< Application* >( qApp )->DeleteTranslators();
+        application.DeleteTranslators();
     Commit();
     if( languageHasChanged_ )
-        static_cast< Application* >( qApp )->CreateTranslators();
+    {
+        application.SetLocale();
+        application.CreateTranslators();
+        application.InitializeLayoutDirection();
+    }
     languageHasChanged_ = false;
     hasChanged_ = false;
     EnableButton( eButtonApply, false );
@@ -286,7 +263,7 @@ void OptionsPage::Commit()
     settings.writeEntry( "/Common/DataDirectory", selectedDataDir_.c_str() );
     settings.writeEntry( "/Common/UserProfile", selectedProfile_ );
 
-    static_cast< Application* >( qApp )->SetLauncherRootDir( selectedDataDir_ );
+    static_cast< Application* >( qApp )->GetLauncher().SetRootDir( selectedDataDir_ );
     config_.SetRootDir( selectedDataDir_ );
     config_.SetProfile( static_cast< Config::EProfile >( selectedProfile_ ) );
 }
@@ -298,12 +275,7 @@ void OptionsPage::Commit()
 void OptionsPage::Reset()
 {
     bool enableApplyButton = false;
-    selectedLanguage_ = ReadLang();
-    if( TransformLang( selectedLanguage_ ) )
-    {
-        hasChanged_ = true;
-        enableApplyButton = true;
-    }
+    selectedLanguage_ = tools::readLang();
     selectedDataDir_ = config_.GetRootDir();
     selectedProfile_ = static_cast< int >( config_.GetProfile() );
 

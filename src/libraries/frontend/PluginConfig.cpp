@@ -19,7 +19,6 @@
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3scrollview.h>
 #include <QtCore/qsettings.h>
-#include <QtCore/qtextcodec.h>
 #include <QtCore/qstring.h>
 #include <QtGui/qtooltip.h>
 #include <QtGui/qlabel.h>
@@ -39,15 +38,6 @@ using namespace frontend;
 #define PLUGIN( plugin ) ( std::string( plugin ) + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt.dll" ) )
 #endif
 
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PluginConfig constructor
 // Created: SBO 2011-05-09
@@ -58,7 +48,7 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     , name_           ( xis.attribute< std::string >( "name" ) )
     , library_        ( xis.has_attribute( "library" ) ? PLUGIN( xis.attribute< std::string >( "library", "" ) ) : "" )
     , version_        ( xis.attribute< std::string >( "version" ) )
-    , description_    ( xis, ReadLang() )
+    , description_    ( xis, tools::readLang() )
 {
     setMargin( 5 );
     view_ = new Q3ScrollView( this );
@@ -98,7 +88,7 @@ void PluginConfig::OnLanguageChanged()
 {
     box_->setTitle( tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" ).arg( label_ ).arg( version_.c_str() ) );
 
-    const std::string currentLanguage = ReadLang();
+    const std::string currentLanguage = tools::readLang();
     description_.SetCurrentLanguage( currentLanguage );
     QToolTip::add( box_, description_.GetDescription().c_str() );
 
@@ -197,7 +187,7 @@ void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
 {
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, parent );
-    groupBoxs_[ box ] = new kernel::XmlDescription( xis, ReadLang() );
+    groupBoxs_[ box ] = new kernel::XmlDescription( xis, tools::readLang() );
     box->setMargin( 5 );
     static_cast< Q3GroupBox* >( parent )->setColumns( 1 );
     xis >> xml::start( "settings" )

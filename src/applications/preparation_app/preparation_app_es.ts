@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="es" sourcelanguage="en">
 <context>
     <name>AffinitiesDialog</name>
     <message>
@@ -34,10 +34,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>sword-ot@masagroup.net</source>
-        <translation>sword-ot@masagroup.net</translation>
-    </message>
-    <message>
         <source>Unhandled error</source>
         <translation>Error inesperado</translation>
     </message>
@@ -46,16 +42,8 @@
         <translation>Preparación</translation>
     </message>
     <message>
-        <source>Unknown exception caught</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">Alerta</translation>
     </message>
     <message>
         <source>The signatures for the following files do not exist or are invalid : </source>

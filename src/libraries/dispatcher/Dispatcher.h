@@ -13,8 +13,8 @@
 #include "CompositePlugin.h"
 #include "CompositeRegistrable.h"
 #include "RotatingLog.h"
-#include "clients_kernel/Application_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace dispatcher
 {
@@ -34,7 +34,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Dispatcher
+class Dispatcher : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -51,18 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Dispatcher( const Dispatcher& );            //!< Copy constructor
-    Dispatcher& operator=( const Dispatcher& ); //!< Assignment operator
-    //@}
-
-    //! @name Operations
-    //@{
-     void AddTranslations();
-    //@}
-
-private:
     std::auto_ptr< dispatcher::StaticModel >  staticModel_;
     std::auto_ptr< MemoryLogger_ABC >     memoryLogger_;
     boost::shared_ptr< Model >            model_;
@@ -74,7 +62,6 @@ private:
     std::auto_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< Shield >               shield_;
     std::auto_ptr< PluginFactory >        factory_;
-    std::auto_ptr< Application_ABC >      qapp_;
 };
 
 }

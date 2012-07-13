@@ -192,4 +192,15 @@
       <Filter>Translations</Filter>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\indicators\indicators_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\indicators\indicators_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\indicators\indicators_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
 </Project>

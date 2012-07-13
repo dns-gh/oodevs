@@ -23,7 +23,6 @@
 #include <QtGui/qlineedit.h>
 #include <QtCore/qsettings.h>
 #include <QtGui/qspinbox.h>
-#include <QtCore/qtextcodec.h>
 #include <QtGui/qtooltip.h>
 #include <QtGui/qcombobox.h>
 #include <QtGui/qpushbutton.h>
@@ -36,15 +35,6 @@
 #include <boost/foreach.hpp>
 
 using namespace frontend;
-
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
 
 FileButtonEvent::FileButtonEvent( PluginSetting& plugins, QWidget* parent )
     : QPushButton( parent )
@@ -78,7 +68,7 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     : attribute_ ( xis.attribute< std::string >( "attribute" ) )
     , type_ ( xis.attribute< std::string >( "type" ) )
     , config_ ( config )
-    , description_( xis, ReadLang() )
+    , description_( xis, tools::readLang() )
     , label_()
     , stringValue_()
     , integerValue_()
@@ -156,7 +146,7 @@ PluginSetting::~PluginSetting()
 // -----------------------------------------------------------------------------
 void PluginSetting::OnLanguageChanged()
 {
-    description_.SetCurrentLanguage( ReadLang() );
+    description_.SetCurrentLanguage( tools::readLang() );
     label_->setText( description_.GetName().c_str() );
     QToolTip::add( label_, description_.GetDescription().c_str() );
 

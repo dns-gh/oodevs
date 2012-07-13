@@ -28,7 +28,6 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Workers.h"
 #include "tools/NullFileLoaderObserver.h"
-#include "ENT/ENT_Tr.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
@@ -36,91 +35,24 @@
 
 using namespace kernel;
 
-namespace
-{
-    QString ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    }
-
-    bool TransformLang( std::string& language )
-    {
-        if( language != "fr" && language != "en" && language != "es" )
-        {
-            language = boost::algorithm::to_lower_copy( language );
-            if( language.find( "fr" ) != std::string::npos )
-                language = "fr";
-            else if( language.find( "es" ) != std::string::npos )
-                language = "es";
-            else
-                language = "en";
-            return true;
-        }
-        return false;
-    }
-
-    class Locale : public QLocale
-    {
-    public:
-        Locale( const std::string& locale )
-            : QLocale( locale == "en" ? QLocale::English : locale == "fr" ? QLocale::French : QLocale::Spanish, locale == "en" ? QLocale::UnitedStates : locale == "fr" ? QLocale::France: QLocale::Spain )
-        {
-            // NOTHING
-        }
-
-        virtual ~Locale(){}
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int& argc, char** argv, const QString& expiration )
+Application::Application( int& argc, char** argv )
     : Application_ABC( argc, argv )
-    , mainWindow_ ( 0 )
-    , expiration_ ( expiration )
 {
-    const QString locale = ReadLang();
-    AddTranslator( locale, "qt" );
-    AddTranslator( locale, "ENT" );
-    AddTranslator( locale, "actions" );
-    AddTranslator( locale, "actions_gui" );
-    AddTranslator( locale, "clients_kernel" );
-    AddTranslator( locale, "clients_gui" );
-    AddTranslator( locale, "gaming" );
-    AddTranslator( locale, "gaming_app" );
-    AddTranslator( locale, "reports" );
-    AddTranslator( locale, "indicators" );
-    AddTranslator( locale, "clients_gui_app6" );
-    AddTranslator( locale, "clients_gui_sword" );
-    AddTranslator( locale, "resources_gradients" );
-    ENT_Tr::InitTranslations();
-    setStyle( new gui::VerticalHeaderStyle( style() ) );
+    // License
+    CheckLicense( "sword-gaming" );
+    if( IsInvalidLicense() )
+        return;
 
-    std::string localeStr = locale.toStdString();
-    TransformLang( localeStr );
-    QLocale::setDefault( Locale( localeStr ) );
-}
+    // Application_ABC initialization
+    Initialize();
 
-// -----------------------------------------------------------------------------
-// Name: Application destructor
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-Application::~Application()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::Initialize
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void Application::Initialize( int /*argc*/, char** /*argv*/ )
-{
+    // Data
     observer_.reset( new tools::NullFileLoaderObserver() );
-    config_.reset( new Config( argc(), argv(), *observer_ ) );
+    config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new Controllers() );
     controllers_->SetModeController( new ::ModeController() );
     logger_.reset( new LoggerProxy() );
@@ -133,15 +65,59 @@ void Application::Initialize( int /*argc*/, char** /*argv*/ )
     model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_ ) );
     profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
-    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, expiration_ );
+
+    // Network
+    networkTimer_.reset( new QTimer( this ) );
+    connect( networkTimer_.get(), SIGNAL( timeout()), SLOT( UpdateData() ) );
+
+    // GUI
+    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, GetExpiration() );
+    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application destructor
+// Created: SBO 2006-07-05
+// -----------------------------------------------------------------------------
+Application::~Application()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::CreateTranslators
+// Created: ABR 2012-07-12
+// -----------------------------------------------------------------------------
+void Application::CreateTranslators()
+{
+    AddTranslator( "qt" );
+    AddTranslator( "ENT" );
+    AddTranslator( "actions" );
+    AddTranslator( "actions_gui" );
+    AddTranslator( "clients_kernel" );
+    AddTranslator( "clients_gui" );
+    AddTranslator( "clients_gui_app6" );
+    AddTranslator( "gaming" );
+    AddTranslator( "gaming_app" );
+    AddTranslator( "indicators" );
+    AddTranslator( "reports" );
+    AddTranslator( "resources_gradients" );
+    ENT_Tr::InitTranslations();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::Run
+// Created: ABR 2012-07-11
+// -----------------------------------------------------------------------------
+int Application::Run()
+{
+    if( IsInvalidLicense() )
+        return EXIT_FAILURE;
+
     mainWindow_->show();
-
-    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
-    networkTimer_ = new QTimer( this );
-    connect( networkTimer_, SIGNAL( timeout()), SLOT( UpdateData() ) );
     networkTimer_->start( 10 );
-
     config_->Connect( *network_ );
+    return exec();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,41 +135,5 @@ void Application::UpdateData()
     {
         network_->Disconnect();
         QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::notify
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-bool Application::notify( QObject* pReceiver, QEvent* pEvent )
-{
-    try
-    {
-        return QApplication::notify( pReceiver, pEvent );
-    }
-    catch( std::exception& e )
-    {
-        DisplayError( e.what() );
-    }
-    catch( ... )
-    {
-        DisplayError( tr( "Unknown exception caught" ) );
-    }
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::DisplayError
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-void Application::DisplayError( const QString& text ) const
-{
-    static bool active = false;
-    if( ! active )
-    {
-        active = true;
-        QMessageBox::critical( activeWindow(),  tools::translate( "Application", "SWORD" ), text, "Ok" );
-        active = false;
     }
 }

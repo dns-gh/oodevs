@@ -12,21 +12,12 @@
 #include "moc_Filter_ABC.cpp"
 #include "clients_kernel/Tools.h"
 
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Filter constructor
 // Created: ABR 2011-06-17
 // -----------------------------------------------------------------------------
 Filter::Filter()
-    : description_( ReadLang() )
+    : description_( tools::readLang() )
 {
     // NOTHING
 }
@@ -36,7 +27,7 @@ Filter::Filter()
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
 Filter::Filter( xml::xistream& xis )
-    : description_( xis, ReadLang() )
+    : description_( xis, tools::readLang() )
 {
     // NOTHING
 }

@@ -175,6 +175,11 @@ lrelease -verbose "%(FullPath)"
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\indicators\indicators_ar.ts" />
+    <None Include="..\..\src\libraries\indicators\indicators_es.ts" />
+    <None Include="..\..\src\libraries\indicators\indicators_fr.ts" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

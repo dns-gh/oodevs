@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="es" sourcelanguage="en">
 <context>
     <name>AggregateToolbar</name>
     <message>
@@ -18,6 +18,11 @@
 </context>
 <context>
     <name>Application</name>
+    <message>
+        <source>QT_LAYOUT_DIRECTION</source>
+        <translatorcomment>Define the layout orientation</translatorcomment>
+        <translation>LTR</translation>
+    </message>
     <message>
         <source>SWORD</source>
         <translation>SWORD</translation>
@@ -37,6 +42,29 @@
     <message>
         <source>About</source>
         <translation type="unfinished">A proposito</translation>
+    </message>
+    <message>
+        <source>sword@masagroup.net</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown exception caught</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NumericLimitsEditor</name>
+    <message>
+        <source>Min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

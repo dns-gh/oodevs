@@ -325,7 +325,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\DialogContainer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\DockContainer.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
@@ -1704,6 +1703,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
+    <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">
       <SubType>Designer</SubType>

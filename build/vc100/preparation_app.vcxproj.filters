@@ -448,9 +448,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\FilterProxyModel.cpp">
-      <Filter>Source Files\Dialogs\Consistency</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolDialog.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -532,9 +529,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\Config.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\preparation_app_pch.h">
@@ -731,6 +725,9 @@
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </None>
+    <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">
@@ -915,9 +912,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostsPanel.h">
       <Filter>Source Files\Panels\Creation</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\FilterProxyModel.h">
-      <Filter>Source Files\Dialogs\Consistency</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\GhostSymbolDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>

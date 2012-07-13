@@ -133,28 +133,6 @@
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Chat.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\messenger_plugin\messenger_plugin_es.ts" />
-    <None Include="..\..\src\libraries\messenger_plugin\messenger_plugin_fr.ts" />
-    <CustomBuild Include="..\..\src\libraries\messenger_plugin\translator.pro">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -verbose "%(FullPath)"
-lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -verbose "%(FullPath)"
-lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -verbose "%(FullPath)"
-lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -verbose "%(FullPath)"
-lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="protocol.vcxproj">
       <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
     </ProjectReference>

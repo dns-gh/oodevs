@@ -27,12 +27,6 @@ namespace
         xos << xml::end;
         return xos.str();
     }
-
-    QString ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +64,7 @@ AfterActionFunction::~AfterActionFunction()
 void AfterActionFunction::ReadDescription( xml::xistream& xis )
 {
     std::string comments;
-    if( xis.attribute< std::string >( "lang" ) == ReadLang().ascii() )
+    if( xis.attribute< std::string >( "lang" ) == tools::readLang() )
     {
         xis >> comments;
         name_ = xis.attribute< std::string >( "name" ).c_str();

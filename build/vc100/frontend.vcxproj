@@ -312,6 +312,7 @@
     <ClInclude Include="..\..\src\libraries\frontend\ProfileVisitor_ABC.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\libraries\frontend\frontend_ar.ts" />
     <None Include="..\..\src\libraries\frontend\frontend_es.ts" />
     <None Include="..\..\src\libraries\frontend\frontend_fr.ts" />
     <CustomBuild Include="..\..\src\libraries\frontend\translator.pro">

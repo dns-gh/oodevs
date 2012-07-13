@@ -15,21 +15,12 @@
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: FilterManager constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
 FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent )
-    : description_( xis, ReadLang() )
+    : description_( xis, tools::readLang() )
     , config_     ( config )
     , id_         ( xis.attribute< std::string >( "id" ) )
     , parent_     ( parent )

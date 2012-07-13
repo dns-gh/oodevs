@@ -10,9 +10,61 @@
 #include "clients_kernel_pch.h"
 #include "Tools.h"
 #include "ENT/ENT_Tr.h"
+#pragma warning( push, 0 )
+#pragma warning( disable : 4127 )
 #include <QtGui/qapplication.h>
+#include <QtCore/qlocale.h>
+#include <QtCore/qsettings.h>
+#include <QtCore/qtranslator.h>
+#pragma warning( pop )
 
 using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: tools::readLocale
+// Created: ABR 2012-07-11
+// -----------------------------------------------------------------------------
+QLocale tools::readLocale()
+{
+    QSettings settings( "MASA Group", "SWORD" );
+    QString locale = settings.value( "/Common/Language", "en" ).value< QString >();
+
+    if( locale.count( "_" ) )
+        return QLocale( locale );
+    else if( locale.count( "fr" ) )
+        return QLocale( QLocale::French, QLocale::France );
+    else if( locale.count( "es" ) )
+        return QLocale( QLocale::Spanish, QLocale::Spain );
+    else if( locale.count( "ar" ) )
+        return QLocale( QLocale::Arabic, QLocale::Algeria );
+
+    return QLocale( QLocale::English, QLocale::UnitedStates );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Tools::readLang
+// Created: ABR 2012-07-13
+// -----------------------------------------------------------------------------
+std::string tools::readLang()
+{
+    return tools::readLocale().name().left( 2 ).toStdString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::AddTranslator
+// Created: ABR 2012-07-11
+// -----------------------------------------------------------------------------
+QTranslator* tools::AddTranslator( QApplication& application, QLocale& locale, const char* t )
+{
+    std::auto_ptr< QTranslator > trans( new QTranslator( &application ) );
+    const QString file = QString( "%1_%2" ).arg( t ).arg( locale.name().left( 2 ) );
+    if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
+    {
+        application.installTranslator( trans.get() );
+        return trans.release();
+    }
+    return 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: tools::translate
@@ -23,7 +75,7 @@ QString tools::translate( const char* context, const char* what )
     if( qApp )
         return qApp->translate( context, what );
     else
-        return QString::fromLatin1( what );
+        return QString::fromUtf8( what );
 }
 
 // -----------------------------------------------------------------------------

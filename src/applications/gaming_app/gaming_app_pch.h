@@ -35,7 +35,6 @@
 #include <QtCore/qsettings.h>
 #include <QtCore/qsignalmapper.h>
 #include <QtCore/qfile.h>
-#include <QtCore/qtextcodec.h>
 
 #include <Qt3Support/q3action.h>
 #include <Qt3Support/q3grid.h>

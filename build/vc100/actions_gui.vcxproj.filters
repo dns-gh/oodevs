@@ -227,6 +227,9 @@
     <None Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.inl">
       <Filter>Source Files\Parameters\Locations</Filter>
     </None>
+    <None Include="..\..\src\libraries\actions_gui\actions_gui_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\actions_gui\LimaParameter.h">

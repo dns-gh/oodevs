@@ -34,7 +34,6 @@
 #include <QtCore/qsignalmapper.h>
 #include <QtCore/qstring.h>
 #include <Qtcore/qtimer.h>
-#include <QtCore/qtextcodec.h>
 
 #include <Qt3Support/q3button.h>
 #include <Qt3Support/q3buttongroup.h>

@@ -133,4 +133,4 @@ WeatherListView.cpp \
 WeatherPanel.cpp \
 main.cpp \
 
-TRANSLATIONS = gaming_app_fr.ts gaming_app_es.ts
+TRANSLATIONS = gaming_app_fr.ts gaming_app_es.ts gaming_app_ar.ts

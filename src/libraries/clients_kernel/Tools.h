@@ -24,6 +24,10 @@
 // =============================================================================
 namespace tools
 {
+    QLocale readLocale();
+    std::string readLang();
+    QTranslator* AddTranslator( QApplication& application, QLocale& locale, const char* t );
+
     QString translate( const char* context, const char* what );
     QString findTranslation( const char* context, const char* what );
 

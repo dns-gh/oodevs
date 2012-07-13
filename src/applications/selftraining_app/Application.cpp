@@ -21,39 +21,40 @@
 #include "frontend/ProcessList.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
+#include "tools/Win32/BugTrap.h"
+#include "license_gui/LicenseDialog.h"
+#include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
-
-namespace
-{
-    QString ReadLang()
-    {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
-    }
-    std::auto_ptr< Config > GetConfig()
-    {
-        std::auto_ptr< Config > config( new Config() );
-        config->Parse( qApp->argc(), qApp->argv() );
-        return config;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: Application constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
-    : QApplication( argc, argv )
-    , config_     ( GetConfig() )
-    , fileLoaderObserver_( new tools::NullFileLoaderObserver() )
-    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
-    , controllers_( new kernel::Controllers() )
-    , launcher_( new Launcher( argc, argv ) )
-    , launcherClient_( new frontend::LauncherClient( controllers_->controller_ ) )
-    , mainWindow_( 0 )
-    , timer_( new QTimer( this ) )
+    : gui::Application_ABC( argc, argv )
 {
-    CreateTranslators();
+    // License
+    CheckLicense( "sword" );
+    if( IsInvalidLicense() )
+        return;
+
+    // Application_ABC initialization
+    Initialize();
+
+    // Data
+    config_.reset( new Config() );
+    config_->Parse( qApp->argc(), qApp->argv() );
+    fileLoaderObserver_.reset( new tools::NullFileLoaderObserver() );
+    fileLoader_.reset( new tools::DefaultLoader( *fileLoaderObserver_ ) );
+    controllers_.reset( new kernel::Controllers() );
+    launcher_.reset( new Launcher( argc, argv ) );
+    launcherClient_.reset( new frontend::LauncherClient( controllers_->controller_ ) );
+    timer_.reset( new QTimer( this ) );
+    connect( timer_.get(), SIGNAL( timeout() ), SLOT( OnTimer() ) );
+
+    // GUI
+    mainWindow_ = new MainWindow( *config_, *fileLoader_, *controllers_, *launcherClient_ );
+    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,24 +69,42 @@ Application::~Application()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Application::Initialize
-// Created: SBO 2010-10-22
+// Name: Application::CreateTranslators
+// Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
-void Application::Initialize()
+void Application::CreateTranslators()
 {
-    if( ! launcher_->IsInitialized() )
+    AddTranslator( "qt" );
+    AddTranslator( "frontend" );
+    AddTranslator( "clients_kernel" );
+    AddTranslator( "clients_gui" );
+    AddTranslator( "selftraining_app" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::InitializeStyle
+// Created: ABR 2012-07-12
+// -----------------------------------------------------------------------------
+void Application::InitializeStyle()
+{
+    QApplication::setStyle( "windows" );
+    QApplication::setDesktopSettingsAware( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::Run
+// Created: ABR 2012-07-12
+// -----------------------------------------------------------------------------
+int Application::Run()
+{
+    if( !launcher_->IsInitialized() )
     {
         QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );
-        closeAllWindows();
+        return EXIT_FAILURE;
     }
 
-    mainWindow_ = new MainWindow( *config_, *fileLoader_, *controllers_, *launcherClient_ );
-    setMainWidget( mainWindow_ );
     mainWindow_->show();
     QCoreApplication::sendEvent( mainWindow_, new QEvent( QEvent::LanguageChange ) );
-
-    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
-    connect( timer_, SIGNAL( timeout() ), SLOT( OnTimer() ) );
     timer_->start( 10 );
 
     // check for previous instances running
@@ -94,10 +113,7 @@ void Application::Initialize()
     {
         MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Start anyway ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::No )
-        {
-            closeAllWindows();
-            return;
-        }
+            return EXIT_SUCCESS;
     }
     if( processes.Contains( "simulation_app.exe" ) )
     {
@@ -111,49 +127,8 @@ void Application::Initialize()
         if( message.exec() == QMessageBox::Yes )
             processes.KillAll( "gaming_app.exe" );
     }
-}
 
-// -----------------------------------------------------------------------------
-// Name: Application::CreateTranslators
-// Created: JSR 2010-06-11
-// -----------------------------------------------------------------------------
-void Application::CreateTranslators()
-{
-    const QString locale = ReadLang();
-    AddTranslator( "qt", locale );
-    AddTranslator( "frontend", locale );
-    AddTranslator( "clients_kernel", locale );
-    AddTranslator( "clients_gui", locale );
-    AddTranslator( "selftraining_app", locale );
-    AddTranslator( "clients_gui_sword", locale );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::DeleteTranslators
-// Created: ABR 2011-11-08
-// -----------------------------------------------------------------------------
-void Application::DeleteTranslators()
-{
-    for( std::vector< QTranslator* >::const_iterator it = translators_.begin(); it != translators_.end(); ++it )
-        removeTranslator( *it );
-    translators_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::AddTranslator
-// Created: SBO 2008-04-09
-// -----------------------------------------------------------------------------
-void Application::AddTranslator( const std::string file, const QString& locale )
-{
-    QTranslator* trans = new QTranslator( this );
-    const QString filename = QString( "%1_%2" ).arg( file.c_str() ).arg( locale );
-    if( trans->load( filename, "." ) || trans->load( filename, "resources/locales" ) )
-    {
-       installTranslator( trans );
-       translators_.push_back( trans );
-    }
-    else
-        delete trans;
+    return exec();
 }
 
 // -----------------------------------------------------------------------------
@@ -163,6 +138,16 @@ void Application::AddTranslator( const std::string file, const QString& locale )
 void Application::OnTimer()
 {
     launcherClient_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::GetLauncher
+// Created: ABR 2012-07-12
+// -----------------------------------------------------------------------------
+Launcher& Application::GetLauncher() const
+{
+    assert( launcher_.get() );
+    return *launcher_;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,13 +164,4 @@ bool Application::notify( QObject* emitter, QEvent* event )
             return true;
         }
     return QApplication::notify( emitter, event );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::SetLauncherRootDir
-// Created: ABR 2011-11-08
-// -----------------------------------------------------------------------------
-void Application::SetLauncherRootDir( const std::string& directory )
-{
-    launcher_->SetRootDir( directory );
 }

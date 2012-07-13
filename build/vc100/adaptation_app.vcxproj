@@ -3969,6 +3969,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_ar.ts" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl" />

@@ -18,4 +18,4 @@ Parameter_ABC.cpp \
 Path.cpp \
 ResourceNetworkNode.cpp \
 
-TRANSLATIONS = actions_fr.ts actions_es.ts
+TRANSLATIONS = actions_fr.ts actions_es.ts actions_ar.ts

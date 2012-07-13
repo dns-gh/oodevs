@@ -88,4 +88,4 @@ WeatherListView.cpp \
 WeatherPanel.cpp \
 main.cpp \
 
-TRANSLATIONS = preparation_app_fr.ts preparation_app_es.ts
+TRANSLATIONS = preparation_app_fr.ts preparation_app_es.ts preparation_app_ar.ts

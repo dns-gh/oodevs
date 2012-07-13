@@ -37,15 +37,6 @@
 using namespace gui;
 using namespace kernel;
 
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ExtensionsPanel constructor
 // Created: JSR 2010-10-04
@@ -260,7 +251,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
 {
     if( !selected_ )
         return;
-    static const std::string language = ReadLang();
+    static const std::string language = tools::readLang();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
     if( attribute.GetType() == AttributeType::ETypeBoolean )

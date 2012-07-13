@@ -865,6 +865,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\CriticalIntelligenceDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Application_ABC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1377,6 +1380,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Application_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1402,6 +1408,15 @@
     </None>
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl">
       <Filter>Source Files\Tools</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\resources_gradients_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_app6_ar.ts">
+      <Filter>Translations</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1676,12 +1691,6 @@
       <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_fr.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_es.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_sword_fr.ts">
       <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_es.ts">

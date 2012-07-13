@@ -23,9 +23,6 @@
     <Filter Include="Source Files\Chat">
       <UniqueIdentifier>{ac7b51f4-cddb-4780-b270-1a584b83c390}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Translations">
-      <UniqueIdentifier>{75363aad-903d-4d82-89a1-e7da0804d86d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\messenger_plugin\messenger_plugin_pch.cpp">
@@ -132,18 +129,5 @@
     <ClInclude Include="..\..\src\libraries\messenger_plugin\Chat.h">
       <Filter>Source Files\Chat</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\src\libraries\messenger_plugin\messenger_plugin_es.ts">
-      <Filter>Translations</Filter>
-    </None>
-    <None Include="..\..\src\libraries\messenger_plugin\messenger_plugin_fr.ts">
-      <Filter>Translations</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\messenger_plugin\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
   </ItemGroup>
 </Project>

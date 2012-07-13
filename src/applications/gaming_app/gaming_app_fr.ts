@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="fr" sourcelanguage="en">
 <context>
     <name>ActionProperties</name>
     <message>
@@ -226,24 +226,12 @@
         <translation>Jeu</translation>
     </message>
     <message>
-        <source>sword@masagroup.net</source>
-        <translation>sword@masagroup.net</translation>
-    </message>
-    <message>
         <source> - Planning mode on</source>
         <translation> - Mode Planification</translation>
     </message>
     <message>
         <source>Error</source>
         <translation>Erreur</translation>
-    </message>
-    <message>
-        <source>Unknown exception caught</source>
-        <translation>Exception inconnue</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Avertissement</translation>
     </message>
 </context>
 <context>

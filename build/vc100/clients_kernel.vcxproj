@@ -91,7 +91,6 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Availability.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Architecture.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
@@ -239,7 +238,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Availability.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ChangePopulationDisplay.h" />
@@ -471,6 +469,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl" />
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_ar.ts" />
     <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
     <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl" />

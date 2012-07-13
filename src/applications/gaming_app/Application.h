@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __Application_h_
-#define __Application_h_
+#ifndef __gaming_Application_h_
+#define __gaming_Application_h_
 
-#include "clients_kernel/Application_ABC.h"
+#include "clients_gui/Application_ABC.h"
 
 namespace kernel
 {
@@ -40,20 +40,21 @@ class RcEntityResolver_ABC;
 */
 // Created: SBO 2006-07-05
 // =============================================================================
-class Application : public Application_ABC
+class Application : public gui::Application_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int& argc, char** argv, const QString& expiration );
+             Application( int& argc, char** argv );
     virtual ~Application();
     //@}
 
-    //! @name
+    //! @name gui::Application_ABC operations
     //@{
-    void Initialize( int argc, char** argv );
+    virtual int Run();
+    virtual void CreateTranslators();
     //@}
 
 private slots:
@@ -63,41 +64,23 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Application( const Application& );            //!< Copy constructor
-    Application& operator=( const Application& ); //!< Assignment operator
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool notify( QObject* receiver, QEvent* e );
-    //@}
-
-    //! @name Helpers
-    //@{
-    void DisplayError( const QString& text ) const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
-    std::auto_ptr< Config > config_;
-    std::auto_ptr< kernel::Controllers > controllers_;
-    std::auto_ptr< RcEntityResolver_ABC > rcResolver_;
-    std::auto_ptr< StaticModel > staticModel_;
-    std::auto_ptr< Model > model_;
-    std::auto_ptr< Services > services_;
-    std::auto_ptr< Simulation > simulation_;
-    std::auto_ptr< Profile > profile_;
-    std::auto_ptr< kernel::Workers > workers_;
-    std::auto_ptr< LoggerProxy > logger_;
-    std::auto_ptr< Network > network_;
-    MainWindow* mainWindow_;
-    QTimer* networkTimer_;
-    const QString expiration_;
+    std::auto_ptr< Config >                            config_;
+    std::auto_ptr< kernel::Controllers >               controllers_;
+    std::auto_ptr< RcEntityResolver_ABC >              rcResolver_;
+    std::auto_ptr< StaticModel >                       staticModel_;
+    std::auto_ptr< Model >                             model_;
+    std::auto_ptr< Services >                          services_;
+    std::auto_ptr< Simulation >                        simulation_;
+    std::auto_ptr< Profile >                           profile_;
+    std::auto_ptr< kernel::Workers >                   workers_;
+    std::auto_ptr< LoggerProxy >                       logger_;
+    std::auto_ptr< Network >                           network_;
+    std::auto_ptr< QTimer >                            networkTimer_;
+    MainWindow*                                        mainWindow_;
     //@}
 };
 
-#endif // __Application_h_
+#endif // __gaming_Application_h_
