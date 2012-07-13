@@ -72,10 +72,10 @@ namespace
         MockFileSystem system;
         MockRuntime runtime;
         MockPortFactory ports;
-        MockNode node;
+        boost::shared_ptr< MockNode > node;
         const host::Path apps;
         Fixture()
-            : node ( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) )
+            : node ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) ) )
             , apps ( "apps" )
         {
             // NOTHING
@@ -83,7 +83,7 @@ namespace
 
         SessionPtr MakeSession()
         {
-            MOCK_EXPECT( node.LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
+            MOCK_EXPECT( node->LinkExerciseName ).once().with( defaultExercise ).returns( FromJson( links ) );
             return boost::make_shared< Session >( system, "", node, client, defaultId, defaultName, defaultExercise, Port( new MockPort( defaultPort ) ) );
         }
 
@@ -93,7 +93,7 @@ namespace
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             const Tree data = FromJson( links );
-            MOCK_EXPECT( node.LinkExerciseTree ).once().with( data ).returns( data );
+            MOCK_EXPECT( node->LinkExerciseTree ).once().with( data ).returns( data );
             return boost::make_shared< Session >( system, "", node, client, tree, runtime, ports );
         }
 

@@ -130,14 +130,15 @@ int GetPid( T& process )
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const FileSystem_ABC& system, const Path& root,
-                  const Node_ABC& node, Client_ABC& client, const Uuid& id,
-                  const std::string& name, const std::string& exercise, const Port& port )
+                  const boost::shared_ptr< const Node_ABC > node, Client_ABC& client,
+                  const Uuid& id, const std::string& name, const std::string& exercise,
+                  const Port& port )
     : system_ ( system )
     , id_     ( id )
     , root_   ( root )
     , node_   ( node )
     , name_   ( name )
-    , links_  ( node.LinkExercise( exercise ) )
+    , links_  ( node->LinkExercise( exercise ) )
     , port_   ( port )
     , client_ ( client )
     , process_()
@@ -153,14 +154,14 @@ Session::Session( const FileSystem_ABC& system, const Path& root,
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const FileSystem_ABC& system, const Path& root,
-                  const Node_ABC& node, Client_ABC& client, const Tree& tree,
-                  const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+                  const boost::shared_ptr< const Node_ABC > node, Client_ABC& client,
+                  const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : system_ ( system )
     , id_     ( Get< Uuid >( tree, "id" ) )
     , root_   ( root )
     , node_   ( node )
     , name_   ( Get< std::string >( tree, "name" ) )
-    , links_  ( node.LinkExercise( tree.get_child( "links" ) ) )
+    , links_  ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , client_ ( client )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
@@ -204,7 +205,7 @@ Path Session::GetRoot() const
 // -----------------------------------------------------------------------------
 Uuid Session::GetNode() const
 {
-    return node_.GetId();
+    return node_->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +243,7 @@ Tree Session::GetProperties( bool save ) const
 {
     Tree tree;
     tree.put( "id", id_ );
-    tree.put( "node", node_.GetId() );
+    tree.put( "node", node_->GetId() );
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
     tree.put( "status", ConvertStatus( status_ ) );
@@ -528,7 +529,7 @@ void Session::Remove()
 {
     boost::unique_lock< boost::mutex > lock( access_ );
     ModifyStatus( lock, STATUS_STOPPED );
-    node_.UnlinkExercise( links_ );
+    node_->UnlinkExercise( links_ );
     system_.Remove( GetRoot() );
     system_.Remove( GetOutput() );
 }

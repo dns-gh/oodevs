@@ -54,7 +54,7 @@ public:
     //@{
              Session( const runtime::FileSystem_ABC& system,
                       const Path& root,
-                      const Node_ABC& node,
+                      boost::shared_ptr< const Node_ABC > node,
                       web::Client_ABC& client,
                       const Uuid& id,
                       const std::string& name,
@@ -63,7 +63,7 @@ public:
                       );
              Session( const runtime::FileSystem_ABC& system,
                       const Path& root,
-                      const Node_ABC& node,
+                      boost::shared_ptr< const Node_ABC > node,
                       web::Client_ABC& client,
                       const Tree& tree,
                       const runtime::Runtime_ABC& runtime,
@@ -127,7 +127,7 @@ private:
     const runtime::FileSystem_ABC& system_;
     const Uuid id_;
     const Path root_;
-    const Node_ABC& node_;
+    const boost::shared_ptr< const Node_ABC > node_;
     const std::string name_;
     const Tree links_;
     const Port port_;
