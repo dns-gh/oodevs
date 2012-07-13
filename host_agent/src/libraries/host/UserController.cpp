@@ -225,6 +225,7 @@ namespace
 // -----------------------------------------------------------------------------
 void PutUser( Tree& dst, Statement_ABC& st )
 {
+    dst.put( "id", st.ReadInt() );
     dst.put( "username", st.ReadText() );
     dst.put( "name", st.ReadText() );
     dst.put( "type", st.ReadText() );
@@ -236,9 +237,10 @@ void PutUser( Tree& dst, Statement_ABC& st )
 // Name: PutUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-void PutUser( Tree& dst, const std::string& username, const std::string& name,
+void PutUser( Tree& dst, int id, const std::string& username, const std::string& name,
               const std::string& type, bool temporary, const std::string& lang )
 {
+    dst.put( "id", id );
     dst.put( "username", username );
     dst.put( "name", name );
     dst.put( "type", type );
@@ -262,13 +264,13 @@ Tree MakeToken( const std::string& sid, Statement_ABC& st )
 // Name: MakeToken
 // Created: BAX 2012-07-04
 // -----------------------------------------------------------------------------
-Tree MakeToken( const std::string& sid, const std::string& username,
-                       const std::string& name, const std::string& type,
-                       bool temporary, const std::string& lang )
+Tree MakeToken( const std::string& sid, int id, const std::string& username,
+                const std::string& name, const std::string& type,
+                bool temporary, const std::string& lang )
 {
     Tree rpy;
     rpy.put( "sid", sid );
-    PutUser( rpy, username, name, type, temporary, lang );
+    PutUser( rpy, id, username, name, type, temporary, lang );
     return rpy;
 }
 
@@ -366,7 +368,7 @@ Reply UserController::Login( const std::string& username, const std::string& pas
             DeleteTokenWithToken( db_, *tr, token );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
         db_.Commit( *tr );
-        return Reply( MakeToken( sid, username, name, type, temporary, lang ) );
+        return Reply( MakeToken( sid, id, username, name, type, temporary, lang ) );
     }
     catch( const std::exception& err )
     {
@@ -386,7 +388,8 @@ Reply UserController::IsAuthenticated( const std::string& token, const std::stri
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT users.username, users.name, users.type, users.temporary, users.language "
+            "SELECT users.id, users.username, users.name, users.type,"
+            "       users.temporary, users.language "
             "FROM   tokens "
             "JOIN   users "
             "ON     users.id = tokens.id_users "
@@ -454,7 +457,7 @@ Reply UserController::UpdateLogin( const std::string& username, const std::strin
         Execute( *st );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
         db_.Commit( *tr );
-        return Reply( MakeToken( sid, username, name, type, false, lang ) );
+        return Reply( MakeToken( sid, id, username, name, type, false, lang ) );
     }
     catch( const std::exception& err )
     {
@@ -483,7 +486,6 @@ Reply UserController::ListUsers( int offset, int limit ) const
         while( st->Next() )
         {
             Tree tree;
-            tree.put( "id", st->ReadInt() );
             PutUser( tree, *st );
             list.push_back( tree );
         }
@@ -531,7 +533,7 @@ Reply UserController::GetUser( int id ) const
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT username, name, type, temporary, language "
+            "SELECT id, username, name, type, temporary, language "
             "FROM users "
             "WHERE id = ?" );
         st->Bind( id );
@@ -539,7 +541,6 @@ Reply UserController::GetUser( int id ) const
             return Reply( web::NOT_FOUND );
 
         Tree tree;
-        tree.put( "id", id );
         PutUser( tree, *st );
         return Reply( tree );
     }
@@ -566,8 +567,7 @@ Reply UserController::CreateUser( const std::string& username, const std::string
         db_.Commit( *tr );
         tr.reset();
         Tree tree;
-        tree.put( "id", db_.LastId() );
-        PutUser( tree, username, name, Convert( type ), temporary, lang );
+        PutUser( tree, static_cast< int >( db_.LastId() ), username, name, Convert( type ), temporary, lang );
         return Reply( tree );
     }
     catch( const std::exception& err )
@@ -588,7 +588,7 @@ Reply UserController::DeleteUser( const std::string& token, int id )
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT     users.username, users.name, users.type, users.temporary, users.language, tokens.token "
+            "SELECT     users.id, users.username, users.name, users.type, users.temporary, users.language, tokens.token "
             "FROM       users "
             "LEFT JOIN  tokens "
             "ON         tokens.id_users = users.id "
@@ -601,7 +601,6 @@ Reply UserController::DeleteUser( const std::string& token, int id )
             return Reply( web::NOT_FOUND );
 
         Tree tree;
-        tree.put( "id", id );
         PutUser( tree, *st );
         // check whether we are not deleting ourselves, which is forbidden
         if( st->IsColumnDefined() )
@@ -647,8 +646,7 @@ Reply UserController::UpdateUser( int id, const std::string& username, const std
             return Reply( web::INTERNAL_SERVER_ERROR );
         db_.Commit( *tr );
         Tree tree;
-        tree.put( "id", id );
-        PutUser( tree, username, name, type, temporary, lang );
+        PutUser( tree, id, username, name, type, temporary, lang );
         return Reply( tree );
     }
     catch( const std::exception& err )

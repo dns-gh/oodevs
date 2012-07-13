@@ -27,7 +27,7 @@
 </div>
 [#-- User Settings Dialog --]
 <script type="text/template" id="user_settings_template">
-    <div class="modal fade">
+    <div class="modal">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">&times;</a>
             <h3>{{#if pwd}}Add{{else}}Edit{{/if}} Administrator</h3>
@@ -94,6 +94,9 @@
     <td>{{name}}</td>
     <td class="action">
         <a class="btn edit"><i class="icon-edit"></i> Edit </a>
+        {{#equal id "${user.id}" }}
+        {{else}}
         <a class="btn delete"><i class="icon-trash"></i> </a>
+        {{/equal}}
     </td>
 </script>

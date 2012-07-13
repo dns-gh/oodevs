@@ -18,6 +18,7 @@ pop_settings = (data) ->
     ui = $ "#user_settings"
     ui.html user_settings data
     mod = ui.find ".modal"
+    mod.addClass "hide fade"
     mod.modal "show"
     return [ui, mod]
 
@@ -70,7 +71,7 @@ class UserItemView extends Backbone.View
         $(@el).html user_template @model.attributes
         spin = $ "<a class='btn disabled spin_btn'></a>"
         set_spinner spin
-        $(@el).find(".delete").after spin
+        $(@el).find(".delete")?.after spin
         spin.hide()
 
     delete: =>
@@ -95,7 +96,6 @@ class UserItemView extends Backbone.View
                 toggle_input_error name, "Missing"
                 err = true
             return if err
-            mod.modal "hide"
             data =
                 username:   user.val()
                 name:       name.val()
@@ -103,8 +103,16 @@ class UserItemView extends Backbone.View
             @toggle_load()
             @model.save data,
                 wait: true
+                success: =>
+                    if $(@el).find(".delete").length
+                        mod.modal "hide"
+                    else
+                        mod.removeClass "fade"
+                        mod.modal "hide"
+                        location.reload()
                 error: =>
                     @toggle_load()
+                    mod.modal "hide"
                     print_error "Unable to update user " + @model.get "username"
 
     toggle_load: =>

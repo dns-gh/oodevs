@@ -253,6 +253,7 @@
     ui = $("#user_settings");
     ui.html(user_settings(data));
     mod = ui.find(".modal");
+    mod.addClass("hide fade");
     mod.modal("show");
     return [ui, mod];
   };
@@ -354,13 +355,15 @@
     };
 
     UserItemView.prototype.render = function() {
-      var spin;
+      var spin, _ref;
       $(this.el).empty();
       $(this.el).attr("id", "id_" + this.model.id);
       $(this.el).html(user_template(this.model.attributes));
       spin = $("<a class='btn disabled spin_btn'></a>");
       set_spinner(spin);
-      $(this.el).find(".delete").after(spin);
+      if ((_ref = $(this.el).find(".delete")) != null) {
+        _ref.after(spin);
+      }
       return spin.hide();
     };
 
@@ -400,7 +403,6 @@
         if (err) {
           return;
         }
-        mod.modal("hide");
         data = {
           username: user.val(),
           name: name.val(),
@@ -409,8 +411,18 @@
         _this.toggle_load();
         return _this.model.save(data, {
           wait: true,
+          success: function() {
+            if ($(_this.el).find(".delete").length) {
+              return mod.modal("hide");
+            } else {
+              mod.removeClass("fade");
+              mod.modal("hide");
+              return location.reload();
+            }
+          },
           error: function() {
             _this.toggle_load();
+            mod.modal("hide");
             return print_error("Unable to update user " + _this.model.get("username"));
           }
         });

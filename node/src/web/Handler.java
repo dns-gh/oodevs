@@ -98,6 +98,7 @@ public class Handler extends HttpServlet {
         root.put("debug", debug_);
         if (user != null) {
             final Map<String, String> sub = new HashMap<String, String>();
+            sub.put("id", user.get("id").toString());
             sub.put("username", user.get("username").toString());
             sub.put("name", user.get("name").toString());
             sub.put("type", user.get("type").toString());
