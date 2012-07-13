@@ -45,6 +45,7 @@ struct UserController_ABC : public boost::noncopyable
     virtual Reply GetUser( int id ) const = 0;
     virtual Reply CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary ) = 0;
     virtual Reply DeleteUser( const std::string& token, int id ) = 0;
+    virtual Reply UpdateUser( int id, const std::string& username, const std::string& name, bool temporary ) = 0;
     //@}
 };
 }

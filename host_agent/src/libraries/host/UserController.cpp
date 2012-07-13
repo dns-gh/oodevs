@@ -621,3 +621,40 @@ Reply UserController::DeleteUser( const std::string& token, int id )
     }
     return Reply( web::INTERNAL_SERVER_ERROR );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserController::UpdateUser
+// Created: BAX 2012-07-11
+// -----------------------------------------------------------------------------
+Reply UserController::UpdateUser( int id, const std::string& username, const std::string& name, bool temporary )
+{
+    try
+    {
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        Sql_ABC::T_Statement st = db_.Prepare( *tr,
+            "UPDATE users "
+            "SET    username = ?, name = ?, temporary = ? "
+            "WHERE  users.id = ?" );
+        st->Bind( username );
+        st->Bind( name );
+        st->Bind( temporary );
+        st->Bind( id );
+        Execute( *st );
+        st.reset();
+        std::string dummy, type, lang;
+        bool done = FetchUser( db_, *tr, username, dummy, id, dummy, dummy, type, temporary, lang, dummy );
+        if( !done )
+            return Reply( web::INTERNAL_SERVER_ERROR );
+        db_.Commit( *tr );
+        Tree tree;
+        tree.put( "id", id );
+        PutUser( tree, username, name, type, temporary, lang );
+        return Reply( tree );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] Unable to create user";
+    }
+    return Reply( web::INTERNAL_SERVER_ERROR );
+}

@@ -25,6 +25,7 @@ namespace mocks
         MOCK_METHOD( GetUser, 1 );
         MOCK_METHOD( CreateUser, 4 );
         MOCK_METHOD( DeleteUser, 2 );
+        MOCK_METHOD( UpdateUser, 4 );
     };
 };
 

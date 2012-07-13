@@ -54,6 +54,7 @@ struct UserController : public web::UserController_ABC
     virtual web::Reply GetUser( int id ) const;
     virtual web::Reply CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary );
     virtual web::Reply DeleteUser( const std::string& token, int id );
+    virtual web::Reply UpdateUser( int id, const std::string& username, const std::string& name, bool temporary );
     //@}
 
 private:
