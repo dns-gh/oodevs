@@ -498,18 +498,27 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
     unsigned int oldStockMaxCapacity = stockMaxCapacity_;
     unsigned int oldConsumptionAmount = consumptionAmount_;
     bool oldConsumptionCritical = consumptionCritical_;
-    consumptionAmount_ = msg.list( 1 ).quantity();
-    consumptionCritical_ = msg.list( 2 ).booleanvalue();
-    isActivated_ = msg.list( 3 ).booleanvalue();
-    productionCapacity_ = msg.list( 4 ).quantity();
-    stockMaxCapacity_ = msg.list( 5 ).quantity();
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
-        delete *it;
-    links_.clear();
-    for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
+    // fix JIRA 8223 : blindage de code pour éviter les crashs quand l'EDT ne respecte pas l'ICD et envoie n'importe quoi...
+    if( msg.list_size() > 1 && msg.list( 1 ).has_quantity() )
+        consumptionAmount_ = msg.list( 1 ).quantity();
+    if( msg.list_size() > 2 && msg.list( 2 ).has_booleanvalue() )
+        consumptionCritical_ = msg.list( 2 ).booleanvalue();
+    if( msg.list_size() > 3 && msg.list( 3 ).has_booleanvalue() )
+        isActivated_ = msg.list( 3 ).booleanvalue();
+    if( msg.list_size() > 4 && msg.list( 4 ).has_quantity() )
+        productionCapacity_ = msg.list( 4 ).quantity();
+    if( msg.list_size() > 5 && msg.list( 5 ).has_quantity() )
+        stockMaxCapacity_ = msg.list( 5 ).quantity();
+    if( msg.list_size() > 6 )
     {
-        const sword::MissionParameter_Value& link = msg.list( 6 ).list( i );
-        links_.push_back( new ResourceLink( link.list( 0 ).identifier(), ResourceLink::eTargetKindUrban, link.list( 1 ).quantity() ) );
+        for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+            delete *it;
+        links_.clear();
+        for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
+        {
+            const sword::MissionParameter_Value& link = msg.list( 6 ).list( i );
+            links_.push_back( new ResourceLink( link.list( 0 ).identifier(), ResourceLink::eTargetKindUrban, link.list( 1 ).quantity() ) );
+        }
     }
     if( oldActivated != isActivated_ || oldProductionCapacity != productionCapacity_ || oldStockMaxCapacity != stockMaxCapacity_
         || oldConsumptionAmount !=  consumptionAmount_ || oldConsumptionCritical != consumptionCritical_ )
