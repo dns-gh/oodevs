@@ -468,7 +468,7 @@
     };
 
     NodeListView.prototype.remove = function(item, list, index) {
-      return $("#id_" + item.get("id")).parent().remove();
+      return $("#id_" + item.id).parent().remove();
     };
 
     NodeListView.prototype.create = function(data) {

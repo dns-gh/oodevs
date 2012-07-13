@@ -567,7 +567,7 @@
     };
 
     SessionListView.prototype.remove = function(item, list, index) {
-      return $("#" + item.get("id")).parent().remove();
+      return $("#" + item.id).parent().remove();
     };
 
     SessionListView.prototype.create = function(data) {

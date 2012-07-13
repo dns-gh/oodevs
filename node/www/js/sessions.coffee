@@ -184,7 +184,7 @@ class SessionListView extends Backbone.View
             $(@el).prepend view.el
 
     remove: (item, list, index) =>
-        $("#" + item.get "id").parent().remove()
+        $("#" + item.id).parent().remove()
 
     create: (data) =>
         item = new SessionItem

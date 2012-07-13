@@ -132,7 +132,7 @@ class NodeListView extends Backbone.View
             $(@el).prepend view.el
 
     remove: (item, list, index) =>
-        $("#id_" + item.get "id").parent().remove()
+        $("#id_" + item.id).parent().remove()
 
     create: (data) =>
         item = new NodeItem

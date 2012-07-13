@@ -230,15 +230,15 @@
     pwd = $("#password");
     bis = $("#password_bis");
     err = false;
-    if (cur.val().length === 0) {
+    if (!cur.val().length) {
       toggle_input_error(cur, "Missing");
       err = true;
     }
-    if (pwd.val().length === 0) {
+    if (!pwd.val().length) {
       toggle_input_error(pwd, "Missing");
       err = true;
     }
-    if (bis.val().length === 0) {
+    if (!bis.val().length) {
       toggle_input_error(bis, "Missing");
       err = true;
     }
