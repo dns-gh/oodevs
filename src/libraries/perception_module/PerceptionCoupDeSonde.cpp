@@ -29,10 +29,9 @@ DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 PerceptionCoupDeSonde::PerceptionCoupDeSonde( const wrapper::View& entity, PerceptionObserver_ABC& observer )
-    : identifier_( entity[ "identifier" ] )
-    , observer_  ( observer )
-    , rWidth_    ( entity[ "perceptions/drill-blow/width" ] )
-    , rLength_   ( entity[ "perceptions/drill-blow/length" ] )
+    : observer_( observer )
+    , rWidth_  ( entity[ "perceptions/drill-blow/width" ] )
+    , rLength_ ( entity[ "perceptions/drill-blow/length" ] )
 {
     // NOTHING
 }

@@ -12,7 +12,6 @@
 
 #include "Perception_ABC.h"
 
-
 namespace sword
 {
 namespace perception
@@ -42,7 +41,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const size_t identifier_;
     PerceptionObserver_ABC& observer_;
     const double rLength_;
     const double rWidth_;
