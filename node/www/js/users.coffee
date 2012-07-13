@@ -151,12 +151,7 @@ class UserListView extends Backbone.View
         next = new UserList
         next.fetch
             success: =>
-                rpy = diff_models next.models, @model.models
-                @model.remove rpy[0]
-                rpy = diff_models @model.models, next.models
-                @model.add rpy[0]
-                for item in rpy[1]
-                    @model.get(item.id).set item.attributes
+                update_model @model, next
                 setTimeout @delta, 5000
             error: =>
                 print_error "Unable to fetch users"

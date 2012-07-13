@@ -37,6 +37,14 @@ diff_models = (prev, next) ->
             found.push item
     return [not_found, found]
 
+update_model = (current, next) ->
+    rpy = diff_models next.models, current.models
+    current.remove rpy[0]
+    rpy = diff_models current.models, next.models
+    current.add rpy[0]
+    for it in rpy[1]
+        current.get(it.id).set it.attributes
+
 set_spinner = (btn) ->
     spin_opts =
         lines:      12
