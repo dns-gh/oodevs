@@ -107,6 +107,7 @@ private:
     std::string GetUser            ( const Request_ABC& request );
     std::string CreateUser         ( Request_ABC& request );
     std::string DeleteUser         ( const Request_ABC& request );
+    std::string UpdateUser         ( const Request_ABC& request );
     //@}
 
     //! @name Helpers

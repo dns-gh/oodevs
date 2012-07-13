@@ -259,6 +259,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/count_users" )        return CountUsers( request );
         if( uri == "/get_user" )           return GetUser( request );
         if( uri == "/delete_user" )        return DeleteUser( request );
+        if( uri == "/update_user" )        return UpdateUser( request );
     }
     catch( const HttpException& err )
     {
@@ -719,4 +720,17 @@ std::string Controller::DeleteUser( const Request_ABC& request )
 {
     const int id = RequireParameter< int >( "id", request );
     return WriteHttpReply( users_.DeleteUser( request.GetSid(), id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UpdateUser
+// Created: BAX 2012-07-13
+// -----------------------------------------------------------------------------
+std::string Controller::UpdateUser( const Request_ABC& request )
+{
+    const int id = RequireParameter< int >( "id", request );
+    const std::string username = RequireParameter< std::string >( "username", request );
+    const std::string name = RequireParameter< std::string >( "name", request );
+    const std::string temporary = RequireParameter< std::string >( "temporary", request );
+    return WriteHttpReply( users_.UpdateUser( id, username, name, ToBool( temporary ) ) );
 }
