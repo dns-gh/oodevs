@@ -29,7 +29,6 @@ namespace host
     struct NodeController_ABC;
     struct SessionController_ABC;
     struct UserController_ABC;
-    typedef web::Reply Reply;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 

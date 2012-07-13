@@ -479,7 +479,6 @@ Reply UserController::ListUsers( int offset, int limit ) const
             "LIMIT ? OFFSET ?" );
         st->Bind( limit );
         st->Bind( offset );
-        std::string json;
         std::vector< Tree > list;
         while( st->Next() )
         {
