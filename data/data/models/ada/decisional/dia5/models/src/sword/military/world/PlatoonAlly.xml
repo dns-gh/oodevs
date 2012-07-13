@@ -219,6 +219,14 @@
             <description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.
             </description>
         </method>
+        <method name="giveMobilitySupport">
+            <description>Informer le pion qu'il est appuyé par une mission d'appui mobilité
+            </description>
+        </method>
+        <method name="endMobilitySupport">
+            <description>Informer le pion qu'il n'est plus appuyé par une mission d'appui mobilité
+            </description>
+        </method>
         <method name="sendReport">
             <description>__INTEGRATION : envoyer un object à gerer d'un pion vers un autre pion du même groupe de communication.</description>
             <argument name="report">

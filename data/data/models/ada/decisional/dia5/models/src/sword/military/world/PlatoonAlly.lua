@@ -8,6 +8,17 @@ masalife.brain.communication.setMessageTreatment( "needEngineerSupport",
     function( content, sender )
         myself.engineerObjectsOnPath[ 1 ] = content
     end )
+    
+masalife.brain.communication.setMessageTreatment( "giveMobilitySupport",
+    function( content, sender )
+        myself.engineerSupporter = myself.engineerSupporter or {}
+        myself.engineerSupporter[ #myself.engineerSupporter + 1 ] = content.engineerPlatoon
+    end )
+    
+masalife.brain.communication.setMessageTreatment( "endMobilitySupport",
+    function( content, sender )
+        removeFromList(content.engineerPlatoon, myself.engineerSupporter )
+    end )
 
 masalife.brain.communication.setMessageTreatment( "FragOrder",
     function( content, sender )
@@ -357,6 +368,12 @@ return
     end,
     askForMobilitySupport = function( self, receiver, engineerObject )
        integration.SendMessage( "needEngineerSupport", receiver, { engineerObject = engineerObject, platoon = meKnowledge }, { type = "dynamic" } )
+    end,
+    giveMobilitySupport = function( self, receiver )
+       integration.SendMessage( "giveMobilitySupport", receiver, { engineerPlatoon = meKnowledge }, { type = "dynamic" } )
+    end,
+    endMobilitySupport = function( self, receiver )
+       integration.SendMessage( "endMobilitySupport", receiver, { engineerPlatoon = meKnowledge }, { type = "dynamic" } )
     end,
     sendReport = function( self, receiver, lima, state )
        integration.SendMessage( "report", receiver, { lima = lima, platoon = meKnowledge, state = state }, { type = "dynamic" } )

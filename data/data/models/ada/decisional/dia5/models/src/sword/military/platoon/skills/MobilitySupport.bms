@@ -7,6 +7,12 @@ rootnode
             meKnowledge:sendObstacleByPassed( self.params.entities[i] )
         end
     end,
+    
+    create = function( self )
+        for i = 1, #self.params.entities do
+            meKnowledge:giveMobilitySupport( self.params.entities[i] )
+        end
+    end,
 
     activate = function( self )
         local Activate = Activate
@@ -16,5 +22,11 @@ rootnode
         if self.obstacles then
             Activate( skill.links.ByPass, 0.9, {entities = self.obstacles})
         end
-    end
+    end,
+    
+    destroy = function( self )
+        for i = 1, #self.params.entities do
+            meKnowledge:endMobilitySupport( self.params.entities[i] )
+        end
+    end,
 }
