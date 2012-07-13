@@ -23,6 +23,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
+typedef web::Reply Reply;
 
 namespace
 {

@@ -30,6 +30,7 @@
 using namespace host;
 using namespace mocks;
 using namespace property_tree;
+typedef web::Reply Reply;
 
 namespace
 {

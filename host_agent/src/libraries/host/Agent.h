@@ -31,7 +31,10 @@ namespace host
     struct UserController_ABC;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  Agent
     @brief  Agent class definition
@@ -49,52 +52,52 @@ public:
 
     //! @name Cluster Methods
     //@{
-    virtual Reply GetCluster() const;
-    virtual Reply StartCluster() const;
-    virtual Reply StopCluster() const;
+    virtual web::Reply GetCluster() const;
+    virtual web::Reply StartCluster() const;
+    virtual web::Reply StopCluster() const;
     //@}
 
     //! @name Node Methods
     //@{
-    virtual Reply ListNodes ( int offset, int limit ) const;
-    virtual Reply CountNodes() const;
-    virtual Reply GetNode   ( const Uuid& id ) const;
-    virtual Reply CreateNode( const std::string& name );
-    virtual Reply DeleteNode( const Uuid& id );
-    virtual Reply StartNode ( const Uuid& id ) const;
-    virtual Reply StopNode  ( const Uuid& id ) const;
+    virtual web::Reply ListNodes ( int offset, int limit ) const;
+    virtual web::Reply CountNodes() const;
+    virtual web::Reply GetNode   ( const Uuid& id ) const;
+    virtual web::Reply CreateNode( const std::string& name );
+    virtual web::Reply DeleteNode( const Uuid& id );
+    virtual web::Reply StartNode ( const Uuid& id ) const;
+    virtual web::Reply StopNode  ( const Uuid& id ) const;
     //@}
 
     //! @name Install Methods
     //@{
-    virtual Reply GetInstall   ( const Uuid& id ) const;
-    virtual Reply DeleteInstall( const Uuid& id, const std::vector< size_t >& list  );
+    virtual web::Reply GetInstall   ( const Uuid& id ) const;
+    virtual web::Reply DeleteInstall( const Uuid& id, const std::vector< size_t >& list  );
     //@}
 
     //! @name Cache Methods
     //@{
-    virtual Reply UploadCache     ( const Uuid& id, std::istream& src );
-    virtual Reply GetCache        ( const Uuid& id ) const;
-    virtual Reply DeleteCache     ( const Uuid& id );
-    virtual Reply InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
+    virtual web::Reply UploadCache     ( const Uuid& id, std::istream& src );
+    virtual web::Reply GetCache        ( const Uuid& id ) const;
+    virtual web::Reply DeleteCache     ( const Uuid& id );
+    virtual web::Reply InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
     //! @name Session Methods
     //@{
-    virtual Reply ListSessions ( const Uuid& node, int offset, int limit ) const;
-    virtual Reply CountSessions( const Uuid& node ) const;
-    virtual Reply GetSession   ( const Uuid& id ) const;
-    virtual Reply CreateSession( const Uuid& node, const std::string& name, const std::string& exercise );
-    virtual Reply DeleteSession( const Uuid& id );
-    virtual Reply StartSession ( const Uuid& id ) const;
-    virtual Reply StopSession  ( const Uuid& id ) const;
-    virtual Reply PauseSession ( const Uuid& id ) const;
+    virtual web::Reply ListSessions ( const Uuid& node, int offset, int limit ) const;
+    virtual web::Reply CountSessions( const Uuid& node ) const;
+    virtual web::Reply GetSession   ( const Uuid& id ) const;
+    virtual web::Reply CreateSession( const Uuid& node, const std::string& name, const std::string& exercise );
+    virtual web::Reply DeleteSession( const Uuid& id );
+    virtual web::Reply StartSession ( const Uuid& id ) const;
+    virtual web::Reply StopSession  ( const Uuid& id ) const;
+    virtual web::Reply PauseSession ( const Uuid& id ) const;
     //@}
 
     //! @name Exercise Methods
     //@{
-    virtual Reply ListExercises ( const Uuid& id, int offset, int limit ) const;
-    virtual Reply CountExercises( const Uuid& id ) const;
+    virtual web::Reply ListExercises ( const Uuid& id, int offset, int limit ) const;
+    virtual web::Reply CountExercises( const Uuid& id ) const;
     //@}
 
 private:
