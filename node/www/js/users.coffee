@@ -40,7 +40,7 @@ validate_settings = (ui, add) ->
     err |= check_missing [user]
     err |= check_missing [name]
     err |= check_missing [pwd, bis] if add?
-    if pwd?.val() != bis?.val()
+    if add? && pwd.val() != bis.val()
         toggle_input_error pwd, "Invalid"
         toggle_input_error bis, "Invalid"
         err = true
@@ -51,7 +51,7 @@ validate_settings = (ui, add) ->
         name:       name.val()
         temporary:  tmp.is ":checked"
         type:       "administrator"
-    if pwd?.val().length
+    if pwd.val()?.length
         data.password = pwd.val()
     return data
 

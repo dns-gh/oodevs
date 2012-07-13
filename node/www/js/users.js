@@ -276,7 +276,7 @@
   };
 
   validate_settings = function(ui, add) {
-    var bis, data, err, name, pwd, tmp, user;
+    var bis, data, err, name, pwd, tmp, user, _ref;
     user = ui.find("#username");
     name = ui.find("#name");
     pwd = ui.find("#password");
@@ -288,7 +288,7 @@
     if (add != null) {
       err |= check_missing([pwd, bis]);
     }
-    if ((pwd != null ? pwd.val() : void 0) !== (bis != null ? bis.val() : void 0)) {
+    if ((add != null) && pwd.val() !== bis.val()) {
       toggle_input_error(pwd, "Invalid");
       toggle_input_error(bis, "Invalid");
       err = true;
@@ -302,7 +302,7 @@
       temporary: tmp.is(":checked"),
       type: "administrator"
     };
-    if (pwd != null ? pwd.val().length : void 0) {
+    if ((_ref = pwd.val()) != null ? _ref.length : void 0) {
       data.password = pwd.val();
     }
     return data;
