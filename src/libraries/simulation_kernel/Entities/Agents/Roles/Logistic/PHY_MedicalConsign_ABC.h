@@ -45,6 +45,8 @@ public:
             bool HasChanged() const;
 
             void FinishSuccessfullyWithoutDelay();
+
+    bool HasValidHumanState() const;
     //@}
 
     //! @name Accessors

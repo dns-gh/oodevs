@@ -204,6 +204,15 @@ const PHY_MaintenanceComposanteState& PHY_MaintenanceConsign_ABC::GetComposanteS
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::HasValidComposanteState
+// Created: JSR 2012-07-13
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceConsign_ABC::HasValidComposanteState() const
+{
+    return pComposanteState_ != 0 ;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------

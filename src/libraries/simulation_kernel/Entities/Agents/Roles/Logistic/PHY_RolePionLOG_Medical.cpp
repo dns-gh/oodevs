@@ -308,6 +308,8 @@ bool PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo( const PHY_MedicalCollect
 // -----------------------------------------------------------------------------
 PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationAmbulance( PHY_MedicalEvacuationConsign& consign )
 {
+    if( !consign.HasValidHumanState() )
+        return 0;
     const MIL_Automate& humanAutomate = consign.GetHumanState().GetAutomate();
     T_EvacuationAmbulancesMMapRange range = evacuationAmbulances_.equal_range( &humanAutomate );
     for( IT_EvacuationAmbulancesMMap itAmbulance = range.first; itAmbulance != range.second; ++itAmbulance )
@@ -342,6 +344,8 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
         if( ambulance.RegisterHuman( consign ) )
             return &ambulance;
     }
+    if( !consign.HasValidHumanState() )
+        return 0;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
@@ -514,7 +518,7 @@ struct sIsPriorityEqual
 {
     bool operator() ( const PHY_MedicalConsign_ABC* pConsign, const PHY_HumanWound* pWound )
     {
-        if( pConsign->IsFinished() )
+        if( pConsign->IsFinished() || !pConsign->HasValidHumanState() )
             return false;
         return *pWound == pConsign->GetHumanState().GetHuman().GetWound();
     }
@@ -527,6 +531,8 @@ struct sIsPriorityEqual
 inline
 void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 {
+    if( !consign.HasValidHumanState() )
+        return;
     IT_MedicalConsigns itTact = consigns_.begin();
     for ( const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first ) // TODO AHC || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )

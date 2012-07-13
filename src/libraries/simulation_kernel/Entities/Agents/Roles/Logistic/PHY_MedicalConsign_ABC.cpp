@@ -64,13 +64,24 @@ PHY_MedicalConsign_ABC::~PHY_MedicalConsign_ABC()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::HasValidHumanState
+// Created: JSR 2012-07-13
+// -----------------------------------------------------------------------------
+bool PHY_MedicalConsign_ABC::HasValidHumanState() const
+{
+    return pHumanState_ != 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::IsAnEmergency
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 bool PHY_MedicalConsign_ABC::IsAnEmergency() const
 {
     assert( pHumanState_ );
-    return pHumanState_->IsAnEmergency();
+    if( pHumanState_)
+        return pHumanState_->IsAnEmergency();
+    return false;
 }
 
 // =============================================================================

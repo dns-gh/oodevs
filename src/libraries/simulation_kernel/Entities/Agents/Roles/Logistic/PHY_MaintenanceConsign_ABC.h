@@ -41,10 +41,11 @@ public:
 
     //! @name Accessors
     //@{
-          bool                            IsFinished            () const;
-    const PHY_ComposanteTypePion&         GetComposanteType     () const;
-    const PHY_Breakdown&                  GetComposanteBreakdown() const;
-    const PHY_MaintenanceComposanteState& GetComposanteState    () const;
+          bool                            IsFinished             () const;
+    const PHY_ComposanteTypePion&         GetComposanteType      () const;
+    const PHY_Breakdown&                  GetComposanteBreakdown () const;
+    const PHY_MaintenanceComposanteState& GetComposanteState     () const;
+    bool                                  HasValidComposanteState() const;
     //@}
 
     //! @name Operations
