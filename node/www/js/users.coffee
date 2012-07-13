@@ -22,6 +22,39 @@ pop_settings = (data) ->
     mod.modal "show"
     return [ui, mod]
 
+check_missing = (list) ->
+    err = false
+    for it in list
+        if !it.val().length
+            toggle_input_error it, "Missing"
+            err = true
+    return err
+
+validate_settings = (ui, add) ->
+    user = ui.find "#username"
+    name = ui.find "#name"
+    pwd  = ui.find "#password"
+    bis  = ui.find "#password_bis"
+    tmp  = ui.find "#temporary"
+    err  = false
+    err |= check_missing [user]
+    err |= check_missing [name]
+    err |= check_missing [pwd, bis] if add?
+    if pwd?.val() != bis?.val()
+        toggle_input_error pwd, "Invalid"
+        toggle_input_error bis, "Invalid"
+        err = true
+    return if err
+
+    data =
+        username:   user.val()
+        name:       name.val()
+        temporary:  tmp.is ":checked"
+        type:       "administrator"
+    if pwd?.val().length
+        data.password = pwd.val()
+    return data
+
 class UserItem extends Backbone.Model
     view: UserItemView
 
@@ -83,28 +116,18 @@ class UserItemView extends Backbone.View
     edit: (evt) =>
         if $(evt.currentTarget).hasClass "disabled"
             return
-        [ui, mod] = pop_settings @model.attributes
+        other = $(@el).find(".delete").length
+        data = $.extend {}, @model.attributes
+        data.other = true if other
+        [ui, mod] = pop_settings data
         ui.find(".add").click (e) =>
-            user = ui.find "#username"
-            name = ui.find "#name"
-            tmp  = ui.find "#temporary"
-            err  = false
-            if !user.val().length
-                toggle_input_error user, "Missing"
-                err = true
-            if !name.val().length
-                toggle_input_error name, "Missing"
-                err = true
-            return if err
-            data =
-                username:   user.val()
-                name:       name.val()
-                temporary:  tmp.is ":checked"
+            data = validate_settings ui
+            return unless data?
             @toggle_load()
             @model.save data,
                 wait: true
                 success: =>
-                    if $(@el).find(".delete").length
+                    if other
                         mod.modal "hide"
                     else
                         mod.removeClass "fade"
@@ -168,34 +191,9 @@ class UserListView extends Backbone.View
 user_view = new UserListView
 
 $("#user_create").click ->
-    [ui, mod] = pop_settings pwd: true
+    [ui, mod] = pop_settings add: true, other: true
     ui.find(".add").click (e) ->
-        user = ui.find "#username"
-        name = ui.find "#name"
-        pwd  = ui.find "#password"
-        bis  = ui.find "#password_bis"
-        tmp  = ui.find "#temporary"
-        err  = false
-        if !user.val().length
-            toggle_input_error user, "Missing"
-            err = true
-        if !name.val().length
-            toggle_input_error name, "Missing"
-            err = true
-        if !pwd.val().length
-            toggle_input_error pwd, "Missing"
-            err = true
-        return if err
-
-        if pwd.val() != bis.val()
-            toggle_input_error pwd, "Invalid"
-            toggle_input_error bis, "Invalid"
-            return
-
+        data = validate_settings ui, true
+        return unless data?
         mod.modal "hide"
-        user_view.create
-            username: user.val()
-            name: name.val()
-            password: pwd.val()
-            temporary: tmp.is ":checked"
-            type: "administrator"
+        user_view.create data
