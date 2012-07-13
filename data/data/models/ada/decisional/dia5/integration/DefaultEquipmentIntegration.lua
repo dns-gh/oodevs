@@ -485,35 +485,37 @@ end
 integration.StartGetVSRAM = function ( pionRenforce, nbrAmbulances )
     DEC_RecupererVSRAM( pionRenforce.source, nbrAmbulances )
 end
--- -------------------------------------------------------------------------------- 
--- Activate radar on area
--- @param area
--- @author DDA
--- @release 2011-12-09
--- -------------------------------------------------------------------------------- 
-integration.startActivateRadar = function ( area, eTypeRadar )
-    area[myself] = area[myself] or {}
-    area[myself].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eTypeRadar, area.source )
-    actionCallbacks[ area[myself].actionRadar ] = function( arg ) area[myself].actionRadar = arg end
-
-    meKnowledge:RC( eRC_DebutSurveillance )
-end
 
 -- -------------------------------------------------------------------------------- 
 -- Activate radar on area
 -- @param area
--- @author DDA
--- @release 2011-12-09
+-- @author PSN
+-- @release 2012-07-12
 -- -------------------------------------------------------------------------------- 
-integration.stopActivateRadar = function ( area, eTypeRadar )
-    area[myself] = area[myself] or {} 
-    if area[myself].actionRadar == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinSurveillance )
-    end  
-    if area[myself].actionRadar then
-        area[myself].actionRadar = DEC_Perception_DesactiverRadarSurLocalisation( eTypeRadar, area[myself].actionRadar )
-    end
+integration.activateRadar = function ( area )
+    myself.ecoute = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Ecoute, area.source )
+    myself.radar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, area.source )
+    myself.ecouteRadar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_EcouteRadar, area.source )
+	
+	meKnowledge:RC( eRC_DebutSurveillance )
+	return true
 end
+
+-- -------------------------------------------------------------------------------- 
+-- Dectivate radar on area
+-- @param area
+-- @author PSN
+-- @release 2012-07-12
+-- -------------------------------------------------------------------------------- 
+integration.deactivateRadar = function ( area )
+    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Ecoute, myself.ecoute )
+    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, myself.radar )
+    DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
+	
+	meKnowledge:RC( eRC_FinSurveillance )	
+	return true
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Activate radar for indirect fire on area
 -- @param area
