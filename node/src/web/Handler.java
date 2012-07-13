@@ -81,7 +81,7 @@ public class Handler extends HttpServlet {
             uri += ".html";
             target = new File(root_, uri);
         }
-        reply.setContentType(getContentType(target));
+        reply.setContentType(getContentType(target) + "; charset=utf-8");
         return uri;
     }
 
