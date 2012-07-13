@@ -94,8 +94,6 @@ public:
     virtual void SetVisionModeNormal() = 0;;
     virtual void SetVisionModeDirection( const MT_Vector2D& vDirection ) = 0;
     virtual void SetVisionModePoint( const MT_Vector2D& vPoint ) = 0;
-
-    virtual bool HasRadarStateChanged() const = 0;
     //@}
 
     //! @name Perceptions
