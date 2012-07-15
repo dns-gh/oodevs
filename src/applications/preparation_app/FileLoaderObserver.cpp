@@ -38,9 +38,9 @@ FileLoaderObserver::~FileLoaderObserver()
 bool FileLoaderObserver::NotifySignatureError( const std::string& file, const tools::EXmlCrc32SignatureError& error )
 {
     if( error == tools::eXmlCrc32SignatureError_Invalid )
-        invalidSignatureFiles_.push_back( bfs::path( file, bfs::native ).filename().string() );
+        invalidSignatureFiles_.push_back( bfs::path( file ).filename().string() );
     else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-        missingSignatureFiles_.push_back( bfs::path( file, bfs::native ).filename().string() );
+        missingSignatureFiles_.push_back( bfs::path( file ).filename().string() );
     return true;
 }
 
@@ -50,7 +50,7 @@ bool FileLoaderObserver::NotifySignatureError( const std::string& file, const to
 // -----------------------------------------------------------------------------
 bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::exception& e )
 {
-    malformedFiles_.push_back( bfs::path( file, bfs::native ).filename().string() + " :\t" + e.what() );
+    malformedFiles_.push_back( bfs::path( file ).filename().string() + " :\t" + e.what() );
     return true;
 }
 
@@ -60,7 +60,7 @@ bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::e
 // -----------------------------------------------------------------------------
 void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& file )
 {
-    missingSchemaFiles_.push_back( bfs::path( file, bfs::native ).filename().string() );
+    missingSchemaFiles_.push_back( bfs::path( file ).filename().string() );
 }
 
 // -----------------------------------------------------------------------------

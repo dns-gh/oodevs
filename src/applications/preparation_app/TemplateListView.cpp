@@ -121,7 +121,7 @@ void TemplateListView::LoadTemplates( const std::string& filename )
     try
     {
         Clear();
-        if( ! filename.empty() && bfs::exists( bfs::path( filename, bfs::native ) ) )
+        if( ! filename.empty() && bfs::exists( bfs::path( filename ) ) )
         {
             xml::xifstream input( filename );
             input >> xml::start( "templates" )

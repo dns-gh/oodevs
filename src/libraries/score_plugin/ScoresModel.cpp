@@ -74,7 +74,7 @@ ScoresModel::~ScoresModel()
 // -----------------------------------------------------------------------------
 void ScoresModel::Load( const std::string& file )
 {
-    if( bfs::exists( bfs::path( file, bfs::native ) ) )
+    if( bfs::exists( bfs::path( file ) ) )
     {
         xml::xifstream xis( file );
         xis >> xml::start( "scores" )

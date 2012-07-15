@@ -307,7 +307,7 @@ void FilterCommand::Execute()
     }
     assert( !path_.empty() );
     boost::shared_ptr< frontend::SpawnCommand > command(
-        new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_, bfs::native ) / bfs::path( command_, bfs::native ) ).string() + argumentsLine_ ).c_str(), true ) );
+        new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_ ) / bfs::path( command_ ) ).string() + argumentsLine_ ).c_str(), true ) );
     command->SetWorkingDirectory( path_.c_str() );
     boost::shared_ptr< frontend::ProcessWrapper > process(
         new frontend::ProcessWrapper( *this, command ) );

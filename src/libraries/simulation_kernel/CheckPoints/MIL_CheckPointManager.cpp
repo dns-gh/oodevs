@@ -260,7 +260,7 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
         {
             std::string oldName = currentCheckPoints_.front();
             std::string oldFile = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", oldName );
-            const boost::filesystem::path oldPath( oldFile, boost::filesystem::native );
+            const boost::filesystem::path oldPath( oldFile );
             boost::filesystem::remove_all( oldPath );
             client::ControlCheckPointSaveDelete message;
             message().set_name( oldName );

@@ -262,7 +262,7 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
             {
                 // todo charger
                 std::vector< std::string > files;
-                bfs::path path = bfs::path( config_.GetSessionDir(), bfs::native );
+                bfs::path path = bfs::path( config_.GetSessionDir() );
                 GetOrdFilesList( path, files );
                 for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
                     DoLoad( *it );

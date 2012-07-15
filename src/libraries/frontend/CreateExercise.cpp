@@ -122,20 +122,20 @@ namespace frontend
     {
         const std::string dir = config.GetExerciseDir( name );
         bfs::create_directories( dir );
-        const std::string filename( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).string() );
+        const std::string filename( ( bfs::path( dir ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, false );
         tools::WriteXmlCrc32Signature( filename );
     }
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
     {
-        const std::string filename( ( bfs::path( config.GetExerciseDir( name ), bfs::native ) / "exercise.xml" ).string() );
+        const std::string filename( ( bfs::path( config.GetExerciseDir( name ) ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, true );
         tools::WriteXmlCrc32Signature( filename );
     }
     void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
     {
-        const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ ), bfs::native  );
-        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ), bfs::native );
+        const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ )  );
+        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
         bfs::create_directories( dirTo );
         // Copy exercise.xml and linked file
         {

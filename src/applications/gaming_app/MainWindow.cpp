@@ -693,7 +693,7 @@ namespace
                 >> xml::optional >> xml::start( "meta" );
         if( xis.has_child( "name" ) )
             xis >> xml::content( "name", name );
-        return ( !name.empty() ) ? name.c_str() : bfs::path( filename, bfs::native ).parent_path().filename().string().c_str();
+        return ( !name.empty() ) ? name.c_str() : bfs::path( filename ).parent_path().filename().string().c_str();
     }
 }
 
@@ -858,7 +858,7 @@ void MainWindow::OnAddRaster()
             parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
             parameters << ( std::string( "--raster=" ) + addRasterDialog_->GetFiles().toStdString() ).c_str();
             parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( addRasterDialog_->GetPixelSize() ) ).c_str();
-            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin" );
+            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin" );
             parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
             bfs::path workingDirectory = bfs::system_complete( "../Terrain/applications/" );
             process_->setWorkingDirectory( workingDirectory.string().c_str() );
@@ -896,7 +896,7 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
         raster.GenerateTexture();
         try
         {
-            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin";
+            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin";
             if( bfs::exists( aggregated ) )
                 bfs::remove( aggregated );
         }

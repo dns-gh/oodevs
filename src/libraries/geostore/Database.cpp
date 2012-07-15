@@ -26,7 +26,7 @@ Database::Database( const std::string& path )
     : path_  ( path )
     , err_msg( 0 )
 {
-    bfs::path directory( path_, bfs::native );
+    bfs::path directory( path_ );
     bfs::path file( directory / "Graphics" / "geostore.sqlite" );    
     spatialite_init( 0 );
     int ret = sqlite3_open_v2( file.string().c_str(), &db_, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL );

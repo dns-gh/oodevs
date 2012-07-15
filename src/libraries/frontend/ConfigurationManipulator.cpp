@@ -56,7 +56,7 @@ ConfigurationManipulator::~ConfigurationManipulator()
 // -----------------------------------------------------------------------------
 std::string ConfigurationManipulator::GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
 {
-    const bfs::path dir( config.BuildSessionDir( exercise, session ), bfs::native );
+    const bfs::path dir( config.BuildSessionDir( exercise, session ) );
     bfs::create_directories( dir );
     return ( dir / "session.xml" ).string();
 }

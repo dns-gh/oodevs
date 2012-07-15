@@ -223,7 +223,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanData()
 {
-    const bfs::path dir( config_.GetRecordDirectory(), bfs::native );
+    const bfs::path dir( config_.GetRecordDirectory() );
     for( ;; )
     {
         if( bfs::exists( dir ) )
@@ -279,7 +279,7 @@ void MessageLoader::AddFolder( const std::string& folderName )
 // -----------------------------------------------------------------------------
 bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const
 {
-    const bfs::path dir = bfs::path( config_.GetRecordDirectory(), bfs::native ) / folder / file;
+    const bfs::path dir = bfs::path( config_.GetRecordDirectory() ) / folder / file;
     if( !bfs::exists( dir ) )
         return false;
     stream.open( dir.string().c_str(), std::ios_base::binary | std::ios_base::in );

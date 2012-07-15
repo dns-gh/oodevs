@@ -173,8 +173,8 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
     else if( type_ == "file" )
     {
         // TODO:
-        // const bfs::path exerciseDir = bfs::path( config_.GetExerciseDir( exercise ), bfs::native );
-        // const bfs::path orderDir = bfs::path( orderFile_, bfs::native );
+        // const bfs::path exerciseDir = bfs::path( config_.GetExerciseDir( exercise ) );
+        // const bfs::path orderDir = bfs::path( orderFile_ );
         // if( exerciseDir.string() == std::string( orderDir.string(), 0, exerciseDir.string().size() ) )
         //    action.SetOption( "session/config/dispatcher/plugins/timeline/orders/@file", std::string( orderFile_, exerciseDir.string().size() + 1, orderFile_.size() - exerciseDir.string().size() - 1 ) );
         visitor.Visit( attribute_, fileName_ );

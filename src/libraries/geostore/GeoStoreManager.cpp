@@ -53,7 +53,7 @@ GeoStoreManager::GeoStoreManager( UrbanModel& model )
 void GeoStoreManager::Initialize( const std::string& path )
 {
     path_ = path;
-    bfs::path directory( path_, bfs::native );
+    bfs::path directory( path_ );
     spatialDb_ = new Database( directory.string() );
     try
     {
@@ -83,7 +83,7 @@ GeoStoreManager::~GeoStoreManager()
 void GeoStoreManager::LoadTerrainFiles()
 {
     bool status = spatialDb_->logTable_->status_;
-    bfs::path directory( path_, bfs::native );
+    bfs::path directory( path_ );
     bfs::path graphicsDirectory( directory / "graphics" );    
     for( bfs::directory_iterator it( graphicsDirectory ); it != bfs::directory_iterator(); ++it )
         if( bfs::extension( *it ) == ".bin" && bfs::basename( *it ) != "preview" )

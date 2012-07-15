@@ -240,7 +240,7 @@ void TerrainLayer::LoadGraphics()
     world_.Set( 0, 0, width_, height_ );
     try
     {
-        const bfs::path aggregated = bfs::path( graphicsDirectory_, bfs::native ) / "shapes.dump";
+        const bfs::path aggregated = bfs::path( graphicsDirectory_ ) / "shapes.dump";
         if( ! bfs::exists( aggregated ) )
         {
             DataFactory factory;

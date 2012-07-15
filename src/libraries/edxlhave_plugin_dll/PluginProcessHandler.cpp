@@ -37,7 +37,7 @@ class PluginProcessHandler::PluginConfig
 public:
     PluginProcessHandler::PluginConfig( const std::string& data, const std::string& session, dispatcher::Logger_ABC& logger )
         : data_ ( data )
-        , exercise_ ( bfs::path( bfs::path( session, bfs::native ).parent_path().parent_path().parent_path() ).string() )
+        , exercise_ ( bfs::path( bfs::path( session ).parent_path().parent_path().parent_path() ).string() )
         , session_ ( session )
         , logger_ ( logger )
     {
@@ -59,22 +59,22 @@ public:
 
     std::string GetExerciseName() const
     {
-        return bfs::path( exercise_, bfs::native ).filename().string();
+        return bfs::path( exercise_ ).filename().string();
     }
     
     std::string GetSessionDir() const 
     {
-        return bfs::path( session_, bfs::native ).parent_path().string();
+        return bfs::path( session_ ).parent_path().string();
     }
         
     std::string GetPhysicalDir() const 
     {
-        return bfs::path( data_, bfs::native ).parent_path().string();
+        return bfs::path( data_ ).parent_path().string();
     }
 
     std::string GetDataDir() const 
     {
-        return bfs::path( exercise_, bfs::native ).parent_path().parent_path().string();
+        return bfs::path( exercise_ ).parent_path().parent_path().string();
     }
 
     void LoadProfile( std::string& profile, std::string& password ) const

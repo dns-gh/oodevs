@@ -434,7 +434,7 @@ void SIM_App::CheckpointTest()
     if( startupConfig_->IsDeleteCheckpointTestMode() == true && startupConfig_->IsTestMode() == true )
     {
         // Temporary checkpoint was loaded in Initialize, we can delete it now.
-        const boost::filesystem::path path( startupConfig_->GetCheckpointDirectory(), boost::filesystem::native );
+        const boost::filesystem::path path( startupConfig_->GetCheckpointDirectory() );
         boost::filesystem::remove_all( path );
     }
 }

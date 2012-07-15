@@ -42,7 +42,7 @@ namespace frontend
         QStringList ListDirectories( const std::string& base, Validator v )
         {
             QStringList result;
-            const bfs::path root = bfs::path( base, bfs::native );
+            const bfs::path root = bfs::path( base );
             if( ! bfs::exists( root ) )
                 return result;
 
@@ -70,7 +70,7 @@ namespace frontend
         QStringList ListDirectoriesNoRecursive( const std::string& base, Validator v )
         {
             QStringList result;
-            const bfs::path root = bfs::path( base, bfs::native );
+            const bfs::path root = bfs::path( base );
             if( ! bfs::exists( root ) )
                 return result;
 
@@ -197,7 +197,7 @@ namespace frontend
 
         QStringList ListScripts( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "scripts" ).string() );
+            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ) ) / "scripts" ).string() );
             return ListDirectories( dir, &IsValidScript );
         }
 
@@ -210,7 +210,7 @@ namespace frontend
 
         QStringList ListOrders( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "orders" ).string() );
+            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ) ) / "orders" ).string() );
             return ListDirectories( dir, &IsValidOrder );
         }
 
@@ -223,7 +223,7 @@ namespace frontend
 
         QStringList ListPropagations( const tools::GeneralConfig& config )
         {
-            std::string  dir( ( bfs::path( config.GetRootDir(), bfs::native ) / "data/propagations" ).string() );
+            std::string  dir( ( bfs::path( config.GetRootDir() ) / "data/propagations" ).string() );
             return ListDirectories( dir, &IsValidPropagation );
         }
 
@@ -234,7 +234,7 @@ namespace frontend
 
         QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            std::string dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) ).string() );
+            std::string dir( ( bfs::path( config.GetExerciseDir( exercise ) ) ).string() );
             return ListDirectoriesNoRecursive( dir, &IsOther );
         }
 
@@ -274,7 +274,7 @@ namespace frontend
 
         void InstallPackageFile( zip::izipfile& archive, const char* inputName, const std::string& outputName, const std::string& destination )
         {
-            bfs::path p = bfs::path( destination, bfs::native ) / outputName;
+            bfs::path p = bfs::path( destination ) / outputName;
             p = Normalize( p );
             if( p.filename() == "." )
                 return;

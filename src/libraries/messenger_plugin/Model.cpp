@@ -76,7 +76,7 @@ namespace
 {
     std::string GetCheckPointFileName( const std::string& directory )
     {
-        return ( bfs::path( directory, bfs::native ) / bfs::path( "messenger.xml", bfs::native ) ).string();
+        return ( bfs::path( directory ) / bfs::path( "messenger.xml" ) ).string();
     }
 }
 

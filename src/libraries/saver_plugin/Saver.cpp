@@ -40,7 +40,7 @@ Saver::Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config&
     , currentFolder_     ( 0 )
     , hasCheckpoint_     ( config.HasCheckpoint() )
 {
-    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << bfs::path( recorderDirectory_, bfs::native ).string() );
+    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << bfs::path( recorderDirectory_ ).string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
         UpdateFragments();
     else
     {
-        const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
+        const bfs::path recorderDirectory( recorderDirectory_ );
         if( bfs::exists( recorderDirectory ) )
             try
             {
@@ -123,7 +123,7 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
 // -----------------------------------------------------------------------------
 void Saver::CreateNewFragment( bool first /*= false*/ )
 {
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+    const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
     if( !bfs::exists( currentDirectory ) )
         bfs::create_directories( currentDirectory );
     if( !first )
@@ -229,10 +229,10 @@ void Saver::CopyFromCurrentToFolder()
 {
     try
     {
-        const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+        const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
         if( !bfs::exists( currentDirectory ) )
             return;
-        const bfs::path newDirectory = bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ );
+        const bfs::path newDirectory = bfs::path( recorderDirectory_ ) / CreateFolderName( currentFolder_++ );
         bfs::create_directories( newDirectory );
         bfs::directory_iterator endItr;
         for( bfs::directory_iterator itr( currentDirectory ); itr != endItr; ++itr )
@@ -272,7 +272,7 @@ void Saver::TerminateFragment()
 // -----------------------------------------------------------------------------
 void Saver::GenerateInfoFile() const
 {
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+    const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
     try
     {
         const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
@@ -299,7 +299,7 @@ void Saver::GenerateInfoFile() const
 // -----------------------------------------------------------------------------
 void Saver::UpdateFragments()
 {
-    const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
+    const bfs::path recorderDirectory( recorderDirectory_ );
     if( !bfs::exists( recorderDirectory ) )
         return;
     currentFolder_ = 0;

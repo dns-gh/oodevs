@@ -149,7 +149,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const std::string& path, const std::string& name, dispatcher::Logger_ABC& logger ) const
 {
-    bfs::path p( name, bfs::native );
+    bfs::path p( name );
 
     if( IsFileDatabase( p ) )
         return CreatePgeo( path, name );

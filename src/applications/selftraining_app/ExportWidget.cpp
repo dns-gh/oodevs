@@ -377,7 +377,7 @@ namespace
 
     void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos, bool recursive, const std::string& exportName = "" )
     {
-        const bfs::path root = bfs::path( base, bfs::native ) / name;
+        const bfs::path root = bfs::path( base ) / name;
         if( ! bfs::exists( root ) )
             return;
         if( ! bfs::is_directory( root ) )
@@ -458,7 +458,7 @@ bool ExportWidget::BrowseClicked()
     const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
     if( filename.isEmpty() )
         return false;
-    const bfs::path file = bfs::path( std::string( filename.ascii() ), bfs::native );
+    const bfs::path file = bfs::path( std::string( filename.ascii() ) );
     package_.first = file.parent_path().string();
     package_.second = file.filename().string();
     if( bfs::exists( file ) )

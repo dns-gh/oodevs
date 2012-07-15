@@ -74,7 +74,7 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
         {
             std::string strPath = config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() );
             MT_LOG_INFO_MSG( "Begin save checkpoint " << strPath );
-            const bfs::path p( strPath, bfs::native );
+            const bfs::path p( strPath );
             if( !bfs::exists( p ) )
                 bfs::create_directories( p );
             Save( strPath );
@@ -142,7 +142,7 @@ namespace
 {
     std::string GetCheckPointFileName( const std::string& directory )
     {
-        return ( bfs::path( directory, bfs::native ) / bfs::path( "profiles.xml", bfs::native ) ).string();
+        return ( bfs::path( directory ) / bfs::path( "profiles.xml" ) ).string();
     }
 }
 

@@ -65,7 +65,7 @@ namespace
     QStringList ListDirectories( const std::string& base, Validator v )
     {
         QStringList result;
-        const bfs::path root = bfs::path( base, bfs::native );
+        const bfs::path root = bfs::path( base );
         if( ! bfs::exists( root ) )
             return result;
 
@@ -99,7 +99,7 @@ namespace
 
     std::string BuildPropagationDir( const std::string& root, const std::string& path )
     {
-        return ( bfs::path( root, bfs::native ) / path ).string();
+        return ( bfs::path( root ) / path ).string();
     }
 }
 // -----------------------------------------------------------------------------

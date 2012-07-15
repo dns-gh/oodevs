@@ -232,7 +232,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     // Load exercise IFN
-    if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) )
+    if( bfs::exists( bfs::path( config_.GetExerciseFile() ) ) )
     {
         SetProgression( 0, tr( "Initialize data ..." ) );
         if( Load() )
@@ -408,7 +408,7 @@ void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
 // -----------------------------------------------------------------------------
 void MainWindow::MigrateExercises()
 {
-    const bfs::path root = bfs::path( config_.GetFolderToMigrate(), bfs::native );
+    const bfs::path root = bfs::path( config_.GetFolderToMigrate() );
     if( ! bfs::exists( root ) )
         throw std::exception( ( "The folder " + config_.GetFolderToMigrate() + " does not exist" ).c_str() );
 
@@ -617,7 +617,7 @@ void MainWindow::SaveAs()
                 QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
             if( ok && !name.isEmpty() )
             {
-                exerciseDirectory = bfs::path( config_.GetExercisesDir(), bfs::native ) / name.ascii();
+                exerciseDirectory = bfs::path( config_.GetExercisesDir() ) / name.ascii();
                 exist = frontend::commands::ExerciseExists( config_, name.ascii() ) || bfs::exists( exerciseDirectory );
             }
             else
@@ -641,7 +641,7 @@ void MainWindow::SaveAs()
                 QLineEdit::Normal, tr( "Type terrain name here" ), &ok, this );
             if( ok && !name.isEmpty() )
             {
-                terrainDirectory = bfs::path( config_.GetTerrainsDir(), bfs::native ) / name.ascii();
+                terrainDirectory = bfs::path( config_.GetTerrainsDir() ) / name.ascii();
                 exist = frontend::commands::TerrainExists( config_, name.ascii() ) || bfs::exists( terrainDirectory );
             }
             else
@@ -909,7 +909,7 @@ void MainWindow::OnAddRaster()
             parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
             parameters << ( std::string( "--raster=" ) + dialog.GetFiles().toStdString() ).c_str();
             parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( dialog.GetPixelSize() ) ).c_str();
-            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin" );
+            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin" );
             parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
             bfs::path workingDirectory = bfs::system_complete( "../Terrain/applications/" );
             process_->setWorkingDirectory( workingDirectory.string().c_str() );
@@ -947,7 +947,7 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
         raster.GenerateTexture();
         try
         {
-            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory(), bfs::native ) / "~~tmp.texture.bin";
+            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin";
             if( bfs::exists( aggregated ) )
                 bfs::remove( aggregated );
         }

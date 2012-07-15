@@ -185,7 +185,7 @@ void ScriptPlugin::Update()
 // -----------------------------------------------------------------------------
 void ScriptPlugin::LoadScripts()
 {
-    const bfs::path dir( config_.BuildExerciseChildFile( "scripts" ), bfs::native );
+    const bfs::path dir( config_.BuildExerciseChildFile( "scripts" ) );
     if( bfs::exists( dir ) )
     {
         for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
@@ -291,7 +291,7 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
 {
     std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
     std::ifstream file( templateFile.c_str() );
-    const bfs::path dest( config_.BuildExerciseChildFile( "StartupOrders.lua" ), bfs::native );
+    const bfs::path dest( config_.BuildExerciseChildFile( "StartupOrders.lua" ) );
     std::ofstream destFile( dest.string().c_str() );
     std::string line;
     while( destFile.good() && std::getline( file, line ) )

@@ -280,7 +280,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     urban_.Load();
 
     const std::string orbatFile = config.GetOrbatFile();
-    if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
+    if( bfs::exists( bfs::path( orbatFile ) ) )
     {
         UpdateName( orbatFile );
         config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ) ) );
@@ -295,7 +295,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
 
     performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
-    if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
+    if( bfs::exists( bfs::path( orbatFile ) ) )
         ghosts_.Finalize( staticModel_ ); // $$$$ ABR 2012-06-25: Resolve logistic link and profiles for ghost ... frozen ICD
 
     SetLoaded( true );
@@ -417,7 +417,7 @@ void Model::UpdateName( const std::string& orbat )
         name_ = "";
     else
     {
-        std::string file = bfs::path( orbat, bfs::native ).filename().string();
+        std::string file = bfs::path( orbat ).filename().string();
         file = file.substr( 0, file.find_last_of( '.' ) );
         name_ = file.c_str();
     }

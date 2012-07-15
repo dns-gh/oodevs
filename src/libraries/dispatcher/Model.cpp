@@ -679,7 +679,7 @@ const kernel::ExtensionTypes& Model::GetExtensionTypes() const
 void Model::DeleteCheckpoint( const std::string& name )
 {
     std::string oldName = config_.GetCheckpointDirectory( name );
-    const boost::filesystem::path oldPath( oldName, boost::filesystem::native );
+    const boost::filesystem::path oldPath( oldName );
     boost::filesystem::remove_all( oldPath );
 }
 

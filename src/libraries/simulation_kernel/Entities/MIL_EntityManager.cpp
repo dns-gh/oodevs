@@ -391,7 +391,7 @@ void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_
     visitor.Dump();
 
     const std::string strUrbanState = config.GetUrbanStateFile();
-    if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState, bfs::native ) ) )
+    if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
         config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
