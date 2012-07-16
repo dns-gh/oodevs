@@ -109,7 +109,7 @@ void MIL_DotationSupplyManager::Update()
     supplyRequests_->Update();
     if( bDotationSupplyNeeded_ && pAutomate_->GetLogisticHierarchy().HasSuperior() )
     {
-        logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy() );
+        logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy(), bDotationSupplyExplicitlyRequested_ );
         bDotationSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
     }
 }

@@ -21,8 +21,9 @@ using namespace logistic;
 // Name: SupplyDotationRequestBuilder constructor
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-SupplyRequestHierarchyDispatcher::SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy )
+SupplyRequestHierarchyDispatcher::SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy, bool forceSupply )
     : logisticHierarchy_                ( logisticHierarchy )
+    , forceSupply_                      ( forceSupply )
     , nbMandatoryRequests_              ( 0 )
     , nbMandatoryRequestsSatisfied_     ( 0 )
     , nbComplementaryRequests_          ( 0 )
@@ -76,5 +77,5 @@ void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRequest_ABC& request )
 // -----------------------------------------------------------------------------
 bool SupplyRequestHierarchyDispatcher::AllowSupply()
 {
-    return nbMandatoryRequestsSatisfied_ > 0;// || ( nbComplementaryRequests_ > 0 && forceSupply_;
+    return nbMandatoryRequestsSatisfied_ > 0 || ( nbComplementaryRequests_ > 0 && forceSupply_ );
 }
