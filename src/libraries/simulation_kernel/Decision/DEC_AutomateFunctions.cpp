@@ -164,6 +164,17 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsOfAutomateWithou
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetCommunicationPionsOfAutomateWithoutPC
+// Created: MMC 2012-07-03
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat )
+{
+    if( !automat )
+        throw std::runtime_error( "Invalid automat in GetCommunicationPionsOfAutomateWithoutPC" );
+    return GetCommunicationPionsWithoutPC( automat->GetAutomate() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetAutomatPionsWithPC
 // Created: LDC 2009-07-24
 // -----------------------------------------------------------------------------
@@ -182,7 +193,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomatPionsWithPC( D
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationAutomatPionsWithPC( DEC_Decision_ABC* pAutomate )
 {
     if( !pAutomate )
-        throw std::runtime_error( "Invalid automat in GetAutomatPionsWithPC" );
+        throw std::runtime_error( "Invalid automat in GetCommunicationAutomatPionsWithPC" );
     const MIL_Automate& callerAutomate = pAutomate->GetAutomate();
     return GetCommunicationPionsWithPC( callerAutomate );
 }

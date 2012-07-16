@@ -94,6 +94,8 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain.Register( "DEC_Automate_PionsAvecPCCommunication", &DEC_Decision_ABC::GetCommunicationPionsWithPC );
     brain[ "DEC_Automate_PionsDeAutomateSansPC" ] = &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC;
     brain[ "DEC_Automate_PionsDeAutomateAvecPC" ] = &DEC_AutomateFunctions::GetAutomatPionsWithPC;
+    brain[ "DEC_Automate_PionsDeAutomateSansPCCommunication" ] = &DEC_AutomateFunctions::GetCommunicationPionsOfAutomateWithoutPC;
+    brain[ "DEC_Automate_PionsDeAutomateAvecPCCommunication" ] = &DEC_AutomateFunctions::GetCommunicationAutomatPionsWithPC;
     brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
     brain[ "DEC_Connaissances_UnitesPrenantAPartieUnAmi" ] = &DEC_KnowledgeFunctions::GetEnemiesAttacking;
     brain[ "DEC_Connaissances_UniteLaPlusProcheDunAmi" ] = &DEC_KnowledgeFunctions::GetNearestToFriend;
