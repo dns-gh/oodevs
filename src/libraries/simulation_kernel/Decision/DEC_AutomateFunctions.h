@@ -48,6 +48,7 @@ public:
     static int GetRulesOfEngagementState( MIL_Automate& callerAutomate );
 
     static std::vector< DEC_Decision_ABC* > GetPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat );
+    static std::vector< DEC_Decision_ABC* > GetCommunicationPionsOfAutomateWithoutPC( const DEC_Decision_ABC* automat );
     static void NotifyRulesOfEngagementStateChanged( MIL_Automate& callerAutomate, int state );
     static void NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& callerAutomate, int state );
 
