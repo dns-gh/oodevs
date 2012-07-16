@@ -18,10 +18,10 @@ using namespace sword;
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
 ListenerHelper::ListenerHelper( core::Model& model, T_Callback callback )
-    : model_   ( model )
+    : model_   ( &model )
     , callback_( callback )
 {
-    model_.Register( *this );
+    model.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +30,8 @@ ListenerHelper::ListenerHelper( core::Model& model, T_Callback callback )
 // -----------------------------------------------------------------------------
 ListenerHelper::~ListenerHelper()
 {
-    model_.Unregister( *this );
+    if( model_ )
+        model_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,14 +40,26 @@ ListenerHelper::~ListenerHelper()
 // -----------------------------------------------------------------------------
 const core::Model& ListenerHelper::operator*() const
 {
-    return model_;
+    if( !model_)
+        throw std::runtime_error( "model has been removed" );
+    return *model_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListenerHelper::Notify
+// Name: ListenerHelper::NotifyChanged
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-void ListenerHelper::Notify( const core::Model& model )
+void ListenerHelper::NotifyChanged( const core::Model& model )
 {
+    model_ = const_cast< core::Model* >( &model );
     callback_( model );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListenerHelper::NotifyRemoved
+// Created: SLI 2012-07-16
+// -----------------------------------------------------------------------------
+void ListenerHelper::NotifyRemoved( const core::Model& /*model*/ )
+{
+    model_ = 0;
 }

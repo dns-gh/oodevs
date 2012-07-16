@@ -45,14 +45,15 @@ namespace
     {
     public:
         ModelSender( core::Model& model, Serializer serializer )
-            : model_     ( model )
+            : model_     ( &model )
             , serializer_( serializer )
         {
             model.Register( *this );
         }
         virtual ~ModelSender()
         {
-            model_.Unregister( *this );
+            if( model_ )
+                model_->Unregister( *this );
         }
         virtual void SendChangedState() const
         {
@@ -62,18 +63,25 @@ namespace
         }
         virtual void SendFullState( unsigned int context ) const
         {
+            if( !model_ )
+                return;
             Message message;
-            if( serializer_( message, model_ ) )
+            if( serializer_( message, *model_ ) )
                 message.Send( NET_Publisher_ABC::Publisher(), context );
         }
     private:
-        virtual void Notify( const core::Model& model )
+        virtual void NotifyChanged( const core::Model& model )
         {
+            model_ = const_cast< core::Model* >( &model );
             message_ = Message();
             serializer_( *message_, model );
         }
+        virtual void NotifyRemoved( const core::Model& /*model*/ )
+        {
+            model_ = 0;
+        }
     private:
-        core::Model& model_;
+        core::Model* model_;
         mutable boost::optional< Message > message_;
         Serializer serializer_;
     };

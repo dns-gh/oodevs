@@ -42,20 +42,23 @@ public:
     template< typename T >
     const core::Model& operator[]( const T& t ) const
     {
-        return model_[ t ];
+        if( !model_ )
+            throw std::runtime_error( "model has been removed" );
+        return (*model_)[ t ];
     }
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void Notify( const core::Model& model );
+    virtual void NotifyChanged( const core::Model& model );
+    virtual void NotifyRemoved( const core::Model& model );
     //@}
 
 private:
     //! @name Member data
     //@{
-    core::Model& model_;
+    core::Model* model_;
     T_Callback callback_;
     //@}
 };
