@@ -26,7 +26,7 @@ class SupplyRequestHierarchyDispatcher : public SupplyRequestDispatcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy );
+             SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy, bool forceSupply = false );
     virtual ~SupplyRequestHierarchyDispatcher();
     //@}
 
@@ -38,7 +38,7 @@ public:
 
 private:
     const LogisticHierarchy_ABC& logisticHierarchy_;
-    //const bool forceSupply_;
+    const bool forceSupply_;
     unsigned nbMandatoryRequests_;
     unsigned nbMandatoryRequestsSatisfied_;
     unsigned nbComplementaryRequests_;
