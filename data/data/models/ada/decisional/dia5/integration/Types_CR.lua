@@ -439,4 +439,5 @@ eRC_FurtifModeOn = 424
 eRC_FurtifModeOff = 425
 eRC_ObstacleNonActivable = 426
 eRC_FireObserver = 427
-eNbr = 428
+eRC_ImpossibleActivateIED = 428
+eNbr = 429

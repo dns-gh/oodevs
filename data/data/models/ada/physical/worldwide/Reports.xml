@@ -632,5 +632,6 @@
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
+  <report category="operational" id="428" message="Impossible to activate IED : out of range"/>
 </reports>
-<!-- signature="0654224757" -->
+<!-- signature="3086040075" -->

@@ -584,6 +584,7 @@ public:
         eRC_FurtifModeOff,
         eRC_ObstacleNonActivable,
         eRC_FireObserver,
+        eRC_ImpossibleActivateIED,
         eLast
     };
     //@}

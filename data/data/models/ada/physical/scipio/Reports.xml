@@ -632,5 +632,6 @@
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
+  <report category="operational" id="428" message="Activation de l'IED impossible : hors de portée"/>
 </reports>
-<!-- signature="3333476724" -->
+<!-- signature="1557898015" -->

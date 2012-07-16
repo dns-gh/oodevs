@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.individual.roles.Terrorist" source-version="1.0.0" extends="sword.military.platoon.individual.roles.Individual">
-  <description>Modèle décisionnel d'un terroriste.</description>
-  <skills>
-    <skill name="sword.military.platoon.individual.skills.Attack"/>
-    <skill name="sword.military.platoon.individual.skills.Assassinate"/>
-    <skill name="sword.military.platoon.individual.skills.Snipe"/>
-  </skills>
-  <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
-    <description>Gestion par défaut des ordres de conduite</description>
-    <goal>
-      <description>Gestion et affectation des ordres de conduite</description>
-    </goal>
-    <let name="fragOrdersToManage">
-      <value>
-        <call method="sword.military.queries.miscellaneous.getFragOrders"/>
-      </value>
-    </let>
+    <description>Modèle décisionnel d'un terroriste.</description>
     <skills>
-      <skill name="sword.military.platoon.skills.miscellaneous.Default"/>
-      <skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
-      <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
-      <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
-        <parameter name="fragOrders">
-          <value>
-            <parameter>fragOrdersToManage</parameter>
-          </value>
-        </parameter>
-      </skill>
-      <skill name="sword.military.platoon.individual.skills.GoUndetected"/>
+        <skill name="sword.military.platoon.individual.skills.Attack"/>
+        <skill name="sword.military.platoon.individual.skills.Assassinate"/>
+        <skill name="sword.military.platoon.individual.skills.Snipe"/>
+        <skill name="sword.military.platoon.individual.skills.CommitTerrorist"/>
     </skills>
-  </default-task>
+    <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
+        <description>Gestion par défaut des ordres de conduite</description>
+        <goal>
+            <description>Gestion et affectation des ordres de conduite</description>
+        </goal>
+        <let name="fragOrdersToManage">
+            <value>
+                <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+            </value>
+        </let>
+        <skills>
+            <skill name="sword.military.platoon.skills.miscellaneous.Default"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+                <parameter name="fragOrders">
+                    <value>
+                        <parameter>fragOrdersToManage</parameter>
+                    </value>
+                </parameter>
+            </skill>
+            <skill name="sword.military.platoon.individual.skills.GoUndetected"/>
+        </skills>
+    </default-task>
 </role>

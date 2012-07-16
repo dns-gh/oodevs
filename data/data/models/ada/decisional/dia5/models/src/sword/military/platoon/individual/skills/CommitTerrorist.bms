@@ -1,0 +1,76 @@
+-- **************************************************************************** 
+-- Attack units. This skill means "terrorist attack" with a bomb to destroy.
+-- A bomb can be use on different elements, 
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveToward, skill.nodes.Attack, skill.nodes.CR },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    commited = function( self ) -- attack is commited
+        Feedback( self.feedbacks.done )
+    end,
+    done = function( self ) --moveToward feedback
+        self.arrived = true
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Activate
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        
+        Activate( skill.links.moveToward, 1, { entities = { self.params.position } } )
+        
+        if self.arrived then
+            if self.params.objective:isValid() then
+                if self.params.objective:isInAttackRange( self.params.suicide, self.params.dotation ) then
+                   Activate( skill.nodes.Attack, 1, { objective = self.params.objective, 
+                       suicide = self.params.suicide, dotation = self.params.dotation } )
+                   self.arrived = false
+               else -- out of range to activate IED
+                   Activate( skill.nodes.CR, 1, { RC = eRC_ImpossibleActivateIED } )
+                   Feedback( self.feedbacks.done )
+                   return
+               end
+            else  -- target is no longer valid
+                Activate( skill.nodes.CR, 1, { RC = eRC_InvalidTarget } )
+                Feedback( self.feedbacks.done )
+                return
+            end
+        end
+    end,
+}
+
+-- **************************************************************************** 
+-- Simple action to attack an element
+-- ****************************************************************************
+node "Attack"
+{
+    feedbacks = { "commited" },
+
+    select = function( self )
+        if self.params.objective:attackIt( self.params.suicide, self.params.dotation ) then
+            Feedback( self.feedbacks.commited )
+        end
+    end
+}
+
+-- ****************************************************************************
+-- CR
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end
+}
