@@ -162,6 +162,16 @@ RolePion_Decision::~RolePion_Decision()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RolePion_Decision::Reload
+// Created: SLI 2012-07-16
+// -----------------------------------------------------------------------------
+void RolePion_Decision::Reload()
+{
+    DEC_RolePion_Decision::Reload();
+    RegisterFunctions();
+}
+
+// -----------------------------------------------------------------------------
 // Name: RolePion_Decision::serialize
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------

@@ -37,6 +37,11 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Reload();
+    //@}
+
 private:
     //! @name Helpers
     //@{

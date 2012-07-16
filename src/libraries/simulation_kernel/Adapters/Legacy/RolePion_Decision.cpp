@@ -71,6 +71,16 @@ RolePion_Decision::~RolePion_Decision()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: RolePion_Decision::Reload
+// Created: SLI 2012-07-16
+// -----------------------------------------------------------------------------
+void RolePion_Decision::Reload()
+{
+    DEC_RolePion_Decision::Reload();
+    RegisterFunctions();
+}
+
 template< typename Archive >
 void RolePion_Decision::serialize( Archive& file, const unsigned int )
 {
