@@ -465,12 +465,13 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
-        if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
-        {
-            dirInfos.SetWorkingDirectory( szOldWorkDir );
-            ResetProgressIndicator();
-            throw ADN_SaveFile_Exception( *it );
-        }
+        if( !it->empty() && bfs::exists( dirInfos.GetTempDirectory().GetData() + *it ) )
+            if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
+            {
+                dirInfos.SetWorkingDirectory( szOldWorkDir );
+                ResetProgressIndicator();
+                throw ADN_SaveFile_Exception( *it );
+            }
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
         CopyUnsavedFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ) );
