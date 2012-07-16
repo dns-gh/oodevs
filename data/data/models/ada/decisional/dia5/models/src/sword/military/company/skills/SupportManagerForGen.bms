@@ -56,7 +56,11 @@ activate = function( self )
                     local support = unitsCanSupport[i]
                     local distance = integration.distance( position, support:getMyPosition() )
                     local task = integration.RetrievePionTask( support, self.params.taskForSupporting )
-                    if task and distance < bestDistance and support.source:DEC_Agent_EtatOpsMajeur() > 0 and integration.nombreDotationAgent( support, pion.source.needReinforcementForDotation ) > self.bestSupportDotation then
+                    local dotationAgent = -1
+                    if pion.source.needReinforcementForDotation then
+                        dotationAgent = integration.nombreDotationAgent( support, pion.source.needReinforcementForDotation )
+                    end
+                     if task and distance < bestDistance and support.source:DEC_Agent_EtatOpsMajeur() > 0 and ( dotationAgent == -1 or dotationAgent > self.bestSupportDotation) then
                         bestSupport = support
                         bestDistance = distance
                         bestTask = task
