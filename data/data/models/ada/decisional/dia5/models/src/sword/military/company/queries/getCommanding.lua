@@ -1,9 +1,9 @@
 queryImplementation "getCommanding" { ["execute"] = function ( params )
     local temp = {}
     if params.withPC then
-        temp = DEC_Automate_PionsAvecPC()
+        temp = DEC_Automate_PionsAvecPCCommunication()
     else
-        temp = DEC_Automate_PionsSansPC()
+        temp = DEC_Automate_PionsSansPCCommunication()
     end
 
     local CreateKnowledge = CreateKnowledge

@@ -20,7 +20,6 @@ end
 
 integration.isROE = function( self )
   local returnValue = self.source:GetType()=="Rep_OrderConduite_ChangerReglesEngagement"
-  integration.cleanFragOrder( self )
   return returnValue
 end
 
@@ -124,7 +123,6 @@ integration.setAutomatFragOrder = function( self )
   elseif orderType == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
       DEC_Automate_ChangeEtatROEPopulation(self.source:GetorderConduiteChangerReglesEngagementPopulation_())
       integration.CR_ROE_Foules ( self.source:GetorderConduiteChangerReglesEngagementPopulation_() )
-      integration.cleanFragOrder( self )
   end
 end
 
