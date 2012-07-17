@@ -89,6 +89,9 @@ macro( add_executable_target target )
 endmacro()
 
 macro( add_test_target target test_name )
+    if( MSVC )
+        add_target_compile_flag( ${target} "/bigobj" )
+    endif()
     add_test( NAME              ${test_name}
               WORKING_DIRECTORY ${run_dir}
               COMMAND           ${target} ${ARGN}
