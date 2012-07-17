@@ -73,8 +73,8 @@ struct Ssl
 
 struct Config
 {
-    Config( const Path& log, const Path& java, const Path& jar, int port, const Ssl& ssl )
-        : log ( log )
+    Config( const Path& root, const Path& java, const Path& jar, int port, const Ssl& ssl )
+        : root( root )
         , java( java )
         , jar ( jar )
         , port( port )
@@ -82,7 +82,7 @@ struct Config
     {
         // NOTHING
     }
-    const Path log;
+    const Path root;
     const Path java;
     const Path jar;
     const int port;
@@ -127,7 +127,6 @@ public:
 
 private:
     //! @name Private methods
-    Path GetPath() const;
     Tree GetProperties() const;
     void Save() const;
     bool Reload( const Path& path );

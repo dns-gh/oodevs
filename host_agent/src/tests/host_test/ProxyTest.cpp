@@ -49,7 +49,7 @@ namespace
     {
         Fixture()
             : ssl    ( 8443, "keystore", "PCKS12", "" )
-            , config ( "logs", "java", "jar", 1337, ssl )
+            , config ( "", "java", "jar", 1337, ssl )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
             MOCK_EXPECT( system.Exists ).with( config.java ).returns( true );

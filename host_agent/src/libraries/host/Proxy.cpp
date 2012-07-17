@@ -79,7 +79,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
         throw std::runtime_error( runtime::Utf8Convert( config_.jar ) + " is missing" );
     if( !system_.IsFile( config_.jar ) )
         throw std::runtime_error( runtime::Utf8Convert( config_.jar ) + " is not a file" );
-    const Path tag = GetPath() / "proxy.id";
+    const Path tag = config_.root / "proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.port;
     bool hasProcess = system_.IsFile( tag );
     if( hasProcess )
@@ -105,7 +105,7 @@ Proxy::~Proxy()
         process_->Kill();
         process_->Join( 1000 );
     }
-    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &system_, config_.root / "proxy.id" ) );
 }
 
 namespace
@@ -186,15 +186,6 @@ int Proxy::GetSsl() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Proxy::GetPath
-// Created: BAX 2012-04-11
-// -----------------------------------------------------------------------------
-Path Proxy::GetPath() const
-{
-    return Path( config_.jar ).remove_filename();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Proxy::ToXml
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
@@ -254,7 +245,7 @@ Proxy::T_Process Proxy::MakeProcess() const
     }
     return runtime_.Start( Utf8Convert( config_.java ), args,
             Utf8Convert( Path( config_.jar ).remove_filename() ),
-            Utf8Convert( config_.log / "proxy.log" ) );
+            Utf8Convert( config_.root / "proxy.log" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +285,7 @@ void Proxy::Stop()
 // -----------------------------------------------------------------------------
 void Proxy::Save() const
 {
-    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, GetPath() / "proxy.id", ToJson( GetProperties() ) ) );
+    async_.Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, config_.root / "proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------
