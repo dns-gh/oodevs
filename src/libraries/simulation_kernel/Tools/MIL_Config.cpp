@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Config.h"
 #include "MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "tools/Loader.h"
 #include "tools/ExerciseConfig.h"
 #include "MT_Tools/MT_ScipioException.h"

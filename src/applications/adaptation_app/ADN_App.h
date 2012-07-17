@@ -24,7 +24,7 @@ class ADN_App : public gui::Application_ABC
 {
 
 public:
-             ADN_App( int argc, char** argv, const std::string& licenseName );
+             ADN_App( int argc, char** argv );
     virtual ~ADN_App();
 
     //! @name gui::Application_ABC operations

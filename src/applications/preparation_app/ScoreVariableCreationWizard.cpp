@@ -124,7 +124,7 @@ namespace
             if( type_ == "circle" || type_ == "polygon" )
                 type_ = "zone";
 
-            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( type_ ), value ) );
+            pVariable_.reset( new indicators::Variable( name_.toUtf8().constData(), types.Instanciate( type_ ), value ) );
             delete &parameter;
         }
         const QString name_;
@@ -219,92 +219,92 @@ namespace
 {
     std::map< std::string, std::string > AmbulanceTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Evacuation" ).ascii(), "evacuation" )
-            ( tools::translate( "ScoreDef", "Collection" ).ascii(), "collection" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Evacuation" ).toUtf8().constData(), "evacuation" )
+            ( tools::translate( "ScoreDef", "Collection" ).toUtf8().constData(), "collection" );
     }
 
     std::map< std::string, std::string > MaintenanceTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).ascii(), "repairers" )
-            ( tools::translate( "ScoreDef", "Haulers" ).ascii(), "haulers" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Repairers" ).toUtf8().constData(), "repairers" )
+            ( tools::translate( "ScoreDef", "Haulers" ).toUtf8().constData(), "haulers" );
     }
 
     std::map< std::string, std::string > ForceRatioTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Favorable" ).ascii(), "favorable" )
-            ( tools::translate( "ScoreDef", "Neutral" ).ascii(), "neutral" )
-            ( tools::translate( "ScoreDef", "Unfavorable" ).ascii(), "unfavorable" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Favorable" ).toUtf8().constData(), "favorable" )
+            ( tools::translate( "ScoreDef", "Neutral" ).toUtf8().constData(), "neutral" )
+            ( tools::translate( "ScoreDef", "Unfavorable" ).toUtf8().constData(), "unfavorable" );
     }
 
     std::map< std::string, std::string > CrowdStates()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
-            ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
-            ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" )
-            ( tools::translate( "ScoreDef", "Contaminated" ).ascii(), "contaminated" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).toUtf8().constData(), "healthy" )
+            ( tools::translate( "ScoreDef", "Wounded" ).toUtf8().constData(), "wounded" )
+            ( tools::translate( "ScoreDef", "Dead" ).toUtf8().constData(), "dead" )
+            ( tools::translate( "ScoreDef", "Contaminated" ).toUtf8().constData(), "contaminated" );
     }
 
     std::map< std::string, std::string > EquipmentStates()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).ascii(), "available" )
-            ( tools::translate( "ScoreDef", "Unavailable" ).ascii(), "unavailable" )
-            ( tools::translate( "ScoreDef", "Repairable" ).ascii(), "repairable" )
-            ( tools::translate( "ScoreDef", "Repairing" ).ascii(), "repairing" )
-            ( tools::translate( "ScoreDef", "Prisoner" ).ascii(), "prisoner" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Available" ).toUtf8().constData(), "available" )
+            ( tools::translate( "ScoreDef", "Unavailable" ).toUtf8().constData(), "unavailable" )
+            ( tools::translate( "ScoreDef", "Repairable" ).toUtf8().constData(), "repairable" )
+            ( tools::translate( "ScoreDef", "Repairing" ).toUtf8().constData(), "repairing" )
+            ( tools::translate( "ScoreDef", "Prisoner" ).toUtf8().constData(), "prisoner" );
     }
 
     std::map< std::string, std::string > FireTypes()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Direct fires" ).ascii(), "direct" )
-            ( tools::translate( "ScoreDef", "Indirect fires" ).ascii(), "indirect" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Direct fires" ).toUtf8().constData(), "direct" )
+            ( tools::translate( "ScoreDef", "Indirect fires" ).toUtf8().constData(), "indirect" );
     }
 
     std::map< std::string, std::string > Fratricide()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Non fratricide fires" ).ascii(), "false" )
-            ( tools::translate( "ScoreDef", "Fratricide fires" ).ascii(), "true" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Non fratricide fires" ).toUtf8().constData(), "false" )
+            ( tools::translate( "ScoreDef", "Fratricide fires" ).toUtf8().constData(), "true" );
     }
 
     std::map< std::string, std::string > HumanStates()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Total" ).ascii(), "total" )
-            ( tools::translate( "ScoreDef", "Operational" ).ascii(), "operational" )
-            ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" )
-            ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
-            ( tools::translate( "ScoreDef", "Mental" ).ascii(), "mental" )
-            ( tools::translate( "ScoreDef", "Nbc" ).ascii(), "nbc" )
-            ( tools::translate( "ScoreDef", "In treatment" ).ascii(), "in-treatment" )
-            ( tools::translate( "ScoreDef", "In maintenance" ).ascii(), "in-maintenance" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Total" ).toUtf8().constData(), "total" )
+            ( tools::translate( "ScoreDef", "Operational" ).toUtf8().constData(), "operational" )
+            ( tools::translate( "ScoreDef", "Dead" ).toUtf8().constData(), "dead" )
+            ( tools::translate( "ScoreDef", "Wounded" ).toUtf8().constData(), "wounded" )
+            ( tools::translate( "ScoreDef", "Mental" ).toUtf8().constData(), "mental" )
+            ( tools::translate( "ScoreDef", "Nbc" ).toUtf8().constData(), "nbc" )
+            ( tools::translate( "ScoreDef", "In treatment" ).toUtf8().constData(), "in-treatment" )
+            ( tools::translate( "ScoreDef", "In maintenance" ).toUtf8().constData(), "in-maintenance" );
     }
 
     std::map< std::string, std::string > HumanRanks()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).ascii(), "officer" )
-            ( tools::translate( "ScoreDef", "Sub officer" ).ascii(), "sub-officer" )
-            ( tools::translate( "ScoreDef", "Troopers" ).ascii(), "troopers" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Officer" ).toUtf8().constData(), "officer" )
+            ( tools::translate( "ScoreDef", "Sub officer" ).toUtf8().constData(), "sub-officer" )
+            ( tools::translate( "ScoreDef", "Troopers" ).toUtf8().constData(), "troopers" );
     }
 
    std::map< std::string, std::string > PerceptionLevels()
     {
-        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Invisible" ).ascii(), "invisible" )
-            ( tools::translate( "ScoreDef", "Detected" ).ascii(), "detected" )
-            ( tools::translate( "ScoreDef", "Recognized" ).ascii(), "recognized" )
-            ( tools::translate( "ScoreDef", "Identified" ).ascii(), "identified" )
-            ( tools::translate( "ScoreDef", "Recorded" ).ascii(), "recorded" );
+        return boost::assign::map_list_of( tools::translate( "ScoreDef", "Invisible" ).toUtf8().constData(), "invisible" )
+            ( tools::translate( "ScoreDef", "Detected" ).toUtf8().constData(), "detected" )
+            ( tools::translate( "ScoreDef", "Recognized" ).toUtf8().constData(), "recognized" )
+            ( tools::translate( "ScoreDef", "Identified" ).toUtf8().constData(), "identified" )
+            ( tools::translate( "ScoreDef", "Recorded" ).toUtf8().constData(), "recorded" );
     }
 
    std::map< std::string, std::string > PopulationStates()
    {
-       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).ascii(), "healthy" )
-           ( tools::translate( "ScoreDef", "Wounded" ).ascii(), "wounded" )
-           ( tools::translate( "ScoreDef", "Dead" ).ascii(), "dead" );
+       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Healthy" ).toUtf8().constData(), "healthy" )
+           ( tools::translate( "ScoreDef", "Wounded" ).toUtf8().constData(), "wounded" )
+           ( tools::translate( "ScoreDef", "Dead" ).toUtf8().constData(), "dead" );
    }
 
    std::map< std::string, std::string > SatisfactionTypes()
    {
-       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Lodging" ).ascii(), "lodging" )
-           ( tools::translate( "ScoreDef", "Health" ).ascii(), "health" )
-           ( tools::translate( "ScoreDef", "Safety" ).ascii(), "safety" );
+       return boost::assign::map_list_of( tools::translate( "ScoreDef", "Lodging" ).toUtf8().constData(), "lodging" )
+           ( tools::translate( "ScoreDef", "Health" ).toUtf8().constData(), "health" )
+           ( tools::translate( "ScoreDef", "Safety" ).toUtf8().constData(), "safety" );
    }
 }
 
@@ -340,7 +340,7 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
 
     if( !compatibleType.empty() )
     {
-        const OrderParameter parameter( variableName.ascii(), compatibleType, false, 1, nbOccur );
+        const OrderParameter parameter( variableName.toUtf8().constData(), compatibleType, false, 1, nbOccur );
         actions::gui::Param_ABC* param = &builder_.BuildOne( parameter, false );
         if( compatibleType == "location" )
             static_cast< actions::gui::ParamLocation* >( param )->SetShapeFilter( false, false, true, true, false );
@@ -349,7 +349,7 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
     else
     {
         // TODO: move ParamStringEnumeration to actions_gui and make it creatable by the builder
-        const OrderParameter parameter( variableName.ascii(), type, false );
+        const OrderParameter parameter( variableName.toUtf8().constData(), type, false );
         if( type == "force-ratio types" )
             result.reset( new ParamStringEnumeration( this, *this, tr( "Force ratio types" ),   parameter, ForceRatioTypes() ) );
         else if( type == "ambulance types" )

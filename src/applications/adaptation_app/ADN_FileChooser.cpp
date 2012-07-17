@@ -43,7 +43,7 @@ public:
 
     void  SetDataChanged(const QString& string)
     {
-        std::string newval=string.ascii();
+        std::string newval=string.toUtf8().constData();
         emit DataChanged((void*)&newval);
     }
 
@@ -136,9 +136,9 @@ void ADN_FileChooser::ChooseFile()
 
     if (qfilename==QString::null)
         return;
-    std::string res( qfilename.ascii() );
+    std::string res( qfilename.toUtf8().constData() );
     std::replace( res.begin(), res.end(), '\\','/' );
-    std::string szPartialPath=GetPartPath( szDirectory_.ascii(), res );
+    std::string szPartialPath=GetPartPath( szDirectory_.toUtf8().constData(), res );
     if (szPartialPath.empty())
     {
         QMessageBox::information( this, "ADN",

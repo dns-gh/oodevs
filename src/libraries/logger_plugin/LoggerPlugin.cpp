@@ -140,8 +140,8 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
             id = message.message().report().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
         FormatMessage( factory_.FormatReport( message.message().report() ), "Report",
-                       entity ? entity->GetName().ascii() : "Unknown entity", id,
-                       factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).ascii() );
+                       entity ? entity->GetName().toUtf8().constData() : "Unknown entity", id,
+                       factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).toUtf8().constData() );
     }
     else if( message.message().has_trace() )
     {
@@ -154,7 +154,7 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
             id = message.message().trace().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
         FormatMessage( message.message().trace().message(), "Trace",
-                       entity ? entity->GetName().ascii() : "Unknown entity", id, date_ );
+                       entity ? entity->GetName().toUtf8().constData() : "Unknown entity", id, date_ );
     }
     else if( message.message().has_control_information() )
     {
@@ -180,21 +180,21 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
     {
         kernel::Entity_ABC* agent = model_.Agents().Find( message.message().unit_order().tasker().id() );
         if( agent )
-            FormatMission( agent->GetName().ascii(), message.message().unit_order().tasker().id(), message.message().unit_order().type().id() );
+            FormatMission( agent->GetName().toUtf8().constData(), message.message().unit_order().tasker().id(), message.message().unit_order().type().id() );
         actions_->Log( message.message().unit_order() );
     }
     else if( message.message().has_automat_order() )
     {
         kernel::Entity_ABC* automat = model_.Automats().Find( message.message().automat_order().tasker().id() );
         if( automat )
-            FormatMission( automat->GetName().ascii(), message.message().automat_order().tasker().id(), message.message().automat_order().type().id() );
+            FormatMission( automat->GetName().toUtf8().constData(), message.message().automat_order().tasker().id(), message.message().automat_order().type().id() );
         actions_->Log( message.message().automat_order() );
     }
     else if( message.message().has_crowd_order() )
     {
         kernel::Entity_ABC* population = model_.Populations().Find( message.message().crowd_order().tasker().id() );
         if( population )
-            FormatMission( population->GetName().ascii(), message.message().crowd_order().tasker().id(), message.message().crowd_order().type().id() );
+            FormatMission( population->GetName().toUtf8().constData(), message.message().crowd_order().tasker().id(), message.message().crowd_order().type().id() );
         actions_->Log( message.message().crowd_order() );
     }
     else if( message.message().has_start_unit_fire() )
@@ -209,12 +209,12 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
                 target = model_.Populations().Find( message.message().start_unit_fire().target().crowd().id() );
             std::string text = "Fire on ";
             if( target )
-                text += boost::lexical_cast< std::string >( target->GetName().ascii() ) + "[" +
+                text += boost::lexical_cast< std::string >( target->GetName().toUtf8().constData() ) + "[" +
                         boost::lexical_cast< std::string >( target->GetId() ) + "]";
             else
                 text += "position";
             //*file_ << ", ammo = " << message.message().start_unit_fire().ammunition();
-            FormatMessage( text, "Fire", agent->GetName().ascii(), message.message().start_unit_fire().firing_unit().id(), date_ );
+            FormatMessage( text, "Fire", agent->GetName().toUtf8().constData(), message.message().start_unit_fire().firing_unit().id(), date_ );
         }
     }
     else if( message.message().has_stop_unit_fire() )
@@ -228,7 +228,7 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
     {
         kernel::Entity_ABC* agent = model_.Populations().Find( message.message().start_crowd_fire().firing_crowd().id() );
         if( agent )
-            FormatMessage( "", "Fire", agent->GetName().ascii(), message.message().start_crowd_fire().firing_crowd().id(), date_ );
+            FormatMessage( "", "Fire", agent->GetName().toUtf8().constData(), message.message().start_crowd_fire().firing_crowd().id(), date_ );
     }
     else if( message.message().has_stop_crowd_fire() )
     {
@@ -289,7 +289,7 @@ void LoggerPlugin::LogPopulationsFireDamages( const sword::CrowdsFireDamages& po
             if( target )
             {
                 std::string text = "damaged : " + boost::lexical_cast< std::string >( damages.dead() ) + " killed";
-                FormatMessage( text, "Fire", target->GetName().ascii(), target->GetId(), date_ );
+                FormatMessage( text, "Fire", target->GetName().toUtf8().constData(), target->GetId(), date_ );
             }
         }
     }
@@ -330,7 +330,7 @@ void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages
                     text += ", ";
                 text += boost::lexical_cast< std::string >( wounded ) + " wounded";
             }
-            FormatMessage( text, "Fire", target.GetName().ascii(), target.GetId(), date_ );
+            FormatMessage( text, "Fire", target.GetName().toUtf8().constData(), target.GetId(), date_ );
         }
     }
 
@@ -357,7 +357,7 @@ void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages
                     text += ", ";
                 text += boost::lexical_cast< std::string >( repairable ) + " repairable";
             }
-            FormatMessage( text, "Fire", target.GetName().ascii(), target.GetId(), date_ );
+            FormatMessage( text, "Fire", target.GetName().toUtf8().constData(), target.GetId(), date_ );
         }
     }
 }

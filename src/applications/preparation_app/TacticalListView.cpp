@@ -341,7 +341,7 @@ void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel
 {
     kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
     for( const HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
-        subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+        subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().toUtf8().constData() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
 }
 
 // -----------------------------------------------------------------------------

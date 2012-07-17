@@ -166,8 +166,8 @@ void Formation::SetLevel( int levelId )
 void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", long( id_ ) )
-        << xml::attribute( "name", name_.ascii() )
-        << xml::attribute( "level", level_->GetName().ascii() );
+        << xml::attribute( "name", name_.toUtf8().constData() )
+        << xml::attribute( "level", level_->GetName().toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

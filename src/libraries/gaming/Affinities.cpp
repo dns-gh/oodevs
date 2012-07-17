@@ -124,7 +124,7 @@ bool Affinities::Accept( AffinitiesVisitor_ABC& visitor )
     BOOST_FOREACH( T_Affinities::value_type& affinity, changingAffinities_ )
     {
         kernel::Team_ABC& team = teams_.GetTeam( affinity.first );
-        visitor.Visit( affinity.first, team.GetName().ascii(), affinity.second );
+        visitor.Visit( affinity.first, team.GetName().toUtf8().constData(), affinity.second );
     }
     return !affinities_.empty();
 }

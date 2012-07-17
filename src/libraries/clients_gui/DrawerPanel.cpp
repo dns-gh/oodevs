@@ -259,7 +259,7 @@ void DrawerPanel::Open()
         filename.replace( "/", "\\" );
     try
     {
-        model_.Load( filename.ascii() );
+        model_.Load( filename.toUtf8().constData() );
     }
     catch( xml::exception& )
     {
@@ -283,7 +283,7 @@ void DrawerPanel::Save()
     try
     {
         tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
-        model_.Save( filename.ascii(), schemaWriter );
+        model_.Save( filename.toUtf8().constData(), schemaWriter );
     }
     catch( xml::exception& )
     {

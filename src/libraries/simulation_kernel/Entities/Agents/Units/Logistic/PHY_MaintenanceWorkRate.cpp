@@ -14,7 +14,7 @@
 #include "PHY_Breakdown.h"
 #include "protocol/Protocol.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;

@@ -96,8 +96,8 @@ void SessionConfigPanel::Commit( const std::string& exercise, const std::string&
     frontend::CreateSession action( config_, exercise, session );
     {
         action.SetOption( "session/meta/date", session );
-        action.SetOption( "session/meta/name", sessionName_->text().ascii() );
-        action.SetOption( "session/meta/comment", sessionComment_->text().ascii() );
+        action.SetOption( "session/meta/name", sessionName_->text().toUtf8().constData() );
+        action.SetOption( "session/meta/comment", sessionComment_->text().toUtf8().constData() );
     }
     {
         action.SetOption( "session/config/simulation/network/@port", frontend::SimulationPort( exerciseNumber_->value() ) );

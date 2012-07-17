@@ -98,7 +98,7 @@ void FilterDialogs::ReadSection( xml::xistream& xis )
     std::string name = xis.attribute< std::string >( "id" );
     std::transform( name.begin(), name.end(), name.begin(), std::tolower );
     if( name != "export" && name != "import" )
-        throw std::runtime_error( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).ascii() );
+        throw std::runtime_error( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).toUtf8().constData() );
     Register( name, *new FilterDialog( parent_, xis, config_ ) );
 }
 

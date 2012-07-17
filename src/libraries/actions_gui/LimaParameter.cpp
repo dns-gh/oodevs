@@ -34,7 +34,7 @@ LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel:
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
     , functions_   ( new Q3ListBox() )
-    , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).ascii(), "datetime", true ), false ) ) )
+    , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toUtf8().constData(), "datetime", true ), false ) ) )
 {
     // NOTHING
 }
@@ -113,7 +113,7 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
             const geometry::Point2f position = selectedLine_->Get< kernel::Positions >().GetPosition();
             const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
             if( ! functions.isEmpty() )
-                tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+                tools.Print( functions.join( ", " ).toUtf8().constData(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
             schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
         glPopAttrib();
     }
@@ -220,7 +220,7 @@ void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
         kernel::Lines lines;
         GeometrySerializer serializer( lines, converter_ );
         selectedLine_->Get< kernel::Positions >().Accept( serializer );
-        std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().ascii(), "phaseline", false ), converter_, lines ) );
+        std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().toUtf8().constData(), "phaseline", false ), converter_, lines ) );
         for( unsigned int i = 0; i < functions_->count(); ++i )
             if( functions_->isSelected( i ) )
                 param->AddFunction( i );
@@ -228,5 +228,5 @@ void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
         parameter.AddParameter( *param.release() );
     }
     else
-        parameter.AddParameter( *new actions::parameters::Lima( kernel::OrderParameter( GetName().ascii(), "phaseline", false ) ) );
+        parameter.AddParameter( *new actions::parameters::Lima( kernel::OrderParameter( GetName().toUtf8().constData(), "phaseline", false ) ) );
 }

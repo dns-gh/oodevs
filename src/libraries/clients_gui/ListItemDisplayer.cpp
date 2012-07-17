@@ -147,7 +147,7 @@ int ListItemDisplayer::FindColumn( const QString& name ) const
     for( unsigned i = 0; i < columns_.size(); ++i )
         if( columns_[i] == name )
             return i;
-    throw std::runtime_error( std::string( "Column '" ) + name.ascii() + "' does not exist" );
+    throw std::runtime_error( std::string( "Column '" ) + name.toUtf8().constData() + "' does not exist" );
 }
 
 // -----------------------------------------------------------------------------

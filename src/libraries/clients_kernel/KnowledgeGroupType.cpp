@@ -12,7 +12,7 @@
 
 #include "Tools.h"
 
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>

@@ -18,7 +18,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.hpp>

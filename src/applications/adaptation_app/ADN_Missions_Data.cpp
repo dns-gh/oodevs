@@ -301,7 +301,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 {
     std::string diaName = diaName_.GetData();
     if( diaName.empty() )
-        diaName = GetFussedDiaName( strName_.GetData().c_str() ).ascii();
+        diaName = GetFussedDiaName( strName_.GetData().c_str() ).toUtf8().constData();
 
     output << xml::start( "parameter" )
             << xml::attribute( "name", strName_ )
@@ -324,7 +324,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
         values_[i]->WriteArchive( output, i );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
     if( type_.GetData() == eMissionParameterTypeGenObject && !HasGenObjects() )
-        throw ADN_DataException( tools::translate( "ADN_Missions_Data",  "Invalid mission" ).ascii(), tools::translate( "ADN_Missions_Data", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "ADN_Missions_Data",  "Invalid mission" ).toUtf8().constData(), tools::translate( "ADN_Missions_Data", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).toUtf8().constData() );
     Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
     output << xml::end;
 }
@@ -462,7 +462,7 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     const QString typeName = type == "units" ? "Pion" : (isAutomat ? "Automate" : "Population");
     const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
     if( diaType_.GetData().empty() )
-        diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii();
+        diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).toUtf8().constData();
 
     output << xml::attribute( "name", strName_ )
            << xml::attribute( "dia-type", diaType_ )
@@ -478,15 +478,15 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     if( !isAutomat )
     {
         if( diaBehavior_.GetData().empty() )
-            diaBehavior_ = QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).ascii();
+            diaBehavior_ = QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).toUtf8().constData();
         output << xml::attribute( "dia-behavior", diaBehavior_ );
     }
     else
     {
         if( cdtDiaBehavior_.GetData().empty() )
-            cdtDiaBehavior_ = QString( "MIS_%1_CDT_%2" ).arg( typeName ).arg( diaName ).ascii();
+            cdtDiaBehavior_ = QString( "MIS_%1_CDT_%2" ).arg( typeName ).arg( diaName ).toUtf8().constData();
         if( mrtDiaBehavior_.GetData().empty() )
-            mrtDiaBehavior_ = QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaName ).ascii();
+            mrtDiaBehavior_ = QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaName ).toUtf8().constData();
         output << xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
                << xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ );
     }
@@ -625,7 +625,7 @@ namespace
 void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
 {
     if( diaType_.GetData().empty() )
-        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).ascii();
+        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toUtf8().constData();
 
     output << xml::start( "fragorder" )
             << xml::attribute( "name", strName_ )
@@ -897,7 +897,7 @@ ADN_Missions_Data::MissionType::MissionType()
 ADN_Missions_Data::MissionType::MissionType( const std::string& name )
 {
     name_ = name;
-    displayName_ = qApp->translate( "ADN_Tr", name.c_str() ).ascii();
+    displayName_ = qApp->translate( "ADN_Tr", name.c_str() ).toUtf8().constData();
     isAllowed_ = false;
 }
 

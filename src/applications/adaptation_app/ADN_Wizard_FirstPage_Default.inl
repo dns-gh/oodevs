@@ -103,7 +103,7 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
 template< typename T >
 T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
 {
-    std::string strNewName = pNameEdit_->text().ascii();
+    std::string strNewName = pNameEdit_->text().toUtf8().constData();
     // Check if the name empty.
     QString strErrorTitle( qApp->translate( "ADN_Wizard", "Creation impossible" ) );
     QString strErrorMsg( qApp->translate( "ADN_Wizard", "The provided name is either empty or already in use, please pick another one." ) );

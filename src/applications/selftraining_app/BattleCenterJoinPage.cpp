@@ -32,7 +32,7 @@ namespace
             : host_( host ), port_( port ) {}
         virtual bool Allows( const frontend::Exercise_ABC& exercise ) const
         {
-            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).ascii() )
+            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).toUtf8().constData() )
                 && exercise.IsRunning();
         }
         const QLineEdit& host_;
@@ -151,5 +151,5 @@ void BattleCenterJoinPage::OnJoin()
 void BattleCenterJoinPage::UpdateExerciseList()
 {
     exercises_->Clear();
-    Connect( host_->text().ascii(), static_cast< unsigned short >( port_->value() ) );
+    Connect( host_->text().toUtf8().constData(), static_cast< unsigned short >( port_->value() ) );
 }

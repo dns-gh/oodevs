@@ -65,7 +65,7 @@ void DrawingCategory::ReadTemplate( xml::xistream& xis, svg::TextRenderer& rende
     DrawingTemplate* style = new DrawingTemplate( xis, name_, renderer );
 
     if( !Find( style->GetName() ) && !Find( style->GetCode().toStdString() ) )
-        Register( style->GetName(), style->GetCode().ascii(), *style );
+        Register( style->GetName(), style->GetCode().toUtf8().constData(), *style );
     else
         QMessageBox::critical( 0,   tools::translate( "gui::DrawingCategory", "Error" ),
                                     tools::translate( "gui::DrawingCategory", "'%1' : category already defined in drawings file." ).arg( style->GetName() ),

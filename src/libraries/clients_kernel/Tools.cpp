@@ -16,6 +16,7 @@
 #include <QtCore/qlocale.h>
 #include <QtCore/qsettings.h>
 #include <QtCore/qtranslator.h>
+#include <QtCore/qtextcodec.h>
 #pragma warning( pop )
 
 using namespace kernel;

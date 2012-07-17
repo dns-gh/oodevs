@@ -175,7 +175,7 @@ actions::gui::Param_ABC& InterfaceBuilder::BuildOne( const kernel::OrderParamete
         return param;
     }
     else
-        throw std::runtime_error( tools::translate( "InterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType().c_str() ).ascii() );
+        throw std::runtime_error( tools::translate( "InterfaceBuilder", "Unknown mission parameter: %1" ).arg( parameter.GetType().c_str() ).toUtf8().constData() );
 }
 
 // =============================================================================

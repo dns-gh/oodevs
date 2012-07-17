@@ -10,7 +10,7 @@
 #include "RadarType.h"
 #include "RadarClass.h"
 #include "PerceptionLevel.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
 #include "MT_Tools/MT_Vector2D.h"

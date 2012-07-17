@@ -105,8 +105,8 @@ ADN_Weapon_Wizard_Page0::~ADN_Weapon_Wizard_Page0()
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
 {
-    std::string strLauncher = pComboLauncher_->currentText().ascii();
-    std::string strAmmo = pComboAmmo_->currentText().ascii();
+    std::string strLauncher = pComboLauncher_->currentText().toUtf8().constData();
+    std::string strAmmo = pComboAmmo_->currentText().toUtf8().constData();
 
     ADN_Weapons_Data::WeaponInfos* pExistingWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmo );
     if( pExistingWeapon != 0 )

@@ -11,7 +11,7 @@
 #include "MIL_MedicalTreatmentType.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MIL_Time_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>

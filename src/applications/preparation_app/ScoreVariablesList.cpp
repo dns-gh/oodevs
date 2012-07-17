@@ -102,8 +102,8 @@ indicators::Variables ScoreVariablesList::GetValue() const
             const QString name  = item->text( 0 ).remove( 0, 1 );
             const QString type  = item->text( 1 );
             const QString value = item->text( 2 );
-            boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.ascii(), types.Instanciate( type.ascii() ), value.ascii() ) );
-            result.Register( name.ascii(), variable );
+            boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.toUtf8().constData(), types.Instanciate( type.toUtf8().constData() ), value.toUtf8().constData() ) );
+            result.Register( name.toUtf8().constData(), variable );
         }
     return result;
 }

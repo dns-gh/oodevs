@@ -67,12 +67,12 @@ void SessionList::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void SessionList::Update( const QString& exercise )
 {
-    if( exercise_ != exercise.ascii() )
+    if( exercise_ != exercise.toUtf8().constData() )
     {
         exercise_ = exercise;
         comments_->clear();
         list_->clear();
-        list_->insertStringList( frontend::commands::ListSessions( config_, exercise.ascii() ) );
+        list_->insertStringList( frontend::commands::ListSessions( config_, exercise.toUtf8().constData() ) );
         list_->setSelected( 0, true );
     }
 }
@@ -97,7 +97,7 @@ void SessionList::ReadComments( const QString& session )
     try
     {
         std::string date, name, comment;
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.ascii(), session.ascii() ) ) / "session.xml" ).string() );
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.toUtf8().constData(), session.toUtf8().constData() ) ) / "session.xml" ).string() );
         *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
         if( xis->has_child( "name" ) )

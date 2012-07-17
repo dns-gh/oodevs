@@ -26,7 +26,7 @@ int main( int argc, char** argv )
     bool isGUI = true;
     try
     {
-        ADN_App app( argc, argv, "sword-authoring" );
+        ADN_App app( argc, argv );
         isGUI = app.GetOutputFile().empty();
         nResultCode = app.Run();
     }
@@ -51,10 +51,3 @@ int main( int argc, char** argv )
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResultCode;
 }
-
-//#include "tools/WinArguments.h"
-//int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
-//{
-//    tools::WinArguments winArgs(lpCmdLine) ;
-//    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) );
-//}

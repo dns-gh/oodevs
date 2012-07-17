@@ -62,7 +62,7 @@ String::~String()
 void String::CommitTo( std::string& message ) const
 {
     if( IsSet() )
-        message = GetValue().ascii();
+        message = GetValue().toUtf8().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void String::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->set_acharstr( GetValue().ascii() );
+       message.mutable_value()->Add()->set_acharstr( GetValue().toUtf8().constData() );
 }
 // -----------------------------------------------------------------------------
 // Name: String::CommitTo
@@ -82,7 +82,7 @@ void String::CommitTo( sword::MissionParameter& message ) const
 void String::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        message.set_acharstr( GetValue().ascii() );
+        message.set_acharstr( GetValue().toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ void String::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
     if( IsSet() )
-        xos << xml::attribute( "value", GetValue().ascii() );
+        xos << xml::attribute( "value", GetValue().toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

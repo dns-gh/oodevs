@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"

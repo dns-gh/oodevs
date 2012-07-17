@@ -143,7 +143,7 @@ std::string ElementTypeResolver::Resolve( const std::string& type ) const
         if( ! it->second.empty() )
             boost::replace_all( result, it->first, it->second );
     if( IsAbstract( result ) )
-        throw std::exception( tools::translate( "Indicators", "Unresolved type parameter: %1." ).arg( result.c_str() ).ascii() );
+        throw std::exception( tools::translate( "Indicators", "Unresolved type parameter: %1." ).arg( result.c_str() ).toUtf8().constData() );
     return ReplaceBaseElementTypes( result );
 }
 
@@ -191,7 +191,7 @@ void ElementTypeResolver::ConvertElementTypes( std::vector< std::string >& type1
     else if( type2.size() > type1.size() )
         type2.erase( type2.begin(), type2.begin() + ( type2.size() - type1.size() ) );
     if( type1.size() == 0 || type2.size() == 0 )
-        throw std::exception( tools::translate( "Indicators", "Cannot convert list parameter." ).ascii() );
+        throw std::exception( tools::translate( "Indicators", "Cannot convert list parameter." ).toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +202,7 @@ std::string ElementTypeResolver::ToSimpleType( const std::string& type )
 {
     const std::vector< std::string > list = Split( type );
     if( list.empty() )
-        throw std::exception( tools::translate( "Indicators", " has no type." ).ascii() );
+        throw std::exception( tools::translate( "Indicators", " has no type." ).toUtf8().constData() );
     return list.back();
 }
 

@@ -12,7 +12,7 @@
 #include "SensorTypeObject.h"
 #include "Sensor.h"
 #include "MT_Tools/MT_Stl.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "wrapper/Hook.h"
 #include <algorithm>
 #include <xeumeuleu/xml.hpp>

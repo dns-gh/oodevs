@@ -45,13 +45,13 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
 {
-    location_           = static_cast< ParamLocation* > ( AddElement( "location",   tr( "Construction location" ).ascii() ) );
-    density_            = static_cast< ParamFloat* >    ( AddElement( "float",      tr( "Density per 100 square meter" ).ascii() ) );
-    tc2_                = static_cast< ParamAutomat* >  ( AddElement( "automat",    tr( "TC2" ).ascii() ) );
-    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).ascii() ) );
-    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).ascii() ) );
-    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).ascii() ) );
-    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).ascii() ) );
+    location_           = static_cast< ParamLocation* > ( AddElement( "location",   tr( "Construction location" ).toUtf8().constData() ) );
+    density_            = static_cast< ParamFloat* >    ( AddElement( "float",      tr( "Density per 100 square meter" ).toUtf8().constData() ) );
+    tc2_                = static_cast< ParamAutomat* >  ( AddElement( "automat",    tr( "TC2" ).toUtf8().constData() ) );
+    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toUtf8().constData() ) );
+    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toUtf8().constData() ) );
+    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toUtf8().constData() ) );
+    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toUtf8().constData() ) );
 
     density_            ->SetKeyName( "density" );
     altitudeModifier_   ->SetKeyName( "altitude_modifier" );
@@ -243,7 +243,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
         if( type->HasLogistic() )
             tc2_->CommitTo( *param );
         if( type->CanBeReservedObstacle() )
-            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).ascii(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).toUtf8().constData(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
         if( type->HasAltitudeModifierCapacity() )
             altitudeModifier_->CommitTo( *param );
         if( type->HasTimeLimitedCapacity() )

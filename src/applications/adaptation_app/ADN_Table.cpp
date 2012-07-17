@@ -277,7 +277,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
 {
     BasicExcel xls;
     xls.New(1);
-    xls.RenameWorksheet( 0, sheetName.ascii() );
+    xls.RenameWorksheet( 0, sheetName.toUtf8().constData() );
     BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
     XLSFormatManager fmt_mgr(xls);
     Workbook::Palette& palette = xls.workbook_.palette_;
@@ -366,7 +366,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
                 if( ok )
                     cell->Set( content.toDouble() );
                 else
-                    cell->Set( content.ascii() );
+                    cell->Set( content.toUtf8().constData() );
             }
 
             // Column size
@@ -415,7 +415,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
     for( int col = 0; col < numCols(); ++col )
         sheet->SetColWidth( col, static_cast< USHORT >( std::max( columnMaxContentSize[ col ] * charactereSize, minimumSize ) ) );
 
-    xls.SaveAs( path.ascii() );
+    xls.SaveAs( path.toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

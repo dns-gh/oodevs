@@ -159,7 +159,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
     {
         if( hasInfrastructure_ && zoom >  0.00045f )
         {
-            name = object_.GetName().ascii();
+            name = object_.GetName().toUtf8().constData();
             if( zoom <= 0.0007f )
                 nameSize = static_cast< unsigned int >( nameSize * zoom * 1600 );
         }
@@ -179,7 +179,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
         {
             if( zoom > 0.00015f && zoom <= 0.00045f )
             {
-                name = object_.GetName().ascii();
+                name = object_.GetName().toUtf8().constData();
                 if( zoom <= 0.0002f )
                     nameSize = static_cast< unsigned int >( nameSize * zoom * 5600 );
                 else if( zoom <= 0.0003f )
@@ -193,7 +193,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
         {
             if( zoom <= 0.00015f )
             {
-                name = object_.GetName().ascii();
+                name = object_.GetName().toUtf8().constData();
                 nameSize = static_cast< unsigned int >( nameSize * zoom * 11300 );
             }
             tools.DrawConvexDecoratedPolygon( polygon_, object_.Get< kernel::UrbanColor_ABC >(), name, nameSize, selected_ );

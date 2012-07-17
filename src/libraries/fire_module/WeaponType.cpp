@@ -12,7 +12,7 @@
 #include "DotationCategory.h"
 #include "WeaponDataType_DirectFire.h"
 #include "WeaponDataType_IndirectFire.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
 #include <module_api/Log.h>

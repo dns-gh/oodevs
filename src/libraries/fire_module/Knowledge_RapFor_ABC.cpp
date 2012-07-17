@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "Knowledge_RapFor_ABC.h"
-#include "tools/xmlcodecs.h" // $$$$ MCO 2012-05-15: refactor dependency
+#include "tools/Codec.h" // $$$$ MCO 2012-05-15: refactor dependency
 #include <wrapper/Hook.h>
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.h>

@@ -58,7 +58,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FilterCsv::Execute()
 {
-    bfs::path ouput( output_->text().ascii() );
+    bfs::path ouput( output_->text().toUtf8().constData() );
     pExport_->Execute( ouput, *this );
 }
 
@@ -113,7 +113,7 @@ QWidget* FilterCsv::CreateParametersWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool FilterCsv::IsValid() const
 {
-    return output_ && output_->text().ascii() && !output_->text().isEmpty() && bfs::exists( output_->text().ascii() );
+    return output_ && output_->text().toUtf8().constData() && !output_->text().isEmpty() && bfs::exists( output_->text().toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

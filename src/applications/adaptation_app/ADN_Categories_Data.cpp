@@ -204,7 +204,7 @@ void ADN_Categories_Data::ReadVolume( xml::xistream& input )
     std::string strName = input.attribute< std::string >( "name" );
     T_SizeInfos_Vector::iterator foundSize = std::find_if( vSizes_.begin(), vSizes_.end(), ADN_String_Cmp( strName ) );
     if( foundSize != vSizes_.end() )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated volume type name '%1'" ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated volume type name '%1'" ).arg( strName.c_str() ).toUtf8().constData() );
 
     SizeInfos* pNewArmor = new SizeInfos(strName);
     pNewArmor->SetDataName( "le nom de la catégorie de volume" );
@@ -256,7 +256,7 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     input >> xml::optional >> xml::attribute( "id", id );
     helpers::T_ResourceNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
     if( found != vDotationNatures_.end() )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).toUtf8().constData() );
     if( !id )
         id = idFactory_.Create();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
@@ -277,7 +277,7 @@ void ADN_Categories_Data::ReadLogisticSupplyClass( xml::xistream& input )
     input >> xml::optional >> xml::attribute( "id", id );
     helpers::T_LogisticSupplyClass_Vector::iterator found = std::find_if( vLogisticSupplyClasses_.begin(), vLogisticSupplyClasses_.end(), ADN_String_Cmp( strName ) );
     if( found != vLogisticSupplyClasses_.end() )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource logistic category '%1'" ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource logistic category '%1'" ).arg( strName.c_str() ).toUtf8().constData() );
     if( !id )
         id = idFactory_.Create();
     helpers::LogisticSupplyClass* pNew = new helpers::LogisticSupplyClass( strName, id );
@@ -316,14 +316,14 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vSizes_, StringExtractor() ) )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated volume type names" ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated volume type names" ).toUtf8().constData() );
 
     output << xml::start( "volumes" );
     ADN_Tools::AddSchema( output, "Volumes" );
     for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
         if( ( *itSize )->GetData().empty() )
-            throw ADN_DataException(tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Invalid volume type name" ).ascii() );
+            throw ADN_DataException(tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Invalid volume type name" ).toUtf8().constData() );
         std::string strData( ( *itSize )->GetData() );
         output << xml::start( "volume" )
                 << xml::attribute( "name", trim( strData ) )
@@ -341,7 +341,7 @@ void ADN_Categories_Data::WriteArmors( xml::xostream& output )
 {
     // Check the armors data for duplicates.
     if( HasDuplicates( vArmors_, ArmorExtractor() ) )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated armor type names" ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated armor type names" ).toUtf8().constData() );
 
     output << xml::start( "protections" );
     ADN_Tools::AddSchema( output, "Armors" );
@@ -358,14 +358,14 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
 {
     // Check the dotation natures for duplicates.
     if( HasDuplicates( vDotationNatures_, StringExtractor() ) )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature names" ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature names" ).toUtf8().constData() );
 
     output << xml::start( "natures" );
     ADN_Tools::AddSchema( output, "ResourceNatures" );
     for( helpers::T_ResourceNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
         if( ( *it )->GetData().empty() )
-            throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).ascii() );
+            throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toUtf8().constData() );
         std::string strData( ( *it )->GetData() );
         output << xml::start( "nature" )
                 << xml::attribute( "type", trim( strData ) )
@@ -383,14 +383,14 @@ void ADN_Categories_Data::WriteLogisticSupplyClasses( xml::xostream& output )
 {
     // Check the dotation natures for duplicates.
     if( HasDuplicates( vLogisticSupplyClasses_, StringExtractor() ) )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated logistic resource category" ).ascii() );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated logistic resource category" ).toUtf8().constData() );
 
     output << xml::start( "logistic-supply-classes" );
     ADN_Tools::AddSchema( output, "LogisticSupplyClasses" );
     for( helpers::T_LogisticSupplyClass_Vector::const_iterator it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
     {
         if( ( *it )->GetData().empty() )
-            throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).ascii() );
+            throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toUtf8().constData() );
         std::string strData( ( *it )->GetData() );
         output << xml::start( "logistic-supply-class" )
                 << xml::attribute( "type", trim( strData ) )

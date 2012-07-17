@@ -123,7 +123,7 @@ void ADN_Health_Data::ReadInjury( xml::xistream& input )
     {
         E_DoctorSkills skill = ADN_Tr::ConvertToDoctorSkills( category );
         if( skill == E_DoctorSkills( -1 ) )
-            throw ADN_DataException( tools::translate( "Health_Data", "Invalid data" ).ascii(), tools::translate( "Health_Data", "Logistic medical system - Invalid wound type '%1'" ).arg( category.c_str() ).ascii() );
+            throw ADN_DataException( tools::translate( "Health_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Health_Data", "Logistic medical system - Invalid wound type '%1'" ).arg( category.c_str() ).toUtf8().constData() );
         wounds[skill].ReadArchive( input );
     }
 }

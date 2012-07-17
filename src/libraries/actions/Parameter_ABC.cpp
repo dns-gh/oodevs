@@ -108,7 +108,7 @@ void Parameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", name_.ascii() );
+    xos << xml::attribute( "name", name_.toUtf8().constData() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );

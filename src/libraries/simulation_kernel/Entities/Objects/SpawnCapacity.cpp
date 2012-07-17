@@ -20,7 +20,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MIL_NbcAgentType.h"
 #include "NBCAttribute.h"
 #include <xeumeuleu/xml.hpp>

@@ -104,8 +104,8 @@ UserProfile::~UserProfile()
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "profile" )
-            << xml::attribute( "name", login_.ascii() )
-            << xml::attribute( "password", password_.ascii() )
+            << xml::attribute( "name", login_.toUtf8().constData() )
+            << xml::attribute( "password", password_.toUtf8().constData() )
             << xml::attribute( "supervision", supervisor_ )
             << xml::start( "rights" );
     rights_.Serialize( xos );

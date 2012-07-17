@@ -43,7 +43,7 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
-    YAxis().SetAxisCaption( tools::translate( "IndicatorPlot", "Value" ).ascii() );
+    YAxis().SetAxisCaption( tools::translate( "IndicatorPlot", "Value" ).toUtf8().constData() );
     YAxis().ShowTicks( 25 );
     YAxis().ShowTicksValue( true );
     YAxis().SetCaptionMargin( 8 );
@@ -52,7 +52,7 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     XAxis().ShowGrid( true );
     XAxis().ShowTicks( 25 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( tools::translate( "IndicatorPlot","Time (Tick)" ).ascii() );
+    XAxis().SetAxisCaption( tools::translate( "IndicatorPlot","Time (Tick)" ).toUtf8().constData() );
 
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );

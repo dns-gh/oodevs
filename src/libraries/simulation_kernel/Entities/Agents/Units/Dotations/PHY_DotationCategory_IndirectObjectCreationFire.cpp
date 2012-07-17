@@ -18,7 +18,7 @@
 #include "Entities/Objects/TimeLimitedAttribute.h"
 #include "Entities/Objects/TimeLimitedCapacity.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 

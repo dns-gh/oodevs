@@ -93,7 +93,7 @@ namespace
 ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category )
     : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
     , tools_   ( tools )
-    , strName_ ( template_->GetName().ascii() )
+    , strName_ ( template_->GetName().toUtf8().constData() )
     , category_( category )
 {
     Initialize();
@@ -147,7 +147,7 @@ const QPixmap& ADN_Drawings_Data::DrawingInfo::GetPixmap() const
 // -----------------------------------------------------------------------------
 const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
 {
-    return template_->GetCode().ascii();
+    return template_->GetCode().toUtf8().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
 // -----------------------------------------------------------------------------
 const std::string ADN_Drawings_Data::DrawingInfo::GetGeometry() const
 {
-    return template_->GetType().ascii();
+    return template_->GetType().toUtf8().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
     glEnd();
 
     // $$$$ ABR 2011-04-21: scale and translate if meter unit
-    const std::string geometry = template_->GetType().ascii();
+    const std::string geometry = template_->GetType().toUtf8().constData();
     if( template_->GetUnit() == gui::DrawingTemplate::eMeter && geometry != "polygon" )
     {
         glScalef( SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_SCALE_RATIO_FOR_METER, 0.f );

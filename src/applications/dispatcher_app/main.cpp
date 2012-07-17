@@ -12,6 +12,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Codec.h"
 #include "tools/WinArguments.h"
 #include <windows.h>
 #pragma warning( push )
@@ -45,6 +46,7 @@ int Run( LPSTR lpCmdLine )
 #endif
 
         // Execute dispatcher
+        tools::SetCodec();
         tools::WinArguments winArgs( lpCmdLine );
         Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
         nResult = app.Execute();

@@ -12,6 +12,7 @@
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
 #include "license_gui/LicenseDialog.h"
+#include "tools/Codec.h"
 #include "tools/Version.h"
 #include "tools/Win32/BugTrap.h"
 
@@ -28,6 +29,7 @@ Application_ABC::Application_ABC( int& argc, char** argv )
     , invalidLicense_( true )
 {
     SetLocale();
+    tools::SetCodec();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,10 +74,10 @@ void Application_ABC::Initialize()
 // -----------------------------------------------------------------------------
 void Application_ABC::CheckLicense( const std::string& licenseName )
 {
+    invalidLicense_ = false;
 #if !defined( NO_LICENSE_CHECK )
     try
     {
-        invalidLicense_ = false;
         std::string strExpiration;
         license_gui::LicenseDialog::CheckLicense( licenseName, false, 0, &strExpiration );
         expiration_ = QString::fromStdString( strExpiration );
@@ -93,9 +95,9 @@ void Application_ABC::CheckLicense( const std::string& licenseName )
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeBugTrap()
 {
-    BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
-            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).ascii() )
-            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
+    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toUtf8().constData() )
+            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).toUtf8().constData() )
+            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

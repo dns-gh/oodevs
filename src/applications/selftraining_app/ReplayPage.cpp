@@ -157,7 +157,7 @@ void ReplayPage::OnSelectSession( const QString& session )
 // -----------------------------------------------------------------------------
 void ReplayPage::ConfigureSession( const QString& exercise, const QString& session )
 {
-    frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
+    frontend::CreateSession action( config_, exercise.toUtf8().constData(), session.toUtf8().constData() );
     action.SetDefaultValues(); // reset specific parameters
     action.Commit();
 }

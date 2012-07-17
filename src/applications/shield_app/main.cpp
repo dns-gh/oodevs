@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "tools/ClientNetworker.h"
+#include "tools/Codec.h"
 #pragma warning( push, 0 )
 #include "shield/proto/ClientToAar.pb.h"
 #include "shield/proto/ClientToAuthentication.pb.h"
@@ -152,6 +153,7 @@ int main( int argc, char* argv[] )
     }
     try
     {
+        tools::SetCodec();
         Client client( host + ":" + port, profile, password );
         while( true )
             client.Update();

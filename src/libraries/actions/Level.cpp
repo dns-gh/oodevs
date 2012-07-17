@@ -75,7 +75,7 @@ void Level::CommitTo( T_Setter setter ) const
 void Level::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << xml::attribute( "value", level_.GetName().ascii() );
+    xos << xml::attribute( "value", level_.GetName().toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

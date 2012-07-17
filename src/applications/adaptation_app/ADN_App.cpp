@@ -27,11 +27,11 @@ namespace po = boost::program_options;
 // Name: ADN_App constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-ADN_App::ADN_App( int argc, char** argv, const std::string& licenseName )
+ADN_App::ADN_App( int argc, char** argv )
     : gui::Application_ABC( argc, argv )
 {
     // License
-    CheckLicense( "sword" );
+    CheckLicense( "sword-authoring" );
     if( IsInvalidLicense() )
         return;
 
@@ -69,11 +69,6 @@ ADN_App::ADN_App( int argc, char** argv, const std::string& licenseName )
 ADN_App::~ADN_App()
 {
     // NOTHING
-    //if( pMainWindow_ != 0 )
-    //    pMainWindow_->hide();
-    // Don't delete the main window to speed up the closing of the application.
-    // Restore the next line if checking for memory leaks.
-    // delete pMainWindow_;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +122,9 @@ int ADN_App::Run()
 {
     try
     {
+        if( IsInvalidLicense() )
+            return EXIT_FAILURE;
+
         if( !inputFile_.empty() )
             mainWindow_->OpenProject( inputFile_, true );
         if( !outputFile_.empty() )
@@ -147,7 +145,6 @@ int ADN_App::Run()
         }
         return EXIT_FAILURE;
     }
-    //mainWindow_->show();
     mainWindow_->showMaximized();
     return exec();
 }

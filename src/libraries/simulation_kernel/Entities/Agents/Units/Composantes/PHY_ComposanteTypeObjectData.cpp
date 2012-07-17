@@ -16,7 +16,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

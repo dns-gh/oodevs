@@ -29,7 +29,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     setFocusPolicy( Qt::ClickFocus );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
-    YAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Altitude (m)" ).ascii() );
+    YAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Altitude (m)" ).toUtf8().constData() );
     YAxis().ShowTicks( 50 );
     YAxis().ShowTicksValue( true );
     YAxis().SetCaptionMargin( 8 );
@@ -38,7 +38,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     XAxis().ShowGrid( false );
     XAxis().ShowTicks( 1 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Distance (km)" ).ascii() );
+    XAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Distance (km)" ).toUtf8().constData() );
 
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );

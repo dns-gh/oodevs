@@ -58,7 +58,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     : Parameter< std::string >( parameter )
     , type_( &types.Get( message.type() ) )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).ascii(), "location", false ), converter, message.position() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toUtf8().constData(), "location", false ), converter, message.position() ) );
     SetValue( type_->GetName() );
     SetParameters( message, entities, controller );
 }
@@ -71,32 +71,32 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
 {
     if( message.combat_train().id() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).ascii(), "tc2", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).toUtf8().constData(), "tc2", false );
         AddParameter( *new Automat( param, message.combat_train().id(), entities, controller ) );
     }
     if( message.density() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).ascii(), "float", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).toUtf8().constData(), "float", false );
         AddParameter( *new Numeric( param, message.density() ) );
     }
     if( message.altitude_modifier() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Altitude modifier" ).ascii(), "integer", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Altitude modifier" ).toUtf8().constData(), "integer", false );
         AddParameter( *new Quantity( param, message.altitude_modifier() ) );
     }
     if( message.mining() != false )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle mining" ).ascii(), "boolean", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle mining" ).toUtf8().constData(), "boolean", false );
         AddParameter( *new Bool( param, message.mining() ) );
     }
     if( message.time_limit() > 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).ascii(), "integer", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).toUtf8().constData(), "integer", false );
         AddParameter( *new Numeric( param, message.time_limit() ) );
     }
     if( message.lodging() > 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Lodging" ).ascii(), "integer", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Lodging" ).toUtf8().constData(), "integer", false );
         AddParameter( *new Quantity( param, message.lodging() ) );
     }
 }
@@ -151,7 +151,7 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).ascii(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toUtf8().constData(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
 }

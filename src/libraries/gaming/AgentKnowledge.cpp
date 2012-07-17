@@ -288,7 +288,7 @@ namespace
         while( list.size() > keep )
             list.pop_back();
         QString result = list.join( "/" );
-        return result.isNull() ? "" : result.ascii();
+        return result.isNull() ? "" : result.toUtf8().constData();
     }
 }
 

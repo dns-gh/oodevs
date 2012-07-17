@@ -10,7 +10,7 @@
 #include "PositionsPluginFactory.h"
 #include "PositionsPlugin.h"
 #include "dispatcher/Config.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::positions;

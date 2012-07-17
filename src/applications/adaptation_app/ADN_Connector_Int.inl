@@ -43,7 +43,7 @@ void ADN_Connector_Int<T>::SetDataPrivate(void *data)
     assert(data);
     char   istring[256];
     sprintf_s(istring,"%d",*(int*)data);
-    if( strcmp(istring,pGfx_->text().ascii()) )
+    if( strcmp(istring,pGfx_->text().toUtf8().constData()) )
     {
         int pos = pGfx_->cursorPosition();
         pGfx_->setText(istring);

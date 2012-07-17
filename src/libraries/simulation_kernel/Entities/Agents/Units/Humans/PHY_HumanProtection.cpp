@@ -15,7 +15,7 @@
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 

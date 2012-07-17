@@ -62,7 +62,7 @@ RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubje
         const dispatcher::Team_ABC& team = it.NextElement();
         if( team.GetId() )
         {
-            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().ascii() + " (" + team.GetName().ascii() + ")" );
+            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().toUtf8().constData() + " (" + team.GetName().toUtf8().constData() + ")" );
             karmas_[ team.GetKarma() ] = team.GetId();
         }
     }

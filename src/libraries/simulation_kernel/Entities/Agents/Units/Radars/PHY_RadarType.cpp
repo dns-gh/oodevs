@@ -20,7 +20,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;

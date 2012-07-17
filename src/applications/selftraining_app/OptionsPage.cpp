@@ -143,7 +143,7 @@ void OptionsPage::OnChangeDataDirectory()
     const QString directory = QDir::convertSeparators( Q3FileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
     if( directory.isEmpty() )
         return;
-    selectedDataDir_ = directory.ascii();
+    selectedDataDir_ = directory.toUtf8().constData();
     dataDirectory_->setText( directory );
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
@@ -155,7 +155,7 @@ void OptionsPage::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnEditDataDirectory( const QString& text )
 {
-    selectedDataDir_ = text.ascii();
+    selectedDataDir_ = text.toUtf8().constData();
     hasChanged_ = true;
     EnableButton( eButtonApply, true );
 }
@@ -200,7 +200,7 @@ void OptionsPage::OnBack()
 // -----------------------------------------------------------------------------
 void OptionsPage::CreateDataDirectory()
 {
-    const std::string directory = dataDirectory_->text().ascii();
+    const std::string directory = dataDirectory_->text().toUtf8().constData();
     if( !bfs::exists( directory ) )
     {
         MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );

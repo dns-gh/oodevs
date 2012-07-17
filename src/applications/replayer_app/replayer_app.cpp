@@ -12,6 +12,7 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Codec.h"
 #include "tools/WinArguments.h"
 #pragma warning( push )
 #pragma warning( disable: 4512 )
@@ -34,6 +35,7 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         license_gui::LicenseDialog::CheckLicense( "sword-replayer", silentMode );
 #endif
+        tools::SetCodec();
         App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
         app.Execute();
     }

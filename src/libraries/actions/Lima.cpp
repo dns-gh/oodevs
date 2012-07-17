@@ -37,7 +37,7 @@ Lima::Lima( const kernel::OrderParameter& parameter )
 Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Location_ABC& location )
     : Parameter< QString >( parameter )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, location ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toUtf8().constData(), "location", false ), converter, location ) );
     Set( true );
 }
 
@@ -52,8 +52,8 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
     for( int i = 0; i < message.fonctions_size(); ++i )
         functions.append( tools::ToShortString( (E_FuncLimaType)message.fonctions(i) ) );
     SetValue( functions.join( ", " ) );
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.line().location() ) );
-    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.time() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toUtf8().constData(), "location", false ), converter, message.line().location() ) );
+    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toUtf8().constData(), "datetime", false ), message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void Lima::Serialize( xml::xostream& xos ) const
         QStringList functions = QStringList::split( ", ", GetValue() );
         for( int i = 0; i < functions.size(); ++i )
             functions[i] = tools::LimaTypeShortToXmlString( functions[i] );
-        xos << xml::attribute( "value", functions.join( ", " ).ascii() );
+        xos << xml::attribute( "value", functions.join( ", " ).toUtf8().constData() );
     }
 }
 
@@ -120,9 +120,9 @@ void Lima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& con
     std::string type;
     xis >> xml::attribute( "type", type );
     if( type == "location" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toUtf8().constData(), "location", false ), converter, xis ) );
     else if( type == "datetime" )
-        AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), xis ) );
+        AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toUtf8().constData(), "datetime", false ), xis ) );
 }
 
 // -----------------------------------------------------------------------------

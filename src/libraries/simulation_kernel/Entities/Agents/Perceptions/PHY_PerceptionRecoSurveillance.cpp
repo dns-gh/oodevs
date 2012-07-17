@@ -23,7 +23,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace

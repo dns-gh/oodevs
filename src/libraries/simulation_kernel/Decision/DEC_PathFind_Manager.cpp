@@ -26,7 +26,7 @@
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Tools/MIL_Config.h"
 #include "tools/Loader_ABC.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Logger.h"

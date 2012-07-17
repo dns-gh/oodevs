@@ -11,7 +11,7 @@
 #include "MIL_KnowledgeGroupType.h"
 #include "MIL_KnowledgeGroup.h"
 #include "tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>

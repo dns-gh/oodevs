@@ -123,7 +123,7 @@ void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
 void ExerciseList::SelectExercise( Q3ListViewItem* item )
 {
     const QString exercise( exercises_->GetItemName( item ) );
-    profiles_->Update( exercise.ascii() );
+    profiles_->Update( exercise.toUtf8().constData() );
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
         properties_->Select( selected );

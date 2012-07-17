@@ -84,7 +84,7 @@ namespace
             {
                 bool founded = false;
                 for( Q3ListViewItemIterator iterator = *files; iterator.current() && !founded; ++iterator )
-                    if( std::string( iterator.current()->text( 0 ).ascii() ).find( it->path().filename().string() ) != std::string::npos )
+                    if( std::string( iterator.current()->text( 0 ).toUtf8().constData() ).find( it->path().filename().string() ) != std::string::npos )
                         founded = true;
                 if( founded )
                     continue;
@@ -159,7 +159,7 @@ namespace frontend
             Q3CheckListItem* item = static_cast< Q3CheckListItem* >( iterator.current() );
             if( item && item->isOn() )
             {
-                std::string file( item->text( 0 ).ascii() );
+                std::string file( item->text( 0 ).toUtf8().constData() );
                 if( file == "exercises" || file.find( "exercises/" + params.from_ ) == std::string::npos )
                     continue;
                 else

@@ -150,7 +150,7 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
     xos << xml::attribute( "valid", isValid_ );
     xos << xml::start( "meta" );
     if( ! name_.isEmpty() )
-        xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;
+        xos << xml::start( "name" ) << xml::cdata( name_.toUtf8().constData() ) << xml::end;
     SerializeBriefings( xos );
     SerializeResources( xos );
     SerializeOrderFiles( xos );
@@ -174,8 +174,8 @@ void Exercise::SerializeBriefings( xml::xostream& xos ) const
     for( T_Resources::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
         if( !it->second.isEmpty() )
             xos << xml::start( "text" )
-                    << xml::attribute( "lang", it->first.ascii() )
-                    << xml::cdata( it->second.ascii() )
+                    << xml::attribute( "lang", it->first.toUtf8().constData() )
+                    << xml::cdata( it->second.toUtf8().constData() )
                 << xml::end;
     xos << xml::end;
 }
@@ -189,8 +189,8 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
     xos << xml::start( "resources" );
     for( T_Resources::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
         xos << xml::start( "resource" )
-                << xml::attribute( "name", it->first.ascii() )
-                << xml::attribute( "file", it->second.ascii() )
+                << xml::attribute( "name", it->first.toUtf8().constData() )
+                << xml::attribute( "file", it->second.toUtf8().constData() )
             << xml::end;
     xos << xml::end;
 }
@@ -206,7 +206,7 @@ void Exercise::SerializeOrderFiles( xml::xostream& xos ) const
     xos << xml::start( "orders" );
     for( T_OrderFiles::const_iterator it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
         xos << xml::start( "order" )
-                << xml::attribute( "file", it->ascii() )
+                << xml::attribute( "file", it->toUtf8().constData() )
             << xml::end;
     xos << xml::end;
 }

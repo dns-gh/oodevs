@@ -310,12 +310,12 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     if( !pLauncher )
-        throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).ascii(), tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toUtf8().constData() );
     ptrLauncher_ = pLauncher;
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-        throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).ascii(), tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toUtf8().constData() );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 
     strName_ = strLauncher + " & " + strAmmunition;
@@ -370,7 +370,7 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
     if( bIndirect_.GetData() )
     {
         if( rMaxRange_.GetData() < rMinRange_.GetData() )
-            throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).ascii(), tools::translate( "Weapons_Data", "Weapon %1 - Indirect fire - max range < min range" ).arg( strName_.GetData().c_str() ).ascii() );
+            throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Weapons_Data", "Weapon %1 - Indirect fire - max range < min range" ).arg( strName_.GetData().c_str() ).toUtf8().constData() );
 
         output << xml::start( "indirect-fire" )
                 << xml::attribute( "average-speed", rAverageSpeed_ )

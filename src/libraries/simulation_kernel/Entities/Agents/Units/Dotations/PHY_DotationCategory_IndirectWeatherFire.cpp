@@ -15,7 +15,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create

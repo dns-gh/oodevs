@@ -157,7 +157,7 @@ namespace
         {
             std::string result;
             parameter.CommitTo( result );
-            request_->SetParameter( parameter.GetName().ascii(), result );
+            request_->SetParameter( parameter.GetName().toUtf8().constData(), result );
             delete& parameter;
         }
     private:
@@ -215,7 +215,7 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
     boost::shared_ptr< actions::gui::Param_ABC > result;
     if( !compatibleType.empty() )
     {
-        const OrderParameter parameter( name.ascii(), compatibleType, false, 1, nbOccur );
+        const OrderParameter parameter( name.toUtf8().constData(), compatibleType, false, 1, nbOccur );
         actions::gui::Param_ABC* param = &builder_.BuildOne( parameter, false );
         if( compatibleType == "location" )
             static_cast< actions::gui::ParamLocation* >( param )->SetShapeFilter( false, false, true, true, false );

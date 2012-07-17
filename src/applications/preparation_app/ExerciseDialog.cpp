@@ -188,13 +188,13 @@ namespace
     std::string AbsolutePath( const std::string& file )
     {
         QDir info( file.c_str() );
-        return info.absPath().ascii();
+        return info.absPath().toUtf8().constData();
     }
 
     QString MakeRelativePath( const QString& filename, const tools::ExerciseConfig& config )
     {
         const std::string sp1 = AbsolutePath( bfs::path( config.GetExerciseFile() ).branch_path().string() );
-        const std::string sp2 = bfs::path( filename.ascii() ).string();
+        const std::string sp2 = bfs::path( filename.toUtf8().constData() ).string();
         if( boost::istarts_with( sp2, sp1 ) && sp1.size() < sp2.size() )
             return bfs::path( sp2.substr( sp1.length() ) ).relative_path().string().c_str();
         return sp2.c_str();

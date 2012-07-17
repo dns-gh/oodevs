@@ -22,7 +22,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"

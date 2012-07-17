@@ -14,7 +14,7 @@
 #include "PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"

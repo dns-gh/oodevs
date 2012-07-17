@@ -31,6 +31,9 @@
     <Filter Include="Source Files\File writer">
       <UniqueIdentifier>{01d9ccda-0f6c-4b13-8fda-b636c785252c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Codecs">
+      <UniqueIdentifier>{101c1cc2-a5ef-4898-91af-d4cce7676f73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp">
@@ -126,6 +129,9 @@
     <ClCompile Include="..\..\src\libraries\tools\ExerciseSettings.cpp">
       <Filter>Source Files\Command line</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Codec.cpp">
+      <Filter>Source Files\Codecs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -138,9 +144,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\xmlcodecs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\CommandLineConfig_ABC.h">
@@ -298,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\ExerciseSettings.h">
       <Filter>Source Files\Command line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Codec.h">
+      <Filter>Source Files\Codecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

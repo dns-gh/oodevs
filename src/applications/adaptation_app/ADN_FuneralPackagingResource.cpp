@@ -65,7 +65,7 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
           >> xml::attribute( "terminal", terminal_ );
     ADN_Equipement_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( resourceName );
     if( resource == 0 )
-        throw ADN_DataException( tools::translate( "Funeral_Data", "Invalid data" ).ascii(), tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Funeral_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toUtf8().constData() );
     resource_ = resource;
 }
 

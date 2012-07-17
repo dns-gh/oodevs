@@ -103,7 +103,7 @@ void ExerciseProperties::Update()
         int index = 1;
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toUtf8().constData() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
                 modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
         }
@@ -147,7 +147,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
                             >> xml::list( "text", *this, &ExerciseProperties::ReadBriefingText );
             if( !image.empty() )
             {
-                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).ascii() );
+                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).toUtf8().constData() );
                 const QImage pix( imagePath.c_str() );
                 QPixmap px;
                 px.fromImage( pix );
@@ -179,7 +179,7 @@ void ExerciseProperties::ReadBriefingText( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    if( lang == language_.ascii() )
+    if( lang == language_.toUtf8().constData() )
     {
         briefingText_->setText( text.c_str() );
         briefingText_->show();
@@ -205,9 +205,9 @@ void ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( dataChanged_ )
         if( terrainList_ && terrainList_->currentItem() > 0 && modelList_ && modelList_->currentItem() > 0 )
         {
-            const std::string terrain = terrainList_->currentText().ascii();
+            const std::string terrain = terrainList_->currentText().toUtf8().constData();
             const QStringList model = QStringList::split( "/", modelList_->currentText() );
-            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().ascii(), model.back().ascii() );
+            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().toUtf8().constData(), model.back().toUtf8().constData() );
         }
     dataChanged_ = false;
 }
@@ -218,6 +218,6 @@ void ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 // -----------------------------------------------------------------------------
 bool ExerciseProperties::IsValid() const
 {
-    return terrainList_->currentText().ascii() != tools::translate( "ExerciseProperties", "Terrain:" ) &&
-           modelList_->currentText().ascii() != tools::translate( "ExerciseProperties", "Model:" );
+    return terrainList_->currentText().toUtf8().constData() != tools::translate( "ExerciseProperties", "Terrain:" ) &&
+           modelList_->currentText().toUtf8().constData() != tools::translate( "ExerciseProperties", "Model:" );
 }

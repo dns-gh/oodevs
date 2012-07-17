@@ -47,7 +47,7 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "MedicalTreatment" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );
-    list.AddString( "ExternalReferenceId", referenceID_->text().ascii() );
+    list.AddString( "ExternalReferenceId", referenceID_->text().toUtf8().constData() );
     list.AddQuantity( "Doctors", doctors_->value() );
     list.AddIdentifier( "Status", 0 ); // JCR TODO : Check status available ?
 

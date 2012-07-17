@@ -29,7 +29,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     YAxis().SetAxisRange( 0, 1, true );
     YAxis().ShowTicks( 10 );
     YAxis().ShowTicksValue( true );
-    YAxis().SetAxisCaption( tools::translate( "StatisticsWidget", "Rate (B)" ).ascii() );
+    YAxis().SetAxisCaption( tools::translate( "StatisticsWidget", "Rate (B)" ).toUtf8().constData() );
     YAxis().SetCaptionMargin( 8 );
 
     XAxis().ShowAxis( true );
@@ -37,7 +37,7 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     XAxis().SetAxisRange( 0, 1, false );
     XAxis().ShowTicks( 1 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( tools::translate( "StatisticsWidget", "Time (Tick)" ).ascii() );
+    XAxis().SetAxisCaption( tools::translate( "StatisticsWidget", "Time (Tick)" ).toUtf8().constData() );
 
     SetBackgroundColor( Qt::white );
     setMinimumHeight( 130 );
@@ -77,7 +77,7 @@ void StatisticsWidget::AddValue( unsigned int tick, unsigned long value )
 // -----------------------------------------------------------------------------
 void StatisticsWidget::SetYAxisCaption( const QString& caption )
 {
-    YAxis().SetAxisCaption( caption.ascii() );
+    YAxis().SetAxisCaption( caption.toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ void StatisticsWidget::SetYAxisCaption( const QString& caption )
 // -----------------------------------------------------------------------------
 void StatisticsWidget::SetXAxisCaption( const QString& caption )
 {
-    XAxis().SetAxisCaption( caption.ascii() );
+    XAxis().SetAxisCaption( caption.toUtf8().constData() );
 }
 
 // -----------------------------------------------------------------------------

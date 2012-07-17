@@ -7,14 +7,21 @@
 //
 // *****************************************************************************
 
-#ifndef __xmlcodecs_h_
-#define __xmlcodecs_h_
+#ifndef __Codec_h_
+#define __Codec_h_
 
 #include <xeumeuleu/xml.hpp>
 #include <sstream>
 
 namespace tools
 {
+    //! @name Qt Codec
+    //@{
+    void SetCodec();
+    //@}
+
+    //! @name Xml Codec
+    //@{
     template< typename T >
     bool DecodeTime( const std::string& input, T& output )
     {
@@ -28,11 +35,11 @@ namespace tools
 
         switch( timeUnit )
         {
-            case 's': break;
-            case 'm': output *= (T)60  ; break;
-            case 'h': output *= (T)3600; break;
-            default:
-                return false;
+        case 's': break;
+        case 'm': output *= (T)60  ; break;
+        case 'h': output *= (T)3600; break;
+        default:
+            return false;
         }
         return true;
     }
@@ -44,6 +51,7 @@ namespace tools
         xis >> xml::optional >> xml::attribute( name, timeString );
         return DecodeTime( timeString, time );
     }
+    //@}
 }
 
-#endif // __xmlcodecs_h_
+#endif // __Codec_h_

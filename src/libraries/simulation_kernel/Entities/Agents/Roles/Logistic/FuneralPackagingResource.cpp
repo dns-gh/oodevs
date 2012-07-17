@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "FuneralPackagingResource.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 
 using namespace logistic;
 

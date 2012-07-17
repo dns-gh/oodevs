@@ -130,7 +130,7 @@ void AggregateToolbar::Aggregate( int id )
     DisaggregateAll();
     const std::string level = LEVELS[ id ];
     for( IT_Formations it = formations_.begin(); it != formations_.end(); ++it )
-        if( IsValid( (*it)->GetLevel().GetName().ascii(), level ) )
+        if( IsValid( (*it)->GetLevel().GetName().toUtf8().constData(), level ) )
             formationsLayer_.Aggregate( **it );
     for( IT_Automats it = automats_.begin(); it != automats_.end(); ++it )
     {

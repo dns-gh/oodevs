@@ -28,7 +28,7 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DetectionCapacity )

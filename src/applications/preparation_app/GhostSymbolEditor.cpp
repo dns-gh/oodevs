@@ -114,11 +114,11 @@ bool GhostSymbolEditor::IsLevelValid() const
 // -----------------------------------------------------------------------------
 void GhostSymbolEditor::UpdateSymbol()
 {
-    nature_ = natureWidget_->text().ascii();
+    nature_ = natureWidget_->text().toUtf8().constData();
     icon_->SetSymbol( symbolsFactory_.CreateSymbol( nature_ ) );
     if( levelComboBox_->currentText() != levelBase_ )
     {
-        level_ = levelComboBox_->currentText().ascii();
+        level_ = levelComboBox_->currentText().toUtf8().constData();
         icon_->SetLevel( std::string( "levels/" ) + level_ );
     }
     else

@@ -46,11 +46,11 @@ bool Wgs84DdParser::Parse( QString content, geometry::Point2f& result, QStringLi
     QString hintY = listValue[ 1 ].stripWhiteSpace();
 
     float x, y;
-    std::stringstream strX( hintX.ascii() );
+    std::stringstream strX( hintX.toUtf8().constData() );
     strX >> x ;
     if( ! strX )
         return false;
-    std::stringstream strY( hintY.ascii() );
+    std::stringstream strY( hintY.toUtf8().constData() );
     strY >> y ;
     if( ! strY )
         return false;

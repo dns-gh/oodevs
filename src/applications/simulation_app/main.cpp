@@ -7,6 +7,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Codec.h"
 #include "tools/Version.h"
 #include <tools/win32/FlexLm.h>
 #include <masalloc/masalloc.h>
@@ -118,6 +119,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
+        tools::SetCodec();
         app = new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app->Execute();

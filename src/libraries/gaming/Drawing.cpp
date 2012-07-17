@@ -99,11 +99,11 @@ void Drawing::NotifyDestruction() const
 void Drawing::Create()
 {
     plugins::messenger::ShapeCreationRequest message;
-    message().mutable_shape()->set_category( style_.GetCategory().ascii() );
+    message().mutable_shape()->set_category( style_.GetCategory().toUtf8().constData() );
     message().mutable_shape()->mutable_color()->set_red( color_.red() );
     message().mutable_shape()->mutable_color()->set_green( color_.green() );
     message().mutable_shape()->mutable_color()->set_blue( color_.blue() );
-    message().mutable_shape()->set_pattern( style_.GetName().ascii() );
+    message().mutable_shape()->set_pattern( style_.GetName().toUtf8().constData() );
     if( entity_ )
     {
         if( entity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
@@ -127,11 +127,11 @@ void Drawing::Update()
     {
         plugins::messenger::ShapeUpdateRequest message;
         message().mutable_shape()->set_id( GetId() );
-        message().set_category( style_.GetCategory().ascii() );
+        message().set_category( style_.GetCategory().toUtf8().constData() );
         message().mutable_color()->set_red( color_.red() );
         message().mutable_color()->set_green( color_.green() );
         message().mutable_color()->set_blue( color_.blue() );
-        message().set_pattern( style_.GetName().ascii() );
+        message().set_pattern( style_.GetName().toUtf8().constData() );
         SerializeLocation( *message().mutable_points() );
         message.Send( publisher_ );
     }

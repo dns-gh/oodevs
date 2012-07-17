@@ -12,7 +12,7 @@
 #include "MIL_LivingArea_ABC.h"
 #include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>

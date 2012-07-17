@@ -47,7 +47,7 @@ void TacticalGraphics::NotifyCreated( const DrawingCategory& category )
     while( it.HasMoreElements() )
     {
         const DrawingTemplate& drawing = it.NextElement();
-        templates_[ drawing.GetCode().ascii() ] = &drawing;
+        templates_[ drawing.GetCode().toUtf8().constData() ] = &drawing;
     }
 }
 
@@ -62,12 +62,12 @@ void TacticalGraphics::NotifyDeleted( const DrawingCategory& category )
     {
         const DrawingTemplate& drawing = it.NextElement();
         {
-            T_Renderers::iterator itD = renderers_.find( drawing.GetCode().ascii() );
+            T_Renderers::iterator itD = renderers_.find( drawing.GetCode().toUtf8().constData() );
             if( itD != renderers_.end() )
                 renderers_.erase( itD );
         }
         {
-            T_Templates::iterator itD = templates_.find( drawing.GetCode().ascii() );
+            T_Templates::iterator itD = templates_.find( drawing.GetCode().toUtf8().constData() );
             if( itD != templates_.end() )
                 templates_.erase( itD );
         }

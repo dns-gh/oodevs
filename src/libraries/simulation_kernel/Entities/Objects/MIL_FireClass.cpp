@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "meteo/PHY_Precipitation.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/xmlcodecs.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;

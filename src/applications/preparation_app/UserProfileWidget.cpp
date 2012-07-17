@@ -161,9 +161,9 @@ void UserProfileWidget::OnLoginChanged()
         {
             QString login = login_->text();
             if( profile_->GetLogin() != login && checker_.Exists( profile_->GetLogin(), login ) )
-                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
+                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toUtf8().constData() );
             if( profile_->GetLogin() != login && model_.profiles_.Exists( login ) && !checker_.Exists( login ) )
-                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).ascii() );
+                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toUtf8().constData() );
             profile_->SetLogin( login );
         }
     }
