@@ -173,10 +173,10 @@ void NodeController::Create( Node_ABC& node, bool reload )
 // Name: NodeController::Create
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Create( const std::string& name )
+NodeController::T_Node NodeController::Create( const std::string& name, size_t max, size_t parallel )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    T_Node node = factory_.Make( output, name );
+    T_Node node = factory_.Make( output, name, max, parallel );
     nodes_.Attach( node );
     Create( *node, false );
     return node;
@@ -214,9 +214,8 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
 NodeController::T_Node NodeController::Start( const Uuid& id ) const
 {
     T_Node node = nodes_.Get( id );
-    if( !node )
-        return T_Node();
-    Start( *node, false, false );
+    if( node )
+        Start( *node, false, false );
     return node;
 }
 
@@ -227,9 +226,8 @@ NodeController::T_Node NodeController::Start( const Uuid& id ) const
 NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 {
     T_Node node = nodes_.Get( id );
-    if( !node )
-        return T_Node();
-    Stop( *node, false, false );
+    if( node )
+        Stop( *node, false, false );
     return node;
 }
 
@@ -253,6 +251,14 @@ void NodeController::Stop( Node_ABC& node, bool skip, bool weak ) const
     bool modified = node.Stop( weak );
     if( modified && !skip )
         Save( node );
+}
+
+NodeController::T_Node NodeController::Update( const Uuid& id, size_t max, size_t parallel )
+{
+    T_Node node = nodes_.Get( id );
+    if( node )
+        node->Update( max, parallel );
+    return node;
 }
 
 // -----------------------------------------------------------------------------

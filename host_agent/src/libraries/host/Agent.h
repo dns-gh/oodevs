@@ -62,10 +62,11 @@ public:
     virtual web::Reply ListNodes ( int offset, int limit ) const;
     virtual web::Reply CountNodes() const;
     virtual web::Reply GetNode   ( const Uuid& id ) const;
-    virtual web::Reply CreateNode( const std::string& name );
+    virtual web::Reply CreateNode( const std::string& name, size_t max, size_t parallel );
     virtual web::Reply DeleteNode( const Uuid& id );
     virtual web::Reply StartNode ( const Uuid& id ) const;
     virtual web::Reply StopNode  ( const Uuid& id ) const;
+    virtual web::Reply UpdateNode( const Uuid& id, size_t max, size_t parallel );
     //@}
 
     //! @name Install Methods

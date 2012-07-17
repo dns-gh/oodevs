@@ -65,7 +65,7 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            return boost::make_shared< Node >( packages, system, uuids, pool, defaultRoot, defaultName, ports );
+            return boost::make_shared< Node >( packages, system, uuids, pool, defaultRoot, defaultName, 16, 8, ports );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -115,28 +115,30 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     const std::string base = "{"
         "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
         "\"name\":\"myName\","
-        "\"port\":\"1337\"";
-    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
+        "\"port\":\"1337\","
+        "\"max_sessions\":\"16\","
+        "\"parallel_sessions\":\"8\",";
+    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
         "\"stopped\":\"false\""
         "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
-    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
+    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
         "\"status\":\"running\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
         "\"stopped\":\"false\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
         "}}" );
     StopNode( *node, process );
-    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
+    BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
         "\"status\":\"stopped\""
         "}" );
-    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
+    BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
         "\"stopped\":\"true\""
         "}" );
 }

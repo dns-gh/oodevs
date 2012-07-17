@@ -62,6 +62,7 @@ private:
     std::string DeleteNode( const Request_ABC& request );
     std::string StartNode ( const Request_ABC& request );
     std::string StopNode  ( const Request_ABC& request );
+    std::string UpdateNode( const Request_ABC& request );
     //@}
 
     //! @name Install Methods

@@ -104,7 +104,7 @@ Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeControll
         if( cluster_->Count() )
             clusterId_ = cluster_->List( 0, 1 ).front()->GetId();
         else
-            clusterId_ = cluster_->Create( "cluster" )->GetId();
+            clusterId_ = cluster_->Create( "cluster", 0, 0 )->GetId();
         cluster_->Start( clusterId_ );
     }
     nodes_.Reload();
@@ -178,10 +178,10 @@ Reply Agent::GetNode( const Uuid& id ) const
 // Name: Agent::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::CreateNode( const std::string& name )
+Reply Agent::CreateNode( const std::string& name, size_t max, size_t parallel )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( nodes_.Create( name ), "node" );
+    return Create( nodes_.Create( name, max, parallel ), "node" );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,6 +221,18 @@ Reply Agent::StartNode( const Uuid& id ) const
 Reply Agent::StopNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Stop, id, "stop node" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::UpdateNode
+// Created: BAX 2012-07-17
+// -----------------------------------------------------------------------------
+Reply Agent::UpdateNode( const Uuid& id, size_t max, size_t parallel )
+{
+    NodeController_ABC::T_Node ptr = nodes_.Update( id, max, parallel );
+    if( !ptr )
+        return Reply( web::NOT_FOUND );
+    return Reply( ptr->GetProperties() );
 }
 
 // -----------------------------------------------------------------------------

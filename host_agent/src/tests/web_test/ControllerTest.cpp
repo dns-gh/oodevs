@@ -54,10 +54,11 @@ namespace
         MOCK_METHOD( ListNodes, 2 );
         MOCK_METHOD( CountNodes, 0 );
         MOCK_METHOD( GetNode, 1 );
-        MOCK_METHOD( CreateNode, 1 );
+        MOCK_METHOD( CreateNode, 3 );
         MOCK_METHOD( DeleteNode, 1 );
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
+        MOCK_METHOD( UpdateNode, 3 );
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
@@ -190,9 +191,11 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
     const std::string name = "node_name";
     SetRequest( "GET", "/create_node", boost::assign::map_list_of
         ( "name", name )
+        ( "max_sessions", "16" )
+        ( "parallel_sessions", "8" )
     );
     const std::string expected = "a json node";
-    MOCK_EXPECT( agent.CreateNode ).once().with( name ).returns( expected );
+    MOCK_EXPECT( agent.CreateNode ).once().with( name, 16, 8 ).returns( expected );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 

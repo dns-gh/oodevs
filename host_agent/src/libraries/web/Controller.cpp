@@ -230,6 +230,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/delete_node" )        return DeleteNode( request );
         if( uri == "/start_node" )         return StartNode( request );
         if( uri == "/stop_node" )          return StopNode( request );
+        if( uri == "/update_node" )        return UpdateNode( request );
         // install
         if( uri == "/get_install" )        return GetInstall( request );
         if( uri == "/delete_install" )     return DeleteInstall( request );
@@ -371,7 +372,9 @@ std::string Controller::CreateNode( const Request_ABC& request )
 {
     const std::string name = RequireParameter< std::string >( "name", request );
     LOG_INFO( log_ ) << "[web] /create_node name: " << name;
-    return WriteHttpReply( agent_.CreateNode( name ) );
+    const int max = GetParameter( "max_sessions", request, 16 );
+    const int parallel = GetParameter( "parallel_sessions", request, 4 );
+    return WriteHttpReply( agent_.CreateNode( name, max, std::min( parallel, max ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -399,6 +402,18 @@ std::string Controller::StartNode( const Request_ABC& request )
 std::string Controller::StopNode( const Request_ABC& request )
 {
     return UuidDispatch( request, "id", agent_, &Agent_ABC::StopNode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::UpdateNode
+// Created: BAX 2012-07-17
+// -----------------------------------------------------------------------------
+std::string Controller::UpdateNode( const Request_ABC& request )
+{
+    const std::string id = RequireParameter< std::string >( "id", request );
+    const size_t max = RequireParameter< size_t >( "max_sessions", request );
+    const size_t parallel = RequireParameter< size_t >( "parallel_sessions", request );
+    return WriteHttpReply( agent_.UpdateNode( Convert( id ), max, parallel ) );
 }
 
 // -----------------------------------------------------------------------------

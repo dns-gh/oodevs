@@ -51,10 +51,11 @@ struct Agent_ABC : public boost::noncopyable
     virtual Reply ListNodes ( int offset, int limit ) const = 0;
     virtual Reply CountNodes() const = 0;
     virtual Reply GetNode   ( const Uuid& id ) const = 0;
-    virtual Reply CreateNode( const std::string& name ) = 0;
+    virtual Reply CreateNode( const std::string& name, size_t max, size_t parallel ) = 0;
     virtual Reply DeleteNode( const Uuid& id ) = 0;
     virtual Reply StartNode ( const Uuid& id ) const = 0;
     virtual Reply StopNode  ( const Uuid& id ) const = 0;
+    virtual Reply UpdateNode( const Uuid& id, size_t max, size_t parallel ) = 0;
     //@}
 
     //! @name Install Methods

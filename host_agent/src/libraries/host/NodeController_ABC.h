@@ -63,10 +63,11 @@ struct NodeController_ABC : public boost::noncopyable
     virtual size_t  Count() const = 0;
     virtual bool    Has( const Uuid& id ) const = 0;
     virtual T_Node  Get( const Uuid& id ) const = 0;
-    virtual T_Node  Create( const std::string& name ) = 0;
+    virtual T_Node  Create( const std::string& name, size_t max, size_t parallel ) = 0;
     virtual T_Node  Delete( const Uuid& id ) = 0;
     virtual T_Node  Start( const Uuid& id ) const = 0;
     virtual T_Node  Stop( const Uuid& id ) const = 0;
+    virtual T_Node  Update( const Uuid& id, size_t max, size_t parallel ) = 0;
     //@}
 
     //! @name Install Methods

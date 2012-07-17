@@ -26,10 +26,11 @@ namespace mocks
         MOCK_METHOD( Count, 0 );
         MOCK_METHOD( Has, 1 );
         MOCK_METHOD( Get, 1 );
-        MOCK_METHOD( Create, 1 );
+        MOCK_METHOD( Create, 3 );
         MOCK_METHOD( Delete, 1 );
         MOCK_METHOD( Start, 1 );
         MOCK_METHOD( Stop, 1 );
+        MOCK_METHOD( Update, 3 );
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
         MOCK_METHOD( GetCache, 1 );

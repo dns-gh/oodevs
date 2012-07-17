@@ -127,8 +127,8 @@ namespace
         boost::shared_ptr< MockNode > AddNode( const std::string& id, const std::string& name )
         {
             boost::shared_ptr< MockNode > node = CreateMockNode( id, name );
-            MOCK_EXPECT( nodes.Create ).once().with( name ).returns( node );
-            CheckReply( agent.CreateNode( name ), ToJson( node->GetProperties() ) );
+            MOCK_EXPECT( nodes.Create ).once().with( name, 16, 8 ).returns( node );
+            CheckReply( agent.CreateNode( name, 16, 8 ), ToJson( node->GetProperties() ) );
             return node;
         }
 
@@ -208,8 +208,8 @@ BOOST_FIXTURE_TEST_CASE( agent_get_node, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_create_node, Fixture<> )
 {
-    MOCK_EXPECT( nodes.Create ).once().with( "zomg" ).returns( node );
-    CheckReply( agent.CreateNode( "zomg" ), ToJson( node->GetProperties() ) );
+    MOCK_EXPECT( nodes.Create ).once().with( "zomg", 16, 8 ).returns( node );
+    CheckReply( agent.CreateNode( "zomg", 16, 8 ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_node, Fixture<> )

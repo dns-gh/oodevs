@@ -113,7 +113,7 @@ namespace
             const std::string idText = tree.get< std::string >( "id" );
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.nodes.Make2 ).once().with( mock::any, tree.get< std::string >( "name" ) ).returns( node );
+                MOCK_EXPECT( sub.nodes.Make4 ).once().with( mock::any, tree.get< std::string >( "name" ), mock::any, mock::any ).returns( node );
                 MOCK_EXPECT( node->Start ).once().returns( true );
             }
             else
@@ -149,7 +149,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_reloads, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
 {
     AddNode( idIdle, nodeIdle );
-    NodeController::T_Node node = control.Create( "myName2" );
+    NodeController::T_Node node = control.Create( "myName2", 16, 8 );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK( control.Has( idIdle ) );

@@ -38,7 +38,10 @@ namespace host
     struct PortFactory_ABC;
     struct UuidFactory_ABC;
     typedef boost::shared_ptr< const Port_ABC > Port;
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  Node_ABC
     @brief  Node_ABC interface
@@ -52,7 +55,8 @@ public:
     //@{
              Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
                    const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
-                   const std::string& name, PortFactory_ABC& ports );
+                   const std::string& name, size_t max_sessions, size_t parallel_sessions,
+                   PortFactory_ABC& ports );
              Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
                    const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
                    const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
@@ -75,6 +79,7 @@ public:
                         const Path& web, const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
+    virtual void Update( size_t max, size_t parallel );
     //@}
 
     //! @name Node_ABC methods
@@ -133,6 +138,8 @@ private:
     T_Process process_;
     bool stopped_;
     mutable runtime::Async async_;
+    size_t max_;
+    size_t parallel_;
     //@}
 };
 }
