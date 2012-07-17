@@ -36,7 +36,7 @@ return
         local entitiesToSupport = {}
         for i = 1, #params.compagniesAAppuyer do
             local entitiesToSupportFromAutomat
-            local entitiesFromAutomat = integration.getEntitiesFromAutomat( params.compagniesAAppuyer[i], "none", true)
+            local entitiesFromAutomat = integration.getEntitiesFromAutomatCommunication( params.compagniesAAppuyer[i], "none", true)
             if params.bMarcheRetrograde then --marche retrograde on suit le 2nd echelon sinon on suit le 1er
                 entitiesToSupportFromAutomat = integration.filterPionWithEchelon( entitiesFromAutomat, eEtatEchelon_Second )
             else

@@ -1,7 +1,7 @@
 return
 {
     getEntitiesToSupport = function( self, params )
-        return integration.getEntitiesFromAutomat( params.objective, "none", true)
+        return integration.getEntitiesFromAutomatCommunication( params.objective, "none", true)
     end,
 
     getDirection = function( self, params )

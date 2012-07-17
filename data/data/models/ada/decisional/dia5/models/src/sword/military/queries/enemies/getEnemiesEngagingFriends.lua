@@ -11,7 +11,7 @@ queryImplementation "getEnemiesEngagingFriends"
                 res = {}
                 entities = {}
                 if masalife.brain.core.class.isOfType( entity, sword.military.world.Company ) then -- on peut appuyer des automates alliés
-                    local entitiesFromAutomat = integration.getEntitiesFromAutomat( entity, "none", true)
+                    local entitiesFromAutomat = integration.getEntitiesFromAutomatCommunication( entity, "none", true)
                     for j = 1, #entitiesFromAutomat do
                         entities[#entities + 1] = entitiesFromAutomat[j]
                     end

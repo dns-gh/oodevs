@@ -21,7 +21,7 @@ rootnode
     activate = function( self )
         local Activate = Activate
         local oldEntities = myself.oldEntities
-        local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
+        local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true )
 
         -- Si un pion a été ajouté à l'automate et que celui-ci est embrayé
         if oldEntities and #oldEntities > 0 then
@@ -45,7 +45,7 @@ rootnode
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
                 local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"               
                 local entities = sword.military.company.queries.getCommanding[ "execute" ]({role = "none", withPC = true})
-                if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" then
+                if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" then -- Il faut enlever le silence radio à tous les pions
                     entities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
                 end
                 for _, entity in pairs( entities ) do

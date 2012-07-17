@@ -63,7 +63,7 @@ local function manageAddedAndDeletedUnits( self )
     local redone = false
     local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
-    local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
@@ -110,7 +110,7 @@ connections = { skill.links.manageFragOrder, skill.links.coordinationManager, sk
 create = function( self )
         local Activate = Activate
         self.parameters = myself.taskParams
-        self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
         self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
         -- Initialisation
