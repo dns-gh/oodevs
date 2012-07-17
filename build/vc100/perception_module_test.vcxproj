@@ -77,7 +77,7 @@
     <ClCompile />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -93,7 +93,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -107,7 +107,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>core.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -123,7 +123,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
