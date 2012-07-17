@@ -44,7 +44,9 @@ public:
 
     //! @name Checkpoint
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive > void load( Archive&, const unsigned int );
+    template< typename Archive > void save( Archive&, const unsigned int ) const;
     //@}
 
     //! @name Operations

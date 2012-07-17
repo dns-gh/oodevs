@@ -172,13 +172,24 @@ void RolePion_Decision::Reload()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Decision::serialize
-// Created: SLI 2012-02-01
+// Name: RolePion_Decision::load
+// Created: SLI 2012-07-17
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void RolePion_Decision::serialize( Archive& file, const unsigned int )
+void RolePion_Decision::load( Archive& archive, const unsigned int )
 {
-    file & boost::serialization::base_object< DEC_RolePion_Decision >( *this );
+    archive >> boost::serialization::base_object< DEC_RolePion_Decision >( *this );
+    RegisterFunctions();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Decision::save
+// Created: SLI 2012-07-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void RolePion_Decision::save( Archive& archive, const unsigned int ) const
+{
+    archive << boost::serialization::base_object< DEC_RolePion_Decision >( *this );
 }
 
 // -----------------------------------------------------------------------------
