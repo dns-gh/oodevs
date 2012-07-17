@@ -14,9 +14,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <QtCore/qsettings.h>
-#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 using namespace license_gui;
@@ -29,17 +26,35 @@ using namespace license_gui;
 #define MARGIN 10
 #define BUTTON_HEIGHT 30
 
+#include <iostream>
+
 namespace
 {
     std::string ReadLang()
     {
-        QSettings settings( "MASA Group", "SWORD" );
-        QString language = settings.value( "/Common/Language", "en" ).value< QString >();
-        if( language.count( "fr" ) )
+        HKEY hkCle = NULL;
+        char sValeur[ 200 ];
+        DWORD dwTailleValeur1 = 200;
+        bool found = false;
+        if( found = RegOpenKeyEx( HKEY_CURRENT_USER, "Software\\MASA Group\\SWORD\\Common", 0, KEY_ALL_ACCESS, &hkCle ) == ERROR_SUCCESS )
+        {
+            RegQueryValueEx( hkCle, "Language", NULL, NULL, (LPBYTE)sValeur, &dwTailleValeur1 );
+            RegCloseKey(hkCle);
+        }
+        if( !found && RegOpenKeyEx( HKEY_LOCAL_MACHINE, "Software\\MASA Group\\SWORD\\Common", 0, KEY_ALL_ACCESS, &hkCle ) == ERROR_SUCCESS )
+        {
+            RegQueryValueEx( hkCle, "Language", NULL, NULL, (LPBYTE)sValeur, &dwTailleValeur1 );
+            RegCloseKey(hkCle);
+            found = true;
+        }
+        if( !found )
+            return "en";
+        std::string result = sValeur;
+        if( result.find( "fr" ) != std::string::npos )
             return "fr";
-        else if( language.count( "es" ) )
+        if( result.find( "es" ) != std::string::npos )
             return "es";
-        else if( language.count( "ar" ) )
+        if( result.find( "ar" ) != std::string::npos )
             return "ar";
         return "en";
     }
