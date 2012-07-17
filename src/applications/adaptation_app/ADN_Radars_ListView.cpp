@@ -95,6 +95,12 @@ void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Radars_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        RadarInfos* pCastData = static_cast< RadarInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Sensors", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+    }
     popupMenu.exec( pt );
 }
 
