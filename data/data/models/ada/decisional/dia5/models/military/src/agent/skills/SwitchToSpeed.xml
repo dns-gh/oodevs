@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.SwitchToSpeed" source-version="1.0.0">
+    <description>Passer en ambiance sûreté (attitude/posture de sauvegarde). </description>
+    <parameters/>
+    <goal>
+        <description>Passer en ambiance sûreté.</description>
+    </goal>
+    <body-type>
+        <class name="world_concepts.HumanFactors"/>
+    </body-type>
+</skill>

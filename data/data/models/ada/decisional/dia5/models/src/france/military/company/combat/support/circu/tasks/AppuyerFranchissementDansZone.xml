@@ -3,14 +3,14 @@
 	<parameters>
 		<parameter name="zone">
 			<type>
-				<class name="sword.military.world.Area"/>
+				<class name="world_elements.Area"/>
 			</type>
 		</parameter>
 	</parameters>
 	<stages>
 		<stage label="Appuyer le franchissement sur les sites présents dans la zone" disable-when-done="true">
 			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
+				<skill name="commander.skills.Lead" main="true">
 					<parameter name="companyTask">
 						<value>
 							<string>france.military.company.combat.support.circu.tasks.AppuyerFranchissementDansZone</string>

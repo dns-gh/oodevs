@@ -18,33 +18,33 @@ integration.communication = {}
 initializeAssignMissions = function()
     myself = myself or {}
     myself.ParameterRegistrationFunctor = {}
-    myself.ParameterRegistrationFunctor["sword.military.world.Area"] = DEC_AssignMissionLocationParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.Company"] = DEC_AssignMissionAutomatParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.Crowd"] = DEC_AssignMissionCrowdParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.Object"] = DEC_AssignMissionObjectKnowledgeParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.EngineerObject"] = DEC_AssignMissionGenObjectParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.Point"] = DEC_AssignMissionPointParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.Platoon"] = DEC_AssignMissionAgentKnowledgeParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.PlatoonAlly"] = DEC_AssignMissionPionParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.UrbanBlock"] = DEC_AssignMissionUrbanBlockParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.ResourceNetwork"] = DEC_AssignMissionResourceNetworkParameter
-    myself.ParameterRegistrationFunctor["sword.military.world.Fuseau"] = function( missionPion, parameterName, value) DEC_AssignerFuseauAMissionPion_Mission( value, missionPion ) end
+    myself.ParameterRegistrationFunctor["world_elements.Area"] = DEC_AssignMissionLocationParameter
+    myself.ParameterRegistrationFunctor["world_elements.Company"] = DEC_AssignMissionAutomatParameter
+    myself.ParameterRegistrationFunctor["world_elements.Crowd"] = DEC_AssignMissionCrowdParameter
+    myself.ParameterRegistrationFunctor["world_elements.Object"] = DEC_AssignMissionObjectKnowledgeParameter
+    myself.ParameterRegistrationFunctor["world_elements.EngineerObject"] = DEC_AssignMissionGenObjectParameter
+    myself.ParameterRegistrationFunctor["world_elements.Point"] = DEC_AssignMissionPointParameter
+    myself.ParameterRegistrationFunctor["world_elements.Platoon"] = DEC_AssignMissionAgentKnowledgeParameter
+    myself.ParameterRegistrationFunctor["world_elements.PlatoonAlly"] = DEC_AssignMissionPionParameter
+    myself.ParameterRegistrationFunctor["world_elements.UrbanBlock"] = DEC_AssignMissionUrbanBlockParameter
+    myself.ParameterRegistrationFunctor["world_elements.ResourceNetwork"] = DEC_AssignMissionResourceNetworkParameter
+    myself.ParameterRegistrationFunctor["world_elements.Fuseau"] = function( missionPion, parameterName, value) DEC_AssignerFuseauAMissionPion_Mission( value, missionPion ) end
     myself.ParameterRegistrationFunctor["security.integration.Unit"] = DEC_AssignMissionPionParameter
     myself.ParameterRegistrationFunctor["number"] = DEC_AssignMissionNumericTypeParameter
     myself.ParameterRegistrationFunctor["userdata"] = DEC_AssignMissionDotationTypeParameter
     myself.ParameterRegistrationFunctor["boolean"] = DEC_AssignMissionBoolParameter
 
     myself.ParameterListRegistrationFunctor = {}
-    myself.ParameterListRegistrationFunctor["sword.military.world.Point"] = DEC_AssignMissionPointListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.Platoon"] = DEC_AssignMissionAgentKnowledgeListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.PlatoonAlly"] = DEC_AssignMissionPionListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.Company"] = DEC_AssignMissionAutomatListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.Object"] = DEC_AssignMissionObjectKnowledgeListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.EngineerObject"] = DEC_AssignMissionGenObjectListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.Area"] = DEC_AssignMissionLocationListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.UrbanBlock"] = DEC_AssignMissionUrbanBlockListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.Point"] = DEC_AssignMissionPointListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.Platoon"] = DEC_AssignMissionAgentKnowledgeListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.PlatoonAlly"] = DEC_AssignMissionPionListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.Company"] = DEC_AssignMissionAutomatListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.Object"] = DEC_AssignMissionObjectKnowledgeListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.EngineerObject"] = DEC_AssignMissionGenObjectListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.Area"] = DEC_AssignMissionLocationListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.UrbanBlock"] = DEC_AssignMissionUrbanBlockListParameter
     myself.ParameterListRegistrationFunctor["security.integration.Unit"] = DEC_AssignMissionPionListParameter
-    myself.ParameterListRegistrationFunctor["sword.military.world.ResourceNetwork"] = DEC_AssignMissionResourceNetworkListParameter
+    myself.ParameterListRegistrationFunctor["world_elements.ResourceNetwork"] = DEC_AssignMissionResourceNetworkListParameter
 end
 
 local function InferType( param )
@@ -70,7 +70,7 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
     if DEC_Mission_IsPath( missionPion, parameterName ) then
         for i = 1, nValues do
             local currentValue = value[i]
-            if InferType( currentValue ) ~= "sword.military.world.Point" then
+            if InferType( currentValue ) ~= "world_elements.Point" then
                 error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
             end
             listParams[i] = currentValue.source
@@ -230,10 +230,10 @@ end
 
 integration.getAgentFromKnowledge = function( entity )
     local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
-    return CreateKnowledge(sword.military.world.PlatoonAlly, agent)
+    return CreateKnowledge(world_elements.PlatoonAlly, agent)
 end
 
 integration.getAgentFromAutomatKnowledge = function( entity )
     local agent = DEC_Connaissance_EnAgent( entity.source )
-    return CreateKnowledge(sword.military.world.PlatoonAlly, agent)
+    return CreateKnowledge(world_elements.PlatoonAlly, agent)
 end

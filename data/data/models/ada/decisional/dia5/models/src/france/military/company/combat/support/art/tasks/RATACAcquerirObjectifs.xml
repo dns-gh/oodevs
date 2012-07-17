@@ -4,7 +4,7 @@
     <parameter name="zonesAObserver">
       <type>
         <list>
-          <class name="sword.military.world.Area"/>
+          <class name="world_elements.Area"/>
         </list>
       </type>
     </parameter>
@@ -12,7 +12,7 @@
       <description>Positions de déploiement</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Reachable"/>
+          <class name="world_concepts.Reachable"/>
         </list>
       </type>
     </parameter>
@@ -20,7 +20,7 @@
   <stages>
     <stage label="Acquérir objectifs">
       <skills>
-        <skill name="sword.military.company.skills.Lead" main="true">
+        <skill name="commander.skills.Lead" main="true">
           <parameter name="companyTask">
             <value>
               <string>france.military.company.combat.support.art.tasks.RATACAcquerirObjectifs</string>

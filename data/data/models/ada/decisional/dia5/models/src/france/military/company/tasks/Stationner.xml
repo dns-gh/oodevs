@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Stationner" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.Park">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Stationner" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.Park">
   <parameters>
     <parameter name="position">
       <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
+        <class name="world_concepts.Reachable"/>
       </type>
     </parameter>
   </parameters>
   <stages/>
-  <next-task name="sword.military.company.tasks.Park">
+  <next-task name="commander.tasks_armored.Park">
     <parameter name="companyTask">
       <value>
         <string>france.military.company.tasks.Stationner</string>

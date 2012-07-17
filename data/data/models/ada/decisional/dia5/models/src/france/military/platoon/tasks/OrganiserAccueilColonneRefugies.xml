@@ -5,12 +5,12 @@
       <description>Position d'accueil.&#xD;
 </description>
       <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
-        <class name="sword.military.knowledge.decisional.Observing"/>
+        <class name="world_concepts.Reachable"/>
+        <class name="world_concepts.Observing"/>
       </type>
     </parameter>
   </parameters>
-  <next-task name="sword.military.platoon.coercition.tasks.Monitor">
+  <next-task name="agent.tasks_armored.Monitor">
     <parameter name="positions">
       <value>
         <list>

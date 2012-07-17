@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries_misc.getFragOrders" source-version="1.0.0">
+  <description>BCI: Cette query devrait être dans sword.integration.</description>
+  <parameters/>
+  <target name="fragOrder">
+    <type>
+      <class name="world_concepts.FragOrder"/>
+    </type>
+  </target>
+</query>

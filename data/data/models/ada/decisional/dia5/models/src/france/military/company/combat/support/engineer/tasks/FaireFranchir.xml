@@ -4,7 +4,7 @@
 		<parameter name="entities">
 			<type>
 				<list>
-					<class name="sword.military.world.Object"/>
+					<class name="world_elements.Object"/>
 				</list>
 			</type>
 		</parameter>
@@ -15,14 +15,14 @@
 		</parameter>
 		<parameter name="meetingPoint">
 			<type>
-				<class name="sword.military.world.Point"/>
+				<class name="world_elements.Point"/>
 			</type>
 		</parameter>
 	</parameters>
 	<stages>
 		<stage label="Reconnaissance">
 			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
+				<skill name="commander.skills.Lead" main="true">
 					<parameter name="companyTask">
 						<value>
 							<string>france.military.company.combat.support.engineer.tasks.FaireFranchir</string>
@@ -58,7 +58,7 @@
 		</stage>
 		<stage label="Construction">
 			<skills>
-				<skill name="sword.military.company.skills.LeadGEN" main="true">
+				<skill name="commander.skills.LeadGEN" main="true">
 					<parameter name="companyTask">
 						<value>
 							<string>france.military.company.combat.support.engineer.tasks.FaireFranchir</string>

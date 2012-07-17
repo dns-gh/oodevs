@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.SInfiltrer" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Infiltrate">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.SInfiltrer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Infiltrate">
     <parameters>
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                    <class name="world_concepts.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -12,7 +12,7 @@
     <stages>
         <stage label="Infiltration" disable-when-done="true">
             <skills>
-                <skill name="sword.military.platoon.skills.MoveAlong" main="true">
+                <skill name="agent.skills.MoveAlong" main="true">
                     <parameter name="criminalMoving">
                         <value>
                             <boolean>true</boolean>
@@ -24,7 +24,7 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.individual.skills.GoUndetected"/>
+                <skill name="agent.skills.GoUndetected"/>
             </skills>
         </stage>
     </stages>

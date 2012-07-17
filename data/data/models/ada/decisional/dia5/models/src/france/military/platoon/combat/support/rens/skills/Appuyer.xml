@@ -4,13 +4,13 @@
         <parameter name="objective">
             <description>L'objectif à rejoindre.</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>La position de regroupement.</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="jammingTime">
@@ -21,6 +21,6 @@
         </parameter>
     </parameters>
     <links>
-        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="moveToward" skill="agent.skills.MoveToward"/>
     </links>
 </skill>

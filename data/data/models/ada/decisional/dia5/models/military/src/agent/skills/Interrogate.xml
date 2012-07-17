@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.Interrogate" source-version="1.0.0">
+  <description>Interroger une entité afin d'obtenir des renseignements critiques.</description>
+  <parameters>
+    <parameter name="entity">
+      <description>L'entité que l'on souhaite interroger.</description>
+      <type>
+        <class name="world_concepts.Reachable"/>
+        <class name="world_concepts.Askable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <body-type>
+    <class name="world_elements.PlatoonAlly"/>
+  </body-type>
+  <links>
+    <link name="moveToward" skill="agent.skills.MoveToward">
+      <description>Lien vers le skill MoveToward</description>
+    </link>
+  </links>
+</skill>

@@ -885,27 +885,36 @@
             </concat>
         </sequential>
     </macrodef>
-
-    <target name = "generate-common-database">
-        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-    </target>
     
-    <target name="generate-database" depends="generate-decisional-files,generate-common-database" description="compile behavior model database">
-        <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
+    <target name = "generate-database-common">
+        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
 
-    <target name="generate-database-crowd" depends="generate-common-database" description="compile behavior model database for crowd">
-        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+    <target name="generate-database-crowd" depends="generate-database-common" description= "compile behavior model database for crowd">
         <bmc src="${models.dir}/crowd/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
     </target>
 
-    <target name="generate-database-security" depends="generate-common-database" description="compile behavior model database for security">
-        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+    <target name="generate-database-security" depends="generate-database-common"  description=" compile behavior model database for security">
         <bmc src="${models.dir}/security/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
         <bmc src="${models.dir}/security_test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/security/src" luac="false"/>
     </target>
+
+    <target name ="generate-database-military">
+        <bmc src="${models.dir}/military/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+    </target>   
+ 
+    <target name="generate-database-france" depends="generate-database-military,generate-database-crowd" description="compile behavior model database france">
+        <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/crowd/src;${models.dir}/military/src" luac="false"/>
+        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
+    </target>
     
+    
+    <target name="generate-all-databases">
+        <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" 
+            depends="${models.dir}/common/src;${models.dir}/crowd/src;${models.dir}/military/src;${models.dir}/france/src;${models.dir}/security/src" luac="false"/>
+        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
+    </target>
+
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg"/>
@@ -1861,8 +1870,7 @@
         <update name="iconv"/>
         <update name="proj4"/>
         <antcall target="deploy-application-data"/>
-        <antcall target="generate-database"/>
-        <antcall target="generate-database-security"/>
+        <antcall target="generate-all-databases"/>
         <antcall target="generate-symbols"/>
     </target>
 

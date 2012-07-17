@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks_armored.ReconnoiterRoute" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.ReconnoiterRoute">
+	<description>&#xD;
+        Reconnaitre un ITINERAIRE.  Cette mission est une mission de reconnaissance offensive, pour les agents de combat. Elle apport des informations d'ordre tactique et non technique.&#xD;
+    Il s'agit de la reconnaissance d'éléments terrain désignés en paramètre, dans l'ordre dans lequel ils ont été désignés. L'itinéraire n'est pas une connaissance en tant que telle, il est défini comme une suite ordonnée de point de passage obligé à RECONNAITRE. Un itinéraire peut donc être constitué de point, BU, zone... La détection/identification des ennemis et divers obstacles sera la conséquence des actions de reconnaissance de ces éléments (point, BU, zone) mais également (effet implicite) de la détection de l'agent pendant la progression tactique vers les objectifs.</description>
+	<parameters>
+		<parameter name="objectives">
+			<description>Les objectifs à reconnaitre.</description>
+			<type>
+				<list>
+					<class name="world_concepts.Reconnoitrable"/>
+					<class name="world_concepts.Reconnoitring"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="searchObjectives">
+			<description>Définit si les élements doivent être fouillés.</description>
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Se déplacer tactiquement vers les éléments et les reconnaître.</description>
+	</goal>
+	<stages>
+		<stage label="Reconnaissance" disable-when-done="true">
+			<description>Mouvement tactique et reonnaissance des objectifs. Détection des ennemis, prise de contact si possible.</description>
+			<goal>
+				<description>Obtenir des informations sur les objectifs avec agressivité.</description>
+			</goal>
+			<let name="destroyableEntities">
+				<value>
+					<call method="queries_enemies.getEnemiesInRange">
+						<parameter name="probabilityToHit">
+							<value>
+								<number>0.5</number>
+							</value>
+						</parameter>
+					</call>
+				</value>
+			</let>
+			<skills>
+				<skill name="agent.skills.ReconnoiterRoute" main="true" priority="0.9">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+					<parameter name="searchObjectives">
+						<value>
+							<parameter>searchObjectives</parameter>
+						</value>
+					</parameter>
+				</skill>
+				<skill name="agent.skills.Engage" priority="0.1">
+					<parameter name="entities">
+						<value>
+							<parameter>destroyableEntities</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<call method="queries_positions.getPositionsToDestroy">
+								<parameter name="elementsToDestroy">
+									<value>
+										<parameter>destroyableEntities</parameter>
+									</value>
+								</parameter>
+							</call>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

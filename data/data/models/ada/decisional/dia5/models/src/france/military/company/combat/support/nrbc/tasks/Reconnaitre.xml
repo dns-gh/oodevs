@@ -4,7 +4,7 @@
 		<parameter name="entities">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+					<class name="world_concepts.Reconnoitrable"/>
 				</list>
 			</type>
 		</parameter>
@@ -12,7 +12,7 @@
 	<stages>
 		<stage label="Reconnaissance" disable-when-done="true">
 			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
+				<skill name="commander.skills.Lead" main="true">
 					<parameter name="companyTask">
 						<value>
 							<string>france.military.company.combat.support.nrbc.tasks.Reconnaitre</string>

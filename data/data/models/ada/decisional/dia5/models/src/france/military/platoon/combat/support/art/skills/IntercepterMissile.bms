@@ -9,7 +9,7 @@ rootnode {
 
     create = function( self )
         self.distanceCouverte = integration.porteeMaxPourTirerSurUnitePosturesReelles( self.params.enemy, self.params.ph )
-        self.pointInterception = CreateKnowledge(sword.military.world.Point, integration.positionInterception( self.params.enemy, self.params.projectileSpeed ))
+        self.pointInterception = CreateKnowledge(world_elements.Point, integration.positionInterception( self.params.enemy, self.params.projectileSpeed ))
         
         self.distancePointInterception = integration.distance( meKnowledge, self.pointInterception )
         self.tempsInterception = self.distancePointInterception / ( self.params.projectileSpeed * 60 )

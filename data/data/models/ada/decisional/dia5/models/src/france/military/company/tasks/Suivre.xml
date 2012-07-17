@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Suivre" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.FollowingEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Suivre" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.FollowingEffect">
     <parameters>
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                    <class name="world_concepts.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -12,7 +12,7 @@
     <stages>
         <stage label="suivre" permanent="true">
             <skills>
-                <skill name="sword.military.company.skills.Lead">
+                <skill name="commander.skills.Lead">
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.tasks.Suivre</string>

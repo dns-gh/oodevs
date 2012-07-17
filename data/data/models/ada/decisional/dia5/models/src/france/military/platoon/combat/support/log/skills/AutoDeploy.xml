@@ -3,7 +3,7 @@
     <parameters/>
     <modifiers/>
     <links>
-        <link name="Deploy" skill="sword.military.platoon.skills.Deploy"/>
+        <link name="Deploy" skill="agent.skills.Deploy"/>
     </links>
     <resources/>
 </skill>

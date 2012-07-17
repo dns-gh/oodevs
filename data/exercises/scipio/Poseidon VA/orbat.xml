@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp Bleu" type="friend">
       <objects>
@@ -23,8 +23,8 @@
         </object>
       </objects>
       <tactical>
-        <formation id="10" level="ii" name="INF [10]">
-          <automat engaged="false" id="11" knowledge-group="95" name="SGTIA INF [11]" type="SGTIA INF dominante roues">
+        <formation id="10" level="ii" name="INF [10]" symbol="symbols/sfgpucim">
+          <automat engaged="false" id="11" knowledge-group="95" name="SGTIA INF [11]" symbol="symbols/sfgpucim" type="SGTIA INF dominante roues">
             <unit command-post="true" id="12" name="Section . CDT CIE INF VAB" position="29TNF3245158128" type="INF . Section CDT CIE VAB"/>
             <unit command-post="false" id="13" name="Section . CBT INF VAB CDS SOFF" position="29TNF3323557555" type="INF . Section CBT VAB CDS SOFF"/>
             <unit command-post="false" id="14" name="Section . CBT INF VAB CDS SOFF" position="29TNF3200157688" type="INF . Section CBT VAB CDS SOFF"/>
@@ -50,8 +50,8 @@
             <point>29TNF3670250590</point>
           </limit>
         </formation>
-        <formation id="92" level="ii" name="ABC [92]">
-          <automat engaged="true" id="22" knowledge-group="94" name="SGTIA ABC [22]" type="SGTIA ABC XL">
+        <formation id="92" level="ii" name="ABC [92]" symbol="symbols/sfgpucath">
+          <automat engaged="true" id="22" knowledge-group="94" name="SGTIA ABC [22]" symbol="symbols/sfgpucath" type="SGTIA ABC XL">
             <unit command-post="true" id="23" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="ABC . Peloton LECLERC CDT ESC"/>
             <unit command-post="false" id="24" name="Peloton . LECLERC CDP SOFF" position="29TNF3480558372" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="25" name="Peloton . LECLERC CDP SOFF" position="29TNF3489958215" type="ABC . Peloton LECLERC CDP SOFF"/>
@@ -65,18 +65,18 @@
             <unit command-post="false" id="108" name="Patrouille . EI 12,7" position="29TNF3532359783" type="ABC . Patrouille EI 12,7"/>
           </automat>
         </formation>
-        <formation id="110" level="xxxx" name="Artillerie [110]">
-          <automat engaged="true" id="111" knowledge-group="7" name="ASS . Batterie de Tir AUF1 [111]" type="ASS . Batterie de Tir AUF1">
+        <formation id="110" level="xxxx" name="Artillerie [110]" symbol="symbols/sfgpucfhe">
+          <automat engaged="true" id="111" knowledge-group="7" name="ASS . Batterie de Tir AUF1 [111]" symbol="symbols/sfgpucfhe" type="ASS . Batterie de Tir AUF1">
             <unit command-post="true" id="112" name="PC . Batterie ASS" position="29TNF3028963569" type="ASS . PC Batterie ASS"/>
             <unit command-post="false" id="113" name="Section de Tir . AUF1 CDS OFF" position="29TNF3079263072" type="ASS . Section de Tir AUF1 CDS OFF"/>
             <unit command-post="false" id="114" name="Section de Tir . AUF1 CDS OFF" position="29TNF3029362571" type="ASS . Section de Tir AUF1 CDS OFF"/>
             <unit command-post="false" id="115" name="Section . CDT CIE INF VAB" position="29TNF3148663497" type="INF . Section CDT CIE VAB"/>
           </automat>
         </formation>
-        <formation id="158" level="xxxx" logistic-level="logistic-base" name="BL [158]"/>
-        <formation id="210" level="xxxx" name="GTIA [210]"/>
-        <formation id="310" level="xxxx" name="Circulation [310]">
-          <automat engaged="true" id="311" knowledge-group="95" name="CIRCU . Peloton Circulation sur VAB [311]" type="CIRCU . Peloton Circulation sur VAB">
+        <formation id="158" level="xxxx" logistic-level="logistic-base" name="BL [158]" symbol=""/>
+        <formation id="210" level="xxxx" name="GTIA [210]" symbol=""/>
+        <formation id="310" level="xxxx" name="Circulation [310]" symbol="symbols/sfgpuulm">
+          <automat engaged="true" id="311" knowledge-group="95" name="CIRCU . Peloton Circulation sur VAB [311]" symbol="symbols/sfgpuulm" type="CIRCU . Peloton Circulation sur VAB">
             <unit command-post="true" id="312" name="CIRCU PC sur VAB [312]" position="29TNF3579263072" type="CIRCU . PC sur VAB"/>
             <unit command-post="false" id="313" name="CIRCU . Patrouille VAB [313]" position="29TNF3579263072" type="CIRCU . Patrouille VAB"/>
             <unit command-post="false" id="314" name="CIRCU . Patrouille VAB [314]" position="29TNF3589363072" type="CIRCU . Patrouille VAB"/>
@@ -84,14 +84,14 @@
             <unit command-post="false" id="316" name="CIRCU . Patrouille VAB [316]" position="29TNF3609563072" type="CIRCU . Patrouille VAB"/>
           </automat>
         </formation>
-        <formation id="410" level="xxxx" name="NRBC [410]">
-          <automat engaged="true" id="411" knowledge-group="95" name="NRBC . Section Decontamination [411]" type="NRBC . Section Decontamination">
+        <formation id="410" level="xxxx" name="NRBC [410]" symbol="symbols/sfgpuuad">
+          <automat engaged="true" id="411" knowledge-group="95" name="NRBC . Section Decontamination [411]" symbol="symbols/sfgpuuad" type="NRBC . Section Decontamination">
             <unit command-post="true" id="412" name="NRBC . PC deconta [412]" position="29TNF3779263072" type="NRBC . PC deconta"/>
             <unit command-post="false" id="413" name="NRBC . Equipe decontamination [413]" position="29TNF3779363072" type="NRBC . Equipe decontamination"/>
             <unit command-post="false" id="414" name="NRBC . Equipe decontamination [414]" position="29TNF3789463072" type="NRBC . Equipe decontamination"/>
             <unit command-post="false" id="415" name="NRBC . Equipe decontamination [415]" position="29TNF3799563072" type="NRBC . Equipe decontamination"/>
           </automat>
-          <automat engaged="true" id="416" knowledge-group="95" name="NRBC . PC Section Reco [416]" type="NRBC . Section Reco">
+          <automat engaged="true" id="416" knowledge-group="95" name="NRBC . PC Section Reco [416]" symbol="symbols/sfgpuuac" type="NRBC . Section Reco">
             <unit command-post="true" id="417" name="NRBC . PC deconta [417]" position="29TNF2950863072" type="NRBC . PC Section Reco"/>
             <unit command-post="false" id="418" name="NRBC . Patrouille Reco [418]" position="29TNF2960863072" type="NRBC . Patrouille Reco"/>
           </automat>
@@ -102,7 +102,17 @@
         <knowledge-group id="94" name="KG ABC [94]" type="Standard"/>
         <knowledge-group id="95" name="KG INF [95]" type="Standard"/>
       </communication>
-      <populations/>
+      <populations>
+        <population attitude="calme" id="427" name="Foule mixte [427]" position="29TNF3834864434" type="Foule mixte">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <repartition children="0.1" female="0.45" male="0.45"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
       <inhabitants>
         <inhabitant id="241" name="pop b01" type="popStandard">
           <composition dead="0" healthy="500" wounded="0"/>
@@ -1157,21 +1167,21 @@
         </object>
       </objects>
       <tactical>
-        <formation id="33" level="ii" name="ENI [33]">
-          <automat engaged="false" id="64" knowledge-group="8" name="SGTIA INF [64]" type="SGTIA INF dominante roues">
+        <formation id="33" level="ii" name="ENI [33]" symbol="symbols/shgpucath">
+          <automat engaged="false" id="64" knowledge-group="8" name="SGTIA INF [64]" symbol="symbols/shgpucim" type="SGTIA INF dominante roues">
             <unit command-post="true" id="65" name="Section . CDT CIE INF VAB" position="29TNF3132452702" type="INF . Section CDT CIE VAB"/>
             <unit command-post="false" id="66" name="Section . CBT INF VAB CDS SOFF" position="29TNF3143352943" type="INF . Section CBT VAB CDS SOFF"/>
             <unit command-post="false" id="67" name="Section . CBT INF VAB CDS SOFF" position="29TNF3165252860" type="INF . Section CBT VAB CDS SOFF"/>
             <unit command-post="false" id="70" name="Peloton . LECLERC CDP SOFF" position="29TNF3213052750" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="71" name="Groupe GEN . EBG" position="29TNF3183152456" type="GEN . Groupe EBG"/>
           </automat>
-          <automat engaged="true" id="75" knowledge-group="8" name="SGTIA ABC [75]" type="SGTIA ABC XL">
+          <automat engaged="true" id="75" knowledge-group="8" name="SGTIA ABC [75]" symbol="symbols/shgpucath" type="SGTIA ABC XL">
             <unit command-post="true" id="76" name="Peloton . LECLERC CDT ESC" position="29TNF3330852046" type="ABC . Peloton LECLERC CDT ESC"/>
             <unit command-post="false" id="78" name="Peloton . LECLERC CDP SOFF" position="29TNF3268452315" type="ABC . Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="80" name="Section . CBT INF VAB CDS SOFF" position="29TNF3311552256" type="INF . Section CBT VAB CDS SOFF"/>
             <unit command-post="false" id="81" name="Peloton . d appui direct" position="29TNF3265652105" type="ABC . Peloton d appui direct"/>
           </automat>
-          <automat engaged="true" id="82" knowledge-group="8" name="SGTIA ABC [82]" type="SGTIA ABC XL">
+          <automat engaged="true" id="82" knowledge-group="8" name="SGTIA ABC [82]" symbol="symbols/shgpucath" type="SGTIA ABC XL">
             <unit command-post="true" id="83" name="Peloton . LECLERC CDT ESC" position="29TNF3686453745" type="ABC . Peloton LECLERC CDT ESC"/>
             <unit command-post="false" id="86" name="ABC . Peloton LECLERC CDP OFF" position="29TNF3627553518" type="ABC . Peloton LECLERC CDP OFF"/>
             <unit command-post="false" id="87" name="Section . CBT INF VAB CDS SOFF" position="29TNF3658853270" type="INF . Section CBT VAB CDS SOFF"/>
@@ -1940,7 +1950,7 @@
     <party id="3" name="Camp Vert" type="neutral">
       <objects/>
       <tactical>
-        <formation id="120" level="xxxx" name="Formation [120]"/>
+        <formation id="120" level="xxxx" name="Formation [120]" symbol=""/>
       </tactical>
       <communication>
         <knowledge-group id="4" name="Vert" type="Standard"/>
@@ -1948,6 +1958,14 @@
       </communication>
       <populations>
         <population attitude="calme" id="123" name="Foule standard BM [123]" position="29TNF3829465061" type="Foule standard">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="3" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="426" name="Manifestants [426]" position="29TNF3828564060" type="Manifestants">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -1975,4 +1993,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2641623756" -->
+<!-- signature="0368576600" -->

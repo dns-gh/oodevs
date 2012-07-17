@@ -4,14 +4,14 @@
         <parameter name="area">
             <description>Zone à surveiller.</description>
             <type>
-                <class name="sword.military.world.Area"/>
+                <class name="world_elements.Area"/>
             </type>
         </parameter>
     </parameters>
     <stages>
         <stage label="Activation de radar sur zone" disable-when-done="true">
             <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
+                <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur</string>

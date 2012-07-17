@@ -4,7 +4,7 @@
 		<parameter name="positions" nullable="true">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
+					<class name="world_concepts.Reachable"/>
 				</list>
 			</type>
 			<default>
@@ -13,7 +13,7 @@
 		</parameter>
 		<parameter name="objective">
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
+				<class name="world_concepts.Reachable"/>
 			</type>
 		</parameter>
 		<parameter name="angle" nullable="true">
@@ -34,7 +34,7 @@
 		</parameter>
 		<parameter name="meetingPoint" nullable="true">
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
+				<class name="world_concepts.Reachable"/>
 			</type>
 			<default>
 				<nil/>
@@ -44,7 +44,7 @@
 	<stages>
 		<stage label="Défendre">
 			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
+				<skill name="commander.skills.Lead" main="true">
 					<parameter name="pcTasks">
 						<value>
 							<string>france.military.platoon.tasks.Stationner</string>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Eclairer" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.ReconnoiterRoute">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Eclairer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.ReconnoiterRoute">
     <description>Recherche du reinseignement</description>
     <parameters>
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-                    <class name="sword.military.knowledge.decisional.Reconnoitring"/>
+                    <class name="world_concepts.Reconnoitrable"/>
+                    <class name="world_concepts.Reconnoitring"/>
                 </list>
             </type>
         </parameter>
@@ -15,7 +15,7 @@
         <description>Obtenir du renseignement</description>
     </goal>
     <stages/>
-    <next-task name="sword.military.platoon.coercition.tasks.Scout">
+    <next-task name="agent.tasks_armored.Scout">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

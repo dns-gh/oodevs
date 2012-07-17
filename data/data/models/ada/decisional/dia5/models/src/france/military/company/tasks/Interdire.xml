@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interdire" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.DenyEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interdire" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.DenyEffect">
     <parameters>
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Observable"/>
+                    <class name="world_concepts.Observable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                    <class name="world_concepts.Positionable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="world_concepts.Buildable"/>
                 </list>
             </type>
             <default>
@@ -27,8 +27,8 @@
         </parameter>
         <parameter name="meetingPoint" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Approachable"/>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <class name="world_concepts.Approachable"/>
+                <class name="world_concepts.Positionable"/>
             </type>
             <default>
                 <nil/>
@@ -38,7 +38,7 @@
             <description>Elements fâce auxquels interdire, pouvant faire objet d'une menance.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Observable"/>
+                    <class name="world_concepts.Observable"/>
                 </list>
             </type>
         </parameter>
@@ -52,7 +52,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.tasks.Deny">
+    <next-task name="commander.tasks_armored.Deny">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.tasks.Interdire</string>

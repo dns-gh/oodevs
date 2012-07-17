@@ -4,8 +4,8 @@
         <parameter name="position">
             <description>Position d'accueil.</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
-                <class name="sword.military.knowledge.decisional.Observing"/>
+                <class name="world_concepts.Reachable"/>
+                <class name="world_concepts.Observing"/>
             </type>
         </parameter>
     </parameters>
@@ -13,7 +13,7 @@
         <stage label="Organiser l'accueil des réfugiés.">
             <description>Organiser l'accueil des réfugiés.</description>
             <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
+                <skill name="commander.skills.Lead" main="true">
                     <parameter name="noCoordination">
                         <value>
                             <boolean>true</boolean>

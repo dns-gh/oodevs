@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.terrorism.roles.SniperCompany" source-version="1.0.0" extends="sword.military.company.roles.Company">
-  <skills/>
-</role>

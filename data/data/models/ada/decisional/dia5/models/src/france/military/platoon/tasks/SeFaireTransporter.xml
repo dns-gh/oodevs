@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.SeFaireTransporter" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.WaitTransport">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.SeFaireTransporter" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.WaitTransport">
     <description>Soutien dynamique. Appuyer par le mouvement.</description>
     <parameters>
         <parameter name="position">
             <type>
-                <class name="sword.military.world.Point"/>
+                <class name="world_elements.Point"/>
             </type>
         </parameter>
     </parameters>

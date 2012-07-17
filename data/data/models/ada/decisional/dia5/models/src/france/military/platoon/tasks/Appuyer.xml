@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Appuyer" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.CombatSupport">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Appuyer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.CombatSupport">
     <description>Soutien dynamique. Soutenir par la manoeuvre.</description>
     <parameters>
         <parameter name="objectives">
             <description>Les unités à appuyer.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                    <class name="world_concepts.Supportable"/>
                 </list>
             </type>
         </parameter>
@@ -24,7 +24,7 @@
     <goal>
         <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
     </goal>
-    <next-task name="sword.military.platoon.coercition.tasks.CombatSupport">
+    <next-task name="agent.tasks_armored.CombatSupport">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

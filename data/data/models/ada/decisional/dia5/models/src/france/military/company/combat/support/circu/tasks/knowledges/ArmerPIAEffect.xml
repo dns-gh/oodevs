@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.circu.tasks.knowledges.ArmerPIAEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.circu.tasks.knowledges.ArmerPIAEffect" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
 	<methods>
 		<method name="getDirection">
 			<return>
 				<type>
-					<class name="sword.military.knowledge.decisional.Observable"/>
+					<class name="world_concepts.Observable"/>
 				</type>
 			</return>
 		</method>
@@ -12,7 +12,7 @@
 			<return>
 				<type>
 					<list>
-						<class name="sword.military.knowledge.decisional.Reachable"/>
+						<class name="world_concepts.Reachable"/>
 					</list>
 				</type>
 			</return>

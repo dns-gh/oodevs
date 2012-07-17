@@ -47,7 +47,7 @@ rootnode
           local escort = F_Pion_GetpionEnEscorte( meKnowledge.source )
           if escort then -- Une unité m'escorte, la mission MoveToward devient StayClose
               local distanceMax = 100
-              self.escortUnit = CreateKnowledge( sword.military.world.PlatoonAlly, escort )
+              self.escortUnit = CreateKnowledge( world_elements.PlatoonAlly, escort )
               if myself.getRouteForEscorting then -- Si l'escorteur a récupéré mon itinéraire
                   if not myself.isEscorted then
                        F_Pion_SetNewEscorted( escort, true )
@@ -57,7 +57,7 @@ rootnode
                                                    positions = { self.params.entities[ self.nextTargetIndex ] } } )
                   else
                   -- On suit
-                      local position = CreateProxyKnowledge( sword.military.world.ReachingArea, self.escortUnit, 
+                      local position = CreateProxyKnowledge( world_elements.ReachingArea, self.escortUnit, 
                                                        { distanceMin = 0, distanceMax = distanceMax } )
                       Activate( skill.links.stayClose, 1, { entities  = { self.escortUnit }, positions = { position } } )
                       meKnowledge:sendCanGiveRouteForEscorting( self.escortUnit, false )

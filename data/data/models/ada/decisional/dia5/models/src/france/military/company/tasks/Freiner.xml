@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Freiner" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.DelayEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Freiner" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.DelayEffect">
     <parameters>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="world_concepts.Buildable"/>
                 </list>
             </type>
             <default>
@@ -13,8 +13,8 @@
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="sword.military.knowledge.decisional.Approachable"/>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <class name="world_concepts.Approachable"/>
+                <class name="world_concepts.Positionable"/>
             </type>
         </parameter>
         <parameter name="withImprovement">
@@ -27,7 +27,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.tasks.Delay">
+    <next-task name="commander.tasks_armored.Delay">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.tasks.Freiner</string>

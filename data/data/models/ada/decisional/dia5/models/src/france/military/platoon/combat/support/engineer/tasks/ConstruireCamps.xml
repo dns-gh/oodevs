@@ -6,13 +6,13 @@
             <description>Les objets à construire</description>
             <type>
                 <list>
-                    <class name="sword.military.world.Object"/>
+                    <class name="world_elements.Object"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
     </parameters>
@@ -20,7 +20,7 @@
         <description>Construire les objets.</description>
     </goal>
     <stages/>
-    <next-task name="sword.military.platoon.tasks.Build">
+    <next-task name="agent.tasks_engineer.Build">
         <parameter name="entities">
             <value>
                 <parameter>entities</parameter>

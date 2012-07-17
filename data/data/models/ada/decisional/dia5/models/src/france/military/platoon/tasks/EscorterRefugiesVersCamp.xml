@@ -3,13 +3,13 @@
 	<parameters>
 		<parameter name="camp">
 			<type>
-				<class name="sword.military.knowledge.Camp"/>
+				<class name="world_concepts.Camp"/>
 			</type>
 		</parameter>
 		<parameter name="entities">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Loadable"/>
+					<class name="world_concepts.Loadable"/>
 				</list>
 			</type>
 		</parameter>
@@ -20,7 +20,7 @@
 	<stages>
 		<stage label="Déplacement vers les unités réfugiées.">
 			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
+				<skill name="agent.skills.primitives.Load" main="true">
 					<parameter name="entities">
 						<value>
 							<parameter>entities</parameter>
@@ -31,7 +31,7 @@
 		</stage>
 		<stage label="Déplacement vers le camp" disable-when-done="true">
 			<skills>
-				<skill name="sword.military.platoon.skills.DischargeIn" main="true">
+				<skill name="agent.skills.DischargeIn" main="true">
 					<parameter name="elements">
 						<value>
 							<parameter>entities</parameter>

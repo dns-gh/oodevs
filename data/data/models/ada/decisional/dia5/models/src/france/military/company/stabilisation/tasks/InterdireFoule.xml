@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.stabilisation.tasks.InterdireFoule" source-version="1.0.0" knowledge-class="sword.military.company.stabilisation.tasks.knowledge.FilterEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.stabilisation.tasks.InterdireFoule" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.FilterEffect">
     <parameters>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                    <class name="world_concepts.Reachable"/>
                 </list>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.stabilisation.tasks.Filter">
+    <next-task name="commander.tasks_armored.Filter">
         <parameter name="bodySearchStrength">
             <value>
                 <number>0.0</number>

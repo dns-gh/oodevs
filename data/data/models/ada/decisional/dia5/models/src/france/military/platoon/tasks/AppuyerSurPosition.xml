@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.AppuyerSurPosition" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.FireSupport">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.AppuyerSurPosition" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.FireSupport">
     <parameters>
         <parameter name="position">
             <type>
-                <class name="sword.military.knowledge.decisional.Destroying"/>
-                <class name="sword.military.knowledge.decisional.Neutralizing"/>
-                <class name="sword.military.knowledge.decisional.Observing"/>
+                <class name="world_concepts.Destroying"/>
+                <class name="world_concepts.Neutralizing"/>
+                <class name="world_concepts.Observing"/>
             </type>
         </parameter>
         <parameter name="unitsToSupport">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                    <class name="world_concepts.Supportable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="objective">
             <type>
-                <class name="sword.military.knowledge.decisional.Observable"/>
+                <class name="world_concepts.Observable"/>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.platoon.coercition.tasks.FireSupport">
+    <next-task name="agent.tasks_armored.FireSupport">
         <parameter name="objectives">
             <value>
                 <list>

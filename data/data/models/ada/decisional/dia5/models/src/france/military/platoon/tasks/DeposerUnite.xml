@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.DeposerUnite" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.DeposerUnite" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.MoveToward">
     <parameters>
         <parameter name="unite">
             <type>
-                <class name="sword.military.world.Platoon"/>
+                <class name="world_elements.Platoon"/>
             </type>
         </parameter>
         <parameter name="position" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
             <default>
                 <nil/>
@@ -18,7 +18,7 @@
     <stages>
         <stage permanent="false">
             <skills>
-                <skill name="sword.military.platoon.skills.DropUnit" main="true" priority="1000.0">
+                <skill name="agent.skills.DropUnit" main="true" priority="1000.0">
                     <parameter name="unit">
                         <value>
                             <parameter>unite</parameter>

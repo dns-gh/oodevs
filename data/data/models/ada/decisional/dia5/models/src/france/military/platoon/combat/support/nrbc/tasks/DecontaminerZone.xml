@@ -5,7 +5,7 @@
         <parameter name="area">
             <description>Zone à décontaminer</description>
             <type>
-                <class name="sword.military.world.Area"/>
+                <class name="world_elements.Area"/>
             </type>
         </parameter>
     </parameters>
@@ -19,7 +19,7 @@
                 <description>Se déplacer vers la zone à décontaminer</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.skills.MoveAlong" main="true" priority="0.5">
+                <skill name="agent.skills.MoveAlong" main="true" priority="0.5">
                     <parameter name="entities">
                         <value>
                             <list>
@@ -33,7 +33,7 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.actions.EquipNBCOutfit" priority="0.5"/>
+                <skill name="agent.skills.actions.EquipNBCOutfit" priority="0.5"/>
             </skills>
         </stage>
         <stage label="Décontamination" disable-when-done="true">
@@ -49,7 +49,7 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.actions.EquipNBCOutfit" priority="0.5"/>
+                <skill name="agent.skills.actions.EquipNBCOutfit" priority="0.5"/>
             </skills>
         </stage>
     </stages>

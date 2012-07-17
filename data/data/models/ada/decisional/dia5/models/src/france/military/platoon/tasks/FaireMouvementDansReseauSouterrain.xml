@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="network">
       <type>
-        <class name="sword.military.knowledge.UndergroundNetwork"/>
+        <class name="world_concepts.UndergroundNetwork"/>
       </type>
     </parameter>
   </parameters>

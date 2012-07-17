@@ -4,14 +4,14 @@
   <parameters>
     <parameter name="entity">
       <type>
-          <class name="sword.military.knowledge.decisional.Illuminatable"/>
+          <class name="world_concepts.Illuminatable"/>
       </type>
     </parameter>
     <parameter name="illuminateally">
       <description>Les entités non PC servant à illuminer les cibles.</description>
       <type>
         <list>
-          <class name="sword.military.world.PlatoonAlly"/>
+          <class name="world_elements.PlatoonAlly"/>
         </list>
       </type>
     </parameter>

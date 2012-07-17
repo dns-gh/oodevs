@@ -2,8 +2,8 @@
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.air.roles.Pion" source-version="1.0.0" extends="france.military.platoon.roles.Pion">
     <skills>
         <skill name="france.military.platoon.combat.support.air.skills.Atterrir"/>
-        <skill name="sword.military.platoon.coercition.skills.SwitchToSafety"/>
-        <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
+        <skill name="agent.skills.SwitchToSafety"/>
+        <skill name="agent.skills.SwitchToSpeed"/>
         <skill name="france.military.platoon.combat.support.air.skills.Decoller"/>
         <skill name="france.military.platoon.combat.support.air.skills.ModifierAltitude"/>
         <skill name="france.military.platoon.combat.support.rens.skills.RADINT_RenseignerSur"/>
@@ -17,28 +17,27 @@
         </goal>
         <let name="fragOrdersToManage">
             <value>
-                <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+                <call method="queries_misc.getFragOrders"/>
             </value>
         </let>
         <skills>
-            <skill name="sword.military.platoon.skills.miscellaneous.Default"/>
-            <skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
-            <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
-            <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+            <skill name="agent.skills.ReactToObstacles"/>
+            <skill name="agent.skills.SetPace"/>
+            <skill name="agent.skills.ManageFragOrder">
                 <parameter name="fragOrders">
                     <value>
                         <parameter>fragOrdersToManage</parameter>
                     </value>
                 </parameter>
             </skill>
-            <skill name="sword.military.platoon.skills.ReactToCoordinationLine">
+            <skill name="agent.skills.ReactToCoordinationLine">
                 <parameter name="limas">
                     <value>
-                        <call method="sword.military.queries.miscellaneous.getLimaOnPath"/>
+                        <call method="queries_misc.getLimaOnPath"/>
                     </value>
                 </parameter>
             </skill>
-            <skill name="france.military.platoon.combat.support.air.skills.Defaut"/>
+            <skill name="agent.skills.Default"/>
         </skills>
     </default-task>
 </role>

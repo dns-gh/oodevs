@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Fixer" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Fix">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Fixer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Fix">
   <description>Fixer</description>
   <parameters>
     <parameter name="objectives">
       <description>Les objectifs : les ennemis à fixer.</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Destroyable"/>
+          <class name="world_concepts.Destroyable"/>
         </list>
       </type>
     </parameter>
@@ -14,7 +14,7 @@
       <description>Les positions permettant de fixer l'ennemi.</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Destroying"/>
+          <class name="world_concepts.Destroying"/>
         </list>
       </type>
     </parameter>
@@ -23,7 +23,7 @@
     <description>Se déplacer sur la meilleure position permettant de fixer les ennemis.</description>
   </goal>
   <stages/>
-  <next-task name="sword.military.platoon.coercition.tasks.Fix">
+  <next-task name="agent.tasks_armored.Fix">
     <parameter name="objectives">
       <value>
         <parameter>objectives</parameter>

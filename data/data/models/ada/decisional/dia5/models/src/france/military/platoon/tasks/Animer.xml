@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Animer" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Animate">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Animer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Animate">
     <description>Animer un object tactique</description>
     <parameters>
         <parameter name="entities">
             <description>Les objets à animer</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Animatable"/>
-                    <class name="sword.military.knowledge.decisional.Animating"/>
+                    <class name="world_concepts.Animatable"/>
+                    <class name="world_concepts.Animating"/>
                 </list>
             </type>
         </parameter>
@@ -22,7 +22,7 @@
                 <description>Animer les objets</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.skills.primitives.Animate" main="true" priority="1.0">
+                <skill name="agent.skills.primitives.Animate" main="true" priority="1.0">
                     <parameter name="entities">
                         <value>
                             <parameter>entities</parameter>

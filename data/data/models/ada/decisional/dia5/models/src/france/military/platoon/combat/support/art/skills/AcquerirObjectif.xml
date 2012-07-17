@@ -3,17 +3,17 @@
 	<parameters>
 		<parameter name="zone">
 			<type>
-				<class name="sword.military.world.Area"/>
+				<class name="world_elements.Area"/>
 			</type>
 		</parameter>
 		<parameter name="position">
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
+				<class name="world_concepts.Reachable"/>
 			</type>
 		</parameter>
 		<parameter name="positionDebarquement" nullable="true">
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
+				<class name="world_concepts.Reachable"/>
 			</type>
 			<default>
 				<nil/>
@@ -21,8 +21,8 @@
 		</parameter>
 	</parameters>
 	<links>
-		<link name="moveTo" skill="sword.military.platoon.skills.MoveToward"/>
-		<link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+		<link name="moveTo" skill="agent.skills.MoveToward"/>
+		<link name="dismount" skill="agent.skills.actions.Dismount"/>
 		<link name="orienterCapteur" skill="france.military.platoon.combat.support.art.skills.OrienterCapteurOuSenseur"/>
 	</links>
 </skill>

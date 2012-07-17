@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.tasks.TrierEtTraiterBlesses" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Deploy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.tasks.TrierEtTraiterBlesses" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Deploy">
     <parameters>
         <parameter name="objective" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
             <default>
                 <nil/>
@@ -13,7 +13,7 @@
             <description>Le type de blessures à prendre en charge par la chaîne logistique santé</description>
             <type>
                 <list>
-                    <class name="sword.military.world.HumanWound"/>
+                    <class name="world_elements.HumanWound"/>
                 </list>
             </type>
             <default>
@@ -24,7 +24,7 @@
     <stages>
         <stage label="Tri et traitement des blessés" permanent="true">
             <skills>
-                <skill name="sword.military.platoon.skills.Deploy">
+                <skill name="agent.skills.Deploy">
                     <parameter name="objective">
                         <value>
                             <parameter>objective</parameter>

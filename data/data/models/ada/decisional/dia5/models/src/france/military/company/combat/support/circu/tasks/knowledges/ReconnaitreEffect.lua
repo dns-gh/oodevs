@@ -23,7 +23,7 @@ return
         -- Ordonner la table d'objectives par ordre de proximité à l'unité subordonnée
         table.sort( positions, comp )
         -- Ajout du dernier point au bout du sous-fuseau
-        positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
+        positions[ #positions + 1 ] = CreateKnowledge( world_elements.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
         return positions, fuseau
     end,
     
@@ -33,7 +33,7 @@ return
             myself.leadData.fuseaux = {}
             local fuseaux = integration.query.getFuseaux( myself.taskParams.maxNbrFront )
             for i = 1, #fuseaux do
-                myself.leadData.fuseaux[#myself.leadData.fuseaux +1] = CreateKnowledge( sword.military.world.Fuseau, fuseaux[i])
+                myself.leadData.fuseaux[#myself.leadData.fuseaux +1] = CreateKnowledge( world_elements.Fuseau, fuseaux[i])
             end
         end
         myself.leadData.currentReccePosition = myself.leadData.currentReccePosition % #myself.leadData.fuseaux + 1
@@ -44,7 +44,7 @@ return
         local positions = {}
         local fuseau = self:getPeiAOR( params )
         -- Ajout du dernier point au bout du sous-fuseau
-        positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
+        positions[ #positions + 1 ] = CreateKnowledge( world_elements.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
         return positions, fuseau
     end,
     
@@ -54,7 +54,7 @@ return
             myself.leadData.fuseauxPei = {}
             local fuseaux = integration.query.getFuseaux( myself.taskParams.maxNbrFront )
             for _,fuseau in pairs( fuseaux ) do
-                myself.leadData.fuseauxPei[#myself.leadData.fuseauxPei +1] = CreateKnowledge( sword.military.world.Fuseau, fuseau)
+                myself.leadData.fuseauxPei[#myself.leadData.fuseauxPei +1] = CreateKnowledge( world_elements.Fuseau, fuseau)
             end
         end
         myself.leadData.currentPeiPosition = myself.leadData.currentPeiPosition % #myself.leadData.fuseauxPei + 1

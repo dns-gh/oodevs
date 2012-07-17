@@ -35,7 +35,7 @@ end
 integration.getSafetyPositionFromCrowd = function( crowd, distance )
     local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, distance )
     if position then
-        return CreateKnowledge( sword.military.world.Point, position)
+        return CreateKnowledge( world_elements.Point, position)
     else
         return meKnowledge:getMyPosition()
     end
@@ -49,7 +49,7 @@ integration.getSafetyPositionsFromFireObjects = function( objects, distance )
         local object = objects[ i ]
         scaledObject = DEC_Geometrie_AgrandirLocalisation(  object:getLocalisation() , distance )
         objectPosition = DEC_Geometrie_ComputeNearestBorder( positionNextTo, scaledObject )
-        points[#points + 1] = CreateKnowledge( sword.military.world.Point, objectPosition )
+        points[#points + 1] = CreateKnowledge( world_elements.Point, objectPosition )
     end
     return points
 end

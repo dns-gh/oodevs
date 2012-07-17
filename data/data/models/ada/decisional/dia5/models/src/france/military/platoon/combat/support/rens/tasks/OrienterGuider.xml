@@ -5,7 +5,7 @@
     <parameter name="unit">
       <description>L'unité amie  ou ennemie avec laquelle partager les connaissances.</description>
       <type>
-        <class name="sword.military.world.Element"/>
+        <class name="world_elements.Element"/>
       </type>
     </parameter>
   </parameters>

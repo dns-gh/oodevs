@@ -4416,8 +4416,8 @@
     <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="FOULES Agresser" package="attack">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="Point"/>
           <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
         </choice>
       </parameter>
     </mission>
@@ -4635,4 +4635,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2517654690" -->
+<!-- signature="3239820983" -->

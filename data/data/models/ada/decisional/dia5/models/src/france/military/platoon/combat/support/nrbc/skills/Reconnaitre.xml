@@ -6,7 +6,7 @@
             <description>L'élément à reconnaître.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+                    <class name="world_concepts.Reconnoitrable"/>
                 </list>
             </type>
         </parameter>
@@ -16,10 +16,10 @@
     </goal>
     <modifiers/>
     <links>
-        <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition">
+        <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition">
             <description>Lien vers le skill MoveAndTakePosition</description>
         </link>
-        <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
+        <link name="observe" skill="agent.skills.actions.Observe">
             <description>Lien vers le skill Observe</description>
         </link>
     </links>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Appuyer" source-version="1.0.0" knowledge-class="sword.military.company.combat.tasks.knowledges.CombatSupportEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Appuyer" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.CombatSupportEffect">
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="sword.military.world.Company"/>
+                <class name="world_elements.Company"/>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.combat.tasks.CombatSupport">
+    <next-task name="commander.tasks_armored.CombatSupport">
         <parameter name="objectives">
             <value>
-                <call method="sword.military.company.queries.getEntitiesFromAutomat">
+                <call method="commander.queries.getEntitiesFromAutomat">
                     <parameter name="role">
                         <value>
                             <string>none</string>

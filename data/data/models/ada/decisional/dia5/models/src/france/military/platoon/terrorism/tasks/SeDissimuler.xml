@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.SeDissimuler" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Infiltrate">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.SeDissimuler" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Infiltrate">
   <description>Se dissimuler dans un element pour etre moins visible des autres pions</description>
   <parameters>
     <parameter name="reachable">
       <description>Element dans lequelle se dissimuler.</description>
       <type>
-        <class name="sword.military.world.LocalizedElement"/>
+        <class name="world_elements.LocalizedElement"/>
       </type>
     </parameter>
   </parameters>

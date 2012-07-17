@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Couvrir" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Cover">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Couvrir" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Cover">
   <description>Couvrir des unités à partir des positions fâce à des objectifs.</description>
   <parameters>
     <parameter name="entities">
       <description>les unités à couvrir</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Reachable"/>
+          <class name="world_concepts.Reachable"/>
         </list>
       </type>
     </parameter>
@@ -14,7 +14,7 @@
       <description>Objectif face auquel il faut couvrir.</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Observable"/>
+          <class name="world_concepts.Observable"/>
         </list>
       </type>
       <default>
@@ -25,9 +25,9 @@
       <description>Positions à partir desquelles il faut couvrir.</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Neutralizing"/>
-          <class name="sword.military.knowledge.decisional.Observing"/>
-          <class name="sword.military.knowledge.decisional.Destroying"/>
+          <class name="world_concepts.Neutralizing"/>
+          <class name="world_concepts.Observing"/>
+          <class name="world_concepts.Destroying"/>
         </list>
       </type>
     </parameter>
@@ -35,7 +35,7 @@
   <goal>
     <description>Détruire les objectifs.</description>
   </goal>
-  <next-task name="sword.military.platoon.coercition.tasks.Cover">
+  <next-task name="agent.tasks_armored.Cover">
     <parameter name="entities">
       <value>
         <parameter>entities</parameter>

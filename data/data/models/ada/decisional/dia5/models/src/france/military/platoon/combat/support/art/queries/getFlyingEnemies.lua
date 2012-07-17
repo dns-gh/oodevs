@@ -6,7 +6,7 @@ queryImplementation "getFlyingEnemies"
         local result = {}
         for i=1, #listeUnitesEnnemiesVivantesPercues do
             if DEC_ConnaissanceAgent_EstEnVol( listeUnitesEnnemiesVivantesPercues[i] ) then
-                result[#result + 1] = CreateKnowledge( sword.military.world.Platoon, listeUnitesEnnemiesVivantesPercues[i] )
+                result[#result + 1] = CreateKnowledge( world_elements.Platoon, listeUnitesEnnemiesVivantesPercues[i] )
             end
         end
         return result

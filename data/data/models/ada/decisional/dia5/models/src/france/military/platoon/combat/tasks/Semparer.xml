@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Semparer" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Seize">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Semparer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Seize">
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="sword.military.knowledge.decisional.Destroying"/>
+        <class name="world_concepts.Destroying"/>
       </type>
     </parameter>
   </parameters>
@@ -11,7 +11,7 @@
     <description>Mouvement tactique, observation vers l'objectif et engagement de tout ennemi.</description>
   </goal>
   <stages/>
-  <next-task name="sword.military.platoon.coercition.tasks.Seize">
+  <next-task name="agent.tasks_armored.Seize">
     <parameter name="objectives">
       <value>
         <list>

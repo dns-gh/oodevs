@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.queries.miscellaneous.getPointTowardMissionDirection" source-version="1.0.0">
-    <description>Retourne un point vers la direction dangereuse de la mission.</description>
-    <target name="point">
-        <type>
-            <class name="sword.military.world.Point"/>
-        </type>
-    </target>
-</query>

@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="position" nullable="true">
       <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
+        <class name="world_concepts.Reachable"/>
       </type>
       <default>
         <nil/>
@@ -13,7 +13,7 @@
   <stages>
     <stage label="Progression vers point la position de déploiement" disable-when-done="true">
       <skills>
-        <skill name="sword.military.company.skills.Lead" main="true">
+        <skill name="commander.skills.Lead" main="true">
           <parameter name="companyTask">
             <value>
               <string>france.military.company.combat.support.art.tasks.COBRASeDeployer</string>

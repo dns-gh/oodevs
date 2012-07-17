@@ -3,17 +3,17 @@
     <parameters>
         <parameter name="enter">
             <type>
-                <class name="sword.military.knowledge.UndergroundNetwork"/>
+                <class name="world_concepts.UndergroundNetwork"/>
             </type>
         </parameter>
         <parameter name="exit">
             <type>
-                <class name="sword.military.knowledge.UndergroundNetwork"/>
+                <class name="world_concepts.UndergroundNetwork"/>
             </type>
         </parameter>
         <parameter name="objective">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
     </parameters>

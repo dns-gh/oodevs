@@ -273,7 +273,7 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
     local nTemp = #temp
     for i = 1, nTemp do
         local pion = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( sword.military.world.PlatoonAlly, pion )
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( world_elements.PlatoonAlly, pion )
     end
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
@@ -297,7 +297,7 @@ integration.getEntitiesFromBatallion = function ()
     local nTemp = #temp
     for i = 1, nTemp do
         local automat = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( sword.military.world.Company, automat )
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( world_elements.Company, automat )
     end
     return knowledges
  end
@@ -328,9 +328,9 @@ integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withP
 integration.getDestroyableInObjective = function( objective )
     local res = {}
     local enemies = {}
-    if masalife.brain.core.class.isOfType( objective, sword.military.world.Area ) then
+    if masalife.brain.core.class.isOfType( objective, world_elements.Area ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( objective.source ) 
-    elseif masalife.brain.core.class.isOfType( objective, sword.military.world.UrbanBlock ) then
+    elseif masalife.brain.core.class.isOfType( objective, world_elements.UrbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( objective:getPosition(), 600 )
@@ -339,7 +339,7 @@ integration.getDestroyableInObjective = function( objective )
     local nEnemies = #enemies
     for i = 1,nEnemies do
         local enemy = enemies[i]
-        res[#res + 1] = CreateKnowledge( sword.military.world.Platoon, enemy )
+        res[#res + 1] = CreateKnowledge( world_elements.Platoon, enemy )
     end
     return res
 end
@@ -353,9 +353,9 @@ end
 integration.getTerroristsInObjective = function( objective )
     local res = {}
     local enemies = {}
-    if masalife.brain.core.class.isOfType( objective, sword.military.world.Area ) then
+    if masalife.brain.core.class.isOfType( objective, world_elements.Area ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( objective.source ) 
-    elseif masalife.brain.core.class.isOfType( objective, sword.military.world.UrbanBlock ) then
+    elseif masalife.brain.core.class.isOfType( objective, world_elements.UrbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( objective:getPosition(), 600 )
@@ -365,7 +365,7 @@ integration.getTerroristsInObjective = function( objective )
     for i = 1,nEnemies do
         local enemy = enemies[i]
         if DEC_ConnaissanceAgent_EstTerroriste( enemy ) then
-            res[#res + 1] = CreateKnowledge( sword.military.world.Platoon, enemy )
+            res[#res + 1] = CreateKnowledge( world_elements.Platoon, enemy )
         end
     end
     return res
@@ -377,7 +377,7 @@ end
 -- @release 2011-06-08
 -- --------------------------------------------------------------------------------
 integration.getPCOfAutomate = function( automate )
-    return CreateKnowledge( sword.military.world.PlatoonAlly, DEC_Automate_PionPCDeAutomate( automate.source ) )
+    return CreateKnowledge( world_elements.PlatoonAlly, DEC_Automate_PionPCDeAutomate( automate.source ) )
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -387,7 +387,7 @@ end
 -- @release 2011-08-29
 -- --------------------------------------------------------------------------------
 integration.query.getPositionsToFollow = function( elementToFollow, distanceMin, distanceMax )
-    return { CreateProxyKnowledge( sword.military.world.ReachingArea, elementToFollow, 
+    return { CreateProxyKnowledge( world_elements.ReachingArea, elementToFollow, 
                               { distanceMin = distanceMin, distanceMax = distanceMax } ) }
 end
 
@@ -396,7 +396,7 @@ integration.query.getSiteFranchissementDansZone = function ( zone )
     local obstacles = {}
     obstacles = DEC_ObjectKnowledgesInZone( zone.source, {"crossing site" } )
     for _, objective in pairs( obstacles ) do
-        allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Object, objective )
+        allRes[ #allRes + 1 ] = CreateKnowledge( world_elements.Object, objective )
     end
     return allRes
 end
@@ -436,7 +436,7 @@ integration.getFirePositions = function( modeDeploiement, zone, angle )
     end
     local returnPositions = {}
     for i = 1, #firePositions do
-        returnPositions[i] = CreateKnowledge(sword.military.world.Point, firePositions[i])
+        returnPositions[i] = CreateKnowledge(world_elements.Point, firePositions[i])
     end
     return returnPositions
 end

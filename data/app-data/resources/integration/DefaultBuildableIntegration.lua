@@ -324,7 +324,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appeler une seule fois.
     local localisation
-    if masalife.brain.core.class.isOfType( position, sword.military.world.Area) then
+    if masalife.brain.core.class.isOfType( position, world_elements.Area) then
         localisation = position.source
     else
         localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
@@ -339,7 +339,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.destroyInstantlyObjectOn = function( typeObject, position )
     local localisation
-    if masalife.brain.core.class.isOfType( position, sword.military.world.Area) then
+    if masalife.brain.core.class.isOfType( position, world_elements.Area) then
         localisation = position.source
     else
         localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )

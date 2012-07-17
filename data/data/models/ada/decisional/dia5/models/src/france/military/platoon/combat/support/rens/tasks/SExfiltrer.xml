@@ -4,7 +4,7 @@
 		<parameter name="entity">
 			<description>L'élément que l'on veut rejoindre.</description>
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
+				<class name="world_concepts.Reachable"/>
 			</type>
 		</parameter>
 		<parameter name="byNight" nullable="true">

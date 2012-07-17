@@ -6,7 +6,7 @@
       <description>Le ou les élements à parcourir</description>
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Reachable"/>
+          <class name="world_concepts.Reachable"/>
         </list>
       </type>
     </parameter>
@@ -33,9 +33,9 @@ eTypeItiLogistique = 7</description>
     <description>Se déplacer vers tous les objectifs. Les objectifs sont parcourus de proche en proche.</description>
   </goal>
   <links>
-    <link name="moveToward" skill="sword.military.platoon.skills.primitives.MoveToward">
+    <link name="moveToward" skill="agent.skills.primitives.MoveToward">
       <description>Lien vers le skill MoveToward</description>
     </link>
-		<link name="stayClose" skill="sword.military.platoon.skills.primitives.StayClose"/>
+		<link name="stayClose" skill="agent.skills.primitives.StayClose"/>
   </links>
 </skill>

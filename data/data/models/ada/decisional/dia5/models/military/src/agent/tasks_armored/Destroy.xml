@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks_armored.Destroy" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Destroy">
+    <parameters>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="world_concepts.Destroyable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <type>
+                <list>
+                    <class name="world_concepts.Destroying"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Destruction" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.primitives.Destroy" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

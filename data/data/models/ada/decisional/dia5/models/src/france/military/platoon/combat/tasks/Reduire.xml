@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Reduire" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Reduire" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.MoveToward">
     <description>Réduire les objectifs par le feu.</description>
     <parameters>
         <parameter name="entities">
@@ -7,7 +7,7 @@
 </description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                    <class name="world_concepts.Destroyable"/>
                 </list>
             </type>
         </parameter>
@@ -16,7 +16,7 @@
         <description>Réduire les objectifs.</description>
     </goal>
     <stages/>
-    <next-task name="sword.military.platoon.coercition.tasks.Destroy">
+    <next-task name="agent.tasks_armored.Destroy">
         <parameter name="entities">
             <value>
                 <parameter>entities</parameter>

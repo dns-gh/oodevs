@@ -5,9 +5,9 @@ rootnode
     done = function( self ) end,
 
     create = function( self )
-        if masalife.brain.core.class.isOfType(  self.params.objective, sword.military.world.Company) then
+        if masalife.brain.core.class.isOfType(  self.params.objective, world_elements.Company) then
             self.escortableUnits = integration.getEntitiesFromAutomat( self.params.objective, "none", true)
-        elseif masalife.brain.core.class.isOfType( self.params.objective, sword.military.world.Platoon) then
+        elseif masalife.brain.core.class.isOfType( self.params.objective, world_elements.Platoon) then
             self.escortableUnits = { integration.getAgentFromAutomatKnowledge( self.params.objective ) }
         else
             self.escortableUnits = { self.params.objective }
@@ -32,7 +32,7 @@ rootnode
             if not self.fragOrderSent then
                 local platoonInMeKnowledge = integration.getEntitiesFromAutomat( meKnowledge, "none", true)
                 local sizePlatoonInMeKnowledge = #platoonInMeKnowledge
-                local objectivePosition = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint( self.params.objective:getPosition() ) )
+                local objectivePosition = CreateKnowledge( world_elements.Point, DEC_Geometrie_CopiePoint( self.params.objective:getPosition() ) )
                 for i = 1, sizePlatoonInMeKnowledge do
                     local element = platoonInMeKnowledge[i]
                     element:sendTaskToPion( element, "france.military.platoon.tasks.FaireMouvement", { objectives = { objectivePosition },
@@ -41,7 +41,7 @@ rootnode
                 self.fragOrderSent = true
              end
               local fragOrder = CreateFragOrder("Rep_OrderConduite_AttendreSePoster")
-              local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )       
+              local fragOrderKn = CreateKnowledge( world_elements.FragOrder, fragOrder )       
               Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
          end
     end,
@@ -54,7 +54,7 @@ rootnode
        if not self.waitFollowFragOrder then
             self.waitFollowFragOrder = 1
             local fragOrder = CreateFragOrder("Rep_OrderConduite_Poursuivre")
-            local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )
+            local fragOrderKn = CreateKnowledge( world_elements.FragOrder, fragOrder )
             Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
        elseif self.waitFollowFragOrder == 1 then
            self.waitFollowFragOrder = 2

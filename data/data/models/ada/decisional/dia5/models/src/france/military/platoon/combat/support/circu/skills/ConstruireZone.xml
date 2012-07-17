@@ -3,7 +3,7 @@
 	<parameters>
 		<parameter name="zone">
 			<type>
-				<class name="sword.military.world.Area"/>
+				<class name="world_elements.Area"/>
 			</type>
 		</parameter>
 		<parameter name="typeObjet">
@@ -13,6 +13,6 @@
 		</parameter>
 	</parameters>
 	<links>
-		<link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+		<link name="moveToward" skill="agent.skills.MoveToward"/>
 	</links>
 </skill>

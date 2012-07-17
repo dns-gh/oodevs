@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Barrer" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Block">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Barrer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Block">
     <description>Barrage de points (plus tard de directions dangereuses) à partir de positions.</description>
     <parameters>
         <parameter name="objectives">
             <description>Les objectifs à barrer</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Observable"/>
+                    <class name="world_concepts.Observable"/>
                 </list>
             </type>
         </parameter>
@@ -14,15 +14,15 @@
             <description>Positions à partir desquelles interdire</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroying"/>
-                    <class name="sword.military.knowledge.decisional.Observing"/>
+                    <class name="world_concepts.Destroying"/>
+                    <class name="world_concepts.Observing"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.world.Object"/>
+                    <class name="world_elements.Object"/>
                 </list>
             </type>
             <default>
@@ -42,7 +42,7 @@
     <goal>
         <description>Occupation de position intéressante pour barrer les objectifs</description>
     </goal>
-    <next-task name="sword.military.platoon.coercition.tasks.Block">
+    <next-task name="agent.tasks_armored.Block">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

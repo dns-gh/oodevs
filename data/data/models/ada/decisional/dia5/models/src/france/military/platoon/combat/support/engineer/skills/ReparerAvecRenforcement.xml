@@ -6,7 +6,7 @@
 			<description>les elements a construire</description>
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Buildable"/>
+					<class name="world_concepts.Buildable"/>
 				</list>
 			</type>
 			<default>

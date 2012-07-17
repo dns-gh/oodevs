@@ -3,14 +3,14 @@
   <parameters>
     <parameter name="destinataire">
       <type>
-        <class name="sword.military.world.Platoon"/>
+        <class name="world_elements.Platoon"/>
       </type>
     </parameter>
   </parameters>
   <stages>
     <stage label="Transmission des informations au destinataire." disable-when-done="true">
       <skills>
-        <skill name="sword.military.company.skills.Lead" main="true">
+        <skill name="commander.skills.Lead" main="true">
           <parameter name="companyTask">
             <value>
               <string>france.military.company.tasks.Renseigner</string>

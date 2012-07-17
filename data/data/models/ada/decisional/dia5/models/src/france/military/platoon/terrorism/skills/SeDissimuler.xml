@@ -4,11 +4,11 @@
     <parameter name="reachable">
       <description>Element dans lequelle se dissimuler.</description>
       <type>
-        <class name="sword.military.world.LocalizedElement"/>
+        <class name="world_elements.LocalizedElement"/>
       </type>
     </parameter>
   </parameters>
   <links>
-    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+    <link name="moveToward" skill="agent.skills.MoveToward"/>
   </links>
 </skill>

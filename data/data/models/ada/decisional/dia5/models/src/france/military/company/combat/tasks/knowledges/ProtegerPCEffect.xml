@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.knowledges.ProtegerPCEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.knowledges.ProtegerPCEffect" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
   <methods/>
 </class>

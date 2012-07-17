@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="position" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="automat">
             <type>
-                <class name="sword.military.world.Company"/>
+                <class name="world_elements.Company"/>
             </type>
         </parameter>
     </parameters>

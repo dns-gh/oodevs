@@ -11,7 +11,7 @@ rootnode
     activate = function( self )
         local Activate = Activate
         -- if dissimulate in a crowd, go to the head
-        if masalife.brain.core.class.isOfType( self.params.reachable, sword.military.world.Crowd )then
+        if masalife.brain.core.class.isOfType( self.params.reachable, world_elements.Crowd )then
             self.destination = self.params.reachable:getHeadPosition()
         else
             self.destination = self.destination or self.params.reachable:getMyPosition()

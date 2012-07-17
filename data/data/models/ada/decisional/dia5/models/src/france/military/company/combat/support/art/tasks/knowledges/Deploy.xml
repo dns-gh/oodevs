@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.art.tasks.knowledges.Deploy" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.ReachingEffect">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.art.tasks.knowledges.Deploy" source-version="1.0.0" extends="commander.tasks_knowledge.ReachingEffect">
 	<description>Interface des connaissances de mission de niveau compagnie</description>
 	<methods>
 		<method name="getFirePositions">

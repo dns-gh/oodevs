@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="position" nullable="true">
       <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
+        <class name="world_concepts.Reachable"/>
       </type>
       <default>
         <nil/>
@@ -11,11 +11,11 @@
     </parameter>
     <parameter name="automat">
       <type>
-        <class name="sword.military.world.Company"/>
+        <class name="world_elements.Company"/>
       </type>
     </parameter>
   </parameters>
   <links>
-    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+    <link name="moveToward" skill="agent.skills.MoveToward"/>
   </links>
 </skill>

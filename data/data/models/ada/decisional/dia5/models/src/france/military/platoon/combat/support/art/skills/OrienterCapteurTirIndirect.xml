@@ -3,12 +3,12 @@
 	<parameters>
 		<parameter name="zone">
 			<type>
-				<class name="sword.military.world.Area"/>
+				<class name="world_elements.Area"/>
 			</type>
 		</parameter>
 	</parameters>
 	<links>
 		<link name="activateRadar" skill="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
-		<link name="observe" skill="sword.military.platoon.skills.actions.Observe"/>
+		<link name="observe" skill="agent.skills.actions.Observe"/>
 	</links>
 </skill>

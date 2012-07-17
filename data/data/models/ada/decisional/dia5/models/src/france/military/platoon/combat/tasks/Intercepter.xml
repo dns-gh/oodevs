@@ -4,14 +4,14 @@
         <parameter name="objective">
             <description>La zone d'engagement des ennemis.</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <class name="world_concepts.Positionable"/>
             </type>
         </parameter>
         <parameter name="destroyingPositions" nullable="true">
             <description>Positions d'observation où l'unité peut observer les unités ennemis avant l'engagement.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
+                    <class name="world_concepts.Neutralizing"/>
                 </list>
             </type>
             <default>
@@ -21,7 +21,7 @@
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.world.Object"/>
+                    <class name="world_elements.Object"/>
                 </list>
             </type>
             <default>
@@ -32,7 +32,7 @@
             <description>Les ennemis à engager.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                    <class name="world_concepts.Destroyable"/>
                 </list>
             </type>
             <default>
@@ -56,7 +56,7 @@
                 <description>Construire le plan d'obstacle.</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.skills.BuildWithReinforcement" main="true">
+                <skill name="agent.skills.BuildWithReinforcement" main="true">
                     <parameter name="withImprovement">
                         <value>
                             <parameter>withImprovement</parameter>
@@ -76,7 +76,7 @@
                 <description>Engagement des objectifs.</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.coercition.skills.Engage" priority="0.9">
+                <skill name="agent.skills.Engage" priority="0.9">
                     <parameter name="positions">
                         <value>
                             <parameter>destroyingPositions</parameter>

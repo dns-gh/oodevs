@@ -6,7 +6,7 @@
 			<description>Itinéraire de vol.</description>
 			<type>
 				<list>
-					<class name="sword.military.world.Point"/>
+					<class name="world_elements.Point"/>
 				</list>
 			</type>
 		</parameter>

@@ -22,7 +22,7 @@ return
         local positions = {}
         for _, entity in pairs (params.obstacles) do
             for _, position in pairs (entity:getPositions()) do
-                positions[ #positions + 1] = CreateKnowledge( sword.military.world.Point, position )
+                positions[ #positions + 1] = CreateKnowledge( world_elements.Point, position )
             end
         end
         return positions

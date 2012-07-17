@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.actions.EquipNBCOutfit" source-version="1.0.0">
+  <description>Action simple qui consiste à gérer une alerte NBC. L'agent décide de se s'équiper d'une protection.</description>
+  <body-type>
+    <class name="world_concepts.Equipment"/>
+  </body-type>
+  <resources>
+    <resource name="agent.resources.NBCProtectionCapacity" variable="NBCProtectionCapability"/>
+  </resources>
+</skill>

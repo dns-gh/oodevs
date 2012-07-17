@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="position">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="ph">
@@ -20,9 +20,9 @@
     <modifiers/>
     <links>
         <link name="intercepterMissile" skill="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
-        <link name="deploy" skill="sword.military.platoon.skills.Deploy"/>
+        <link name="deploy" skill="agent.skills.Deploy"/>
     </links>
     <resources>
-        <resource name="sword.military.platoon.resources.EngageCapacity" variable="engage"/>
+        <resource name="agent.resources.EngageCapacity" variable="engage"/>
     </resources>
 </skill>

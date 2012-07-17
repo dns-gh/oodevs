@@ -6,7 +6,7 @@
     <stages>
         <stage label="Changer en ambiance sûreté" disable-when-done="true">
             <skills>
-                <skill name="sword.military.platoon.coercition.skills.SwitchToSafety" main="true"/>
+                <skill name="agent.skills.SwitchToSafety" main="true"/>
             </skills>
         </stage>
     </stages>

@@ -5,8 +5,8 @@
             <description>L'itinéraire est défini par une liste de point de passage obligé.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-                    <class name="sword.military.knowledge.decisional.Reconnoitring"/>
+                    <class name="world_concepts.Reconnoitrable"/>
+                    <class name="world_concepts.Reconnoitring"/>
                 </list>
             </type>
         </parameter>
@@ -21,7 +21,7 @@
                 <description>Reconnaître les éléments NBC.</description>
             </goal>
             <skills>
-                <skill name="sword.military.platoon.skills.actions.EquipNBCOutfit"/>
+                <skill name="agent.skills.actions.EquipNBCOutfit"/>
                 <skill name="france.military.platoon.combat.support.nrbc.skills.Reconnaitre" main="true">
                     <parameter name="entities">
                         <value>

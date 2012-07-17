@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="network">
             <type>
-                <class name="sword.military.knowledge.UndergroundNetwork"/>
+                <class name="world_concepts.UndergroundNetwork"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
     </parameters>
@@ -26,7 +26,7 @@
         </stage>
         <stage label="Déplacement vers la position de regroupement" disable-when-done="true">
             <skills>
-                <skill name="sword.military.platoon.skills.MoveToward" main="true">
+                <skill name="agent.skills.MoveToward" main="true">
                     <parameter name="entities">
                         <value>
                             <list>

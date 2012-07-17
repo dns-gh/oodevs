@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.OpenRoute">
-  <description>Soutien dynamique. Appuyer par le mouvement.</description>
-  <parameters>
-    <parameter name="objectives">
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Positionable"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
-  <goal>
-    <description>Ouvrir un itinéraire : dégager ou contourner les obstacles rencontrés.</description>
-  </goal>
-  <stages/>
-  <next-task name="sword.military.platoon.tasks.OpenRoute">
-    <parameter name="objectives">
-      <value>
-        <parameter>objectives</parameter>
-      </value>
-    </parameter>
-  </next-task>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.OpenRoute">
+    <description>Soutien dynamique. Appuyer par le mouvement.</description>
+    <parameters>
+        <parameter name="objectives">
+            <type>
+                <list>
+                    <class name="world_concepts.Positionable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Ouvrir un itinéraire : dégager ou contourner les obstacles rencontrés.</description>
+    </goal>
+    <stages/>
+    <next-task name="agent.tasks_engineer.OpenRoute">
+        <parameter name="objectives">
+            <value>
+                <parameter>objectives</parameter>
+            </value>
+        </parameter>
+    </next-task>
 </task>

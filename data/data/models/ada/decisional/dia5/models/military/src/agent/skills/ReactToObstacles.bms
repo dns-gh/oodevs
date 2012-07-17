@@ -1,0 +1,39 @@
+-- **************************************************************************** 
+-- ReactToObstacles
+-- pour sortir de l'objet si en collision?
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.nodes.AskForMobilitySupport },
+
+    done = function( self ) end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Ask for mobility support if supported.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        if not meKnowledge:isSelfCommanding() then
+            local friends   = queries_misc.getFriends[ "execute" ]( { dynamic = true } ) -- get friends that could help me to bypass obstacles
+            local nbAppuiMobility = integration.nbPlatoonsHaveTask( friends , "agent.tasks_engineer.MobilitySupport" )
+            if nbAppuiMobility > 0 and meKnowledge:isMoving() then
+                local obstacles = queries_objects.getObstaclesOnPath[ "execute" ]()-- get obstacle
+                for _, entity in pairs( friends ) do
+                    Activate( skill.nodes.AskForMobilitySupport, 1, { entity = entity, obstacles = obstacles } )
+                end
+            end
+       end
+    end
+}
+
+-- **************************************************************************** 
+-- Simple action to ask for support
+-- ****************************************************************************
+node "AskForMobilitySupport"
+{
+    select = function( self )
+        for _, obstacle in pairs( self.params.obstacles ) do
+            meKnowledge:askForMobilitySupport( self.params.entity, obstacle )
+        end
+    end
+}

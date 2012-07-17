@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Suivre" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Follow">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Suivre" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Follow">
     <parameters>
         <parameter name="objectives">
             <description>Les éléments à suivre.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                    <class name="world_concepts.Reachable"/>
                 </list>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.platoon.tasks.Follow">
+    <next-task name="agent.tasks_armored.Follow">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

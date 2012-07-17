@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
+  <parties>
+    <party id="316" name="Army 316" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="318" level="ii" name="Formation [318]" symbol="symbols/sfgpucim">
+          <automat engaged="false" id="320" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="322" name="MILITARY.Infantry platoon" position="29TNF3535258463" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="323" name="MILITARY.Infantry platoon" position="29TNF3535158562" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="324" name="MILITARY.Infantry platoon" position="29TNF3535258363" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="325" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="326" name="MILITARY.Infantry platoon" position="29TNF3454358913" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="327" name="MILITARY.Infantry platoon" position="29TNF3454259013" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="328" name="MILITARY.Infantry platoon" position="29TNF3454358813" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="329" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="330" name="MILITARY.Infantry platoon" position="29TNF3547059813" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="331" name="MILITARY.Infantry platoon" position="29TNF3546959913" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="332" name="MILITARY.Infantry platoon" position="29TNF3547059714" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="336" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="337" name="MILITARY.Infantry platoon" position="29TNF3327157593" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="338" name="MILITARY.Infantry platoon" position="29TNF3327157692" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="339" name="MILITARY.Infantry platoon" position="29TNF3327257493" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="340" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="341" name="MILITARY.Infantry platoon" position="29TNF3430556979" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="342" name="MILITARY.Infantry platoon" position="29TNF3430457079" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="343" name="MILITARY.Infantry platoon" position="29TNF3430556880" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="389" knowledge-group="321" name="SAFETY.Civil Protection" symbol="symbols/sfgpuepe" type="SAFETY.Civil Protection">
+            <unit command-post="false" id="390" name="SAFETY.Militia" position="29TNF3657559625" type="SAFETY.Militia"/>
+            <unit command-post="false" id="391" name="SAFETY.Buses" position="29TNF3664059602" type="SAFETY.Buses"/>
+            <unit command-post="false" id="392" name="SAFETY.Firefigthers" position="29TNF3667459543" type="SAFETY.Firefigthers"/>
+            <unit command-post="false" id="393" name="SAFETY.Public Works Vehicles" position="29TNF3666359476" type="SAFETY.Public Works Vehicles"/>
+            <unit command-post="false" id="394" name="SAFETY.Rescue Boats" position="29TNF3661059432" type="SAFETY.Rescue Boats"/>
+            <unit command-post="false" id="395" name="SAFETY.Decontamination Team" position="29TNF3654259431" type="SAFETY.Decontamination Team"/>
+            <unit command-post="false" id="396" name="SAFETY.Ambulance" position="29TNF3648959475" type="SAFETY.Ambulance"/>
+            <unit command-post="true" id="397" name="SAFETY.Police Unit" position="29TNF3657659525" type="SAFETY.Police Unit"/>
+            <unit command-post="false" id="398" name="SAFETY.Medical advanced post" position="29TNF3647759542" type="SAFETY.Medical advanced post"/>
+            <unit command-post="false" id="399" name="SAFETY.Rescue Helicopters" position="29TNF3651159601" type="SAFETY.Rescue Helicopters"/>
+          </automat>
+          <lima name="Phase line 372">
+            <point>29TNF3257758436</point>
+            <point>29TNF3451257933</point>
+            <point>29TNF3597757021</point>
+            <point>29TNF3604356908</point>
+          </lima>
+          <lima name="Phase line 373">
+            <point>29TNF3218556141</point>
+            <point>29TNF3283856113</point>
+            <point>29TNF3347656031</point>
+            <point>29TNF3429255949</point>
+            <point>29TNF3479055835</point>
+            <point>29TNF3541955823</point>
+          </lima>
+          <limit name="Limit 333">
+            <point>29TNF3668159906</point>
+            <point>29TNF3466556848</point>
+          </limit>
+          <limit name="Limit 334">
+            <point>29TNF3620460383</point>
+            <point>29TNF3563559042</point>
+            <point>29TNF3504358909</point>
+            <point>29TNF3411257542</point>
+          </limit>
+          <limit name="Limit 335">
+            <point>29TNF3532160864</point>
+            <point>29TNF3313557973</point>
+          </limit>
+          <limit name="Limit 344">
+            <point>29TNF3416658342</point>
+            <point>29TNF3379857353</point>
+            <point>29TNF3357556338</point>
+            <point>29TNF3290954841</point>
+          </limit>
+          <limit name="Limit 345">
+            <point>29TNF3530657596</point>
+            <point>29TNF3480256389</point>
+            <point>29TNF3460755329</point>
+            <point>29TNF3446654287</point>
+          </limit>
+          <limit name="Limit 346">
+            <point>29TNF3332758900</point>
+            <point>29TNF3265157792</point>
+            <point>29TNF3268556280</point>
+            <point>29TNF3246155419</point>
+            <point>29TNF3203253914</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="321" name="Knowledge group [321]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="416" name="Standard Crowd [416]" position="29TNF3690357441" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="417" name="Fan Crowd [417]" position="29TNF3670456811" type="Fan Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="418" name="Standard Crowd [418]" position="29TNF3504756376" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="317" name="Army 317" type="enemy">
+      <objects/>
+      <tactical>
+        <formation id="319" level="ii" name="Formation [319]" symbol="symbols/shgpucim">
+          <automat engaged="true" id="347" knowledge-group="348" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="349" name="MILITARY.Infantry platoon" position="29TNF2937458188" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="350" name="MILITARY.Infantry platoon" position="29TNF2937458287" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="351" name="MILITARY.Infantry platoon" position="29TNF2937558088" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="352" knowledge-group="348" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="353" name="MILITARY.Infantry platoon" position="29TNF3069258543" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="354" name="MILITARY.Infantry platoon" position="29TNF3069158643" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="355" name="MILITARY.Infantry platoon" position="29TNF3069258444" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="356" knowledge-group="348" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="357" name="MILITARY.Infantry platoon" position="29TNF2971057839" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="358" name="MILITARY.Infantry platoon" position="29TNF2970957939" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="359" name="MILITARY.Infantry platoon" position="29TNF2971057740" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="360" knowledge-group="348" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="361" name="MILITARY.Infantry platoon" position="29TNF3091456829" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="362" name="MILITARY.Infantry platoon" position="29TNF3091356929" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="363" name="MILITARY.Infantry platoon" position="29TNF3091456729" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="364" knowledge-group="348" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="365" name="MILITARY.Infantry platoon" position="29TNF3156055876" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="366" name="MILITARY.Infantry platoon" position="29TNF3156055976" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="367" name="MILITARY.Infantry platoon" position="29TNF3156155777" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <lima name="Phase line 371">
+            <point>29TNF2931157027</point>
+            <point>29TNF3045557936</point>
+            <point>29TNF3152558120</point>
+            <point>29TNF3208058422</point>
+          </lima>
+          <limit name="Limit 368">
+            <point>29TNF2982558855</point>
+            <point>29TNF3034358038</point>
+            <point>29TNF3086857452</point>
+            <point>29TNF3152156900</point>
+            <point>29TNF3232355752</point>
+          </limit>
+          <limit name="Limit 369">
+            <point>29TNF3099659552</point>
+            <point>29TNF3141358120</point>
+            <point>29TNF3226856596</point>
+            <point>29TNF3267455822</point>
+            <point>29TNF3301755687</point>
+          </limit>
+          <limit name="Limit 370">
+            <point>29TNF2889458399</point>
+            <point>29TNF2949256848</point>
+            <point>29TNF3047756819</point>
+            <point>29TNF3114155823</point>
+            <point>29TNF3176252976</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="348" name="Knowledge group [348]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="374" name="Army 374" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="375" level="ii" name="Formation [375]" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="376" knowledge-group="377" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="378" name="MILITARY.Infantry platoon" position="29TNF3406050721" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="379" name="MILITARY.Infantry platoon" position="29TNF3405950821" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="380" name="MILITARY.Infantry platoon" position="29TNF3406050622" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="381" knowledge-group="377" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="382" name="MILITARY.Infantry platoon" position="29TNF3500249766" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="383" name="MILITARY.Infantry platoon" position="29TNF3500249866" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="384" name="MILITARY.Infantry platoon" position="29TNF3500349667" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <lima name="Phase line 387">
+            <point>29TNF3325550349</point>
+            <point>29TNF3520552416</point>
+          </lima>
+          <lima name="Phase line 388">
+            <point>29TNF3338349283</point>
+            <point>29TNF3589151771</point>
+          </lima>
+          <limit name="Limit 385">
+            <point>29TNF3559250433</point>
+            <point>29TNF3377252459</point>
+          </limit>
+          <limit name="Limit 386">
+            <point>29TNF3457948830</point>
+            <point>29TNF3308451767</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="377" name="Knowledge group [377]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="316">
+      <relationship diplomacy="enemy" party="317"/>
+      <relationship diplomacy="neutral" party="374"/>
+    </party>
+    <party id="317">
+      <relationship diplomacy="enemy" party="316"/>
+      <relationship diplomacy="neutral" party="374"/>
+    </party>
+    <party id="374">
+      <relationship diplomacy="neutral" party="316"/>
+      <relationship diplomacy="neutral" party="317"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0182395305" -->

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.FlancGarder" source-version="1.0.0" knowledge-class="sword.military.company.combat.tasks.knowledges.CoverEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.FlancGarder" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.CoverEffect">
     <parameters>
         <parameter name="entity">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                    <class name="world_concepts.Positionable"/>
                 </list>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.combat.tasks.FlancGuard">
+    <next-task name="commander.tasks_armored.FlancGuard">
         <parameter name="entity">
             <value>
                 <parameter>entity</parameter>

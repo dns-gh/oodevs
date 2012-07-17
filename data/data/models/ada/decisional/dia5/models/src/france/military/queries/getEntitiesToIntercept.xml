@@ -3,13 +3,13 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="sword.military.knowledge.decisional.Observable"/>
+        <class name="world_concepts.Observable"/>
       </type>
     </parameter>
   </parameters>
   <target name="entities">
     <type>
-      <class name="sword.military.knowledge.decisional.Destroyable"/>
+      <class name="world_concepts.Destroyable"/>
     </type>
   </target>
 </query>

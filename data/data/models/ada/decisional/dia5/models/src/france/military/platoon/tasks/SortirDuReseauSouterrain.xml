@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
+        <class name="world_concepts.Reachable"/>
       </type>
     </parameter>
   </parameters>

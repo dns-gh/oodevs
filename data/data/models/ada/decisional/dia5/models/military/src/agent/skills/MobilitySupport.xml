@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.MobilitySupport" source-version="1.0.0">
+	<description></description>
+	<parameters>
+		<parameter name="entities">
+			<description>Les éléments à suivre.</description>
+			<type>
+				<list>
+					<class name="world_concepts.Reachable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Appui à la mobilité : dégager ou contourner les obstacles rencontrés.</description>
+	</goal>
+	<modifiers/>
+	<links>
+		<link name="StayClose" skill="agent.skills.primitives.StayClose"/>
+		<link name="ByPass" skill="agent.skills.Bypass"/>
+	</links>
+</skill>

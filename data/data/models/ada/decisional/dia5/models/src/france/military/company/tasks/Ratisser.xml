@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Ratisser" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.SearchEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Ratisser" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.SearchEffect">
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-        <class name="sword.military.knowledge.Sealable"/>
+        <class name="world_concepts.Reconnoitrable"/>
+        <class name="world_concepts.Sealable"/>
       </type>
     </parameter>
   </parameters>
-  <next-task name="sword.military.company.tasks.Search">
+  <next-task name="commander.tasks_armored.Search">
     <parameter name="companyTask">
       <value>
         <string>france.military.company.tasks.Ratisser</string>

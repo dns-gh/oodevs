@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="world_concepts.Body" source-version="1.0.0">
+    <description>Interface to be implemented by all body classes.</description>
+    <methods>
+        <method name="RC">
+            <description>Action de rendre compte.</description>
+            <argument>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+            <argument>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+        </method>
+        <method name="getTasks">
+            <return>
+                <type>
+                    <list>
+                        <class name="world_elements.Task"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getPosition">
+            <description>Fonction d'intégration</description>
+        </method>
+    </methods>
+</interface>

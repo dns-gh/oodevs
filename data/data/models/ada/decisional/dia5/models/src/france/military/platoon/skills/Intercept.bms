@@ -15,7 +15,7 @@ rootnode
         if self.params.destroyingPositions and self.params.destroyingPositions ~= NIL then
             self.positionsToIntercept = self.params.destroyingPositions
         else
-            self.positionsToIntercept = sword.military.queries.tactical.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.interceptionObjective }, dynamic = true } )
+            self.positionsToIntercept = queries_positions.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.interceptionObjective }, dynamic = true } )
         end
     end,
     

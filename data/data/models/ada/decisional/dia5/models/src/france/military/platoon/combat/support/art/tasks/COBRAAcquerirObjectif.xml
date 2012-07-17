@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.tasks.COBRAAcquerirObjectif" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.art.tasks.knowledges.RATACAcquerirObjectif">
-	<parameters>
-		<parameter name="zone">
-			<type>
-				<class name="sword.military.world.Area"/>
-			</type>
-		</parameter>
-		<parameter name="position">
-			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Déplacement">
-			<skills>
-				<skill name="sword.military.platoon.skills.MoveToward" main="true">
-					<parameter name="entities">
-						<value>
-							<list>
-								<parameter>position</parameter>
-							</list>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Acquerir des objectifs">
-			<skills>
-				<skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurTirIndirect" main="true">
-					<parameter name="zone">
-						<value>
-							<parameter>zone</parameter>
-						</value>
-					</parameter>
-				</skill>
-				<skill name="sword.military.platoon.skills.Deploy">
-					<parameter name="objective">
-						<value>
-							<parameter>position</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="zone">
+            <type>
+                <class name="world_elements.Area"/>
+            </type>
+        </parameter>
+        <parameter name="position">
+            <type>
+                <class name="world_concepts.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Déplacement">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>position</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Acquerir des objectifs">
+            <skills>
+                <skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurTirIndirect" main="true">
+                    <parameter name="zone">
+                        <value>
+                            <parameter>zone</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="agent.skills.Deploy">
+                    <parameter name="objective">
+                        <value>
+                            <parameter>position</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="world_elements.PionTask" source-version="1.0.0" extends="world_elements.Task">
+    <description>Base class for task knowledge of pion.</description>
+    <methods>
+        <method name="computeEffectsLevels" abstract="false">
+            <return>
+                <type>
+                    <class name="world_elements.TaskEffects"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+    <attributes/>
+</class>

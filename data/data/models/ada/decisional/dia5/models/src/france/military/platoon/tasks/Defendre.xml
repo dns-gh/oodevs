@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Defendre" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Defend">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Defendre" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Defend">
     <description>Tenir un bloc urbain à partir d'une position.</description>
     <parameters>
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                    <class name="world_concepts.Destroying"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.world.Object"/>
+                    <class name="world_elements.Object"/>
                 </list>
             </type>
             <default>
@@ -29,7 +29,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="sword.military.platoon.coercition.tasks.Defend">
+    <next-task name="agent.tasks_armored.Defend">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

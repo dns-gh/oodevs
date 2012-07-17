@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.TransportEffectCrowd" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.TransportEffectCrowd" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
   <methods>
     <method name="getCrowdToTransport">
       <return>
         <type>
           <list>
-            <class name="sword.military.knowledge.decisional.Loadable"/>
+            <class name="world_concepts.Loadable"/>
           </list>
         </type>
       </return>
@@ -13,21 +13,21 @@
     <method name="getLoadingPoint">
       <return>
         <type>
-          <class name="sword.military.knowledge.decisional.Loading"/>
+          <class name="world_concepts.Loading"/>
         </type>
       </return>
     </method>
     <method name="getDestination">
       <return>
         <type>
-          <class name="sword.military.knowledge.decisional.Loading"/>
+          <class name="world_concepts.Loading"/>
         </type>
       </return>
     </method>
     <method name="getMeetingPoint" abstract="false">
       <argument name="entity">
         <type>
-          <class name="sword.military.knowledge.decisional.Commanding"/>
+          <class name="world_concepts.Commanding"/>
         </type>
       </argument>
       <return>

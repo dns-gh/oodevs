@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.tasks.TraiterBlesses" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Deploy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.tasks.TraiterBlesses" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Deploy">
     <parameters>
         <parameter name="objective" nullable="true">
             <description>Le point de regroupement  ou la chaine logistique santé sera déployée</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <class name="world_concepts.Positionable"/>
             </type>
             <default>
                 <nil/>
@@ -14,7 +14,7 @@
             <description>Le type de blessures à prendre en charge par la chaîne logistique santé</description>
             <type>
                 <list>
-                    <class name="sword.military.world.HumanWound"/>
+                    <class name="world_elements.HumanWound"/>
                 </list>
             </type>
             <default>
@@ -25,7 +25,7 @@
     <stages>
         <stage label="Se déployer et traiter les blessés" permanent="true">
             <skills>
-                <skill name="sword.military.platoon.skills.Deploy">
+                <skill name="agent.skills.Deploy">
                     <parameter name="objective">
                         <value>
                             <parameter>objective</parameter>

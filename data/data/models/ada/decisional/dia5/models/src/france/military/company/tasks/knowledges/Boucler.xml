@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.Boucler" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.Boucler" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
 	<methods>
 		<method name="getSealOffObjective">
 			<return>
 				<type>
-					<class name="sword.military.knowledge.Sealable"/>
+					<class name="world_concepts.Sealable"/>
 				</type>
 			</return>
 		</method>

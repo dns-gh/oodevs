@@ -7,7 +7,7 @@ return
         myself.leadData.done = false
         self.nbAreas = 0
         for _, entity in pairs( myself.taskParams.entities ) do
-            if masalife.brain.core.class.isOfType( entity, sword.military.world.Area) then
+            if masalife.brain.core.class.isOfType( entity, world_elements.Area) then
                 self.nbAreas = self.nbAreas + 1 
             end
         end
@@ -19,13 +19,13 @@ return
             for i=1, #params.entities do
                 local entity = params.entities[i]
                 -- division de la zone en sous-zones
-                if masalife.brain.core.class.isOfType( entity, sword.military.world.Area) then
+                if masalife.brain.core.class.isOfType( entity, world_elements.Area) then
                     local nbOtherObjectives = #params.entities - self.nbAreas
                     local nbParts = math.max((( nbFront - nbOtherObjectives )/self.nbAreas),1)
                     local subAreas = DEC_Geometry_SplitLocalisation( entity.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
                     subAreas = subAreas.first
                     for _, area in pairs( subAreas ) do
-                        myself.leadData.entities[#myself.leadData.entities + 1] = CreateKnowledge( sword.military.world.Area, area )
+                        myself.leadData.entities[#myself.leadData.entities + 1] = CreateKnowledge( world_elements.Area, area )
                     end
                     if #subAreas == 0 then
                         myself.leadData.entities[#myself.leadData.entities + 1] = entity -- cas ou la zone est hors limite

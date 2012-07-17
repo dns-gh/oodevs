@@ -3,19 +3,19 @@
     <parameters>
         <parameter name="zone">
             <type>
-                <class name="sword.military.world.Area"/>
+                <class name="world_elements.Area"/>
             </type>
         </parameter>
         <parameter name="position">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
     </parameters>
     <stages>
         <stage label="Déplacement">
             <skills>
-                <skill name="sword.military.platoon.skills.MoveToward" main="true">
+                <skill name="agent.skills.MoveToward" main="true">
                     <parameter name="entities">
                         <value>
                             <list>
@@ -35,7 +35,7 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.Deploy">
+                <skill name="agent.skills.Deploy">
                     <parameter name="objective">
                         <value>
                             <parameter>position</parameter>

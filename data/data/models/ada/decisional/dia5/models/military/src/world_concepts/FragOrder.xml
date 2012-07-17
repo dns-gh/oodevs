@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="world_concepts.FragOrder" source-version="1.0.0">
+  <methods>
+    <method name="updateROE">
+      <description>Appliquer le changement de ROE</description>
+    </method>
+    <method name="isROE">
+      <description>Retourne vrai si l'ordre de conduite est de type ROE</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="isTask">
+      <description>Retourne vrai si l'ordre de conduite est une mission</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="startTask">
+      <description>Lance la mission</description>
+    </method>
+  </methods>
+</interface>

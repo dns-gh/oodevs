@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.roles.Pion" source-version="1.0.0" extends="sword.military.platoon.roles.Platoon">
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.roles.Pion" source-version="1.0.0" extends="agent.roles.Platoon">
     <skills>
         <skill name="france.military.platoon.skills.ActiverReseauSouterrain"/>
         <skill name="france.military.platoon.skills.CoordinateIlluminationAndIndirectFire"/>
         <skill name="france.military.platoon.skills.DetruireReseau"/>
         <skill name="france.military.platoon.skills.DesactiverReseauSouterrain"/>
-        <skill name="sword.military.platoon.skills.Scout"/>
-        <skill name="sword.military.platoon.skills.EnsureIndirectFire"/>
+        <skill name="agent.skills.Scout"/>
+        <skill name="agent.skills.EnsureIndirectFire"/>
         <skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
         <skill name="france.military.platoon.skills.Escort"/>
         <skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>
@@ -17,7 +17,7 @@
         <skill name="france.military.platoon.skills.LibererEmbarques"/>
         <skill name="france.military.platoon.skills.MoveAlong"/>
         <skill name="france.military.platoon.skills.Produire"/>
-        <skill name="sword.military.platoon.skills.RecoverHumanTransporters"/>
+        <skill name="agent.skills.RecoverHumanTransporters"/>
         <skill name="france.military.platoon.skills.ReparerReseau"/>
         <skill name="france.military.platoon.skills.SeFaireTransporter"/>
         <skill name="france.military.platoon.skills.SortirDuReseauSouterrain"/>
@@ -39,14 +39,14 @@
         <skill name="france.military.platoon.combat.support.nrbc.skills.Reconnaitre"/>
         <skill name="france.military.platoon.combat.support.art.skills.Engager"/>
         <skill name="france.military.platoon.combat.support.art.skills.Desengager"/>
-        <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
+        <skill name="agent.skills.SwitchToSafety"/>
         <skill name="france.military.platoon.combat.support.circu.skills.AppuyerMouvement"/>
         <skill name="france.military.platoon.combat.support.circu.skills.ConstruireZone"/>
         <skill name="france.military.platoon.combat.support.log.skills.RecupererRemorqueurs"/>
         <skill name="france.military.platoon.combat.support.log.skills.RecupererVSRAM"/>
         <skill name="france.military.platoon.combat.support.log.skills.PreterRemorqueurs"/>
         <skill name="france.military.platoon.combat.support.log.skills.PreterVSRAM"/>
-        <skill name="sword.military.platoon.skills.DropUnit"/>
+        <skill name="agent.skills.DropUnit"/>
         <skill name="france.military.platoon.combat.support.art.skills.ReconnaitreZoneDeploiement"/>
         <skill name="france.military.platoon.combat.support.art.skills.Defendre"/>
         <skill name="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
@@ -62,12 +62,12 @@
         <skill name="france.military.platoon.combat.support.art.skills.AcquerirObjectif"/>
         <skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurOuSenseur"/>
         <skill name="france.military.platoon.combat.support.rens.skills.Appuyer"/>
-        <skill name="sword.military.platoon.coercition.skills.ReconnoiterSite"/>
+        <skill name="agent.skills.ReconnoiterSite"/>
         <skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurTirIndirect"/>
         <skill name="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadarTirIndirect"/>
     </skills>
     <resources>
         <resource name="france.military.platoon.resources.CapaciteEmbarquement"/>
-        <resource name="sword.military.platoon.resources.RadarCapacity"/>
+        <resource name="agent.resources.RadarCapacity"/>
     </resources>
 </role>

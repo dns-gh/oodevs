@@ -191,7 +191,7 @@ integration.startFragOrderTask = function( self )
     orderType = "france.military.platoon.combat.support.art.tasks.AssurerMiseEnOeuvre"
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )}
   elseif orderType == "Rep_OrderConduite_MiseEnBatterieInopinee" then
-    orderType = "sword.military.platoon.tasks.frago.RapidDeploiement"
+    orderType = "agent.tasks_frago.RapidDeploiement"
     mission.entity = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
     mission.interventionType = self.source:GetnbIT_()
     mission.munition = self.source:Getmunitions_()
@@ -199,17 +199,17 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objectives = { point }
-    orderType = "sword.military.platoon.tasks.frago.WaitOn"
+    orderType = "agent.tasks_frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_SArreter" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objectives = { point }
-    orderType = "sword.military.platoon.tasks.frago.WaitOn"
+    orderType = "agent.tasks_frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_Attendre" then
     local point = CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
     mission.objective = point
     orderType = "sword.military.crowd.tasks.frago.WaitOn"
   elseif orderType == "Rep_OrderConduite_Poursuivre" then
-    stopTask( "sword.military.platoon.tasks.frago.WaitOn" )
+    stopTask( "agent.tasks_frago.WaitOn" )
     stopTask( "sword.military.crowd.tasks.frago.WaitOn" )
     myself.blocked = nil
     myself.canBeBlocked = nil
@@ -221,29 +221,29 @@ integration.startFragOrderTask = function( self )
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadar" then
-    stopTask( "sword.military.platoon.tasks.frago.ActivateRadar" )
-    orderType = "sword.military.platoon.tasks.frago.ObserveRadarSilence"
+    stopTask( "agent.tasks_frago.ActivateRadar" )
+    orderType = "agent.tasks_frago.ObserveRadarSilence"
   elseif orderType == "Rep_OrderConduite_ArreterSilenceRadar" then
-    stopTask( "sword.military.platoon.tasks.frago.ObserveRadarSilence" )
-    orderType = "sword.military.platoon.tasks.frago.ActivateRadar"
+    stopTask( "agent.tasks_frago.ObserveRadarSilence" )
+    orderType = "agent.tasks_frago.ActivateRadar"
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadio" then
-    stopTask( "sword.military.platoon.tasks.frago.ObservePartialRadioSilence" )
-    stopTask( "sword.military.platoon.tasks.frago.ActivateRadio" )
-    orderType = "sword.military.platoon.tasks.frago.ObserveRadioSilence"
+    stopTask( "agent.tasks_frago.ObservePartialRadioSilence" )
+    stopTask( "agent.tasks_frago.ActivateRadio" )
+    orderType = "agent.tasks_frago.ObserveRadioSilence"
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadioPartiel" then
-    stopTask( "sword.military.platoon.tasks.frago.ActivateRadio" )
-    stopTask( "sword.military.platoon.tasks.frago.ObserveRadioSilence" )
-    orderType = "sword.military.platoon.tasks.frago.ObservePartialRadioSilence"
+    stopTask( "agent.tasks_frago.ActivateRadio" )
+    stopTask( "agent.tasks_frago.ObserveRadioSilence" )
+    orderType = "agent.tasks_frago.ObservePartialRadioSilence"
   elseif orderType == "Rep_OrderConduite_ArreterSilenceRadio" then
-    stopTask( "sword.military.platoon.tasks.frago.ObservePartialRadioSilence" )
-    stopTask( "sword.military.platoon.tasks.frago.ObserveRadioSilence" )
-    orderType = "sword.military.platoon.tasks.frago.ActivateRadio"
+    stopTask( "agent.tasks_frago.ObservePartialRadioSilence" )
+    stopTask( "agent.tasks_frago.ObserveRadioSilence" )
+    orderType = "agent.tasks_frago.ActivateRadio"
   elseif orderType == "Rep_OrderConduite_MettreTenueNBC" then
-    stopTask( "sword.military.platoon.tasks.UnequipNBCOutfit" )
-    orderType = "sword.military.platoon.tasks.EquipNBCOutfit"
+    stopTask( "agent.tasks_armored.UnequipNBCOutfit" )
+    orderType = "agent.tasks_armored.EquipNBCOutfit"
   elseif orderType == "Rep_OrderConduite_EnleverTenueNBC" then
-    stopTask( "sword.military.platoon.tasks.EquipNBCOutfit" )
-    orderType = "sword.military.platoon.tasks.UnequipNBCOutfit"
+    stopTask( "agent.tasks_armored.EquipNBCOutfit" )
+    orderType = "agent.tasks_armored.UnequipNBCOutfit"
   elseif orderType =="Rep_OrderConduite_ChangerAmbiance" then
     if self.source:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete then
         orderType = "france.military.platoon.tasks.ChangerAmbianceSurete"

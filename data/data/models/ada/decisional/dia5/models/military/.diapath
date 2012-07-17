@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+    <buildpathentry kind="src" path="src"/>
+    <buildpathentry kind="lib" path="E:/csword/data/data/models/training/decisional/directia5/models/directia.core/directia.core.bml"/>
+    <buildpathentry kind="output" path="src"/>
+</buildpath>

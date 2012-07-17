@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.Decontaminate" source-version="1.0.0">
+    <parameters>
+        <parameter name="objectives">
+            <description>Comportement de décontamination spécifique à tout objet qui le permet (ex:plot de décontamination).</description>
+            <type>
+                <list>
+                    <class name="world_elements.Object"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="meetingPoint">
+            <description>Point de regropupement à rejoindre</description>
+            <type>
+                <list>
+                    <class name="world_concepts.Positionable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveToward" skill="agent.skills.MoveToward"/>
+        <link name="getDecon" skill="agent.skills.GetDecon"/>
+    </links>
+</skill>

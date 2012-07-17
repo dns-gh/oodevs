@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.roles.Individu" source-version="1.0.0" extends="sword.military.platoon.individual.roles.Individual">
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.roles.Individu" source-version="1.0.0" extends="agent.roles.Individual">
     <skills>
         <skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
         <skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>

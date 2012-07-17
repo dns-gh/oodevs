@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.ApplyIndirectFire" source-version="1.0.0">
+	<description>Executer des ordres de tir à partir de la position courante</description>
+	<parameters>
+		<parameter name="entities">
+			<description>Les éléments à détruire.</description>
+			<type>
+				<list>
+					<class name="world_concepts.IndirectFireable"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="interventionType">
+			<type>
+				<simple name="numeric"/>
+			</type>
+		</parameter>
+		<parameter name="munition">
+			<type>
+				<simple name="numeric"/>
+			</type>
+		</parameter>
+		<parameter name="canReceiveUnexpectedOrder">
+			<type>
+				<simple name="boolean"/>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Executer les ordres de tirs.</description>
+	</goal>
+	<resources>
+		<resource name="agent.resources.IndirectFireCapacity" variable="indirectFire">
+			<description>Capacité physiques d'engagement à distance</description>
+		</resource>
+	</resources>
+</skill>

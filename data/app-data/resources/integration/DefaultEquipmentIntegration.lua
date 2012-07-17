@@ -351,7 +351,7 @@ integration.startedActivateDrone = function ( self )
     if not myself.Deployed and meKnowledge:isDeployed() and myself.droneAvailable then
         myself.Deployed = true
         myself.droneAvailable:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
-        local droneKn = CreateKnowledge( sword.military.world.PlatoonAlly, myself.droneAvailable )
+        local droneKn = CreateKnowledge( world_elements.PlatoonAlly, myself.droneAvailable )
         meKnowledge:RC( eRC_FinMiseEnOeuvreDrone )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
     end
@@ -385,7 +385,7 @@ end
 -- @release 2011-05-04
 -- --------------------------------------------------------------------------------
 integration.randomPositionInCircle = function( position, radius )
-    return CreateKnowledge( sword.military.world.Point, DEC_Geometrie_PositionAleatoireDansCercle( position:getPosition(), radius ) )
+    return CreateKnowledge( world_elements.Point, DEC_Geometrie_PositionAleatoireDansCercle( position:getPosition(), radius ) )
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -398,7 +398,7 @@ integration.splitArea = function( area, numberOfParts )
     subAreas = subAreas.first
     myself.leadData.subAreas = {}
     for _, localArea in pairs( subAreas ) do
-        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( sword.military.world.Area, localArea )
+        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( world_elements.Area, localArea )
     end
 end
 
@@ -635,7 +635,7 @@ integration.forcerImmunisationNbc = function( self, immunize )
 end
 
 integration.getUnitPC = function( self ) 
-    return CreateKnowledge( sword.military.world.PlatoonAlly, DEC_Pion_PionPC() )
+    return CreateKnowledge( world_elements.PlatoonAlly, DEC_Pion_PionPC() )
 end
 
 integration.isLogisticTypeUnit = function( )

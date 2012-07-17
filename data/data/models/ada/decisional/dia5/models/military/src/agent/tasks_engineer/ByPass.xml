@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks_engineer.ByPass" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.ByPass">
+    <parameters>
+        <parameter name="obstacles">
+            <description>Obstacles to byPass</description>
+            <type>
+                <list>
+                    <class name="world_concepts.Bypassable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="meetingPoint" nullable="true">
+            <description>Le point de regroupement une fois les obstacles contournés</description>
+            <type>
+                <class name="world_elements.Point"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Franchir les obstacles">
+            <skills>
+                <skill name="agent.skills.Bypass" main="true">
+                    <parameter name="avoidObstacles">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                    <parameter name="entities">
+                        <value>
+                            <parameter>obstacles</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Déplacement vers le point de regroupement" disable-when-done="true">
+            <description>Se déplace vers le position de regroupement afin de s'éloigner de l'obstacle.</description>
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>meetingPoint</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

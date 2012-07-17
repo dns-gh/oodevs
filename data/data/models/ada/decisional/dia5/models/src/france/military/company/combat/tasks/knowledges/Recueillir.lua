@@ -23,7 +23,7 @@ return
         local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LR, ( self.nbMain ) )		
         for _, points in pairs( pointsOnLimas ) do
             for _, point in pairs( points ) do
-                self.mainPositions[#self.mainPositions + 1] = CreateKnowledge( sword.military.world.Point, point )
+                self.mainPositions[#self.mainPositions + 1] = CreateKnowledge( world_elements.Point, point )
             end
         end
         if not pointsOnLimas or #pointsOnLimas == 0 then
@@ -36,7 +36,7 @@ return
             pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LIA, ( self.nbScout ) )      
             for _, points in pairs( pointsOnLimas ) do
                 for _, point in pairs( points ) do
-                    self.scoutPositions[#self.scoutPositions + 1] = CreateKnowledge( sword.military.world.Point, point )
+                    self.scoutPositions[#self.scoutPositions + 1] = CreateKnowledge( world_elements.Point, point )
                 end
             end
             if not pointsOnLimas or #pointsOnLimas == 0 then
@@ -57,7 +57,7 @@ return
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = DEC_GetDirectionEnnemi( mission )
         local position = DEC_Geometrie_PositionTranslateDir( self.scoutPositions[1]:getPosition(), dir, 1000 )
-        return CreateKnowledge( sword.military.world.Point, position)
+        return CreateKnowledge( world_elements.Point, position)
     end,
 
     getObjectives = function( self, params )

@@ -4,20 +4,20 @@
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="world_concepts.Buildable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
     </parameters>
     <stages>
         <stage label="Réparation des objectifs">
             <skills>
-                <skill name="sword.military.company.skills.LeadGEN" main="true">
+                <skill name="commander.skills.LeadGEN" main="true">
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.combat.support.engineer.tasks.Reparer</string>
@@ -53,7 +53,7 @@
         </stage>
         <stage label="Rejoindre la position de regroupement" disable-when-done="true">
             <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
+                <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.combat.support.engineer.tasks.Reparer</string>

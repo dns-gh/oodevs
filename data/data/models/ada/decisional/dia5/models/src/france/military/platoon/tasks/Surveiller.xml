@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Surveiller" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Monitor">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Surveiller" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Monitor">
   <description>Soutien dynamique. Appuyer par le mouvement.</description>
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="sword.military.knowledge.decisional.Observable"/>
+        <class name="world_concepts.Observable"/>
       </type>
     </parameter>
     <parameter name="positions">
       <type>
         <list>
-          <class name="sword.military.knowledge.decisional.Observing"/>
+          <class name="world_concepts.Observing"/>
         </list>
       </type>
     </parameter>
   </parameters>
   <stages/>
-  <next-task name="sword.military.platoon.coercition.tasks.Monitor">
+  <next-task name="agent.tasks_armored.Monitor">
     <parameter name="objective">
       <value>
         <parameter>objective</parameter>

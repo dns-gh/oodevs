@@ -6,7 +6,7 @@
     <stages>
         <stage label="Recuperer transporteurs" disable-when-done="true">
             <skills>
-                <skill name="sword.military.platoon.skills.RecoverHumanTransporters" main="true"/>
+                <skill name="agent.skills.RecoverHumanTransporters" main="true"/>
             </skills>
         </stage>
     </stages>

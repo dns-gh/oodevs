@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Tenir" source-version="1.0.0" knowledge-class="sword.military.company.combat.tasks.knowledges.DefendEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Tenir" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.DefendEffect">
     <parameters>
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                    <class name="world_concepts.Destroying"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
-                    <class name="sword.military.knowledge.decisional.Building"/>
+                    <class name="world_concepts.Buildable"/>
+                    <class name="world_concepts.Building"/>
                 </list>
             </type>
             <default>
@@ -21,8 +21,8 @@
         </parameter>
         <parameter name="meetingPoint" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Approachable"/>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <class name="world_concepts.Approachable"/>
+                <class name="world_concepts.Positionable"/>
             </type>
             <default>
                 <nil/>
@@ -38,7 +38,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.combat.tasks.Defend">
+    <next-task name="commander.tasks_armored.Defend">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.combat.tasks.Tenir</string>

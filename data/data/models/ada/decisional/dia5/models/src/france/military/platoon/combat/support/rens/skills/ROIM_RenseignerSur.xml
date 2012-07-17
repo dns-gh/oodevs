@@ -4,13 +4,13 @@
         <parameter name="ficelleDeVol">
             <type>
                 <list>
-                    <class name="sword.military.world.Point"/>
+                    <class name="world_elements.Point"/>
                 </list>
             </type>
         </parameter>
     </parameters>
     <links>
-        <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition"/>
+        <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition"/>
         <link name="decoller" skill="france.military.platoon.combat.support.air.skills.Decoller"/>
         <link name="atterir" skill="france.military.platoon.combat.support.air.skills.Atterrir"/>
         <link name="moveAlong" skill="france.military.platoon.skills.MoveAlong"/>

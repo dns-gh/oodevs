@@ -225,7 +225,7 @@ end
 
 -- unit asks crowd's domination
 integration.getDomination = function( entity )
-    if masalife.brain.core.class.isOfType( entity, sword.military.world.Crowd) then
+    if masalife.brain.core.class.isOfType( entity, world_elements.Crowd) then
         return DEC_KnowledgePopulation_Domination( entity.source ).first
     end
     return nil
@@ -329,7 +329,7 @@ end
 
 integration.getPositionConcentration = function ( crowd, concentration )
     if concentration == 0 then return {} end
-    return CreateKnowledge( sword.military.world.Point, DEC_GetPositionConcentration( myself, crowd.source, concentration ) )
+    return CreateKnowledge( world_elements.Point, DEC_GetPositionConcentration( myself, crowd.source, concentration ) )
 end
 
 integration.getNbPersonConcentration = function ( crowd, concentration )

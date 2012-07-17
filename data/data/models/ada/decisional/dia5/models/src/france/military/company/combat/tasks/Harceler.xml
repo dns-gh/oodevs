@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Harceler" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.HarassEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Harceler" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.HarassEffect">
     <parameters>
         <parameter name="objective">
             <description>La zone d'engagement des ennemis.</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="meetingPoints" nullable="true">
             <description>Positions d'observation où l'unité peut observer les unités ennemis avant l'engagement.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Observing"/>
+                    <class name="world_concepts.Observing"/>
                 </list>
             </type>
             <default>
@@ -21,7 +21,7 @@
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="world_concepts.Buildable"/>
                 </list>
             </type>
             <default>
@@ -31,7 +31,7 @@
         <parameter name="entities" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                    <class name="world_concepts.Destroyable"/>
                 </list>
             </type>
             <default>
@@ -48,7 +48,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.tasks.Harass">
+    <next-task name="commander.tasks_armored.Harass">
         <parameter name="peiTasks">
             <value>
                 <string>france.military.platoon.combat.tasks.Eclairer</string>

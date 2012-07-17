@@ -3,7 +3,7 @@
 	<stages>
 		<stage label="Armer PIA" disable-when-done="true">
 			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
+				<skill name="commander.skills.Lead" main="true">
 					<parameter name="companyTask">
 						<value>
 							<string>france.military.company.combat.support.circu.tasks.ArmerPIA</string>

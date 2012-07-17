@@ -3,13 +3,13 @@
   <parameters>
     <parameter name="automate">
       <type>
-        <class name="sword.military.world.Company"/>
+        <class name="world_elements.Company"/>
       </type>
     </parameter>
   </parameters>
   <target>
     <type>
-      <class name="sword.military.world.PlatoonAlly"/>
+      <class name="world_elements.PlatoonAlly"/>
     </type>
   </target>
 </query>

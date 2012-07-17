@@ -1,0 +1,37 @@
+-------------------------------------------------------------------------------
+-- ReactToNBC
+-- @author GGE
+-- @created 2011-01-20
+--
+-- This file is part of a MASA library or program.
+-- Refer to the included end-user license agreement for restrictions.
+--
+-- Copyright (c) 2010 MASA Group
+------------------------------------------------------------------------------
+
+rootnode
+{
+    connections = { skill.nodes.sendFragOrder },
+
+    done = function( self ) end,
+    
+    activate = function( self )
+        local Activate = Activate
+        
+        if meKnowledge:isContaminated() or meKnowledge:isPoisoned() then
+            Activate( skill.nodes.sendFragOrder, 1 ) 
+        end
+    end
+}
+
+node "sendFragOrder"
+{
+    connections = { skill.links.manageFragOrder };
+    
+    create = function( self )
+        local fragOrder = CreateFragOrder("Rep_OrderConduite_MettreTenueNBC")
+        local fragOrderKn = CreateKnowledge( world_elements.FragOrder, fragOrder )       
+            
+        Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } } )
+    end
+}

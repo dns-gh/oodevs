@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks_knowledge.MonitorEffect" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
+  <methods>
+    <method name="getPositions">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+    <method name="getEntities">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+    <method name="getDirection">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+    <method name="getObjectivesPei">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+    <method name="getObjectives">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+  </methods>
+</class>

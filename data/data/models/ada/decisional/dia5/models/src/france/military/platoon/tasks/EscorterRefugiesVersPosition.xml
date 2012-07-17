@@ -3,13 +3,13 @@
 	<parameters>
 		<parameter name="position">
 			<type>
-				<class name="sword.military.knowledge.decisional.Loading"/>
+				<class name="world_concepts.Loading"/>
 			</type>
 		</parameter>
 		<parameter name="entities">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Loadable"/>
+					<class name="world_concepts.Loadable"/>
 				</list>
 			</type>
 		</parameter>
@@ -20,7 +20,7 @@
 	<stages>
 		<stage label="Déplacement vers les réfugiés.">
 			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
+				<skill name="agent.skills.primitives.Load" main="true">
 					<parameter name="entities">
 						<value>
 							<parameter>entities</parameter>
@@ -31,7 +31,7 @@
 		</stage>
 		<stage label="Déplacement vers la position" disable-when-done="true">
 			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Unload" main="true">
+				<skill name="agent.skills.primitives.Unload" main="true">
 					<parameter name="entities">
 						<value>
 							<parameter>entities</parameter>

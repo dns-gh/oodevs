@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interroger" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.InterrogateEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interroger" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.InterrogateEffect">
 	<parameters>
 		<parameter name="entity">
 			<description>L'entité que l'on souhaite interroger.</description>
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-				<class name="sword.military.knowledge.Askable"/>
+				<class name="world_concepts.Reachable"/>
+				<class name="world_concepts.Askable"/>
 			</type>
 		</parameter>
 	</parameters>
-	<next-task name="sword.military.company.tasks.Interrogate">
+	<next-task name="commander.tasks_armored.Interrogate">
 		<parameter name="companyTask">
 			<value>
 				<string>france.military.company.tasks.Interroger</string>

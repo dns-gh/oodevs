@@ -5,7 +5,7 @@
             <description>Position d'observation de la poition ou harceler.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
+                    <class name="world_concepts.Neutralizing"/>
                 </list>
             </type>
             <default>
@@ -16,7 +16,7 @@
             <description>Entitées à harceler</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Neutralizable"/>
+                    <class name="world_concepts.Neutralizable"/>
                 </list>
             </type>
             <default>
@@ -28,14 +28,14 @@
 L'agent va donc observer cette position en mesure d'engager les éléments ennemis identifiés.&#xD;
 </description>
             <type>
-                <class name="sword.military.knowledge.decisional.Positionable"/>
+                <class name="world_concepts.Positionable"/>
             </type>
         </parameter>
     </parameters>
     <links>
-        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="moveToward" skill="agent.skills.MoveToward"/>
     </links>
     <resources>
-        <resource name="sword.military.platoon.resources.EngageCapacity" variable="engage"/>
+        <resource name="agent.resources.EngageCapacity" variable="engage"/>
     </resources>
 </skill>

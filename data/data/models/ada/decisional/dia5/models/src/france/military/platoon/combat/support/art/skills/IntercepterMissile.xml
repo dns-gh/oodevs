@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="enemy">
             <type>
-                <class name="sword.military.world.Platoon"/>
+                <class name="world_elements.Platoon"/>
             </type>
         </parameter>
         <parameter name="percentageEquipement">
@@ -24,6 +24,6 @@
     </parameters>
     <modifiers/>
     <resources>
-        <resource name="sword.military.platoon.resources.EngageCapacity" variable="engage"/>
+        <resource name="agent.resources.EngageCapacity" variable="engage"/>
     </resources>
 </skill>

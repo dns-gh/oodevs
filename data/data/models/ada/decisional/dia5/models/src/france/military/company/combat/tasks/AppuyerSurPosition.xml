@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.AppuyerSurPosition" source-version="1.0.0" knowledge-class="sword.military.company.combat.tasks.knowledges.CombatSupportEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.AppuyerSurPosition" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.CombatSupportEffect">
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="sword.military.world.Company"/>
+                <class name="world_elements.Company"/>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Destroying"/>
-                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
-                    <class name="sword.military.knowledge.decisional.Observing"/>
+                    <class name="world_concepts.Destroying"/>
+                    <class name="world_concepts.Neutralizing"/>
+                    <class name="world_concepts.Observing"/>
                 </list>
             </type>
         </parameter>
         <parameter name="direction">
             <type>
-                <class name="sword.military.knowledge.decisional.Observable"/>
+                <class name="world_concepts.Observable"/>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.company.combat.tasks.CombatSupport">
+    <next-task name="commander.tasks_armored.CombatSupport">
         <parameter name="objectives">
             <value>
-                <call method="sword.military.company.queries.getEntitiesFromAutomat">
+                <call method="commander.queries.getEntitiesFromAutomat">
                     <parameter name="role">
                         <value>
                             <string>none</string>

@@ -5,13 +5,13 @@
         <parameter name="entities">
             <description>element to repair</description>
             <type>
-                <class name="sword.military.knowledge.decisional.Buildable"/>
+                <class name="world_concepts.Buildable"/>
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Building"/>
+                    <class name="world_concepts.Building"/>
                 </list>
             </type>
             <default>
@@ -23,21 +23,21 @@
         <description>The skill's goal is to repair the tactical object</description>
     </goal>
     <body-type>
-        <class name="sword.military.world.PlatoonAlly"/>
+        <class name="world_elements.PlatoonAlly"/>
     </body-type>
     <links>
-        <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition"/>
-        <link name="observe" skill="sword.military.platoon.skills.actions.Observe"/>
-        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+        <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition"/>
+        <link name="observe" skill="agent.skills.actions.Observe"/>
+        <link name="dismount" skill="agent.skills.actions.Dismount"/>
     </links>
     <resources>
-        <resource name="sword.military.platoon.resources.BuildCapacity" variable="buildCapacity"/>
+        <resource name="agent.resources.BuildCapacity" variable="buildCapacity"/>
     </resources>
     <feedbacks>
         <feedback name="elementRepaired">
             <argument name="element">
                 <type>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="world_concepts.Buildable"/>
                 </type>
             </argument>
         </feedback>
@@ -45,7 +45,7 @@
             <description>L'element element n'a pas pu etre réparé.</description>
             <argument name="element">
                 <type>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="world_concepts.Buildable"/>
                 </type>
             </argument>
             <argument name="reason">

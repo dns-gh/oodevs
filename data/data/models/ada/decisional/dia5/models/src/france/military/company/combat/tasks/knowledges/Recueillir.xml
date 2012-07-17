@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.knowledges.Recueillir" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.knowledges.Recueillir" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
     <methods>
         <method name="getObjectivesPei">
             <return>
                 <type>
                     <list>
-                        <class name="sword.military.knowledge.decisional.Observing"/>
+                        <class name="world_concepts.Observing"/>
                     </list>
                 </type>
             </return>
@@ -13,7 +13,7 @@
         <method name="getDirection">
             <return>
                 <type>
-                    <class name="sword.military.knowledge.decisional.Observable"/>
+                    <class name="world_concepts.Observable"/>
                 </type>
             </return>
         </method>
@@ -21,7 +21,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="sword.military.knowledge.decisional.Reachable"/>
+                        <class name="world_concepts.Reachable"/>
                     </list>
                 </type>
             </return>
@@ -39,7 +39,7 @@
         <method name="getMeetingPoint" abstract="false">
             <argument name="entity">
                 <type>
-                    <class name="sword.military.knowledge.decisional.Commanding"/>
+                    <class name="world_concepts.Commanding"/>
                 </type>
             </argument>
             <return>

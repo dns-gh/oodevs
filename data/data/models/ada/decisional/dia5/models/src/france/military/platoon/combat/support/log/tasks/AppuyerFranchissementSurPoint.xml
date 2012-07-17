@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="objectif">
             <type>
-                <class name="sword.military.world.KeyPoint"/>
+                <class name="world_elements.KeyPoint"/>
             </type>
         </parameter>
     </parameters>

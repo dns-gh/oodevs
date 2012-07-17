@@ -6,7 +6,7 @@ return
     end,
     
     getObjective= function( self, params )
-      if masalife.brain.core.class.isOfType( myself.taskParams.objective, sword.military.world.Area) then
+      if masalife.brain.core.class.isOfType( myself.taskParams.objective, world_elements.Area) then
           local area = myself.taskParams.objective
           local nbFront = math.min(self:getNbrFront(), params.maxNbrFront )
     
@@ -14,7 +14,7 @@ return
           local subAreas = DEC_Geometry_SplitLocalisation( myself.taskParams.objective.source, nbFront, nil ) 
           subAreas = subAreas.first
           for _, area in pairs( subAreas ) do
-              myself.leadData.area[#myself.leadData.area + 1] = CreateKnowledge( sword.military.world.Area, area )
+              myself.leadData.area[#myself.leadData.area + 1] = CreateKnowledge( world_elements.Area, area )
           end
           if #subAreas == 0 then
               myself.leadData.area[#myself.leadData.area + 1] = area -- cas ou la zone est hors limite

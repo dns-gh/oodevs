@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.DepolluerZone" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.DepolluerZone" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.MoveToward">
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="sword.military.world.Area"/>
+                <class name="world_elements.Area"/>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.platoon.tasks.CleanArea">
+    <next-task name="agent.tasks_engineer.CleanArea">
         <parameter name="area">
             <value>
                 <parameter>objective</parameter>

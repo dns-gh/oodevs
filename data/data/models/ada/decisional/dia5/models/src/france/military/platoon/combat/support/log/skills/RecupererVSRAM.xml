@@ -5,7 +5,7 @@
         <parameter name="pionRenforce">
             <description>Unité qui va rendre les ambulances</description>
             <type>
-                <class name="sword.military.world.PlatoonAlly"/>
+                <class name="world_elements.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrAmbulances">
@@ -19,6 +19,6 @@
         <description>Récupèrer des ambulances après en avoir prêté à une autre unité</description>
     </goal>
     <body-type>
-        <class name="sword.military.knowledge.HumanFactors"/>
+        <class name="world_concepts.HumanFactors"/>
     </body-type>
 </skill>

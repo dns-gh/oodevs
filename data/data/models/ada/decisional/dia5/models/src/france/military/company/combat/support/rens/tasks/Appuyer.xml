@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="jammingTime">
@@ -20,7 +20,7 @@
     <stages>
         <stage label="Brouillage" disable-when-done="true">
             <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
+                <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
                             <string>france.military.company.combat.support.rens.tasks.Appuyer</string>

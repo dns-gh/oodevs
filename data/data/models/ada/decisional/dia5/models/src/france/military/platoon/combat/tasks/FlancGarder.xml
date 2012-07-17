@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.FlancGarder" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Cover">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.FlancGarder" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Cover">
     <description>Flanc-garder une entité amie, face à des objectifs, à partir de positions telles que s'il faut rester proche des entités soutenues.</description>
     <parameters>
         <parameter name="entities">
             <description>les unités à flanc-garder</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Reachable"/>
-                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                    <class name="world_concepts.Reachable"/>
+                    <class name="world_concepts.Supportable"/>
                 </list>
             </type>
         </parameter>
@@ -15,13 +15,13 @@
             <description>Positions à partir desquelles il faut flanc-garder.</description>
             <type>
                 <list>
-                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
-                    <class name="sword.military.knowledge.decisional.Observing"/>
+                    <class name="world_concepts.Neutralizing"/>
+                    <class name="world_concepts.Observing"/>
                 </list>
             </type>
         </parameter>
     </parameters>
-    <next-task name="sword.military.platoon.coercition.tasks.FlankGuard">
+    <next-task name="agent.tasks_armored.FlankGuard">
         <parameter name="entities">
             <value>
                 <parameter>entities</parameter>

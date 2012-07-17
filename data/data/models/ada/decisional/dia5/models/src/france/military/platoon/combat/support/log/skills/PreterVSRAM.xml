@@ -5,7 +5,7 @@
         <parameter name="pionRenforce" nullable="true">
             <description>Unité prêtant des ambulances </description>
             <type>
-                <class name="sword.military.world.PlatoonAlly"/>
+                <class name="world_elements.PlatoonAlly"/>
             </type>
             <default>
                 <nil/>
@@ -14,7 +14,7 @@
         <parameter name="pionARenforcer">
             <description>Unité à renforcer en ambulances</description>
             <type>
-                <class name="sword.military.world.PlatoonAlly"/>
+                <class name="world_elements.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrAmbulances">
@@ -28,6 +28,6 @@
         <description>Prêter des ambulances</description>
     </goal>
     <body-type>
-        <class name="sword.military.world.PlatoonAlly"/>
+        <class name="world_elements.PlatoonAlly"/>
     </body-type>
 </skill>

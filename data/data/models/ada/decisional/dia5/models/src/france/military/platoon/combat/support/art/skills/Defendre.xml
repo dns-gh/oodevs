@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.skills.Defendre" source-version="1.0.0">
-	<parameters>
-		<parameter name="zone">
-			<type>
-				<class name="sword.military.knowledge.decisional.Positionable"/>
-			</type>
-		</parameter>
-		<parameter name="position" nullable="true">
-			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="typeDeploiement">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-		<parameter name="ph">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-	</parameters>
-	<modifiers/>
-	<links>
-		<link name="moveTo" skill="sword.military.platoon.skills.MoveToward"/>
-		<link name="intercepterMissile" skill="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
-	</links>
-	<resources>
-		<resource name="sword.military.platoon.resources.EngageCapacity" variable="engage"/>
-	</resources>
+    <parameters>
+        <parameter name="zone">
+            <type>
+                <class name="world_concepts.Positionable"/>
+            </type>
+        </parameter>
+        <parameter name="position" nullable="true">
+            <type>
+                <class name="world_concepts.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="typeDeploiement">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+        <parameter name="ph">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+    </parameters>
+    <modifiers/>
+    <links>
+        <link name="moveTo" skill="agent.skills.MoveToward"/>
+        <link name="intercepterMissile" skill="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
+    </links>
+    <resources>
+        <resource name="agent.resources.EngageCapacity" variable="engage"/>
+    </resources>
 </skill>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Controler" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Control">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Controler" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Control">
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="sword.military.knowledge.Controlable"/>
+                <class name="world_concepts.Controlable"/>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.world.Object"/>
+                    <class name="world_elements.Object"/>
                 </list>
             </type>
             <default>
@@ -26,7 +26,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="sword.military.platoon.tasks.Control">
+    <next-task name="agent.tasks_armored.Control">
         <parameter name="objective">
             <value>
                 <parameter>objective</parameter>

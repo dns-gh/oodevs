@@ -3,14 +3,14 @@
   <parameters>
     <parameter name="position">
       <type>
-        <class name="sword.military.world.Point"/>
+        <class name="world_elements.Point"/>
       </type>
     </parameter>
   </parameters>
   <body-type>
-    <class name="sword.military.world.PlatoonAlly"/>
+    <class name="world_elements.PlatoonAlly"/>
   </body-type>
   <links>
-    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+    <link name="moveToward" skill="agent.skills.MoveToward"/>
   </links>
 </skill>

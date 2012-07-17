@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks_armored.Seize" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Seize">
+	<parameters>
+		<parameter name="objectives">
+			<type>
+				<list>
+					<class name="world_concepts.Destroying"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<let name="enemiesAround">
+		<value>
+			<call method="queries_enemies.getEnemiesInRange">
+				<parameter name="probabilityToHit">
+					<value>
+						<number>0.5</number>
+					</value>
+				</parameter>
+			</call>
+		</value>
+	</let>
+	<stages>
+		<stage label="S'emparer de la position" permanent="true" disable-when-done="false">
+			<description>Hold the objectives.</description>
+			<goal>
+				<description>Engaging enemies approaching and hold the objectives.</description>
+			</goal>
+			<skills>
+				<skill name="agent.skills.MoveToward" priority="0.9">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+				</skill>
+				<skill name="agent.skills.Engage" priority="0.1">
+					<parameter name="entities">
+						<value>
+							<parameter>enemiesAround</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

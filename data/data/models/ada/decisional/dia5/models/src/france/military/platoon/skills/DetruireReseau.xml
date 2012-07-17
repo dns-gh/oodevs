@@ -3,11 +3,11 @@
     <parameters>
         <parameter name="network">
             <type>
-                <class name="sword.military.world.ResourceNetwork"/>
+                <class name="world_elements.ResourceNetwork"/>
             </type>
         </parameter>
     </parameters>
     <links>
-        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="moveToward" skill="agent.skills.MoveToward"/>
     </links>
 </skill>

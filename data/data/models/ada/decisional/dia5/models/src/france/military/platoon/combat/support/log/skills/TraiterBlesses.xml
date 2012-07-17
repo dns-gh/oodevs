@@ -4,7 +4,7 @@
         <parameter name="blessuresTraitees" nullable="true">
             <type>
                 <list>
-                    <class name="sword.military.world.HumanWound"/>
+                    <class name="world_elements.HumanWound"/>
                 </list>
             </type>
             <default>
@@ -13,6 +13,6 @@
         </parameter>
     </parameters>
     <body-type>
-        <class name="sword.military.world.PlatoonAlly"/>
+        <class name="world_elements.PlatoonAlly"/>
     </body-type>
 </skill>

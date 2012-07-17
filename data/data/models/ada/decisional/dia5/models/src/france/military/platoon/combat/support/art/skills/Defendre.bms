@@ -11,7 +11,7 @@ rootnode {
         if self.position == NIL then
             self.position = self.params.zone
         end
-        self.direction = sword.military.queries.miscellaneous.getMissionDirection[ "execute" ]()
+        self.direction = queries_miscgetMissionDirection[ "execute" ]()
         self.arrived = false
     end,
 

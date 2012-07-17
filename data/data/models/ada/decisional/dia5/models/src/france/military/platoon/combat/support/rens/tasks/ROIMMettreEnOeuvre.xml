@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="position" nullable="true">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
             <default>
                 <nil/>

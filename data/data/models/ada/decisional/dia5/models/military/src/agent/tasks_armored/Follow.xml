@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks_armored.Follow" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Follow">
+    <description>For the agent to know how to follow a set of moving agents or crowds. The agent chooses the best positions to stay close to a maximum of the given entities.</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>The entities to follow.</description>
+            <type>
+                <list>
+                    <class name="world_concepts.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="follow" permanent="true">
+            <skills>
+                <skill name="agent.skills.primitives.StayClose">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <call method="queries_positions.getPositionsToFollow">
+                                <parameter name="elementsToFollow">
+                                    <value>
+                                        <parameter>objectives</parameter>
+                                    </value>
+                                </parameter>
+                                <parameter name="dynamic">
+                                    <value>
+                                        <boolean>true</boolean>
+                                    </value>
+                                </parameter>
+                                <parameter name="distanceMin">
+                                    <value>
+                                        <number>50.0</number>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

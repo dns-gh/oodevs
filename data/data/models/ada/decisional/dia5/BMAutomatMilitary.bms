@@ -1,0 +1,34 @@
+pragma "once"
+LoadResourcesFile( "Integration.lua" )
+
+local libPath = select(1,...)
+local role    = select(2,...)
+masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", 
+                                       libPath .. "/models/military/src" } )
+integration.ontology =
+{
+    types =
+    {
+        body            = world_elements.Company,
+        object          = world_elements.Object,
+        urbanBlock      = world_elements.UrbanBlock,
+        point           = world_elements.Point,
+        area            = world_elements.Area,
+        direction       = world_elements.Direction,
+        automat         = world_elements.Company,
+        agent           = world_elements.PlatoonAlly,
+        agentKnowledge  = world_elements.Platoon,
+        population      = world_elements.Crowd,
+        genObject       = world_elements.EngineerObject,
+        limaStatique    = world_elements.LimaStatique,
+        fragOrder       = world_elements.FragOrder, 
+        resourceNetwork = world_elements.ResourceNetwork
+    }
+}
+
+local swordErrorHandler = function( err )
+    DEC_Trace( tostring( err )..debug.traceback() )
+    return err
+end
+
+errorhandlermanager.installErrorHandler( swordErrorHandler )

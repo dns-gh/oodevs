@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.DischargeIn" source-version="1.0.0">
+    <parameters>
+        <parameter name="camp">
+            <type>
+                <class name="world_concepts.Camp"/>
+            </type>
+        </parameter>
+        <parameter name="elements">
+            <type>
+                <list>
+                    <class name="world_concepts.Loadable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveTo" skill="agent.skills.MoveToward"/>
+    </links>
+</skill>

@@ -5,7 +5,7 @@
       <description>Ficelle de vol.</description>
       <type>
         <list>
-          <class name="sword.military.world.Point"/>
+          <class name="world_elements.Point"/>
         </list>
       </type>
     </parameter>
@@ -13,7 +13,7 @@
   <stages>
     <stage label="Reconnaitre la zone" disable-when-done="true">
       <skills>
-        <skill name="sword.military.company.skills.Lead" main="true">
+        <skill name="commander.skills.Lead" main="true">
           <parameter name="companyTask">
             <value>
               <string>france.military.company.combat.support.rens.tasks.ROIM_Reconnaitre</string>

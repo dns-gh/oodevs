@@ -7,12 +7,12 @@
     <default-task label="Deploiement automatique">
         <let name="fragOrdersToManage">
             <value>
-                <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+                <call method="queries_misc.getFragOrders"/>
             </value>
         </let>
         <skills>
             <skill name="france.military.platoon.combat.support.log.skills.AutoDeploy" main="true" priority="0.01"/>
-            <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+            <skill name="agent.skills.ManageFragOrder">
                 <parameter name="fragOrders">
                     <value>
                         <parameter>fragOrdersToManage</parameter>

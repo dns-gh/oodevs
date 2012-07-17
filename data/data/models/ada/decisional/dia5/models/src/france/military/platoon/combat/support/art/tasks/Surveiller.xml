@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="position">
             <type>
-                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="world_concepts.Reachable"/>
             </type>
         </parameter>
         <parameter name="typeDeploiement">

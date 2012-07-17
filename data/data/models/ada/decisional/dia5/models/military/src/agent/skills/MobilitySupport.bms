@@ -1,0 +1,20 @@
+rootnode
+{
+    connections = { skill.links.StayClose, skill.links.ByPass },
+
+    done = function( self, params, additionnalParams ) -- ByPass
+        for i = 1, #self.params.entities do
+            meKnowledge:sendObstacleByPassed( self.params.entities[i] )
+        end
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.obstacles = queries_objects.getObstaclesToSupport[ "execute" ]()
+        self.positions = queries_positions.getPositionsToFollow[ "execute" ]( {elementsToFollow = self.params.entities, dynamic = "true" })
+        Activate( skill.links.StayClose, 0.1, {entities = self.params.entities, positions = self.positions})
+        if self.obstacles then
+            Activate( skill.links.ByPass, 0.9, {entities = self.obstacles})
+        end
+    end
+}

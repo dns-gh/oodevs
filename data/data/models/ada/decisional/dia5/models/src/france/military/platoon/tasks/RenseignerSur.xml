@@ -4,13 +4,13 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="sword.military.knowledge.decisional.Observable"/>
-        <class name="sword.military.knowledge.decisional.Observing"/>
+        <class name="world_concepts.Observable"/>
+        <class name="world_concepts.Observing"/>
       </type>
     </parameter>
   </parameters>
   <stages/>
-  <next-task name="sword.military.platoon.coercition.tasks.Monitor">
+  <next-task name="agent.tasks_armored.Monitor">
     <parameter name="objective">
       <value>
         <parameter>objective</parameter>

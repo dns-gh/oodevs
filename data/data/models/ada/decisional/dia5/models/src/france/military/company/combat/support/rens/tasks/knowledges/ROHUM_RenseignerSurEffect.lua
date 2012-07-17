@@ -16,7 +16,7 @@ return
       local subAreas = DEC_Geometry_SplitLocalisation( myself.taskParams.area.source, nbFront, nil ) 
       subAreas = subAreas.first
       for _, area in pairs( subAreas ) do
-          myself.leadData.area[#myself.leadData.area + 1] = CreateKnowledge( sword.military.world.Area, area )
+          myself.leadData.area[#myself.leadData.area + 1] = CreateKnowledge( world_elements.Area, area )
       end
       if #subAreas == 0 then
           myself.leadData.area[#myself.leadData.area + 1] = area -- cas ou la zone est hors limite
