@@ -37,7 +37,6 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( SetVisionModeNormal, 0 );
     MOCK_METHOD( SetVisionModeDirection, 1 );
     MOCK_METHOD( SetVisionModePoint, 1 );
-    MOCK_METHOD( HasRadarStateChanged, 0 );
 
     MOCK_METHOD( EnableSensors, 0 );
     MOCK_METHOD( DisableSensors, 0 );
