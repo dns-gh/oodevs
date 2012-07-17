@@ -14,6 +14,25 @@ node_error_template = Handlebars.compile $("#node_error_template").html()
 print_error = (text) ->
     display_error "node_error", node_error_template, text
 
+pop_settings = (ui, data) ->
+    ui.html node_settings data
+    mod = ui.find ".modal"
+    mod.modal "show"
+    return [ui, mod]
+
+validate_settings = (ui, item) ->
+    max = ui.find ".max_sessions"
+    par = ui.find ".parallel_sessions"
+    max_val = parseInt max.val(), 10
+    par_val = parseInt par.val(), 10
+    if par_val > max_val
+        toggle_input_error par, "Invalid", par_val
+        return
+    data =
+        max_sessions: max_val
+        parallel_sessions: par_val
+    return data
+
 class NodeItem extends Backbone.Model
     view: NodeItemView
 
@@ -23,11 +42,13 @@ class NodeItem extends Backbone.Model
 
     sync: (method, model, options) =>
         if method == "create"
-            params =
-                name: model.get "name"
-            return ajax "/api/create_node", params, options.success, options.error
+            return ajax "/api/create_node", model.attributes,
+                options.success, options.error
         if method == "read"
             return ajax "/api/get_node", id: model.id,
+                options.success, options.error
+        if method == "update"
+            return ajax "/api/update_node", model.attributes,
                 options.success, options.error
         if method == "delete"
             return ajax "/api/delete_node", id: model.id,
@@ -61,7 +82,7 @@ class NodeItemView extends Backbone.View
         "click .delete" : "delete"
         "click .stop" : "stop"
         "click .play" : "play"
-        "click .config": "config"
+        "click .edit": "edit"
 
     render: =>
         $(@el).empty()
@@ -91,13 +112,17 @@ class NodeItemView extends Backbone.View
                 print_error "Unable to start node " + @model.get "name"
                 @toggle_load()
 
-    config: (evt) =>
+    edit: (evt) =>
         return if is_disabled evt
-        on_node_config $(@el).find(".node_settings"),
-            @model.get("name"),
-            @model.get("max_sessions"),
-            @model.get("parallel_sessions"),
-        $(@el).find(".node_settings .modal").modal "show"
+        [ui, mod] = pop_settings $(@el).find(".node_settings"), @model.attributes
+        mod.find(".apply").click =>
+            data = validate_settings ui, @model
+            return unless data?
+            mod.modal "hide"
+            @model.save data,
+                wait: true
+                error: =>
+                    print_error "Unable to update node " + @model.get "name"
 
     toggle_load: =>
         for it in $(@el).find(".session_top_right .btn")
@@ -149,6 +174,7 @@ class NodeListView extends Backbone.View
                 setTimeout @delta, 5000
 
 node_view = new NodeListView
+node_default = new NodeItem
 
 validate_input_node = (control, result) ->
     if !result
@@ -159,29 +185,22 @@ validate_input_node = (control, result) ->
         return false
     return true
 
-on_node_click = ->
-    name = $("#node_name")
+$("#node_create").click ->
+    name = $ "#node_name"
     if !validate_input_node name, name.val().length
         return
-    node_view.create name: name.val()
+    node_default.set "name", name.val()
+    node_view.create node_default
     name.val ''
 
-on_node_config = (container, name, max, parallel) ->
-    container.html node_settings
-        name: name
-        max_sessions: max
-        parallel_sessions: parallel
-
-on_node_config $("#node_settings"), "", 64, 8
-
-$("#node_create").click on_node_click
-
-$("#node_config").click ->
-    on_node_config $("#node_settings"),
-        $("#node_name").val(),
-        $("#node_settings .max_sessions").val(),
-        $("#node_settings .parallel_sessions").val()
-    $("#node_settings .modal").modal "show"
+$("#node_edit").click ->
+    [ui, mod] = pop_settings $("#node_settings"), node_default.attributes
+    mod.find(".apply").click ->
+        data = validate_settings ui, node_default
+        return unless data?
+        node_default.set "max_sessions", data.max_sessions
+        node_default.set "parallel_sessions", data.parallel_sessions
+        mod.modal "hide"
 
 $(".create_form").keypress (e) ->
     if e.which == 13

@@ -7,7 +7,7 @@
             <div class="control-group">
                 <div class="controls">
                     <input id="node_name" type="text" placeholder="Name..."/>
-                    <a id="node_config" class="btn"><i class="icon-cog"></i></a>
+                    <a id="node_edit" class="btn"><i class="icon-cog"></i></a>
                     <a id="node_create" class="btn"><i class="icon-plus"></i> Create...</a>
                 </div>
             </div>
@@ -48,7 +48,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a class="btn btn-inverse" data-dismiss="modal">Apply</a>
+            <a class="btn btn-inverse apply">Apply</a>
             <a class="btn btn-inverse" data-dismiss="modal">Discard</a>
         </div>
     </div>
@@ -66,7 +66,7 @@
                 {{#is_option status stopped=""}}
                 <a title="Play" class="btn play"><i class="icon-play"></i></a>
                 {{/is_option}}
-                <a title="Settings..." class="btn config{{#is_option status running=""}} disabled{{/is_option}}"><i class="icon-cog"></i></a>
+                <a title="Settings..." class="btn edit{{#is_option status running=""}} disabled{{/is_option}}"><i class="icon-cog"></i></a>
                 {{#is_option status running=""}}
                 <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
                 {{/is_option}}
@@ -83,14 +83,14 @@
                     <div class="control-group">
                         <label class="control-label">Sessions</label>
                         <div class="controls">
-                            <span class="uneditable-input read_only">{{{max_sessions}}} total</span>
+                            <span class="uneditable-input read_only">{{max_sessions}} total</span>
                             <span class="uneditable-input read_only">0 played</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"></label>
                         <div class="controls">
-                            <span class="uneditable-input read_only">{{{parallel_sessions}}} parallel</span>
+                            <span class="uneditable-input read_only">{{parallel_sessions}} parallel</span>
                             <span class="uneditable-input read_only">0 running</span>
                         </div>
                     </div>
