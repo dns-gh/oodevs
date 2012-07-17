@@ -616,6 +616,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Position de bouclage" optional="true" type="Point"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
@@ -3470,4 +3471,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3082299747" -->
+<!-- signature="0247970178" -->

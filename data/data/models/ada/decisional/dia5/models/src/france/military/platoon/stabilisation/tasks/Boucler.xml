@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.stabilisation.tasks.Boucler" source-version="1.0.0" knowledge-class="sword.military.platoon.stabilisation.tasks.knowledge.SealOff">
-    <parameters>
-        <parameter name="objective">
-            <type>
-                <class name="sword.military.knowledge.Sealable"/>
-            </type>
-        </parameter>
-    </parameters>
-    <next-task name="sword.military.platoon.stabilisation.tasks.SealOff">
-        <parameter name="objective">
-            <value>
-                <parameter>objective</parameter>
-            </value>
-        </parameter>
-    </next-task>
+	<parameters>
+		<parameter name="objective">
+			<type>
+				<class name="sword.military.knowledge.Sealable"/>
+			</type>
+		</parameter>
+		<parameter name="position" nullable="true">
+			<type>
+				<class name="sword.military.knowledge.decisional.Reachable"/>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
+	</parameters>
+	<next-task name="sword.military.platoon.stabilisation.tasks.SealOff">
+		<parameter name="position">
+			<value>
+				<parameter>position</parameter>
+			</value>
+		</parameter>
+		<parameter name="objective">
+			<value>
+				<parameter>objective</parameter>
+			</value>
+		</parameter>
+	</next-task>
 </task>
