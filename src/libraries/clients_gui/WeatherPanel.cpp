@@ -148,7 +148,8 @@ void WeatherPanel::CommitLocalWeather()
     {
         localWidget_->CommitTo( *selectedLocal_ );
         if( selectedLocal_->IsCreated() )
-            selectedLocal_->SetPeriod( startTime_->dateTime(), endTime_->dateTime() );
+            selectedLocal_->SetPeriod( boost::posix_time::from_iso_string( startTime_->dateTime().toString( Qt::ISODate ).toUtf8().constData() ),
+                                       boost::posix_time::from_iso_string( endTime_->dateTime().toString( Qt::ISODate ).toUtf8().constData() ) );
     }
 }
 
@@ -163,8 +164,8 @@ void WeatherPanel::LocalSelectionChanged()
     if( selected != 0 )
     {
         localWidget_->Update( *selected );
-        startTime_->setDateTime( selected->GetStartTime() );
-        endTime_->setDateTime( selected->GetEndTime() );
+        startTime_->setDateTime( QDateTime::fromString( boost::posix_time::to_iso_string( selected->GetStartTime() ).c_str(), Qt::ISODate ) );
+        endTime_->setDateTime( QDateTime::fromString( boost::posix_time::to_iso_string( selected->GetEndTime() ).c_str(), Qt::ISODate ) );
         layer_.SetPosition( *selected );
     }
     else

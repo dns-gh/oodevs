@@ -7,9 +7,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\dispatcher_dll\config.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher_dll\DispatcherFacade.h">
       <Filter>Source Files</Filter>
     </ClInclude>

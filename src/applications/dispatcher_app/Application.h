@@ -12,6 +12,7 @@
 
 #include <string>
 #include <memory>
+#include <boost/noncopyable.hpp>
 
 class DispatcherFacade;
 
@@ -21,7 +22,7 @@ class DispatcherFacade;
 */
 // Created: NLD 2006-10-10
 // =============================================================================
-class Application
+class Application : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -36,16 +37,20 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    Application( const Application& );            //!< Copy constructor
-    Application& operator=( const Application& ); //!< Assignment operator
+    typedef void* ( *T_FacadeCreator )( int argc, char** argv, int maxConnections );
+    typedef void ( *T_FacadeDestructor )( void* facade );
+    typedef void ( *T_FacadeUpdator )( void* facade );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< DispatcherFacade > dispatcher_;
+    void* dispatcher_;
+    T_FacadeCreator facadeCreator_;
+    T_FacadeDestructor facadeDestructor_;
+    T_FacadeUpdator facadeUpdator_;
     //@}
 };
 

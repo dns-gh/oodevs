@@ -13,6 +13,17 @@
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
+#include <windows.h>
+
+#ifndef PLATFORM
+#error PLATFORM must be defined (for instance vc80 or vc100_x64) for dispatcher
+#endif
+
+#ifdef _DEBUG
+# define EXTENSION "-gd"
+#else
+# define EXTENSION ""
+#endif
 
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher constructor
@@ -20,9 +31,12 @@
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv, int maxConnections )
     : running_   ( true )
-    , dispatcher_( argc, argv, maxConnections )
 {
-    // NOTHING
+    HMODULE module = LoadLibrary( ( "dispatcher" + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt" EXTENSION ".dll" ) ).c_str() );
+    facadeCreator_ = (T_FacadeCreator) GetProcAddress( module, "CreateDispatcherFacade" );
+    facadeUpdator_ = (T_FacadeUpdator) GetProcAddress( module, "UpdateDispatcherFacade" );
+    facadeDestructor_= (T_FacadeDestructor) GetProcAddress( module, "DestroyDispatcherFacade" );
+    dispatcher_ = facadeCreator_( argc, argv, maxConnections );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +45,7 @@ SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv, int maxConnections )
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::~SIM_Dispatcher()
 {
-    // NOTHING
+    facadeDestructor_( dispatcher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +56,7 @@ void SIM_Dispatcher::Run()
 {
     while( running_ ) // $$$$ MCO : should be protected with a mutex
     {
-        dispatcher_.Update();
+        facadeUpdator_( dispatcher_ );
         boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ;
     }
 }

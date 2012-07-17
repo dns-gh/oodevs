@@ -11,7 +11,6 @@
 #include "PHY_Lighting.h"
 #include "PHY_Precipitation.h"
 #include "ReadDirections.h"
-#include "clients_kernel/Tools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -188,6 +187,25 @@ void Meteo::Update( const sword::WeatherAttributes& msg )
         pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
 
+namespace
+{
+    const char* GetXmlSection( E_WeatherType weather )
+    {
+        switch( weather  )
+        {
+        case eWeatherType_None:      return "PasDePrecipitation";
+        case eWeatherType_SandStorm: return "TempeteDeSable";
+        case eWeatherType_Fog:       return "Brouillard";
+        case eWeatherType_Drizzle:   return "Crachin";
+        case eWeatherType_Rain:      return "Pluie";
+        case eWeatherType_Snow:      return "Neige";
+        case eWeatherType_Smoke:     return "Fumigene";
+        default:
+            return "Unknown";
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Meteo::Serialize
 // Created: ABR 2011-06-01
@@ -208,7 +226,7 @@ void Meteo::Serialize( xml::xostream& xos ) const
             << xml::attribute( "value", temperature_ )
         << xml::end
         << xml::start( "precipitation" )
-            << xml::attribute( "value", tools::GetXmlSection( pPrecipitation_->GetID() ) )
+            << xml::attribute( "value", GetXmlSection( pPrecipitation_->GetID() ) )
         << xml::end;
 }
 

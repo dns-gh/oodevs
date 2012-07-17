@@ -17,6 +17,7 @@
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"
 #include "protocol/ClientSenders.h"
+#include <QtCore/qstring.h>
 
 using namespace dispatcher;
 

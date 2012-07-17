@@ -69,9 +69,6 @@ namespace tools
     QString ToDisplayedString( E_LightingType lighting );
     QString ToDisplayedString( E_WeatherType weather );
 
-    const char* GetXmlSection( E_UnitPosture nPosture );
-    const char* GetXmlSection( E_WeatherType nWeatherType );
-
     E_DotationFamily        DotationFamilyFromString( const std::string& type );
     E_NatureLevel           NatureLevelFromString   ( const std::string& type );
     E_LocationType          LocationFromString      ( const std::string& type );

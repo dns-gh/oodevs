@@ -10,7 +10,7 @@
 #ifndef __DispatcherFacade_h_
 #define __DispatcherFacade_h_
 
-#include "config.h"
+//#include "config.h"
 #include <memory>
 
 #pragma warning( push )
@@ -33,7 +33,7 @@ namespace tools
 */
 // Created: AGE 2008-05-21
 // =============================================================================
-class DISPATCHER_DLL_API DispatcherFacade
+class DispatcherFacade
 {
 public:
     //! @name Constructors/Destructor
@@ -55,6 +55,21 @@ private:
     std::auto_ptr< dispatcher::Dispatcher > dispatcher_;
     //@}
 };
+
+extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
+{
+    return new DispatcherFacade( argc, argv, maxConnections );
+}
+
+extern "C" __declspec(dllexport) void DestroyDispatcherFacade( void* dispatchFacade )
+{
+    delete static_cast< DispatcherFacade* >( dispatchFacade );
+}
+
+extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFacade )
+{
+    static_cast< DispatcherFacade* >( dispatchFacade )->Update();
+}
 
 #pragma warning( pop )
 

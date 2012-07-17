@@ -179,46 +179,6 @@ QString tools::ToDisplayedString( E_WeatherType weather )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::GetXmlSection
-// Created: AGE 2005-03-31
-// -----------------------------------------------------------------------------
-const char* tools::GetXmlSection( E_UnitPosture nPosture )
-{
-    switch( nPosture )
-    {
-        case eUnitPosture_PostureMouvement:         return "Mouvement";
-        case eUnitPosture_PostureMouvementDiscret:  return "MouvementDiscret";
-        case eUnitPosture_PostureArret:             return "Arret";
-        case eUnitPosture_PosturePosteReflexe:      return "PosteReflexe";
-        case eUnitPosture_PosturePoste:             return "Poste";
-        case eUnitPosture_PosturePosteAmenage:      return "PosteAmenage";
-        case eUnitPosture_PosturePostePrepareGenie: return "PostePrepareGenie";
-        default:
-            return "Unknown";
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::GetXmlSection
-// Created: APE 2004-05-03
-// -----------------------------------------------------------------------------
-const char* tools::GetXmlSection( E_WeatherType weather )
-{
-    switch( weather  )
-    {
-        case eWeatherType_None:      return "PasDePrecipitation";
-        case eWeatherType_SandStorm: return "TempeteDeSable";
-        case eWeatherType_Fog:       return "Brouillard";
-        case eWeatherType_Drizzle:   return "Crachin";
-        case eWeatherType_Rain:      return "Pluie";
-        case eWeatherType_Snow:      return "Neige";
-        case eWeatherType_Smoke:     return "Fumigene";
-        default:
-            return "Unknown";
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------

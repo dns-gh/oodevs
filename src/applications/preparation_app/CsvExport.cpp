@@ -283,11 +283,11 @@ void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& 
     while( it.HasMoreElements() )
     {
         const weather::MeteoLocal& meteo = it.NextElement();
-        const QString start = ( meteo.GetStartTime().isValid() ? meteo.GetStartTime() : QDateTime() ).toString( "yyyyMMddThhmmss" );
-        const QString end   = ( meteo.GetEndTime().isValid() ? meteo.GetEndTime() : QDateTime() ).toString( "yyyyMMddThhmmss" );
+        const std::string start = meteo.GetStartTime().is_not_a_date_time() ? "19700101Thhmmss" : boost::posix_time::to_iso_string( meteo.GetStartTime() );
+        const std::string end   = meteo.GetEndTime().is_not_a_date_time() ? "19700101Thhmmss" : boost::posix_time::to_iso_string( meteo.GetEndTime() );
         file << meteo.GetWind().rSpeed_ << separator << meteo.GetWind().eAngle_ << separator << meteo.GetTemperature() << separator
-            << meteo.GetCloud().nFloor_ << separator << meteo.GetCloud().nCeiling_ << separator << meteo.GetCloud().nDensityPercentage_ << separator
-            << meteo.GetPrecipitation().GetName() << separator << start << separator << end << std::endl;
+             << meteo.GetCloud().nFloor_ << separator << meteo.GetCloud().nCeiling_ << separator << meteo.GetCloud().nDensityPercentage_ << separator
+             << meteo.GetPrecipitation().GetName() << separator << start << separator << end << std::endl;
     }
     file.close();
 }

@@ -11,10 +11,7 @@
 #define __weather_MeteoLocal_h_
 
 #include "Meteo/Meteo.h"
-#pragma warning( push )
-#pragma warning( disable : 4127 )
-#include <QtCore/QDateTime.h>
-#pragma warning( pop )
+#include <boost/date_time.hpp>
 
 namespace sword
 {
@@ -59,13 +56,13 @@ public:
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
     void SetPosition( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
-    void SetPeriod( const QDateTime& start, const QDateTime& end );
+    void SetPeriod( const boost::posix_time::ptime& start, const boost::posix_time::ptime& end );
     void SetCreated( bool created );
 
     const geometry::Point2f GetTopLeft() const;
     const geometry::Point2f GetBottomRight() const;
-    const QDateTime GetStartTime() const;
-    const QDateTime GetEndTime() const;
+    const boost::posix_time::ptime& GetStartTime() const;
+    const boost::posix_time::ptime& GetEndTime() const;
     bool IsCreated() const;
     virtual bool IsOlder( const weather::Meteo& other ) const;
     const kernel::CoordinateConverter_ABC& GetCoordinateConverter() const;
@@ -95,8 +92,8 @@ private:
     const kernel::CoordinateConverter_ABC* converter_;
     geometry::Point2f topLeft_;
     geometry::Point2f bottomRight_;
-    QDateTime startTime_;
-    QDateTime endTime_;
+    boost::posix_time::ptime startTime_;
+    boost::posix_time::ptime endTime_;
     bool created_;
     //@}
 

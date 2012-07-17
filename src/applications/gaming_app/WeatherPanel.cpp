@@ -128,8 +128,8 @@ void WeatherPanel::Commit()
 
                     localWidget_->Update( *local );
                     static_cast< WeatherWidget* >( localWidget_ )->CreateParameters( *action, it );
-                    action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), local->GetStartTime() ) );
-                    action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), local->GetEndTime() ) );
+                    action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), QDateTime::fromString( boost::posix_time::to_iso_string( local->GetStartTime() ).c_str(), Qt::ISODate ) ) );
+                    action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), QDateTime::fromString( boost::posix_time::to_iso_string( local->GetEndTime() ).c_str(), Qt::ISODate ) ) );
                     kernel::Rectangle rectangle;
                     rectangle.AddPoint( local->GetBottomRight() );
                     rectangle.AddPoint( local->GetTopLeft() );

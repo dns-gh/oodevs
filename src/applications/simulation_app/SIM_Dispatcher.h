@@ -10,8 +10,6 @@
 #ifndef __SIM_Dispatcher_h_
 #define __SIM_Dispatcher_h_
 
-#include "dispatcher_dll/DispatcherFacade.h"
-
 // =============================================================================
 /** @class  SIM_Dispatcher
     @brief  SIM_Dispatcher
@@ -41,10 +39,21 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef void* ( *T_FacadeCreator )( int argc, char** argv, int maxConnections );
+    typedef void ( *T_FacadeDestructor )( void* facade );
+    typedef void ( *T_FacadeUpdator )( void* facade );
+    //@}
+
+private:
     //! @name Member data
     //@{
     bool running_;
-    DispatcherFacade dispatcher_;
+    void* dispatcher_;
+    T_FacadeCreator facadeCreator_;
+    T_FacadeDestructor facadeDestructor_;
+    T_FacadeUpdator facadeUpdator_;
     //@}
 };
 

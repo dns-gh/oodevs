@@ -21,8 +21,6 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
-class QString;
-
 namespace sword
 {
     class WeatherAttributes;

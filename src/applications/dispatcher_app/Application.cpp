@@ -8,9 +8,19 @@
 // *****************************************************************************
 
 #include "Application.h"
-#include "dispatcher_dll/DispatcherFacade.h"
 #include "MT_Tools/MT_Logger.h"
 #include <windows.h>
+#include <boost/preprocessor/stringize.hpp>
+
+#ifndef PLATFORM
+#error PLATFORM must be defined (for instance vc80 or vc100_x64) for dispatcher
+#endif
+
+#ifdef _DEBUG
+# define EXTENSION "-gd"
+#else
+# define EXTENSION ""
+#endif
 
 // -----------------------------------------------------------------------------
 // Name: Application constructor
@@ -21,7 +31,11 @@ Application::Application( int argc, char** argv, int maxConnections )
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword Officer Training(tm) Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    dispatcher_.reset( new DispatcherFacade( argc, argv, maxConnections ) );
+    HMODULE module = LoadLibrary( ( "dispatcher" + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt" EXTENSION ".dll" ) ).c_str() );
+    facadeCreator_ = (T_FacadeCreator) GetProcAddress( module, "CreateDispatcherFacade" );
+    facadeUpdator_ = (T_FacadeUpdator) GetProcAddress( module, "UpdateDispatcherFacade" );
+    facadeDestructor_= (T_FacadeDestructor) GetProcAddress( module, "DestroyDispatcherFacade" );
+    dispatcher_ = facadeCreator_( argc, argv, maxConnections );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +44,7 @@ Application::Application( int argc, char** argv, int maxConnections )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
-    // NOTHING
+    facadeDestructor_( dispatcher_ );
 }
 
 #pragma warning( disable : 4127 ) //conditional expression is constant
@@ -46,7 +60,7 @@ int Application::Execute()
         while( 1 )
         {
             ::Sleep( 10 );
-            dispatcher_->Update();
+            facadeUpdator_( dispatcher_ );
         }
     }
     catch( std::exception& e )

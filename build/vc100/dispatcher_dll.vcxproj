@@ -175,7 +175,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\dispatcher_dll\config.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher_dll\DispatcherFacade.h" />
   </ItemGroup>
   <ItemGroup>

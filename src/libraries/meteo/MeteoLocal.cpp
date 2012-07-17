@@ -11,7 +11,6 @@
 #include "PHY_Precipitation.h"
 #include "PHY_Lighting.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Tools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -19,17 +18,6 @@
 using namespace weather;
 
 unsigned int MeteoLocal::localCounter_ = 1;
-
-namespace
-{
-    QDateTime MakeDate( const std::string& str )
-    {
-        QString extended( str.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' );
-        extended.insert(  6, '-' ); extended.insert(  4, '-' );
-        return QDateTime::fromString( extended, Qt::ISODate );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: MeteoLocal constructor
@@ -46,8 +34,8 @@ MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
     temperature_ = meteo.GetTemperature();
     topLeft_ = meteo.GetTopLeft();
     bottomRight_ = meteo.GetBottomRight();
-    startTime_ = meteo.GetStartTime();
-    endTime_ = meteo.GetEndTime();
+    startTime_ = meteo.startTime_;
+    endTime_ = meteo.endTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +43,7 @@ MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
-    : Meteo( localCounter_, 0, name + QString::number( localCounter_ ).toUtf8().constData() )
+    : Meteo( localCounter_, 0, name + boost::lexical_cast< std::string >( localCounter_ ) )
     , converter_( &converter )
     , created_( false )
 {
@@ -67,7 +55,7 @@ MeteoLocal::MeteoLocal( const kernel::CoordinateConverter_ABC& converter, const 
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const std::string& name /*= ""*/ )
-    : Meteo( localCounter_, xis, 0, 0, name + QString::number( localCounter_ ).toUtf8().constData() )
+    : Meteo( localCounter_, xis, 0, 0, name + boost::lexical_cast< std::string >( localCounter_ ) )
     , converter_( &converter )
     , created_  ( false )
 {
@@ -78,8 +66,8 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
         >> xml::attribute( "bottom-right", bottomRight );
     topLeft_ = converter_->ConvertToXY( topLeft );
     bottomRight_ = converter_->ConvertToXY( bottomRight );
-    startTime_ = MakeDate( startTime );
-    endTime_ = MakeDate( endTime );
+    startTime_ = boost::posix_time::from_iso_string( startTime );
+    endTime_ = boost::posix_time::from_iso_string( endTime );
     localCounter_++;
 }
 
@@ -88,7 +76,7 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const kernel::CoordinateConverter_ABC& converter, unsigned int timeStep, const std::string& name /*= ""*/ )
-    : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + QString::number( msg.weather().id() ).toUtf8().constData() )
+    : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + boost::lexical_cast< std::string >( msg.weather().id() ) )
     , converter_( &converter )
     , created_  ( false )
 {
@@ -127,10 +115,10 @@ MeteoLocal::~MeteoLocal()
 void MeteoLocal::Serialize( xml::xostream& xos ) const
 {
     assert( converter_ );
-    const QString start = ( startTime_.isValid() ? startTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
-    const QString end   = ( endTime_.isValid() ? endTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
-    xos << xml::attribute( "start-time", start.isNull() ? "19700101Thhmmss" : start.toUtf8().constData() )
-        << xml::attribute( "end-time", end.isNull() ? "19700101Thhmmss" : end.toUtf8().constData() )
+    const std::string start = startTime_.is_not_a_date_time() ? "19700101Thhmmss" : boost::posix_time::to_iso_string( startTime_ );
+    const std::string end = endTime_.is_not_a_date_time() ? "19700101Thhmmss" : boost::posix_time::to_iso_string( endTime_ );
+    xos << xml::attribute( "start-time", start )
+        << xml::attribute( "end-time", end )
         << xml::attribute( "top-left", converter_->ConvertToMgrs( topLeft_ ) )
         << xml::attribute( "bottom-right"  , converter_->ConvertToMgrs( bottomRight_ ) );
     Meteo::Serialize( xos );
@@ -150,7 +138,7 @@ void MeteoLocal::SetPosition( const geometry::Point2f& topLeft, const geometry::
 // Name: MeteoLocal::SetPeriod
 // Created: SBO 2010-05-17
 // -----------------------------------------------------------------------------
-void MeteoLocal::SetPeriod( const QDateTime& start, const QDateTime& end )
+void MeteoLocal::SetPeriod( const boost::posix_time::ptime& start, const boost::posix_time::ptime& end )
 {
     if( startTime_ != start || endTime_ != end )
         modified_ = true;
@@ -189,7 +177,7 @@ const geometry::Point2f MeteoLocal::GetBottomRight() const
 // Name: MeteoLocal::GetStartTime
 // Created: SBO 2010-05-17
 // -----------------------------------------------------------------------------
-const QDateTime MeteoLocal::GetStartTime() const
+const boost::posix_time::ptime& MeteoLocal::GetStartTime() const
 {
     return startTime_;
 }
@@ -198,7 +186,7 @@ const QDateTime MeteoLocal::GetStartTime() const
 // Name: MeteoLocal::GetEndTime
 // Created: SBO 2010-05-17
 // -----------------------------------------------------------------------------
-const QDateTime MeteoLocal::GetEndTime() const
+const boost::posix_time::ptime& MeteoLocal::GetEndTime() const
 {
     return endTime_;
 }
@@ -237,7 +225,7 @@ bool MeteoLocal::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 bool MeteoLocal::IsValid() const
 {
-    return !created_ || startTime_ < endTime_ && startTime_.isValid() && endTime_.isValid() && !( topLeft_ == geometry::Point2f( 0, 0 ) && bottomRight_ == geometry::Point2f( 0, 0 ) );
+    return !created_ || startTime_ < endTime_ && !startTime_.is_not_a_date_time() && !endTime_.is_not_a_date_time() && !( topLeft_ == geometry::Point2f( 0, 0 ) && bottomRight_ == geometry::Point2f( 0, 0 ) );
 }
 
 // -----------------------------------------------------------------------------
