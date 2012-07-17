@@ -146,8 +146,8 @@ $(".sign_out").click ->
         ->  location.reload(),
         ->  location.reload()
 
-toggle_input_error = (el, txt) ->
-    el.val ''
+toggle_input_error = (el, txt, def = '') ->
+    el.val def if def?
     root = el.parent().parent()
     return if root.hasClass "error"
     root.addClass "error"

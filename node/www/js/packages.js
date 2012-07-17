@@ -214,9 +214,14 @@
     });
   });
 
-  toggle_input_error = function(el, txt) {
+  toggle_input_error = function(el, txt, def) {
     var msg, reset_error, root;
-    el.val('');
+    if (def == null) {
+      def = '';
+    }
+    if (def != null) {
+      el.val(def);
+    }
     root = el.parent().parent();
     if (root.hasClass("error")) {
       return;
