@@ -444,7 +444,7 @@
         data.other = true;
       }
       _ref = pop_settings(data), ui = _ref[0], mod = _ref[1];
-      return ui.find(".add").click(function(e) {
+      return ui.find(".add").click(function() {
         data = validate_settings(ui);
         if (data == null) {
           return;
@@ -586,7 +586,7 @@
       add: true,
       other: true
     }), ui = _ref[0], mod = _ref[1];
-    return ui.find(".add").click(function(e) {
+    return ui.find(".add").click(function() {
       var data;
       data = validate_settings(ui, true);
       if (data == null) {

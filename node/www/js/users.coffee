@@ -120,7 +120,7 @@ class UserItemView extends Backbone.View
         data = $.extend {}, @model.attributes
         data.other = true if other
         [ui, mod] = pop_settings data
-        ui.find(".add").click (e) =>
+        ui.find(".add").click =>
             data = validate_settings ui
             return unless data?
             @toggle_load()
@@ -192,7 +192,7 @@ user_view = new UserListView
 
 $("#user_create").click ->
     [ui, mod] = pop_settings add: true, other: true
-    ui.find(".add").click (e) ->
+    ui.find(".add").click ->
         data = validate_settings ui, true
         return unless data?
         mod.modal "hide"
