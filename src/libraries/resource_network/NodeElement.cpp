@@ -302,16 +302,23 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links, const ResourceNe
 {
     int distributionMean = static_cast< int >( static_cast< float >( immediateStock_ ) / links.size() );
     T_ResourceLinks updatedLinks;
-    for( CIT_ResourceLinks it = links.begin(); it != links.end(); ++it )
+
+    for( CIT_ResourceLinks it = links.begin(); it != links.end(); )
     {
-        // distribute to links with capacity inferior to mean
-        int linkCapacity = ( *it )->GetEfficientCapacity();
-        if( linkCapacity != -1 && linkCapacity <= distributionMean )
+        if( !model.IsValidNode( ( *it )->GetTarget() ) ) // clean invalid links
+            it = links.erase( it );
+        else
         {
-            ( *it )->SetFlow( linkCapacity );
-            model.Push( ( *it )->GetTarget(), linkCapacity, resourceId_ );
-            immediateStock_ -= linkCapacity;
-            updatedLinks.push_back( *it );
+            // distribute to links with capacity inferior to mean
+            int linkCapacity = ( *it )->GetEfficientCapacity();
+            if( linkCapacity != -1 && linkCapacity <= distributionMean )
+            {
+                ( *it )->SetFlow( linkCapacity );
+                model.Push( ( *it )->GetTarget(), linkCapacity, resourceId_ );
+                immediateStock_ -= linkCapacity;
+                updatedLinks.push_back( *it );
+            }
+            ++it;
         }
     }
     if( updatedLinks.empty() )
