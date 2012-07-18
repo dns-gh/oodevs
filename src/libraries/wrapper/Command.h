@@ -34,6 +34,10 @@ namespace detail
             {
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
             }
+            catch( ... )
+            {
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while creating command" );
+            }
         }
         static void Destroy( void* command, void* /*context*/ )
         {
@@ -50,6 +54,10 @@ namespace detail
             {
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
             }
+            catch( ... )
+            {
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
+            }
         }
         static void ExecutePaused( const void* command, const SWORD_Model* model, void* /*context*/ )
         {
@@ -61,6 +69,10 @@ namespace detail
             catch( std::exception& e )
             {
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+            }
+            catch( ... )
+            {
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
             }
         }
     };
@@ -78,6 +90,10 @@ namespace detail
             {
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
             }
+            catch( ... )
+            {
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while creating command" );
+            }
         }
         static void Destroy( void* command, void* /*userData*/ )
         {
@@ -94,6 +110,10 @@ namespace detail
             {
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
             }
+            catch( ... )
+            {
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
+            }
         }
         static void ExecutePaused( const void* command, const SWORD_Model* model, void* /*userData*/ )
         {
@@ -105,6 +125,10 @@ namespace detail
             catch( std::exception& e )
             {
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+            }
+            catch( ... )
+            {
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
             }
         }
     };
