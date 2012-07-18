@@ -125,6 +125,7 @@ struct Configuration
     {
         Path jar;
         Path root;
+        int min_play_seconds;
     } node;
     struct
     {
@@ -151,6 +152,7 @@ struct Configuration
             found |= ReadParameter( proxy.jar, "--proxy_jar", i, argc, argv );
             found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
+            found |= ReadParameter( node.min_play_seconds, "--node_min_play", i, argc, argv );
             found |= ReadParameter( session.apps, "--session_apps", i, argc, argv );
             found |= ReadParameter( ssl.store, "--ssl_store", i, argc, argv );
             found |= ReadParameter( ssl.type, "--ssl_type", i, argc, argv );
@@ -172,6 +174,7 @@ struct NodeFactory : public NodeFactory_ABC
                  const runtime::Runtime_ABC& runtime,
                  const UuidFactory_ABC& uuids,
                  PortFactory_ABC& ports,
+                 int min_play,
                  Pool_ABC& pool )
         : packages( packages )
         , system  ( system )
@@ -179,25 +182,32 @@ struct NodeFactory : public NodeFactory_ABC
         , uuids   ( uuids )
         , ports   ( ports )
         , pool    ( pool )
+        , min_play( min_play )
     {
         // NOTHING
     }
 
     Ptr Make( const Path& root, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ),
-                                           root, name, num_sessions, parallel_sessions, boost::ref( ports ) );
+        NodeConfig cfg;
+        cfg.name = name;
+        cfg.num_sessions = num_sessions;
+        cfg.parallel_sessions = parallel_sessions;
+        cfg.min_play_seconds = min_play;
+        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), root, cfg, boost::ref( ports ) );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), Path( tag ).remove_filename(), FromJson( system.ReadFile( tag ) ), runtime, boost::ref( ports ) );
+        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), Path( tag ).remove_filename(),
+                                           FromJson( system.ReadFile( tag ) ), min_play, runtime, boost::ref( ports ) );
     }
 
     const PackageFactory_ABC& packages;
     const FileSystem_ABC& system;
     const runtime::Runtime_ABC& runtime;
     const UuidFactory_ABC& uuids;
+    const int min_play;
     PortFactory_ABC& ports;
     Pool_ABC& pool;
 };
@@ -275,7 +285,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     Proxy proxy( log, runtime, system, proxyConfig, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( pool, system );
-    NodeFactory fnodes( packages, system, runtime, uuids, ports, pool );
+    NodeFactory fnodes( packages, system, runtime, uuids, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
     NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", host->Get(), pool, proxy );
     NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", host->Get(), pool, proxy );
@@ -331,20 +341,21 @@ Path GetRootDir( int argc, const char* argv[] )
 
 void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
 {
-    LOG_INFO( log ) << "[cfg] root "            << cfg.root;
-    LOG_INFO( log ) << "[cfg] ports.period "    << cfg.ports.period;
-    LOG_INFO( log ) << "[cfg] ports.min "       << cfg.ports.min;
-    LOG_INFO( log ) << "[cfg] ports.max "       << cfg.ports.max;
-    LOG_INFO( log ) << "[cfg] ports.proxy "     << cfg.ports.proxy;
-    LOG_INFO( log ) << "[cfg] ports.ssl "       << cfg.ports.ssl;
-    LOG_INFO( log ) << "[cfg] cluster.enabled " << ( cfg.cluster.enabled ? "true" : "false" );
-    LOG_INFO( log ) << "[cfg] java "            << cfg.java;
-    LOG_INFO( log ) << "[cfg] proxy.jar "       << cfg.proxy.jar;
-    LOG_INFO( log ) << "[cfg] node.jar "        << cfg.node.jar;
-    LOG_INFO( log ) << "[cfg] node.root "       << cfg.node.root;
-    LOG_INFO( log ) << "[cfg] session.apps "    << cfg.session.apps;
-    LOG_INFO( log ) << "[cfg] ssl.store "       << cfg.ssl.store;
-    LOG_INFO( log ) << "[cfg] ssl.type "        << cfg.ssl.type;
+    LOG_INFO( log ) << "[cfg] root "                  << cfg.root;
+    LOG_INFO( log ) << "[cfg] ports.period "          << cfg.ports.period;
+    LOG_INFO( log ) << "[cfg] ports.min "             << cfg.ports.min;
+    LOG_INFO( log ) << "[cfg] ports.max "             << cfg.ports.max;
+    LOG_INFO( log ) << "[cfg] ports.proxy "           << cfg.ports.proxy;
+    LOG_INFO( log ) << "[cfg] ports.ssl "             << cfg.ports.ssl;
+    LOG_INFO( log ) << "[cfg] cluster.enabled "       << ( cfg.cluster.enabled ? "true" : "false" );
+    LOG_INFO( log ) << "[cfg] java "                  << cfg.java;
+    LOG_INFO( log ) << "[cfg] proxy.jar "             << cfg.proxy.jar;
+    LOG_INFO( log ) << "[cfg] node.jar "              << cfg.node.jar;
+    LOG_INFO( log ) << "[cfg] node.root "             << cfg.node.root;
+    LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
+    LOG_INFO( log ) << "[cfg] session.apps "          << cfg.session.apps;
+    LOG_INFO( log ) << "[cfg] ssl.store "             << cfg.ssl.store;
+    LOG_INFO( log ) << "[cfg] ssl.type "              << cfg.ssl.type;
 }
 
 Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
@@ -360,19 +371,20 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     const char* jhome = getenv( "JAVA_HOME" );
     const Path bin = Path( module ).remove_filename();
     Configuration cfg;
-    cfg.root            = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
-    cfg.ports.period    = GetTree( tree, "ports.period", 40 );
-    cfg.ports.min       = GetTree( tree, "ports.min", 50000 );
-    cfg.ports.max       = GetTree( tree, "ports.max", 60000 );
-    cfg.ports.proxy     = GetTree( tree, "ports.proxy", 8080 );
-    cfg.ports.ssl       = GetTree( tree, "ports.ssl", 8443 );
-    cfg.cluster.enabled = GetTree( tree, "cluster.enabled", true );
-    cfg.ssl.type        = GetTree( tree, "ssl.type", std::string( "PKCS12" ) );
-    cfg.java            = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
-    cfg.proxy.jar       = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
-    cfg.node.jar        = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
-    cfg.node.root       = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / ".." / "www" ) ) );
-    cfg.session.apps    = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
+    cfg.root                  = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
+    cfg.ports.period          = GetTree( tree, "ports.period", 40 );
+    cfg.ports.min             = GetTree( tree, "ports.min", 50000 );
+    cfg.ports.max             = GetTree( tree, "ports.max", 60000 );
+    cfg.ports.proxy           = GetTree( tree, "ports.proxy", 8080 );
+    cfg.ports.ssl             = GetTree( tree, "ports.ssl", 8443 );
+    cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
+    cfg.ssl.type              = GetTree( tree, "ssl.type", std::string( "PKCS12" ) );
+    cfg.java                  = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
+    cfg.proxy.jar             = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
+    cfg.node.jar              = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
+    cfg.node.root             = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / ".." / "www" ) ) );
+    cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
+    cfg.session.apps          = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
     system.WriteFile( config, ToJson( tree, true ) );
 
     bool valid = cfg.Parse( log, argc, argv );

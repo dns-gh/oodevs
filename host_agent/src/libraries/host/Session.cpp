@@ -175,7 +175,7 @@ Session::Session( const FileSystem_ABC& system,
     , links_  ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
-    , running_( process_ ? node->SessionStart( true ) : Node_ABC::T_Token() )
+    , running_( process_ ? node->SessionStart( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
     , polling_( false )
     , counter_( 0 )
@@ -442,7 +442,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
         return ModifyStatus( lock, STATUS_PLAYING );
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    Node_ABC::T_Token token = node_->SessionStart( false );
+    Node_ABC::T_Token token = node_->SessionStart( boost::posix_time::second_clock::local_time() );
     if( !token )
         return false;
 

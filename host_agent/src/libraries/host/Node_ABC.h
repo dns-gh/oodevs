@@ -20,6 +20,10 @@ namespace filesystem
 {
     class path;
 }
+namespace posix_time
+{
+    class ptime;
+}
 namespace uuids
 {
     struct uuid;
@@ -106,7 +110,7 @@ struct Node_ABC : public boost::noncopyable
     //! @name Session methods
     //@{
     typedef boost::shared_ptr< node::Token > T_Token;
-    virtual T_Token SessionStart( bool force ) = 0;
+    virtual T_Token SessionStart( const boost::posix_time::ptime& start ) = 0;
     //@}
 };
 

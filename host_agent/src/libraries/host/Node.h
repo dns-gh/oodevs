@@ -42,6 +42,14 @@ namespace host
 
 namespace host
 {
+struct NodeConfig
+{
+    std::string name;
+    size_t num_sessions;
+    size_t parallel_sessions;
+    int min_play_seconds;
+};
+
 // =============================================================================
 /** @class  Node_ABC
     @brief  Node_ABC interface
@@ -55,11 +63,11 @@ public:
     //@{
              Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
                    const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
-                   const std::string& name, size_t num_sessions, size_t parallel_sessions,
-                   PortFactory_ABC& ports );
+                   const NodeConfig& config, PortFactory_ABC& ports );
              Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
                    const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
-                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
+                   const Tree& tree, int min_play_seconds, const runtime::Runtime_ABC& runtime,
+                   PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
@@ -107,8 +115,8 @@ public:
 
     //! @name Session methods
     //@{
-    virtual T_Token SessionStart( bool force );
-    void SessionStop();
+    virtual T_Token SessionStart( const boost::posix_time::ptime& start );
+    void SessionStop( const boost::posix_time::ptime& start );
     //@}
 
     //! @name Typedef helpers
@@ -134,6 +142,7 @@ private:
     const std::string name_;
     const Path root_;
     const Port port_;
+    const int min_play_seconds_;
     //@}
 
     //! @name Private members

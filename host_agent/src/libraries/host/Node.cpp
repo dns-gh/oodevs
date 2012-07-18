@@ -71,20 +71,21 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // -----------------------------------------------------------------------------
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
             const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
-            const std::string& name, size_t num_sessions, size_t parallel_sessions,
-            PortFactory_ABC& ports )
+            const NodeConfig& config, PortFactory_ABC& ports )
     : packages_         ( packages )
     , system_           ( system )
     , uuids_            ( uuids )
     , id_               ( uuids.Create() )
-    , name_             ( name )
+    , name_             ( config.name )
     , root_             ( root )
     , port_             ( ports.Create() )
     , stopped_          ( false )
     , async_            ( pool )
-    , num_sessions_     ( num_sessions )
-    , parallel_sessions_( parallel_sessions )
+    , num_sessions_     ( config.num_sessions )
+    , num_counter_      ( 0 )
+    , parallel_sessions_( config.parallel_sessions )
     , parallel_counter_ ( 0 )
+    , min_play_seconds_ ( config.min_play_seconds )
 {
     install_ = packages_.Make( root_ / "install", true );
 }
@@ -95,7 +96,8 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
 // -----------------------------------------------------------------------------
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
             const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
-            const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+            const Tree& tree, int min_play_seconds, const runtime::Runtime_ABC& runtime,
+            PortFactory_ABC& ports )
     : packages_         ( packages )
     , system_           ( system )
     , uuids_            ( uuids )
@@ -107,8 +109,10 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , stopped_          ( Get< bool >( tree, "stopped" ) )
     , async_            ( pool )
     , num_sessions_     ( Get< size_t >( tree, "num_sessions" ) )
+    , num_counter_      ( Get< size_t >( tree, "num_counter" ) )
     , parallel_sessions_( Get< size_t >( tree, "parallel_sessions" ) )
     , parallel_counter_ ( 0 )
+    , min_play_seconds_ ( min_play_seconds )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
     ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
@@ -194,6 +198,7 @@ Tree Node::Save() const
     Tree tree = GetCommonProperties();
 
     boost::shared_lock< boost::shared_mutex > lock( access_ );
+    tree.put( "num_counter", num_counter_ );
     if( cache_ )
         tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
     tree.put( "stopped", stopped_ );
@@ -474,41 +479,51 @@ void Node::UnlinkExercise( const Tree& tree ) const
 
 struct node::Token
 {
-    Token( Node* node )
-        : node( node )
+    Token( Node* node, const boost::posix_time::ptime& start )
+        : node ( node )
+        , start( start )
     {
         // NOTHING
     }
     ~Token()
     {
-        if( node )
-            node->SessionStop();
+        if( !node )
+            return;
+        node->SessionStop( start );
     }
 private:
     Node* node;
+    boost::posix_time::ptime start;
 };
 
 // -----------------------------------------------------------------------------
 // Name: Node::SessionStart
 // Created: BAX 2012-07-18
 // -----------------------------------------------------------------------------
-Node_ABC::T_Token Node::SessionStart( bool force )
+Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
 {
+    const bool force = start == boost::posix_time::not_a_date_time;
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    if( !parallel_sessions_ )
-        return boost::make_shared< node::Token >( reinterpret_cast< Node* >( 0 ) );
-    if( !force && parallel_counter_ >= parallel_sessions_ )
-        return T_Token();
+    if( !force && parallel_sessions_ )
+        if( parallel_counter_ >= parallel_sessions_ )
+            return T_Token();
+    if( !force && num_sessions_ )
+        if( num_counter_ >= num_sessions_ )
+            return T_Token();
     ++parallel_counter_;
-    return boost::make_shared< node::Token >( this );
+    ++num_counter_;
+    return boost::make_shared< node::Token >( this, start );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::SessionStop
 // Created: BAX 2012-07-18
 // -----------------------------------------------------------------------------
-void Node::SessionStop()
+void Node::SessionStop( const boost::posix_time::ptime& start )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     parallel_counter_ = std::max( size_t( 0 ), parallel_counter_ - 1 );
+    if( start != boost::posix_time::not_a_date_time )
+        if( start + boost::posix_time::seconds( min_play_seconds_ ) > boost::posix_time::second_clock::local_time() )
+            num_counter_ = std::max( size_t( 0 ), num_counter_ - 1 );
 }

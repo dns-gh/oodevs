@@ -65,7 +65,12 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
-            return boost::make_shared< Node >( packages, system, uuids, pool, defaultRoot, defaultName, 16, 8, ports );
+            host::NodeConfig cfg;
+            cfg.name = defaultName;
+            cfg.num_sessions = 16;
+            cfg.parallel_sessions = 8;
+            cfg.min_play_seconds = 5*60;
+            return boost::make_shared< Node >( packages, system, uuids, pool, defaultRoot, cfg, ports );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -76,7 +81,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( packages, system, uuids, pool, "", tree, runtime, ports );
+            return boost::make_shared< Node >( packages, system, uuids, pool, "", tree, 5*60, runtime, ports );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )
@@ -122,6 +127,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "\"status\":\"stopped\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+        "\"num_counter\":\"0\","
         "\"stopped\":\"false\""
         "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
@@ -129,6 +135,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "\"status\":\"running\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+        "\"num_counter\":\"0\","
         "\"stopped\":\"false\","
         "\"process\":{"
             "\"pid\":\"7331\","
@@ -139,6 +146,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "\"status\":\"stopped\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
+        "\"num_counter\":\"0\","
         "\"stopped\":\"true\""
         "}" );
 }
