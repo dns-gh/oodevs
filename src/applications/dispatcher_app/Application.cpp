@@ -17,10 +17,56 @@
 #endif
 
 #ifdef _DEBUG
-# define EXTENSION "-gd"
+# define DEBUG_EXTENSION "-gd"
 #else
-# define EXTENSION ""
+# define DEBUG_EXTENSION ""
 #endif
+
+#define EXTENSION "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt" DEBUG_EXTENSION ".dll"
+
+class Application::DispatcherFacade : private boost::noncopyable
+{
+public:
+    DispatcherFacade( int argc, char** argv, int maxConnections )
+        : module_          ( LoadLibrary( "dispatcher" EXTENSION ) )
+        , facadeCreator_   ( LoadFunction< T_FacadeCreator >( "CreateDispatcherFacade" ) )
+        , facadeDestructor_( LoadFunction< T_FacadeDestructor >( "DestroyDispatcherFacade" ) )
+        , facadeUpdator_   ( LoadFunction< T_FacadeUpdator >( "UpdateDispatcherFacade" ) )
+        , dispatcher_      ( facadeCreator_( argc, argv, maxConnections ) )
+    {
+        if( !dispatcher_ )
+            throw std::runtime_error( "failed to create dispatcher" );
+    }
+    ~DispatcherFacade()
+    {
+        facadeDestructor_( dispatcher_ );
+        FreeModule( module_ );
+    }
+    void Update()
+    {
+        facadeUpdator_( dispatcher_ );
+    }
+    template< typename Function >
+    Function LoadFunction( const std::string& name ) const
+    {
+        if( !module_ )
+            throw std::runtime_error( "failed to load dispatcher" EXTENSION );
+        Function fun = reinterpret_cast< Function >( GetProcAddress( module_, name.c_str() ) );
+        if( !fun )
+            throw std::runtime_error( "failed to load function '" + name + "' in dispatcher" EXTENSION );
+        return fun;
+    }
+private:
+    typedef void* ( *T_FacadeCreator )( int argc, char** argv, int maxConnections );
+    typedef void ( *T_FacadeDestructor )( void* facade );
+    typedef void ( *T_FacadeUpdator )( void* facade );
+
+    HMODULE module_;
+    T_FacadeCreator facadeCreator_;
+    T_FacadeDestructor facadeDestructor_;
+    T_FacadeUpdator facadeUpdator_;
+    void* dispatcher_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: Application constructor
@@ -31,11 +77,7 @@ Application::Application( int argc, char** argv, int maxConnections )
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword Officer Training(tm) Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    HMODULE module = LoadLibrary( ( "dispatcher" + std::string(  "-" BOOST_PP_STRINGIZE( PLATFORM ) "-mt" EXTENSION ".dll" ) ).c_str() );
-    facadeCreator_ = (T_FacadeCreator) GetProcAddress( module, "CreateDispatcherFacade" );
-    facadeUpdator_ = (T_FacadeUpdator) GetProcAddress( module, "UpdateDispatcherFacade" );
-    facadeDestructor_= (T_FacadeDestructor) GetProcAddress( module, "DestroyDispatcherFacade" );
-    dispatcher_ = facadeCreator_( argc, argv, maxConnections );
+    dispatcher_.reset( new DispatcherFacade( argc, argv, maxConnections ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +86,7 @@ Application::Application( int argc, char** argv, int maxConnections )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
-    facadeDestructor_( dispatcher_ );
+    // NOTHING
 }
 
 #pragma warning( disable : 4127 ) //conditional expression is constant
@@ -60,7 +102,7 @@ int Application::Execute()
         while( 1 )
         {
             ::Sleep( 10 );
-            facadeUpdator_( dispatcher_ );
+            dispatcher_->Update();
         }
     }
     catch( std::exception& e )

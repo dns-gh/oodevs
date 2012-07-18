@@ -10,6 +10,8 @@
 #ifndef __SIM_Dispatcher_h_
 #define __SIM_Dispatcher_h_
 
+#include <memory>
+
 // =============================================================================
 /** @class  SIM_Dispatcher
     @brief  SIM_Dispatcher
@@ -41,19 +43,14 @@ private:
 private:
     //! @name Types
     //@{
-    typedef void* ( *T_FacadeCreator )( int argc, char** argv, int maxConnections );
-    typedef void ( *T_FacadeDestructor )( void* facade );
-    typedef void ( *T_FacadeUpdator )( void* facade );
+    class DispatcherFacade;
     //@}
 
 private:
     //! @name Member data
     //@{
     bool running_;
-    void* dispatcher_;
-    T_FacadeCreator facadeCreator_;
-    T_FacadeDestructor facadeDestructor_;
-    T_FacadeUpdator facadeUpdator_;
+    std::auto_ptr< DispatcherFacade > dispatcher_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #ifndef __DispatcherFacade_h_
 #define __DispatcherFacade_h_
 
-//#include "config.h"
 #include <memory>
 
 #pragma warning( push )
@@ -56,20 +55,9 @@ private:
     //@}
 };
 
-extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
-{
-    return new DispatcherFacade( argc, argv, maxConnections );
-}
-
-extern "C" __declspec(dllexport) void DestroyDispatcherFacade( void* dispatchFacade )
-{
-    delete static_cast< DispatcherFacade* >( dispatchFacade );
-}
-
-extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFacade )
-{
-    static_cast< DispatcherFacade* >( dispatchFacade )->Update();
-}
+extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections );
+extern "C" __declspec(dllexport) void DestroyDispatcherFacade( void* dispatchFacade );
+extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFacade );
 
 #pragma warning( pop )
 
