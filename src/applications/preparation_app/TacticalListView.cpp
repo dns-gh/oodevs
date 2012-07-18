@@ -41,6 +41,7 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "icons.h"
 
 using namespace gui;
@@ -623,8 +624,6 @@ bool TacticalListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kerne
     }
     return false;
 }
-
-#include "clients_kernel/Positions.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::Drop
