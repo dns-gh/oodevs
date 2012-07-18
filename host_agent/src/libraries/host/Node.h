@@ -32,6 +32,7 @@ namespace runtime
 
 namespace host
 {
+    struct NodeObserver_ABC;
     struct Package_ABC;
     struct PackageFactory_ABC;
     struct Port_ABC;
@@ -44,6 +45,7 @@ namespace host
 {
 struct NodeConfig
 {
+    Path root;
     std::string name;
     size_t num_sessions;
     size_t parallel_sessions;
@@ -61,13 +63,24 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
-                   const NodeConfig& config, PortFactory_ABC& ports );
-             Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
-                   const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
-                   const Tree& tree, int min_play_seconds, const runtime::Runtime_ABC& runtime,
-                   PortFactory_ABC& ports );
+             Node( const PackageFactory_ABC& packages,
+                   const runtime::FileSystem_ABC& system,
+                   const UuidFactory_ABC& uuids,
+                   const NodeObserver_ABC& observer,
+                   runtime::Pool_ABC& pool,
+                   PortFactory_ABC& ports,
+                   const NodeConfig& config
+                   );
+             Node( const PackageFactory_ABC& packages,
+                   const runtime::FileSystem_ABC& system,
+                   const UuidFactory_ABC& uuids,
+                   const NodeObserver_ABC& observer,
+                   runtime::Pool_ABC& pool,
+                   PortFactory_ABC& ports,
+                   const NodeConfig& config,
+                   const Tree& tree,
+                   const runtime::Runtime_ABC& runtime
+                   );
     virtual ~Node();
     //@}
 
@@ -138,6 +151,7 @@ private:
     const runtime::FileSystem_ABC& system_;
     const UuidFactory_ABC& uuids_;
     const PackageFactory_ABC& packages_;
+    const NodeObserver_ABC& observer_;
     const Uuid id_;
     const std::string name_;
     const Path root_;

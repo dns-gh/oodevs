@@ -183,6 +183,7 @@ struct NodeFactory : public NodeFactory_ABC
         , ports   ( ports )
         , pool    ( pool )
         , min_play( min_play )
+        , observer( 0 )
     {
         // NOTHING
     }
@@ -190,17 +191,21 @@ struct NodeFactory : public NodeFactory_ABC
     Ptr Make( const Path& root, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const
     {
         NodeConfig cfg;
+        cfg.root = root;
         cfg.name = name;
         cfg.num_sessions = num_sessions;
         cfg.parallel_sessions = parallel_sessions;
         cfg.min_play_seconds = min_play;
-        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), root, cfg, boost::ref( ports ) );
+        return boost::make_shared< Node >( packages, system, uuids, *observer, boost::ref( pool ), boost::ref( ports ), cfg );
     }
 
     Ptr Make( const Path& tag ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), Path( tag ).remove_filename(),
-                                           FromJson( system.ReadFile( tag ) ), min_play, runtime, boost::ref( ports ) );
+        NodeConfig cfg;
+        cfg.root = Path( tag ).remove_filename();
+        cfg.min_play_seconds = min_play;
+        return boost::make_shared< Node >( packages, system, uuids, *observer, boost::ref( pool ), boost::ref( ports ),
+                                           cfg, FromJson( system.ReadFile( tag ) ), runtime );
     }
 
     const PackageFactory_ABC& packages;
@@ -210,6 +215,7 @@ struct NodeFactory : public NodeFactory_ABC
     const int min_play;
     PortFactory_ABC& ports;
     Pool_ABC& pool;
+    NodeObserver_ABC* observer;
 };
 
 struct PackageFactory : public PackageFactory_ABC
@@ -288,6 +294,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     NodeFactory fnodes( packages, system, runtime, uuids, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
     NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", host->Get(), pool, proxy );
+    fnodes.observer = &nodes;
     NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", host->Get(), pool, proxy );
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );

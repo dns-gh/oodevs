@@ -18,6 +18,7 @@
 
 #include "MockLog.h"
 #include "MockFileSystem.h"
+#include "MockNodeObserver.h"
 #include "MockPackage.h"
 #include "MockPool.h"
 #include "MockPortFactory.h"
@@ -49,6 +50,7 @@ namespace
         MockUuidFactory uuids;
         MockLog log;
         MockPool pool;
+        MockNodeObserver observer;
         MockPackageFactory packages;
         boost::shared_ptr< MockPackage > installed;
         boost::shared_ptr< MockPackage > cache;
@@ -66,11 +68,12 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
             host::NodeConfig cfg;
+            cfg.root = defaultRoot;
             cfg.name = defaultName;
             cfg.num_sessions = 16;
             cfg.parallel_sessions = 8;
             cfg.min_play_seconds = 5*60;
-            return boost::make_shared< Node >( packages, system, uuids, pool, defaultRoot, cfg, ports );
+            return boost::make_shared< Node >( packages, system, uuids, observer, pool, ports, cfg );
         }
 
         NodePtr ReloadNode( const Tree& tree, ProcessPtr process = ProcessPtr() )
@@ -81,7 +84,9 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
-            return boost::make_shared< Node >( packages, system, uuids, pool, "", tree, 5*60, runtime, ports );
+            host::NodeConfig cfg;
+            cfg.min_play_seconds = 5*60;
+            return boost::make_shared< Node >( packages, system, uuids, observer, pool, ports, cfg, tree, runtime );
         }
 
         ProcessPtr StartNode( Node& node, int pid, const std::string& name )

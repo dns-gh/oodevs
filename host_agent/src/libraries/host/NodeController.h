@@ -11,6 +11,7 @@
 #define NODE_CONTROLLER_H
 
 #include "NodeController_ABC.h"
+#include "NodeObserver_ABC.h"
 
 #include "Container.h"
 #include "runtime/Async.h"
@@ -42,7 +43,7 @@ namespace host
 */
 // Created: BAX 2012-04-03
 // =============================================================================
-class NodeController : public NodeController_ABC
+class NodeController : public NodeController_ABC, public NodeObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -94,6 +95,11 @@ public:
     //@{
     virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const;
     virtual size_t      CountExercises( const Uuid& id ) const;
+    //@}
+
+    //! @name NodeObserver_ABC Methods
+    //@{
+    void Notify( const Node_ABC& node ) const;
     //@}
 
     //! @name Typedef helpers

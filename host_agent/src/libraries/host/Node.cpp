@@ -9,6 +9,7 @@
 
 #include "Node.h"
 
+#include "NodeObserver_ABC.h"
 #include "Package_ABC.h"
 #include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
@@ -69,15 +70,20 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
-            const NodeConfig& config, PortFactory_ABC& ports )
+Node::Node( const PackageFactory_ABC& packages,
+            const runtime::FileSystem_ABC& system,
+            const UuidFactory_ABC& uuids,
+            const NodeObserver_ABC& observer,
+            runtime::Pool_ABC& pool,
+            PortFactory_ABC& ports,
+            const NodeConfig& config )
     : packages_         ( packages )
     , system_           ( system )
     , uuids_            ( uuids )
+    , observer_         ( observer )
     , id_               ( uuids.Create() )
     , name_             ( config.name )
-    , root_             ( root )
+    , root_             ( config.root )
     , port_             ( ports.Create() )
     , stopped_          ( false )
     , async_            ( pool )
@@ -94,16 +100,22 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
 // Name: Node::Node
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
-            const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
-            const Tree& tree, int min_play_seconds, const runtime::Runtime_ABC& runtime,
-            PortFactory_ABC& ports )
+Node::Node( const PackageFactory_ABC& packages,
+            const runtime::FileSystem_ABC& system,
+            const UuidFactory_ABC& uuids,
+            const NodeObserver_ABC& observer,
+            runtime::Pool_ABC& pool,
+            PortFactory_ABC& ports,
+            const NodeConfig& config,
+            const Tree& tree,
+            const runtime::Runtime_ABC& runtime )
     : packages_         ( packages )
     , system_           ( system )
     , uuids_            ( uuids )
+    , observer_         ( observer )
     , id_               ( Get< Uuid >( tree, "id" ) )
     , name_             ( Get< std::string >( tree, "name" ) )
-    , root_             ( root )
+    , root_             ( config.root )
     , port_             ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_          ( AcquireProcess( tree, runtime, port_->Get() ) )
     , stopped_          ( Get< bool >( tree, "stopped" ) )
@@ -112,7 +124,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , num_counter_      ( Get< size_t >( tree, "num_counter" ) )
     , parallel_sessions_( Get< size_t >( tree, "parallel_sessions" ) )
     , parallel_counter_ ( 0 )
-    , min_play_seconds_ ( min_play_seconds )
+    , min_play_seconds_ ( config.min_play_seconds )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
     ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
@@ -503,7 +515,7 @@ private:
 Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
 {
     const bool force = start == boost::posix_time::not_a_date_time;
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    boost::unique_lock< boost::shared_mutex > lock( access_ );
     if( !force && parallel_sessions_ )
         if( parallel_counter_ >= parallel_sessions_ )
             return T_Token();
@@ -512,6 +524,9 @@ Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
             return T_Token();
     ++parallel_counter_;
     ++num_counter_;
+    lock.unlock();
+
+    observer_.Notify( *this );
     return boost::make_shared< node::Token >( this, start );
 }
 
@@ -521,9 +536,16 @@ Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
 // -----------------------------------------------------------------------------
 void Node::SessionStop( const boost::posix_time::ptime& start )
 {
-    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    boost::unique_lock< boost::shared_mutex > lock( access_ );
     parallel_counter_ = std::max( size_t( 0 ), parallel_counter_ - 1 );
-    if( start != boost::posix_time::not_a_date_time )
-        if( start + boost::posix_time::seconds( min_play_seconds_ ) > boost::posix_time::second_clock::local_time() )
-            num_counter_ = std::max( size_t( 0 ), num_counter_ - 1 );
+    if( start == boost::posix_time::not_a_date_time )
+        return;
+    if( start + boost::posix_time::seconds( min_play_seconds_ ) > boost::posix_time::second_clock::local_time() )
+        return;
+    if( num_counter_ <= 0 )
+        return;
+    --num_counter_;
+    lock.unlock();
+
+    observer_.Notify( *this );
 }

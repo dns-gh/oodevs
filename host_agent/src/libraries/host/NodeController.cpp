@@ -356,3 +356,12 @@ size_t NodeController::CountExercises( const Uuid& id ) const
     T_Node node = nodes_.Get( id );
     return node ? node->CountExercises() : 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::Notify
+// Created: BAX 2012-07-18
+// -----------------------------------------------------------------------------
+void NodeController::Notify( const Node_ABC& node ) const
+{
+    Save( node );
+}

@@ -89,6 +89,11 @@ struct NodeController_ABC : public boost::noncopyable
     virtual T_Exercises GetExercises( const Uuid& id, int offset, int limit ) const = 0;
     virtual size_t      CountExercises( const Uuid& id ) const = 0;
     //@}
+
+    //! @name NodeObserver_ABC Methods
+    //@{
+    virtual void Notify( const Node_ABC& node ) const = 0;
+    //@}
 };
 }
 
