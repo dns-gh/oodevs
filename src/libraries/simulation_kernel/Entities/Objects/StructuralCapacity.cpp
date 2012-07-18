@@ -283,6 +283,8 @@ void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 void StructuralCapacity::Build( double rDeltaPercentage )
 {
     structuralState_ = std::max( 0.f, std::min( 1.f, structuralState_ + static_cast< float >( rDeltaPercentage ) ) );
+    if( rDeltaPercentage > 0 && structuralState_ > 0.99f )
+        structuralState_ = 1.f;
 }
 
 namespace
@@ -334,12 +336,12 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
             MIL_Random::random_shuffle( lines );
             TER_Localisation localisation( TER_Localisation::ePolygon, CreatePolygon( lines.front() ) );
             MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", army, localisation );
-			if( pObject )
-			{
-			    MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
+            if( pObject )
+            {
+                MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
                 if( mineAttribute )
                     mineAttribute->Set(0.);//default valorization is set to 100%
-			}
+            }
         }
 
     }
