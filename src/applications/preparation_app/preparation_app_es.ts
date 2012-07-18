@@ -1479,6 +1479,10 @@ This data can&apos;t be projected.</source>
         <source>CP type or SIOC type extensions defined for a non CP unit.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No user role defined for profile &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

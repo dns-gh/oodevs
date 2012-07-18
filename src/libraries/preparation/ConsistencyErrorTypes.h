@@ -34,6 +34,7 @@ enum E_ConsistencyCheck
     eProfileUnreadable               = 0x0002 << 8,
     eProfileUnwritable               = 0x0003 << 8,
     eProfileNumberTooHigh            = 0x0004 << 8,
+    eProfileNoRole                   = 0x0005 << 8,
 
     eGhostMask                       = 0x000f << 12,
     eGhostExistence                  = 0x0001 << 12,

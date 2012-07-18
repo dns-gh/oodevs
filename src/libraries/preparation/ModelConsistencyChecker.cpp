@@ -513,8 +513,13 @@ void ModelConsistencyChecker::CheckProfileNumberOfElements()
     for( ProfilesModel::T_Profiles::const_iterator it = profiles.begin(); it != profiles.end(); ++it )
     {
         const UserProfile* profile = model_.profiles_.Find( *it );
-        if( profile && profile->GetAutomatAndPopulationsProfilesCount() > 12 )
-            AddError( eProfileNumberTooHigh, 0, *it );
+        if( profile )
+        {
+            if( profile->GetAutomatAndPopulationsProfilesCount() > 12 )
+                AddError( eProfileNumberTooHigh, 0, *it );
+            if( profile->GetUserRole().empty() )
+                AddError( eProfileNoRole, 0, *it );
+        }
     }
 }
 

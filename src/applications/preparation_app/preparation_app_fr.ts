@@ -1484,6 +1484,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>CP type or SIOC type extensions defined for a non CP unit.</source>
         <translation>Extensions Type PC ou Type SIOC définies pour un pion non PC.</translation>
     </message>
+    <message>
+        <source>No user role defined for profile &quot;%1&quot;.</source>
+        <translation>Pas de rôle utilisateur défini pour le profil &quot;%1&quot;.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

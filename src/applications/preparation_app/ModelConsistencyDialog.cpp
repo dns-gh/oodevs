@@ -26,7 +26,7 @@ namespace
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eBadCPExtensions;
+            || type == eBadCPExtensions || type == eProfileNoRole;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
@@ -95,6 +95,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eProfileUnreadable ]               = tools::translate( "ModelConsistencyDialog", "Not 'readable' to any user profile. You will not be able to see it on the game." );
     errorDescriptions_[ eProfileUnwritable ]               = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
     errorDescriptions_[ eProfileNumberTooHigh ]            = tools::translate( "ModelConsistencyDialog", "The profile \"%1\" contains more than 12 automats and/or crowds." );
+    errorDescriptions_[ eProfileNoRole ]                   = tools::translate( "ModelConsistencyDialog", "No user role defined for profile \"%1\"." );
 
     // Ghost
     errorDescriptions_[ eGhostExistence ]                  = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );
