@@ -1130,7 +1130,9 @@
         <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="PION ASYMETRIQUE Assassiner Officiers"/>
-        <mission name="PION ASYMETRIQUE Commettre un Attentat"/>
+        <mission name="PION ASYMETRIQUE Commettre un Attentat">
+          <fragorder name="Pion Mise A Feu IED"/>
+        </mission>
         <mission name="PION ASYMETRIQUE Commettre un Attentat Suicide"/>
         <mission name="PION ASYMETRIQUE Prendre en Otage">
           <fragorder name="Deposer Unite Capturee"/>
@@ -7481,4 +7483,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1907713547" -->
+<!-- signature="0592310514" -->

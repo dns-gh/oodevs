@@ -587,6 +587,8 @@ public:
         eRC_ImpossibleActivateIED,
         eRC_Jammed,
         eRC_PCJammed, // 430
+        eRC_IEDNotReady,
+        eRC_IEDReadyForFiring,
         eLast
     };
     //@}

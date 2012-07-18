@@ -26,6 +26,15 @@
                 <class name="sword.military.knowledge.Attackable"/>
             </type>
         </parameter>
+        <parameter name="manual" nullable="true">
+            <description>Mise à feu manuelle (sur ordre de conduite) ou automatique (une fois arrivée sur position de repli)</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <links>
         <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>

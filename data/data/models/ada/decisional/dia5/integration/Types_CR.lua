@@ -442,4 +442,6 @@ eRC_FireObserver = 427
 eRC_ImpossibleActivateIED = 428
 eRC_Jammed = 429
 eRC_PCJammed = 430
-eNbr = 431
+eRC_IEDNotReady = 431
+eRC_IEDReadyForFiring = 432
+eNbr = 433

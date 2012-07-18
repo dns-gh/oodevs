@@ -67,7 +67,8 @@ integration.isTask = function( self )
          orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" or
          orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" or
          orderType == "Rep_OrderConduite_Pion_TransfererRemorqueurs" or
-         orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs"
+         orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" or
+         orderType == "Rep_OrderConduite_MiseAFeuIED"
 end
 
 integration.mustBePropagate = function( self )
@@ -398,6 +399,8 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "Rep_OrderConduite_RejoindrePointLancement" then
     return
   elseif orderType == "Rep_OrderConduite_Deboucher" then
+    return
+  elseif orderType == "Rep_OrderConduite_MiseAFeuIED" then
     return
   end
 

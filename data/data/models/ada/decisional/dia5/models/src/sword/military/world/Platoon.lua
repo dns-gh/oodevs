@@ -330,12 +330,7 @@ return
         start = integration.startAttackIt, 
         started = integration.updateAttackIt, 
         stop = integration.stopAttackIt
-    } ),-- = masalife.brain.integration.startStopAction( 
-    --{ 
-     --   start = integration.startCommitPlatoonAttack,
-    --    started = integration.startedCommitPlatoonAttack,
-   --     stop = integration.stopCommitPlatoonAttack
-  -- } ),
+    } ),
     interrogateIt = masalife.brain.integration.startStopAction( 
     { 
         start = integration.startInterrogatePion,

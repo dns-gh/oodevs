@@ -635,5 +635,7 @@
   <report category="operational" id="428" message="Impossible to activate IED : out of range"/>
   <report category="operational" id="429" message="Jammed"/>
   <report category="operational" id="430" message="PC is jammed or in radio silence"/>
+  <report category="operational" id="431" message="Firing of IED impossible: not yet in place"/>
+  <report category="operational" id="432" message="IED ready for firing"/>
 </reports>
 <!-- signature="0958286212" -->
