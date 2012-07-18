@@ -67,7 +67,7 @@ void DispatcherFacade::Update()
 // Name: CreateDispatcherFacade
 // Created: SLI 2012-07-18
 // -----------------------------------------------------------------------------
-void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
+extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
 {
     try
     {
@@ -88,7 +88,7 @@ void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
 // Name: DestroyDispatcherFacade
 // Created: SLI 2012-07-18
 // -----------------------------------------------------------------------------
-void DestroyDispatcherFacade( void* dispatchFacade )
+extern "C" __declspec(dllexport) void DestroyDispatcherFacade( void* dispatchFacade )
 {
     if( dispatchFacade )
         delete static_cast< DispatcherFacade* >( dispatchFacade );
@@ -98,7 +98,7 @@ void DestroyDispatcherFacade( void* dispatchFacade )
 // Name: UpdateDispatcherFacade
 // Created: SLI 2012-07-18
 // -----------------------------------------------------------------------------
-void UpdateDispatcherFacade( void* dispatchFacade )
+extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFacade )
 {
     try
     {

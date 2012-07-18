@@ -55,10 +55,6 @@ private:
     //@}
 };
 
-extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections );
-extern "C" __declspec(dllexport) void DestroyDispatcherFacade( void* dispatchFacade );
-extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFacade );
-
 #pragma warning( pop )
 
 #endif // __DispatcherFacade_h_
