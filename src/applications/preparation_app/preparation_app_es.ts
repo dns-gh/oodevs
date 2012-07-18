@@ -456,6 +456,10 @@
         <source>Fill empty CP extensions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Extension</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileToolbar</name>

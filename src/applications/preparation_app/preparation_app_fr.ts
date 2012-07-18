@@ -456,6 +456,10 @@
         <source>Fill empty CP extensions</source>
         <translation>Renseigner les extensions vides des PCs</translation>
     </message>
+    <message>
+        <source>Extension</source>
+        <translation>Extension</translation>
+    </message>
 </context>
 <context>
     <name>FileToolbar</name>

@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "ExtensionsPanel.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -141,8 +142,13 @@ void ExtensionsPanel::NotifyContextMenu( const kernel::Team_ABC& team, kernel::C
 void ExtensionsPanel::DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     cpSuperior_ = &entity;
-    menu.InsertItem( "Command", tr( "Delete CP extensions" ), this, SLOT( OnDeleteCPExtensions() ) );
-    menu.InsertItem( "Command", tr( "Fill empty CP extensions" ), this, SLOT( OnFillEmptyCPExtensions() ) );
+
+    ContextMenu* subMenu = menu.SubMenu( "Helpers", tools::translate( "ExtensionsPanel", "Extension" ), false, 12 );
+    if( subMenu )
+    {
+        subMenu->InsertItem( "Command", tools::translate( "ExtensionsPanel", "Delete CP extensions" ), this, SLOT( OnDeleteCPExtensions() ) );
+        subMenu->InsertItem( "Command", tools::translate( "ExtensionsPanel", "Fill empty CP extensions" ), this, SLOT( OnFillEmptyCPExtensions() ) );
+    }
 }
 
 namespace
