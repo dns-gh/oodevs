@@ -75,10 +75,16 @@ void ResourceNetworkModel::UnregisterNode( unsigned int id )
 void ResourceNetworkModel::Push( unsigned int id, int quantity, unsigned long resourceId ) const
 {
     NodeProperties* node = Find( id );
-    if( !node )
-    {
-        MT_LOG_ERROR_MSG( "Resource network node not found " << id );
-        return;
-    }
-    node->Push( quantity, resourceId );
+    if( node )
+        node->Push( quantity, resourceId );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkModel::IsValidNode
+// Created: JSR 2012-07-18
+// -----------------------------------------------------------------------------
+bool ResourceNetworkModel::IsValidNode( unsigned int id ) const
+{
+    return Find( id ) != 0;
+}
+

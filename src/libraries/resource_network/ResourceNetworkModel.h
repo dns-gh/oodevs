@@ -39,6 +39,7 @@ public:
     void RegisterNode( NodeProperties& nodeProperties, unsigned int id );
     void UnregisterNode( unsigned int id );
     void Push( unsigned int id, int quantity, unsigned long resourceId ) const;
+    bool IsValidNode( unsigned int id ) const;
     //@}
 };
 
