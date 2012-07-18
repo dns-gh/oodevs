@@ -2704,50 +2704,6 @@
       <missions/>
       <fragorders/>
     </unit>
-    <unit dia-type="sword.military.platoon.roles.Platoon" file="BMPion.bms " masalife="true" name="Military.Infantry platoon">
-      <missions>
-        <mission name="Masalife.COMMON - Move to">
-          <fragorder name="Switch posture"/>
-        </mission>
-        <mission name="Masalife.COMMON - Follow"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="sword.military.platoon.roles.Platoon" file="BMPion.bms " masalife="true" name="Military.Armored platoon">
-      <missions>
-        <mission name="Masalife.COMMON - Move to">
-          <fragorder name="Switch posture"/>
-        </mission>
-        <mission name="Masalife.COMMON - Follow"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </unit>
   </units>
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Strategic Bomber Squadron">
@@ -3957,50 +3913,6 @@
       </missions>
       <fragorders/>
     </automat>
-    <automat dia-type="sword.military.company.roles.Company" file="BMAutomat.bms" masalife="true" name="Military.Infantry company">
-      <missions>
-        <mission name="Masalife.COMMON - Move to">
-          <fragorder name="Switch posture"/>
-        </mission>
-        <mission name="Masalife.COMMON - Follow"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radio silence lifted"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="sword.military.company.roles.Company" file="BMAutomat.bms" masalife="true" name="Military.Armored squadron">
-      <missions>
-        <mission name="Masalife.COMMON - Move to">
-          <fragorder name="Switch posture"/>
-        </mission>
-        <mission name="Masalife.COMMON - Follow"/>
-      </missions>
-      <fragorders>
-        <fragorder name="NBC suit on"/>
-        <fragorder name="NBC suit off"/>
-        <fragorder name="Radio silence"/>
-        <fragorder name="Radio silence lifted"/>
-        <fragorder name="Radar silence"/>
-        <fragorder name="Radar silence lifted"/>
-        <fragorder name="Get back carriers"/>
-        <fragorder name="Pause maneuver"/>
-        <fragorder name="Resume maneuver"/>
-        <fragorder name="Cancel maneuver"/>
-        <fragorder name="Change ROE"/>
-        <fragorder name="Change population ROE"/>
-      </fragorders>
-    </automat>
   </automats>
   <crowd>
     <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Crowd">
@@ -4027,4 +3939,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3472645827" -->
+<!-- signature="2256390688" -->

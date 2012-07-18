@@ -3519,49 +3519,6 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Area" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="sword.military.platoon.tasks.MoveAlong" dia-type="sword.military.platoon.tasks.MoveAlong" id="44504" name="Masalife.COMMON - Move to">
-      <description>
-        <doctrine><![CDATA[<P>To move to an objective using a defined route</P>]]></doctrine>
-        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Route</b> (path): the path to move along,<BR>
- - <i>Area of responsability<i>: the right and left boundaries inside which the agent perform the mission. <BR>
-<P>* The agent moves toward each waypoints defining the route. If a visited waypoint is not reachable,<BR>
-     the agent moves as close as possible (the agents can move within it), the agent moves to the center, else it moves to a <BR>
-     close position (the closest position from the center). Average speed depends on physical capabilities regarding to terrain<BR>
-      properties.</P>
-<P>* Upon reaching a waypoint, the agent moves to the next one and so on, until the final one is reached.</P>
-<P>* When there is no more waypoints to visit, the agent stays next to the last one and the mission ends.</P>]]></usage>
-      </description>
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" name="Route" optional="false" type="Path"/>
-    </mission>
-    <mission dia-behavior="sword.military.platoon.tasks.Follow" dia-type="sword.military.platoon.tasks.Follow" id="44507" name="Masalife.COMMON - Follow">
-      <description>
-        <doctrine><![CDATA[<P>To follow a set of motile agents (units or crowds).</P>]]></doctrine>
-        <usage><![CDATA[
-<P>This mission needs the following parameters: <BR>
- - <b>Agents</b> (agent, agentknowledge, crowd): the set of entities to follow,<BR>
- - <i>Area of responsability</i>: the right and left boundaries inside which the agent perform the mission. <BR>
-<P>* The agent chooses a position to stay as close as possible to the given agents. The chosen position changes dynamically <BR>
-    if the followed agents moves.</P>
-<P>* The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</P>]]></usage>
-      </description>
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Entities" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Automat"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-        </choice>
-      </parameter>
-    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -5226,36 +5183,6 @@ In that specific case, the agent decides to act on the next one.</P>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="waypoints" max-occurs="unbounded" min-occurs="1" name="waypoints" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="sword.military.company.tasks.MoveAlong" dia-type="sword.military.company.tasks.MoveAlong" id="44505" mrt-dia-behavior="sword.military.company.tasks.MoveAlong" name="Masalife.COMMON - Move to">
-      <description>
-        <doctrine><![CDATA[<P>To move to an objective using a defined route</P>]]></doctrine>
-        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Route</b> (path): the path to move along.<BR>
- - <b>Area of responsability<b>: the right and left boundaries inside which the subodinates perform their mission. <BR>
-<P>* The commander agent issues a "moveTo" order to each subordinate with the route as parameter.</P>
-<P>* The mission ends when all the subordinate agents have finished their mission.</P>]]></usage>
-      </description>
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" name="Route" optional="false" type="Path"/>
-    </mission>
-    <mission cdt-dia-behavior="sword.military.company.tasks.Follow" dia-type="sword.military.company.tasks.Follow" id="44506" mrt-dia-behavior="sword.military.company.tasks.Follow" name="Masalife.COMMON - Follow">
-      <description>
-        <doctrine><![CDATA[<P>To follow a set of motile agents (units or crowds).</P>]]></doctrine>
-        <usage><![CDATA[<P>This mission needs the following parameters: <BR>
- - <b>Agents</b> (agent, agentknowledge, crowd): the set of entities to follow,<BR>
- - <b>Area of responsability</b>: the right and left boundaries inside which the subordinates perform their mission. <BR>
-<P>* The commander agent issues a "follow" order to each subordinate with the set of "Agents" as parameter.</P>
-<P>* The mission ends if another mission (or "the cancel maneuver" fragmantary order) is issued by user.</P>]]></usage>
-      </description>
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Agents" optional="false" type="Agent"/>
-    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="342" name="Crowd - move">
@@ -5266,22 +5193,6 @@ In that specific case, the agent decides to act on the next one.</P>
     </mission>
     <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="344" name="Crowd - attack">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="sword.military.crowd.tasks.MoveTo" dia-type="sword.military.crowd.tasks.MoveTo" id="4490" name="MLCrowd - MoveTo">
-      <parameter dia-name="objective" name="objective" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
-    </mission>
-    <mission dia-behavior="sword.military.crowd.tasks.Follow" dia-type="sword.military.crowd.tasks.Follow" id="4492" name="MLCrowd - Follow">
-      <parameter dia-name="objective" name="objective" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-        </choice>
-      </parameter>
     </mission>
   </populations>
   <fragorders>
@@ -5532,4 +5443,4 @@ In that specific case, the agent decides to act on the next one.</P>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0661405944" -->
+<!-- signature="0080116511" -->
