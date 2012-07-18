@@ -341,6 +341,9 @@ bool Session::StopProcess()
     if( !copy || !copy->IsAlive() )
         return true;
 
+    // FIXME we must be locked here because we cannot start another process
+    // until the previous one is completely stopped, however, we may block the
+    // whole node for up 20s...
     client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
     if( copy->Join( 15 * 1000 ) )
         return true;
