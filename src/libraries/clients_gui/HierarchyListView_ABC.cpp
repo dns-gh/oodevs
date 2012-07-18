@@ -17,8 +17,11 @@
 #include "ListItemToolTip.h"
 #include "ValuedDragObject.h"
 #include "ValuedListItem.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
@@ -337,7 +340,9 @@ void HierarchyListView_ABC::viewportDragEnterEvent( QDragEnterEvent* pEvent )
         return;
     }
     ListView< HierarchyListView_ABC >::viewportDragEnterEvent( pEvent );
-    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+    pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) ||
+                    ValuedDragObject::Provides< const AgentType >( pEvent ) ||
+                    ValuedDragObject::Provides< const AutomatType >( pEvent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,14 +357,25 @@ void HierarchyListView_ABC::viewportDragMoveEvent( QDragMoveEvent* pEvent )
         return;
     }
     ListView< HierarchyListView_ABC >::viewportDragMoveEvent( pEvent );
-    const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent );
-    if( !entity )
+    if( const Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( pEvent ) )
     {
-        pEvent->ignore();
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        pEvent->accept( CanDrop( entity, position ) && ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
         return;
     }
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
-    pEvent->accept( CanDrop( entity, position ) && ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
+    else if( const AgentType* type = gui::ValuedDragObject::GetValue< AgentType >( pEvent ) )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        pEvent->accept( CanDropOnGhost( type, position, eGhostType_Agent ) && ValuedDragObject::Provides< const AgentType >( pEvent ) );
+        return;
+    }
+    else if( const AutomatType* type = gui::ValuedDragObject::GetValue< AutomatType >( pEvent ) )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        pEvent->accept( CanDropOnGhost( type, position, eGhostType_Automat ) && ValuedDragObject::Provides< const AutomatType >( pEvent ) );
+        return;
+    }
+    pEvent->ignore();
 }
 
 // -----------------------------------------------------------------------------
@@ -374,8 +390,7 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
         return;
     }
     ListView< HierarchyListView_ABC >::viewportDropEvent( pEvent );
-    const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent );
-    if( entity )
+    if( const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
         ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
@@ -387,6 +402,24 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
             setFocus();
             entity->Select( controllers_.actions_ );
         }
+    }
+    else if( const AgentType* type = ValuedDragObject::GetValue< const AgentType >( pEvent ) )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
+        if( !targetItem || !Drop( *type, *targetItem ) )
+            pEvent->ignore();
+        else
+            pEvent->accept();
+    }
+    else if( const AutomatType* type = ValuedDragObject::GetValue< const AutomatType >( pEvent ) )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
+        if( !targetItem || !Drop( *type, *targetItem ) )
+            pEvent->ignore();
+        else
+            pEvent->accept();
     }
     else
         pEvent->ignore();
@@ -409,6 +442,38 @@ bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& targ
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 bool HierarchyListView_ABC::Drop( const Entity_ABC& , const Entity_ABC& )
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::Drop
+// Created: ABR 2012-07-18
+// -----------------------------------------------------------------------------
+template< typename T>
+bool HierarchyListView_ABC::Drop( const T& type, ValuedListItem& target )
+{
+    if( IsReadOnly() )
+        return false;
+    if( target.IsA< const Entity_ABC >() )
+        return Drop( type, const_cast< Entity_ABC& >( *target.GetValueNoCheck< const Entity_ABC >() ) );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::Drop
+// Created: ABR 2012-07-18
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::Drop( const kernel::AgentType&, kernel::Entity_ABC& )
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::Drop
+// Created: ABR 2012-07-18
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::Drop( const kernel::AutomatType&, kernel::Entity_ABC& )
 {
     return false;
 }
@@ -439,6 +504,24 @@ bool HierarchyListView_ABC::CanDrop( const kernel::Entity_ABC* entity, QPoint po
     if( entity->GetId() == target->GetId() )
         return false;
     return CanChangeSuperior( *entity, *target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::CanDropOnGhost
+// Created: ABR 2012-07-18
+// -----------------------------------------------------------------------------
+template< typename T >
+bool HierarchyListView_ABC::CanDropOnGhost( const T* type, QPoint position, E_GhostType ghostType ) const
+{
+    ValuedListItem* item = static_cast< ValuedListItem* >( itemAt( position ) );
+    if( !type || !item )
+        return false;
+    if( !item->IsA< const Entity_ABC >() )
+        return false;
+    if( const Entity_ABC* target = item->GetValue< const Entity_ABC >() )
+        if( const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( target ) )
+            return ghost->GetGhostType() == ghostType;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

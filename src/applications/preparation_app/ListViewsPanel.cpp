@@ -104,7 +104,7 @@ void ListViewsPanel::CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWid
     std::vector< gui::HierarchyListView_ABC* >& lists = first ? firstUnitViews_ : secondUnitViews_;
     // Tactical
     {
-        gui::SearchListView_ABC* searchListView = new gui::SearchListView< TacticalListView >( tabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_, staticModel.types_ );
+        gui::SearchListView_ABC* searchListView = new gui::SearchListView< TacticalListView >( tabWidget, controllers, factory, icons, model, modelBuilder, staticModel.types_ );
         lists.push_back( static_cast< gui::HierarchyListView_ABC* >( searchListView->GetRichListView() ) );
         connect( lists.back(), SIGNAL( ListViewFocusIn( gui::HierarchyListView_ABC* ) ), SLOT( FocusIn( gui::HierarchyListView_ABC* ) ) );
         Configure( searchListView, listViews, aggregateToolbar, ePreparationMode_Terrain );

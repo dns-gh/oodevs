@@ -13,10 +13,13 @@
 #include "ChangeAutomatTypeDialog.h"
 #include "ModelBuilder.h"
 #include "PreparationProfile.h"
+#include "preparation/AgentsModel.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "Preparation/Formation.h"
+#include "Preparation/FormationModel.h"
+#include "preparation/Model.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
@@ -31,6 +34,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "icons.h"
 
 using namespace gui;
@@ -61,13 +65,14 @@ namespace
 // Name: TacticalListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons,
-                                    ModelBuilder& modelBuilder, const FormationLevels& levels, const kernel::AgentTypes& agentTypes )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons, Model& model,
+                                    ModelBuilder& modelBuilder, const kernel::AgentTypes& agentTypes )
     : HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , itemFactory_         ( factory )
     , agentTypes_          ( agentTypes )
+    , model_               ( model )
     , modelBuilder_        ( modelBuilder )
-    , levels_              ( levels )
+    , levels_              ( model.formations_.levels_ )
     , lock_                ( MAKE_PIXMAP( lock ) )
     , commandPost_         ( MAKE_PIXMAP( commandpost ) )
     , changeSuperiorDialog_( 0 )
@@ -472,26 +477,18 @@ void TacticalListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Ent
 // -----------------------------------------------------------------------------
 bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
 {
-    const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item );
-    if( agent )
+    if( item.GetId() == target.GetId() )
+        return false;
+    if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item ) )
         return Drop( *agent, target );
-
-    const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &item );
-    if( automat )
+    else if( const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &item ) )
         return Drop( *automat, target );
-
-    const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &item );
-    if( formation )
+    else if( const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &item ) )
         return Drop( *formation, target );
-
-    const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &item );
-    if( ghost )
+    else if( const Ghost_ABC* ghost = dynamic_cast< const Ghost_ABC* >( &item ) )
         return Drop( *ghost, target );
-
-    const KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( &item );
-    if( knowledgeGroup )
+    else if( const KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const KnowledgeGroup_ABC* >( &item ) )
         return Drop( *knowledgeGroup, target );
-
     return false;
 }
 
@@ -605,6 +602,40 @@ bool TacticalListView::Drop( const kernel::KnowledgeGroup_ABC& item, const kerne
         tools::Iterator< const kernel::Entity_ABC& > children = item.Get< CommunicationHierarchies >().CreateSubordinateIterator();
         while( children.HasMoreElements() )
             ChangeSuperior( children.NextElement(), *formation );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: ABR 2012-07-18
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::AgentType& type, kernel::Entity_ABC& target )
+{
+    const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
+    if( Entity_ABC* result = model_.agents_.CreateAgent( static_cast< kernel::Ghost_ABC& >( target ), type, position ) )
+    {
+        delete static_cast< const Ghost_ABC* >( &target );
+        setFocus();
+        result->Select( controllers_.actions_ );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: ABR 2012-07-18
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::AutomatType& type, kernel::Entity_ABC& target )
+{
+    const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
+    if( Entity_ABC* result = model_.agents_.CreateAutomatInsteadOf( target, type, position ) )
+    {
+        delete static_cast< const Ghost_ABC* >( &target );
+        setFocus();
+        result->Select( controllers_.actions_ );
         return true;
     }
     return false;
