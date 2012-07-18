@@ -24,6 +24,7 @@
 #include <core/Logger_ABC.h>
 #include <core/UserData.h>
 #include <core/MakeModel.h>
+#include <core/ChildrenVisitor.h>
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
 #include <boost/assign.hpp>
@@ -212,6 +213,16 @@ namespace core
                 return core::Convert( &(*core::Convert( node ))[ key ] );
             CATCH
                 return 0;
+        }
+        static int SWORD_VisitChildren( const SWORD_Model* parent, SWORD_ChildrenVisitor visitor, void* userData )
+        {
+            TRY
+                BOOST_REQUIRE( parent );
+                BOOST_REQUIRE( visitor );
+                core::ChildrenVisitor( *core::Convert( parent ), visitor, userData );
+                return true;
+            CATCH
+                return false;
         }
         static const SWORD_Model* SWORD_GetChildInt( const SWORD_Model* parent, unsigned int key )
         {
