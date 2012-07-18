@@ -277,7 +277,8 @@ Tree Session::GetProperties() const
 Tree Session::Save() const
 {
     Tree tree = GetProperties( true );
-    boost::lock_guard< boost::mutex > lock( access_ );
+
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );
@@ -336,18 +337,19 @@ std::string GetConfiguration( const std::string& name, int base )
 // Name: Session::StopProcess
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
-bool Session::StopProcess( )
+bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
 {
-    status_ = STATUS_STOPPED;
-    T_Process copy; Node_ABC::T_Token token;
-    copy.swap( process_ );
-    token.swap( running_ );
+    T_Process copy;
+    Node_ABC::T_Token token;
+    {
+        boost::upgrade_to_unique_lock< boost::shared_mutex> write( lock );
+        status_ = STATUS_STOPPED;
+        copy.swap( process_ );
+        token.swap( running_ );
+    }
     if( !copy || !copy->IsAlive() )
         return true;
 
-    // FIXME we must be locked here because we cannot start another process
-    // until the previous one is completely stopped, however, we may block the
-    // whole node for up 20s...
     client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/stop", Client_ABC::T_Parameters() );
     if( copy->Join( 15 * 1000 ) )
         return true;
@@ -361,8 +363,7 @@ bool Session::StopProcess( )
 // Name: Session::ModifyStatus
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
-template< typename T >
-bool Session::ModifyStatus( T& lock, Session::Status next )
+bool Session::ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Session::Status next )
 {
     if( process_ && !process_->IsAlive() )
         next = STATUS_STOPPED;
@@ -371,7 +372,7 @@ bool Session::ModifyStatus( T& lock, Session::Status next )
         return false;
 
     if( next == STATUS_STOPPED )
-        return StopProcess();
+        return StopProcess( lock );
 
     const size_t counter = counter_++;
     const int pid = GetPid( process_ );
@@ -385,7 +386,7 @@ bool Session::ModifyStatus( T& lock, Session::Status next )
     if( response->GetStatus() != 200 )
         return false;
 
-    lock.lock();
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     if( counter + 1 != counter_ || GetPid( process_ ) != pid )
         return false;
 
@@ -399,7 +400,7 @@ bool Session::ModifyStatus( T& lock, Session::Status next )
 // -----------------------------------------------------------------------------
 bool Session::Stop()
 {
-    boost::unique_lock< boost::mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     return ModifyStatus( lock, STATUS_STOPPED );
 }
 
@@ -409,7 +410,7 @@ bool Session::Stop()
 // -----------------------------------------------------------------------------
 bool Session::Pause()
 {
-    boost::unique_lock< boost::mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     return ModifyStatus( lock, STATUS_PAUSED );
 }
 
@@ -428,10 +429,11 @@ std::string MakeOption( const std::string& option, const T& value )
 // -----------------------------------------------------------------------------
 bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
 {
-    boost::unique_lock< boost::mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( process_ )
         return ModifyStatus( lock, STATUS_PLAYING );
 
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     Node_ABC::T_Token token = node_->SessionStart( false );
     if( !token )
         return false;
@@ -488,16 +490,15 @@ Path Session::GetOutput() const
 // -----------------------------------------------------------------------------
 void Session::Update()
 {
-    boost::unique_lock< boost::mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     ModifyStatus( lock, status_ );
 }
 
 namespace
 {
-void ResetBool( boost::unique_lock< boost::mutex >& lock, bool& value, bool next )
+void ResetBool( boost::upgrade_lock< boost::shared_mutex >& lock, bool& value, bool next )
 {
-    if( !lock.owns_lock() )
-        lock.lock();
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     value = next;
 }
 }
@@ -508,7 +509,7 @@ void ResetBool( boost::unique_lock< boost::mutex >& lock, bool& value, bool next
 // -----------------------------------------------------------------------------
 void Session::Poll()
 {
-    boost::unique_lock< boost::mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( polling_ || !process_ || !process_->IsAlive() )
         return;
 
@@ -539,7 +540,7 @@ void Session::Poll()
 // -----------------------------------------------------------------------------
 void Session::Remove()
 {
-    boost::unique_lock< boost::mutex > lock( access_ );
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     ModifyStatus( lock, STATUS_STOPPED );
     node_->UnlinkExercise( links_ );
     system_.Remove( GetRoot() );

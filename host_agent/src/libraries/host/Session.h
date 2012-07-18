@@ -14,7 +14,8 @@
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/thread/mutex.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/thread/shared_mutex.hpp>
 #include <boost/uuid/uuid.hpp>
 
 namespace boost
@@ -124,8 +125,8 @@ private:
     //! @name Private methods
     //@{
     Tree GetProperties( bool save ) const;
-    bool StopProcess();
-    template< typename T > bool ModifyStatus( T& lock, Status next );
+    bool StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock );
+    bool ModifyStatus( boost::upgrade_lock< boost::shared_mutex >& lock, Status next );
     //@}
 
 private:
@@ -139,7 +140,7 @@ private:
     const Tree links_;
     const Port port_;
     web::Client_ABC& client_;
-    mutable boost::mutex access_;
+    mutable boost::shared_mutex access_;
     T_Process process_;
     boost::shared_ptr< node::Token > running_;
     Status status_;
