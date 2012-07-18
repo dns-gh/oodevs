@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "NumericLimitsEditor.h"
 #include "moc_NumericLimitsEditor.cpp"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 
@@ -55,9 +56,9 @@ void NumericLimitsEditor< int, RichSpinBox >::CreateInterface()
     QHBoxLayout* layout = new QHBoxLayout( this );
     layout->setMargin( 0 );
     layout->setSpacing( 2 );
-    layout->addWidget( new QLabel( tr( "Min" ) ) );
+    layout->addWidget( new QLabel( tools::translate( "NumericLimitsEditor", "Min" ) ) );
     layout->addWidget( minSpin_, 1 );
-    layout->addWidget( new QLabel( tr( "Max" ) ) );
+    layout->addWidget( new QLabel( tools::translate( "NumericLimitsEditor", "Max" ) ) );
     layout->addWidget( maxSpin_, 1 );
     connect( minSpin_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMinValueChanged( int ) ) );
     connect( maxSpin_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxValueChanged( int ) ) );
@@ -74,9 +75,9 @@ void NumericLimitsEditor< double, RichDoubleSpinBox >::CreateInterface()
     QHBoxLayout* layout = new QHBoxLayout( this );
     layout->setMargin( 0 );
     layout->setSpacing( 2 );
-    layout->addWidget( new QLabel( tr( "Min" ) ) );
+    layout->addWidget( new QLabel( tools::translate( "NumericLimitsEditor", "Min" ) ) );
     layout->addWidget( minSpin_, 1 );
-    layout->addWidget( new QLabel( tr( "Max" ) ) );
+    layout->addWidget( new QLabel( tools::translate( "NumericLimitsEditor", "Max" ) ) );
     layout->addWidget( maxSpin_, 1 );
     connect( minSpin_, SIGNAL( valueChanged( double ) ), this, SLOT( OnMinValueChanged( double ) ) );
     connect( maxSpin_, SIGNAL( valueChanged( double ) ), this, SLOT( OnMaxValueChanged( double ) ) );
