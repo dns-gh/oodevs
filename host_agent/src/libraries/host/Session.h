@@ -61,18 +61,18 @@ public:
     //! @name Constructors/Destructor
     //@{
              Session( const runtime::FileSystem_ABC& system,
-                      const Path& root,
-                      boost::shared_ptr< Node_ABC > node,
                       web::Client_ABC& client,
+                      boost::shared_ptr< Node_ABC > node,
+                      const Path& root,
                       const Uuid& id,
                       const std::string& name,
                       const std::string& exercise,
                       const Port& port
                       );
              Session( const runtime::FileSystem_ABC& system,
-                      const Path& root,
-                      boost::shared_ptr< Node_ABC > node,
                       web::Client_ABC& client,
+                      boost::shared_ptr< Node_ABC > node,
+                      const Path& root,
                       const Tree& tree,
                       const runtime::Runtime_ABC& runtime,
                       PortFactory_ABC& ports
@@ -133,13 +133,13 @@ private:
     //! @name Private members
     //@{
     const runtime::FileSystem_ABC& system_;
+    web::Client_ABC& client_;
+    const boost::shared_ptr< Node_ABC > node_;
     const Uuid id_;
     const Path root_;
-    const boost::shared_ptr< Node_ABC > node_;
     const std::string name_;
     const Tree links_;
     const Port port_;
-    web::Client_ABC& client_;
     mutable boost::shared_mutex access_;
     T_Process process_;
     boost::shared_ptr< node::Token > running_;

@@ -130,18 +130,22 @@ int GetPid( T& process )
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const FileSystem_ABC& system, const Path& root,
-                  const boost::shared_ptr< Node_ABC > node, Client_ABC& client,
-                  const Uuid& id, const std::string& name, const std::string& exercise,
+Session::Session( const FileSystem_ABC& system,
+                  Client_ABC& client,
+                  const boost::shared_ptr< Node_ABC > node,
+                  const Path& root,
+                  const Uuid& id,
+                  const std::string& name,
+                  const std::string& exercise,
                   const Port& port )
     : system_ ( system )
+    , client_ ( client )
+    , node_   ( node )
     , id_     ( id )
     , root_   ( root )
-    , node_   ( node )
     , name_   ( name )
     , links_  ( node->LinkExercise( exercise ) )
     , port_   ( port )
-    , client_ ( client )
     , running_()
     , process_()
     , status_ ( STATUS_STOPPED )
@@ -155,17 +159,21 @@ Session::Session( const FileSystem_ABC& system, const Path& root,
 // Name: Session::Session
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( const FileSystem_ABC& system, const Path& root,
-                  const boost::shared_ptr< Node_ABC > node, Client_ABC& client,
-                  const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+Session::Session( const FileSystem_ABC& system,
+                  Client_ABC& client,
+                  const boost::shared_ptr< Node_ABC > node,
+                  const Path& root,
+                  const Tree& tree,
+                  const runtime::Runtime_ABC& runtime,
+                  PortFactory_ABC& ports )
     : system_ ( system )
+    , client_ ( client )
+    , node_   ( node )
     , id_     ( Get< Uuid >( tree, "id" ) )
     , root_   ( root )
-    , node_   ( node )
     , name_   ( Get< std::string >( tree, "name" ) )
     , links_  ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , client_ ( client )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
     , running_( process_ ? node->SessionStart( true ) : Node_ABC::T_Token() )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
