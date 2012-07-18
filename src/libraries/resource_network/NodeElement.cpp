@@ -323,7 +323,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links, const ResourceNe
     int distributionMean = static_cast< int >( static_cast< float >( immediateStock_ ) / links.size() );
     T_ResourceLinks updatedLinks;
 
-    for( CIT_ResourceLinks it = links.begin(); it != links.end(); )
+    for( IT_ResourceLinks it = links.begin(); it != links.end(); )
     {
         if( !model.IsValidNode( ( *it )->GetTarget() ) ) // clean invalid links
             it = links.erase( it );
