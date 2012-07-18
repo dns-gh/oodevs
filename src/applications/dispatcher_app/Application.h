@@ -14,7 +14,10 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 
-class DispatcherFacade;
+namespace dispatcher
+{
+    class DispatcherLoader;
+}
 
 // =============================================================================
 /** @class  Application
@@ -45,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< DispatcherFacade > dispatcher_;
+    std::auto_ptr< dispatcher::DispatcherLoader > dispatcher_;
     //@}
 };
 

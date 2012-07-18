@@ -12,6 +12,11 @@
 
 #include <memory>
 
+namespace dispatcher
+{
+    class DispatcherLoader;
+}
+
 // =============================================================================
 /** @class  SIM_Dispatcher
     @brief  SIM_Dispatcher
@@ -50,7 +55,7 @@ private:
     //! @name Member data
     //@{
     bool running_;
-    std::auto_ptr< DispatcherFacade > dispatcher_;
+    std::auto_ptr< dispatcher::DispatcherLoader > dispatcher_;
     //@}
 };
 

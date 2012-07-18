@@ -114,3 +114,13 @@ extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFaca
         MT_LOG_ERROR_MSG( "Updating: Unknown error" );
     }
 }
+
+#define PLATFORM platform
+#include "dispatcher/DispatcherLoader.h"
+
+namespace // for compilation check only
+{
+    static const dispatcher::DispatcherLoader::T_FacadeCreator creator = &CreateDispatcherFacade;
+    static const dispatcher::DispatcherLoader::T_FacadeDestructor destructor = &DestroyDispatcherFacade;
+    static const dispatcher::DispatcherLoader::T_FacadeUpdator updator = &UpdateDispatcherFacade;
+}
