@@ -18,3 +18,12 @@ integration.changeAutomate = function( self, isAutomat )
         end
     end
 end
+
+integration.agentEstBrouille = function( self )
+    return DEC_Agent_EstBrouille( meKnowledge.source )
+end
+
+integration.pcEstBrouille = function( self )
+    local pc = DEC_Pion_PionPCDeAutomate( meKnowledge.source )
+    return DEC_Agent_EstBrouille( pc ) or DEC_Agent_EstEnSilenceRadioEmission( pc ) or DEC_Agent_EstEnSilenceRadioReception( pc )
+end

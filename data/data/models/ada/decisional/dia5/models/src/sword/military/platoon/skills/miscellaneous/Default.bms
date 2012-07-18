@@ -51,6 +51,15 @@ rootnode
         if self.positionSurete and DEC_Agent_EstNeutralise() then
             Activate( skill.links.moveTo, 10, { entities = {CreateKnowledge( integration.ontology.types.point, self.positionSurete )} } )
         end
+        
+        -- Brouillage
+        if meKnowledge:isJammed() then
+            Activate( skill.nodes.RC, 1, { RC = eRC_Jammed } )
+        end
+        -- Brouillage du PC
+        if meKnowledge:isPCJammed() then
+            Activate( skill.nodes.RC, 1, { RC = eRC_PCJammed } )
+        end
 
         -- Transport
         if DEC_Agent_EstTransporte() then -- $$$ MIA TODO Virer fonction DEC, mettre isNeutraized sur le body

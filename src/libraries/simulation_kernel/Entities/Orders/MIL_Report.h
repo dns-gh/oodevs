@@ -585,6 +585,8 @@ public:
         eRC_ObstacleNonActivable,
         eRC_FireObserver,
         eRC_ImpossibleActivateIED,
+        eRC_Jammed,
+        eRC_PCJammed, // 430
         eLast
     };
     //@}
