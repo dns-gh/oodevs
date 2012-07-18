@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.FlancGarder" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.CoverEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.FlancGarder" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CoverEffect">
     <parameters>
         <parameter name="entity">
             <type>
@@ -14,7 +14,7 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks_armored.FlancGuard">
+    <next-task name="commander.tasks.FlancGuard">
         <parameter name="entity">
             <value>
                 <parameter>entity</parameter>

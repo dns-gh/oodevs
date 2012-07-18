@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Sinfiltrer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Infiltrate">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Sinfiltrer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Infiltrate">
   <parameters>
     <parameter name="objectives">
       <type>
@@ -9,7 +9,7 @@
       </type>
     </parameter>
   </parameters>
-  <next-task name="agent.tasks_armored.Infiltrate">
+  <next-task name="agent.tasks.Infiltrate">
     <parameter name="objectives">
       <value>
         <parameter>objectives</parameter>

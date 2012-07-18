@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.AssassinerOfficiers" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.AssassinateOfficers">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.AssassinerOfficiers" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.AssassinateOfficers">
     <parameters>
         <parameter name="unit">
             <description>Cible de l'assassinat. Les officiers présents dans la cible seront assassinés.</description>
@@ -17,7 +17,7 @@
     <goal>
         <description>Commettre un attentat contre la cible, puis se replier vers une position de repli.</description>
     </goal>
-    <next-task name="agent.tasks_asy.AssassinateOfficers">
+    <next-task name="agent.tasks.AssassinateOfficers">
         <parameter name="unit">
             <value>
                 <parameter>unit</parameter>

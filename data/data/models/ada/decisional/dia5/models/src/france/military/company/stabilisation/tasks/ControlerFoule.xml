@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.stabilisation.tasks.ControlerFoule" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.ControlCrowdEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.stabilisation.tasks.ControlerFoule" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.ControlCrowdEffect">
     <parameters>
         <parameter name="area">
             <type>
@@ -7,7 +7,7 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks_armored.ControlCrowd">
+    <next-task name="commander.tasks.ControlCrowd">
         <parameter name="area">
             <value>
                 <parameter>area</parameter>

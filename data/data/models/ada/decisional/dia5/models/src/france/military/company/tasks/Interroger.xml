@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interroger" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.InterrogateEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interroger" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.InterrogateEffect">
 	<parameters>
 		<parameter name="entity">
 			<description>L'entité que l'on souhaite interroger.</description>
@@ -9,7 +9,7 @@
 			</type>
 		</parameter>
 	</parameters>
-	<next-task name="commander.tasks_armored.Interrogate">
+	<next-task name="commander.tasks.Interrogate">
 		<parameter name="companyTask">
 			<value>
 				<string>france.military.company.tasks.Interroger</string>

@@ -19,7 +19,7 @@
         <description>Obtenir du renseignement</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_armored.Monitor">
+    <next-task name="agent.tasks.Monitor">
         <parameter name="objective">
             <value>
                 <parameter>objective</parameter>

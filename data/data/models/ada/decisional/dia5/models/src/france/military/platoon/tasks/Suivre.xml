@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Suivre" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Follow">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Suivre" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Follow">
     <parameters>
         <parameter name="objectives">
             <description>Les éléments à suivre.</description>
@@ -10,7 +10,7 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks_armored.Follow">
+    <next-task name="agent.tasks.Follow">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

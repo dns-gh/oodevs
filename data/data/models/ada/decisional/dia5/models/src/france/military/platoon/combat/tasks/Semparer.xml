@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Semparer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Seize">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Semparer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Seize">
   <parameters>
     <parameter name="objective">
       <type>
@@ -11,7 +11,7 @@
     <description>Mouvement tactique, observation vers l'objectif et engagement de tout ennemi.</description>
   </goal>
   <stages/>
-  <next-task name="agent.tasks_armored.Seize">
+  <next-task name="agent.tasks.Seize">
     <parameter name="objectives">
       <value>
         <list>

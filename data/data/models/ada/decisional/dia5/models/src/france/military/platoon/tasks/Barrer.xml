@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Barrer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Block">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Barrer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Block">
     <description>Barrage de points (plus tard de directions dangereuses) à partir de positions.</description>
     <parameters>
         <parameter name="objectives">
@@ -42,7 +42,7 @@
     <goal>
         <description>Occupation de position intéressante pour barrer les objectifs</description>
     </goal>
-    <next-task name="agent.tasks_armored.Block">
+    <next-task name="agent.tasks.Block">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

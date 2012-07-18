@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.stabilisation.tasks.InterdireFoule" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Filter">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.stabilisation.tasks.InterdireFoule" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Filter">
     <parameters>
         <parameter name="position">
             <type>
@@ -7,7 +7,7 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks_armored.Filter">
+    <next-task name="agent.tasks.Filter">
         <parameter name="bodySearchStrength">
             <value>
                 <number>0.0</number>

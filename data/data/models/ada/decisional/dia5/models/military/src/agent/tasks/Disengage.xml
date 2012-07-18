@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Disengage" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Disengage">
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="world_concepts.Positionable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Decrocher" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true" priority="1000.0">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>objective</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

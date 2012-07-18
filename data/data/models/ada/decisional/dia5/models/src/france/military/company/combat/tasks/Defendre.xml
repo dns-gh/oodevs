@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Defendre" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.DefendEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Defendre" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DefendEffect">
     <parameters>
         <parameter name="objectives">
             <type>
@@ -38,7 +38,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks_armored.Defend">
+    <next-task name="commander.tasks.Defend">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.combat.tasks.Defendre</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Reconnaitre" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Reconnoiter">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Reconnaitre" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Reconnoiter">
     <description>Recueillir du renseignement</description>
     <parameters>
         <parameter name="objectives">
@@ -24,7 +24,7 @@
     <goal>
         <description>Se déplacer tactiquement vers les éléments et les reconnaître.</description>
     </goal>
-    <next-task name="agent.tasks_armored.ReconnoiterRoute">
+    <next-task name="agent.tasks.ReconnoiterRoute">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

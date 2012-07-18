@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Fixer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Fix">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Fixer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Fix">
   <description>Fixer</description>
   <parameters>
     <parameter name="objectives">
@@ -23,7 +23,7 @@
     <description>Se déplacer sur la meilleure position permettant de fixer les ennemis.</description>
   </goal>
   <stages/>
-  <next-task name="agent.tasks_armored.Fix">
+  <next-task name="agent.tasks.Fix">
     <parameter name="objectives">
       <value>
         <parameter>objectives</parameter>

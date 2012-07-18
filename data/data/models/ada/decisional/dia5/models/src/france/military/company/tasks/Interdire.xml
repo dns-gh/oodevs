@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interdire" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.DenyEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interdire" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DenyEffect">
     <parameters>
         <parameter name="objectives">
             <type>
@@ -52,7 +52,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks_armored.Deny">
+    <next-task name="commander.tasks.Deny">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.tasks.Interdire</string>

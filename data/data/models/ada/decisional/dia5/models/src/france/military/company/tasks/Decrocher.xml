@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Decrocher" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.Disengage">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Decrocher" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Disengage">
   <parameters>
     <parameter name="objective">
       <type>
@@ -8,7 +8,7 @@
       </type>
     </parameter>
   </parameters>
-  <next-task name="commander.tasks_armored.Disengage">
+  <next-task name="commander.tasks.Disengage">
     <parameter name="companyTask">
       <value>
         <string>france.military.company.tasks.Decrocher</string>

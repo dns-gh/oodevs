@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Observer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.MoveToward">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Observer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.MoveToward">
     <parameters>
         <parameter name="objective">
             <description>L'objet à observer</description>
@@ -12,7 +12,7 @@
         <description>Observe l'élement.</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_frago.Observe">
+    <next-task name="agent.frago.Observe">
         <parameter name="objective">
             <value>
                 <parameter>objective</parameter>

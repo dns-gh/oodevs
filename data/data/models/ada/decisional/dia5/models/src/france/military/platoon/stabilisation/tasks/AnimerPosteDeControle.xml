@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Filter">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Filter">
     <parameters>
         <parameter name="position">
             <type>
@@ -20,7 +20,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks_armored.Filter">
+    <next-task name="agent.tasks.Filter">
         <parameter name="blockingStrength">
             <value>
                 <parameter>blockingStrength</parameter>

@@ -20,7 +20,7 @@
         <description>Construire les objets.</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_engineer.Build">
+    <next-task name="agent.tasks.Build">
         <parameter name="entities">
             <value>
                 <parameter>entities</parameter>

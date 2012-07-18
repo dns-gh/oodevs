@@ -1162,7 +1162,7 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="agent.tasks_armored.Screen" dia-type="agent.tasks_armored.Screen" id="2110" name="PION MELEE Jalonner" package="defence" symbol="IdJalonner_Poly-ligne">
+    <mission dia-behavior="agent.tasks.Screen" dia-type="agent.tasks.Screen" id="2110" name="PION MELEE Jalonner" package="defence" symbol="IdJalonner_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1388,7 +1388,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="agent.tasks_engineer.MobilitySupport" dia-type="agent.tasks_engineer.MobilitySupport" id="2119" name="PION GENIE Appui Mobilite" package="support">
+    <mission dia-behavior="agent.tasks.MobilitySupport" dia-type="agent.tasks.MobilitySupport" id="2119" name="PION GENIE Appui Mobilite" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -4635,4 +4635,4 @@
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0998529333" -->
+<!-- signature="4266055395" -->

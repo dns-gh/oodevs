@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Delay" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Delay">
+    <description>Se déplacer sur des positions en engageant l'ennemi pour le ralentir, face à des objectifs.</description>
+    <parameters>
+        <parameter name="positions">
+            <description>Positions à sur lesquelles se déplacer.</description>
+            <type>
+                <list>
+                    <class name="world_concepts.Destroying"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se déplacer en observant et engageant les ennemis à partir des positions.</description>
+    </goal>
+    <stages>
+        <stage label="Coup d'arret" permanent="false" disable-when-done="true">
+            <description>Se déplacer en observant l'objectif et engageant les ennemis à partir des positions.</description>
+            <goal>
+                <description>Occuper les positions de freinage.</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.Delay" main="true" priority="0.7">
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

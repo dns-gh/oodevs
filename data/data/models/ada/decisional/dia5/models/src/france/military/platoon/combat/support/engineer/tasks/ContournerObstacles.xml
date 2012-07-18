@@ -21,7 +21,7 @@
         <description>Contourner les obstacles</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_engineer.ByPass">
+    <next-task name="agent.tasks.ByPass">
         <parameter name="obstacles">
             <value>
                 <parameter>obstacles</parameter>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.OpenRoute">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.OpenRoute">
     <description>Soutien dynamique. Appuyer par le mouvement.</description>
     <parameters>
         <parameter name="objectives">
@@ -14,7 +14,7 @@
         <description>Rétablir un itinéraire : dégager les obstacles rencontrés.</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_engineer.RestoreRoute">
+    <next-task name="agent.tasks.RestoreRoute">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

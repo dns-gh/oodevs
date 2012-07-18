@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Fouiller" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Search">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Fouiller" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Search">
     <description>Fouiller les objectifs pour détecter des éléments cachés (comme des individus isolés cachés dans un bloc par exemple).</description>
     <parameters>
         <parameter name="objectifs">
@@ -15,7 +15,7 @@
     <goal>
         <description>Se déplacer tactiquement vers l'objectif et le fouiller.</description>
     </goal>
-    <next-task name="agent.tasks_armored.Search">
+    <next-task name="agent.tasks.Search">
         <parameter name="objectives">
             <value>
                 <parameter>objectifs</parameter>

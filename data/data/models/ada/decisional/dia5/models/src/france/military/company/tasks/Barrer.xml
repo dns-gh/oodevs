@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Barrer" source-version="1.0.0" knowledge-class="commander.tasks_knowledge.BlockEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Barrer" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.BlockEffect">
     <parameters>
         <parameter name="objectives">
             <description>Les objectifs à Barrer: pour l'instant des points mais plus tard des directions</description>
@@ -45,7 +45,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks_armored.Block">
+    <next-task name="commander.tasks.Block">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.tasks.Barrer</string>

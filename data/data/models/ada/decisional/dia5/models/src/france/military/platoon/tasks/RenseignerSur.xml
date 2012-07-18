@@ -10,7 +10,7 @@
     </parameter>
   </parameters>
   <stages/>
-  <next-task name="agent.tasks_armored.Monitor">
+  <next-task name="agent.tasks.Monitor">
     <parameter name="objective">
       <value>
         <parameter>objective</parameter>

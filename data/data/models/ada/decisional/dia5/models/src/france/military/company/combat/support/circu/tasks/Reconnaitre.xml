@@ -10,7 +10,7 @@
         </parameter>
     </parameters>
     <stages/>
-    <next-task name="commander.tasks_armored.Reconnoiter">
+    <next-task name="commander.tasks.Reconnoiter">
         <parameter name="companyTask">
             <value>
                 <string>france.military.company.combat.support.circu.tasks.Reconnaitre</string>

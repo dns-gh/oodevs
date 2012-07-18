@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Interrogate" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Interrogate">
+  <parameters>
+    <parameter name="entity">
+      <description>L'entité que l'on souhaite interroger.</description>
+      <type>
+        <class name="world_concepts.Reachable"/>
+        <class name="world_concepts.Askable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="Interroger" disable-when-done="true">
+      <skills>
+        <skill name="agent.skills.Interrogate" main="true">
+          <parameter name="entity">
+            <value>
+              <parameter>entity</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

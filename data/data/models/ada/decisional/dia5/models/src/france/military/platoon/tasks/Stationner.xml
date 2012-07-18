@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Stationner" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Park">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Stationner" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Park">
   <description>Stationnement sur un objectif.</description>
   <parameters>
     <parameter name="position">
@@ -9,7 +9,7 @@
       </type>
     </parameter>
   </parameters>
-  <next-task name="agent.tasks_armored.MoveToward">
+  <next-task name="agent.tasks.MoveToward">
     <parameter name="objectives">
       <value>
         <list>

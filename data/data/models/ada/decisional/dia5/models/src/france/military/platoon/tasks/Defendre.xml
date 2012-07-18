@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Defendre" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Defend">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Defendre" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Defend">
     <description>Tenir un bloc urbain à partir d'une position.</description>
     <parameters>
         <parameter name="objectives">
@@ -29,7 +29,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks_armored.Defend">
+    <next-task name="agent.tasks.Defend">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

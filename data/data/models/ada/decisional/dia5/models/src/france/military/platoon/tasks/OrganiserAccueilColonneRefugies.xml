@@ -10,7 +10,7 @@
       </type>
     </parameter>
   </parameters>
-  <next-task name="agent.tasks_armored.Monitor">
+  <next-task name="agent.tasks.Monitor">
     <parameter name="positions">
       <value>
         <list>

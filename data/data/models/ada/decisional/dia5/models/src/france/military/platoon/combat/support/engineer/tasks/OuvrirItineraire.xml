@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.OpenRoute">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.OpenRoute">
     <description>Soutien dynamique. Appuyer par le mouvement.</description>
     <parameters>
         <parameter name="objectives">
@@ -14,7 +14,7 @@
         <description>Ouvrir un itinéraire : dégager ou contourner les obstacles rencontrés.</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_engineer.OpenRoute">
+    <next-task name="agent.tasks.OpenRoute">
         <parameter name="objectives">
             <value>
                 <parameter>objectives</parameter>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.frago.Mount" source-version="1.0.0">
+  <description>Ordre simple d'embarquer.</description>
+  <stages>
+    <stage label="Embarquement" permanent="true">
+      <skills>
+        <skill name="agent.skills.actions.Mount" priority="1000.0"/>
+      </skills>
+    </stage>
+  </stages>
+</task>

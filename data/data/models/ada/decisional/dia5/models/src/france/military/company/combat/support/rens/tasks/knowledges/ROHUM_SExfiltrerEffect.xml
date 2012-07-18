@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.rens.tasks.knowledges.ROHUM_SExfiltrerEffect" source-version="1.0.0" extends="commander.tasks_knowledge.CompanyTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.rens.tasks.knowledges.ROHUM_SExfiltrerEffect" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
 	<methods>
 		<method name="getObjective">
 			<return>

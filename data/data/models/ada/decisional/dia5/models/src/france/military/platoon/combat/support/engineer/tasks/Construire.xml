@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.Construire" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Build">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.Construire" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Build">
     <description>Construire un object tactique</description>
     <parameters>
         <parameter name="entities">
@@ -30,7 +30,7 @@
         <description>Construire les objets.</description>
     </goal>
     <stages/>
-    <next-task name="agent.tasks_engineer.Build">
+    <next-task name="agent.tasks.Build">
         <parameter name="meetingPoint">
             <value>
                 <parameter>meetingPoint</parameter>

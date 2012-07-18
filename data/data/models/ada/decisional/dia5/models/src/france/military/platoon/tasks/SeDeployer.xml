@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.SeDeployer" source-version="1.0.0" knowledge-class="agent.tasks_knowledge.Deploy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.SeDeployer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Deploy">
     <parameters>
         <parameter name="objective" nullable="true">
             <description>Position pour le déploiement</description>
@@ -11,7 +11,7 @@
             </default>
         </parameter>
     </parameters>
-    <next-task name="agent.tasks_armored.Deploy">
+    <next-task name="agent.tasks.Deploy">
         <parameter name="objective">
             <value>
                 <parameter>objective</parameter>

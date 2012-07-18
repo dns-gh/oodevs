@@ -239,11 +239,11 @@ integration.startFragOrderTask = function( self )
     stopTask( "agent.tasks_frago.ObserveRadioSilence" )
     orderType = "agent.tasks_frago.ActivateRadio"
   elseif orderType == "Rep_OrderConduite_MettreTenueNBC" then
-    stopTask( "agent.tasks_armored.UnequipNBCOutfit" )
-    orderType = "agent.tasks_armored.EquipNBCOutfit"
+    stopTask( "agent.tasks.UnequipNBCOutfit" )
+    orderType = "agent.tasks.EquipNBCOutfit"
   elseif orderType == "Rep_OrderConduite_EnleverTenueNBC" then
-    stopTask( "agent.tasks_armored.EquipNBCOutfit" )
-    orderType = "agent.tasks_armored.UnequipNBCOutfit"
+    stopTask( "agent.tasks.EquipNBCOutfit" )
+    orderType = "agent.tasks.UnequipNBCOutfit"
   elseif orderType =="Rep_OrderConduite_ChangerAmbiance" then
     if self.source:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete then
         orderType = "france.military.platoon.tasks.ChangerAmbianceSurete"

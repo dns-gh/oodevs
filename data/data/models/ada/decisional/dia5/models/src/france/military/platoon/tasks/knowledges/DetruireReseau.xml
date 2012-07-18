@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.knowledges.DetruireReseau" source-version="1.0.0" extends="agent.tasks_knowledge.PlatoonTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.knowledges.DetruireReseau" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
     <description>Interface des connaissances de mission de niveau compagnie</description>
     <methods>
         <method name="getPionEfficiency">
