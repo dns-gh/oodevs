@@ -21,6 +21,7 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -83,6 +84,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , async_            ( pool )
     , num_sessions_     ( num_sessions )
     , parallel_sessions_( parallel_sessions )
+    , parallel_counter_ ( 0 )
 {
     install_ = packages_.Make( root_ / "install", true );
 }
@@ -106,6 +108,7 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
     , async_            ( pool )
     , num_sessions_     ( Get< size_t >( tree, "num_sessions" ) )
     , parallel_sessions_( Get< size_t >( tree, "parallel_sessions" ) )
+    , parallel_counter_ ( 0 )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
     ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
@@ -467,4 +470,45 @@ void Node::UnlinkExercise( const Tree& tree ) const
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     install_->UnlinkItem( async_, tree );
+}
+
+struct node::Token
+{
+    Token( Node* node )
+        : node( node )
+    {
+        // NOTHING
+    }
+    ~Token()
+    {
+        if( node )
+            node->SessionStop();
+    }
+private:
+    Node* node;
+};
+
+// -----------------------------------------------------------------------------
+// Name: Node::SessionStart
+// Created: BAX 2012-07-18
+// -----------------------------------------------------------------------------
+Node_ABC::T_Token Node::SessionStart( bool force )
+{
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    if( !parallel_sessions_ )
+        return boost::make_shared< node::Token >( reinterpret_cast< Node* >( 0 ) );
+    if( !force && parallel_counter_ >= parallel_sessions_ )
+        return T_Token();
+    ++parallel_counter_;
+    return boost::make_shared< node::Token >( this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::SessionStop
+// Created: BAX 2012-07-18
+// -----------------------------------------------------------------------------
+void Node::SessionStop()
+{
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    parallel_counter_ = std::max( size_t( 0 ), parallel_counter_ - 1 );
 }

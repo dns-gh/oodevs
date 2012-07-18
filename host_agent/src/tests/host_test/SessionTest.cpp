@@ -30,6 +30,11 @@ using namespace mocks;
 using namespace property_tree;
 using namespace runtime;
 
+struct host::node::Token
+{
+    Token() {}
+};
+
 namespace
 {
     const std::string defaultIdString = "12345678-90AB-CDEF-9876-543210123456";
@@ -78,7 +83,7 @@ namespace
             : node ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) ) )
             , apps ( "apps" )
         {
-            // NOTHING
+            MOCK_EXPECT( node->SessionStart ).returns( boost::make_shared< host::node::Token >() );
         }
 
         SessionPtr MakeSession()

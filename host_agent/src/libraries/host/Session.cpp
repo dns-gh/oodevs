@@ -23,6 +23,7 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -130,7 +131,7 @@ int GetPid( T& process )
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const FileSystem_ABC& system, const Path& root,
-                  const boost::shared_ptr< const Node_ABC > node, Client_ABC& client,
+                  const boost::shared_ptr< Node_ABC > node, Client_ABC& client,
                   const Uuid& id, const std::string& name, const std::string& exercise,
                   const Port& port )
     : system_ ( system )
@@ -141,6 +142,7 @@ Session::Session( const FileSystem_ABC& system, const Path& root,
     , links_  ( node->LinkExercise( exercise ) )
     , port_   ( port )
     , client_ ( client )
+    , running_()
     , process_()
     , status_ ( STATUS_STOPPED )
     , polling_( false )
@@ -154,7 +156,7 @@ Session::Session( const FileSystem_ABC& system, const Path& root,
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::Session( const FileSystem_ABC& system, const Path& root,
-                  const boost::shared_ptr< const Node_ABC > node, Client_ABC& client,
+                  const boost::shared_ptr< Node_ABC > node, Client_ABC& client,
                   const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
     : system_ ( system )
     , id_     ( Get< Uuid >( tree, "id" ) )
@@ -165,6 +167,7 @@ Session::Session( const FileSystem_ABC& system, const Path& root,
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , client_ ( client )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
+    , running_( process_ ? node->SessionStart( true ) : Node_ABC::T_Token() )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
     , polling_( false )
     , counter_( 0 )
@@ -333,11 +336,12 @@ std::string GetConfiguration( const std::string& name, int base )
 // Name: Session::StopProcess
 // Created: BAX 2012-06-20
 // -----------------------------------------------------------------------------
-bool Session::StopProcess()
+bool Session::StopProcess( )
 {
     status_ = STATUS_STOPPED;
-    T_Process copy;
+    T_Process copy; Node_ABC::T_Token token;
     copy.swap( process_ );
+    token.swap( running_ );
     if( !copy || !copy->IsAlive() )
         return true;
 
@@ -428,6 +432,10 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     if( process_ )
         return ModifyStatus( lock, STATUS_PLAYING );
 
+    Node_ABC::T_Token token = node_->SessionStart( false );
+    if( !token )
+        return false;
+
     const Path output = GetOutput();
     system_.MakePaths( output );
     system_.WriteFile( output / "session.xml", GetConfiguration( name_, port_->Get() ) );
@@ -445,6 +453,7 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
         return false;
 
     process_ = ptr;
+    running_ = token;
     status_  = STATUS_PLAYING;
     return true;
 }

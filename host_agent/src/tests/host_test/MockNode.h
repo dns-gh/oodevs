@@ -45,6 +45,7 @@ namespace mocks
         MOCK_METHOD_EXT( LinkExercise, 1, host::Tree( const std::string& ), LinkExerciseName );
         MOCK_METHOD_EXT( LinkExercise, 1, host::Tree( const host::Tree& ), LinkExerciseTree );
         MOCK_METHOD( UnlinkExercise, 1 );
+        MOCK_METHOD( SessionStart, 1 );
     };
 
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )

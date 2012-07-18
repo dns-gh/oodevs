@@ -105,6 +105,12 @@ public:
     virtual void        UnlinkExercise( const Tree& tree ) const;
     //@}
 
+    //! @name Session methods
+    //@{
+    virtual T_Token SessionStart( bool force );
+    void SessionStop();
+    //@}
+
     //! @name Typedef helpers
     //@{
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
@@ -139,7 +145,9 @@ private:
     bool stopped_;
     mutable runtime::Async async_;
     size_t num_sessions_;
+    size_t num_counter_;
     size_t parallel_sessions_;
+    size_t parallel_counter_;
     //@}
 };
 }

@@ -38,6 +38,10 @@ namespace host
     typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
+namespace node
+{
+    struct Token;
+}
 }
 
 namespace host
@@ -89,18 +93,20 @@ struct Node_ABC : public boost::noncopyable
     virtual Tree InstallFromCache( const std::vector< size_t >& list ) = 0;
     //@}
 
-    //! @name Typedef helpers
-    //@{
-    typedef std::vector< std::string > T_Exercises;
-    //@}
-
     //! @name Exercise methods
     //@{
+    typedef std::vector< std::string > T_Exercises;
     virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
     virtual size_t      CountExercises() const = 0;
     virtual Tree        LinkExercise( const std::string& name ) const = 0;
     virtual Tree        LinkExercise( const Tree& tree ) const = 0;
     virtual void        UnlinkExercise( const Tree& tree ) const = 0;
+    //@}
+
+    //! @name Session methods
+    //@{
+    typedef boost::shared_ptr< node::Token > T_Token;
+    virtual T_Token SessionStart( bool force ) = 0;
     //@}
 };
 

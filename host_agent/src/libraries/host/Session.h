@@ -40,7 +40,14 @@ namespace host
     struct Port_ABC;
     struct PortFactory_ABC;
     typedef boost::shared_ptr< const Port_ABC > Port;
+namespace node
+{
+    struct Token;
+}
+}
 
+namespace host
+{
 // =============================================================================
 /** @class  Session
     @brief  Session class definition
@@ -54,7 +61,7 @@ public:
     //@{
              Session( const runtime::FileSystem_ABC& system,
                       const Path& root,
-                      boost::shared_ptr< const Node_ABC > node,
+                      boost::shared_ptr< Node_ABC > node,
                       web::Client_ABC& client,
                       const Uuid& id,
                       const std::string& name,
@@ -63,7 +70,7 @@ public:
                       );
              Session( const runtime::FileSystem_ABC& system,
                       const Path& root,
-                      boost::shared_ptr< const Node_ABC > node,
+                      boost::shared_ptr< Node_ABC > node,
                       web::Client_ABC& client,
                       const Tree& tree,
                       const runtime::Runtime_ABC& runtime,
@@ -127,13 +134,14 @@ private:
     const runtime::FileSystem_ABC& system_;
     const Uuid id_;
     const Path root_;
-    const boost::shared_ptr< const Node_ABC > node_;
+    const boost::shared_ptr< Node_ABC > node_;
     const std::string name_;
     const Tree links_;
     const Port port_;
     web::Client_ABC& client_;
     mutable boost::mutex access_;
     T_Process process_;
+    boost::shared_ptr< node::Token > running_;
     Status status_;
     bool polling_;
     size_t counter_;
