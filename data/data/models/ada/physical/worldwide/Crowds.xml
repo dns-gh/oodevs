@@ -2,7 +2,7 @@
 <populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="1"/>
   <time-between-nbc-applications delay="1h"/>
-  <population armed-individuals="0" concentration-density="0.05" decisional-model="Crowd ML" id="0" moving-base-density="0.5" moving-speed="6" name="Standard Crowd">
+  <population armed-individuals="0" concentration-density="0.05" decisional-model="Crowd" id="0" moving-base-density="0.5" moving-speed="6" name="Standard Crowd">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="30" population-density="0.5" unit-size="Heavy"/>
@@ -180,7 +180,7 @@
     <repartition children="0" female="0" male="1"/>
     <nbc decontaminationDelay="300s"/>
   </population>
-  <population armed-individuals="0" concentration-density="1.5" decisional-model="Crowd ML" id="1" moving-base-density="0.1" moving-speed="6" name="Fan Crowd">
+  <population armed-individuals="0" concentration-density="1.5" decisional-model="Crowd" id="1" moving-base-density="0.1" moving-speed="6" name="Fan Crowd">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="30" population-density="0.1" unit-size="Heavy"/>
@@ -359,4 +359,4 @@
     <nbc decontaminationDelay="300s"/>
   </population>
 </populations>
-<!-- signature="1386100654" -->
+<!-- signature="1882303653" -->

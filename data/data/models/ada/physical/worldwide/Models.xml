@@ -4025,13 +4025,6 @@
         <fragorder name="Population - Change attitude"/>
       </fragorders>
     </crowd>
-    <crowd dia-type="sword.military.crowd.roles.Crowd" file="BMCrowd.bms" masalife="true" name="Crowd ML">
-      <missions>
-        <mission name="MLCrowd - MoveTo"/>
-        <mission name="MLCrowd - Follow"/>
-      </missions>
-      <fragorders/>
-    </crowd>
   </crowd>
 </models>
-<!-- signature="2267733588" -->
+<!-- signature="3472645827" -->
