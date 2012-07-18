@@ -201,5 +201,5 @@ bool LocationEditorToolbar::GetPosition( geometry::Point2f& result )
 void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
     menuPoint_ = point;
-    menu.InsertItem( "Helpers", tr( "Bookmark location" ), this, SLOT( CreateBookmark() ) );
+    menu.InsertItem( "Interface", tr( "Bookmark location" ), this, SLOT( CreateBookmark() ) );
 }

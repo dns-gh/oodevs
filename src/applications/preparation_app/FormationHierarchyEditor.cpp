@@ -52,7 +52,7 @@ void FormationHierarchyEditor::NotifyContextMenu( const kernel::Formation_ABC& e
         return;
     
     selected_ = pFormation;
-    Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Change hierarchy level" ) );
+    Q3PopupMenu* subMenu = menu.SubMenu( "Helpers", tr( "Change hierarchy level" ), false, 4 );
     for( const kernel::HierarchyLevel_ABC* level = levels_.Resolve( "xxxxx" ); level; level = level->GetNext() )
         subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ),this, SLOT( OnChangeLevel( int ) ), 0, level->GetId() );
 }

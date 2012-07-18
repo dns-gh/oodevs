@@ -697,8 +697,8 @@
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Change symbol</source>
-        <translation type="unfinished"></translation>
+        <source>Symbol</source>
+        <translation type="unfinished">Símbolo</translation>
     </message>
 </context>
 <context>
@@ -2675,6 +2675,10 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display initial state</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

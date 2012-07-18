@@ -225,7 +225,7 @@ void LogisticStockEditor::NotifyContextMenu( const kernel::Formation_ABC& format
 void LogisticStockEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
-    kernel::ContextMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
+    kernel::ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
     pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Edit Stocks" ), this, SLOT( ShowStocksDialog() ) );
     pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Edit Quotas" ), this, SLOT( ShowQuotasDialog() ) );
 }

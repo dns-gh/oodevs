@@ -183,8 +183,9 @@ void ModelBuilder::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& men
     // TODO gérer suivant les modes
     if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ )
         return;
+
     toDelete_ = &entity;
-    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );
 }
 
 namespace

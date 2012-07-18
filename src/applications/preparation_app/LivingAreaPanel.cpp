@@ -102,7 +102,7 @@ void LivingAreaPanel::closeEvent( QCloseEvent* /*pEvent*/ )
 void LivingAreaPanel::NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = &entity;
-    menu.InsertItem( "Update", tools::translate( "LivingAreaEditor", "Change living Area" ), this, SLOT( Update() ) );
+    menu.InsertItem( "Helpers", tools::translate( "LivingAreaEditor", "Change living Area" ), this, SLOT( Update() ), false, 2 );
     text_->setText( GetContent( entity ) );
 }
 
