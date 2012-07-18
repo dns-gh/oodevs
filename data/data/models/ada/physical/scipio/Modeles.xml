@@ -6130,7 +6130,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.MonoPion">
+    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.MonoPion">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
@@ -6731,7 +6731,7 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Terroriste">
+    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.Terroriste">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Position"/>
@@ -6857,7 +6857,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Chalands Marine">
+    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Chalands Marine">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
@@ -6883,7 +6883,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Marine">
+    <automat dia-type="commander.roles.SniperCompany" file="BMAutomatMilitary.bms" masalife="true" name="Masalife.Automate.JOINT.Groupe Marine">
       <missions>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
       </missions>
@@ -7432,4 +7432,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3060700364" -->
+<!-- signature="1449376787" -->
