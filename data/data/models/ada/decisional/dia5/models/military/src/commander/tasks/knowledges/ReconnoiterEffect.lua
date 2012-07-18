@@ -20,7 +20,7 @@ return
         local fuseau = self:getAOR( params )
         
         if not next( params.objectives ) then
-            positions[ #positions + 1 ] = CreateKnowledge( world_elements.Point, DEC_Geometrie_CalculerPointArriveePourFuseau( fuseau.source ) )
+            positions[ #positions + 1 ] = CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau( fuseau.source ) )
             return positions, fuseau
         end
         
@@ -50,7 +50,7 @@ return
         -- ajouter un point dans le fuseau au meme niveau que l'objectif le plus lointain
         if not next( positions ) or addLastPoint then
           local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
-          positions[ #positions + 1 ] = CreateKnowledge( world_elements.Point, pos )
+          positions[ #positions + 1 ] = CreateKnowledge( world.Point, pos )
         end
       
         return positions, fuseau
@@ -62,7 +62,7 @@ return
             myself.leadData.fuseaux = {}
             local fuseaux = integration.query.getFuseaux( myself.taskParams.maxNbrFront )
             for _,fuseau in pairs( fuseaux ) do
-                myself.leadData.fuseaux[#myself.leadData.fuseaux +1] = CreateKnowledge( world_elements.Fuseau, fuseau)
+                myself.leadData.fuseaux[#myself.leadData.fuseaux +1] = CreateKnowledge( world.Fuseau, fuseau)
             end
         end
         myself.leadData.currentReccePosition = myself.leadData.currentReccePosition % #myself.leadData.fuseaux + 1
@@ -79,7 +79,7 @@ return
             myself.leadData.fuseauxPei = {}
             local fuseaux = integration.query.getFuseaux( myself.taskParams.maxNbrFront )
             for _,fuseau in pairs( fuseaux ) do
-                myself.leadData.fuseauxPei[#myself.leadData.fuseauxPei +1] = CreateKnowledge( world_elements.Fuseau, fuseau)
+                myself.leadData.fuseauxPei[#myself.leadData.fuseauxPei +1] = CreateKnowledge( world.Fuseau, fuseau)
             end
         end
         myself.leadData.currentPeiPosition = myself.leadData.currentPeiPosition % #myself.leadData.fuseauxPei + 1

@@ -37,7 +37,7 @@ rootnode
 
         if meKnowledge:isUnderIndirectFire() and not self.isMoving then
             if not self.isMoving then
-                self.direction = queries_misc.getMissionDirection[ "execute" ]()
+                self.direction = queries.getMissionDirection[ "execute" ]()
                 if meKnowledge:isParked() then
                     self.positionSurete = meKnowledge:getPosition()
                 elseif( self.direction[1] ~= nil ) then

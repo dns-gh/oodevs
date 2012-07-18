@@ -6,7 +6,7 @@
       <description>Le ou les élements à parcourir</description>
       <type>
         <list>
-          <class name="world_concepts.Destroying"/>
+          <class name="properties.Destroying"/>
         </list>
       </type>
     </parameter>
@@ -15,7 +15,7 @@
     <description>Echanger des délais contre du combat. Freiner les unités le long des positions.</description>
   </goal>
   <body-type>
-    <class name="world_concepts.ForceRatio"/>
+    <class name="properties.ForceRatio"/>
   </body-type>
   <links>
     <link name="moveToward" skill="agent.skills.MoveToward"/>

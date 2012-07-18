@@ -6,6 +6,6 @@
 		<description>Passer en ambiance sureté.</description>
 	</goal>
 	<body-type>
-		<class name="world_concepts.HumanFactors"/>
+		<class name="properties.HumanFactors"/>
 	</body-type>
 </skill>

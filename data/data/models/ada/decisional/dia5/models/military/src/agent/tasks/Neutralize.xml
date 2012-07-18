@@ -5,7 +5,7 @@
 		<parameter name="entities">
 			<type>
 				<list>
-					<class name="world_concepts.Neutralizable"/>
+					<class name="properties.Neutralizable"/>
 				</list>
 			</type>
 		</parameter>
@@ -25,7 +25,7 @@
 					</parameter>
 					<parameter name="positions">
 						<value>
-							<call method="queries_positions.getPositionsToNeutralize">
+							<call method="queries.getPositionsToNeutralize">
 								<parameter name="elementsToNeutralize">
 									<value>
 										<parameter>entities</parameter>

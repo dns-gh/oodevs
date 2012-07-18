@@ -13,7 +13,7 @@
     </goal>
     <let name="fragOrdersToManage">
       <value>
-        <call method="queries_misc.getFragOrders"/>
+        <call method="queries.getFragOrders"/>
       </value>
     </let>
     <skills>

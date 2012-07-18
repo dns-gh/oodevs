@@ -9,7 +9,7 @@ Warning: it should inherit from Mountable, but Masalife does not handle multi in
       <argument name="entity">
         <description>L'entité à observer</description>
         <type>
-          <class name="world_concepts.Observable"/>
+          <class name="properties.Observable"/>
         </type>
       </argument>
     </method>
@@ -18,7 +18,7 @@ Warning: it should inherit from Mountable, but Masalife does not handle multi in
       <argument name="position">
         <description>La position que l'agent souhaite rejoindre.</description>
         <type>
-          <class name="world_concepts.Positionable"/>
+          <class name="properties.Positionable"/>
         </type>
       </argument>
       <return>
@@ -38,7 +38,7 @@ D'une point de vue générale, toutes positions du terrain est une position util
       <argument name="entity">
         <description>L'entité à rejoindre</description>
         <type>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </type>
       </argument>
       <argument name="pathType">
@@ -53,7 +53,7 @@ D'une point de vue générale, toutes positions du terrain est une position util
       <argument name="entity">
         <description>L'entité à rejoindre</description>
         <type>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </type>
       </argument>
       <return>

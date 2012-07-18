@@ -26,7 +26,7 @@ rootnode
         for _, entity in pairs( self.params.entities ) do
             self.targets[ entity ] = true
         end
-        self.positions = queries_positions.getPositionsToLoad[ "execute" ]({elementsToLoad = self.params.entities})
+        self.positions = queries.getPositionsToLoad[ "execute" ]({elementsToLoad = self.params.entities})
     end,
 
     -- --------------------------------------------------------------------------------

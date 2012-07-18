@@ -4,14 +4,14 @@
         <parameter name="objective">
             <description>Position ou il faut emmener les réfugiés</description>
             <type>
-                <class name="world_concepts.Loading"/>
+                <class name="properties.Loading"/>
             </type>
         </parameter>
         <parameter name="prisoners">
             <description>Groupe de réfugiés à guider</description>
             <type>
                 <list>
-                    <class name="world_concepts.Loadable"/>
+                    <class name="properties.Loadable"/>
                 </list>
             </type>
         </parameter>

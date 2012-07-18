@@ -4,12 +4,12 @@
     <parameters>
         <parameter name="undergroundNetwork">
             <type>
-                <class name="world_concepts.UndergroundNetwork"/>
+                <class name="properties.UndergroundNetwork"/>
             </type>
         </parameter>
         <parameter name="exitUndergroundNetwork" nullable="true">
             <type>
-                <class name="world_concepts.UndergroundNetwork"/>
+                <class name="properties.UndergroundNetwork"/>
             </type>
             <default>
                 <nil/>
@@ -17,7 +17,7 @@
         </parameter>
     </parameters>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="moveToward" skill="agent.skills.MoveToward"/>

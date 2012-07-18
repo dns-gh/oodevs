@@ -4,7 +4,7 @@
         <method name="getEntities">
             <return>
                 <type>
-                    <class name="world_concepts.Reconnoitrable"/>
+                    <class name="properties.Reconnoitrable"/>
                 </type>
             </return>
         </method>

@@ -12,7 +12,7 @@
             <description>Les unités qui demandent le support.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Commanding"/>
+                    <class name="properties.Commanding"/>
                 </list>
             </type>
         </parameter>
@@ -20,7 +20,7 @@
             <description>Les unités du second échelon.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Commanding"/>
+                    <class name="properties.Commanding"/>
                 </list>
             </type>
         </parameter>

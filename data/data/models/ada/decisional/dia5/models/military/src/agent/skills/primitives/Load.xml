@@ -6,7 +6,7 @@
 			<description>Les éléments à charger.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Loadable"/>
+					<class name="properties.Loadable"/>
 				</list>
 			</type>
 		</parameter>

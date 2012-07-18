@@ -4,7 +4,7 @@
         <parameter name="pionARenforcer">
             <description>Unité alliées à renforcer</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrAmbulances">
@@ -16,7 +16,7 @@
         <parameter name="pionRenforce" nullable="true">
             <description>Pion qui renforce en ambulances</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
             <default>
                 <nil/>

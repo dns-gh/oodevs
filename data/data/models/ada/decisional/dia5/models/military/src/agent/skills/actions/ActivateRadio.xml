@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.actions.ActivateRadio" source-version="1.0.0">
   <body-type>
-    <class name="world_concepts.Equipment"/>
+    <class name="properties.Equipment"/>
   </body-type>
   <resources>
     <resource name="agent.resources.RadioCapacity" variable="radio">

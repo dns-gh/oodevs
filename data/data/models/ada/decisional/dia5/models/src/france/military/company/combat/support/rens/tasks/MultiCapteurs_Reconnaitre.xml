@@ -4,14 +4,14 @@
     <parameter name="area">
       <description>Zone à reconnaitre.</description>
       <type>
-        <class name="world_elements.Area"/>
+        <class name="world.Area"/>
       </type>
     </parameter>
     <parameter name="ficelleDeVol" nullable="true">
       <description>Ficelle de vol</description>
       <type>
         <list>
-          <class name="world_elements.Point"/>
+          <class name="world.Point"/>
         </list>
       </type>
       <default>

@@ -60,7 +60,7 @@ node "activateElement"
     
     create = function( self )
         if self.params.positions or self.params.positions == NIL then
-            self.positionsToActivate = queries_positions.getPositionsToActivate[ "execute" ](
+            self.positionsToActivate = queries.getPositionsToActivate[ "execute" ](
                                              { elementsToActivate = { self.params.entity } } )
         else
             self.positionsToActivate = self.params.positions

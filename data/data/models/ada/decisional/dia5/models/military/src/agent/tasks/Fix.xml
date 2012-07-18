@@ -8,7 +8,7 @@
       <description>Les objectifs : les ennemis à fixer.</description>
       <type>
         <list>
-          <class name="world_concepts.Destroyable"/>
+          <class name="properties.Destroyable"/>
         </list>
       </type>
     </parameter>
@@ -16,7 +16,7 @@
       <description>Les positions permettant de fixer les ennemis.</description>
       <type>
         <list>
-          <class name="world_concepts.Destroying"/>
+          <class name="properties.Destroying"/>
         </list>
       </type>
     </parameter>

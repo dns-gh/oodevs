@@ -13,7 +13,7 @@
         </parameter>
         <parameter name="position">
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
     </parameters>

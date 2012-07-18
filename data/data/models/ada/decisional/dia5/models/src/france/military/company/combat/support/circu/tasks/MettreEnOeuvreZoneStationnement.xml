@@ -4,7 +4,7 @@
 		<parameter name="zones">
 			<type>
 				<list>
-					<class name="world_elements.Area"/>
+					<class name="world.Area"/>
 				</list>
 			</type>
 		</parameter>

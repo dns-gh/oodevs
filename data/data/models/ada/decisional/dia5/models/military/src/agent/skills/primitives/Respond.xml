@@ -4,7 +4,7 @@
         <parameter name="entities">
             <type>
                 <list>
-                    <class name="world_concepts.Safeguardable"/>
+                    <class name="properties.Safeguardable"/>
                 </list>
             </type>
         </parameter>

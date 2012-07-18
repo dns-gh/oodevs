@@ -4,7 +4,7 @@
   <parameters/>
   <target name="UnitsWithoutPC">
     <type>
-      <class name="world_concepts.Commanding"/>
+      <class name="properties.Commanding"/>
     </type>
   </target>
 </query>

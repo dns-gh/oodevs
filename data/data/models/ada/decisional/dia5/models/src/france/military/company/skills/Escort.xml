@@ -10,7 +10,7 @@
         <parameter name="objective">
             <description>Les entités du groupe servant à la résolution de la tâche.</description>
             <type>
-                <class name="world_elements.Company"/>
+                <class name="world.Company"/>
             </type>
         </parameter>
         <parameter name="automateParameters">

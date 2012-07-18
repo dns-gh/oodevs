@@ -3,24 +3,24 @@
     <parameters>
         <parameter name="entity">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="directionPoints" nullable="true">
             <description>Objectifs face auxquels il faut couvrir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </list>
             </type>
             <default>
-                <call method="queries_misc.getPointTowardMissionDirection"/>
+                <call method="queries.getPointTowardMissionDirection"/>
             </default>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>

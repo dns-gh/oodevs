@@ -17,7 +17,7 @@
         </goal>
         <let name="fragOrdersToManage">
             <value>
-                <call method="queries_misc.getFragOrders"/>
+                <call method="queries.getFragOrders"/>
             </value>
         </let>
         <skills>
@@ -33,7 +33,7 @@
             <skill name="agent.skills.ReactToCoordinationLine">
                 <parameter name="limas">
                     <value>
-                        <call method="queries_misc.getLimaOnPath"/>
+                        <call method="queries.getLimaOnPath"/>
                     </value>
                 </parameter>
             </skill>

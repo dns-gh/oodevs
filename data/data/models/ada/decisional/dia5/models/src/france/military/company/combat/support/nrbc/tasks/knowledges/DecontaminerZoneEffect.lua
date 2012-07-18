@@ -14,7 +14,7 @@ return
           local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
           subAreas = subAreas.first
           for _, area in pairs( subAreas ) do
-              myself.leadData.objectives[#myself.leadData.objectives + 1] = CreateKnowledge( world_elements.Area, area )
+              myself.leadData.objectives[#myself.leadData.objectives + 1] = CreateKnowledge( world.Area, area )
           end
           if #subAreas == 0 then
               myself.leadData.objectives[#myself.leadData.objectives + 1] = objective -- cas ou la zone est hors limite

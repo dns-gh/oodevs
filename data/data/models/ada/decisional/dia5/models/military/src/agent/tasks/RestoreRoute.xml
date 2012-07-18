@@ -6,7 +6,7 @@
             <description>L'itinéraire est défini par une liste de point de passage obligé.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>

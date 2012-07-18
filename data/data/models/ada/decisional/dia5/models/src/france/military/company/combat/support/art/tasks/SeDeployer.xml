@@ -4,7 +4,7 @@
         <parameter name="firePositions" nullable="true">
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
             <default>
@@ -14,7 +14,7 @@
         <parameter name="retreatPosition" nullable="true">
             <description>Position de sauvegarde optionnelle pour un mouvement post tir</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
             <default>
                 <nil/>

@@ -4,7 +4,7 @@
         <parameter name="objective" nullable="true">
             <description>Le point de regroupement  ou la chaine logistique santé sera déployée</description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
             <default>
                 <nil/>
@@ -14,7 +14,7 @@
             <description>Le type de blessures à prendre en charge par la chaîne logistique santé</description>
             <type>
                 <list>
-                    <class name="world_elements.HumanWound"/>
+                    <class name="world.HumanWound"/>
                 </list>
             </type>
             <default>

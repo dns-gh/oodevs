@@ -5,8 +5,8 @@
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="world_concepts.Reconnoitrable"/>
-                    <class name="world_concepts.Reconnoitring"/>
+                    <class name="properties.Reconnoitrable"/>
+                    <class name="properties.Reconnoitring"/>
                 </list>
             </type>
         </parameter>

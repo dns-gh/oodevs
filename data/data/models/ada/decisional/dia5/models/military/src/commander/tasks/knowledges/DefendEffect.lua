@@ -19,7 +19,7 @@ return
       local firstParam = params.objectives[ next(params.objectives) ]
       
       -- Defense de BU : chaque pion effectue occupe une portion de la zone
-    if masalife.brain.core.class.isOfType( firstParam, world_elements.Area) then
+    if masalife.brain.core.class.isOfType( firstParam, world.Area) then
         if not myself.leadData.currentPosition then
             myself.leadData.currentPosition = 0 
             integration.splitArea( firstParam, math.min( self:getNbrFront(), params.maxNbrFront ) )
@@ -31,7 +31,7 @@ return
       end
       
        -- Defense de BU : tous les pions occupent le BU
-      if masalife.brain.core.class.isOfType( firstParam, world_elements.UrbanBlock) then
+      if masalife.brain.core.class.isOfType( firstParam, world.UrbanBlock) then
         return params.objectives 
       end
 
@@ -50,7 +50,7 @@ return
       local firstParam = params.objectives[ next(params.objectives) ]
       
       -- Defense de BU : chaque pion occupe une portion de la zone
-      if masalife.brain.core.class.isOfType( firstParam, world_elements.Area) then
+      if masalife.brain.core.class.isOfType( firstParam, world.Area) then
         if not myself.leadData.currentPosition then
             myself.leadData.currentPosition = 0 
             integration.splitArea( firstParam, math.min( self:getNbrFront(), params.maxNbrFront ) )
@@ -75,7 +75,7 @@ return
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = DEC_GetDirectionEnnemi( mission )
         local position = DEC_Geometrie_PositionTranslateDir( params.objectives[1]:getPosition(), dir, 1000 )
-        return CreateKnowledge( world_elements.Point, position)
+        return CreateKnowledge( world.Point, position)
     end, 
 
     getWithImprovement = function( self, params )

@@ -5,7 +5,7 @@ rootnode
     done = function( self ) end,
     
     create = function (self )
-        self.pions = queries_miscgetFriends[ "execute" ]()
+        self.pions = queriesgetFriends[ "execute" ]()
         self.pionsSources = {}
         meKnowledge.dronesToEmbark = {}
         for _, pion in pairs( self.pions ) do
@@ -18,7 +18,7 @@ rootnode
     
     activate = function( self )
         for pionSource in pairs( meKnowledge.dronesToEmbark ) do
-           local pion = CreateKnowledge( world_elements.PlatoonAlly, pionSource )
+           local pion = CreateKnowledge( world.PlatoonAlly, pionSource )
            if pion:isOperational() then
                 if meKnowledge:getDistanceTo( pion ) < 100 then
                       Activate( skill.nodes.EmbarquerDrone, 1, { pionDrone = pion } )

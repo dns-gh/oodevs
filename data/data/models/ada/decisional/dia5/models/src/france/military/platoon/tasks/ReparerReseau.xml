@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="world_elements.ResourceNetwork"/>
+                <class name="world.ResourceNetwork"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>

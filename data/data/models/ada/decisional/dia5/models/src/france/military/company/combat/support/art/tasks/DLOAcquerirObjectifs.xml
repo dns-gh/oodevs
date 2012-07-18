@@ -4,14 +4,14 @@
     <parameter name="zonesAcquisition">
       <type>
         <list>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </list>
       </type>
     </parameter>
     <parameter name="compagniesAAppuyer">
       <type>
         <list>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </list>
       </type>
     </parameter>

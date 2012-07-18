@@ -4,7 +4,7 @@
     <parameter name="objectives">
       <type>
         <list>
-          <class name="world_concepts.Destroying"/>
+          <class name="properties.Destroying"/>
         </list>
       </type>
     </parameter>

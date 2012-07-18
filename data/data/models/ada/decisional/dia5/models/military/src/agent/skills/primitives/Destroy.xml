@@ -6,7 +6,7 @@
             <description>Les éléments à détruire.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroyable"/>
+                    <class name="properties.Destroyable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Positions possibles de destruction.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
             <default>

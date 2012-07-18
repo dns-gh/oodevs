@@ -5,7 +5,7 @@
             <description>unite a decgarger au cas ou la mission s'arrete avant le déchargement</description>
             <type>
                 <list>
-                    <class name="world_concepts.Loadable"/>
+                    <class name="properties.Loadable"/>
                 </list>
             </type>
         </parameter>

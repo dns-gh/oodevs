@@ -4,14 +4,14 @@
     <parameter name="camp">
       <description>Camp de Réfugiés</description>
       <type>
-        <class name="world_concepts.Loading"/>
+        <class name="properties.Loading"/>
       </type>
     </parameter>
     <parameter name="peoples">
       <description>Groupe de réfugiés à guider</description>
       <type>
         <list>
-          <class name="world_concepts.Loadable"/>
+          <class name="properties.Loadable"/>
         </list>
       </type>
     </parameter>

@@ -4,14 +4,14 @@
         <method name="getObjective">
             <return>
                 <type>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </type>
             </return>
         </method>
         <method name="getMeetingPoint">
             <return>
                 <type>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </type>
             </return>
         </method>

@@ -6,7 +6,7 @@
             <description>Les unités à appuyer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Supportable"/>
+                    <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>
@@ -31,7 +31,7 @@
             </goal>
             <let name="enemiesInRange">
                 <value>
-                    <call method="queries_enemies.getEnemiesEngagingFriends">
+                    <call method="queries.getEnemiesEngagingFriends">
                         <parameter name="dynamic">
                             <value>
                                 <boolean>true</boolean>
@@ -66,7 +66,7 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <call method="queries_positions.getPositionsToNeutralize">
+                            <call method="queries.getPositionsToNeutralize">
                                 <parameter name="elementsToNeutralize">
                                     <value>
                                         <parameter>enemiesInRange</parameter>

@@ -25,7 +25,7 @@
       <description>Les entités du second échelon.</description>
       <type>
         <list>
-          <class name="world_concepts.Commanding"/>
+          <class name="properties.Commanding"/>
         </list>
       </type>
     </parameter>

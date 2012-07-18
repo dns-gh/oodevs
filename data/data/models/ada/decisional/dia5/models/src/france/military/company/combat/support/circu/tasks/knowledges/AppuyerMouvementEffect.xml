@@ -4,7 +4,7 @@
 		<method name="getEntity">
 			<return>
 				<type>
-					<class name="world_concepts.Reachable"/>
+					<class name="properties.Reachable"/>
 				</type>
 			</return>
 		</method>

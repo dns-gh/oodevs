@@ -4,7 +4,7 @@
     <parameter name="objectives" nullable="true">
       <type>
         <list>
-          <class name="world_concepts.Supportable"/>
+          <class name="properties.Supportable"/>
         </list>
       </type>
       <default>

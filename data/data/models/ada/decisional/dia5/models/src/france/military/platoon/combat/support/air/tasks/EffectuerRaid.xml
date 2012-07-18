@@ -4,13 +4,13 @@
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="area">
             <type>
-                <class name="world_elements.Area"/>
+                <class name="world.Area"/>
             </type>
         </parameter>
         <parameter name="munitions">
@@ -63,7 +63,7 @@
                     </parameter>
                     <parameter name="entities">
                         <value>
-                            <call method="queries_enemies.getEnemiesInArea">
+                            <call method="queries.getEnemiesInArea">
                                 <parameter name="areas">
                                     <value>
                                         <list>

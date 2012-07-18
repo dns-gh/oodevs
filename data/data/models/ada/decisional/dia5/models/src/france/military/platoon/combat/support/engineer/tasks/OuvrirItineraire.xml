@@ -5,7 +5,7 @@
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>

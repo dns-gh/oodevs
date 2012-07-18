@@ -6,7 +6,7 @@
             <description>les unités à flanc-garder</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -14,9 +14,9 @@
             <description>Positions à partir desquelles il faut flanc-garder.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
-                    <class name="world_concepts.Observing"/>
-                    <class name="world_concepts.Reaching"/>
+                    <class name="properties.Neutralizing"/>
+                    <class name="properties.Observing"/>
+                    <class name="properties.Reaching"/>
                 </list>
             </type>
         </parameter>
@@ -32,7 +32,7 @@
             </goal>
             <let name="enemies">
                 <value>
-                    <call method="queries_enemies.getEnemiesInRange">
+                    <call method="queries.getEnemiesInRange">
                         <parameter name="probabilityToHit">
                             <value>
                                 <number>0.5</number>

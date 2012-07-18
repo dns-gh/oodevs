@@ -4,13 +4,13 @@
         <parameter name="hostage">
             <description>unite a prendre en otage</description>
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
         <parameter name="position">
             <description>position ou deposer l'otage</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>

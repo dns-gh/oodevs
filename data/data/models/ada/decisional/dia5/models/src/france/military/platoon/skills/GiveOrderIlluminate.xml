@@ -4,14 +4,14 @@
   <parameters>
     <parameter name="entity">
       <type>
-          <class name="world_concepts.Illuminatable"/>
+          <class name="properties.Illuminatable"/>
       </type>
     </parameter>
     <parameter name="illuminateally">
       <description>Les entités non PC servant à illuminer les cibles.</description>
       <type>
         <list>
-          <class name="world_elements.PlatoonAlly"/>
+          <class name="world.PlatoonAlly"/>
         </list>
       </type>
     </parameter>

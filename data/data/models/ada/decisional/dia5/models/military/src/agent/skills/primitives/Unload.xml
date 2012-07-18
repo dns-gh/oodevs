@@ -6,7 +6,7 @@
             <description>Les éléments à débarquer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Loadable"/>
+                    <class name="properties.Loadable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Les positions possibles de débarquement.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Loading"/>
+                    <class name="properties.Loading"/>
                 </list>
             </type>
         </parameter>

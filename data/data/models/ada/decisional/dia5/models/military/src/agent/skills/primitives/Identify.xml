@@ -6,7 +6,7 @@
             <description>Les éléments à identifier.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Identifiable"/>
+                    <class name="properties.Identifiable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Positions possibles d'indentification.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Identifying"/>
+                    <class name="properties.Identifying"/>
                 </list>
             </type>
             <default>

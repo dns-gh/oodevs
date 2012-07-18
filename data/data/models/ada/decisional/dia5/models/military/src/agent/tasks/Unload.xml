@@ -4,13 +4,13 @@
     <parameter name="elements">
       <type>
         <list>
-          <class name="world_concepts.Loadable"/>
+          <class name="properties.Loadable"/>
         </list>
       </type>
     </parameter>
     <parameter name="position">
       <type>
-        <class name="world_concepts.Loading"/>
+        <class name="properties.Loading"/>
       </type>
     </parameter>
   </parameters>

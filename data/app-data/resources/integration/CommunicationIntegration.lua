@@ -18,33 +18,33 @@ integration.communication = {}
 initializeAssignMissions = function()
     myself = myself or {}
     myself.ParameterRegistrationFunctor = {}
-    myself.ParameterRegistrationFunctor["world_elements.Area"] = DEC_AssignMissionLocationParameter
-    myself.ParameterRegistrationFunctor["world_elements.Company"] = DEC_AssignMissionAutomatParameter
-    myself.ParameterRegistrationFunctor["world_elements.Crowd"] = DEC_AssignMissionCrowdParameter
-    myself.ParameterRegistrationFunctor["world_elements.Object"] = DEC_AssignMissionObjectKnowledgeParameter
-    myself.ParameterRegistrationFunctor["world_elements.EngineerObject"] = DEC_AssignMissionGenObjectParameter
-    myself.ParameterRegistrationFunctor["world_elements.Point"] = DEC_AssignMissionPointParameter
-    myself.ParameterRegistrationFunctor["world_elements.Platoon"] = DEC_AssignMissionAgentKnowledgeParameter
-    myself.ParameterRegistrationFunctor["world_elements.PlatoonAlly"] = DEC_AssignMissionPionParameter
-    myself.ParameterRegistrationFunctor["world_elements.UrbanBlock"] = DEC_AssignMissionUrbanBlockParameter
-    myself.ParameterRegistrationFunctor["world_elements.ResourceNetwork"] = DEC_AssignMissionResourceNetworkParameter
-    myself.ParameterRegistrationFunctor["world_elements.Fuseau"] = function( missionPion, parameterName, value) DEC_AssignerFuseauAMissionPion_Mission( value, missionPion ) end
+    myself.ParameterRegistrationFunctor["world.Area"] = DEC_AssignMissionLocationParameter
+    myself.ParameterRegistrationFunctor["world.Company"] = DEC_AssignMissionAutomatParameter
+    myself.ParameterRegistrationFunctor["world.Crowd"] = DEC_AssignMissionCrowdParameter
+    myself.ParameterRegistrationFunctor["world.Object"] = DEC_AssignMissionObjectKnowledgeParameter
+    myself.ParameterRegistrationFunctor["world.EngineerObject"] = DEC_AssignMissionGenObjectParameter
+    myself.ParameterRegistrationFunctor["world.Point"] = DEC_AssignMissionPointParameter
+    myself.ParameterRegistrationFunctor["world.Platoon"] = DEC_AssignMissionAgentKnowledgeParameter
+    myself.ParameterRegistrationFunctor["world.PlatoonAlly"] = DEC_AssignMissionPionParameter
+    myself.ParameterRegistrationFunctor["world.UrbanBlock"] = DEC_AssignMissionUrbanBlockParameter
+    myself.ParameterRegistrationFunctor["world.ResourceNetwork"] = DEC_AssignMissionResourceNetworkParameter
+    myself.ParameterRegistrationFunctor["world.Fuseau"] = function( missionPion, parameterName, value) DEC_AssignerFuseauAMissionPion_Mission( value, missionPion ) end
     myself.ParameterRegistrationFunctor["security.integration.Unit"] = DEC_AssignMissionPionParameter
     myself.ParameterRegistrationFunctor["number"] = DEC_AssignMissionNumericTypeParameter
     myself.ParameterRegistrationFunctor["userdata"] = DEC_AssignMissionDotationTypeParameter
     myself.ParameterRegistrationFunctor["boolean"] = DEC_AssignMissionBoolParameter
 
     myself.ParameterListRegistrationFunctor = {}
-    myself.ParameterListRegistrationFunctor["world_elements.Point"] = DEC_AssignMissionPointListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.Platoon"] = DEC_AssignMissionAgentKnowledgeListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.PlatoonAlly"] = DEC_AssignMissionPionListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.Company"] = DEC_AssignMissionAutomatListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.Object"] = DEC_AssignMissionObjectKnowledgeListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.EngineerObject"] = DEC_AssignMissionGenObjectListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.Area"] = DEC_AssignMissionLocationListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.UrbanBlock"] = DEC_AssignMissionUrbanBlockListParameter
+    myself.ParameterListRegistrationFunctor["world.Point"] = DEC_AssignMissionPointListParameter
+    myself.ParameterListRegistrationFunctor["world.Platoon"] = DEC_AssignMissionAgentKnowledgeListParameter
+    myself.ParameterListRegistrationFunctor["world.PlatoonAlly"] = DEC_AssignMissionPionListParameter
+    myself.ParameterListRegistrationFunctor["world.Company"] = DEC_AssignMissionAutomatListParameter
+    myself.ParameterListRegistrationFunctor["world.Object"] = DEC_AssignMissionObjectKnowledgeListParameter
+    myself.ParameterListRegistrationFunctor["world.EngineerObject"] = DEC_AssignMissionGenObjectListParameter
+    myself.ParameterListRegistrationFunctor["world.Area"] = DEC_AssignMissionLocationListParameter
+    myself.ParameterListRegistrationFunctor["world.UrbanBlock"] = DEC_AssignMissionUrbanBlockListParameter
     myself.ParameterListRegistrationFunctor["security.integration.Unit"] = DEC_AssignMissionPionListParameter
-    myself.ParameterListRegistrationFunctor["world_elements.ResourceNetwork"] = DEC_AssignMissionResourceNetworkListParameter
+    myself.ParameterListRegistrationFunctor["world.ResourceNetwork"] = DEC_AssignMissionResourceNetworkListParameter
 end
 
 local function InferType( param )
@@ -70,7 +70,7 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
     if DEC_Mission_IsPath( missionPion, parameterName ) then
         for i = 1, nValues do
             local currentValue = value[i]
-            if InferType( currentValue ) ~= "world_elements.Point" then
+            if InferType( currentValue ) ~= "world.Point" then
                 error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
             end
             listParams[i] = currentValue.source
@@ -230,10 +230,10 @@ end
 
 integration.getAgentFromKnowledge = function( entity )
     local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
-    return CreateKnowledge(world_elements.PlatoonAlly, agent)
+    return CreateKnowledge(world.PlatoonAlly, agent)
 end
 
 integration.getAgentFromAutomatKnowledge = function( entity )
     local agent = DEC_Connaissance_EnAgent( entity.source )
-    return CreateKnowledge(world_elements.PlatoonAlly, agent)
+    return CreateKnowledge(world.PlatoonAlly, agent)
 end

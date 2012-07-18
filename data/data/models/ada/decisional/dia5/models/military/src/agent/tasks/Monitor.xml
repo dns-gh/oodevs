@@ -4,13 +4,13 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="world_concepts.Observable"/>
+        <class name="properties.Observable"/>
       </type>
     </parameter>
     <parameter name="positions">
       <type>
         <list>
-          <class name="world_concepts.Observing"/>
+          <class name="properties.Observing"/>
         </list>
       </type>
     </parameter>

@@ -6,7 +6,7 @@ L'intention de l'agent pour la relève utilise celle du skill &quot;MoveTowad&qu
 		<parameter name="objective">
 			<description>L'unité à escorter.</description>
 			<type>
-				<class name="world_concepts.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 		</parameter>
 	</parameters>

@@ -2,6 +2,6 @@
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.ReactToObstacles" source-version="1.0.0">
     <description>Gere le comportement face à un obstacle et la demande d'appui à la mobilité</description>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
 </skill>

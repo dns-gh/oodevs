@@ -22,7 +22,7 @@ return
         if LimaId > 0 and meKnowledge.nbPionsMain > 0 then
             pointsBeforeLimas = DEC_Geometrie_CalculerPositionsParRapportALima( LimaId, 300, meKnowledge.nbPionsMain)
             for _, point in pairs( pointsBeforeLimas ) do
-                myself.leadData.scoutPoints[ #myself.leadData.scoutPoints + 1 ]= CreateKnowledge( world_elements.Point, point )
+                myself.leadData.scoutPoints[ #myself.leadData.scoutPoints + 1 ]= CreateKnowledge( world.Point, point )
             end
         else
             DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LCAR )

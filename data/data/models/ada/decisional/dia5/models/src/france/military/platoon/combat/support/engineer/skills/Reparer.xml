@@ -5,13 +5,13 @@
         <parameter name="entities">
             <description>element to repair</description>
             <type>
-                <class name="world_concepts.Buildable"/>
+                <class name="properties.Buildable"/>
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
             <type>
                 <list>
-                    <class name="world_concepts.Building"/>
+                    <class name="properties.Building"/>
                 </list>
             </type>
             <default>
@@ -23,7 +23,7 @@
         <description>The skill's goal is to repair the tactical object</description>
     </goal>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition"/>
@@ -37,7 +37,7 @@
         <feedback name="elementRepaired">
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
         </feedback>
@@ -45,7 +45,7 @@
             <description>L'element element n'a pas pu etre réparé.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
             <argument name="reason">

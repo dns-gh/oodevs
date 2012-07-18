@@ -5,7 +5,7 @@
       <description>Les entités du groupe servant à la résolution de la tâche.</description>
       <type>
         <list>
-          <class name="world_concepts.Supportable"/>
+          <class name="properties.Supportable"/>
         </list>
       </type>
     </parameter>
@@ -20,13 +20,13 @@
     <parameter name="commandingEntities">
       <type>
         <list>
-          <class name="world_concepts.Commanding"/>
+          <class name="properties.Commanding"/>
         </list>
       </type>
     </parameter>
     <parameter name="objective">
       <type>
-        <class name="world_elements.Company"/>
+        <class name="world.Company"/>
       </type>
     </parameter>
     <parameter name="followTask">

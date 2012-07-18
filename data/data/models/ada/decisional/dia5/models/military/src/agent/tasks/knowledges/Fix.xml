@@ -14,7 +14,7 @@
       <argument name="companyTask">
         <description>La tâche automate</description>
         <type>
-          <class name="world_concepts.Commandable"/>
+          <class name="properties.Commandable"/>
         </type>
       </argument>
       <argument name="params">

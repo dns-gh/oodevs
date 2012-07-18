@@ -10,8 +10,8 @@
 			<description>Les objectifs à reconnaitre.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Reconnoitrable"/>
-					<class name="world_concepts.Reconnoitring"/>
+					<class name="properties.Reconnoitrable"/>
+					<class name="properties.Reconnoitring"/>
 				</list>
 			</type>
 		</parameter>
@@ -27,7 +27,7 @@
 			</goal>
 			<let name="entitiesToEngage">
 				<value>
-					<call method="queries_enemies.getEnemiesInRange">
+					<call method="queries.getEnemiesInRange">
 						<parameter name="probabilityToHit">
 							<value>
 								<number>0.5</number>
@@ -57,7 +57,7 @@
 					</parameter>
 					<parameter name="positions">
 						<value>
-							<call method="queries_positions.getPositionsToDestroy">
+							<call method="queries.getPositionsToDestroy">
 								<parameter name="elementsToDestroy">
 									<value>
 										<parameter>entitiesToEngage</parameter>

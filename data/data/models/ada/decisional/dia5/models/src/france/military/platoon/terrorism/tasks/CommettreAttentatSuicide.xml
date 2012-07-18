@@ -4,7 +4,7 @@
         <parameter name="objective">
             <description>Cible contre laquelle l'attentat est commis.</description>
             <type>
-                <class name="world_concepts.Attackable"/>
+                <class name="properties.Attackable"/>
             </type>
         </parameter>
         <parameter name="dotation">

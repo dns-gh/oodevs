@@ -5,7 +5,7 @@
             <description>Comportement de décontamination spécifique à tout objet qui le permet (ex:plot de décontamination).</description>
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
         </parameter>
@@ -17,7 +17,7 @@
         <feedback name="isDecontaminated">
             <argument name="element">
                 <type>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </type>
             </argument>
             <argument name="reason">

@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="area">
             <type>
-                <class name="world_elements.Area"/>
+                <class name="world.Area"/>
             </type>
         </parameter>
     </parameters>
@@ -26,7 +26,7 @@
                 <skill name="agent.skills.ControlCrowds">
                     <parameter name="crowds">
                         <value>
-                            <call method="queries_crowds.getCrowdsInArea">
+                            <call method="queries.getCrowdsInArea">
                                 <parameter name="area">
                                     <value>
                                         <parameter>area</parameter>

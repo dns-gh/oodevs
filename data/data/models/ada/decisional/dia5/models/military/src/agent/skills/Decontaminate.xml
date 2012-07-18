@@ -5,7 +5,7 @@
             <description>Comportement de décontamination spécifique à tout objet qui le permet (ex:plot de décontamination).</description>
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
         </parameter>
@@ -13,7 +13,7 @@
             <description>Point de regropupement à rejoindre</description>
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>

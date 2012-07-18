@@ -7,7 +7,7 @@
 </description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroyable"/>
+                    <class name="properties.Destroyable"/>
                 </list>
             </type>
         </parameter>

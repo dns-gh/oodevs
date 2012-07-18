@@ -10,7 +10,7 @@ create = function( self )
     self.fragOrderReceived = false
     self.sendCR = false
     
-    self.transporteur = CreateKnowledge( world_elements.PlatoonAlly, integration.getTransporter() )
+    self.transporteur = CreateKnowledge( world.PlatoonAlly, integration.getTransporter() )
     self.fluxTire = integration.distance(self.transporteur, meKnowledge) < 10
 end,
 
@@ -39,12 +39,12 @@ end,
         if continueConvoy or not self.fluxTire  then
             self.sendCR = false
             Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointChargement, } )
-            self.ravitailleur = CreateKnowledge( world_elements.PlatoonAlly, integration.getRavitailleur() )
+            self.ravitailleur = CreateKnowledge( world.PlatoonAlly, integration.getRavitailleur() )
             if not self.itineraryToSupplier then
                 local itinerary = integration.getItineraireVersProchaineDestination()
                 self.itineraryToSupplier = {}
                 for _, pos in pairs( itinerary ) do
-                  self.itineraryToSupplier[#self.itineraryToSupplier + 1] = CreateKnowledge( world_elements.Point, pos )
+                  self.itineraryToSupplier[#self.itineraryToSupplier + 1] = CreateKnowledge( world.Point, pos )
                 end
                 self.itineraryToSupplier[#self.itineraryToSupplier + 1] = self.ravitailleur:getMyPosition()
             end
@@ -61,12 +61,12 @@ end,
         if self.fragOrderReceived then
             self.sendCR = false
             Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
-            self.destinataireCourant = CreateKnowledge( world_elements.PlatoonAlly, integration.getDestinataireCourant() )
+            self.destinataireCourant = CreateKnowledge( world.PlatoonAlly, integration.getDestinataireCourant() )
             if not self.itineraryToSupplyRecipient then
                 local itinerary = integration.getItineraireVersProchaineDestination()
                 self.itineraryToSupplyRecipient = {}
                 for _, pos in pairs( itinerary ) do
-                  self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = CreateKnowledge( world_elements.Point, pos )
+                  self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = CreateKnowledge( world.Point, pos )
                 end
                 self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = self.destinataireCourant:getMyPosition()
             end
@@ -87,7 +87,7 @@ end,
                 local itinerary = integration.getItineraireVersProchaineDestination()
                 self.itineraryToTransportersProvider = {}
                 for _, pos in pairs( itinerary ) do
-                  self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = CreateKnowledge( world_elements.Point, pos )
+                  self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = CreateKnowledge( world.Point, pos )
                 end
                 self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = self.transporteur:getMyPosition()
             end

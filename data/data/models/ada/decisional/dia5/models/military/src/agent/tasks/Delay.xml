@@ -6,7 +6,7 @@
             <description>Positions à sur lesquelles se déplacer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
         </parameter>

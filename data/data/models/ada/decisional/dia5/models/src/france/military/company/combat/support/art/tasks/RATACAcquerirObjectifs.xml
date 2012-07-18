@@ -4,7 +4,7 @@
     <parameter name="zonesAObserver">
       <type>
         <list>
-          <class name="world_elements.Area"/>
+          <class name="world.Area"/>
         </list>
       </type>
     </parameter>
@@ -12,7 +12,7 @@
       <description>Positions de déploiement</description>
       <type>
         <list>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </list>
       </type>
     </parameter>

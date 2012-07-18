@@ -6,8 +6,8 @@
 			<description>Les éléments à illuminer et à tirer.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Illuminatable"/>
-					<class name="world_concepts.IndirectFireable"/>
+					<class name="properties.Illuminatable"/>
+					<class name="properties.IndirectFireable"/>
 				</list>
 			</type>
 		</parameter>
@@ -15,7 +15,7 @@
 			<description>L'illuminateur chargé d'illuminer la cible.</description>
 			<type>
 				<list>
-					<class name="world_elements.PlatoonAlly"/>
+					<class name="world.PlatoonAlly"/>
 				</list>
 			</type>
 		</parameter>
@@ -23,7 +23,7 @@
 			<description>Positions de déploiement de la batterie de tir.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Reachable"/>
+					<class name="properties.Reachable"/>
 				</list>
 			</type>
 		</parameter>

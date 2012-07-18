@@ -40,8 +40,8 @@ rootnode
 
         -- No entities to safeguard from issued. Get nearby enemies by default
         if self.params.entities == NIL then
-            self.agentsEngagingMe = queries_enemies.getAgentsEngagingMe[ "execute" ]()
-            self.enemiesCloseToMe = queries_enemies.getDangerousEnemies[ "execute" ]()
+            self.agentsEngagingMe = queries.getAgentsEngagingMe[ "execute" ]()
+            self.enemiesCloseToMe = queries.getDangerousEnemies[ "execute" ]()
             self.entitiesToSafeguardFrom = fusionList( self.agentsEngagingMe, self.enemiesCloseToMe )
         else
             self.entitiesToSafeguardFrom = self.params.entities

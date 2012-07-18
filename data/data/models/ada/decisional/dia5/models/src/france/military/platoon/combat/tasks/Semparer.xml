@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="world_concepts.Destroying"/>
+        <class name="properties.Destroying"/>
       </type>
     </parameter>
   </parameters>

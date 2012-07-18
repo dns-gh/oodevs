@@ -4,7 +4,7 @@ queryImplementation "getDefaultEntitiesToLeadWithoutPC" { ["execute"] = function
     local CreateKnowledge = CreateKnowledge
     local nTemp = #temp
     for i = 1, nTemp do
-        allRes[ i ] = CreateKnowledge( world_elements.PlatoonAlly, nTemp )
+        allRes[ i ] = CreateKnowledge( world.PlatoonAlly, nTemp )
     end
     return allRes
 end}

@@ -5,7 +5,7 @@
         <parameter name="objective">
             <description>Le ou les élément(s) à boucler.</description>
             <type>
-                <class name="world_concepts.Sealable"/>
+                <class name="properties.Sealable"/>
             </type>
         </parameter>
     </parameters>

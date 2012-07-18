@@ -30,13 +30,13 @@ return
               local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts + addArea, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
               subAreas = subAreas.first
               for _, area in pairs( subAreas ) do
-                  areasKn[#areasKn + 1] = CreateKnowledge( world_elements.Area, area )
+                  areasKn[#areasKn + 1] = CreateKnowledge( world.Area, area )
               end
               if #subAreas == 0 then
                   areasKn[#areasKn + 1] = objective -- cas ou la zone est hors limite
               end
           else                                              -- nb de zones  >= nb de pions
-              areasKn[#areasKn + 1] = CreateKnowledge( world_elements.Area, objective.source )
+              areasKn[#areasKn + 1] = CreateKnowledge( world.Area, objective.source )
           end
       end
        -- Distribtion des sous-zones aux pions

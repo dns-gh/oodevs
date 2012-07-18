@@ -6,7 +6,7 @@
             <description>Elements au près desquels il faut aller.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Positions vers lesquelles l'entité peut se déplacer pour rester proche des élements passés en paramètre.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reaching"/>
+                    <class name="properties.Reaching"/>
                 </list>
             </type>
             <default>

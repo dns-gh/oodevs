@@ -7,7 +7,7 @@
             <description>Les éléments à valoriser</description>
             <type>
                 <list>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </list>
             </type>
         </parameter>
@@ -16,7 +16,7 @@
         <description>Valoriser des objets tactiques</description>
     </goal>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition"/>
@@ -31,7 +31,7 @@
             <description>L'element element n'a pas pue etre valorise.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </type>
             </argument>
             <argument name="reason">
@@ -45,7 +45,7 @@
             <description>L'element element a ete valorise.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </type>
             </argument>
         </feedback>
@@ -53,7 +53,7 @@
             <description>L'element n'est pas valorisable</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
         </feedback>

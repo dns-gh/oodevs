@@ -6,14 +6,14 @@
             <description>element to build</description>
             <type>
                 <list>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
             <type>
                 <list>
-                    <class name="world_concepts.Building"/>
+                    <class name="properties.Building"/>
                 </list>
             </type>
             <default>
@@ -37,14 +37,14 @@
             <description>Les travaux sur l'element element one ete annules sur ordre.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
         </feedback>
         <feedback name="elementBuilt">
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
         </feedback>
@@ -52,7 +52,7 @@
             <description>L'element element n'a pas pu etre consruit.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
             <argument name="reason">
@@ -66,7 +66,7 @@
             <description>L'obstacle de manoeuvre n'est pas activé</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Activable"/>
+                    <class name="properties.Activable"/>
                 </type>
             </argument>
         </feedback>

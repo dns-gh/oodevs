@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="position">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="typeDeploiement">

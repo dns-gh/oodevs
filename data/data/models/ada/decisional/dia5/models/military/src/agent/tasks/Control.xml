@@ -7,13 +7,13 @@
         <parameter name="objective">
             <description>The objective to control.</description>
             <type>
-                <class name="world_concepts.Controlable"/>
+                <class name="properties.Controlable"/>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
             <default>
@@ -29,7 +29,7 @@
     </parameters>
     <let name="destroyableEntities">
         <value>
-            <call method="queries_enemies.getEnemiesInRange">
+            <call method="queries.getEnemiesInRange">
                 <parameter name="probabilityToHit">
                     <value>
                         <number>0.5</number>
@@ -74,7 +74,7 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <call method="queries_positions.getPositionsToDestroy">
+                            <call method="queries.getPositionsToDestroy">
                                 <parameter name="elementsToDestroy">
                                     <value>
                                         <parameter>destroyableEntities</parameter>

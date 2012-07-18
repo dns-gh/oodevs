@@ -75,7 +75,7 @@ node "BuildElement"
         self.arrived = false
         self.alreadyBuiltNeedActivate = false
         if self.params.positions or self.params.positions == NIL then
-            self.positions = queries_positions.getPositionsToBuild[ "execute" ](
+            self.positions = queries.getPositionsToBuild[ "execute" ](
                                              { elementsToBuild = { self.params.entity } } )
         else
             self.positions = self.params.positions

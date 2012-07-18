@@ -7,7 +7,7 @@ S'enregistre auprès des éléments soutenus pour recevoir la valeur de leur rap
             <description>Les entités à soutenir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Supportable"/>
+                    <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>
@@ -22,7 +22,7 @@ S'enregistre auprès des éléments soutenus pour recevoir la valeur de leur rap
         </parameter>
     </parameters>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="support" skill="agent.skills.primitives.Support"/>

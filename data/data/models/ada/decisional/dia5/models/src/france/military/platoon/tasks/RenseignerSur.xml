@@ -4,8 +4,8 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="world_concepts.Observable"/>
-        <class name="world_concepts.Observing"/>
+        <class name="properties.Observable"/>
+        <class name="properties.Observing"/>
       </type>
     </parameter>
   </parameters>

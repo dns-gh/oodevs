@@ -6,7 +6,7 @@
             <description>L'élément à engager.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizable"/>
+                    <class name="properties.Neutralizable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Zone dans laquelle l'entité peut se déplacer pour engager l'élément.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
+                    <class name="properties.Neutralizing"/>
                 </list>
             </type>
             <default>

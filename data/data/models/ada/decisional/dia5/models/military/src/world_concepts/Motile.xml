@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="world_concepts.Motile" source-version="1.0.0">
-  <description>Represente tout élément capable de se déplacer par ses propres moyens (les unités).</description>
-  <predicates>
-    <predicate name="isMoving"/>
-  </predicates>
-</interface>

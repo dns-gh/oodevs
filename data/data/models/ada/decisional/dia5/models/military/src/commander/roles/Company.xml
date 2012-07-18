@@ -2,7 +2,7 @@
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.roles.Company" source-version="1.0.0">
     <description>Une entité décisionnelle quelconque dans un contexte militaire.</description>
     <body-type>
-        <class name="world_elements.Company"/>
+        <class name="world.Company"/>
     </body-type>
     <skills>
         <skill name="commander.skills.Lead"/>
@@ -32,7 +32,7 @@
             <skill name="commander.skills.ManageFragOrder">
                 <parameter name="fragOrders">
                     <value>
-                        <call method="queries_misc.getFragOrders"/>
+                        <call method="queries.getFragOrders"/>
                     </value>
                 </parameter>
                 <parameter name="entities">

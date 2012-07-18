@@ -4,7 +4,7 @@
         <parameter name="objective">
             <description>Endroit de regroupement.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="byNight" nullable="true">

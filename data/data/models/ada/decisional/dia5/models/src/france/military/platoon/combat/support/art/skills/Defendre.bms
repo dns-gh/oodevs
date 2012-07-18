@@ -11,7 +11,7 @@ rootnode {
         if self.position == NIL then
             self.position = self.params.zone
         end
-        self.direction = queries_miscgetMissionDirection[ "execute" ]()
+        self.direction = queriesgetMissionDirection[ "execute" ]()
         self.arrived = false
     end,
 

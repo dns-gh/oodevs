@@ -6,7 +6,7 @@
             <description>L'objectif : l'entité amie à recueillir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>
@@ -14,8 +14,8 @@
             <description>Les postions : postion permettant d'observer l'unité alliée et d'engager les ennemis.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Destroying"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
         </parameter>

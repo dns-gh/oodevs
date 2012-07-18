@@ -4,7 +4,7 @@
         <parameter name="unit">
             <description>Unité amie avec laquelle partager les connaissances.</description>
             <type>
-                <class name="world_elements.Element"/>
+                <class name="world.Element"/>
             </type>
         </parameter>
     </parameters>

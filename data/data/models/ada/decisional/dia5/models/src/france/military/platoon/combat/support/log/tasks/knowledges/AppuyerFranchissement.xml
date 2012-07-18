@@ -5,7 +5,7 @@
       <argument name="companyTask">
         <description>La tache automate</description>
         <type>
-          <class name="world_concepts.Commandable"/>
+          <class name="properties.Commandable"/>
         </type>
       </argument>
       <argument name="params">

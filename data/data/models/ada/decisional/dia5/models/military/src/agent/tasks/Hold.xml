@@ -6,7 +6,7 @@
 			<description>L'objectif à tenir.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Destroying"/>
+					<class name="properties.Destroying"/>
 				</list>
 			</type>
 		</parameter>
@@ -14,8 +14,8 @@
 			<description>Le plan d'obstacle à construire si nécéssaire.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Buildable"/>
-					<class name="world_concepts.Building"/>
+					<class name="properties.Buildable"/>
+					<class name="properties.Building"/>
 				</list>
 			</type>
 			<default>
@@ -34,7 +34,7 @@
 	</goal>
 	<let name="enemiesAround">
 		<value>
-			<call method="queries_enemies.getEnemiesInRange">
+			<call method="queries.getEnemiesInRange">
 				<parameter name="probabilityToHit">
 					<value>
 						<number>0.5</number>

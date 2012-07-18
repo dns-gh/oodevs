@@ -3,21 +3,21 @@
     <parameters>
         <parameter name="position">
             <type>
-                <class name="world_concepts.Destroying"/>
-                <class name="world_concepts.Neutralizing"/>
-                <class name="world_concepts.Observing"/>
+                <class name="properties.Destroying"/>
+                <class name="properties.Neutralizing"/>
+                <class name="properties.Observing"/>
             </type>
         </parameter>
         <parameter name="unitsToSupport">
             <type>
                 <list>
-                    <class name="world_concepts.Supportable"/>
+                    <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="objective">
             <type>
-                <class name="world_concepts.Observable"/>
+                <class name="properties.Observable"/>
             </type>
         </parameter>
     </parameters>

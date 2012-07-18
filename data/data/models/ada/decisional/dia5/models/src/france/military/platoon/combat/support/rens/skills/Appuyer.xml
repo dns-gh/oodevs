@@ -4,13 +4,13 @@
         <parameter name="objective">
             <description>L'objectif à rejoindre.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>La position de regroupement.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="jammingTime">

@@ -3,21 +3,21 @@
     <parameters>
         <parameter name="entity">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="directionPoints" nullable="true">
             <description>Objectif face auquel il faut couvrir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>

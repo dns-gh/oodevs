@@ -5,14 +5,14 @@
             <description>Les éléments à dégager.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Removable"/>
+                    <class name="properties.Removable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>Point de regroupement vers lequel se déplacera l'unité en fin de mission.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>

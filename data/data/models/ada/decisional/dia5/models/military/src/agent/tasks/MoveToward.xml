@@ -6,7 +6,7 @@
       <description>Les objectifs à atteindre.</description>
       <type>
         <list>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </list>
       </type>
     </parameter>

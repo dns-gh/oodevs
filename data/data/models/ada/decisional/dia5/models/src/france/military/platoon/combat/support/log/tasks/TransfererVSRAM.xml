@@ -5,13 +5,13 @@
             <description>Unité alliée qui donne des ambulances&#xD;
 </description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="pionARenforcer">
             <description>Unité alliée qui est renforcée par des ambulances</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrAmbulances">

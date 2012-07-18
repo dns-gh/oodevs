@@ -6,8 +6,8 @@
             <description>Les objectifs à fouiller.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Searchable"/>
-                    <class name="world_concepts.Reconnoitring"/>
+                    <class name="properties.Searchable"/>
+                    <class name="properties.Reconnoitring"/>
                 </list>
             </type>
         </parameter>

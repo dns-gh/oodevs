@@ -4,7 +4,7 @@
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </list>
             </type>
             <default>
@@ -13,8 +13,8 @@
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="world_concepts.Approachable"/>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Approachable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
         <parameter name="withImprovement">

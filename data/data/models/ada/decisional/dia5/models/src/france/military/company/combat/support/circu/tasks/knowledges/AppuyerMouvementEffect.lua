@@ -5,7 +5,7 @@ return
       
        local entities = {}
        for i = 1, #params.entities do
-           if masalife.brain.core.class.isOfType( params.entities[i], world_elements.Company) then
+           if masalife.brain.core.class.isOfType( params.entities[i], world.Company) then
                 local entitiesFromAutomat = integration.getEntitiesFromAutomat( params.entities[i], "none", true)
                 for j = 1, #entitiesFromAutomat do
                     entities[#entities + 1] = entitiesFromAutomat[j]

@@ -5,7 +5,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_concepts.Buildable"/>
+                        <class name="properties.Buildable"/>
                     </list>
                 </type>
             </return>
@@ -21,7 +21,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_concepts.Reachable"/>
+                        <class name="properties.Reachable"/>
                     </list>
                 </type>
             </return>
@@ -29,7 +29,7 @@
         <method name="getFinalMeetingPoint">
             <return>
                 <type>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </type>
             </return>
         </method>
@@ -37,7 +37,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_concepts.Reachable"/>
+                        <class name="properties.Reachable"/>
                     </list>
                 </type>
             </return>

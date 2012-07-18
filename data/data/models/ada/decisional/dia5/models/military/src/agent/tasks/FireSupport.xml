@@ -6,7 +6,7 @@
             <description>Zone de provenance de la menace.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </list>
             </type>
         </parameter>
@@ -14,9 +14,9 @@
             <description>Les positions d'appui.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observing"/>
-                    <class name="world_concepts.Destroying"/>
-                    <class name="world_concepts.Neutralizing"/>
+                    <class name="properties.Observing"/>
+                    <class name="properties.Destroying"/>
+                    <class name="properties.Neutralizing"/>
                 </list>
             </type>
         </parameter>
@@ -24,7 +24,7 @@
             <description>Les unités à appuyer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Supportable"/>
+                    <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>
@@ -34,7 +34,7 @@
     </goal>
     <let name="enemisApproaching">
         <value>
-            <call method="queries_enemies.getEnemiesInRange">
+            <call method="queries.getEnemiesInRange">
                 <parameter name="probabilityToHit">
                     <value>
                         <number>0.5</number>

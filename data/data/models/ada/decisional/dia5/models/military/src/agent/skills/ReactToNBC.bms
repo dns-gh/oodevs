@@ -30,7 +30,7 @@ node "sendFragOrder"
     
     create = function( self )
         local fragOrder = CreateFragOrder("Rep_OrderConduite_MettreTenueNBC")
-        local fragOrderKn = CreateKnowledge( world_elements.FragOrder, fragOrder )       
+        local fragOrderKn = CreateKnowledge( world.FragOrder, fragOrder )       
             
         Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } } )
     end

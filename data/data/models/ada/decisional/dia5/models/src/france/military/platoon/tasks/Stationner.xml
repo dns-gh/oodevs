@@ -5,7 +5,7 @@
     <parameter name="position">
       <description>L'élément ou stationner.</description>
       <type>
-        <class name="world_concepts.Positionable"/>
+        <class name="properties.Positionable"/>
       </type>
     </parameter>
   </parameters>

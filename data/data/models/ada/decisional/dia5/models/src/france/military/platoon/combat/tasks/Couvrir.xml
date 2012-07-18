@@ -6,7 +6,7 @@
       <description>les unités à couvrir</description>
       <type>
         <list>
-          <class name="world_concepts.Reachable"/>
+          <class name="properties.Reachable"/>
         </list>
       </type>
     </parameter>
@@ -14,7 +14,7 @@
       <description>Objectif face auquel il faut couvrir.</description>
       <type>
         <list>
-          <class name="world_concepts.Observable"/>
+          <class name="properties.Observable"/>
         </list>
       </type>
       <default>
@@ -25,9 +25,9 @@
       <description>Positions à partir desquelles il faut couvrir.</description>
       <type>
         <list>
-          <class name="world_concepts.Neutralizing"/>
-          <class name="world_concepts.Observing"/>
-          <class name="world_concepts.Destroying"/>
+          <class name="properties.Neutralizing"/>
+          <class name="properties.Observing"/>
+          <class name="properties.Destroying"/>
         </list>
       </type>
     </parameter>

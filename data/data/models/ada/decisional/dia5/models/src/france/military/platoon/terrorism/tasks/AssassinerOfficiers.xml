@@ -4,13 +4,13 @@
         <parameter name="unit">
             <description>Cible de l'assassinat. Les officiers présents dans la cible seront assassinés.</description>
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>Position vers laquelle on se replie apres l'assassinat.</description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
     </parameters>

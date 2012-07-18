@@ -4,7 +4,7 @@ return
         local res = {}
         local pions = DEC_Automate_PionsAvecPC()
         for _, pion in pairs( pions ) do
-            res[ #res + 1 ] = CreateKnowledge( world_elements.PlatoonAlly, pion )
+            res[ #res + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )
         end
         return res
     end,

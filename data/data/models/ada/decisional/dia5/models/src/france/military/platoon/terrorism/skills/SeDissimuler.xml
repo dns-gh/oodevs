@@ -4,7 +4,7 @@
     <parameter name="reachable">
       <description>Element dans lequelle se dissimuler.</description>
       <type>
-        <class name="world_elements.LocalizedElement"/>
+        <class name="world.LocalizedElement"/>
       </type>
     </parameter>
   </parameters>

@@ -4,25 +4,25 @@
         <parameter name="crowd">
             <description>Foule à transporter</description>
             <type>
-                <class name="world_concepts.Transportable"/>
+                <class name="properties.Transportable"/>
             </type>
         </parameter>
         <parameter name="loadingPoint">
             <description>Position d'embarquement</description>
             <type>
-                <class name="world_concepts.Loading"/>
+                <class name="properties.Loading"/>
             </type>
         </parameter>
         <parameter name="destination">
             <description>Position d'arrivee</description>
             <type>
-                <class name="world_concepts.Loading"/>
+                <class name="properties.Loading"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>Poin ou aller une fois toutes les unites transportees</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>

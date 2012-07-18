@@ -4,13 +4,13 @@
         <parameter name="entity">
             <description>Les éléments à illuminer.</description>
             <type>
-                <class name="world_concepts.Illuminatable"/>
+                <class name="properties.Illuminatable"/>
             </type>
         </parameter>
         <parameter name="ally">
             <description>Les batteries alliées chargée des tirs.</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
     </parameters>

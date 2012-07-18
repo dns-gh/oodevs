@@ -5,7 +5,7 @@
             <description>L'objectif : l'ennemi à fixer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroyable"/>
+                    <class name="properties.Destroyable"/>
                 </list>
             </type>
         </parameter>
@@ -13,7 +13,7 @@
             <description>Les positions permettant de fixer l'ennemi.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
         </parameter>

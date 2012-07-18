@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="objectif">
             <type>
-                <class name="world_elements.KeyPoint"/>
+                <class name="world.KeyPoint"/>
             </type>
         </parameter>
     </parameters>

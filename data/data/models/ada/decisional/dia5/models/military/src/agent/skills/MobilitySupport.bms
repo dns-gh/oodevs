@@ -10,8 +10,8 @@ rootnode
 
     activate = function( self )
         local Activate = Activate
-        self.obstacles = queries_objects.getObstaclesToSupport[ "execute" ]()
-        self.positions = queries_positions.getPositionsToFollow[ "execute" ]( {elementsToFollow = self.params.entities, dynamic = "true" })
+        self.obstacles = queries.getObstaclesToSupport[ "execute" ]()
+        self.positions = queries.getPositionsToFollow[ "execute" ]( {elementsToFollow = self.params.entities, dynamic = "true" })
         Activate( skill.links.StayClose, 0.1, {entities = self.params.entities, positions = self.positions})
         if self.obstacles then
             Activate( skill.links.ByPass, 0.9, {entities = self.obstacles})

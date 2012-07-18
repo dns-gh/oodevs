@@ -20,16 +20,16 @@
         <method name="getSupportingPosition">
             <return>
                 <type>
-                    <class name="world_concepts.Neutralizing"/>
-                    <class name="world_concepts.Destroying"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Neutralizing"/>
+                    <class name="properties.Destroying"/>
+                    <class name="properties.Observing"/>
                 </type>
             </return>
         </method>
         <method name="getDirection">
             <return>
                 <type>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </type>
             </return>
         </method>

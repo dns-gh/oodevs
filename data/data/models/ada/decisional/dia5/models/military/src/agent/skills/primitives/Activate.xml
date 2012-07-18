@@ -6,7 +6,7 @@
       <description>Les éléments à activer.</description>
       <type>
         <list>
-          <class name="world_concepts.Activable"/>
+          <class name="properties.Activable"/>
         </list>
       </type>
     </parameter>
@@ -14,7 +14,7 @@
       <description>Positions permettant d'activer les éléments.</description>
       <type>
         <list>
-          <class name="world_concepts.Activating"/>
+          <class name="properties.Activating"/>
         </list>
       </type>
     </parameter>

@@ -6,7 +6,7 @@
             <description>The entities to follow.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -22,7 +22,7 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <call method="queries_positions.getPositionsToFollow">
+                            <call method="queries.getPositionsToFollow">
                                 <parameter name="elementsToFollow">
                                     <value>
                                         <parameter>objectives</parameter>

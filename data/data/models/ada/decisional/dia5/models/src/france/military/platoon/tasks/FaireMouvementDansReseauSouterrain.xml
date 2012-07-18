@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="network">
       <type>
-        <class name="world_concepts.UndergroundNetwork"/>
+        <class name="properties.UndergroundNetwork"/>
       </type>
     </parameter>
   </parameters>

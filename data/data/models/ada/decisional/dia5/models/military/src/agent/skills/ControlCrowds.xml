@@ -5,7 +5,7 @@
         <parameter name="crowds">
             <type>
                 <list>
-                    <class name="world_elements.Crowd"/>
+                    <class name="world.Crowd"/>
                 </list>
             </type>
         </parameter>

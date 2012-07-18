@@ -4,7 +4,7 @@
         <parameter name="area">
             <description>Zone à surveiller</description>
             <type>
-                <class name="world_elements.Area"/>
+                <class name="world.Area"/>
             </type>
         </parameter>
         <parameter name="byNight" nullable="true">

@@ -5,7 +5,7 @@
 		<parameter name="meetingPoint">
 			<description>Les positions de sauvegarde.</description>
 			<type>
-				<class name="world_concepts.Reaching"/>
+				<class name="properties.Reaching"/>
 			</type>
 		</parameter>
 	</parameters>

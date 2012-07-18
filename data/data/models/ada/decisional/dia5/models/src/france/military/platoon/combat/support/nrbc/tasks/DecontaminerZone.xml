@@ -5,7 +5,7 @@
         <parameter name="area">
             <description>Zone à décontaminer</description>
             <type>
-                <class name="world_elements.Area"/>
+                <class name="world.Area"/>
             </type>
         </parameter>
     </parameters>

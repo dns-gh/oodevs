@@ -4,14 +4,14 @@
 		<parameter name="objectives">
 			<type>
 				<list>
-					<class name="world_concepts.Reachable"/>
+					<class name="properties.Reachable"/>
 				</list>
 			</type>
 		</parameter>
 		<parameter name="meetingPoint">
 			<description>Position de de regroupement</description>
 			<type>
-				<class name="world_concepts.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 		</parameter>
 	</parameters>

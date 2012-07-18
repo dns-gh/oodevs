@@ -56,7 +56,7 @@ rootnode
         self.report = nil
         self.toImprove = nil
         self.alltry = #self.params.entities == 0
-        self.positions = queries_positions.getPositionsToRepair[ "execute" ]({elementsToRepair = self.params.entities})
+        self.positions = queries.getPositionsToRepair[ "execute" ]({elementsToRepair = self.params.entities})
     end,
 
     activate = function( self )

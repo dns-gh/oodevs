@@ -15,7 +15,7 @@
 			<return>
 				<type>
 					<list>
-						<class name="world_elements.Object"/>
+						<class name="world.Object"/>
 					</list>
 				</type>
 			</return>

@@ -4,7 +4,7 @@
 	<parameters>
 		<parameter name="entity">
 			<type>
-				<class name="world_concepts.IndirectFireable"/>
+				<class name="properties.IndirectFireable"/>
 			</type>
 		</parameter>
 		<parameter name="munition">
@@ -20,7 +20,7 @@
 		<parameter name="firePositions">
 			<type>
 				<list>
-					<class name="world_concepts.Reaching"/>
+					<class name="properties.Reaching"/>
 				</list>
 			</type>
 		</parameter>

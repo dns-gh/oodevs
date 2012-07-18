@@ -6,7 +6,7 @@
             <description>L'élément à reconnaître.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Searchable"/>
+                    <class name="properties.Searchable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Zone dans laquelle l'entité peut se déplacer pour reconnaître l'élement.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reconnoitring"/>
+                    <class name="properties.Reconnoitring"/>
                 </list>
             </type>
             <default>

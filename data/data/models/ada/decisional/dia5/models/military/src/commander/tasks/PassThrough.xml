@@ -4,13 +4,13 @@
         <parameter name="crossingSite">
             <description>Le site de franchissement</description>
             <type>
-                <class name="world_elements.Object"/>
+                <class name="world.Object"/>
             </type>
         </parameter>
         <parameter name="objective">
             <description>L'élement à rejoindre</description>
             <type>
-                <class name="world_concepts.Reaching"/>
+                <class name="properties.Reaching"/>
             </type>
         </parameter>
         <parameter name="companyTask">

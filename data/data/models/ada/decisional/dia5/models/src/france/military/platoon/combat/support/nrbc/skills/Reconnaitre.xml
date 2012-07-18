@@ -6,7 +6,7 @@
             <description>L'élément à reconnaître.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reconnoitrable"/>
+                    <class name="properties.Reconnoitrable"/>
                 </list>
             </type>
         </parameter>

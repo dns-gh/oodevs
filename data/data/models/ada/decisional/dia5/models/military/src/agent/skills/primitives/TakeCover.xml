@@ -6,7 +6,7 @@
 			<description>Les entités représentant un danger potentiel.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Safeguardable"/>
+					<class name="properties.Safeguardable"/>
 				</list>
 			</type>
 		</parameter>
@@ -14,7 +14,7 @@
 			<description>Les positions de sauvegarde.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Safeguarding"/>
+					<class name="properties.Safeguarding"/>
 				</list>
 			</type>
 			<default>
@@ -37,7 +37,7 @@
 		<feedback name="movementDone">
 			<argument name="position">
 				<type>
-					<class name="world_concepts.Positionable"/>
+					<class name="properties.Positionable"/>
 				</type>
 			</argument>
 		</feedback>

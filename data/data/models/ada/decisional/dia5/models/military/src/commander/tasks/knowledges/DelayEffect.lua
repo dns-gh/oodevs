@@ -16,7 +16,7 @@ return
       self.pointsOnLimasScout = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsScout )
       for _, points in pairs( self.pointsOnLimasScout ) do
        for _, point in pairs( points ) do
-         self.scoutPoints[ #self.scoutPoints + 1 ] = CreateKnowledge( world_elements.Point, point )
+         self.scoutPoints[ #self.scoutPoints + 1 ] = CreateKnowledge( world.Point, point )
        end
       end
       self.numberEchelons = myself.taskParams.echelonNumber or 0
@@ -34,7 +34,7 @@ return
       for _, points in pairs( self.pointsOnLimas ) do
        for _, point in pairs( points ) do
          if meKnowledge.nbPionsMain % 2 == 0 or compt % ( meKnowledge.nbPionsMain + 1 ) ~= meKnowledge.nbPionsMain then
-           self.mainPoints[ #self.mainPoints + 1 ] = CreateKnowledge( world_elements.Point, point )
+           self.mainPoints[ #self.mainPoints + 1 ] = CreateKnowledge( world.Point, point )
          end
          compt = compt + 1  
        end

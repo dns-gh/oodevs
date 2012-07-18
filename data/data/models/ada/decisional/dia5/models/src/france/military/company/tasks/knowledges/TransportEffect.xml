@@ -5,7 +5,7 @@
       <return>
         <type>
           <list>
-            <class name="world_concepts.Loadable"/>
+            <class name="properties.Loadable"/>
           </list>
         </type>
       </return>
@@ -13,21 +13,21 @@
     <method name="getLoadingPoint">
       <return>
         <type>
-          <class name="world_concepts.Loading"/>
+          <class name="properties.Loading"/>
         </type>
       </return>
     </method>
     <method name="getDestination">
       <return>
         <type>
-          <class name="world_concepts.Loading"/>
+          <class name="properties.Loading"/>
         </type>
       </return>
     </method>
     <method name="getMeetingPoint" abstract="false">
       <argument name="entity">
         <type>
-          <class name="world_concepts.Commanding"/>
+          <class name="properties.Commanding"/>
         </type>
       </argument>
       <return>

@@ -7,7 +7,7 @@ rootnode {
     end,
 
     create = function (self )
-        self.direction = queries_miscgetMissionDirection[ "execute" ]()
+        self.direction = queriesgetMissionDirection[ "execute" ]()
         self.deployed = false
         meKnowledge:setROE( eRoeStateRestrictedFire )
     end,

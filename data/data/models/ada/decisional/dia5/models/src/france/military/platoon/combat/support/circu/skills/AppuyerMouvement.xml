@@ -3,7 +3,7 @@
 	<parameters>
 		<parameter name="entity">
 			<type>
-				<class name="world_elements.PlatoonAlly"/>
+				<class name="world.PlatoonAlly"/>
 			</type>
 		</parameter>
 	</parameters>

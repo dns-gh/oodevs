@@ -6,8 +6,8 @@
       <description>Les entités à engager.</description>
       <type>
         <list>
-          <class name="world_concepts.Neutralizable"/>
-          <class name="world_concepts.Destroyable"/>
+          <class name="properties.Neutralizable"/>
+          <class name="properties.Destroyable"/>
         </list>
       </type>
     </parameter>
@@ -15,7 +15,7 @@
       <description>Les positions d'engagement.</description>
       <type>
         <list>
-          <class name="world_concepts.Positionable"/>
+          <class name="properties.Positionable"/>
         </list>
       </type>
       <default>

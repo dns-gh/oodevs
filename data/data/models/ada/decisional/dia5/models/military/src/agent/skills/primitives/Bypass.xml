@@ -6,7 +6,7 @@
             <description>Les éléments à contourner</description>
             <type>
                 <list>
-                    <class name="world_concepts.Bypassable"/>
+                    <class name="properties.Bypassable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Positions permettant de contourner les éléments.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Bypassing"/>
+                    <class name="properties.Bypassing"/>
                 </list>
             </type>
         </parameter>
@@ -50,7 +50,7 @@
         <feedback name="elementBypassed">
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Bypassable"/>
+                    <class name="properties.Bypassable"/>
                 </type>
             </argument>
         </feedback>
@@ -58,7 +58,7 @@
             <description>L'element element n'a pas pu etre degage.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Bypassable"/>
+                    <class name="properties.Bypassable"/>
                 </type>
             </argument>
         </feedback>
@@ -66,7 +66,7 @@
             <description>Les travaux sur l'element element one ete annules sur ordre.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Bypassable"/>
+                    <class name="properties.Bypassable"/>
                 </type>
             </argument>
         </feedback>
@@ -74,7 +74,7 @@
             <description>Les travaux sur l'element element one ete annules sur ordre.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Bypassable"/>
+                    <class name="properties.Bypassable"/>
                 </type>
             </argument>
         </feedback>

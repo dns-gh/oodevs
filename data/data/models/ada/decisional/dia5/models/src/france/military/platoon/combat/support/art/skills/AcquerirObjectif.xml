@@ -3,17 +3,17 @@
 	<parameters>
 		<parameter name="zone">
 			<type>
-				<class name="world_elements.Area"/>
+				<class name="world.Area"/>
 			</type>
 		</parameter>
 		<parameter name="position">
 			<type>
-				<class name="world_concepts.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 		</parameter>
 		<parameter name="positionDebarquement" nullable="true">
 			<type>
-				<class name="world_concepts.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 			<default>
 				<nil/>

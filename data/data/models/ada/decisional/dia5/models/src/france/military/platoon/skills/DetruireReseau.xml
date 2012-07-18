@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="network">
             <type>
-                <class name="world_elements.ResourceNetwork"/>
+                <class name="world.ResourceNetwork"/>
             </type>
         </parameter>
     </parameters>

@@ -4,7 +4,7 @@
 		<parameter name="elements">
 			<type>
 				<list>
-					<class name="world_concepts.Loadable"/>
+					<class name="properties.Loadable"/>
 				</list>
 			</type>
 		</parameter>

@@ -4,12 +4,12 @@
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="moveToward" skill="agent.skills.MoveToward"/>

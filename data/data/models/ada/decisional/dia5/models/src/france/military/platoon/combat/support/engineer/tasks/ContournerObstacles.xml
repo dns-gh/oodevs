@@ -6,14 +6,14 @@
             <description>Les obstacles a contourner</description>
             <type>
                 <list>
-                    <class name="world_concepts.Bypassable"/>
+                    <class name="properties.Bypassable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>Le point de regroupement une fois les obstacles contournés</description>
             <type>
-                <class name="world_elements.Point"/>
+                <class name="world.Point"/>
             </type>
         </parameter>
     </parameters>

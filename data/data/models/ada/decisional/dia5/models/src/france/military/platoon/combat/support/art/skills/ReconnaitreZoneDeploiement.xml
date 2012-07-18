@@ -5,13 +5,13 @@
 		<parameter name="objectives">
 			<type>
 				<list>
-					<class name="world_concepts.Reconnoitrable"/>
+					<class name="properties.Reconnoitrable"/>
 				</list>
 			</type>
 		</parameter>
 		<parameter name="meetingPoint" nullable="true">
 			<type>
-				<class name="world_concepts.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 			<default>
 				<nil/>

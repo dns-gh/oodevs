@@ -39,7 +39,7 @@ rootnode
             if lima:getLimaType() == eTypeLima_LCA then
                 local fragOrder = CreateFragOrder("Rep_OrderConduite_ChangerAmbiance")
                 integration.setOrderConduiteChangerAmbiance( fragOrder, eEtatAmbiance_Surete )
-                local fragOrderKn = CreateKnowledge( world_elements.FragOrder, fragOrder )
+                local fragOrderKn = CreateKnowledge( world.FragOrder, fragOrder )
                 Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } } )
             end
         end

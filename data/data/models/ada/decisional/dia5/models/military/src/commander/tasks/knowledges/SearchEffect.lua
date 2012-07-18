@@ -19,7 +19,7 @@ return
     
     getObjectives = function( self, params )
         local objective = params.objective
-        if masalife.brain.core.class.isOfType( objective, world_elements.Area) then
+        if masalife.brain.core.class.isOfType( objective, world.Area) then
             if not myself.leadData.currentPosition then
                 myself.leadData.currentPosition = 0 
                 integration.splitArea( params.objective, math.min( self:getNbrFront(), params.maxNbrFront ) )

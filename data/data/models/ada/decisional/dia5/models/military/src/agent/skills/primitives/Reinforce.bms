@@ -21,7 +21,7 @@ rootnode
 
     create = function( self )
         self.arrived = false
-        if not DEC_Agent_AutomateEstEmbraye() and masalife.brain.core.class.isOfType( self.params.entity, world_elements.PlatoonAlly ) then
+        if not DEC_Agent_AutomateEstEmbraye() and masalife.brain.core.class.isOfType( self.params.entity, world.PlatoonAlly ) then
            meKnowledge:sendReinforceGivenByUser( integration.GetSuperiorKnowledge( meKnowledge ), meKnowledge )
         end
         self.params.entity:changeAutomate()
@@ -59,7 +59,7 @@ rootnode
         if self.params.positions and self.params.positions ~= NIL then
           positions = self.params.positions
         else 
-           positions = queries_positions.getPositionsToReinforce[ "execute" ]({ elementsToReinforce = { self.params.entity } })
+           positions = queries.getPositionsToReinforce[ "execute" ]({ elementsToReinforce = { self.params.entity } })
         end
         for _,position in pairs( positions ) do
             Activate( skill.links.moveAndTakePosition, 

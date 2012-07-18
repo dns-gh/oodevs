@@ -3,21 +3,21 @@
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="world_elements.Company"/>
+                <class name="world.Company"/>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
-                    <class name="world_concepts.Neutralizing"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Destroying"/>
+                    <class name="properties.Neutralizing"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
         </parameter>
         <parameter name="direction">
             <type>
-                <class name="world_concepts.Observable"/>
+                <class name="properties.Observable"/>
             </type>
         </parameter>
     </parameters>

@@ -15,7 +15,7 @@ rootnode
     end,
 
     create = function( self )
-        self.positions = queries_positions.getPositionsToIlluminate[ "execute" ]({elementsToIlluminate = self.params.entities})
+        self.positions = queries.getPositionsToIlluminate[ "execute" ]({elementsToIlluminate = self.params.entities})
     end,
     -- -------------------------------------------------------------------------------- 
     -- For each objective of the skill, try to activate it. 

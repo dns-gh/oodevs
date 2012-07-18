@@ -41,7 +41,7 @@ rootnode
         if #self.entities < 1 then
             self.entities = { meKnowledge:getMyPosition() }
         end
-        self.positions = queries_positions.getPositionsToReach[ "execute" ](
+        self.positions = queries.getPositionsToReach[ "execute" ](
                                              { elementsToReach = self.entities } )
     end,
 

@@ -5,7 +5,7 @@
       <description>Ficelle de vol.</description>
       <type>
         <list>
-          <class name="world_elements.Point"/>
+          <class name="world.Point"/>
         </list>
       </type>
     </parameter>

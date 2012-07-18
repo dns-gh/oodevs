@@ -5,8 +5,8 @@
             <description>Les Obstacles à activer</description>
             <type>
                 <list>
-                    <class name="world_concepts.Activable"/>
-                    <class name="world_concepts.Activating"/>
+                    <class name="properties.Activable"/>
+                    <class name="properties.Activating"/>
                 </list>
             </type>
         </parameter>

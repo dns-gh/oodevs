@@ -6,14 +6,14 @@
             <description>Les objets à construire</description>
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint" nullable="true">
             <description>Point de regroupement vers lequel se déplacera l'unité en fin de mission.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="withImprovement" nullable="true">

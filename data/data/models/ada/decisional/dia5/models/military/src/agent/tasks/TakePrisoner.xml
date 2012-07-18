@@ -4,12 +4,12 @@
     <parameters>
         <parameter name="enemy">
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
         <parameter name="camp">
             <type>
-                <class name="world_concepts.Camp"/>
+                <class name="properties.Camp"/>
             </type>
         </parameter>
     </parameters>

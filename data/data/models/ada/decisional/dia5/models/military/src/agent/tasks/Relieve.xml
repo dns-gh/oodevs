@@ -7,7 +7,7 @@
     <parameter name="objective">
       <description>L'unité à relever.</description>
       <type>
-        <class name="world_concepts.Relievable"/>
+        <class name="properties.Relievable"/>
       </type>
     </parameter>
   </parameters>

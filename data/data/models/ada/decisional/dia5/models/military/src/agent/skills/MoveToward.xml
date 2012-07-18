@@ -5,7 +5,7 @@
             <description>Les éléments que l'on veut rejoindre.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>

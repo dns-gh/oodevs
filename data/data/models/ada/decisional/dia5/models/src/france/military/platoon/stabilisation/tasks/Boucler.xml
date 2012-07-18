@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="objective">
             <type>
-                <class name="world_concepts.Sealable"/>
+                <class name="properties.Sealable"/>
             </type>
         </parameter>
     </parameters>

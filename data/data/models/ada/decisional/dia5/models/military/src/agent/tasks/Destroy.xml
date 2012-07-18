@@ -4,14 +4,14 @@
         <parameter name="entities">
             <type>
                 <list>
-                    <class name="world_concepts.Destroyable"/>
+                    <class name="properties.Destroyable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions" nullable="true">
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
             <default>

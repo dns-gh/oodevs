@@ -5,7 +5,7 @@
     <parameter name="objective">
       <description>La zone à rejoindre</description>
       <type>
-        <class name="world_concepts.Reachable"/>
+        <class name="properties.Reachable"/>
       </type>
     </parameter>
   </parameters>

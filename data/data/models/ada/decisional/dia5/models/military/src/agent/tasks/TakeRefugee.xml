@@ -5,13 +5,13 @@
         <parameter name="unit">
             <description>L'unité à prendre en compte comme réfugié.</description>
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
         <parameter name="camp">
             <description>Le camp dans lequel déposer le réfugié.</description>
             <type>
-                <class name="world_concepts.Camp"/>
+                <class name="properties.Camp"/>
             </type>
         </parameter>
     </parameters>

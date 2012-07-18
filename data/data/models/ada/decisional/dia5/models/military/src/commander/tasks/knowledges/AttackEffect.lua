@@ -3,7 +3,7 @@ return
 
     getObjectives = function( self, params, entity )
         local fuseau = self:getReachable( params )
-        return { CreateKnowledge( world_elements.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source)) }
+        return { CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source)) }
     end,
 
     getReachable = function( self, params )
@@ -14,7 +14,7 @@ return
         if not objective then
           local fuseaux = integration.query.getFuseaux( myself.taskParams.maxNbrFront )
           for _,fuseau in pairs( fuseaux ) do
-            myself.leadData.fuseaux[#myself.leadData.fuseaux +1] = CreateKnowledge( world_elements.Fuseau, fuseau)
+            myself.leadData.fuseaux[#myself.leadData.fuseaux +1] = CreateKnowledge( world.Fuseau, fuseau)
           end
        end
      end

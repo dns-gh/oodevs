@@ -8,7 +8,7 @@
             <description>Les objectifs : les entités amies à recueillir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>
@@ -16,8 +16,8 @@
             <description>Les postions : postions permettant d'observer l'unité alliée et d'engager les ennemis.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Destroying"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
         </parameter>
@@ -47,7 +47,7 @@
                 <skill name="agent.skills.Engage" priority="0.1">
                     <parameter name="entities">
                         <value>
-                            <call method="queries_enemies.getEnemiesInRange">
+                            <call method="queries.getEnemiesInRange">
                                 <parameter name="probabilityToHit">
                                     <value>
                                         <number>0.5</number>

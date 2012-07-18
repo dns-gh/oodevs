@@ -4,7 +4,7 @@
         <parameter name="objective" nullable="true">
             <description>Objective that will be used to deploy the unit</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
             <default>
                 <nil/>

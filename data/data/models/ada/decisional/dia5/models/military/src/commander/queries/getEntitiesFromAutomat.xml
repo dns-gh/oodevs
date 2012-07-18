@@ -14,13 +14,13 @@
     </parameter>
     <parameter name="automat">
       <type>
-        <class name="world_elements.Company"/>
+        <class name="world.Company"/>
       </type>
     </parameter>
   </parameters>
   <target name="k">
     <type>
-      <class name="world_elements.PlatoonAlly"/>
+      <class name="world.PlatoonAlly"/>
     </type>
   </target>
 </query>

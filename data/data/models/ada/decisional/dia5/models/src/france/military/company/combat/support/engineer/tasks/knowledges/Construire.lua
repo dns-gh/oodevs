@@ -29,7 +29,7 @@ return
         local positions = {}
         for _, entity in pairs (params.entities) do
             for _, position in pairs (entity:getPositions()) do
-                positions[ #positions + 1] = CreateKnowledge( world_elements.Point, position )
+                positions[ #positions + 1] = CreateKnowledge( world.Point, position )
             end
         end
         return positions

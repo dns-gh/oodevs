@@ -6,7 +6,7 @@
             <description>les unités à couvrir</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Objectifs face auxquels il faut couvrir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </list>
             </type>
         </parameter>
@@ -22,9 +22,9 @@
             <description>Positions à partir desquelles il faut couvrir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
-                    <class name="world_concepts.Observing"/>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Neutralizing"/>
+                    <class name="properties.Observing"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
         </parameter>
@@ -40,7 +40,7 @@
             </goal>
             <let name="enemies">
                 <value>
-                    <call method="queries_enemies.getEnemiesInRange">
+                    <call method="queries.getEnemiesInRange">
                         <parameter name="probabilityToHit">
                             <value>
                                 <number>0.5</number>
@@ -51,7 +51,7 @@
             </let>
             <let name="dangerDirection">
                 <value>
-                    <call method="queries_misc.getPointTowardMissionDirection"/>
+                    <call method="queries.getPointTowardMissionDirection"/>
                 </value>
             </let>
             <skills>

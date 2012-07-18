@@ -43,7 +43,7 @@ rootnode
         if self.params.destroyingPositions and self.params.destroyingPositions ~= NIL  then
             self.harassPositions = self.params.destroyingPositions   
         else       
-            self.harassPositions = queries_positions.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.harassObjective }, dynamic = true } ) 
+            self.harassPositions = queries.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.harassObjective }, dynamic = true } ) 
         end
         self.numberOfInitialHarassPositions = #self.harassPositions
     end,
@@ -67,9 +67,9 @@ rootnode
               local realEnemyId = integration.getAgentIdFromKnowledge( element )
               if self.realEnemies[ realEnemyId ] then
                   if element:isOperational() and 
-                    ( ( masalife.brain.core.class.isOfType( self.params.harassObjective,world_elements.Area ) 
+                    ( ( masalife.brain.core.class.isOfType( self.params.harassObjective,world.Area ) 
                   and DEC_Geometrie_EstPointDansLocalisation( element:getPosition(), self.params.harassObjective.source ) ) 
-                        or ( masalife.brain.core.class.isOfType( self.params.harassObjective, world_elements.UrbanBlock ) 
+                        or ( masalife.brain.core.class.isOfType( self.params.harassObjective, world.UrbanBlock ) 
                   and DEC_IsPointInUrbanBlock( element:getPosition(), self.params.harassObjective.source ) ) )
                     then
                       self.entities[ #self.entities + 1 ] = element

@@ -8,7 +8,7 @@
 		</parameter>
 		<parameter name="siteFranchissement">
 			<type>
-				<class name="world_elements.Object"/>
+				<class name="world.Object"/>
 			</type>
 		</parameter>
 	</parameters>

@@ -13,22 +13,22 @@ integration.ontology =
 {
     types = 
     {
-        body            = world_elements.PlatoonAlly,
-        object          = world_elements.Object,
-        urbanBlock      = world_elements.UrbanBlock,
-        point           = world_elements.Point,
-        area            = world_elements.Area,
-        direction       = world_elements.Direction,
-        automat         = world_elements.Company,
-        agent           = world_elements.PlatoonAlly,
-        agentKnowledge  = world_elements.Platoon,
-        population      = world_elements.Crowd,
-        genObject       = world_elements.EngineerObject,
-        limaStatique    = world_elements.LimaStatique,
-        fragOrder       = world_elements.FragOrder,
-        resourceNetwork = world_elements.ResourceNetwork,
-        humanWound      = world_elements.HumanWound,
-        equipmentType   = world_elements.EquipmentType
+        body            = world.PlatoonAlly,
+        object          = world.Object,
+        urbanBlock      = world.UrbanBlock,
+        point           = world.Point,
+        area            = world.Area,
+        direction       = world.Direction,
+        automat         = world.Company,
+        agent           = world.PlatoonAlly,
+        agentKnowledge  = world.Platoon,
+        population      = world.Crowd,
+        genObject       = world.EngineerObject,
+        limaStatique    = world.LimaStatique,
+        fragOrder       = world.FragOrder,
+        resourceNetwork = world.ResourceNetwork,
+        humanWound      = world.HumanWound,
+        equipmentType   = world.EquipmentType
     }
 }
 

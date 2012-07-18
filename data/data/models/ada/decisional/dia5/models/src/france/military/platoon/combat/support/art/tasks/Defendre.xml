@@ -3,12 +3,12 @@
 	<parameters>
 		<parameter name="zone">
 			<type>
-				<class name="world_concepts.Positionable"/>
+				<class name="properties.Positionable"/>
 			</type>
 		</parameter>
 		<parameter name="position" nullable="true">
 			<type>
-				<class name="world_concepts.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 			<default>
 				<nil/>

@@ -24,7 +24,7 @@
       <description>Les entités du groupe servant à la résolution de la tâche.</description>
       <type>
         <list>
-          <class name="world_concepts.Commanding"/>
+          <class name="properties.Commanding"/>
         </list>
       </type>
     </parameter>

@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="zone">
             <type>
-                <class name="world_elements.Area"/>
+                <class name="world.Area"/>
             </type>
         </parameter>
         <parameter name="positionDebarquement" nullable="true">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
             <default>
                 <nil/>
@@ -16,7 +16,7 @@
         </parameter>
         <parameter name="entity">
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
     </parameters>
@@ -40,7 +40,7 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <call method="queries_positions.getPositionsToFollow">
+                            <call method="queries.getPositionsToFollow">
                                 <parameter name="elementsToFollow">
                                     <value>
                                         <list>

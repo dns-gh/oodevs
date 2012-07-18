@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="resource">
             <type>
-               <class name="world_elements.ResourceNetwork"/>
+               <class name="world.ResourceNetwork"/>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="moveToward" skill="agent.skills.MoveToward"/>

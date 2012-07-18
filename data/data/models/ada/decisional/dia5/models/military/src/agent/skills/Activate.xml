@@ -6,7 +6,7 @@
       <description>The obstacles to activate.</description>
       <type>
         <list>
-          <class name="world_concepts.Activable"/>
+          <class name="properties.Activable"/>
         </list>
       </type>
       <default>
@@ -17,7 +17,7 @@
       <description>Positions permettant d'activer les elements.</description>
       <type>
         <list>
-          <class name="world_concepts.Activating"/>
+          <class name="properties.Activating"/>
         </list>
       </type>
     </parameter>

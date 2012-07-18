@@ -4,7 +4,7 @@
     <parameter name="objective">
       <description>Compagnie à orienter</description>
       <type>
-        <class name="world_elements.Company"/>
+        <class name="world.Company"/>
       </type>
     </parameter>
   </parameters>

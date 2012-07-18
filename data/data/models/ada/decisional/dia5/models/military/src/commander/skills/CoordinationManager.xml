@@ -5,7 +5,7 @@
       <description>Les unités de cet echelon qui vont être coordonées.</description>
       <type>
         <list>
-          <class name="world_concepts.Commanding"/>
+          <class name="properties.Commanding"/>
         </list>
       </type>
     </parameter>

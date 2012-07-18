@@ -4,7 +4,7 @@
         <parameter name="objective">
             <description>L'objet à observer</description>
             <type>
-                <class name="world_concepts.Observable"/>
+                <class name="properties.Observable"/>
             </type>
         </parameter>
     </parameters>

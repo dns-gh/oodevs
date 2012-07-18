@@ -10,7 +10,7 @@ return
         for _, point in pairs(params.objectives) do
             positions[ #positions + 1 ] = point
         end
-        positions[ #positions + 1 ] = CreateKnowledge( world_elements.Point, whoReinforce:getPosition() )
+        positions[ #positions + 1 ] = CreateKnowledge( world.Point, whoReinforce:getPosition() )
         return positions
     end,
 }

@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="area">
             <type>
-                <class name="world_elements.Area"/>
+                <class name="world.Area"/>
             </type>
         </parameter>
     </parameters>
@@ -31,7 +31,7 @@
         <stage label="Depolluer zone" disable-when-done="true">
             <let name="obstacles">
                 <value>
-                    <call method="queries_objects.getObstaclesInArea">
+                    <call method="queries.getObstaclesInArea">
                         <parameter name="area">
                             <value>
                                 <parameter>area</parameter>

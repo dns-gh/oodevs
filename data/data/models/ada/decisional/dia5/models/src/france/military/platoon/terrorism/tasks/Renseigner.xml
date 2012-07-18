@@ -4,7 +4,7 @@
         <parameter name="destinataire">
             <description>L'unite avec laquelle on partage les information.</description>
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
     </parameters>

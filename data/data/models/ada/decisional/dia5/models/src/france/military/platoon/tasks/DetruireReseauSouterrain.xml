@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="network">
             <type>
-                <class name="world_concepts.UndergroundNetwork"/>
+                <class name="properties.UndergroundNetwork"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>

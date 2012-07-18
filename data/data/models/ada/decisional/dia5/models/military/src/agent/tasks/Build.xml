@@ -6,13 +6,13 @@
             <description>Les objets à construire</description>
             <type>
                 <list>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint" nullable="true">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="withImprovement" nullable="true">

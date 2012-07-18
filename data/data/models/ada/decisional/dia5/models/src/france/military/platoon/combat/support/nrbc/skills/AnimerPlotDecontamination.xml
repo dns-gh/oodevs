@@ -5,7 +5,7 @@
         <parameter name="position">
             <description>Positions permettant d'activer les éléments.</description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
     </parameters>
@@ -14,7 +14,7 @@
     </goal>
     <modifiers/>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <links>
         <link name="moveToward" skill="agent.skills.MoveToward"/>

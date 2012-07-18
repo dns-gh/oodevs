@@ -6,8 +6,8 @@
             <description>les unités à flanc-garder</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
-                    <class name="world_concepts.Supportable"/>
+                    <class name="properties.Reachable"/>
+                    <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>
@@ -15,8 +15,8 @@
             <description>Positions à partir desquelles il faut flanc-garder.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Neutralizing"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
         </parameter>

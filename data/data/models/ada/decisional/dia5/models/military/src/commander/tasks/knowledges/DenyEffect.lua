@@ -13,7 +13,7 @@ return
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = DEC_GetDirectionEnnemi( mission )
         local position = DEC_Geometrie_PositionTranslateDir( params.objectives[1]:getPosition(), dir, 1000 )
-        return CreateKnowledge( world_elements.Point, position)
+        return CreateKnowledge( world.Point, position)
     end,
 
     getObjective = function( self, params )

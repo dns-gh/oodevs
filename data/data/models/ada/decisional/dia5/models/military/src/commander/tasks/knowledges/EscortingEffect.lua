@@ -3,10 +3,10 @@ return
     init = function( self, params, parameters )
         local entities = {}
         self.entitiesToFollow = {}
-        if masalife.brain.core.class.isOfType( parameters.objective, world_elements.Company) then
+        if masalife.brain.core.class.isOfType( parameters.objective, world.Company) then
              entities = DEC_Automate_PionsDeAutomateAvecPC(parameters.objective.source)
              for _, element in pairs (entities) do
-                self.entitiesToFollow[ #self.entitiesToFollow + 1 ] = CreateKnowledge( world_elements.PlatoonAlly, element )
+                self.entitiesToFollow[ #self.entitiesToFollow + 1 ] = CreateKnowledge( world.PlatoonAlly, element )
              end
         else
             self.entitiesToFollow = { parameters.objective }

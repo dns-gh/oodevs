@@ -17,7 +17,7 @@ rootnode
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        if masalife.brain.core.class.isOfType( self.params.objective, world_elements.Platoon) then
+        if masalife.brain.core.class.isOfType( self.params.objective, world.Platoon) then
             self.escortableUnit = integration.getAgentFromKnowledge( self.params.objective )
         else
             self.escortableUnit = self.params.objective

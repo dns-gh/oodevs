@@ -6,7 +6,7 @@
 			<description>Les éléments à détruire.</description>
 			<type>
 				<list>
-					<class name="world_concepts.IndirectFireable"/>
+					<class name="properties.IndirectFireable"/>
 				</list>
 			</type>
 		</parameter>

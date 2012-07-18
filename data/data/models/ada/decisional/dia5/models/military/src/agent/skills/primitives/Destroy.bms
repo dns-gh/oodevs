@@ -36,7 +36,7 @@ rootnode
 
         local positions
         if self.params.positions == NIL then
-            positions = queries_positions.getPositionsToDestroy[ "execute" ]( { elementsToDestroy = self.params.entities, dynamic = true } )
+            positions = queries.getPositionsToDestroy[ "execute" ]( { elementsToDestroy = self.params.entities, dynamic = true } )
         else
             positions = self.params.positions
         end

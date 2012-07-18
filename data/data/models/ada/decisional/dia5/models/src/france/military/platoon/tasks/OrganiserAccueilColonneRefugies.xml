@@ -5,8 +5,8 @@
       <description>Position d'accueil.&#xD;
 </description>
       <type>
-        <class name="world_concepts.Reachable"/>
-        <class name="world_concepts.Observing"/>
+        <class name="properties.Reachable"/>
+        <class name="properties.Observing"/>
       </type>
     </parameter>
   </parameters>

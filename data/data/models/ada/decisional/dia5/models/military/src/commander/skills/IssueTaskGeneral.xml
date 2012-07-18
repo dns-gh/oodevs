@@ -5,7 +5,7 @@
       <description>Les entités qui vont recevoir la mission.</description>
       <type>
         <list>
-          <class name="world_concepts.Commanding"/>
+          <class name="properties.Commanding"/>
         </list>
       </type>
     </parameter>

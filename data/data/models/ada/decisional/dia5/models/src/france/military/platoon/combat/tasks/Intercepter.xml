@@ -4,14 +4,14 @@
         <parameter name="objective">
             <description>La zone d'engagement des ennemis.</description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
         <parameter name="destroyingPositions" nullable="true">
             <description>Positions d'observation où l'unité peut observer les unités ennemis avant l'engagement.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
+                    <class name="properties.Neutralizing"/>
                 </list>
             </type>
             <default>
@@ -21,7 +21,7 @@
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
             <default>
@@ -32,7 +32,7 @@
             <description>Les ennemis à engager.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroyable"/>
+                    <class name="properties.Destroyable"/>
                 </list>
             </type>
             <default>

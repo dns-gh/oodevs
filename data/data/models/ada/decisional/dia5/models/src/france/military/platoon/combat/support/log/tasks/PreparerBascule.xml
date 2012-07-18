@@ -3,12 +3,12 @@
     <parameters>
         <parameter name="position" nullable="true">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="automat">
             <type>
-                <class name="world_elements.Company"/>
+                <class name="world.Company"/>
             </type>
         </parameter>
     </parameters>

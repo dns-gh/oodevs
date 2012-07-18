@@ -5,13 +5,13 @@
         <parameter name="crossingSite">
             <description>Les sites de franchissement</description>
             <type>
-                <class name="world_elements.Object"/>
+                <class name="world.Object"/>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>Le ou les élements à rejoindre</description>
             <type>
-                <class name="world_concepts.Reaching"/>
+                <class name="properties.Reaching"/>
             </type>
         </parameter>
     </parameters>

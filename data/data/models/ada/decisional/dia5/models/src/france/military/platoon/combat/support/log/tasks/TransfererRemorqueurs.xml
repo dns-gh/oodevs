@@ -4,13 +4,13 @@
         <parameter name="pionRenforce">
             <description>Unité qui va donner des remorqueurs</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="pionARenforcer">
             <description>Unité alliée à renforcer</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrRemorqueurs">

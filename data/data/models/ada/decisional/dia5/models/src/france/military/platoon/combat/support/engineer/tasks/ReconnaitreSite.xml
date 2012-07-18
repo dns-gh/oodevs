@@ -5,8 +5,8 @@
         <parameter name="objective">
             <description>L'objectif à reconnaitre.</description>
             <type>
-                <class name="world_concepts.Reconnoitrable"/>
-                <class name="world_concepts.Reconnoitring"/>
+                <class name="properties.Reconnoitrable"/>
+                <class name="properties.Reconnoitring"/>
             </type>
         </parameter>
     </parameters>

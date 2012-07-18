@@ -5,7 +5,7 @@ return
         myself.leadData.objectives = {}
         self.nbAreas = 0
         for _, objective in pairs( myself.taskParams.objectives ) do
-            if masalife.brain.core.class.isOfType( objective, world_elements.Area) then
+            if masalife.brain.core.class.isOfType( objective, world.Area) then
                 self.nbAreas = self.nbAreas + 1 
             end
         end
@@ -33,7 +33,7 @@ return
             else
                 position = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dir, 1000 )
             end
-            params.objectives.kn = CreateKnowledge( world_elements.Point, position)
+            params.objectives.kn = CreateKnowledge( world.Point, position)
         end
         return params.objectives.kn
     end,
@@ -46,13 +46,13 @@ return
       for i=1, #params.objectives do
             local objective = params.objectives[i]
           -- division de la zone en sous-zones
-          if masalife.brain.core.class.isOfType( objective, world_elements.Area) then
+          if masalife.brain.core.class.isOfType( objective, world.Area) then
               local nbOtherObjectives = #params.objectives - self.nbAreas
               local nbParts = math.max((( nbFront - nbOtherObjectives )/self.nbAreas),1)
               local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
               subAreas = subAreas.first
               for _, area in pairs( subAreas ) do
-                  myself.leadData.objectives[#myself.leadData.objectives + 1] = CreateKnowledge( world_elements.Area, area )
+                  myself.leadData.objectives[#myself.leadData.objectives + 1] = CreateKnowledge( world.Area, area )
               end
               if #subAreas == 0 then
                   myself.leadData.objectives[#myself.leadData.objectives + 1] = objective -- cas ou la zone est hors limite

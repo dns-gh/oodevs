@@ -6,7 +6,7 @@
             <description>Les entités à reconnaître.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reconnoitrable"/>
+                    <class name="properties.Reconnoitrable"/>
                 </list>
             </type>
         </parameter>

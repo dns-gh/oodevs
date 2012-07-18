@@ -1,5 +1,5 @@
 function integration.getAvoidingPositionsFor( entity )
-    return { CreateProxyKnowledge( world_elements.AvoidingArea, entity ) }
+    return { CreateProxyKnowledge( world.AvoidingArea, entity ) }
 end
 
 function integration.getObjectsInArea( localisation, objectTypes )
@@ -41,7 +41,7 @@ function integration.getCrowdsInArea( area )
     for i = 1, nCrowd do
         local crowd = crowds[ i ]
         if DEC_ConnaissancePopulation_EstDansZone( crowd, area.source ) then
-            allRes[ #allRes + 1 ] = CreateKnowledge( world_elements.Crowd, crowd )
+            allRes[ #allRes + 1 ] = CreateKnowledge( world.Crowd, crowd )
         end
     end
     local nRes = #allRes
@@ -61,7 +61,7 @@ function integration.getNearbyTerrorists()
     for i = 1, nTerrorists do
         local terrorist = terrorists[i]
         if not exists( newResult, terrorist ) then
-            newResult[ #newResult + 1 ] = CreateKnowledge( world_elements.Platoon, terrorist )
+            newResult[ #newResult + 1 ] = CreateKnowledge( world.Platoon, terrorist )
         end
     end
     return newResult
@@ -87,10 +87,10 @@ integration.getImplantationObjects = function( area, nbAreas )
             end
         end
         if nonTrafficablePosition then -- Ce point n'est pas trafficable pour au moins un pion de l'automate.
-            positions = integration.getPointPositions(CreateKnowledge( world_elements.Point, barycentre ))
+            positions = integration.getPointPositions(CreateKnowledge( world.Point, barycentre ))
             local positionInLocalisation = {}
             for j = 1, #positions do
-                if integration.isPointInLocalisation(CreateKnowledge( world_elements.Point, positions[j] ), area) then
+                if integration.isPointInLocalisation(CreateKnowledge( world.Point, positions[j] ), area) then
                     positionInLocalisation[#positionInLocalisation + 1] = positions[j]
                 end
             end
@@ -119,7 +119,7 @@ integration.getImplantationObjects = function( area, nbAreas )
         
         existingObject = integration.obtenirObjetProcheDe( localisation,  eTypeObject, 10 )
         local object = DEC_CreateDynamicGenObject( S_TypeObject_ToString( eTypeObject ), localisation, 0  )
-        local toto = CreateKnowledge( world_elements.EngineerObject, object )
+        local toto = CreateKnowledge( world.EngineerObject, object )
         toto.knowledge = existingObject
         objectKn[#objectKn+1] = toto
         

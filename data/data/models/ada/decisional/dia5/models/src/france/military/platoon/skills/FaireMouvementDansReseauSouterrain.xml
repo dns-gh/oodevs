@@ -4,7 +4,7 @@
 	<parameters>
 		<parameter name="undergroundNetwork">
 			<type>
-				<class name="world_concepts.UndergroundNetwork"/>
+				<class name="properties.UndergroundNetwork"/>
 			</type>
 		</parameter>
 	</parameters>

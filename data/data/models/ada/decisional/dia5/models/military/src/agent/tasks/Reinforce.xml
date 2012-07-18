@@ -4,15 +4,15 @@
 		<parameter name="objective">
 			<description>L'éléments à renforcer.</description>
 			<type>
-				<class name="world_concepts.Reinforcable"/>
-				<class name="world_concepts.Supportable"/>
+				<class name="properties.Reinforcable"/>
+				<class name="properties.Supportable"/>
 			</type>
 		</parameter>
 		<parameter name="positions" nullable="true">
 			<description>Les positions de renforcement.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Reinforcing"/>
+					<class name="properties.Reinforcing"/>
 				</list>
 			</type>
 			<default>
@@ -24,7 +24,7 @@
 		<stage label="Renforcer" permanent="true">
 			<let name="enemiesInRange">
 				<value>
-					<call method="queries_enemies.getEnemiesToSupport">
+					<call method="queries.getEnemiesToSupport">
 						<parameter name="elementsToSupport">
 							<value>
 								<list>

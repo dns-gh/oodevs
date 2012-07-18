@@ -6,7 +6,7 @@
             <description>Les éléments que l'on veut percevoir.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </list>
             </type>
         </parameter>
@@ -14,7 +14,7 @@
             <description>Positions vers lesquelles l'entité peut se déplacer pour observer les élements passés en paramètre.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
             <default>

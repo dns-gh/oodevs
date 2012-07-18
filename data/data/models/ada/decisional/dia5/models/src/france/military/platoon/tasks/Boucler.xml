@@ -5,23 +5,23 @@
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Reachable"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Destroying"/>
+                    <class name="properties.Observing"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
             <default>

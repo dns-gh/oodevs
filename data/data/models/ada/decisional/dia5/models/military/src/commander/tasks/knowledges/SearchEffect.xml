@@ -11,14 +11,14 @@
         <method name="getObjectivesPei">
             <return>
                 <type>
-                    <class name="world_concepts.Observing"/>
+                    <class name="properties.Observing"/>
                 </type>
             </return>
         </method>
         <method name="getDirection">
             <return>
                 <type>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </type>
             </return>
         </method>
@@ -26,7 +26,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_concepts.Reconnoitrable"/>
+                        <class name="properties.Reconnoitrable"/>
                     </list>
                 </type>
             </return>
@@ -34,7 +34,7 @@
         <method name="getSealOffObjective">
             <return>
                 <type>
-                    <class name="world_concepts.Sealable"/>
+                    <class name="properties.Sealable"/>
                 </type>
             </return>
         </method>

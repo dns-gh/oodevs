@@ -5,7 +5,7 @@
     <parameter name="unit">
       <description>L'unité amie  ou ennemie avec laquelle partager les connaissances.</description>
       <type>
-        <class name="world_elements.Element"/>
+        <class name="world.Element"/>
       </type>
     </parameter>
   </parameters>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.PlatoonTask" source-version="1.0.0" abstract="true" extends="world_elements.PionTask">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.PlatoonTask" source-version="1.0.0" abstract="true" extends="world.PionTask">
   <description>Interface des connaissances de mission de niveau compagnie</description>
   <methods>
     <method name="getPionEfficiency">
@@ -14,7 +14,7 @@
       <argument name="companyTask">
         <description>La tâche automate</description>
         <type>
-          <class name="world_concepts.Commandable"/>
+          <class name="properties.Commandable"/>
         </type>
       </argument>
       <argument name="objectives">
@@ -36,7 +36,7 @@
     <method name="computeEffectsLevels">
       <return>
         <type>
-          <class name="world_elements.TaskEffects"/>
+          <class name="world.TaskEffects"/>
         </type>
       </return>
     </method>

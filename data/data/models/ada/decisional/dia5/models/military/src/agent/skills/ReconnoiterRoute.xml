@@ -6,14 +6,14 @@
             <description>Les entités à reconnaître.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reconnoitrable"/>
+                    <class name="properties.Reconnoitrable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="world_concepts.Reconnoitring"/>
+                    <class name="properties.Reconnoitring"/>
                 </list>
             </type>
         </parameter>

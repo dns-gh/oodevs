@@ -5,7 +5,7 @@
     <parameter name="objective">
       <description>L'objectif : destinations de la contre attaque.</description>
       <type>
-        <class name="world_concepts.Destroying"/>
+        <class name="properties.Destroying"/>
       </type>
     </parameter>
   </parameters>

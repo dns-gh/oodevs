@@ -11,12 +11,12 @@ rootnode
     end,
     
     create = function( self )
-        self.initPos = CreateKnowledge( world_elements.Point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
+        self.initPos = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
         self.destination = nil
         self.unitPC = meKnowledge:getUnitPC()
         self.listPoint = fusionList( self.params.ficelleDeVol, { self.initPos } )
         self.itinerary = integration.creerItineraireAPartirListePoint( self.listPoint )
-        self.pionsFriends = queries_miscgetFriends[ "execute" ]()
+        self.pionsFriends = queriesgetFriends[ "execute" ]()
         self.fragOrderReceived = false
          for _, pion in pairs( self.pionsFriends ) do
             meKnowledge:sendEndOfMission( pion, meKnowledge, true )

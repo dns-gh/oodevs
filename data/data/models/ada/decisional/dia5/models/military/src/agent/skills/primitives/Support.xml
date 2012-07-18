@@ -6,7 +6,7 @@
 			<description>Les éléments à appuyer.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Supportable"/>
+					<class name="properties.Supportable"/>
 				</list>
 			</type>
 		</parameter>
@@ -26,7 +26,7 @@
 		<feedback name="done">
 			<argument name="lastPosition">
 				<type>
-					<class name="world_concepts.Positionable"/>
+					<class name="properties.Positionable"/>
 				</type>
 			</argument>
 			<argument name="reason">

@@ -5,8 +5,8 @@
       <description>Positions à sur lesquelles jalonner.</description>
       <type>
         <list>
-          <class name="world_concepts.Neutralizing"/>
-          <class name="world_concepts.Observing"/>
+          <class name="properties.Neutralizing"/>
+          <class name="properties.Observing"/>
         </list>
       </type>
     </parameter>

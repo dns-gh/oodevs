@@ -8,7 +8,7 @@
             <description>Les objectifs à attaquer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Reachable"/>
+                    <class name="properties.Reachable"/>
                 </list>
             </type>
         </parameter>
@@ -18,7 +18,7 @@
     </goal>
     <let name="destroyableEntities">
         <value>
-            <call method="queries_enemies.getEnemiesInRange">
+            <call method="queries.getEnemiesInRange">
                 <parameter name="probabilityToHit">
                     <value>
                         <number>0.5</number>
@@ -42,7 +42,7 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <call method="queries_positions.getPositionsToDestroy">
+                            <call method="queries.getPositionsToDestroy">
                                 <parameter name="elementsToDestroy">
                                     <value>
                                         <parameter>destroyableEntities</parameter>

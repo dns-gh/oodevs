@@ -6,7 +6,7 @@
             <description>Les unités à appuyer.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Supportable"/>
+                    <class name="properties.Supportable"/>
                 </list>
             </type>
         </parameter>

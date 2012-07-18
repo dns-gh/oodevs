@@ -5,7 +5,7 @@
             <description>Position d'observation de la poition ou harceler.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
+                    <class name="properties.Neutralizing"/>
                 </list>
             </type>
             <default>
@@ -16,7 +16,7 @@
             <description>Entitées à harceler</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizable"/>
+                    <class name="properties.Neutralizable"/>
                 </list>
             </type>
             <default>
@@ -28,7 +28,7 @@
 L'agent va donc observer cette position en mesure d'engager les éléments ennemis identifiés.&#xD;
 </description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
     </parameters>

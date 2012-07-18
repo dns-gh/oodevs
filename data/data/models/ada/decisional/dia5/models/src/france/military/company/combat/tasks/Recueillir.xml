@@ -3,13 +3,13 @@
     <parameters>
         <parameter name="meetingPoint">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
             <default>

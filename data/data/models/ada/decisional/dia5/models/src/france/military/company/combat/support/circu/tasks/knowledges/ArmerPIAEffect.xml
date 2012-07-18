@@ -4,7 +4,7 @@
 		<method name="getDirection">
 			<return>
 				<type>
-					<class name="world_concepts.Observable"/>
+					<class name="properties.Observable"/>
 				</type>
 			</return>
 		</method>
@@ -12,7 +12,7 @@
 			<return>
 				<type>
 					<list>
-						<class name="world_concepts.Reachable"/>
+						<class name="properties.Reachable"/>
 					</list>
 				</type>
 			</return>

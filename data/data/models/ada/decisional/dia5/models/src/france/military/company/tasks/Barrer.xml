@@ -5,21 +5,21 @@
             <description>Les objectifs à Barrer: pour l'instant des points mais plus tard des directions</description>
             <type>
                 <list>
-                    <class name="world_concepts.Observable"/>
+                    <class name="properties.Observable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="positions">
             <type>
                 <list>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </list>
             </type>
             <default>
@@ -28,8 +28,8 @@
         </parameter>
         <parameter name="meetingPoint" nullable="true">
             <type>
-                <class name="world_concepts.Approachable"/>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Approachable"/>
+                <class name="properties.Positionable"/>
             </type>
             <default>
                 <nil/>

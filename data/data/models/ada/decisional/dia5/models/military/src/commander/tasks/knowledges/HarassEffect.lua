@@ -40,18 +40,18 @@ return
                     if elementPosition then
                         local blocksInCircle = DEC_Connaissances_BlocUrbainDansCercle( elementPosition, radius )
                         for _, block in pairs( blocksInCircle ) do
-                            myself.leadData.observingPositions[ #myself.leadData.observingPositions + 1 ] = CreateKnowledge( world_elements.UrbanBlock, block )
+                            myself.leadData.observingPositions[ #myself.leadData.observingPositions + 1 ] = CreateKnowledge( world.UrbanBlock, block )
                         end
                     end
                 end
                 -- Area case, add positions in the area if needed
                 local nbParts = ( 2 * math.min( self:getNbrFront(), params.maxNbrFront ) ) - #myself.leadData.observingPositions
                 if nbParts > 0 then
-                    if masalife.brain.core.class.isOfType( params.objective, world_elements.Area) then
+                    if masalife.brain.core.class.isOfType( params.objective, world.Area) then
                         local subAreas = DEC_Geometry_SplitLocalisation( params.objective.source, nbParts, nil )
                         for _, subArea in pairs( subAreas.first ) do
                             local pos = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
-                            myself.leadData.observingPositions[ #myself.leadData.observingPositions + 1 ] = CreateKnowledge( world_elements.Point, pos )
+                            myself.leadData.observingPositions[ #myself.leadData.observingPositions + 1 ] = CreateKnowledge( world.Point, pos )
                         end
                     end
                 end   

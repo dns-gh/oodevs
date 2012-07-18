@@ -4,8 +4,8 @@
         <parameter name="entity">
             <description>L'entité que l'on souhaite interroger.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
-                <class name="world_concepts.Askable"/>
+                <class name="properties.Reachable"/>
+                <class name="properties.Askable"/>
             </type>
         </parameter>
         <parameter name="companyTask">

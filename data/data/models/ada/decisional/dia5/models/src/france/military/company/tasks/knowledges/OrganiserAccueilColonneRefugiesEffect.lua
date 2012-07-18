@@ -10,12 +10,12 @@ return
         local nbFrontBefore = math.min(self:getNbrFront(), params.maxNbrFront )
         local nbFront = math.max(nbFrontBefore,1)
 
-        if masalife.brain.core.class.isOfType( objective, world_elements.Area) then
+        if masalife.brain.core.class.isOfType( objective, world.Area) then
               local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbFront, nil )
               subAreas = subAreas.first
               myself.leadData.objectiveIndex = 0 
               for _, area in pairs( subAreas ) do
-                  myself.leadData.areas[#myself.leadData.areas + 1] = CreateKnowledge( world_elements.Area, area )
+                  myself.leadData.areas[#myself.leadData.areas + 1] = CreateKnowledge( world.Area, area )
               end
               if #subAreas == 0 then
                   myself.leadData.areas[#myself.leadData.areas + 1] = objective -- cas ou la zone est hors limite

@@ -3,13 +3,13 @@
 	<parameters>
 		<parameter name="camp">
 			<type>
-				<class name="world_concepts.Camp"/>
+				<class name="properties.Camp"/>
 			</type>
 		</parameter>
 		<parameter name="entities">
 			<type>
 				<list>
-					<class name="world_concepts.Loadable"/>
+					<class name="properties.Loadable"/>
 				</list>
 			</type>
 		</parameter>

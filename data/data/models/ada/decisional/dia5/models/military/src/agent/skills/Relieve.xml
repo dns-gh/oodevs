@@ -6,7 +6,7 @@ L'intention de l'agent pour la relève utilise celle du skill &quot;MoveTowad&qu
     <parameter name="objective">
       <description>L'unité à relever.</description>
       <type>
-        <class name="world_concepts.Relievable"/>
+        <class name="properties.Relievable"/>
       </type>
     </parameter>
   </parameters>

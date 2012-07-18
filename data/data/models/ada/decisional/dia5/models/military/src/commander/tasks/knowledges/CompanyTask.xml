@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.CompanyTask" source-version="1.0.0" abstract="true" extends="world_elements.Task">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.CompanyTask" source-version="1.0.0" abstract="true" extends="world.Task">
     <description>Interface des connaissances de mission de niveau compagnie</description>
     <methods>
         <method name="getMeetingPoint">
@@ -31,7 +31,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_elements.EngineerObject"/>
+                        <class name="world.EngineerObject"/>
                     </list>
                 </type>
             </return>
@@ -46,7 +46,7 @@
         <method name="computeEffectsLevels">
             <return>
                 <type>
-                    <class name="world_elements.TaskEffects"/>
+                    <class name="world.TaskEffects"/>
                 </type>
             </return>
         </method>
@@ -80,7 +80,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_elements.EngineerObject"/>
+                        <class name="world.EngineerObject"/>
                     </list>
                 </type>
             </return>

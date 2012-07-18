@@ -7,7 +7,7 @@
             <description>Les éléments à valoriser</description>
             <type>
                 <list>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </list>
             </type>
         </parameter>
@@ -28,7 +28,7 @@
             <description>L'element element n'a pas pue etre valorise.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </type>
             </argument>
             <argument name="reason">
@@ -42,7 +42,7 @@
             <description>L'element element a ete valorise.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </type>
             </argument>
         </feedback>
@@ -50,7 +50,7 @@
             <description>L'elemennt element n'a pas ete fini a cause d'une annulation.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Improvable"/>
+                    <class name="properties.Improvable"/>
                 </type>
             </argument>
         </feedback>
@@ -58,7 +58,7 @@
             <description>L'element n'est pas valorisable</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </argument>
         </feedback>
@@ -66,7 +66,7 @@
             <description>L'élément n'est pas activé.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Activable"/>
+                    <class name="properties.Activable"/>
                 </type>
             </argument>
         </feedback>

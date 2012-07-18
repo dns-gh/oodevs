@@ -43,7 +43,7 @@ activate = function( self )
                if pion.source.needReinforcementForCapacity then
                   local unitsAbleToReinforce = integration.unitsAbleToReinforce( pion, self.supportList, pion.source.needReinforcementForCapacity, pion.source.needReinforcementForAction )
                   for i=1, #unitsAbleToReinforce do
-                     unitsCanSupport[#unitsCanSupport + 1] = CreateKnowledge( world_elements.PlatoonAlly, unitsAbleToReinforce[i] )
+                     unitsCanSupport[#unitsCanSupport + 1] = CreateKnowledge( world.PlatoonAlly, unitsAbleToReinforce[i] )
                   end
                 else
                     for i=1, #self.supportList do -- SE qui ne supporte pas déja

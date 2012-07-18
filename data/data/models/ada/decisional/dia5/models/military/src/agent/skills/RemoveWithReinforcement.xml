@@ -6,7 +6,7 @@
             <description>Les éléments à dégager.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Removable"/>
+                    <class name="properties.Removable"/>
                 </list>
             </type>
             <default>

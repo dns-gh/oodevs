@@ -8,14 +8,14 @@
             <description>Les positions de tirs pour l'embuscade.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
         </parameter>
         <parameter name="meetingPoint">
             <description>Le point de regroupement à rejoindre en fin de mission.</description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
     </parameters>

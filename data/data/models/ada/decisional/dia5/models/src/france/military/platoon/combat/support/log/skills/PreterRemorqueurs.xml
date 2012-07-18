@@ -5,7 +5,7 @@
         <parameter name="pionRenforce" nullable="true">
             <description>Unité qui prête ses remorqueurs</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
             <default>
                 <nil/>
@@ -14,7 +14,7 @@
         <parameter name="pionARenforcer">
             <description>Unité renforcée en remorqueurs</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrRemorqueurs">
@@ -28,6 +28,6 @@
         <description>Prêter des remorqueurs à une autre unité</description>
     </goal>
     <body-type>
-        <class name="world_concepts.HumanFactors"/>
+        <class name="properties.HumanFactors"/>
     </body-type>
 </skill>

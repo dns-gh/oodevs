@@ -6,7 +6,7 @@
         <parameter name="objective">
             <description>L'objectif à boucler.</description>
             <type>
-                <class name="world_concepts.Sealable"/>
+                <class name="properties.Sealable"/>
             </type>
         </parameter>
     </parameters>

@@ -21,7 +21,7 @@ rootnode
     activate = function( self )
 
         if self.params.positions == NIL then
-            self.positions = queries_positions.getPositionsToCover[ "execute" ]( 
+            self.positions = queries.getPositionsToCover[ "execute" ]( 
                 { elementsToCoverFrom = self.params.entities, dynamic = true } )
         else
             self.positions =  self.params.positions

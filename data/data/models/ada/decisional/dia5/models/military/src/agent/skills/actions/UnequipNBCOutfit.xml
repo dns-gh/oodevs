@@ -2,7 +2,7 @@
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.actions.UnequipNBCOutfit" source-version="1.0.0">
     <description>Action simple qui consiste à se déséquiper d'une protection NBC.</description>
     <body-type>
-        <class name="world_concepts.Equipment"/>
+        <class name="properties.Equipment"/>
     </body-type>
     <resources>
         <resource name="agent.resources.NBCProtectionCapacity" variable="NBCProtectionCapability"/>

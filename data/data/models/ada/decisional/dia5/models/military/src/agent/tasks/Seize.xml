@@ -4,14 +4,14 @@
 		<parameter name="objectives">
 			<type>
 				<list>
-					<class name="world_concepts.Destroying"/>
+					<class name="properties.Destroying"/>
 				</list>
 			</type>
 		</parameter>
 	</parameters>
 	<let name="enemiesAround">
 		<value>
-			<call method="queries_enemies.getEnemiesInRange">
+			<call method="queries.getEnemiesInRange">
 				<parameter name="probabilityToHit">
 					<value>
 						<number>0.5</number>

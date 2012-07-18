@@ -6,8 +6,8 @@
             <description>Les objets à animer</description>
             <type>
                 <list>
-                    <class name="world_concepts.Animatable"/>
-                    <class name="world_concepts.Animating"/>
+                    <class name="properties.Animatable"/>
+                    <class name="properties.Animating"/>
                 </list>
             </type>
         </parameter>

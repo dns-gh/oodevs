@@ -15,7 +15,7 @@
             <return>
                 <type>
                     <list>
-                        <class name="world_elements.Platoon"/>
+                        <class name="world.Platoon"/>
                     </list>
                 </type>
             </return>

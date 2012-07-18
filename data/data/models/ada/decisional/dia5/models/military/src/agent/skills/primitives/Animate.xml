@@ -6,7 +6,7 @@
       <description>Les éléments à animer.</description>
       <type>
         <list>
-          <class name="world_concepts.Animatable"/>
+          <class name="properties.Animatable"/>
         </list>
       </type>
     </parameter>
@@ -14,7 +14,7 @@
       <description>Positions permettant d'activer les éléments.</description>
       <type>
         <list>
-          <class name="world_concepts.Animating"/>
+          <class name="properties.Animating"/>
         </list>
       </type>
     </parameter>

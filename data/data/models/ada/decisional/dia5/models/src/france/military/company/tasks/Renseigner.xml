@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="destinataire">
       <type>
-        <class name="world_elements.Platoon"/>
+        <class name="world.Platoon"/>
       </type>
     </parameter>
   </parameters>

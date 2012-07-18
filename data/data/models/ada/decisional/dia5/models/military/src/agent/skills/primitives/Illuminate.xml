@@ -6,7 +6,7 @@
 			<description>Les éléments à illuminer.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Illuminatable"/>
+					<class name="properties.Illuminatable"/>
 				</list>
 			</type>
 		</parameter>
@@ -14,7 +14,7 @@
 			<description>Les batteries alliées chargée des tirs.</description>
 			<type>
 				<list>
-					<class name="world_elements.PlatoonAlly"/>
+					<class name="world.PlatoonAlly"/>
 				</list>
 			</type>
 		</parameter>

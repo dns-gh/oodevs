@@ -2,7 +2,7 @@
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.roles.Platoon" source-version="1.0.0">
     <description>Une entité décisionnelle quelconque dans un contexte militaire.</description>
     <body-type>
-        <class name="world_elements.PlatoonAlly"/>
+        <class name="world.PlatoonAlly"/>
     </body-type>
     <skills>
         <skill name="agent.skills.Engage"/>
@@ -112,12 +112,12 @@
         </goal>
         <let name="fragOrdersToManage">
             <value>
-                <call method="queries_misc.getFragOrders"/>
+                <call method="queries.getFragOrders"/>
             </value>
         </let>
         <let name="attackingCrowds">
             <value>
-                <call method="queries_crowds.getAttackingCrowds"/>
+                <call method="queries.getAttackingCrowds"/>
             </value>
         </let>
         <skills>
@@ -134,7 +134,7 @@
             <skill name="agent.skills.ReactToCoordinationLine">
                 <parameter name="limas">
                     <value>
-                        <call method="queries_misc.getLimaOnPath"/>
+                        <call method="queries.getLimaOnPath"/>
                     </value>
                 </parameter>
             </skill>

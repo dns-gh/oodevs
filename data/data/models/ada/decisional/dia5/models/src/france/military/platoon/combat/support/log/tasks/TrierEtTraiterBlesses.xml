@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="objective" nullable="true">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
             <default>
                 <nil/>
@@ -13,7 +13,7 @@
             <description>Le type de blessures à prendre en charge par la chaîne logistique santé</description>
             <type>
                 <list>
-                    <class name="world_elements.HumanWound"/>
+                    <class name="world.HumanWound"/>
                 </list>
             </type>
             <default>

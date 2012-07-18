@@ -47,7 +47,7 @@ rootnode
         Activate( skill.links.moveToward, 1, { entities  = { self.params.positions[ self.nextTargetIndex ] } } )
 
         -- Shoot at the enemies
-        local hostileElements = queries_enemies.getEnemiesInRange[ "execute" ]( { probabilityToHit = 0.7 } )
+        local hostileElements = queries.getEnemiesInRange[ "execute" ]( { probabilityToHit = 0.7 } )
         if #hostileElements ~= 0 and self.movementDone then -- arrived on a position to engage enemies
             for _,  element in pairs( hostileElements ) do
                 if element:canDestroyIt() then

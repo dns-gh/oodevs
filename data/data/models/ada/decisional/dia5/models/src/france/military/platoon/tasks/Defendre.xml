@@ -5,14 +5,14 @@
         <parameter name="objectives">
             <type>
                 <list>
-                    <class name="world_concepts.Destroying"/>
+                    <class name="properties.Destroying"/>
                 </list>
             </type>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
                 <list>
-                    <class name="world_elements.Object"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
             <default>

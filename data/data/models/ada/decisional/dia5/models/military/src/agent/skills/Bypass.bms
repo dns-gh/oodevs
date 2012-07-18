@@ -41,7 +41,7 @@ rootnode
         self.nextTargetIndex = 1
         self.report = nil
         self.elementToRemove = nil
-        self.obstacles = queries_objects.getObstaclesAroundMe[ "execute" ]({ distance = 100 })
+        self.obstacles = queries.getObstaclesAroundMe[ "execute" ]({ distance = 100 })
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -51,7 +51,7 @@ rootnode
     activate = function( self )
         local Activate = Activate
         if self.params.entities == NIL then
-            local obstacles = queries_objects.getObstaclesOnPath[ "execute" ]()
+            local obstacles = queries.getObstaclesOnPath[ "execute" ]()
             if #obstacles > 0 then
                 self.obstacles = obstacles
             end
@@ -65,9 +65,9 @@ rootnode
         end
 
         if self.params.entities == NIL then
-            self.positions = queries_positions.getAvoidingArea[ "execute" ]( { objects = self.obstacles } )
+            self.positions = queries.getAvoidingArea[ "execute" ]( { objects = self.obstacles } )
         else
-            self.positions = queries_positions.getPositionsToBypass[ "execute" ]( { elementsToBypass = self.obstacles } )
+            self.positions = queries.getPositionsToBypass[ "execute" ]( { elementsToBypass = self.obstacles } )
         end
 
         -- CR on physical capability --> need reinforcement or recompletion

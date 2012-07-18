@@ -7,8 +7,8 @@ Ce skill s'applique à une entité qui implémente l'effet &quot;d'être fixé&q
       <description>Les unités à fixer.</description>
       <type>
         <list>
-          <class name="world_concepts.Destroyable"/>
-          <class name="world_concepts.Motile"/>
+          <class name="properties.Destroyable"/>
+          <class name="properties.Motile"/>
         </list>
       </type>
     </parameter>
@@ -16,7 +16,7 @@ Ce skill s'applique à une entité qui implémente l'effet &quot;d'être fixé&q
       <description>Lles positions permettant de fixer les unités.</description>
       <type>
         <list>
-          <class name="world_concepts.Destroying"/>
+          <class name="properties.Destroying"/>
         </list>
       </type>
     </parameter>

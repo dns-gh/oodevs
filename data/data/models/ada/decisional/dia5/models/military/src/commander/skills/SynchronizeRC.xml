@@ -5,7 +5,7 @@
 			<description>Les unités dont la compagnie attend un CR.</description>
 			<type>
 				<list>
-					<class name="world_concepts.Commanding"/>
+					<class name="properties.Commanding"/>
 				</list>
 			</type>
 		</parameter>

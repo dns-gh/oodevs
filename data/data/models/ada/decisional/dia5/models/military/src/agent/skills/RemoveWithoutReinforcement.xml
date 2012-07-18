@@ -5,7 +5,7 @@
     <parameter name="entities" nullable="true">
       <type>
         <list>
-          <class name="world_concepts.Removable"/>
+          <class name="properties.Removable"/>
         </list>
       </type>
       <default>
@@ -15,7 +15,7 @@
     <parameter name="positions" nullable="true">
       <type>
         <list>
-          <class name="world_concepts.Removing"/>
+          <class name="properties.Removing"/>
         </list>
       </type>
       <default>

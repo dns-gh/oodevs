@@ -6,7 +6,7 @@
 			<description>les elements a construire</description>
 			<type>
 				<list>
-					<class name="world_concepts.Buildable"/>
+					<class name="properties.Buildable"/>
 				</list>
 			</type>
 			<default>

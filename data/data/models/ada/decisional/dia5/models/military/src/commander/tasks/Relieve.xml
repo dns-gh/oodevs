@@ -3,7 +3,7 @@
   <parameters>
     <parameter name="objective">
       <type>
-        <class name="world_elements.Company"/>
+        <class name="world.Company"/>
       </type>
     </parameter>
     <parameter name="followTask">

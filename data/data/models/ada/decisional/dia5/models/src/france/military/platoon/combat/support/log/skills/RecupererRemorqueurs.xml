@@ -5,7 +5,7 @@
         <parameter name="pionRenforce">
             <description>Pion qui va rendre des remorqueurs</description>
             <type>
-                <class name="world_elements.PlatoonAlly"/>
+                <class name="world.PlatoonAlly"/>
             </type>
         </parameter>
         <parameter name="nbrRemorqueurs">
@@ -19,6 +19,6 @@
         <description>Récupèrer des remorqueurs aprèes en avoir prêter</description>
     </goal>
     <body-type>
-        <class name="world_concepts.HumanFactors"/>
+        <class name="properties.HumanFactors"/>
     </body-type>
 </skill>

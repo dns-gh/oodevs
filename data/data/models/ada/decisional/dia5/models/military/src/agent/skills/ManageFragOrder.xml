@@ -6,7 +6,7 @@
       <description>L'ordre de conduite à appliquer</description>
       <type>
         <list>
-          <class name="world_concepts.FragOrder"/>
+          <class name="properties.FragOrder"/>
         </list>
       </type>
     </parameter>

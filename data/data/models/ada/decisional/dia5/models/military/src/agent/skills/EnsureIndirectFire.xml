@@ -6,7 +6,7 @@
 			<description>Les positions de tirs</description>
 			<type>
 				<list>
-					<class name="world_concepts.Reaching"/>
+					<class name="properties.Reaching"/>
 				</list>
 			</type>
 			<default>

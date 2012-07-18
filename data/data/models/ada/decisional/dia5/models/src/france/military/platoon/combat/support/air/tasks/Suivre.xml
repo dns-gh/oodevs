@@ -4,7 +4,7 @@
         <parameter name="objective">
             <description>Les éléments à suivre.</description>
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>
@@ -32,7 +32,7 @@
                     </parameter>
                     <parameter name="positions">
                         <value>
-                            <call method="queries_positions.getPositionsToFollow">
+                            <call method="queries.getPositionsToFollow">
                                 <parameter name="elementsToFollow">
                                     <value>
                                         <list>

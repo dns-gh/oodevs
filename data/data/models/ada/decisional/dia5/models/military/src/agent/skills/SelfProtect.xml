@@ -7,7 +7,7 @@ Ce skill est est un skill de sauvegarde spécifique aux unités ennemis.</descri
 			<description>Les éléments représentant un danger potentiel</description>
 			<type>
 				<list>
-					<class name="world_elements.Platoon"/>
+					<class name="world.Platoon"/>
 				</list>
 			</type>
 			<default>
@@ -32,9 +32,9 @@ Ce skill est est un skill de sauvegarde spécifique aux unités ennemis.</descri
 		</modifier>
 	</modifiers>
 	<body-type>
-		<class name="world_concepts.HumanFactors"/>
-		<class name="world_concepts.ForceRatio"/>
-		<class name="world_concepts.Mountable"/>
+		<class name="properties.HumanFactors"/>
+		<class name="properties.ForceRatio"/>
+		<class name="properties.Mountable"/>
 	</body-type>
 	<links>
 		<link name="dismount" skill="agent.skills.actions.Dismount">

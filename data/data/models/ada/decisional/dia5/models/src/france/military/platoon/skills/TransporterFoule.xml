@@ -4,24 +4,24 @@
     <parameter name="crowd">
       <description>Foule a transporter.</description>
       <type>
-        <class name="world_concepts.Transportable"/>
+        <class name="properties.Transportable"/>
       </type>
     </parameter>
     <parameter name="loadingPoint">
       <description>Position d'embarquement.</description>
       <type>
-        <class name="world_concepts.Loading"/>
+        <class name="properties.Loading"/>
       </type>
     </parameter>
     <parameter name="destination">
       <description>Position ou transporter les unites</description>
       <type>
-        <class name="world_concepts.Loading"/>
+        <class name="properties.Loading"/>
       </type>
     </parameter>
   </parameters>
   <body-type>
-    <class name="world_elements.PlatoonAlly"/>
+    <class name="world.PlatoonAlly"/>
   </body-type>
   <links>
     <link name="moveToward" skill="france.military.platoon.skills.MoveAlong"/>

@@ -18,7 +18,7 @@
         </parameter>
         <parameter name="objective">
             <type>
-                <class name="world_concepts.Reachable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
         <parameter name="defaultTask">

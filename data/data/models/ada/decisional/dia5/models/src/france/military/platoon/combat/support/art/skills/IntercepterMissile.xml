@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="enemy">
             <type>
-                <class name="world_elements.Platoon"/>
+                <class name="world.Platoon"/>
             </type>
         </parameter>
         <parameter name="percentageEquipement">

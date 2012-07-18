@@ -5,7 +5,7 @@
             <description>Positions d'observation depuis lesquelles intercepter.</description>
             <type>
                 <list>
-                    <class name="world_concepts.Neutralizing"/>
+                    <class name="properties.Neutralizing"/>
                 </list>
             </type>
             <default>
@@ -17,7 +17,7 @@
 L'agent va donc observer cette position en mesure d'engager les éléments ennemis identifiés.&#xD;
 </description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
     </parameters>

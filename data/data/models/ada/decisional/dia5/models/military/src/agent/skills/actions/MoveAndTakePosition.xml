@@ -5,7 +5,7 @@
         <parameter name="entity">
             <description>L'élément que l'on veut rejoindre et occuper</description>
             <type>
-                <class name="world_concepts.Positionable"/>
+                <class name="properties.Positionable"/>
             </type>
         </parameter>
         <parameter name="pathType">
@@ -28,7 +28,7 @@ eTypeItiLogistique = 7</description>
         </parameter>
     </parameters>
     <body-type>
-        <class name="world_concepts.Mountable"/>
+        <class name="properties.Mountable"/>
     </body-type>
     <links>
         <link name="dismount" skill="agent.skills.actions.Dismount"/>
@@ -46,7 +46,7 @@ eTypeItiLogistique = 7</description>
         <feedback name="done">
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </type>
             </argument>
             <argument name="reason">
@@ -59,7 +59,7 @@ eTypeItiLogistique = 7</description>
             <description>L'element element n'a pas pu etre atteind.</description>
             <argument name="element">
                 <type>
-                    <class name="world_concepts.Positionable"/>
+                    <class name="properties.Positionable"/>
                 </type>
             </argument>
             <argument name="reason">

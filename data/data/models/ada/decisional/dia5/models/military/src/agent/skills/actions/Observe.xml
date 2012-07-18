@@ -5,7 +5,7 @@
     <parameter name="entity">
       <description>L'élément que l'on veut observer.</description>
       <type>
-        <class name="world_concepts.Observable"/>
+        <class name="properties.Observable"/>
       </type>
     </parameter>
   </parameters>

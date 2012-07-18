@@ -1,5 +1,5 @@
 local immutablePosition = function( knowledge )
-   return (not knowledge.proxy) and (knowledge == meKnowledge or not masalife.brain.core.class.isOfType( knowledge, world_elements.PlatoonAlly ))
+   return (not knowledge.proxy) and (knowledge == meKnowledge or not masalife.brain.core.class.isOfType( knowledge, world.PlatoonAlly ))
 end
 
 --------------------------------------------------------

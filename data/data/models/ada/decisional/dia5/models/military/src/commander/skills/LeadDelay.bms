@@ -194,7 +194,7 @@ create = function( self )
       -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée 
       if ( not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) ) or self.screenPosition then
         local fragOrder = CreateFragOrder("Rep_OrderConduite_Decrocher")
-        local fragOrderKn = CreateKnowledge( world_elements.FragOrder, fragOrder )
+        local fragOrderKn = CreateKnowledge( world.FragOrder, fragOrder )
 
         meKnowledge.pionsToAwait = copyTable( myself.leadData.pionsLima1 )
 
