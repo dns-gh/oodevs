@@ -176,13 +176,8 @@ integration.startFragOrderTask = function( self )
   elseif orderType == "france.military.platoon.tasks.DeposerUnite" then
         local targetPoint = self.source:GetpointCible_()
         mission.unite = CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() )
-        if myself.CRCaptureSomeone and myself.CRCaptureSomeone[ mission.unite.source ] then
-            if targetPoint ~= nil then
-                mission.position = CreateKnowledge( integration.ontology.types.point, targetPoint )
-            end
-        else  
-            integration.cleanFragOrder( self )
-            return
+        if targetPoint ~= nil then
+            mission.position = CreateKnowledge( integration.ontology.types.point, targetPoint )
         end
   elseif orderType == "france.military.platoon.tasks.Observer" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
