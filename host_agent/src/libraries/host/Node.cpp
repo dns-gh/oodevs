@@ -70,19 +70,19 @@ Node::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& ru
 // -----------------------------------------------------------------------------
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
             const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
-            const std::string& name, size_t max_sessions, size_t parallel_sessions,
+            const std::string& name, size_t num_sessions, size_t parallel_sessions,
             PortFactory_ABC& ports )
-    : packages_( packages )
-    , system_  ( system )
-    , uuids_   ( uuids )
-    , id_      ( uuids.Create() )
-    , name_    ( name )
-    , root_    ( root )
-    , port_    ( ports.Create() )
-    , stopped_ ( false )
-    , async_   ( pool )
-    , max_     ( max_sessions )
-    , parallel_( parallel_sessions )
+    : packages_         ( packages )
+    , system_           ( system )
+    , uuids_            ( uuids )
+    , id_               ( uuids.Create() )
+    , name_             ( name )
+    , root_             ( root )
+    , port_             ( ports.Create() )
+    , stopped_          ( false )
+    , async_            ( pool )
+    , num_sessions_     ( num_sessions )
+    , parallel_sessions_( parallel_sessions )
 {
     install_ = packages_.Make( root_ / "install", true );
 }
@@ -94,18 +94,18 @@ Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
 Node::Node( const PackageFactory_ABC& packages, const FileSystem_ABC& system,
             const UuidFactory_ABC& uuids, Pool_ABC& pool, const Path& root,
             const Tree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
-    : packages_( packages )
-    , system_  ( system )
-    , uuids_   ( uuids )
-    , id_      ( Get< Uuid >( tree, "id" ) )
-    , name_    ( Get< std::string >( tree, "name" ) )
-    , root_    ( root )
-    , port_    ( AcquirePort( Get< int >( tree, "port" ), ports ) )
-    , process_ ( AcquireProcess( tree, runtime, port_->Get() ) )
-    , stopped_ ( Get< bool >( tree, "stopped" ) )
-    , async_   ( pool )
-    , max_     ( Get< size_t >( tree, "max_sessions" ) )
-    , parallel_( Get< size_t >( tree, "parallel_sessions" ) )
+    : packages_         ( packages )
+    , system_           ( system )
+    , uuids_            ( uuids )
+    , id_               ( Get< Uuid >( tree, "id" ) )
+    , name_             ( Get< std::string >( tree, "name" ) )
+    , root_             ( root )
+    , port_             ( AcquirePort( Get< int >( tree, "port" ), ports ) )
+    , process_          ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , stopped_          ( Get< bool >( tree, "stopped" ) )
+    , async_            ( pool )
+    , num_sessions_     ( Get< size_t >( tree, "num_sessions" ) )
+    , parallel_sessions_( Get< size_t >( tree, "parallel_sessions" ) )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
     ParsePackages( cache == boost::none ? Path() : Utf8Convert( *cache ) );
@@ -166,8 +166,8 @@ Tree Node::GetCommonProperties() const
     tree.put( "id", id_ );
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
-    tree.put( "max_sessions", max_ );
-    tree.put( "parallel_sessions", parallel_ );
+    tree.put( "num_sessions", num_sessions_ );
+    tree.put( "parallel_sessions", parallel_sessions_ );
     return tree;
 }
 
@@ -296,11 +296,11 @@ void Node::Remove( const FileSystem_ABC& system, Async& async )
 // Name: Node::Update
 // Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
-void Node::Update( size_t max, size_t parallel )
+void Node::Update( size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
-    max_ = max;
-    parallel_ = std::min( max_, parallel );
+    num_sessions_ = num_sessions;
+    parallel_sessions_ = parallel_sessions;
 }
 
 namespace

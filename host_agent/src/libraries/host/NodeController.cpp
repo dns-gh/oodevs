@@ -173,10 +173,10 @@ void NodeController::Create( Node_ABC& node, bool reload )
 // Name: NodeController::Create
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Create( const std::string& name, size_t max, size_t parallel )
+NodeController::T_Node NodeController::Create( const std::string& name, size_t num_sessions, size_t parallel_sessions )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    T_Node node = factory_.Make( output, name, max, parallel );
+    T_Node node = factory_.Make( output, name, num_sessions, parallel_sessions );
     nodes_.Attach( node );
     Create( *node, false );
     return node;
@@ -253,11 +253,11 @@ void NodeController::Stop( Node_ABC& node, bool skip, bool weak ) const
         Save( node );
 }
 
-NodeController::T_Node NodeController::Update( const Uuid& id, size_t max, size_t parallel )
+NodeController::T_Node NodeController::Update( const Uuid& id, size_t num_sessions, size_t parallel_sessions )
 {
     T_Node node = nodes_.Get( id );
     if( node )
-        node->Update( max, parallel );
+        node->Update( num_sessions, parallel_sessions );
     return node;
 }
 

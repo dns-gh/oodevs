@@ -183,9 +183,10 @@ struct NodeFactory : public NodeFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const std::string& name, size_t max, size_t parallel ) const
+    Ptr Make( const Path& root, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const
     {
-        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ), root, name, max, parallel, boost::ref( ports ) );
+        return boost::make_shared< Node >( packages, system, uuids, boost::ref( pool ),
+                                           root, name, num_sessions, parallel_sessions, boost::ref( ports ) );
     }
 
     Ptr Make( const Path& tag ) const

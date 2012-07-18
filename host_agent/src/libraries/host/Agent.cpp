@@ -178,10 +178,10 @@ Reply Agent::GetNode( const Uuid& id ) const
 // Name: Agent::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::CreateNode( const std::string& name, size_t max, size_t parallel )
+Reply Agent::CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( nodes_.Create( name, max, parallel ), "node" );
+    return Create( nodes_.Create( name, num_sessions, parallel_sessions ), "node" );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,9 +227,9 @@ Reply Agent::StopNode( const Uuid& id ) const
 // Name: Agent::UpdateNode
 // Created: BAX 2012-07-17
 // -----------------------------------------------------------------------------
-Reply Agent::UpdateNode( const Uuid& id, size_t max, size_t parallel )
+Reply Agent::UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions )
 {
-    NodeController_ABC::T_Node ptr = nodes_.Update( id, max, parallel );
+    NodeController_ABC::T_Node ptr = nodes_.Update( id, num_sessions, parallel_sessions );
     if( !ptr )
         return Reply( web::NOT_FOUND );
     return Reply( ptr->GetProperties() );

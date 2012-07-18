@@ -267,7 +267,7 @@
 
   validate_settings = function(ui, item) {
     var data, max, max_val, par, par_val;
-    max = ui.find(".max_sessions");
+    max = ui.find(".num_sessions");
     par = ui.find(".parallel_sessions");
     max_val = parseInt(max.val(), 10);
     par_val = parseInt(par.val(), 10);
@@ -276,7 +276,7 @@
       return;
     }
     data = {
-      max_sessions: max_val,
+      num_sessions: max_val,
       parallel_sessions: par_val
     };
     return data;
@@ -294,7 +294,7 @@
     NodeItem.prototype.view = NodeItemView;
 
     NodeItem.prototype.defaults = {
-      max_sessions: 64,
+      num_sessions: 64,
       parallel_sessions: 8
     };
 
@@ -605,7 +605,7 @@
       if (data == null) {
         return;
       }
-      node_default.set("max_sessions", data.max_sessions);
+      node_default.set("num_sessions", data.num_sessions);
       node_default.set("parallel_sessions", data.parallel_sessions);
       return mod.modal("hide");
     });

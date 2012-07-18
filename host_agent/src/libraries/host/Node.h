@@ -55,7 +55,7 @@ public:
     //@{
              Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
                    const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
-                   const std::string& name, size_t max_sessions, size_t parallel_sessions,
+                   const std::string& name, size_t num_sessions, size_t parallel_sessions,
                    PortFactory_ABC& ports );
              Node( const PackageFactory_ABC& packages, const runtime::FileSystem_ABC& system,
                    const UuidFactory_ABC& uuids, runtime::Pool_ABC& pool, const Path& root,
@@ -79,7 +79,7 @@ public:
                         const Path& web, const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
-    virtual void Update( size_t max, size_t parallel );
+    virtual void Update( size_t num_sessions, size_t parallel_sessions );
     //@}
 
     //! @name Node_ABC methods
@@ -138,8 +138,8 @@ private:
     T_Process process_;
     bool stopped_;
     mutable runtime::Async async_;
-    size_t max_;
-    size_t parallel_;
+    size_t num_sessions_;
+    size_t parallel_sessions_;
     //@}
 };
 }

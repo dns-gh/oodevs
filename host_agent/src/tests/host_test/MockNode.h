@@ -50,7 +50,8 @@ namespace mocks
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )
     {
         MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Path& tag ), Make1 );
-        MOCK_METHOD_EXT( Make, 4, host::NodeFactory_ABC::Ptr( const host::Path& root, const std::string& name, size_t max, size_t parallel ), Make4 );
+        MOCK_METHOD_EXT( Make, 4, host::NodeFactory_ABC::Ptr( const host::Path& root,
+                         const std::string& name, size_t num_sessions, size_t parallel_sessions ), Make4 );
     };
 };
 

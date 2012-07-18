@@ -116,7 +116,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
         "\"name\":\"myName\","
         "\"port\":\"1337\","
-        "\"max_sessions\":\"16\","
+        "\"num_sessions\":\"16\","
         "\"parallel_sessions\":\"8\",";
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
         "\"status\":\"stopped\""

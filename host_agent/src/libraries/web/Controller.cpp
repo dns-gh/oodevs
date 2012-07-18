@@ -372,9 +372,9 @@ std::string Controller::CreateNode( const Request_ABC& request )
 {
     const std::string name = RequireParameter< std::string >( "name", request );
     LOG_INFO( log_ ) << "[web] /create_node name: " << name;
-    const int max = GetParameter( "max_sessions", request, 16 );
-    const int parallel = GetParameter( "parallel_sessions", request, 4 );
-    return WriteHttpReply( agent_.CreateNode( name, max, std::min( parallel, max ) ) );
+    const int num_sessions = GetParameter( "num_sessions", request, 16 );
+    const int parallel_sessions = GetParameter( "parallel_sessions", request, 4 );
+    return WriteHttpReply( agent_.CreateNode( name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,9 +411,9 @@ std::string Controller::StopNode( const Request_ABC& request )
 std::string Controller::UpdateNode( const Request_ABC& request )
 {
     const std::string id = RequireParameter< std::string >( "id", request );
-    const size_t max = RequireParameter< size_t >( "max_sessions", request );
-    const size_t parallel = RequireParameter< size_t >( "parallel_sessions", request );
-    return WriteHttpReply( agent_.UpdateNode( Convert( id ), max, parallel ) );
+    const size_t num_sessions = RequireParameter< size_t >( "num_sessions", request );
+    const size_t parallel_sessions = RequireParameter< size_t >( "parallel_sessions", request );
+    return WriteHttpReply( agent_.UpdateNode( Convert( id ), num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------

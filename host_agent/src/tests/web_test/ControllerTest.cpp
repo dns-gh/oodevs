@@ -191,7 +191,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
     const std::string name = "node_name";
     SetRequest( "GET", "/create_node", boost::assign::map_list_of
         ( "name", name )
-        ( "max_sessions", "16" )
+        ( "num_sessions", "16" )
         ( "parallel_sessions", "8" )
     );
     const std::string expected = "a json node";

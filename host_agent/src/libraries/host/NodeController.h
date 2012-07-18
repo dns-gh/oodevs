@@ -69,11 +69,11 @@ public:
     virtual size_t  Count() const;
     virtual bool    Has( const Uuid& id ) const;
     virtual T_Node  Get( const Uuid& id ) const;
-    virtual T_Node  Create( const std::string& name, size_t max, size_t parallel );
+    virtual T_Node  Create( const std::string& name, size_t num_sessions, size_t parallel_sessions );
     virtual T_Node  Delete( const Uuid& id );
     virtual T_Node  Start( const Uuid& id ) const;
     virtual T_Node  Stop( const Uuid& id ) const;
-    virtual T_Node  Update( const Uuid& id, size_t max, size_t parallel );
+    virtual T_Node  Update( const Uuid& id, size_t num_sessions, size_t parallel_sessions );
     //@}
 
     //! @name Install Methods
