@@ -81,6 +81,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
     {
         if( urbanPosition->Vertices().empty() )
         {
+            delete hierarchies;
             delete pTerrainObject;
             return 0;
         }
