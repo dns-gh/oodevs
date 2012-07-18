@@ -19,12 +19,17 @@
 
 namespace kernel
 {
+    class AgentType;
+    class AutomatType;
     class Controllers;
+    class Ghost_ABC;
     class Hierarchies;
     class Entity_ABC;
     class Profile_ABC;
     class Symbol_ABC;
 }
+
+enum E_GhostType;
 
 namespace gui
 {
@@ -109,7 +114,14 @@ private:
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    virtual bool Drop( const kernel::AgentType& item, kernel::Entity_ABC& target );
+    virtual bool Drop( const kernel::AutomatType& item, kernel::Entity_ABC& target );
+    template< typename T>
+    bool Drop( const T& type, ValuedListItem& target );
+
     virtual bool CanDrop( const kernel::Entity_ABC* entity, QPoint position ) const;
+    template< typename T >
+    bool CanDropOnGhost( const T* type, QPoint position, E_GhostType ghostType ) const;
     //@}
 
 protected:

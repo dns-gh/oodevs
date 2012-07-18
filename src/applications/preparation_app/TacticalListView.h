@@ -34,6 +34,7 @@ namespace kernel
 
 class AutomatDecisions;
 class ModelBuilder;
+class Model;
 
 // =============================================================================
 /** @class  TacticalListView
@@ -58,8 +59,8 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
-                               ModelBuilder& modelBuilder, const kernel::FormationLevels& levels, const kernel::AgentTypes& agentTypes, const kernel::GlTools_ABC& tools );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, Model& model,
+                               ModelBuilder& modelBuilder, const kernel::AgentTypes& agentTypes, const kernel::GlTools_ABC& tools );
     virtual ~TacticalListView();
     //@}
 
@@ -111,6 +112,8 @@ private:
     bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
     bool Drop( const kernel::Ghost_ABC& item, const kernel::Entity_ABC& target );
     bool Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target );
+    bool Drop( const kernel::AgentType& item, kernel::Entity_ABC& target );
+    bool Drop( const kernel::AutomatType& item, kernel::Entity_ABC& target );
     void AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root );
     void UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
@@ -118,6 +121,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Model& model_;
     gui::ItemFactory_ABC& itemFactory_;
     const kernel::AgentTypes& agentTypes_;
     ModelBuilder& modelBuilder_;

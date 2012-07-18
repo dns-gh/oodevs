@@ -286,10 +286,11 @@ Agent_ABC& AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type,
 // Name: AgentsModel::CreateAgent
 // Created: ABR 2011-10-25
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( Ghost_ABC& ghost, const AgentType& type, const geometry::Point2f& position )
+Agent_ABC* AgentsModel::CreateAgent( Ghost_ABC& ghost, const AgentType& type, const geometry::Point2f& position )
 {
     Agent_ABC* agent = agentFactory_.Create( ghost, type, Clip( position, width_, height_ ) );
     tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    return agent;
 }
 
 // -----------------------------------------------------------------------------
