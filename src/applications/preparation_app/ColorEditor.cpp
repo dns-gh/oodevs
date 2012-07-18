@@ -134,8 +134,8 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
 void ColorEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
-    menu.InsertItem( "Color", tools::translate( "ColorEditor", "Change color" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Helpers", tools::translate( "ColorEditor", "Change color" ), this, SLOT( Show() ), false, 3 );
     if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC>() )
         if( pColor->IsOverriden() )
-            menu.InsertItem( "Color", tools::translate( "ColorEditor", "Reset color" ), this, SLOT( Reset() ) );
+            menu.InsertItem( "Helpers", tools::translate( "ColorEditor", "Reset color" ), this, SLOT( Reset() ), false, 8 );
 }

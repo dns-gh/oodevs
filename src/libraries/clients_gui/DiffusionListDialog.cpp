@@ -113,7 +113,7 @@ void DiffusionListDialog::NotifyContextMenu( const kernel::Team_ABC& team, Conte
         return;
     currentTeam_ = &team;
     currentAgent_ = 0;
-    menu.InsertItem( "Extensions", tr( "Edit diffusion list" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Helpers", tr( "Edit diffusion list" ), this, SLOT( Show() ), false, 11 );
 }
 
 // -----------------------------------------------------------------------------

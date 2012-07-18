@@ -76,7 +76,7 @@ GhostSymbolDialog::~GhostSymbolDialog()
 void GhostSymbolDialog::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
 {
     selected_ = &ghost;
-    menu.InsertItem( "Update", tr( "Change symbol" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Helpers", tr( "Symbol" ), this, SLOT( Show() ), false, 10 );
 }
 
 // -----------------------------------------------------------------------------

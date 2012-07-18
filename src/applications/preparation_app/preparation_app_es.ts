@@ -694,8 +694,8 @@
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Change symbol</source>
-        <translation type="unfinished"></translation>
+        <source>Symbol</source>
+        <translation type="unfinished">Símbolo</translation>
     </message>
 </context>
 <context>

@@ -694,8 +694,8 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Change symbol</source>
-        <translation>Modifier le symbole</translation>
+        <source>Symbol</source>
+        <translation>Symbole</translation>
     </message>
 </context>
 <context>

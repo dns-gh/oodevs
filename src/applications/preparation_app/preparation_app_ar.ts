@@ -694,7 +694,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change symbol</source>
+        <source>Symbol</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

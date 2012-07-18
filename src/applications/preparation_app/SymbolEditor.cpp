@@ -147,7 +147,7 @@ namespace
 // -----------------------------------------------------------------------------
 void SymbolEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    menu_ = menu.SubMenu( "Symbols", tr( "Symbol" ) );
+    menu_ = menu.SubMenu( "Helpers", tr( "Symbol" ), false, 9 );
     menu_->setStyle( new MenuStyle() );
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     Update();

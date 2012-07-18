@@ -80,7 +80,7 @@ void TemplatesPanel::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel
         || dynamic_cast< const kernel::Agent_ABC* >( & entity ) )
     {
         menuEntity_ = &entity;
-        menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ) );
+        menu.InsertItem( "Command", tr( "Create template" ), this, SLOT( OnCreateTemplate() ), false, 2 );
     }
 }
 

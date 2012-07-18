@@ -183,7 +183,7 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
         return;    if( &entity != &model_.teams_.GetNoSideTeam() )
     {
         toDelete_ = &entity;
-        menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
+        menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );
     }
 }
 

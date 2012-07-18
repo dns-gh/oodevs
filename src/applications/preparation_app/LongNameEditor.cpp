@@ -97,7 +97,7 @@ void LongNameEditor::DoNotifyContextMenu( const Entity_ABC& entity, ContextMenu&
     if( type && type->Find( "NomLong" ) )
     {
         selected_ = const_cast< Entity_ABC* >( &entity );
-        menu.InsertItem( "NomLong", tools::translate( "LongNameEditor", "Generate long names" ), this, SLOT( Generate() ) );
+        menu.InsertItem( "Helpers", tools::translate( "LongNameEditor", "Generate long names" ), this, SLOT( Generate() ), false, 6 );
     }
 }
 

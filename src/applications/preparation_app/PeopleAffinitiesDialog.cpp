@@ -41,7 +41,7 @@ PeopleAffinitiesDialog::~PeopleAffinitiesDialog()
 void PeopleAffinitiesDialog::NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Inhabitant_ABC* >( &entity );
-    menu.InsertItem( "Update", tools::translate( "AffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Helpers", tools::translate( "AffinitiesDialog", "Change affinities" ), this, SLOT( Show() ), false, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,5 +51,5 @@ void PeopleAffinitiesDialog::NotifyContextMenu( const kernel::Inhabitant_ABC& en
 void PeopleAffinitiesDialog::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Population_ABC* >( &entity );
-    menu.InsertItem( "Update", tools::translate( "AffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Helpers", tools::translate( "AffinitiesDialog", "Change affinities" ), this, SLOT( Show() ), false, 1 );
 }

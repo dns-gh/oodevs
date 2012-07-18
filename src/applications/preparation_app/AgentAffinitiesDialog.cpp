@@ -40,5 +40,5 @@ AgentAffinitiesDialog::~AgentAffinitiesDialog()
 void AgentAffinitiesDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Agent_ABC* >( &entity );
-    menu.InsertItem( "Update", tools::translate( "AffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Helpers", tools::translate( "AffinitiesDialog", "Change affinities" ), this, SLOT( Show() ), false, 1 );
 }

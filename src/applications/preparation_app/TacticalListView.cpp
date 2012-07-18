@@ -283,9 +283,9 @@ void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, ContextMenu&
     contextMenuEntity_ = &entity;
     if( !isVisible() || !IsActivated() )
         return;
-    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ) );
+    menu.InsertItem( "Command", tr( "Rename" ), this, SLOT( OnRename() ), false, 4 );
     if( entity.Get< kernel::TacticalHierarchies >().GetSuperior() != 0 )
-        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
+        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ), false, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -326,11 +326,11 @@ void TacticalListView::NotifyContextMenu( const Automat_ABC& automat, ContextMen
     if( const AutomatDecisions* decisions = automat.Retrieve< AutomatDecisions >() )
     {
         if( ! decisions->IsEmbraye() )
-            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
+            menu.InsertItem( "Helpers", tr( "Engage" ), this, SLOT( Engage() ), false, 0 );
         else if( decisions->CanBeOrdered() )
-            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
+            menu.InsertItem( "Helpers", tr( "Disengage" ), this, SLOT( Disengage() ), false, 0 );
     }
-    menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ) );
+    menu.InsertItem( "Command", tr( "Change automat type" ), this, SLOT( ChangeAutomatType() ), false, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -339,7 +339,7 @@ void TacticalListView::NotifyContextMenu( const Automat_ABC& automat, ContextMen
 // -----------------------------------------------------------------------------
 void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel_ABC& root )
 {
-    kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Command", tr( "Create formation" ), false, 3 );
     for( const HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
         subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().toUtf8().constData() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
 }
@@ -350,10 +350,10 @@ void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const kernel::Ghost_ABC& ghost, kernel::ContextMenu& menu )
 {
-    contextMenuEntity_ = &ghost;
-    if( !isVisible() || !IsActivated() )
+    if( ghost.GetGhostType() != eGhostType_Automat || !isVisible() || !IsActivated() )
         return;
-    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ) );
+    contextMenuEntity_ = &ghost;
+    menu.InsertItem( "Command", tr( "Replace by a new automat" ), this, SLOT( ChangeAutomatType() ), false, 6 );
 }
 
 // -----------------------------------------------------------------------------
