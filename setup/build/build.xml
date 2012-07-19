@@ -5,8 +5,10 @@
     <import file="${env.PONEY_HOME}/poney.xml"/>
     <var name="repositories" value="${repositories},${sword.repository}"/>
 
+    <property name="branch" value="trunk" />
+
     <target name="configure" description="retrieve dependencies">
-        <update name="sword" version="Defense/releases/internal/sword5-dev" package="SWORD_binaries_${platform}_sword5-dev"/>
+        <update name="sword" version="Defense/releases/internal/${branch}" package="SWORD_binaries_${platform}_${branch}"/>
         <update name="vcredist" package="vcredist"/>
     </target>
 
@@ -17,7 +19,7 @@
                 <fileset dir="../../host_agent/out/${platform}/RelWithDebInfo" includes="**/*.pdb"/>
                 <flattenmapper/>
            </mappedresources>
-        </zip>        
+        </zip>
     </target>
 
     <target name="all" depends="configure,package" />
