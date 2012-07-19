@@ -80,9 +80,6 @@ LangString OT_SELF_TRAINING ${LANG_FRENCH} "Auto Formation"
 LangString OT_GEN ${LANG_ENGLISH} "Terrain Generation"
 LangString OT_GEN ${LANG_FRENCH}  "Generation Terrain"
 
-LangString OT_WKP ${LANG_ENGLISH} "Terrain Workshop"
-LangString OT_WKP ${LANG_FRENCH}  "Atelier Terrain"
-
 LangString OT_TN_TOOLS ${LANG_ENGLISH} "Terrain Tools"
 LangString OT_TN_TOOLS ${LANG_FRENCH}  "Outils Terrain"
 
