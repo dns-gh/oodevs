@@ -23,22 +23,17 @@ pop_settings = (ui, data) ->
 validate_settings = (ui, item) ->
     max = ui.find ".num_sessions"
     par = ui.find ".parallel_sessions"
-    max_val = parseInt max.val(), 10
-    par_val = parseInt par.val(), 10
-    if par_val > max_val
-        toggle_input_error par, "Invalid", par_val
-        return
     data =
-        num_sessions: max_val
-        parallel_sessions: par_val
+        num_sessions: parseInt max.val(), 10
+        parallel_sessions: parseInt par.val(), 10
     return data
 
 class NodeItem extends Backbone.Model
     view: NodeItemView
 
     defaults:
-        num_sessions: 64
-        parallel_sessions: 8
+        num_sessions: 0
+        parallel_sessions: 0
 
     sync: (method, model, options) =>
         if method == "create"
