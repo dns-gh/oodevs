@@ -643,6 +643,12 @@ return
         end
         return false
     end,
+    isJammed = function ( self ) 
+        return integration.agentEstBrouille( self )
+    end,
+    isPCJammed = function ( self )
+        return integration.pcEstBrouille( self )
+    end,
         
     getTasks = function( self )
         return self.tasks
