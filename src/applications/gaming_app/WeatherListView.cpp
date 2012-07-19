@@ -11,6 +11,7 @@
 #include "WeatherListView.h"
 #include "moc_WeatherListView.cpp"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/MeteoModel.h"
 #include "meteo/MeteoLocal.h"
 #include <boost/shared_ptr.hpp>
