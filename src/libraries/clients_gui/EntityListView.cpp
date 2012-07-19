@@ -191,6 +191,17 @@ void EntityListView::NotifyUpdated( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityListView::NotifyUpdated
+// Created: MMC 2012-07-19
+// -----------------------------------------------------------------------------
+void EntityListView::NotifyUpdated( const Team_ABC& team )
+{
+    ValuedListItem* teamItem = FindSibling( static_cast< const Entity_ABC* >( &team ), firstChild() );
+    if( teamItem )
+        teamItem->SetNamed( static_cast< const Entity_ABC& >( team ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityListView::NotifyCreated
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
