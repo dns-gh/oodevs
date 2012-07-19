@@ -19,7 +19,9 @@ integration.cleanFragOrder = function( fragOrder )
 end
 
 integration.isROE = function( self )
-  return self.source:GetType()=="Rep_OrderConduite_ChangerReglesEngagement"
+  local returnValue = self.source:GetType()=="Rep_OrderConduite_ChangerReglesEngagement"
+  integration.cleanFragOrder( self )
+  return returnValue
 end
 
 integration.isTask = function( self )
@@ -123,6 +125,7 @@ integration.setAutomatFragOrder = function( self )
   elseif orderType == "Rep_OrderConduite_ChangerReglesEngagementPopulation" then
       DEC_Automate_ChangeEtatROEPopulation(self.source:GetorderConduiteChangerReglesEngagementPopulation_())
       integration.CR_ROE_Foules ( self.source:GetorderConduiteChangerReglesEngagementPopulation_() )
+      integration.cleanFragOrder( self )
   end
 end
 
@@ -283,6 +286,7 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "Rep_OrderConduite_ChangerReglesEngagement" then
     integration.updateROE( self )
+    integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_Engager" then
     orderType = "france.military.platoon.combat.support.art.tasks.Engager"
