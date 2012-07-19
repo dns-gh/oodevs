@@ -144,6 +144,28 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MessageLoader::GetNearestKeyFrame
+// Created: JSR 2012-07-19
+// -----------------------------------------------------------------------------
+unsigned int MessageLoader::GetNearestKeyFrame( unsigned int frame )
+{
+    ++ frame;
+    if( !SwitchToFragment( frame ) )
+        return frame - 1;
+    unsigned int ret = frame;
+    CIT_KeyFrames it = keyFrames_.begin();
+    for( ; it != keyFrames_.end() && it->frameNumber_ <= frame; ++it )
+        ret = it->frameNumber_;
+    if( it != keyFrames_.end() )
+    {
+        ++it;
+        if( ( frame - ret ) > ( it->frameNumber_ - frame ) )
+            ret = it->frameNumber_;
+    }
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MessageLoader::FillTimeTable
 // Created: JSR 2011-07-25
 // -----------------------------------------------------------------------------

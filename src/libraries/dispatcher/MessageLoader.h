@@ -50,6 +50,7 @@ public:
     virtual void LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
     virtual unsigned int GetTickNumber() const;
     unsigned int FindKeyFrame( unsigned int frameNumber );
+    unsigned int GetNearestKeyFrame( unsigned int frame );
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     //@}
 

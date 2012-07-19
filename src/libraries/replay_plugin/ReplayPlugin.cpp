@@ -185,6 +185,9 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
     asn().set_tick( loader_.GetCurrentTick() );
     if( frame < loader_.GetTickNumber() )
     {
+        // hack pour Scipio, on se place à la keyframe la plus proche, pour que l'edt reçoive moins de messages.
+        frame = loader_.GetNearestKeyFrame( frame );
+
         asn().set_tick( frame );
         asn().set_error_code( sword::ControlAck::no_error );
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );

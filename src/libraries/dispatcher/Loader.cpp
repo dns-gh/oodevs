@@ -116,6 +116,15 @@ unsigned Loader::GetTickNumber() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Loader::GetNearestKeyFrame
+// Created: JSR 2012-07-19
+// -----------------------------------------------------------------------------
+unsigned int Loader::GetNearestKeyFrame( unsigned int frame )
+{
+    return loader_->GetNearestKeyFrame( frame );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Loader::FillTimeTable
 // Created: JSR 2011-07-25
 // -----------------------------------------------------------------------------
