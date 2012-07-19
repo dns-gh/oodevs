@@ -523,10 +523,12 @@ Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
         if( num_counter_ >= num_sessions_ )
             return T_Token();
     ++parallel_counter_;
-    ++num_counter_;
+    if( !force )
+        ++num_counter_;
     lock.unlock();
 
-    observer_.Notify( *this );
+    if( !force )
+        observer_.Notify( *this );
     return boost::make_shared< node::Token >( this, start );
 }
 
