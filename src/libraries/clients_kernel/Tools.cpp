@@ -18,8 +18,27 @@
 #include <QtCore/qtranslator.h>
 #include <QtCore/qtextcodec.h>
 #pragma warning( pop )
+#include <boost/date_time.hpp>
 
 using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: Tools::BoostTimeToQTime
+// Created: ABR 2012-07-19
+// -----------------------------------------------------------------------------
+QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
+{
+    return QDateTime::fromString( boost::posix_time::to_iso_string( btime ).c_str(), Qt::ISODate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Tools::QTimeToBoostTime
+// Created: ABR 2012-07-19
+// -----------------------------------------------------------------------------
+boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
+{
+    return boost::posix_time::from_iso_string( qtime.toString( "yyyyMMddThhmmss" ).toUtf8().constData() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: tools::readLocale

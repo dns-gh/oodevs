@@ -14,7 +14,9 @@
 #include "ENT/ENT_Tr_ABC.h"
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
+#include <QtCore/qdatetime.h>
 #pragma warning( pop )
+#include <boost/date_time/posix_time/ptime.hpp>
 
 // =============================================================================
 /** @class  Tools
@@ -24,6 +26,9 @@
 // =============================================================================
 namespace tools
 {
+    QDateTime BoostTimeToQTime( const boost::posix_time::ptime& btime );
+    boost::posix_time::ptime QTimeToBoostTime( const QDateTime& qtime );
+
     QLocale readLocale();
     std::string readLang();
     QTranslator* AddTranslator( QApplication& application, QLocale& locale, const char* t );

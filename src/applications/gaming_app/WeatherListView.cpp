@@ -63,8 +63,7 @@ void WeatherListView::CreateItem()
 {
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toUtf8().constData() ) );
     weather->SetCreated( true );
-    weather->SetPeriod( boost::posix_time::from_iso_string( simulation_.GetDateTime().toString( Qt::ISODate ).toUtf8().constData() ),
-                        boost::posix_time::from_iso_string( simulation_.GetDateTime().toString( Qt::ISODate ).toUtf8().constData() ) );
+    weather->SetPeriod( tools::QTimeToBoostTime( simulation_.GetDateTime() ), tools::QTimeToBoostTime( simulation_.GetDateTime() ) );
     Q3ListViewItem* item = new Q3ListViewItem( this );
     item->setText( 0, weather->GetName().c_str() );
     weathers_.push_back( weather );

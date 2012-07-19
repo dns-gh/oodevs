@@ -18,6 +18,7 @@
 #include "WeatherListView.h"
 #include "WeatherWidget.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include "meteo/MeteoLocal.h"
 
 using namespace gui;
@@ -148,8 +149,7 @@ void WeatherPanel::CommitLocalWeather()
     {
         localWidget_->CommitTo( *selectedLocal_ );
         if( selectedLocal_->IsCreated() )
-            selectedLocal_->SetPeriod( boost::posix_time::from_iso_string( startTime_->dateTime().toString( Qt::ISODate ).toUtf8().constData() ),
-                                       boost::posix_time::from_iso_string( endTime_->dateTime().toString( Qt::ISODate ).toUtf8().constData() ) );
+            selectedLocal_->SetPeriod( tools::QTimeToBoostTime( startTime_->dateTime() ), tools::QTimeToBoostTime( endTime_->dateTime() ) );
     }
 }
 
@@ -164,8 +164,8 @@ void WeatherPanel::LocalSelectionChanged()
     if( selected != 0 )
     {
         localWidget_->Update( *selected );
-        startTime_->setDateTime( QDateTime::fromString( boost::posix_time::to_iso_string( selected->GetStartTime() ).c_str(), Qt::ISODate ) );
-        endTime_->setDateTime( QDateTime::fromString( boost::posix_time::to_iso_string( selected->GetEndTime() ).c_str(), Qt::ISODate ) );
+        startTime_->setDateTime( tools::BoostTimeToQTime( selected->GetStartTime() ) );
+        endTime_->setDateTime( tools::BoostTimeToQTime( selected->GetEndTime() ) );
         layer_.SetPosition( *selected );
     }
     else
