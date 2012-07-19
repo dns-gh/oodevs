@@ -2688,7 +2688,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Display initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher l&apos;état initial</translation>
     </message>
 </context>
 <context>
