@@ -15,6 +15,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge["sword.military.platoon.stabilisation.tasks.knowledge.SealOff"] = t
+taskKnowledge["agent.tasks.knowledges.SealOff"] = t
 
 return result

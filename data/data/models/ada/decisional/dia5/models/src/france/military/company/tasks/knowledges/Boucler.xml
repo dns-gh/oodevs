@@ -19,7 +19,7 @@
 		<method name="getSealOffPosition">
 			<return>
 				<type>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
+					<class name="properties.Reachable"/>
 				</type>
 			</return>
 		</method>

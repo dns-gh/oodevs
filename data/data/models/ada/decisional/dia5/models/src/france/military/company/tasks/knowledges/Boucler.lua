@@ -10,7 +10,7 @@ return
         local number = math.floor( (#myself.leadData.sealOffPositions / meKnowledge.nbPionsMain ) +1 )
 
         myself.leadData.sealOffIndex = ( myself.leadData.sealOffIndex + number ) % #myself.leadData.sealOffPositions
-        return CreateKnowledge( sword.military.world.Point, myself.leadData.sealOffPositions[myself.leadData.sealOffIndex] )
+        return CreateKnowledge( world.Point, myself.leadData.sealOffPositions[myself.leadData.sealOffIndex] )
     end,
 
     getMeetingPoint = function( self, params )

@@ -56,7 +56,7 @@
         <method name="plannedworkToWork">
             <return>
                 <type>
-                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                    <class name="properties.Buildable"/>
                 </type>
             </return>
         </method>

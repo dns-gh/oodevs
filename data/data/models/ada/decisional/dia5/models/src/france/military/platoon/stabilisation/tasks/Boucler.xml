@@ -3,19 +3,19 @@
 	<parameters>
 		<parameter name="objective">
 			<type>
-				<class name="sword.military.knowledge.Sealable"/>
+				<class name="properties.Sealable"/>
 			</type>
 		</parameter>
 		<parameter name="position" nullable="true">
 			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
+				<class name="properties.Reachable"/>
 			</type>
 			<default>
 				<nil/>
 			</default>
 		</parameter>
 	</parameters>
-	<next-task name="sword.military.platoon.stabilisation.tasks.SealOff">
+	<next-task name="agent.tasks.SealOff">
 		<parameter name="position">
 			<value>
 				<parameter>position</parameter>

@@ -6,7 +6,7 @@
 			<description>Les ordres de conduite à propager</description>
 			<type>
 				<list>
-					<class name="sword.military.knowledge.FragOrder"/>
+					<class name="properties.FragOrder"/>
 				</list>
 			</type>
 		</parameter>

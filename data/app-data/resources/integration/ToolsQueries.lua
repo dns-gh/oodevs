@@ -300,7 +300,7 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
     local nTemp = #temp
     for i = 1, nTemp do
         local pion = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( sword.military.world.PlatoonAlly, pion )
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )
     end
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters

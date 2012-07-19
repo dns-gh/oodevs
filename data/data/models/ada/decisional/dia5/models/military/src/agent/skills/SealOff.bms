@@ -21,7 +21,7 @@ rootnode
             self.position = self.params.position
         else
             local objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), self.params.objective:getLocalisation() )
-            self.position = CreateKnowledge( sword.military.world.Point, objectPosition )
+            self.position = CreateKnowledge( world.Point, objectPosition )
         end
     end,
 
