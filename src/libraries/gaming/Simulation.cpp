@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Simulation.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Tools.h"
 #include "Network.h"
 #include "protocol/ReplaySenders.h"
 
@@ -331,19 +332,7 @@ QString Simulation::GetTimeAsString() const
 // -----------------------------------------------------------------------------
 QString Simulation::GetDateAsString() const
 {
-    return GetDateTime().date().toString();
-}
-
-namespace
-{
-    QDateTime MakeDate( const std::string& str )
-    {
-        // $$$$ AGE 2007-10-12: ...
-        QString extended( str.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' );
-        extended.insert(  6, '-' ); extended.insert(  4, '-' );
-        return QDateTime::fromString( extended, Qt::ISODate );
-    }
+    return QLocale().toString( GetDateTime().date(), QLocale::LongFormat );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,7 +341,7 @@ namespace
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetDateTime() const
 {
-    return MakeDate( date_ );
+    return tools::IsoStringToQTime( date_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +350,7 @@ QDateTime Simulation::GetDateTime() const
 // -----------------------------------------------------------------------------
 QDateTime Simulation::GetInitialDateTime() const
 {
-    return MakeDate( initialDate_ );
+    return tools::IsoStringToQTime( initialDate_ );
 }
 
 // -----------------------------------------------------------------------------

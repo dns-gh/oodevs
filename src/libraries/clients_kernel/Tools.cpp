@@ -23,7 +23,16 @@
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Tools::BoostTimeToQTime
+// Name: tools::IsoStringToQTime
+// Created: ABR 2012-07-19
+// -----------------------------------------------------------------------------
+QDateTime tools::IsoStringToQTime( const std::string& text )
+{
+    return QDateTime::fromString( text.c_str(), "yyyyMMddThhmmss" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::BoostTimeToQTime
 // Created: ABR 2012-07-19
 // -----------------------------------------------------------------------------
 QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
@@ -32,7 +41,7 @@ QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Tools::QTimeToBoostTime
+// Name: tools::QTimeToBoostTime
 // Created: ABR 2012-07-19
 // -----------------------------------------------------------------------------
 boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )

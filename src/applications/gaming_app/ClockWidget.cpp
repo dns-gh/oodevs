@@ -42,7 +42,6 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
         font.setBold( true );
         time_ = new QLabel( vBox );
         time_->setFont( font );
-        //QColor( 142, 219, 251 )
         time_->setPaletteForegroundColor( foregroundColor );
         time_->setText( "00:00:00" );
         time_->setAlignment( Qt::AlignCenter );
@@ -116,6 +115,6 @@ void ClockWidget::paintEvent( QPaintEvent* = 0)
 // -----------------------------------------------------------------------------
 void ClockWidget::NotifyUpdated( const Simulation& simulation )
 {
-    time_->setText( simulation.GetTimeAsString() );
     day_ ->setText( simulation.GetDateAsString() );
+    time_->setText( simulation.GetTimeAsString() );
 }
