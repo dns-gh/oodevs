@@ -71,7 +71,7 @@ Reply Create( T ptr, const std::string& name )
 }
 
 template< typename T, typename U >
-Reply Dispatch( T& controller, const U& member, const Uuid& id, const std::string& action )
+Reply Dispatch( T& controller, const U& member, const Uuid& id )
 {
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
@@ -80,11 +80,11 @@ Reply Dispatch( T& controller, const U& member, const Uuid& id, const std::strin
 }
 
 template< typename T, typename U >
-Reply ClusterDispatch( T* controller, const U& member, const Uuid& id, const std::string& action )
+Reply ClusterDispatch( T* controller, const U& member, const Uuid& id )
 {
     if( !controller )
         return Reply( web::INTERNAL_SERVER_ERROR, "Missing cluster" );
-    return Dispatch( *controller, member, id, action );
+    return Dispatch( *controller, member, id );
 }
 }
 
@@ -126,7 +126,7 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 Reply Agent::GetCluster() const
 {
-    return ClusterDispatch( cluster_, &NodeController_ABC::Get, clusterId_, "find cluster" );
+    return ClusterDispatch( cluster_, &NodeController_ABC::Get, clusterId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ Reply Agent::GetCluster() const
 // -----------------------------------------------------------------------------
 Reply Agent::StartCluster() const
 {
-    return ClusterDispatch( cluster_, &NodeController_ABC::Start, clusterId_, "start cluster" );
+    return ClusterDispatch( cluster_, &NodeController_ABC::Start, clusterId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ Reply Agent::StartCluster() const
 // -----------------------------------------------------------------------------
 Reply Agent::StopCluster() const
 {
-    return ClusterDispatch( cluster_, &NodeController_ABC::Stop, clusterId_, "start cluster" );
+    return ClusterDispatch( cluster_, &NodeController_ABC::Stop, clusterId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ Reply Agent::CountNodes() const
 // -----------------------------------------------------------------------------
 Reply Agent::GetNode( const Uuid& id ) const
 {
-    return Dispatch( nodes_, &NodeController_ABC::Get, id, "find node" );
+    return Dispatch( nodes_, &NodeController_ABC::Get, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ Reply Agent::DeleteNode( const Uuid& id )
 // -----------------------------------------------------------------------------
 Reply Agent::StartNode( const Uuid& id ) const
 {
-    return Dispatch( nodes_, &NodeController_ABC::Start, id, "start node" );
+    return Dispatch( nodes_, &NodeController_ABC::Start, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ Reply Agent::StartNode( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::StopNode( const Uuid& id ) const
 {
-    return Dispatch( nodes_, &NodeController_ABC::Stop, id, "stop node" );
+    return Dispatch( nodes_, &NodeController_ABC::Stop, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -319,7 +319,7 @@ Reply Agent::CountSessions( const Uuid& node ) const
 // -----------------------------------------------------------------------------
 Reply Agent::GetSession( const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Get, id, "find session" );
+    return Dispatch( sessions_, &SessionController_ABC::Get, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -338,7 +338,7 @@ Reply Agent::CreateSession( const Uuid& node, const std::string& name, const std
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteSession( const Uuid& id )
 {
-    return Dispatch( sessions_, &SessionController_ABC::Delete, id, "delete session" );
+    return Dispatch( sessions_, &SessionController_ABC::Delete, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -347,7 +347,7 @@ Reply Agent::DeleteSession( const Uuid& id )
 // -----------------------------------------------------------------------------
 Reply Agent::StartSession( const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Start, id, "start session" );
+    return Dispatch( sessions_, &SessionController_ABC::Start, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,7 +356,7 @@ Reply Agent::StartSession( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::StopSession( const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Stop, id, "stop session" );
+    return Dispatch( sessions_, &SessionController_ABC::Stop, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -365,7 +365,7 @@ Reply Agent::StopSession( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::PauseSession( const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Pause, id, "pause session" );
+    return Dispatch( sessions_, &SessionController_ABC::Pause, id );
 }
 
 // -----------------------------------------------------------------------------
