@@ -676,5 +676,10 @@
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
+  <report category="operational" id="472" message="Activation de l'IED impossible : hors de portée"/>
+  <report category="operational" id="473" message="Brouillé"/>
+  <report category="operational" id="474" message="Pion PC brouillé ou en silence radio"/>
+  <report category="operational" id="475" message="Mise à feu de l'IED impossible : il n'est pas encore en place"/>
+  <report category="operational" id="476" message="IED prêt pour mise à feu"/>
 </reports>
-<!-- signature="1771094794" -->
+<!-- signature="0682915386" -->

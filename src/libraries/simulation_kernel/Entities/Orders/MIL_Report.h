@@ -629,8 +629,13 @@ public:
         eRC_FragOrderReceived,
         eRC_FurtifModeOn,
         eRC_FurtifModeOff,
-        eRC_ObstacleNonActivable,
+        eRC_ObstacleNonActivable,//470
         eRC_FireObserver,
+        eRC_ImpossibleActivateIED,
+        eRC_Jammed,
+        eRC_PCJammed,
+        eRC_IEDNotReady,
+        eRC_IEDReadyForFiring,
         eLast
     };
     //@}

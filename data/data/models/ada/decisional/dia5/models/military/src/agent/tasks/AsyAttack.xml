@@ -19,15 +19,24 @@
                 <class name="properties.Reachable"/>
             </type>
         </parameter>
+        <parameter name="manual" nullable="true">
+            <description>Mise à feu manuelle de l'IED</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
-        <stage label="Mouvement vers la cible">
-            <description>Commettre l'attentat</description>
+        <stage label="Mise en place de l'IED">
+            <description>Mise en place de l'IED</description>
             <skills>
-                <skill name="agent.skills.Attack" main="true">
-                    <parameter name="objective">
+                <skill name="agent.skills.CommitTerrorist" main="true">
+                    <parameter name="position">
                         <value>
-                            <parameter>objective</parameter>
+                            <parameter>position</parameter>
                         </value>
                     </parameter>
                     <parameter name="dotation">
@@ -40,18 +49,14 @@
                             <boolean>false</boolean>
                         </value>
                     </parameter>
-                </skill>
-            </skills>
-        </stage>
-        <stage label="Mouvement vers la position de repli" disable-when-done="true">
-            <description>Mouvement vers la position de repli</description>
-            <skills>
-                <skill name="agent.skills.MoveToward" main="true">
-                    <parameter name="entities">
+                    <parameter name="objective">
                         <value>
-                            <list>
-                                <parameter>position</parameter>
-                            </list>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="manual">
+                        <value>
+                            <parameter>manual</parameter>
                         </value>
                     </parameter>
                 </skill>

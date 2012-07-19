@@ -19,6 +19,15 @@
                 <class name="properties.Reachable"/>
             </type>
         </parameter>
+        <parameter name="manual" nullable="true">
+            <description>Mise à feu de l'IED manuelle</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <goal>
         <description>Commettre un attentat contre la cible, puis se replier vers une position de repli.</description>
@@ -37,6 +46,11 @@
         <parameter name="dotation">
             <value>
                 <parameter>dotation</parameter>
+            </value>
+        </parameter>
+        <parameter name="manual">
+            <value>
+                <parameter>manual</parameter>
             </value>
         </parameter>
     </next-task>

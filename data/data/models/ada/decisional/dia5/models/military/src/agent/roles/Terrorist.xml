@@ -5,6 +5,7 @@
     <skill name="agent.skills.Attack"/>
     <skill name="agent.skills.Assassinate"/>
     <skill name="agent.skills.Snipe"/>
+    <skill name="agent.skills.CommitTerrorist"/>
   </skills>
   <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
     <description>Gestion par défaut des ordres de conduite</description>

@@ -333,4 +333,14 @@ return
     isVisible = function( self )
         return integration.isPointVisible( self )
     end,
+    isInAttackRange = function( self, suicide, dotation )
+        if suicide then return self:isReached() end
+        return integration.distance( meKnowledge, self ) < integration.porteePourAttentat( dotation )
+    end,
+    attackIt = masalife.brain.integration.startStopAction( 
+    { 
+        start = integration.startAttackIt, 
+        started = integration.updateAttackIt, 
+        stop = integration.stopAttackIt
+    } ),
 }
