@@ -80,6 +80,13 @@ static const HttpCode httpCodes[] =
 
 BOOST_STATIC_ASSERT( COUNT_OF( httpCodes ) == HTTP_STATUS_COUNT );
 
+const char* GetStatusMessage( HttpStatus code )
+{
+    if( code < 0 || code >= HTTP_STATUS_COUNT )
+        return "Invalid HTTP status code";
+    return httpCodes[code].text;
+}
+
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
 // Created: BAX 2012-02-28
@@ -287,20 +294,17 @@ std::string Controller::DoGet( Request_ABC& request )
     }
     catch( const HttpException& err )
     {
-        LOG_WARN( log_ ) << err.code << " " << err.msg;
-        LOG_WARN( log_ ) << "[web] error on " << uri;
+        LOG_WARN( log_ ) << "[web] " << uri << " " << GetStatusMessage( err.code ) << " " << err.msg;
         return WriteHttpReply( err.code, err.msg );
     }
     catch( const std::exception& err )
     {
-        LOG_WARN( log_ ) << err.what();
-        LOG_WARN( log_ ) << "[web] error on " << uri;
+        LOG_WARN( log_ ) << "[web] " << uri << " " << err.what();
         return WriteHttpReply( INTERNAL_SERVER_ERROR, err.what() );
     }
     catch( ... )
     {
-        LOG_WARN( log_ ) << "[web] unknown exception";
-        LOG_WARN( log_ ) << "[web] error on " << uri;
+        LOG_WARN( log_ ) << "[web] " << uri << " unknown exception";
         return WriteHttpReply( INTERNAL_SERVER_ERROR );
     }
     return WriteHttpReply( NOT_FOUND );

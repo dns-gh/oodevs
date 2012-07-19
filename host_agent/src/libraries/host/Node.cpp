@@ -18,6 +18,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
+#include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/function.hpp>
@@ -516,13 +517,16 @@ private:
 Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
 {
     const bool force = start == boost::posix_time::not_a_date_time;
+
     boost::unique_lock< boost::shared_mutex > lock( access_ );
     if( !force && parallel_sessions_ )
         if( parallel_counter_ >= parallel_sessions_ )
-            return T_Token();
+            throw web::HttpException( web::FORBIDDEN );
+
     if( !force && num_sessions_ )
         if( num_counter_ >= num_sessions_ )
-            return T_Token();
+            throw web::HttpException( web::FORBIDDEN );
+
     ++parallel_counter_;
     if( !force )
         ++num_counter_;
