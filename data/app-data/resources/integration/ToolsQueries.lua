@@ -282,6 +282,33 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
         return knowledges
     end
  end
+
+-- -------------------------------------------------------------------------------- 
+-- Param a automat
+-- Return a list of platoon with a good communication
+-- @author LMT
+-- @release 2012-07-17
+-- --------------------------------------------------------------------------------
+integration.getEntitiesFromAutomatCommunication = function ( automat, role, withPC)
+    local temp = {}
+    if withPC then
+        temp = DEC_Automate_PionsDeAutomateAvecPCCommunication(automat.source)
+    else
+        temp = DEC_Automate_PionsDeAutomateSansPCCommunication(automat.source)
+    end
+    local knowledges = {}
+    local nTemp = #temp
+    for i = 1, nTemp do
+        local pion = temp[i]
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( sword.military.world.PlatoonAlly, pion )
+    end
+
+    if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
+        return integration.filterPionWithRole( knowledges, role )
+    else
+        return knowledges
+    end
+ end
  
  -- -------------------------------------------------------------------------------- 
 -- Param a batallion
@@ -309,7 +336,7 @@ integration.getEntitiesFromBatallion = function ()
 -- @release 2011-10-12
 -- --------------------------------------------------------------------------------
 integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withPC)
-    local entities = integration.getEntitiesFromAutomat( automat, role, withPC)
+    local entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC)
     local operationnalEntities = {}
     for i = 1, #entities do
         if entities[i].source:DEC_Agent_EtatOpsMajeur() ~= 0 then

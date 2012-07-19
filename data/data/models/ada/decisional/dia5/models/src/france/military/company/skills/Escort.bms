@@ -6,7 +6,7 @@ rootnode
 
     create = function( self )
         if masalife.brain.core.class.isOfType(  self.params.objective, world.Company) then
-            self.escortableUnits = integration.getEntitiesFromAutomat( self.params.objective, "none", true)
+            self.escortableUnits = integration.getEntitiesFromAutomatCommunication( self.params.objective, "none", true)
         elseif masalife.brain.core.class.isOfType( self.params.objective, world.Platoon) then
             self.escortableUnits = { integration.getAgentFromAutomatKnowledge( self.params.objective ) }
         else
@@ -30,7 +30,7 @@ rootnode
          else
             -- Il faut que l'automate escorteur se rapproche de l'automate a escorter
             if not self.fragOrderSent then
-                local platoonInMeKnowledge = integration.getEntitiesFromAutomat( meKnowledge, "none", true)
+                local platoonInMeKnowledge = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true)
                 local sizePlatoonInMeKnowledge = #platoonInMeKnowledge
                 local objectivePosition = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint( self.params.objective:getPosition() ) )
                 for i = 1, sizePlatoonInMeKnowledge do

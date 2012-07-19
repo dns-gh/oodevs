@@ -6,7 +6,7 @@ return
         self.scoutPositions = {}
         self.mainPositions = {}
 
-        local listPlatoonAlly = integration.getEntitiesFromAutomat( meKnowledge, "none", false )
+        local listPlatoonAlly = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
         self.nbMain = 0
         local tasks = explode( ";", params.mainTasks )
         for _, task in pairs( tasks ) do

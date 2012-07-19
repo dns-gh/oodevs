@@ -57,7 +57,7 @@ local function manageAddedAndDeletedUnits( self )
     local redone = false
     local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
-    local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
 
     -- Si un pion a �t� supprim� de l'automate, on redistribue les missions
@@ -96,7 +96,7 @@ done = function( self ) end,
 create = function( self )
         myself.newTask = false
         self.parameters = myself.taskParams
-        self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
         self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
         for _, pion in pairs( self.parameters.commandingEntities ) do
             integration.setNeedReinforcement( pion, nil, nil, false )

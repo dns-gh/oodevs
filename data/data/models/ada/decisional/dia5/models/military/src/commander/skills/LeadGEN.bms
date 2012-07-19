@@ -234,7 +234,7 @@ create = function( self )
         myself.leadData = {}
         myself.leadData.workMap = {}
         self.parameters = myself.taskParams
-        self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
         for _, pion in pairs( self.parameters.commandingEntities ) do
             integration.setNeedReinforcement( pion, nil, nil, false )
         end
@@ -285,7 +285,7 @@ activate = function( self )
       self:create()
     end
     local oldEntities = self.parameters.commandingEntities
-    local newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local redone = false
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
