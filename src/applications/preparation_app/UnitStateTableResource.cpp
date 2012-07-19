@@ -174,6 +174,8 @@ void UnitStateTableResource::AddItem( int id )
         }
     }
     AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, 0, 0, consumption );
+    QStandardItem* item = dataModel_.item( dataModel_.rowCount() - 1, ePercentage );
+    item->setFlags( Qt::ItemIsSelectable );
 }
 
 // -----------------------------------------------------------------------------
