@@ -567,6 +567,10 @@
         <source>Select a directory</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid or missing orbat file.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FilterManager</name>
@@ -640,17 +644,6 @@
     <message>
         <source>Populations</source>
         <translation type="unfinished">Poblaciones</translation>
-    </message>
-</context>
-<context>
-    <name>FilterPartiesListView</name>
-    <message>
-        <source>Error loading file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

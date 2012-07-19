@@ -567,6 +567,10 @@
         <source>Select a directory</source>
         <translation>Sélectionnez un répertoire</translation>
     </message>
+    <message>
+        <source>Invalid or missing orbat file.</source>
+        <translation>Fichier orbat manquant ou invalide.</translation>
+    </message>
 </context>
 <context>
     <name>FilterManager</name>
@@ -640,17 +644,6 @@
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
-    </message>
-</context>
-<context>
-    <name>FilterPartiesListView</name>
-    <message>
-        <source>Error loading file</source>
-        <translation>Erreur de chargement</translation>
-    </message>
-    <message>
-        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
-        <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.&lt;br&gt;Merci de sélectionner un autre fichier à importer.</translation>
     </message>
 </context>
 <context>

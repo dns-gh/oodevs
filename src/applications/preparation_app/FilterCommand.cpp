@@ -76,7 +76,10 @@ const std::string FilterCommand::GetName() const
 // -----------------------------------------------------------------------------
 bool FilterCommand::IsValid() const
 {
-    return !command_.empty() && !path_.empty();
+    bool valid = true;
+    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+        valid = valid && it->second->IsValid();
+    return !command_.empty() && !path_.empty() && valid;
 }
 
 // -----------------------------------------------------------------------------
