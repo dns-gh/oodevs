@@ -43,6 +43,7 @@ public:
     virtual void NotifyNoXmlSchemaSpecified( const std::string& file ) = 0;
     virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion ) = 0;
     virtual void GetErrors( std::vector< std::string >& /* errors */ ) const { /* NOTHING */ }
+    virtual void Purge() { /* NOTHING */ };
     //@}
 };
 

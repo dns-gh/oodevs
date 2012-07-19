@@ -49,7 +49,7 @@ namespace
 // Name: ModelConsistencyDialog constructor
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
-ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
+ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : T_Parent( parent, *new ModelConsistencyChecker( model, staticModel, controllers, fileLoaderObserver ), *new gui::FilterProxyModel< E_ConsistencyCheck >( IsError, Convert ) )
     , model_           ( model )
     , actionController_( controllers.actions_ )

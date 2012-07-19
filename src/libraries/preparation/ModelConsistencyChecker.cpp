@@ -68,7 +68,7 @@ using namespace tools;
 // Name: ModelConsistencyChecker constructor
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
+ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : model_      ( model )
     , staticModel_( staticModel )
     , controllers_( controllers )
@@ -736,6 +736,7 @@ void ModelConsistencyChecker::CheckFiles()
     fileLoaderObserver_.GetErrors( filesErrors );
     for( std::size_t i = 0; i < filesErrors.size(); ++i )
         AddError( eOthers, 0, filesErrors[ i ] );
+    fileLoaderObserver_.Purge();
 }
 
 // -----------------------------------------------------------------------------
