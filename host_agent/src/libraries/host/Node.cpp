@@ -544,7 +544,7 @@ void Node::SessionStop( const boost::posix_time::ptime& start )
         return;
     if( start + boost::posix_time::seconds( min_play_seconds_ ) > boost::posix_time::second_clock::local_time() )
         return;
-    if( num_counter_ <= 0 )
+    if( num_counter_ < 1 )
         return;
     --num_counter_;
     lock.unlock();
