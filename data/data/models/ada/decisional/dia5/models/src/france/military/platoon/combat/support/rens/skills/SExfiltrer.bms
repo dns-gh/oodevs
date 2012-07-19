@@ -11,8 +11,6 @@ connections = { skill.links.moveToward, skill.nodes.RC },
     end,
 
     activate = function( self )
-      DEC_Trace("self.params.byNight "..tostring(self.params.byNight))
-      DEC_Trace("integration.isNight() "..tostring(integration.isNight()))
        if self.params.byNight and not integration.isNight() then
             Activate( skill.nodes.RC, 1, { RC = eRC_AttenteConditionFavorablePourInfiltration } )
             return
