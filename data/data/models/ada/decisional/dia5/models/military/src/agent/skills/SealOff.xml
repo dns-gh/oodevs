@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.SealOff" source-version="1.0.0">
-    <description>Boucler une zone.</description>
-    <parameters>
-        <parameter name="objective">
-            <description>Le ou les élément(s) à boucler.</description>
-            <type>
-                <class name="properties.Sealable"/>
-            </type>
-        </parameter>
-    </parameters>
-    <goal>
-        <description>Boucler l'élément passé en paramètre.</description>
-    </goal>
-    <links>
-        <link name="moveToward" skill="agent.skills.MoveToward">
-            <description>Lien vers le skill moveToward</description>
-        </link>
-    </links>
+	<description>Boucler une zone.</description>
+	<parameters>
+		<parameter name="objective">
+			<description>Le ou les élément(s) à boucler.</description>
+			<type>
+				<class name="sword.military.knowledge.Sealable"/>
+			</type>
+		</parameter>
+		<parameter name="position" nullable="true">
+			<type>
+				<class name="sword.military.knowledge.decisional.Reachable"/>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Boucler l'élément passé en paramètre.</description>
+	</goal>
+	<links>
+		<link name="moveToward" skill="sword.military.platoon.skills.MoveToward">
+			<description>Lien vers le skill moveToward</description>
+		</link>
+	</links>
 </skill>

@@ -689,6 +689,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Position de bouclage" optional="true" type="Point"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
@@ -4636,4 +4637,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
   </fragorders>
 </missions>
-<!-- signature="3436638672" -->
+<!-- signature="2812349090" -->

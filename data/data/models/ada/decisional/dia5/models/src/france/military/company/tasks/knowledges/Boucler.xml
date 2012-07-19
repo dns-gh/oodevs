@@ -16,5 +16,12 @@
 			</return>
 		</method>
 		<method name="getWithImprovement"/>
+		<method name="getSealOffPosition">
+			<return>
+				<type>
+					<class name="sword.military.knowledge.decisional.Reachable"/>
+				</type>
+			</return>
+		</method>
 	</methods>
 </class>
