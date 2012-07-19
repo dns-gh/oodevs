@@ -201,8 +201,11 @@ void LivingAreaPanel::Update()
     assert( controllers_.modes_ );
     controllers_.ChangeMode( ePreparationMode_LivingArea );
     if( selected_ )
+    {
+        selected_->Select( controllers_.actions_ );
         if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
             positions->StartEdition();
+    }
 }
 
 // -----------------------------------------------------------------------------
