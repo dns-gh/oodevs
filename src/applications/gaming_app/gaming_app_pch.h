@@ -9,6 +9,8 @@
 
 #pragma warning( disable : 4231 )
 
+#pragma execution_character_set("utf-8")
+
 #ifndef __gaming_app_pch_h_
 #define __gaming_app_pch_h_
 

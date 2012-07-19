@@ -10,6 +10,8 @@
 #ifndef __timeline_plugin_pch_h_
 #define __timeline_plugin_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>

@@ -10,6 +10,8 @@
 #ifndef __TER_pch_h_
 #define __TER_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #pragma warning( push, 0 )
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>

@@ -10,6 +10,8 @@
 #ifndef __score_plugin_pch_h_
 #define __score_plugin_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #include <memory>
 #include <string>
 #include <stdexcept>

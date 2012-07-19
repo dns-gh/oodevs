@@ -10,6 +10,8 @@
 #ifndef __client_proxy_pch_h_
 #define __client_proxy_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #include <string>
 #include <memory>
 #include <map>

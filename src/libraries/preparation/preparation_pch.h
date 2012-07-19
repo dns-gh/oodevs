@@ -10,6 +10,8 @@
 #ifndef __preparation_pch_h_
 #define __preparation_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #pragma warning( disable : 4290 )
 #pragma warning( disable : 4702 )
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list

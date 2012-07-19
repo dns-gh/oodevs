@@ -10,6 +10,8 @@
 #ifndef __ADN_APPLICATION_PCH_H_
 #define __ADN_APPLICATION_PCH_H_
 
+#pragma execution_character_set("utf-8")
+
 #pragma warning( disable : 4231 4355 4996 )
 
 #pragma warning( push, 0 )

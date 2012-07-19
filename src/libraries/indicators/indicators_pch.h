@@ -10,6 +10,8 @@
 #ifndef __indicators_pch_h_
 #define __indicators_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>

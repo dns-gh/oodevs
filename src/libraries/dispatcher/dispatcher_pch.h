@@ -10,6 +10,8 @@
 #ifndef __dispatcher_pch_h_
 #define __dispatcher_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #pragma warning ( push )
 #pragma warning ( disable : 4702 4996 )
 

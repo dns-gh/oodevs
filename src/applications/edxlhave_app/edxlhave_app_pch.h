@@ -10,6 +10,8 @@
 #ifndef __edxlhave_app_pch_h_
 #define __edxlhave_app_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #include <string>
 #include <memory>
 #include <map>

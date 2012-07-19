@@ -12,6 +12,8 @@
 #ifndef __MIL_pch_h_
 #define __MIL_pch_h_
 
+#pragma execution_character_set("utf-8")
+
 #include <boost/serialization/extended_type_info.hpp> // $$$$ MCO : see http://old.nabble.com/-Serialization--extended_type_info.hpp-to27448440.html
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
