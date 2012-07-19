@@ -49,6 +49,17 @@ FilterInputArgument::~FilterInputArgument()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterInputArgument::IsValid
+// Created: ABR 2012-07-19
+// -----------------------------------------------------------------------------
+bool FilterInputArgument::IsValid()
+{
+    if( type_ == eTeamList && listView_ )
+        return listView_->isEnabled();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterInputArgument::CreateWidget
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
@@ -67,6 +78,9 @@ QWidget* FilterInputArgument::CreateWidget( QWidget* parent )
         listView_ = new FilterPartiesListView( result, false );
         listView_->ParseOrbatFile( config_.GetOrbatFile() );
         connect( listView_, SIGNAL( ValueChanged() ), this, SLOT( OnTextChanged() ) );
+        errorLabel_ = new QLabel( result );
+        if( !listView_->isEnabled() )
+            errorLabel_->setText( "<font color=\"#FF0000\">" + tools::translate( "FilterInputArgument", "Invalid or missing orbat file." ) + "</font><br/>" );
     }
     else
     {
@@ -91,7 +105,10 @@ QWidget* FilterInputArgument::CreateWidget( QWidget* parent )
 void FilterInputArgument::Update()
 {
     if( type_ == eTeamList && listView_ )
+    {
         listView_->ParseOrbatFile( config_.GetOrbatFile() );
+        errorLabel_->setText( listView_->isEnabled() ? "" : "<font color=\"#FF0000\">" + tools::translate( "FilterInputArgument", "Invalid or missing orbat file." ) + "</font><br/>" );
+    }
 }
 
 // -----------------------------------------------------------------------------

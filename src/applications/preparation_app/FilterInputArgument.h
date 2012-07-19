@@ -47,6 +47,7 @@ public:
     QWidget* CreateWidget( QWidget* parent );
     QString GetText() const;
     void Update();
+    bool IsValid();
     //@}
 
 private:
@@ -75,6 +76,7 @@ private:
     E_ArgumentType               type_;
     QLineEdit*                   line_;
     FilterPartiesListView*       listView_;
+    QLabel*                      errorLabel_;
     const std::string            exerciseDir_;
     const std::string            description_;
     //@}

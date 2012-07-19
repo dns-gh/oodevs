@@ -85,18 +85,17 @@ void FilterPartiesListView::OnItemClicked( Q3ListViewItem* item, const QPoint& /
 bool FilterPartiesListView::ParseOrbatFile( const std::string& fileName )
 {
     clear();
-    bool status = false;
+    bool status = true;
     try
     {
         xml::xifstream xis( fileName );
         xis >> xml::start( "orbat" )
                 >> xml::start( "parties" )
                     >> xml::list( "party", *this, &FilterPartiesListView::ReadTeam );
-        status = true;
     }
     catch( ... )
     {
-        QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterPartiesListView", "Error loading file" ), tools::translate( "FilterPartiesListView", "File does not appear to be a valid orbat file.<br>Please select an other orbat file to import." ) );
+        status = false;
     }
     setEnabled( status );
     return status;
