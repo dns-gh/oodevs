@@ -106,16 +106,15 @@ integration.updateBuildIt = function( object )
     else
         if object[myself].actionBuildState == eActionObjetImpossible then
             DEC_Trace( "impossible works" )
-            return false
+            return eRC_ConstructionObjetImpossible
         elseif object[myself].actionBuildState == eActionObjetManqueDotation then
-            DEC_Trace( "not enough dotation" ) 
-            return false
+            return eRC_PasDotationConstructionObjet
         elseif object[myself].actionBuildState == eActionObjetPasDeCapacite then
             DEC_Trace( "no capacity" ) 
-            return false
+            return eRC_ConstructionObjetImpossible
         end
     end
-    return true
+    return eRC_RAS
 end
 -- -----------------------------------------------------------------------------
 -- Update the object creation
@@ -129,12 +128,10 @@ integration.stopBuildIt = function( object )
         end
         object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
         object[myself].actionBuildState = nil
-        return true
     else
         object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
         object[myself].actionBuildState = nil
         DEC_Trace( "pause work build" )
-        return false
     end
     object[myself].actionBuildState = nil
 end

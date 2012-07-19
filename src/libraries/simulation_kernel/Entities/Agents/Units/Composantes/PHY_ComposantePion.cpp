@@ -684,9 +684,7 @@ bool PHY_ComposantePion::CanComponentBeUsed( const transport::PHY_RoleAction_Loa
     if( bUsedForLogistic_ )
         return false;
     if( bLoadable_ && !bWithLoaded )
-    {
-        return !roleLoading || !roleLoading->IsLoaded();
-    }
+        return !roleLoading || roleLoading->IsUnloaded();
     return true;
 }
 
