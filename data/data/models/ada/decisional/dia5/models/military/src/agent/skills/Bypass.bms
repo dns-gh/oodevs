@@ -27,7 +27,7 @@ rootnode
 
     elementFailed = function( self, params, additionalParams )
         integration.setNeedReinforcement( meKnowledge, additionalParams.needReinforcement, additionalParams.element, false )
-        self.report = eRC_ConstructionObjetImpossible
+        self.report = eRC_ObjetNonSupprimable
     end,
 
     elementNotBypassable = function( self, params, additionalParams )
