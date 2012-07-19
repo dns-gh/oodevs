@@ -38,7 +38,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     layout->addWidget( nbcAgentsLabel_ );
     nbcAgents_ = new Q3ListView();
     nbcAgents_->setResizeMode( Q3ListView::AllColumns );
-    nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
+    nbcAgents_->setMinimumHeight( 100 );
     nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
     layout->addWidget( nbcAgents_ );
 
