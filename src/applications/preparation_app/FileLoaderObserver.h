@@ -36,6 +36,7 @@ public:
    
     void DisplayErrors() const;
     virtual void GetErrors( std::vector< std::string >& errors ) const;
+    virtual void Purge();
     //@}
 
 private:

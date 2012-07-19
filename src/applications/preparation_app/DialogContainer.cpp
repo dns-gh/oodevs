@@ -41,6 +41,7 @@
 #include "preparation/StaticModel.h"
 #include "tools/DefaultLoader.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/RealFileLoaderObserver_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DialogContainer constructor
@@ -71,7 +72,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     scoreDialog_ = new ScoreDialog( parent, controllers, factory, model.scores_, paramLayer, staticModel, config, tools );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, model.successFactors_, factory, staticModel.successFactorActionTypes_, model.scores_ );
     exerciseDialog_ = new ExerciseDialog( parent, controllers, model.exercise_, config );
-    consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() );
+    consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );
     filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
     addRasterDialog_ = new gui::AddRasterDialog( parent );

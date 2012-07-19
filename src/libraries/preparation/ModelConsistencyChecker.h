@@ -41,7 +41,7 @@ class ModelConsistencyChecker : public kernel::ConsistencyChecker< E_Consistency
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelConsistencyChecker( const Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver );
+             ModelConsistencyChecker( const Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver );
     virtual ~ModelConsistencyChecker();
     //@}
 
@@ -92,7 +92,7 @@ private:
     const StaticModel&   staticModel_;
     kernel::Controllers& controllers_;
     T_Entities           entities_;
-    const tools::RealFileLoaderObserver_ABC& fileLoaderObserver_;
+    tools::RealFileLoaderObserver_ABC& fileLoaderObserver_;
     //@}
 };
 

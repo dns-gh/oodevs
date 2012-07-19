@@ -127,3 +127,15 @@ void FileLoaderObserver::GetErrors( std::vector< std::string >& errors ) const
         for( CIT_Error it = malformedFiles_.begin(); it != malformedFiles_.end(); ++it )
             errors.push_back( tools::translate( "Application", "The following files do not match their xsd : " ).append( it->c_str() ).toStdString() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FileLoaderObserver::Purge
+// Created: ABR 2012-07-19
+// -----------------------------------------------------------------------------
+void FileLoaderObserver::Purge()
+{
+    invalidSignatureFiles_.clear();
+    missingSignatureFiles_.clear();
+    malformedFiles_.clear();
+    missingSchemaFiles_.clear();
+}

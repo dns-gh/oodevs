@@ -42,7 +42,7 @@ class ModelConsistencyDialog : public gui::ConsistencyDialog< E_ConsistencyCheck
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, const tools::RealFileLoaderObserver_ABC& fileLoaderObserver );
+             ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver );
     virtual ~ModelConsistencyDialog();
     //@}
 
