@@ -58,7 +58,11 @@ void ColorEditor::Show()
     QColor current = colorStrategy_.FindColor( *selected_ );
     QColor color = QColorDialog::getColor( current, 0, tools::translate( "ColorEditor", "Select color" ) );
     if( color.isValid() && color != current )
+    {
+        if( color == Qt::black )
+            color.setRgb( 1, 1, 1 );
         colorEditor_.Add( *selected_, color );
+    }
 }
 
 // -----------------------------------------------------------------------------
