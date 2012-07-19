@@ -83,7 +83,7 @@ template< typename T, typename U >
 Reply ClusterDispatch( T* controller, const U& member, const Uuid& id )
 {
     if( !controller )
-        return Reply( web::INTERNAL_SERVER_ERROR, "Missing cluster" );
+        return Reply( web::INTERNAL_SERVER_ERROR );
     return Dispatch( *controller, member, id );
 }
 }
