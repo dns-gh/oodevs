@@ -14,6 +14,7 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -158,13 +159,15 @@ void CrowdCapacity::SetDensityFactor( double densityFactor )
 // -----------------------------------------------------------------------------
 void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
-    if( role && !role->HasInhabitantCollision() )
+    PHY_RolePion_Location* roleLocation = agent.RetrieveRole< PHY_RolePion_Location >();
+    PHY_RoleInterface_UrbanLocation* roleUrbanLocation = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
+    if(  roleUrbanLocation && !roleUrbanLocation->HasInhabitantCollision() 
+      && roleLocation && roleLocation->GetCurrentSpeed() > 0. )
     {
         if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
         {
             MIL_Report::PostEvent( agent, MIL_Report::eReport_UrbanCollisionStarted );
-            role->ToggleInhabitantCollision( true );
+            roleUrbanLocation->ToggleInhabitantCollision( true );
         }
     }
 }
@@ -175,10 +178,12 @@ void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_
 // -----------------------------------------------------------------------------
 void CrowdCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
-    if( role && role->HasInhabitantCollision() )
+    PHY_RolePion_Location* roleLocation = agent.RetrieveRole< PHY_RolePion_Location >();
+    PHY_RoleInterface_UrbanLocation* roleUrbanLocation = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
+    if(  roleUrbanLocation && roleUrbanLocation->HasInhabitantCollision() 
+      && roleLocation && roleLocation->GetCurrentSpeed() > 0. )
     {
         MIL_Report::PostEvent( agent, MIL_Report::eReport_UrbanCollisionStopped );
-        role->ToggleInhabitantCollision( false );
+        roleUrbanLocation->ToggleInhabitantCollision( false );
     }
 }
