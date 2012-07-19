@@ -15,7 +15,7 @@
 -- @release 2011-01-20
 integration.defaultPlatoonInCompany = function( )
     local allRes = {}
-    local listPlatoon = DEC_Automate_PionsAvecPC()
+    local listPlatoon = DEC_Automate_PionsAvecPCCommunication()
     local CreateKnowledge = CreateKnowledge
     for _,pion in pairs( listPlatoon ) do
         allRes[ #allRes + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )

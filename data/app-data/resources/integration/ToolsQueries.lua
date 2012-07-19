@@ -416,7 +416,7 @@ end
 -- @release 2011-12-05
 -- --------------------------------------------------------------------------------
 integration.getFirePositions = function( modeDeploiement, zone, angle )
-    local nombrePositions = #( DEC_Automate_PionsSansPC() )
+    local nombrePositions = #( DEC_Automate_PionsSansPCCommunication() )
     local directionEnnemi = DEC_GetDirectionEnnemi( DEC_GetRawMission( meKnowledge.source ) )
     local firePositions = {}
     if modeDeploiement == eDeploiementEn_carre then
