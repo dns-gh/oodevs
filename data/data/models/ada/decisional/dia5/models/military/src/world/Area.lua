@@ -51,6 +51,12 @@ return
         start = integration.startActivateRadar,
         stop = integration.stopActivateRadar
     } ),
+    radarOn = function( self )
+       return integration.activateRadar( self )
+    end,
+    radarOff = function( self )
+       return integration.deactivateRadar( self )
+    end,
     activateRadarTirIndirect = masalife.brain.integration.startStopAction( 
     { 
         start = integration.startActivateRadarTirIndirect,
