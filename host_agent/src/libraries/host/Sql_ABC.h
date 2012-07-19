@@ -88,6 +88,20 @@ struct Statement_ABC : public boost::noncopyable
     virtual void        Reset() = 0;
     //@}
 };
+
+struct SqlException : public std::exception
+{
+    SqlException( const std::string& msg )
+        : msg( msg )
+    {
+        // NOTHING
+    }
+    virtual ~SqlException() throw()
+    {
+        // NOTHING
+    }
+    std::string msg;
+};
 }
 
 #endif // SQL_ABC_H

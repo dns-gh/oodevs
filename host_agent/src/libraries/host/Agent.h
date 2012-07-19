@@ -29,6 +29,7 @@ namespace host
     struct NodeController_ABC;
     struct SessionController_ABC;
     struct UserController_ABC;
+    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }
@@ -52,53 +53,53 @@ public:
 
     //! @name Cluster Methods
     //@{
-    virtual web::Reply GetCluster() const;
-    virtual web::Reply StartCluster() const;
-    virtual web::Reply StopCluster() const;
+    virtual Tree GetCluster  () const;
+    virtual Tree StartCluster() const;
+    virtual Tree StopCluster () const;
     //@}
 
     //! @name Node Methods
     //@{
-    virtual web::Reply ListNodes ( int offset, int limit ) const;
-    virtual web::Reply CountNodes() const;
-    virtual web::Reply GetNode   ( const Uuid& id ) const;
-    virtual web::Reply CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions );
-    virtual web::Reply DeleteNode( const Uuid& id );
-    virtual web::Reply StartNode ( const Uuid& id ) const;
-    virtual web::Reply StopNode  ( const Uuid& id ) const;
-    virtual web::Reply UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions );
+    virtual std::vector< Tree > ListNodes ( int offset, int limit ) const;
+    virtual size_t              CountNodes() const;
+    virtual Tree                GetNode   ( const Uuid& id ) const;
+    virtual Tree                CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions );
+    virtual Tree                DeleteNode( const Uuid& id );
+    virtual Tree                StartNode ( const Uuid& id ) const;
+    virtual Tree                StopNode  ( const Uuid& id ) const;
+    virtual Tree                UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions );
     //@}
 
     //! @name Install Methods
     //@{
-    virtual web::Reply GetInstall   ( const Uuid& id ) const;
-    virtual web::Reply DeleteInstall( const Uuid& id, const std::vector< size_t >& list  );
+    virtual Tree GetInstall   ( const Uuid& id ) const;
+    virtual Tree DeleteInstall( const Uuid& id, const std::vector< size_t >& list  );
     //@}
 
     //! @name Cache Methods
     //@{
-    virtual web::Reply UploadCache     ( const Uuid& id, std::istream& src );
-    virtual web::Reply GetCache        ( const Uuid& id ) const;
-    virtual web::Reply DeleteCache     ( const Uuid& id );
-    virtual web::Reply InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
+    virtual Tree UploadCache     ( const Uuid& id, std::istream& src );
+    virtual Tree GetCache        ( const Uuid& id ) const;
+    virtual Tree DeleteCache     ( const Uuid& id );
+    virtual Tree InstallFromCache( const Uuid& id, const std::vector< size_t >& list );
     //@}
 
     //! @name Session Methods
     //@{
-    virtual web::Reply ListSessions ( const Uuid& node, int offset, int limit ) const;
-    virtual web::Reply CountSessions( const Uuid& node ) const;
-    virtual web::Reply GetSession   ( const Uuid& id ) const;
-    virtual web::Reply CreateSession( const Uuid& node, const std::string& name, const std::string& exercise );
-    virtual web::Reply DeleteSession( const Uuid& id );
-    virtual web::Reply StartSession ( const Uuid& id ) const;
-    virtual web::Reply StopSession  ( const Uuid& id ) const;
-    virtual web::Reply PauseSession ( const Uuid& id ) const;
+    virtual std::vector< Tree > ListSessions ( const Uuid& node, int offset, int limit ) const;
+    virtual size_t              CountSessions( const Uuid& node ) const;
+    virtual Tree                GetSession   ( const Uuid& id ) const;
+    virtual Tree                CreateSession( const Uuid& node, const std::string& name, const std::string& exercise );
+    virtual Tree                DeleteSession( const Uuid& id );
+    virtual Tree                StartSession ( const Uuid& id ) const;
+    virtual Tree                StopSession  ( const Uuid& id ) const;
+    virtual Tree                PauseSession ( const Uuid& id ) const;
     //@}
 
     //! @name Exercise Methods
     //@{
-    virtual web::Reply ListExercises ( const Uuid& id, int offset, int limit ) const;
-    virtual web::Reply CountExercises( const Uuid& id ) const;
+    virtual std::vector< Path > ListExercises ( const Uuid& id, int offset, int limit ) const;
+    virtual size_t              CountExercises( const Uuid& id ) const;
     //@}
 
 private:

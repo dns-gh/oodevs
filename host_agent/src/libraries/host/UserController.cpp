@@ -14,7 +14,7 @@
 #include "runtime/Utf8.h"
 #include "Sql_ABC.h"
 #include "UuidFactory_ABC.h"
-#include "web/Reply.h"
+#include "web/HttpException.h"
 
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/lexical_cast.hpp>
@@ -23,8 +23,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
-using web::Reply;
-typedef boost::property_tree::ptree Tree;
+using web::HttpException;
 
 namespace
 {
@@ -351,7 +350,7 @@ bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const
 // Name: UserController::Login
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Reply UserController::Login( const std::string& username, const std::string& password, const std::string& source )
+Tree UserController::Login( const std::string& username, const std::string& password, const std::string& source )
 {
     try
     {
@@ -359,30 +358,30 @@ Reply UserController::Login( const std::string& username, const std::string& pas
         int id; std::string hash, name, type, lang, token; bool temporary;
         bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, temporary, lang, token );
         if( !valid )
-            return Reply( web::NOT_FOUND );
+            throw HttpException( web::NOT_FOUND );
 
         if( !crypt_.Validate( password, hash ) )
-            return Reply( web::UNAUTHORIZED );
+            throw HttpException( web::UNAUTHORIZED );
 
         if( !token.empty() )
             DeleteTokenWithToken( db_, *tr, token );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
         db_.Commit( *tr );
-        return Reply( MakeToken( sid, id, username, name, type, temporary, lang ) );
+        return MakeToken( sid, id, username, name, type, temporary, lang );
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to login";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::IsAuthenticated
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
-Reply UserController::IsAuthenticated( const std::string& token, const std::string& source )
+Tree UserController::IsAuthenticated( const std::string& token, const std::string& source )
 {
     try
     {
@@ -400,14 +399,14 @@ Reply UserController::IsAuthenticated( const std::string& token, const std::stri
         st->Bind( source );
         st->Bind( token );
         if( st->Next() )
-            return Reply( MakeToken( token, *st ) );
+            return MakeToken( token, *st );
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to authenticate token";
     }
-    return Reply( web::UNAUTHORIZED );
+    throw HttpException( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
@@ -422,9 +421,9 @@ void UserController::Logout( const std::string& token )
         DeleteTokenWithToken( db_, *tr, token );
         db_.Commit( *tr );
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to logout";
     }
 }
@@ -433,7 +432,7 @@ void UserController::Logout( const std::string& token )
 // Name: UserController::UpdateLogin
 // Created: BAX 2012-07-05
 // -----------------------------------------------------------------------------
-Reply UserController::UpdateLogin( const std::string& username, const std::string& current, const std::string& password, const std::string& source )
+Tree UserController::UpdateLogin( const std::string& username, const std::string& current, const std::string& password, const std::string& source )
 {
     try
     {
@@ -441,10 +440,10 @@ Reply UserController::UpdateLogin( const std::string& username, const std::strin
         int id; std::string hash, name, type, lang, token; bool temporary;
         bool valid = FetchUser( db_, *tr, username, source, id, hash, name, type, temporary, lang, token );
         if( !valid )
-            return Reply( web::NOT_FOUND );
+            throw HttpException( web::NOT_FOUND );
 
         if( !crypt_.Validate( current, hash ) )
-            return Reply( web::UNAUTHORIZED );
+            throw HttpException( web::UNAUTHORIZED );
 
         DeleteTokenWithUserId( db_, *tr, id );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
@@ -457,21 +456,21 @@ Reply UserController::UpdateLogin( const std::string& username, const std::strin
         Execute( *st );
         const std::string sid = CreateToken( uuids_, db_, *tr, id, source );
         db_.Commit( *tr );
-        return Reply( MakeToken( sid, id, username, name, type, false, lang ) );
+        return MakeToken( sid, id, username, name, type, false, lang );
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to update login";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::ListUsers
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::ListUsers( int offset, int limit ) const
+std::vector< Tree > UserController::ListUsers( int offset, int limit ) const
 {
     try
     {
@@ -489,45 +488,42 @@ Reply UserController::ListUsers( int offset, int limit ) const
             PutUser( tree, *st );
             list.push_back( tree );
         }
-        return Reply( list );
+        return list;
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to list users";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::CountUsers
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::CountUsers() const
+size_t UserController::CountUsers() const
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
                 "SELECT DISTINCT id FROM users" );
-        const size_t size = Execute( *st );
-        Tree tree;
-        tree.put( "count", size );
-        return Reply( tree );
+        return Execute( *st );
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to count users";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::GetUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::GetUser( int id ) const
+Tree UserController::GetUser( int id ) const
 {
     try
     {
@@ -538,25 +534,25 @@ Reply UserController::GetUser( int id ) const
             "WHERE id = ?" );
         st->Bind( id );
         if( !st->Next() )
-            return Reply( web::NOT_FOUND );
+            throw HttpException( web::NOT_FOUND );
 
         Tree tree;
         PutUser( tree, *st );
-        return Reply( tree );
+        return tree;
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to get user";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::CreateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary )
+Tree UserController::CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary )
 {
     try
     {
@@ -568,21 +564,21 @@ Reply UserController::CreateUser( const std::string& username, const std::string
         tr.reset();
         Tree tree;
         PutUser( tree, static_cast< int >( db_.LastId() ), username, name, Convert( type ), temporary, lang );
-        return Reply( tree );
+        return tree;
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to create user";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::DeleteUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::DeleteUser( const std::string& token, int id )
+Tree UserController::DeleteUser( const std::string& token, int id )
 {
     try
     {
@@ -598,37 +594,37 @@ Reply UserController::DeleteUser( const std::string& token, int id )
         st->Bind( id );
         bool valid = st->Next();
         if( !valid )
-            return Reply( web::NOT_FOUND );
+            throw HttpException( web::NOT_FOUND );
 
         Tree tree;
         PutUser( tree, *st );
         // check whether we are not deleting ourselves, which is forbidden
         if( st->IsColumnDefined() )
-            return Reply( web::FORBIDDEN );
+            throw HttpException( web::FORBIDDEN );
 
         DeleteTokenWithUserId( db_, *tr, id );
         st = db_.Prepare( *tr, "DELETE FROM users WHERE users.id = ?" );
         st->Bind( id );
         Execute( *st );
         db_.Commit( *tr );
-        return Reply( tree );
+        return tree;
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to create user";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserController::UpdateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Reply UserController::UpdateUser( const std::string& token, int id,
-                                  const std::string& username,
-                                  const std::string& name, bool temporary,
-                                  const boost::optional< std::string >& password )
+Tree UserController::UpdateUser( const std::string& token, int id,
+                                 const std::string& username,
+                                 const std::string& name, bool temporary,
+                                 const boost::optional< std::string >& password )
 {
     try
     {
@@ -654,7 +650,7 @@ Reply UserController::UpdateUser( const std::string& token, int id,
             const bool found = st->Next();
             // you cannot update your password without your current password
             if( found )
-                return Reply( web::FORBIDDEN );
+                throw HttpException( web::FORBIDDEN );
 
             DeleteTokenWithUserId( db_, *tr, id );
             st = db_.Prepare( *tr,
@@ -669,16 +665,17 @@ Reply UserController::UpdateUser( const std::string& token, int id,
         std::string dummy, type, lang;
         bool done = FetchUser( db_, *tr, username, dummy, id, dummy, dummy, type, temporary, lang, dummy );
         if( !done )
-            return Reply( web::INTERNAL_SERVER_ERROR );
+            throw HttpException( web::INTERNAL_SERVER_ERROR );
+
         db_.Commit( *tr );
         Tree tree;
         PutUser( tree, id, username, name, type, temporary, lang );
-        return Reply( tree );
+        return tree;
     }
-    catch( const std::exception& err )
+    catch( const SqlException& err )
     {
-        LOG_ERROR( log_ ) << err.what();
+        LOG_ERROR( log_ ) << "[sql] " << err.what();
         LOG_ERROR( log_ ) << "[sql] Unable to create user";
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
     }
-    return Reply( web::INTERNAL_SERVER_ERROR );
 }

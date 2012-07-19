@@ -10,14 +10,17 @@
 #include "Controller.h"
 
 #include "cpplog/cpplog.hpp"
+#include "runtime/PropertyTree.h"
+#include "runtime/Utf8.h"
 #include "Agent_ABC.h"
-#include "Reply.h"
+#include "HttpException.h"
 #include "Request_ABC.h"
 #include "UserController_ABC.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -25,6 +28,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 
 using namespace web;
+using namespace property_tree;
 
 // -----------------------------------------------------------------------------
 // Name: Controller::Controller
@@ -59,7 +63,7 @@ namespace
 // -----------------------------------------------------------------------------
 struct HttpCode
 {
-    int code;
+    const int code;
     const char* text;
 };
 
@@ -75,41 +79,6 @@ static const HttpCode httpCodes[] =
 };
 
 BOOST_STATIC_ASSERT( COUNT_OF( httpCodes ) == HTTP_STATUS_COUNT );
-
-// -----------------------------------------------------------------------------
-// Name: HttpException class
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-class HttpException : public std::exception
-{
-public:
-    HttpException( HttpStatus code, const std::string& error )
-        : error_( error )
-        , code_ ( code )
-    {
-        // NOTHING
-    }
-
-    ~HttpException() throw()
-    {
-        // NOTHING
-    }
-
-    const char* what() const throw()
-    {
-        return error_.c_str();
-    }
-
-    HttpStatus GetCode() const
-    {
-        return code_;
-    }
-
-private:
-    const std::string error_;
-    const HttpStatus code_;
-    HttpException& operator=( const HttpException& );
-};
 
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
@@ -134,11 +103,60 @@ std::string WriteHttpReply( HttpStatus code, const std::string& content = std::s
 
 // -----------------------------------------------------------------------------
 // Name: WriteHttpReply
-// Created: BAX 2012-04-03
+// Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-std::string WriteHttpReply( const Reply& reply )
+std::string WriteHttpReply( const Tree& tree )
 {
-    return WriteHttpReply( reply.status, reply.data );
+    return WriteHttpReply( OK, ToJson( tree ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteHttpReply
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+std::string WriteHttpReply( size_t count )
+{
+    return WriteHttpReply( OK, "{\"count\":\"" + boost::lexical_cast< std::string >( count ) + "\"}" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FixJsonList
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+std::string FixJsonList( const std::ostringstream& stream )
+{
+    std::string rpy = stream.str();
+    rpy.insert( 0, "[" );
+    rpy.replace( rpy.size() - 1, 1, "]" );
+    return rpy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteHttpReply
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+std::string WriteHttpReply( const std::vector< Tree >& list )
+{
+    std::ostringstream stream;
+    BOOST_FOREACH( const Tree& it, list )
+        stream << ToJson( it ) << ",";
+    return WriteHttpReply( OK, FixJsonList( stream ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteHttpReply
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+std::string WriteHttpReply( const std::vector< Path >& list )
+{
+    std::ostringstream stream;
+    BOOST_FOREACH( const Path& it, list )
+    {
+        std::string item = runtime::Utf8Convert( it );
+        std::replace( item.begin(), item.end(), '\\', '/' );
+        stream << "\"" << item << "\",";
+    }
+    return WriteHttpReply( OK, FixJsonList( stream ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,6 +179,10 @@ T GetParameter( const std::string& name, const Request_ABC& data, const T& value
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: RequireParameter
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
 template< typename T >
 T RequireParameter( const std::string& name, const Request_ABC& request )
 {
@@ -170,6 +192,10 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
     return boost::lexical_cast< T >( *value );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Convert
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
 Uuid Convert( const std::string& uuid )
 {
     if( uuid.empty() )
@@ -218,7 +244,7 @@ std::string Controller::DoGet( Request_ABC& request )
     try
     {
         if( uri != "/is_authenticated" && !IsAuthenticated( request ) )
-            return WriteHttpReply( UNAUTHORIZED, "Invalid authentication" );
+            return WriteHttpReply( UNAUTHORIZED );
         if( uri == "/get_cluster" )        return GetCluster( request );
         if( uri == "/start_cluster" )      return StartCluster( request );
         if( uri == "/stop_cluster" )       return StopCluster( request );
@@ -252,10 +278,7 @@ std::string Controller::DoGet( Request_ABC& request )
         if( uri == "/count_exercises" )    return CountExercises( request );
         // users
         if( uri == "/logout" )             return UserLogout( request );
-        if( uri == "/is_authenticated" )
-        {
-            return UserIsAuthenticated( request );
-        }
+        if( uri == "/is_authenticated" )   return UserIsAuthenticated( request );
         if( uri == "/list_users" )         return ListUsers( request );
         if( uri == "/count_users" )        return CountUsers( request );
         if( uri == "/get_user" )           return GetUser( request );
@@ -264,9 +287,23 @@ std::string Controller::DoGet( Request_ABC& request )
     }
     catch( const HttpException& err )
     {
-        return WriteHttpReply( err.GetCode(), err.what() );
+        LOG_WARN( log_ ) << err.code << " " << err.msg;
+        LOG_WARN( log_ ) << "[web] error on " << uri;
+        return WriteHttpReply( err.code, err.msg );
     }
-    return WriteHttpReply( NOT_FOUND, "Unknown URI" );
+    catch( const std::exception& err )
+    {
+        LOG_WARN( log_ ) << err.what();
+        LOG_WARN( log_ ) << "[web] error on " << uri;
+        return WriteHttpReply( INTERNAL_SERVER_ERROR, err.what() );
+    }
+    catch( ... )
+    {
+        LOG_WARN( log_ ) << "[web] unknown exception";
+        LOG_WARN( log_ ) << "[web] error on " << uri;
+        return WriteHttpReply( INTERNAL_SERVER_ERROR );
+    }
+    return WriteHttpReply( NOT_FOUND );
 }
 
 namespace
@@ -293,7 +330,7 @@ std::string Controller::DoPost( Request_ABC& request )
     try
     {
         if( !SkipAuthentication( uri ) && !IsAuthenticated( request ) )
-            return WriteHttpReply( UNAUTHORIZED, "Invalid authentication" );
+            return WriteHttpReply( UNAUTHORIZED );
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
         if( uri == "/update_login" ) return UserUpdateLogin( request );
@@ -301,9 +338,17 @@ std::string Controller::DoPost( Request_ABC& request )
     }
     catch( const HttpException& err )
     {
-        return WriteHttpReply( err.GetCode(), err.what() );
+        return WriteHttpReply( err.code, err.msg );
     }
-    return WriteHttpReply( NOT_FOUND, "Unknown URI" );
+    catch( const std::exception& err )
+    {
+        return WriteHttpReply( INTERNAL_SERVER_ERROR, err.what() );
+    }
+    catch( ... )
+    {
+        return WriteHttpReply( INTERNAL_SERVER_ERROR );
+    }
+    return WriteHttpReply( NOT_FOUND );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +480,7 @@ std::string ListDispatch( const Request_ABC& request, const T& functor )
     std::vector< std::string > tokens;
     boost::algorithm::split( tokens, join, boost::is_any_of( "," ) );
     if( tokens.empty() )
-        throw HttpException( BAD_REQUEST, "missing items" );
+        throw HttpException( BAD_REQUEST );
     std::vector< size_t > list;
     BOOST_FOREACH( const std::string& item, tokens )
         list.push_back( boost::lexical_cast< size_t >( item ) );
@@ -583,10 +628,9 @@ std::string Controller::CountExercises( const Request_ABC& request )
 
 namespace
 {
-void OnUploadCache( boost::shared_ptr< Reply >& reply, Agent_ABC& agent, const Uuid& id, std::istream& stream )
+void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid& id, std::istream& stream )
 {
-    const Reply r = agent.UploadCache( id, stream );
-    reply.reset( new Reply( r.status, r.data ) );
+    reply = agent.UploadCache( id, stream );
 }
 }
 
@@ -598,12 +642,12 @@ std::string Controller::UploadCache( Request_ABC& request )
 {
     const std::string id = RequireParameter< std::string >( "id", request );
     LOG_INFO( log_ ) << "[web] /upload_cache id: " << id;
-    boost::shared_ptr< Reply > ptr;
-    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( ptr ), boost::ref( agent_ ), Convert( id ), _1 ) );
+    boost::optional< Tree > reply;
+    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
     request.ParseMime();
-    if( !ptr )
+    if( reply == boost::none )
         return WriteHttpReply( NOT_FOUND );
-    return WriteHttpReply( *ptr );
+    return WriteHttpReply( *reply );
 }
 
 // -----------------------------------------------------------------------------
@@ -635,7 +679,7 @@ bool Controller::IsAuthenticated( const Request_ABC& request )
 {
     if( !secure_ )
         return true;
-    return users_.IsAuthenticated( request.GetSid(), GetSource( request ) ).status == OK;
+    return !users_.IsAuthenticated( request.GetSid(), GetSource( request ) ).empty();
 }
 
 // -----------------------------------------------------------------------------

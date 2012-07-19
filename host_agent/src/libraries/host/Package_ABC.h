@@ -50,7 +50,7 @@ struct Package_ABC : public boost::noncopyable
     //@{
     struct Item_ABC;
     typedef boost::shared_ptr< Item_ABC > T_Item;
-    typedef std::vector< std::string > T_Exercises;
+    typedef std::vector< Path > T_Exercises;
     //@}
 
     //! @name Methods

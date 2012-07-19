@@ -7,17 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef REPLY_H
-#define REPLY_H
+#ifndef HTTP_EXCEPTION_H
+#define HTTP_EXCEPTION_H
 
-#include <boost/property_tree/ptree_fwd.hpp>
 #include <string>
-#include <vector>
-
-namespace web
-{
-    typedef boost::property_tree::ptree Tree;
-}
 
 namespace web
 {
@@ -37,22 +30,32 @@ enum HttpStatus
     HTTP_STATUS_COUNT,
 };
 
-// =============================================================================
-/** @class  Reply
-    @brief  Reply struct definition
-*/
-// Created: BAX 2012-03-07
-// =============================================================================
-struct Reply
+// -----------------------------------------------------------------------------
+// Name: HttpException struct
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+struct HttpException : public std::exception
 {
-    const HttpStatus status;
-    const std::string data;
-    explicit Reply( const std::string& data );
-    explicit Reply( HttpStatus status, const std::string& data = std::string() );
-    explicit Reply( const Tree& tree );
-    explicit Reply( const std::vector< Tree >& list );
-    virtual ~Reply() {}
+    explicit HttpException( HttpStatus code, const std::string& msg = std::string() )
+        : code( code )
+        , msg ( msg )
+    {
+        // NOTHING
+    }
+
+    ~HttpException() throw()
+    {
+        // NOTHING
+    }
+
+    const char* what() const throw()
+    {
+        return msg.c_str();
+    }
+
+    HttpStatus code;
+    std::string msg;
 };
 }
 
-#endif // REPLY_H
+#endif // HTTP_EXCEPTION_H

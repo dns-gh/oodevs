@@ -11,14 +11,22 @@
 #define AGENT_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/uuid/uuid.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/uuid/uuid.hpp>
 #include <string>
 #include <vector>
 
+namespace boost
+{
+namespace filesystem
+{
+    class path;
+}
+}
+
 namespace web
 {
-    struct Reply;
+    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }
@@ -41,53 +49,53 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Cluster Methods
     //@{
-    virtual Reply GetCluster() const = 0;
-    virtual Reply StartCluster() const = 0;
-    virtual Reply StopCluster() const = 0;
+    virtual Tree GetCluster  () const = 0;
+    virtual Tree StartCluster() const = 0;
+    virtual Tree StopCluster () const = 0;
     //@}
 
     //! @name Node Methods
     //@{
-    virtual Reply ListNodes ( int offset, int limit ) const = 0;
-    virtual Reply CountNodes() const = 0;
-    virtual Reply GetNode   ( const Uuid& id ) const = 0;
-    virtual Reply CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
-    virtual Reply DeleteNode( const Uuid& id ) = 0;
-    virtual Reply StartNode ( const Uuid& id ) const = 0;
-    virtual Reply StopNode  ( const Uuid& id ) const = 0;
-    virtual Reply UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual std::vector< Tree > ListNodes ( int offset, int limit ) const = 0;
+    virtual size_t              CountNodes() const = 0;
+    virtual Tree                GetNode   ( const Uuid& id ) const = 0;
+    virtual Tree                CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual Tree                DeleteNode( const Uuid& id ) = 0;
+    virtual Tree                StartNode ( const Uuid& id ) const = 0;
+    virtual Tree                StopNode  ( const Uuid& id ) const = 0;
+    virtual Tree                UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions ) = 0;
     //@}
 
     //! @name Install Methods
     //@{
-    virtual Reply GetInstall   ( const Uuid& id ) const = 0;
-    virtual Reply DeleteInstall( const Uuid& id, const std::vector< size_t >& list  ) = 0;
+    virtual Tree GetInstall   ( const Uuid& id ) const = 0;
+    virtual Tree DeleteInstall( const Uuid& id, const std::vector< size_t >& list  ) = 0;
     //@}
 
     //! @name Cache Methods
     //@{
-    virtual Reply UploadCache     ( const Uuid& id, std::istream& src ) = 0;
-    virtual Reply GetCache        ( const Uuid& id ) const = 0;
-    virtual Reply DeleteCache     ( const Uuid& id ) = 0;
-    virtual Reply InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;
+    virtual Tree UploadCache     ( const Uuid& id, std::istream& src ) = 0;
+    virtual Tree GetCache        ( const Uuid& id ) const = 0;
+    virtual Tree DeleteCache     ( const Uuid& id ) = 0;
+    virtual Tree InstallFromCache( const Uuid& id, const std::vector< size_t >& list ) = 0;
     //@}
 
     //! @name Session Methods
     //@{
-    virtual Reply ListSessions ( const Uuid& node, int offset, int limit ) const = 0;
-    virtual Reply CountSessions( const Uuid& node ) const = 0;
-    virtual Reply GetSession   ( const Uuid& id ) const = 0;
-    virtual Reply CreateSession( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
-    virtual Reply DeleteSession( const Uuid& id ) = 0;
-    virtual Reply StartSession ( const Uuid& id ) const = 0;
-    virtual Reply StopSession  ( const Uuid& id ) const = 0;
-    virtual Reply PauseSession ( const Uuid& id ) const = 0;
+    virtual std::vector< Tree > ListSessions ( const Uuid& node, int offset, int limit ) const = 0;
+    virtual size_t              CountSessions( const Uuid& node ) const = 0;
+    virtual Tree                GetSession   ( const Uuid& id ) const = 0;
+    virtual Tree                CreateSession( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
+    virtual Tree                DeleteSession( const Uuid& id ) = 0;
+    virtual Tree                StartSession ( const Uuid& id ) const = 0;
+    virtual Tree                StopSession  ( const Uuid& id ) const = 0;
+    virtual Tree                PauseSession ( const Uuid& id ) const = 0;
     //@}
 
     //! @name Exercise Methods
     //@{
-    virtual Reply ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
-    virtual Reply CountExercises( const Uuid& id ) const = 0;
+    virtual std::vector< Path > ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
+    virtual size_t              CountExercises( const Uuid& id ) const = 0;
     //@}
 };
 }

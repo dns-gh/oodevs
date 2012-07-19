@@ -798,7 +798,7 @@ Package::T_Exercises Package::GetExercises( int offset, int limit ) const
             continue;
         if( offset-- > 0 )
             continue;
-        reply.push_back( Utf8Convert( item->GetName() ) );
+        reply.push_back( item->GetName() );
         if( --limit <  0 )
             break;
     }

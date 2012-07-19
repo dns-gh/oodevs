@@ -14,16 +14,17 @@
 #include "NodeController_ABC.h"
 #include "Session_ABC.h"
 #include "SessionController_ABC.h"
-#include "web/Reply.h"
+#include "web/HttpException.h"
 
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
-typedef web::Reply Reply;
+using web::HttpException;
 
 namespace
 {
@@ -47,43 +48,36 @@ bool IsNode( const Session_ABC& session, const Uuid& id )
 }
 
 template< typename T >
-Reply List( const T& list )
+std::vector< Tree > List( const std::vector< T >& list )
 {
-    std::vector< Tree > next;
-    BOOST_FOREACH( const typename T::value_type& value, list )
-        next.push_back( value->GetProperties() );
-    return Reply( next );
-}
-
-Reply Count( size_t count )
-{
-    Tree tree;
-    tree.put( "count", count );
-    return Reply( tree );
+    std::vector< Tree > rpy;
+    BOOST_FOREACH( const T& it, list )
+        rpy.push_back( it->GetProperties() );
+    return rpy;
 }
 
 template< typename T >
-Reply Create( T ptr, const std::string& name )
+Tree Create( T ptr )
 {
     if( !ptr )
-        return Reply( web::INTERNAL_SERVER_ERROR );
-    return Reply( ptr->GetProperties() );
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
+    return ptr->GetProperties();
 }
 
 template< typename T, typename U >
-Reply Dispatch( T& controller, const U& member, const Uuid& id )
+Tree Dispatch( T& controller, const U& member, const Uuid& id )
 {
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
-        return Reply( web::NOT_FOUND );
-    return Reply( ptr->GetProperties() );
+        throw HttpException( web::NOT_FOUND );
+    return ptr->GetProperties();
 }
 
 template< typename T, typename U >
-Reply ClusterDispatch( T* controller, const U& member, const Uuid& id )
+Tree ClusterDispatch( T* controller, const U& member, const Uuid& id )
 {
     if( !controller )
-        return Reply( web::INTERNAL_SERVER_ERROR );
+        throw HttpException( web::NOT_FOUND );
     return Dispatch( *controller, member, id );
 }
 }
@@ -124,7 +118,7 @@ Agent::~Agent()
 // Name: Agent::GetCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-Reply Agent::GetCluster() const
+Tree Agent::GetCluster() const
 {
     return ClusterDispatch( cluster_, &NodeController_ABC::Get, clusterId_ );
 }
@@ -133,7 +127,7 @@ Reply Agent::GetCluster() const
 // Name: Agent::StartCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-Reply Agent::StartCluster() const
+Tree Agent::StartCluster() const
 {
     return ClusterDispatch( cluster_, &NodeController_ABC::Start, clusterId_ );
 }
@@ -142,7 +136,7 @@ Reply Agent::StartCluster() const
 // Name: Agent::StopCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-Reply Agent::StopCluster() const
+Tree Agent::StopCluster() const
 {
     return ClusterDispatch( cluster_, &NodeController_ABC::Stop, clusterId_ );
 }
@@ -151,7 +145,7 @@ Reply Agent::StopCluster() const
 // Name: Agent::ListNodes
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::ListNodes( int offset, int limit ) const
+std::vector< Tree > Agent::ListNodes( int offset, int limit ) const
 {
     return List( nodes_.List( offset, limit ) );
 }
@@ -160,16 +154,16 @@ Reply Agent::ListNodes( int offset, int limit ) const
 // Name: Agent::CountNodes
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::CountNodes() const
+size_t Agent::CountNodes() const
 {
-    return Count( nodes_.Count() );
+    return nodes_.Count();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::GetNode( const Uuid& id ) const
+Tree Agent::GetNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Get, id );
 }
@@ -178,17 +172,17 @@ Reply Agent::GetNode( const Uuid& id ) const
 // Name: Agent::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions )
+Tree Agent::CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( nodes_.Create( name, num_sessions, parallel_sessions ), "node" );
+    return Create( nodes_.Create( name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DeleteNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteNode( const Uuid& id )
+Tree Agent::DeleteNode( const Uuid& id )
 {
     NodeController_ABC::T_Node ptr;
     SessionController_ABC::T_Sessions invalid;
@@ -196,20 +190,20 @@ Reply Agent::DeleteNode( const Uuid& id )
         boost::lock_guard< boost::mutex > lock( access_ );
         ptr = nodes_.Delete( id );
         if( !ptr )
-            return Reply( web::NOT_FOUND );
+            throw HttpException( web::NOT_FOUND );
         invalid = sessions_.List( boost::bind( &IsNode, _1, id ), 0, INT_MAX );
     }
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )
         sessions_.Delete( ptr->GetId() );
-    return Reply( ptr->GetProperties() );
+    return Tree( ptr->GetProperties() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::StartNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::StartNode( const Uuid& id ) const
+Tree Agent::StartNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Start, id );
 }
@@ -218,7 +212,7 @@ Reply Agent::StartNode( const Uuid& id ) const
 // Name: Agent::StopNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::StopNode( const Uuid& id ) const
+Tree Agent::StopNode( const Uuid& id ) const
 {
     return Dispatch( nodes_, &NodeController_ABC::Stop, id );
 }
@@ -227,73 +221,73 @@ Reply Agent::StopNode( const Uuid& id ) const
 // Name: Agent::UpdateNode
 // Created: BAX 2012-07-17
 // -----------------------------------------------------------------------------
-Reply Agent::UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions )
+Tree Agent::UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions )
 {
     NodeController_ABC::T_Node ptr = nodes_.Update( id, num_sessions, parallel_sessions );
     if( !ptr )
-        return Reply( web::NOT_FOUND );
-    return Reply( ptr->GetProperties() );
+        throw HttpException( web::NOT_FOUND );
+    return Tree( ptr->GetProperties() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetInstall
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Reply Agent::GetInstall( const Uuid& id ) const
+Tree Agent::GetInstall( const Uuid& id ) const
 {
-    return Reply( nodes_.GetInstall( id ) );
+    return Tree( nodes_.GetInstall( id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DeleteInstall
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
+Tree Agent::DeleteInstall( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Reply( nodes_.DeleteInstall( id, list ) );
+    return Tree( nodes_.DeleteInstall( id, list ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::UploadCache
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-Reply Agent::UploadCache( const Uuid& id, std::istream& src )
+Tree Agent::UploadCache( const Uuid& id, std::istream& src )
 {
-    return Reply( nodes_.UploadCache( id, src ) );
+    return Tree( nodes_.UploadCache( id, src ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetCache
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Reply Agent::GetCache( const Uuid& id ) const
+Tree Agent::GetCache( const Uuid& id ) const
 {
-    return Reply( nodes_.GetCache( id ) );
+    return Tree( nodes_.GetCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DeleteCache
 // Created: BAX 2012-05-22
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteCache( const Uuid& id )
+Tree Agent::DeleteCache( const Uuid& id )
 {
-    return Reply( nodes_.DeleteCache( id ) );
+    return Tree( nodes_.DeleteCache( id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::InstallFromCache
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Reply Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
+Tree Agent::InstallFromCache( const Uuid& id, const std::vector< size_t >& list )
 {
-    return Reply( nodes_.InstallFromCache( id, list ) );
+    return Tree( nodes_.InstallFromCache( id, list ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::ListSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::ListSessions( const Uuid& node, int offset, int limit ) const
+std::vector< Tree > Agent::ListSessions( const Uuid& node, int offset, int limit ) const
 {
     SessionController_ABC::T_Predicate predicate;
     if( !node.is_nil() )
@@ -305,19 +299,19 @@ Reply Agent::ListSessions( const Uuid& node, int offset, int limit ) const
 // Name: Agent::CountSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CountSessions( const Uuid& node ) const
+size_t Agent::CountSessions( const Uuid& node ) const
 {
     if( node.is_nil() )
-        return Count( sessions_.Count( SessionController_ABC::T_Predicate() ) );
+        return sessions_.Count( SessionController_ABC::T_Predicate() );
     else
-        return Count( sessions_.Count( boost::bind( &IsNode, _1, node ) ) );
+        return sessions_.Count( boost::bind( &IsNode, _1, node ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::GetSession( const Uuid& id ) const
+Tree Agent::GetSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Get, id );
 }
@@ -326,17 +320,17 @@ Reply Agent::GetSession( const Uuid& id ) const
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CreateSession( const Uuid& node, const std::string& name, const std::string& exercise )
+Tree Agent::CreateSession( const Uuid& node, const std::string& name, const std::string& exercise )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( sessions_.Create( node, name, exercise ), "session" );
+    return Create( sessions_.Create( node, name, exercise ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DeleteSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteSession( const Uuid& id )
+Tree Agent::DeleteSession( const Uuid& id )
 {
     return Dispatch( sessions_, &SessionController_ABC::Delete, id );
 }
@@ -345,7 +339,7 @@ Reply Agent::DeleteSession( const Uuid& id )
 // Name: Agent::StartSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Reply Agent::StartSession( const Uuid& id ) const
+Tree Agent::StartSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Start, id );
 }
@@ -354,7 +348,7 @@ Reply Agent::StartSession( const Uuid& id ) const
 // Name: Agent::StopSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Reply Agent::StopSession( const Uuid& id ) const
+Tree Agent::StopSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Stop, id );
 }
@@ -363,7 +357,7 @@ Reply Agent::StopSession( const Uuid& id ) const
 // Name: Agent::PauseSession
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-Reply Agent::PauseSession( const Uuid& id ) const
+Tree Agent::PauseSession( const Uuid& id ) const
 {
     return Dispatch( sessions_, &SessionController_ABC::Pause, id );
 }
@@ -372,22 +366,16 @@ Reply Agent::PauseSession( const Uuid& id ) const
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-Reply Agent::ListExercises( const Uuid& node, int offset, int limit ) const
+std::vector< Path > Agent::ListExercises( const Uuid& node, int offset, int limit ) const
 {
-    std::string json;
-    BOOST_FOREACH( NodeController_ABC::T_Exercises::value_type item, nodes_.GetExercises( node, offset, limit ) )
-    {
-        std::replace( item.begin(), item.end(), '\\', '/' );
-        json += "\"" + item + "\",";
-    }
-    return Reply( "[" + json.substr( 0, json.size()-1 ) + "]" );
+    return nodes_.GetExercises( node, offset, limit );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::CountExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-Reply Agent::CountExercises( const Uuid& node ) const
+size_t Agent::CountExercises( const Uuid& node ) const
 {
-    return Count( nodes_.CountExercises( node ) );
+    return nodes_.CountExercises( node );
 }

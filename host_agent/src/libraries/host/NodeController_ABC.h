@@ -53,7 +53,7 @@ struct NodeController_ABC : public boost::noncopyable
     typedef Node_ABC T_Base;
     typedef boost::shared_ptr< T_Base > T_Node;
     typedef std::vector< T_Node > T_Nodes;
-    typedef std::vector< std::string > T_Exercises;
+    typedef std::vector< Path > T_Exercises;
     //@}
 
     //! @name Methods

@@ -11,13 +11,15 @@
 
 #include "host/Agent.h"
 #include "runtime/PropertyTree.h"
-#include "web/Reply.h"
+#include "runtime/Utf8.h"
+#include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
@@ -30,7 +32,7 @@
 using namespace host;
 using namespace mocks;
 using namespace property_tree;
-typedef web::Reply Reply;
+using web::Agent_ABC;
 
 namespace
 {
@@ -67,13 +69,47 @@ namespace
         return ptr;
     }
 
-    void CheckReply( const Reply& reply, const std::string& expected, bool valid = true )
+    void CheckTree( const boost::function< Tree() >& operand, const std::string& expected, bool valid = true )
     {
         if( valid )
-            BOOST_CHECK_EQUAL( reply.status, web::OK );
+            BOOST_CHECK_EQUAL( ToJson( operand() ), expected );
         else
-            BOOST_CHECK( reply.status != web::OK );
-        BOOST_CHECK_EQUAL( reply.data, expected );
+            BOOST_CHECK_THROW( operand(), web::HttpException );
+    }
+
+    void CheckCount( const boost::function< size_t() >& operand, const size_t expected )
+    {
+        BOOST_CHECK_EQUAL( operand(), expected );
+    }
+
+    void CheckTreeList( const boost::function< std::vector< Tree >() >& operand, const std::string& expected, bool valid = true )
+    {
+        if( valid )
+        {
+            std::string json;
+            BOOST_FOREACH( const Tree& it, operand() )
+                json += ToJson( it ) + ",";
+            BOOST_CHECK_EQUAL( "[" + json.substr( 0, json.size() - 1 ) + "]", expected );
+        }
+        else
+        {
+            BOOST_CHECK_THROW( operand(), web::HttpException );
+        }
+    }
+
+    void CheckPathList( const boost::function< std::vector< Path >() >& operand, const std::string& expected, bool valid = true )
+    {
+        if( valid )
+        {
+            std::string json;
+            BOOST_FOREACH( const Path& it, operand() )
+                json += "\"" + runtime::Utf8Convert( it ) + "\",";
+            BOOST_CHECK_EQUAL( "[" + json.substr( 0, json.size() - 1 ) + "]", expected );
+        }
+        else
+        {
+            BOOST_CHECK_THROW( operand(), web::HttpException );
+        }
     }
 
     std::string CreatePrefixedUuid( int idx )
@@ -120,7 +156,7 @@ namespace
             const std::string uuid = CreatePrefixedUuid( idx );
             boost::shared_ptr< MockSession > session = CreateMockSession( node, uuid, exercise, name );
             MOCK_EXPECT( sessions.Create ).once().with( node, exercise, name ).returns( session );
-            CheckReply( agent.CreateSession( node, exercise, name ), ToJson( session->GetProperties() ) );
+            CheckTree( boost::bind( &Agent_ABC::CreateSession, &agent, node, exercise, name ), ToJson( session->GetProperties() ) );
             return session;
         }
 
@@ -128,7 +164,7 @@ namespace
         {
             boost::shared_ptr< MockNode > node = CreateMockNode( id, name );
             MOCK_EXPECT( nodes.Create ).once().with( name, 16, 8 ).returns( node );
-            CheckReply( agent.CreateNode( name, 16, 8 ), ToJson( node->GetProperties() ) );
+            CheckTree( boost::bind( &Agent_ABC::CreateNode, &agent, name, 16, 8 ), ToJson( node->GetProperties() ) );
             return node;
         }
 
@@ -172,44 +208,44 @@ BOOST_AUTO_TEST_CASE( agent_reloads )
 BOOST_FIXTURE_TEST_CASE( agent_get_cluster, Fixture< true > )
 {
     MOCK_EXPECT( cluster.controller.Get ).once().returns( cluster.ptr );
-    CheckReply( agent.GetCluster(), "{\"id\":\"12345678-90AB-CDEF-9876-543210123442\",\"name\":\"cluster\"}" );
+    CheckTree( boost::bind( &Agent_ABC::GetCluster, &agent ), "{\"id\":\"12345678-90AB-CDEF-9876-543210123442\",\"name\":\"cluster\"}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_start_cluster, Fixture< true > )
 {
     MOCK_EXPECT( cluster.controller.Start ).once().returns( cluster.ptr );
-    CheckReply( agent.StartCluster(), "{\"id\":\"12345678-90AB-CDEF-9876-543210123442\",\"name\":\"cluster\"}" );
+    CheckTree( boost::bind( &Agent_ABC::StartCluster, &agent ), "{\"id\":\"12345678-90AB-CDEF-9876-543210123442\",\"name\":\"cluster\"}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_cluster, Fixture< true > )
 {
     MOCK_EXPECT( cluster.controller.Stop ).once().returns( cluster.ptr );
-    CheckReply( agent.StopCluster(), "{\"id\":\"12345678-90AB-CDEF-9876-543210123442\",\"name\":\"cluster\"}" );
+    CheckTree( boost::bind( &Agent_ABC::StopCluster, &agent ), "{\"id\":\"12345678-90AB-CDEF-9876-543210123442\",\"name\":\"cluster\"}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_nodes, Fixture<> )
 {
     const int offset = 0, limit = 2;
     MOCK_EXPECT( nodes.List ).once().with( offset, limit ).returns( boost::assign::list_of( node ) );
-    CheckReply( agent.ListNodes( offset, limit ), "[" + ToJson( node->GetProperties() ) + "]" );
+    CheckTreeList( boost::bind( &Agent_ABC::ListNodes, &agent, offset, limit ), "[" + ToJson( node->GetProperties() ) + "]" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_count_nodes, Fixture<> )
 {
     MOCK_EXPECT( nodes.Count ).once().returns( 17 );
-    CheckReply( agent.CountNodes(), "{\"count\":\"17\"}" );
+    CheckCount( boost::bind( &Agent_ABC::CountNodes, &agent ), 17 );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_node, Fixture<> )
 {
     MOCK_EXPECT( nodes.Get ).once().with( defaultNode ).returns( node );
-    CheckReply( agent.GetNode( defaultNode ), ToJson( node->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::GetNode, &agent, defaultNode ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_create_node, Fixture<> )
 {
     MOCK_EXPECT( nodes.Create ).once().with( "zomg", 16, 8 ).returns( node );
-    CheckReply( agent.CreateNode( "zomg", 16, 8 ), ToJson( node->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::CreateNode, &agent, "zomg", 16, 8 ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_node, Fixture<> )
@@ -217,47 +253,46 @@ BOOST_FIXTURE_TEST_CASE( agent_delete_node, Fixture<> )
     MOCK_EXPECT( nodes.Delete ).once().with( defaultNode ).returns( node );
     MOCK_EXPECT( sessions.List ).with( boost::bind( &Fixture::CheckIsNodePredicate, this, _1, defaultNode ), 0, mock::any ).once().returns( boost::assign::list_of( mockSessions[0] ) );
     MOCK_EXPECT( sessions.Delete ).once().with( mockSessions[0]->GetId() ).returns( mockSessions[0] );
-    CheckReply( agent.DeleteNode( defaultNode ), ToJson( node->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::DeleteNode, &agent, defaultNode ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_start_node, Fixture<> )
 {
     MOCK_EXPECT( nodes.Start ).once().with( defaultNode ).returns( node );
-    CheckReply( agent.StartNode( defaultNode ), ToJson( node->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::StartNode, &agent, defaultNode ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_node, Fixture<> )
 {
     MOCK_EXPECT( nodes.Stop ).once().with( defaultNode ).returns( node );
-    CheckReply( agent.StopNode( defaultNode ), ToJson( node->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::StopNode, &agent, defaultNode ), ToJson( node->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_sessions, Fixture<> )
 {
     const int offset = 1, limit = 1;
     MOCK_EXPECT( sessions.List ).once().with( mock::any, offset, limit ).returns( boost::assign::list_of( mockSessions[1] ) );
-    CheckReply( agent.ListSessions( defaultNode, offset, limit ), "[" + ToJson( mockSessions[1]->GetProperties() ) + "]" );
+    CheckTreeList( boost::bind( &Agent_ABC::ListSessions, &agent, defaultNode, offset, limit ), "[" + ToJson( mockSessions[1]->GetProperties() ) + "]" );
     MOCK_EXPECT( sessions.List ).once().with( mock::any, 0, 1 ).returns( boost::assign::list_of( mockSessions[0] ) );
-    CheckReply( agent.ListSessions( boost::uuids::nil_uuid(), 0, 1 ), "[" + ToJson( mockSessions[0]->GetProperties() ) + "]" );
+    CheckTreeList( boost::bind( &Agent_ABC::ListSessions, &agent, boost::uuids::nil_uuid(), 0, 1 ), "[" + ToJson( mockSessions[0]->GetProperties() ) + "]" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture<> )
 {
     MOCK_EXPECT( sessions.Count ).once().returns( 17 );
-    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{\"count\":\"17\"}" );
+    CheckCount( boost::bind( &Agent_ABC::CountSessions, &agent, boost::uuids::nil_uuid() ), 17 );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Get ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckReply( agent.GetSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::GetSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Create ).once().returns( boost::shared_ptr< MockSession >() );
-    const web::Reply rpy = agent.CreateSession( defaultNode, "exercise", "name" );
-    BOOST_CHECK( rpy.status != web::OK );
+    CheckTree( boost::bind( &Agent_ABC::CreateSession, &agent, defaultNode, "exercise", "name" ), "", false );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )
@@ -268,32 +303,32 @@ BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Delete ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckReply( agent.DeleteSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::DeleteSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_start_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Start ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckReply( agent.StartSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_session, Fixture<> )
 {
     MOCK_EXPECT( sessions.Stop ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckReply( agent.StopSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    CheckTree( boost::bind( &Agent_ABC::StopSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture<> )
 {
-    const std::vector< std::string > list = boost::assign::list_of( "a" )( "b" )( "c" );
+    const std::vector< Path > list = boost::assign::list_of( "a" )( "b" )( "c" );
     MOCK_EXPECT( nodes.GetExercises ).once().returns( list );
-    CheckReply( agent.ListExercises( defaultNode, 0, 10 ), "[\"a\",\"b\",\"c\"]" );
+    CheckPathList( boost::bind( &Agent_ABC::ListExercises, &agent, defaultNode, 0, 10 ), "[\"a\",\"b\",\"c\"]" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_count_exercises, Fixture<> )
 {
     MOCK_EXPECT( nodes.CountExercises ).once().returns( 3 );
-    CheckReply( agent.CountExercises( defaultNode ), "{\"count\":\"3\"}" );
+    CheckCount( boost::bind( &Agent_ABC::CountExercises, &agent, defaultNode ), 3 );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_upload_cache, Fixture<> )
@@ -302,7 +337,7 @@ BOOST_FIXTURE_TEST_CASE( agent_upload_cache, Fixture<> )
     tree.put( "some", "data" );
     std::istringstream stream;
     MOCK_EXPECT( nodes.UploadCache ).once().with( defaultNode, boost::ref( stream ) ).returns( tree );
-    CheckReply( agent.UploadCache( defaultNode, stream ), ToJson( tree ) );
+    CheckTree( boost::bind( &Agent_ABC::UploadCache, &agent, defaultNode, boost::ref( stream ) ), ToJson( tree ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_cache, Fixture<> )
@@ -310,7 +345,7 @@ BOOST_FIXTURE_TEST_CASE( agent_get_cache, Fixture<> )
     Tree tree;
     tree.put( "some", "data" );
     MOCK_EXPECT( nodes.GetCache ).once().with( defaultNode ).returns( tree );
-    CheckReply( agent.GetCache( defaultNode ), ToJson( tree ) );
+    CheckTree( boost::bind( &Agent_ABC::GetCache, &agent, defaultNode ), ToJson( tree ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_cache, Fixture<> )
@@ -318,5 +353,5 @@ BOOST_FIXTURE_TEST_CASE( agent_delete_cache, Fixture<> )
     Tree tree;
     tree.put( "some", "data" );
     MOCK_EXPECT( nodes.DeleteCache ).once().with( defaultNode ).returns( tree );
-    CheckReply( agent.DeleteCache( defaultNode ), ToJson( tree ) );
+    CheckTree( boost::bind( &Agent_ABC::DeleteCache, &agent, defaultNode ), ToJson( tree ) );
 }

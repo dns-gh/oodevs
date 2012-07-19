@@ -60,7 +60,7 @@ std::string GetSqliteError( int err )
 
 void ThrowSqlException( const std::string& data, int err )
 {
-    throw std::runtime_error( data + " (" + GetSqliteError( err ) + ")" );
+    throw SqlException( data + " (" + GetSqliteError( err ) + ")" );
 }
 
 void SqliteClose( sqlite3* db )
@@ -81,7 +81,7 @@ Sql::Sql( const Path& file )
     sqlite3* pdb = 0;
     int err = sqlite3_open( Utf8Convert( file_ ).c_str(), &pdb );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to open " + file.string(), err );
+        ThrowSqlException( "Unable to open " + file.string(), err );
     db_.reset( pdb, &SqliteClose );
 }
 
@@ -113,7 +113,7 @@ Sql::T_Statement Sql::Prepare( const Transaction& /*tr*/, const std::string& sql
     // documentation suggest to include null-terminated byte to avoid copy
     int err = sqlite3_prepare_v2( db_.get(), sql.c_str(), static_cast< int >( sql.size() + 1 ), &stmt, 0 );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to prepare " + sql, err );
+        ThrowSqlException( "Unable to prepare " + sql, err );
     return boost::make_shared< Statement >( stmt );
 }
 
@@ -198,7 +198,7 @@ void Statement::Bind( bool value )
 {
     const int err = sqlite3_bind_int( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to bind boolean", err );
+        ThrowSqlException( "Unable to bind boolean", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +209,7 @@ void Statement::Bind( int value )
 {
     const int err = sqlite3_bind_int( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to bind integer", err );
+        ThrowSqlException( "Unable to bind integer", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ void Statement::Bind( int64_t value )
 {
     const int err = sqlite3_bind_int64( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to bind 64-bit integer", err );
+        ThrowSqlException( "Unable to bind 64-bit integer", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ void Statement::Bind( double value )
 {
     const int err = sqlite3_bind_double( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to bind double", err );
+        ThrowSqlException( "Unable to bind double", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +242,7 @@ void Statement::Bind( const std::string& value )
 {
     const int err = sqlite3_bind_text( stmt_.get(), bind_++, value.c_str(), static_cast< int >( value.size() ), SQLITE_TRANSIENT );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to bind text", err );
+        ThrowSqlException( "Unable to bind text", err );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ bool Statement::Next()
         return true;
     if( err == SQLITE_DONE )
         return false;
-    ThrowSqlException( "[sql] Unable to step statement", err );
+    ThrowSqlException( "Unable to step statement", err );
     return false;
 }
 
@@ -286,7 +286,7 @@ void CheckType( sqlite3_stmt* stmt, int expected, int col )
 {
     const int actual = sqlite3_column_type( stmt, col );
     if( expected != actual )
-        throw std::runtime_error( "[sql] Invalid type conversion" );
+        throw SqlException( "Invalid type conversion" );
 }
 }
 
@@ -352,5 +352,5 @@ void Statement::Reset()
     sqlite3_clear_bindings( stmt_.get() );
     const int err = sqlite3_reset( stmt_.get() );
     if( err != SQLITE_OK )
-        ThrowSqlException( "[sql] Unable to reset statement", err );
+        ThrowSqlException( "Unable to reset statement", err );
 }
