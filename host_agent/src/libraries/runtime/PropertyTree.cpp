@@ -9,6 +9,10 @@
 
 #include "PropertyTree.h"
 
+#ifndef BOOST_SPIRIT_THREADSAFE
+#error BOOST_SPIRIT_THREADSAFE define is required
+#endif
+
 #ifdef _MSC_VER
 #   pragma warning( push )
 #   pragma warning( disable : 4100 4512 )
