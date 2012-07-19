@@ -320,6 +320,7 @@ void Node::Update( size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     num_sessions_ = num_sessions;
+    num_counter_ = 0;
     parallel_sessions_ = parallel_sessions;
 }
 
