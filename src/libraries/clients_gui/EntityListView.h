@@ -75,6 +75,7 @@ private:
     virtual void NotifyActivated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     //@}
 
