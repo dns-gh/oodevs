@@ -3808,7 +3808,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new population.</source>
-        <translation>Cliquer &quot;Ok&quot; pour créer une population.</translation>
+        <translation>Cliquer &quot;Terminer&quot; pour créer une population.</translation>
     </message>
 </context>
 <context>
