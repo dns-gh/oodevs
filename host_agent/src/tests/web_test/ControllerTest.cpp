@@ -212,8 +212,8 @@ BOOST_FIXTURE_TEST_CASE( controller_count_nodes, Fixture )
 {
     SetRequest( "GET", "/count_nodes" );
     const size_t expected = 13;
-    MOCK_EXPECT( agent.CountNodes ).once().returns( 13 );
-    CheckCount( 200, 13, controller.DoGet( request ) );
+    MOCK_EXPECT( agent.CountNodes ).once().returns( expected );
+    CheckCount( 200, expected, controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_get_node, Fixture )
