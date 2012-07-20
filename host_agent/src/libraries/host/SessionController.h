@@ -77,6 +77,7 @@ public:
 private:
     //! @name Private methods
     //@{
+    void ReloadSession( const Path& path, T_Predicate predicate );
     void Update();
     void UpdateSession( T_Session session );
     void UpdateSize();

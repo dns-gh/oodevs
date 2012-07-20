@@ -126,30 +126,38 @@ void SessionController::UpdateSize()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionController::ReloadSession
+// Created: BAX 2012-07-20
+// -----------------------------------------------------------------------------
+void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
+{
+    try
+    {
+        boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );
+        if( !ptr || !predicate( *ptr ) )
+            return;
+        sessions_.Attach( ptr );
+        Create( *ptr );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_WARN( log_ ) << "[session] " << err.what();
+        LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8Convert( path );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionController::Reload
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
 void SessionController::Reload( T_Predicate predicate )
 {
+    Async reload( async_.GetPool() );
     BOOST_FOREACH( const Path& dir, system_.Walk( root_, false ) )
     {
         const Path path = dir / "session.id";
-        if( !system_.IsFile( path ) )
-            continue;
-        try
-        {
-            boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );
-            if( !ptr || !predicate( *ptr ) )
-                continue;
-            sessions_.Attach( ptr );
-            Create( *ptr );
-        }
-        catch( const std::exception& err )
-        {
-            LOG_WARN( log_ ) << "[session] " << err.what();
-            LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8Convert( path );
-            continue; // skip invalid entry
-        }
+        if( system_.IsFile( path ) )
+            reload.Go( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
     }
 }
 

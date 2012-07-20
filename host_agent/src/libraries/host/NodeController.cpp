@@ -85,30 +85,38 @@ NodeController::~NodeController()
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeController::ReloadNode
+// Created: BAX 2012-07-20
+// -----------------------------------------------------------------------------
+void NodeController::ReloadNode( const Path& path )
+{
+    try
+    {
+        T_Node node = factory_.Make( path );
+        if( !node )
+            return;
+        nodes_.Attach( node );
+        Create( *node, true );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_WARN( log_ ) << "[" << type_ << "] " << err.what();
+        LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeController::Reload
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 void NodeController::Reload()
 {
+    Async reload( async_.GetPool() );
     BOOST_FOREACH( const Path& dir, system_.Walk( root_, false ) )
     {
         const Path path = dir / ( type_ + ".id" );
-        if( !system_.IsFile( path ) )
-            continue;
-        try
-        {
-            T_Node node = factory_.Make( path );
-            if( !node )
-                continue;
-            nodes_.Attach( node );
-            Create( *node, true );
-        }
-        catch( const std::exception& err )
-        {
-            LOG_WARN( log_ ) << "[" << type_ << "] " << err.what();
-            LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path );
-            continue; // skip invalid entry
-        }
+        if( system_.IsFile( path ) )
+            reload.Go( boost::bind( &NodeController::ReloadNode, this, path ) );
     }
 }
 

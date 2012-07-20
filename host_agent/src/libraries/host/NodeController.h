@@ -110,6 +110,7 @@ public:
 private:
     //! @name Private methods
     //@{
+    void ReloadNode( const Path& path );
     void Update();
     void Save( const Node_ABC& node ) const;
     void Create( Node_ABC& node, bool reload );
