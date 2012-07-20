@@ -26,6 +26,7 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <urban/TerrainObject_ABC.h>
+#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
 
@@ -56,7 +57,6 @@ PHY_RolePion_UrbanLocation::PHY_RolePion_UrbanLocation( MIL_Agent_ABC& pion )
     , delegate_    ( new OutsideUrbanBlockPosition() )
     , isInCity_    ( false )
     , isFlying_    ( false )
-    , hasCollision_( false )
 {
     // NOTHING
 }
@@ -80,7 +80,8 @@ void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsi
     file >> wrapper
          >> isInCity_
          >> isFlying_
-         >> hasCollision_;
+         >> collisions_;
+
     urbanObject_ = wrapper;
     if( urbanObject_ )
         delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
@@ -95,7 +96,7 @@ void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& file, const uns
     file << urbanObject_;
     file << isInCity_
          << isFlying_
-         << hasCollision_;
+         << collisions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -320,12 +321,21 @@ void PHY_RolePion_UrbanLocation::Land()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::ToggleInhabitantCollision
-// Created: LGY 2012-02-29
+// Name: PHY_RolePion_UrbanLocation::AddInhabitantCollision
+// Created: MMC 2012-07-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::ToggleInhabitantCollision( bool value )
+void PHY_RolePion_UrbanLocation::AddInhabitantCollision( unsigned int id )
 {
-    hasCollision_ = value;
+    collisions_.insert( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::RemoveInhabitantCollision
+// Created: MMC 2012-07-19
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::RemoveInhabitantCollision( unsigned int id )
+{
+    collisions_.erase( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,5 +344,5 @@ void PHY_RolePion_UrbanLocation::ToggleInhabitantCollision( bool value )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_UrbanLocation::HasInhabitantCollision() const
 {
-    return hasCollision_;
+    return !collisions_.empty();
 }
