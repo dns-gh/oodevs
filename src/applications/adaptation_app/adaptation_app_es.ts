@@ -967,14 +967,6 @@ estacionado con motor encendido</translation>
         <translation>Código NNO</translation>
     </message>
     <message>
-        <source>Code EMAT6</source>
-        <translation>Código EMAT6</translation>
-    </message>
-    <message>
-        <source>Code EMAT8</source>
-        <translation>Código EMAT8</translation>
-    </message>
-    <message>
         <source>Code LFRIL</source>
         <translation>Código LFRIL</translation>
     </message>
@@ -1257,6 +1249,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>Equipment category:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">Código EMAT8</translation>
     </message>
 </context>
 <context>

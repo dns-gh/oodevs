@@ -966,14 +966,6 @@ Arrêt moteur allumé</translation>
         <translation>Code NNO</translation>
     </message>
     <message>
-        <source>Code EMAT6</source>
-        <translation>Code EMAT6</translation>
-    </message>
-    <message>
-        <source>Code EMAT8</source>
-        <translation>Code EMAT8</translation>
-    </message>
-    <message>
         <source>Code LFRIL</source>
         <translation>Code LFRIL</translation>
     </message>
@@ -1256,6 +1248,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Equipment category:</source>
         <translation>Catégorie d&apos;équipement</translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">Code EMAT8</translation>
     </message>
 </context>
 <context>

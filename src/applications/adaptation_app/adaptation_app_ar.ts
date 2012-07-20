@@ -1158,14 +1158,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Code EMAT6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code EMAT8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Code LFRIL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1239,6 +1231,10 @@ Parked engine running</source>
     </message>
     <message>
         <source>Equipment_%1.htm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
