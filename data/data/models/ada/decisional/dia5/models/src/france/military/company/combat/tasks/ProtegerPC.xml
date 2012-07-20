@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.ProtegerPC" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CombatSupportEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.ProtegerPC" source-version="1.0.0" knowledge-class="france.military.company.combat.tasks.knowledges.Appuyer">
     <parameters>
         <parameter name="objective">
             <type>
@@ -7,43 +7,37 @@
             </type>
         </parameter>
     </parameters>
-    <stages/>
-    <next-task name="commander.tasks.CombatSupport">
-        <parameter name="objectives">
-            <value>
-                <call method="france.military.queries.getPCOfAutomate">
-                    <parameter name="automate">
+    <stages>
+        <stage label="assignations des missions">
+            <skills>
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="companyTask">
                         <value>
-                            <parameter>objective</parameter>
+                            <string>france.military.company.combat.tasks.ProtegerPC</string>
                         </value>
                     </parameter>
-                </call>
-            </value>
-        </parameter>
-        <parameter name="companyTask">
-            <value>
-                <string>france.military.company.combat.tasks.Appuyer</string>
-            </value>
-        </parameter>
-        <parameter name="mainTasks">
-            <value>
-                <string>france.military.platoon.tasks.Appuyer</string>
-            </value>
-        </parameter>
-        <parameter name="supportTasks">
-            <value>
-                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-            </value>
-        </parameter>
-        <parameter name="defaultTask">
-            <value>
-                <string>france.military.platoon.tasks.Suivre</string>
-            </value>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <value>
-                <string>france.military.platoon.tasks.Appuyer</string>
-            </value>
-        </parameter>
-    </next-task>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

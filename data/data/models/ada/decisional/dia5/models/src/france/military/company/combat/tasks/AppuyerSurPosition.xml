@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.AppuyerSurPosition" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CombatSupportEffect">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.AppuyerSurPosition" source-version="1.0.0" knowledge-class="france.military.company.combat.tasks.knowledges.Appuyer">
     <parameters>
         <parameter name="objective">
             <type>
@@ -21,52 +21,37 @@
             </type>
         </parameter>
     </parameters>
-    <next-task name="commander.tasks.CombatSupport">
-        <parameter name="objectives">
-            <value>
-                <call method="commander.queries.getEntitiesFromAutomat">
-                    <parameter name="role">
+    <stages>
+        <stage label="assignation des missions">
+            <skills>
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="companyTask">
                         <value>
-                            <string>none</string>
+                            <string>france.military.company.combat.tasks.AppuyerSurPosition</string>
                         </value>
                     </parameter>
-                    <parameter name="withPC">
+                    <parameter name="mainTasks">
                         <value>
-                            <boolean>true</boolean>
+                            <string>france.military.platoon.tasks.AppuyerSurPosition</string>
                         </value>
                     </parameter>
-                    <parameter name="automat">
+                    <parameter name="supportTasks">
                         <value>
-                            <parameter>objective</parameter>
+                            <string>france.military.platoon.tasks.Suivre</string>
                         </value>
                     </parameter>
-                </call>
-            </value>
-        </parameter>
-        <parameter name="companyTask">
-            <value>
-                <string>france.military.company.combat.tasks.AppuyerSurPosition</string>
-            </value>
-        </parameter>
-        <parameter name="mainTasks">
-            <value>
-                <string>france.military.platoon.tasks.AppuyerSurPosition</string>
-            </value>
-        </parameter>
-        <parameter name="supportTasks">
-            <value>
-                <string>france.military.platoon.tasks.Suivre</string>
-            </value>
-        </parameter>
-        <parameter name="defaultTask">
-            <value>
-                <string>france.military.platoon.tasks.Suivre</string>
-            </value>
-        </parameter>
-        <parameter name="taskForSupporting">
-            <value>
-                <string>france.military.platoon.tasks.Appuyer</string>
-            </value>
-        </parameter>
-    </next-task>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

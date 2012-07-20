@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.CombatSupportEffect" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
+    <description>The knowledge of the 'Support' effect. This knowledge is used by the commander agent to perform support missions. </description>
     <methods>
         <method name="getEntitiesToSupport">
+            <description>Returns the units to be supported.</description>
             <return>
                 <type>
                     <list>
@@ -11,13 +13,15 @@
             </return>
         </method>
         <method name="getNbrFront">
-          <return>
-            <type>
-              <simple name="numeric"/>
-            </type>
-          </return>
+            <description>Returns the number of front units.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
         </method>
         <method name="getSupportingPosition">
+            <description>In case the mission needs positions (fire support from a position), this method returns the set positions tha can be used.</description>
             <return>
                 <type>
                     <class name="properties.Neutralizing"/>
@@ -27,6 +31,7 @@
             </return>
         </method>
         <method name="getDirection">
+            <description>Returns the main threat direction.</description>
             <return>
                 <type>
                     <class name="properties.Observable"/>

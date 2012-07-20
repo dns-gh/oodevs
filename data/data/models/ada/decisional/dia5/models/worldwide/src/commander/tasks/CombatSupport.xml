@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Appuyer" source-version="1.0.0" knowledge-class="france.military.company.combat.tasks.knowledges.Appuyer">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.CombatSupport" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.CombatSupportEffect">
+    <description>For the commander agent, to order subordinates to support a friend company. First line units will receive the main task (support the first line units of the supported company), other units will support the frist line units. </description>
     <parameters>
         <parameter name="objective">
+            <description>The friend company to support.</description>
             <type>
                 <class name="world.Company"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage>
+        <stage label="support">
             <skills>
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <string>france.military.company.combat.tasks.Appuyer</string>
+                            <string>commander.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>france.military.platoon.tasks.Appuyer</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-                        </value>
-                    </parameter>
-                    <parameter name="defaultTask">
-                        <value>
-                            <string>france.military.platoon.tasks.Suivre</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>france.military.platoon.tasks.Appuyer</string>
+                            <string>agent.tasks.CombatSupport</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                 </skill>
