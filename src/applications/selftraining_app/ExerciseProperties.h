@@ -43,7 +43,7 @@ class ExerciseProperties : public gui::LanguageChangeObserver_ABC< Q3VBox >
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable );
+             ExerciseProperties( QWidget* parent, QWidget* granParent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable );
     virtual ~ExerciseProperties();
     //@}
 
@@ -51,7 +51,7 @@ public:
     //@{
     void Update();
     void Select( const frontend::Exercise_ABC* exercise );
-    void Commit( const frontend::Exercise_ABC& exercise );
+    bool Commit( const frontend::Exercise_ABC& exercise );
     bool IsValid() const;
     //@}
 
@@ -80,12 +80,16 @@ private:
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
     const QString language_;
+    QWidget* parent_;
     QLabel* parametersLabel_;
     QLabel* briefingImage_;
     Q3TextEdit* briefingText_;
     QComboBox* terrainList_;
     QComboBox* modelList_;
     bool dataChanged_;
+    std::string currentData_;
+    std::string currentPhysical_;
+    std::string currentTerrain_;
     //@}
 };
 

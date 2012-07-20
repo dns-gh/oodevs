@@ -241,6 +241,22 @@
         <source>No briefing available</source>
         <translation>Aucun briefing</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>The selected terrain is not the one referenced by the selected exercise.
+Do really you want to replace it ?</source>
+        <translation>Le terrain selectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
+Voulez-vous vraiment le remplacer ?</translation>
+    </message>
+    <message>
+        <source>The selected model is not the one referenced by the selected exercise.
+Do really you want to replace it ?</source>
+        <translation>Le modèle selectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
+Voulez-vous vraiment le remplacer ?</translation>
+    </message>
 </context>
 <context>
     <name>ExportWidget</name>

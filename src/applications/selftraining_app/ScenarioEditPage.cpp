@@ -47,7 +47,7 @@ ScenarioEditPage::ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
         // eTabs_Edit
         {
-            exercises_ = new ExerciseList( mainTabs_, config_, fileLoader_, controllers, true, false );
+            exercises_ = new ExerciseList( parent, config_, fileLoader_, controllers, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             connect( exercises_, SIGNAL( ExercisePropertiesChanged() ), SLOT( OnExercisePropertiesChanged() ) );
@@ -131,11 +131,8 @@ void ScenarioEditPage::OnEdit()
     switch( mainTabs_->currentPageIndex() )
     {
     case eTabs_Edit:
-        if( exercise_ )
-        {
-            exercises_->ChangeExerciceParameters();
+        if( exercise_ && exercises_->ChangeExerciceParameters() )
             Edit( exercise_->GetName().c_str() );
-        }
         break;
     case eTabs_Create:
         createExerciceWidget_->CreateExercise();
