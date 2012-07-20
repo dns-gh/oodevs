@@ -84,26 +84,26 @@
                         <label class="control-label">Sessions</label>
                         <div class="controls">
                             <span class="uneditable-input read_only">{{num_sessions}} total</span>
-                            <span class="uneditable-input read_only">0 played</span>
+                            <span class="uneditable-input read_only">{{num_played}} played</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"></label>
                         <div class="controls">
                             <span class="uneditable-input read_only">{{parallel_sessions}} parallel</span>
-                            <span class="uneditable-input read_only">0 running</span>
+                            <span class="uneditable-input read_only">{{num_parallel}} running</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Exercises</label>
                         <div class="controls">
-                            <span class="uneditable-input read_only">0 available</span>
+                            <span class="uneditable-input read_only">{{num_exercises}} available</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Data</label>
                         <div class="controls">
-                            <span class="uneditable-input read_only">0 MB used</span>
+                            <span class="uneditable-input read_only">{{data_size}} bytes</span>
                         </div>
                     </div>
                 </form>

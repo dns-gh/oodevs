@@ -81,6 +81,8 @@ namespace
             MOCK_EXPECT( packages.Make ).once().with( mock::any, true ).returns( installed );
             MOCK_EXPECT( installed->Parse ).once().returns( true );
             MOCK_EXPECT( installed->Identify ).once().with( mock::same( *installed ) );
+            MOCK_EXPECT( installed->CountExercises ).once().returns( 13 );
+            MOCK_EXPECT( installed->GetSize ).once().returns( 20 );
             MOCK_EXPECT( ports.Create1 ).once().with( defaultPort ).returns( new MockPort( defaultPort ) );
             if( process )
                 MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
@@ -128,7 +130,13 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "\"port\":\"1337\","
         "\"num_sessions\":\"16\","
         "\"parallel_sessions\":\"8\",";
+    const std::string properties =
+        "\"num_exercises\":\"0\","
+        "\"num_played\":\"0\","
+        "\"num_parallel\":\"0\","
+        "\"data_size\":\"0\",";
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
+        properties +
         "\"status\":\"stopped\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
@@ -137,6 +145,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
+        properties +
         "\"status\":\"running\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
@@ -148,6 +157,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "}}" );
     StopNode( *node, process );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base +
+        properties +
         "\"status\":\"stopped\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
@@ -207,6 +217,7 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     tree.put( "some", "data" );
     const std::string expected = ToJson( tree );
     MOCK_EXPECT( cache->GetProperties ).returns( tree );
+    MOCK_EXPECT( cache->GetSize ).returns( 0 );
     MOCK_EXPECT( uuids.Create ).returns( boost::uuids::random_generator()() );
     MOCK_EXPECT( system.MakePaths );
     MOCK_EXPECT( system.MakePath ).returns( true );

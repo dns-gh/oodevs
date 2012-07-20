@@ -104,7 +104,7 @@ struct Node_ABC : public boost::noncopyable
     virtual size_t      CountExercises() const = 0;
     virtual Tree        LinkExercise( const std::string& name ) const = 0;
     virtual Tree        LinkExercise( const Tree& tree ) const = 0;
-    virtual void        UnlinkExercise( const Tree& tree ) const = 0;
+    virtual void        UnlinkExercise( const Tree& tree ) = 0;
     //@}
 
     //! @name Session methods

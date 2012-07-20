@@ -33,6 +33,7 @@ typedef boost::function< void( const Path& ) > PathOperand;
 struct Package_ABC::Item_ABC : public boost::noncopyable
 {
     virtual Tree        GetProperties() const = 0;
+    virtual size_t      GetSize() const = 0;
     virtual std::string GetType() const = 0;
     virtual Path        GetName() const = 0;
     virtual Path        GetRoot() const = 0;
@@ -264,6 +265,11 @@ struct Item : Package_ABC::Item_ABC
         return tree;
     }
 
+    virtual size_t GetSize() const
+    {
+        return size_;
+    }
+
     virtual Path GetRoot() const
     {
         return root_;
@@ -321,7 +327,9 @@ struct Item : Package_ABC::Item_ABC
     void MakeChecksum( const FileSystem_ABC& system )
     {
         const Path root = root_ / GetSuffix();
-        checksum_ = system.Checksum( root, IsExercise() ? boost::bind( &IsItemData, std::distance( root.begin(), root.end() ), _1 ) : FileSystem_ABC::T_Predicate() );
+        size_t read;
+        checksum_ = system.Checksum( root, IsExercise() ? boost::bind( &IsItemData, std::distance( root.begin(), root.end() ), _1 ) : FileSystem_ABC::T_Predicate(), read );
+        size_ = read;
     }
 
     void Install( Async& async, const FileSystem_ABC& system, const Path& tomb, const Path& root, const Package_ABC& dst, const Package::T_Items& targets, const PathOperand& operand ) const
@@ -401,6 +409,7 @@ protected:
     std::string checksum_;
     std::string action_;
     std::string error_;
+    size_t size_;
 };
 
 std::string Format( const std::time_t& time )
@@ -887,4 +896,16 @@ void Package::UnlinkItem( Async& async, const Tree& src )
     Unlink( async, system_, src, "terrain", *this );
     Unlink( async, system_, src, "model", *this );
     RemoveItems( items_, &IsOrphaned );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Package::GetSize
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+size_t Package::GetSize() const
+{
+    size_t sum = 0;
+    BOOST_FOREACH( const T_Items::value_type& item, items_ )
+        sum += item->GetSize();
+    return sum;
 }

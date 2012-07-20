@@ -92,6 +92,9 @@ Node::Node( const PackageFactory_ABC& packages,
     , num_counter_      ( 0 )
     , parallel_sessions_( config.parallel_sessions )
     , parallel_counter_ ( 0 )
+    , num_exercises_    ( 0 )
+    , install_size_     ( 0 )
+    , cache_size_       ( 0 )
     , min_play_seconds_ ( config.min_play_seconds )
 {
     install_ = packages_.Make( root_ / "install", true );
@@ -125,6 +128,9 @@ Node::Node( const PackageFactory_ABC& packages,
     , num_counter_      ( Get< size_t >( tree, "num_counter" ) )
     , parallel_sessions_( Get< size_t >( tree, "parallel_sessions" ) )
     , parallel_counter_ ( 0 )
+    , num_exercises_    ( 0 )
+    , install_size_     ( 0 )
+    , cache_size_       ( 0 )
     , min_play_seconds_ ( config.min_play_seconds )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
@@ -198,6 +204,10 @@ Tree Node::GetCommonProperties() const
 Tree Node::GetProperties() const
 {
     Tree tree = GetCommonProperties();
+    tree.put( "num_exercises", num_exercises_ );
+    tree.put( "num_played", num_counter_ );
+    tree.put( "num_parallel", parallel_counter_ );
+    tree.put( "data_size", install_size_ + cache_size_ );
     tree.put( "status", process_ ? "running" : "stopped" );
     return tree;
 }
@@ -363,6 +373,7 @@ void Node::UploadCache( std::istream& src )
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     next->Identify( *install_ );
     next.swap( cache_ );
+    cache_size_ = cache_->GetSize();
     if( next )
         async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
 }
@@ -375,8 +386,12 @@ void Node::ParsePackages( const Path& cache )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     ParseInline( packages_, install_, root_ / "install" );
-    if( !cache.empty() )
-        ParseInline( packages_, cache_,   root_ / cache, install_ );
+    num_exercises_ = install_->CountExercises();
+    install_size_ = install_->GetSize();
+    if( cache.empty() )
+        return;
+    ParseInline( packages_, cache_,   root_ / cache, install_ );
+    cache_size_ = cache_->GetSize();
 }
 
 // -----------------------------------------------------------------------------
@@ -407,6 +422,8 @@ Tree Node::DeleteInstall( const std::vector< size_t >& ids )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     install_->Uninstall( async_, root_, ids );
+    num_exercises_ = install_->CountExercises();
+    install_size_ = install_->GetSize();
     if( cache_ )
         cache_->Identify( *install_ );
     return install_->GetProperties();
@@ -424,6 +441,7 @@ Tree Node::DeleteCache()
         return Tree();
     next.swap( cache_ );
     async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, next->GetPath() ) );
+    cache_size_ = 0;
     return next->GetProperties();
 }
 
@@ -437,6 +455,8 @@ Tree Node::InstallFromCache( const std::vector< size_t >& list )
     if( !cache_ )
         return Tree();
     install_->Install( async_, root_, *cache_, list );
+    num_exercises_ = install_->CountExercises();
+    install_size_ = install_->GetSize();
     cache_->Identify( *install_ );
     return cache_->GetProperties();
 }
@@ -485,10 +505,11 @@ Tree Node::LinkExercise( const Tree& tree ) const
 // Name: Node::UnlinkExercise
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-void Node::UnlinkExercise( const Tree& tree ) const
+void Node::UnlinkExercise( const Tree& tree )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     install_->UnlinkItem( async_, tree );
+    install_size_ = install_->GetSize();
 }
 
 struct node::Token

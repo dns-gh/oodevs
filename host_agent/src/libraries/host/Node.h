@@ -123,7 +123,7 @@ public:
     virtual size_t      CountExercises() const;
     virtual Tree        LinkExercise( const std::string& name ) const;
     virtual Tree        LinkExercise( const Tree& tree ) const;
-    virtual void        UnlinkExercise( const Tree& tree ) const;
+    virtual void        UnlinkExercise( const Tree& tree );
     //@}
 
     //! @name Session methods
@@ -171,6 +171,9 @@ private:
     size_t num_counter_;
     size_t parallel_sessions_;
     size_t parallel_counter_;
+    size_t num_exercises_;
+    size_t install_size_;
+    size_t cache_size_;
     //@}
 };
 }

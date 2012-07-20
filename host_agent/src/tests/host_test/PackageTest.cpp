@@ -90,7 +90,7 @@ struct Fixture
         MOCK_EXPECT( system.GetLastWrite ).with( file ).returns( std::time_t() );
         MOCK_EXPECT( system.ReadFile ).with( file ).returns( contents );
         MOCK_EXPECT( system.ReadFile ).with( root / "metadata.tag" ).returns( "" );
-        MOCK_EXPECT( system.Checksum ).with( data / name, mock::any ).returns( checksum );
+        MOCK_EXPECT( system.Checksum ).with( data / name, mock::any, mock::any ).returns( checksum );
         dst.push_back( file );
     }
 

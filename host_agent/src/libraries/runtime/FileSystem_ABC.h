@@ -84,7 +84,7 @@ struct FileSystem_ABC : public boost::noncopyable
     virtual std::vector< Path > Glob( const Path& path, const Path& name ) const = 0;
     virtual std::vector< Path > Walk( const Path& path, bool recurse ) const = 0;
     virtual T_Unpacker Unpack( const Path& output, std::istream& src ) const = 0;
-    virtual std::string Checksum( const Path& root, const T_Predicate& predicate ) const = 0;
+    virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const = 0;
     virtual Path MakeAnyPath( const Path& root ) const = 0;
     virtual std::time_t GetLastWrite( const Path& file ) const = 0;
     //@}
