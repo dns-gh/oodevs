@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Decrocher" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Disengage">
-  <parameters>
-    <parameter name="objective">
-      <type>
-        <class name="properties.Approachable"/>
-        <class name="properties.Positionable"/>
-      </type>
-    </parameter>
-  </parameters>
-  <next-task name="commander.tasks.Disengage">
-    <parameter name="companyTask">
-      <value>
-        <string>france.military.company.tasks.Decrocher</string>
-      </value>
-    </parameter>
-    <parameter name="mainTasks">
-      <value>
-        <string>france.military.platoon.tasks.Decrocher</string>
-      </value>
-    </parameter>
-    <parameter name="supportTasks">
-      <value>
-        <string>france.military.platoon.tasks.Decrocher</string>
-      </value>
-    </parameter>
-    <parameter name="objective">
-      <value>
-        <parameter>objective</parameter>
-      </value>
-    </parameter>
-    <parameter name="defaultTask">
-      <value>
-        <string>france.military.platoon.tasks.Suivre</string>
-      </value>
-    </parameter>
-    <parameter name="taskForSupporting">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer</string>
-      </value>
-    </parameter>
-  </next-task>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Decrocher" source-version="1.0.0" knowledge-class="france.military.company.tasks.knowledges.Decrocher">
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="properties.Approachable"/>
+                <class name="properties.Positionable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Rompre Contact" disable-when-done="true">
+            <skills>
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="noCoordination">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.tasks.Decrocher</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Decrocher</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Decrocher</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

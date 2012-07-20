@@ -908,6 +908,10 @@
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
     
+    <target name="generate-database-worldwide" depends="generate-database-military" description="compile behavior model database worldwide">
+        <bmc src="${models.dir}/worldwide/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/military/src" luac="false"/>
+        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
+    </target>
 
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
@@ -1865,6 +1869,7 @@
         <update name="proj4"/>
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database-france"/> <!--compile all military models-->
+        <antcall target="generate-database-worldwide"/>
         <antcall target="generate-database-security"/>
         <antcall target="generate-symbols"/>
     </target>

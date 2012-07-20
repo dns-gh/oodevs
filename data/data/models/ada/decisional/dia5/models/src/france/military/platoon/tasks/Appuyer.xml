@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Appuyer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.CombatSupport">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Appuyer" source-version="1.0.0" knowledge-class="france.military.platoon.tasks.knowledges.CombatSupport">
     <description>Soutien dynamique. Soutenir par la manoeuvre.</description>
     <parameters>
         <parameter name="objectives">
@@ -24,16 +24,61 @@
     <goal>
         <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
     </goal>
-    <next-task name="agent.tasks.CombatSupport">
-        <parameter name="objectives">
-            <value>
-                <parameter>objectives</parameter>
-            </value>
-        </parameter>
-        <parameter name="marcheRetrograde">
-            <value>
-                <parameter>marcheRetrograde</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <stages>
+        <stage label="Appui" permanent="true">
+            <description>Suivre, observer et appuyer (feu) les objectifs.</description>
+            <goal>
+                <description>Suivre en mesure de pouvoir observer / appuyer.</description>
+            </goal>
+            <let name="enemiesInRange">
+                <value>
+                    <call method="queries.getEnemiesEngagingFriends">
+                        <parameter name="dynamic">
+                            <value>
+                                <boolean>true</boolean>
+                            </value>
+                        </parameter>
+                        <parameter name="friends">
+                            <value>
+                                <parameter>objectives</parameter>
+                            </value>
+                        </parameter>
+                    </call>
+                </value>
+            </let>
+            <skills>
+                <skill name="agent.skills.Support" priority="0.1">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="marcheRetrograde">
+                        <value>
+                            <parameter>marcheRetrograde</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="agent.skills.Engage" priority="0.8">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>enemiesInRange</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <call method="queries.getPositionsToNeutralize">
+                                <parameter name="elementsToNeutralize">
+                                    <value>
+                                        <parameter>enemiesInRange</parameter>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="agent.skills.actions.ApplyMortarFires" priority="0.1"/>
+            </skills>
+        </stage>
+    </stages>
 </task>
