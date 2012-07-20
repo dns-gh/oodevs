@@ -546,7 +546,7 @@
           <parameter type="Agent"/>
         </choice>
       </parameter>
-      <parameter dia-name="marcheRetrograde" name="marche retrograde" optional="true" type="Boolean"/>
+      <parameter dia-name="retrogradeContext" name="marche retrograde" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Detruire" dia-type="france.military.platoon.combat.tasks.Detruire" id="2013" name="PION MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4267,7 +4267,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zonesAcquisition" max-occurs="unbounded" min-occurs="1" name="zones acquisition" optional="false" type="Polygon"/>
       <parameter dia-name="compagniesAAppuyer" max-occurs="unbounded" min-occurs="1" name="compagnies a appuyer" optional="false" type="Automat"/>
-      <parameter dia-name="bMarcheRetrograde" name="marche retrograde" optional="false" type="Boolean"/>
+      <parameter dia-name="bretrogradeContext" name="marche retrograde" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" id="28776" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" name="AUTOMATE RENS ROEM Renseigner Sur">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4637,4 +4637,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
   </fragorders>
 </missions>
-<!-- signature="2812349090" -->
+<!-- signature="3915888186" -->

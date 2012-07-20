@@ -1,6 +1,6 @@
 local result = 
 {
-    fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif, taskName )
+    fillParameters = function( self, companyTask, params, entity, retrogradeContext, objectif, taskName )
         local entities =companyTask:getObstaclesPlan( params, entity, taskName )
         local meetingPoint = companyTask:getMeetingPoint( params )
         local withImprovement = companyTask:getWithImprovement( params )

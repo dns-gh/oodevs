@@ -15,7 +15,7 @@
         </list>
       </type>
     </parameter>
-    <parameter name="bMarcheRetrograde">
+    <parameter name="bretrogradeContext">
       <type>
         <simple name="boolean"/>
       </type>

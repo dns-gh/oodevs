@@ -1,6 +1,6 @@
 local result =
 {
-    fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif, taskName )
+    fillParameters = function( self, companyTask, params, entity, retrogradeContext, objectif, taskName )
         local obstacles = companyTask:getObstaclesPlan( params, entity, taskName )
         local meetingPoint = companyTask:getFinalMeetingPoint( params )
         if next(obstacles) then

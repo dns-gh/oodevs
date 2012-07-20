@@ -217,7 +217,7 @@ create = function( self )
       
       if self.sendSupport then 
         for _, supportingEntity in pairs( echelons[4] ) do
-          meKnowledge:sendTaskToPion( supportingEntity , self.params.taskForSupporting , { objectives = tableObjectives, marcheRetrograde = true } , eEtatEchelon_Reserve )  
+          meKnowledge:sendTaskToPion( supportingEntity , self.params.taskForSupporting , { objectives = tableObjectives, retrogradeContext = true } , eEtatEchelon_Reserve )  
         end
         self.sendSupport = false
       end

@@ -4,7 +4,7 @@ local result =
         return ePionEfficiencyEngineeringSupport
     end,
 
-    fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif )
+    fillParameters = function( self, companyTask, params, entity, retrogradeContext, objectif )
         if objectif and objectif ~= NIL then
             return { objective = objectif }
         else

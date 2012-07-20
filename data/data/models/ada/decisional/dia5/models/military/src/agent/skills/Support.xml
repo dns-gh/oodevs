@@ -11,7 +11,7 @@ S'enregistre auprès des éléments soutenus pour recevoir la valeur de leur rap
                 </list>
             </type>
         </parameter>
-        <parameter name="marcheRetrograde" nullable="true">
+        <parameter name="retrogradeContext" nullable="true">
             <description>En marche retrograde (false par défaut)</description>
             <type>
                 <simple name="boolean"/>

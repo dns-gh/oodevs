@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.Follow" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
-    <description>The knowledge of the 'Follow' mission. This knowledge is used by the company commander to perform its own tasks. </description>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.knowledges.Appuyer" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
+    <description>Interface des connaissances de mission de niveau compagnie</description>
     <methods>
         <method name="getPionEfficiency">
-            <description>Return the efficiency (a score which value is defined between 0 and 1) of the agent to perform this mission. The higher the returned value is, the best the unit is to perform the mission.</description>
+            <description>Retourne l'efficacité voulue par l'automate basée sur la capacité des pions</description>
             <return>
                 <type>
                     <simple name="numeric"/>
@@ -12,17 +12,22 @@
         </method>
         <method name="fillParameters">
             <argument name="companyTask">
-                <description>The string name of the company task.</description>
+                <description>La tâche automate</description>
                 <type>
                     <class name="properties.Commandable"/>
                 </type>
             </argument>
             <argument name="params">
-                <description>The parameters of the company task.</description>
+                <description>Les paramètres de la tâche automate</description>
                 <type>
                     <list>
                         <class name="directia.core.Object"/>
                     </list>
+                </type>
+            </argument>
+            <argument name="retrogradeContext">
+                <type>
+                    <simple name="boolean"/>
                 </type>
             </argument>
             <return>

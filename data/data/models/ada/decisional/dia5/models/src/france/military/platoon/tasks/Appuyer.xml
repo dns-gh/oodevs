@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Appuyer" source-version="1.0.0" knowledge-class="france.military.platoon.tasks.knowledges.CombatSupport">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Appuyer" source-version="1.0.0" knowledge-class="france.military.platoon.tasks.knowledges.Appuyer">
     <description>Soutien dynamique. Soutenir par la manoeuvre.</description>
     <parameters>
         <parameter name="objectives">
@@ -10,7 +10,7 @@
                 </list>
             </type>
         </parameter>
-        <parameter name="marcheRetrograde" nullable="true">
+        <parameter name="retrogradeContext" nullable="true">
             <description>Boolean indiquant s'il s'agit si c'est un contexte retrograde. Défini par défaut à false. &#xD;
 </description>
             <type>
@@ -53,9 +53,9 @@
                             <parameter>objectives</parameter>
                         </value>
                     </parameter>
-                    <parameter name="marcheRetrograde">
+                    <parameter name="retrogradeContext">
                         <value>
-                            <parameter>marcheRetrograde</parameter>
+                            <parameter>retrogradeContext</parameter>
                         </value>
                     </parameter>
                 </skill>
