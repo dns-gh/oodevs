@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+<profiles model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
   <profile name="RAV.BLT.FR" password="" role="anibas" supervision="false">
     <rights>
       <readonly/>
@@ -25,10 +25,10 @@
     <rights>
       <readonly/>
       <readwrite>
-        <automat id="14108"/>
-        <automat id="14124"/>
         <automat id="16406"/>
         <automat id="245464"/>
+        <automat id="246564"/>
+        <automat id="246589"/>
       </readwrite>
     </rights>
   </profile>
@@ -57,9 +57,9 @@
     <rights>
       <readonly/>
       <readwrite>
-        <automat id="13146"/>
         <automat id="16412"/>
-        <automat id="16472"/>
+        <automat id="246549"/>
+        <automat id="246579"/>
       </readwrite>
     </rights>
   </profile>
@@ -99,12 +99,6 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="CIR.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
   <profile name="C1.24.FR" password="" role="anibas" supervision="false">
     <rights>
       <readonly/>
@@ -114,48 +108,6 @@
         <automat id="15399"/>
         <automat id="15405"/>
       </readwrite>
-    </rights>
-  </profile>
-  <profile name="G1.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="I1.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="I2.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="I3.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="A1.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="EEI.24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
-  <profile name="24.FR" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
     </rights>
   </profile>
   <profile name="BLDA4.FR" password="" role="anibas" supervision="false">
@@ -192,4 +144,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="1988815767" -->
+<!-- signature="4177177292" -->

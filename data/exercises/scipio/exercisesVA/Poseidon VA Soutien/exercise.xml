@@ -8,8 +8,8 @@
   <orbat file="orbat.xml"/>
   <urbanstate file="urbanstate.xml"/>
   <weather file="weather.xml"/>
-  <terrain name="PortoV3Lite"/>
   <model dataset="ada" physical="scipio"/>
+  <terrain name="PortoV3Lite"/>
   <drawings file="drawings.xml"/>
 </exercise>
-<!-- signature="0025280447" -->
+<!-- signature="0994696967" -->

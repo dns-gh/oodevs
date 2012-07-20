@@ -4,7 +4,7 @@
     <party color="0x647dff" id="1" name="Camp Ami" type="friend">
       <objects/>
       <tactical>
-        <formation color="0x647dff" id="4" level="ii" name="GTIA [4]" nature="sfgpucim">
+        <formation color="0x647dff" id="4" level="ii" name="GTIA [4]" nature="sfgpuce">
           <automat color="0x647dff" engaged="true" id="275" knowledge-group="6" name="INF . Compagnie CBT VAB [275]" nature="sfgpucim" type="INF . Compagnie CBT VAB">
             <unit color="0x647dff" command-post="true" id="276" name="INF . Section CDT CIE quaternaire VAB" position="29TNF2641758440" type="INF . Section CDT CIE quaternaire VAB"/>
             <unit color="0x647dff" command-post="false" id="278" name="INF . Section CBT VAB CDS OFF" position="29TNF2692358494" type="INF . Section CBT VAB CDS OFF"/>
@@ -43,7 +43,7 @@
             <unit color="0x647dff" command-post="false" id="330" name="GEN . Section Aide au Deploiement" position="29TNF2988760932" type="GEN . Section Aide au Deploiement"/>
             <unit color="0x647dff" command-post="false" id="333" name="GEN . Groupe Chantier" position="29TNF3024160563" type="GEN . Groupe Chantier"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="511" knowledge-group="6" name="GEN . Compagnie CBT type BB BM [511]" nature="sfgpucect" type="GEN . Compagnie CBT type BB BM">
+          <automat color="0x647dff" engaged="true" id="511" knowledge-group="6" name="GEN . Compagnie CBT type BB BM [511]" nature="sfgpuce" type="GEN . Compagnie CBT type BB BM">
             <unit color="0x647dff" command-post="true" id="512" name="GEN . PC CIE CBT GENIE Type BB/BM" position="29TNF2791157463" type="GEN . PC CIE CBT GENIE Type BB/BM"/>
             <unit color="0x647dff" command-post="false" id="514" name="GEN . Section CBT" position="29TNF2801757042" type="GEN . Section CBT"/>
             <unit color="0x647dff" command-post="false" id="515" name="GEN . Section CBT" position="29TNF2756957137" type="GEN . Section CBT"/>
@@ -150,15 +150,15 @@
             <point>29TNF2761854900</point>
           </limit>
         </formation>
-        <formation color="0x647dff" id="408" level="iii" name="Organisation [408]" nature="sfgpuce">
-          <formation color="0x647dff" id="409" level="ii" name="Formation [409]" nature="sfgpuce">
-            <formation color="0x647dff" id="410" level="i" name="ONG Formation [410]" nature="sfgpuce">
-              <automat color="0x647dff" engaged="false" id="173" knowledge-group="6" logistic-level="logistic-base" name="ONG 2 [173]" nature="sfgpuce" type="ONG">
+        <formation color="0x647dff" id="408" level="iii" name="Organisation [408]" nature="sfgpumo">
+          <formation color="0x647dff" id="409" level="ii" name="Formation [409]" nature="sfgpumo">
+            <formation color="0x647dff" id="410" level="i" name="ONG Formation [410]" nature="sfgpumo">
+              <automat color="0x647dff" engaged="false" id="173" knowledge-group="6" logistic-level="logistic-base" name="ONG 2 [173]" nature="sfgpumo" type="ONG">
                 <unit color="0x647dff" command-post="true" id="174" name="ONG Soutien LOG" position="29TNF2997257991" type="ONG Soutien LOG"/>
                 <unit color="0x647dff" command-post="false" id="175" name="ONG Intervention" position="29TNF2984157834" type="ONG Intervention"/>
                 <unit color="0x647dff" command-post="false" id="176" name="ONG Intervention" position="29TNF3017258017" type="ONG Intervention"/>
               </automat>
-              <automat color="0x647dff" engaged="false" id="198" knowledge-group="6" logistic-level="logistic-base" name="ONG [198]" nature="sfgpuce" type="ONG">
+              <automat color="0x647dff" engaged="false" id="198" knowledge-group="6" logistic-level="logistic-base" name="ONG [198]" nature="sfgpumo" type="ONG">
                 <unit color="0x647dff" command-post="true" id="199" name="ONG Soutien LOG" position="29TNF2886058664" type="ONG Soutien LOG"/>
                 <unit color="0x647dff" command-post="false" id="200" name="ONG Intervention" position="29TNF2875658819" type="ONG Intervention"/>
                 <unit color="0x647dff" command-post="false" id="201" name="ONG Intervention" position="29TNF2879658727" type="ONG Intervention"/>
@@ -166,7 +166,7 @@
               </automat>
             </formation>
             <formation color="0x647dff" id="502" level="i" logistic-level="logistic-base" name="BASE ONG" nature="sfgpusm">
-              <automat color="0x647dff" engaged="true" id="411" knowledge-group="6" logistic-level="logistic-base" name="BASE ONG" nature="sfgpuss" type="ONG">
+              <automat color="0x647dff" engaged="true" id="411" knowledge-group="6" logistic-level="logistic-base" name="BASE ONG" nature="sfgpumo" type="ONG">
                 <unit color="0x647dff" command-post="true" id="412" name="BASE ONG LOG" position="29TNF2941265081" type="ONG Soutien LOG"/>
               </automat>
               <automat color="0x647dff" engaged="true" id="461" knowledge-group="6" name="ONG LOG . Secteur triage [461]" nature="sfgpusm" type="LOG . Secteur triage">
@@ -178,17 +178,10 @@
                 <unit color="0x647dff" command-post="true" id="466" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3017364798" type="LOG . PC LOG BLD Secteur Sante"/>
                 <unit color="0x647dff" command-post="false" id="467" name="LOG . Section Decontamination Medicale NBC" position="29TNF2998564799" type="LOG . Section Decontamination Medicale NBC"/>
                 <unit color="0x647dff" command-post="false" id="468" name="LOG . Section Medico Psychologique" position="29TNF3012464908" type="LOG . Section Medico Psychologique"/>
-                <unit color="0x647dff" command-post="false" id="471" name="LOG . Section Chirurgicale HMC" position="29TNF3028064761" type="LOG . Section Chirurgicale HMC"/>
                 <unit color="0x647dff" command-post="false" id="477" name="LOG . SAN GTSA 240" position="29TNF3021864741" type="LOG . SAN GTSA 240"/>
                 <unit color="0x647dff" command-post="false" id="478" name="LOG . Section Medico Psychologique BLIAT" position="29TNF3009864723" type="LOG . Section Medico Psychologique BLIAT"/>
                 <unit color="0x647dff" command-post="false" id="479" name="LOG . Section Chirurgicale HMC BLIAT" position="29TNF3017664651" type="LOG . Section Chirurgicale HMC BLIAT"/>
-              </automat>
-              <automat color="0x647dff" engaged="true" id="480" knowledge-group="6" name="ONG LOG . Secteur reparation maint mob [480]" nature="sfgpusx" type="LOG . Secteur reparation maint mob">
-                <unit color="0x647dff" command-post="true" id="481" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2873865483" type="LOG . PC LOG BLD Secteur Maintenance"/>
-                <unit color="0x647dff" command-post="false" id="482" name="LOG . Section CDT CMM (EVAC)" position="29TNF2884365355" type="LOG . Section CDT CMM (EVAC)"/>
-                <unit color="0x647dff" command-post="false" id="483" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2881465241" type="LOG . Section Reparation Mob BLD  MOB"/>
-                <unit color="0x647dff" command-post="false" id="484" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2894865256" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
-                <unit color="0x647dff" command-post="false" id="494" name="LOG . Section Evacuation BLIAT" position="29TNF2894965452" type="LOG . Section Evacuation BLIAT"/>
+                <unit color="0x647dff" command-post="false" id="560" name="LOG . Section Chirurgicale HMC" position="29TNF3028064761" type="LOG . Hopital Mobile de Campagne"/>
               </automat>
               <automat color="0x647dff" engaged="true" id="495" knowledge-group="6" name="ONG LOG . Secteur transport [495]" nature="sfgpust" type="LOG . Secteur transport">
                 <unit color="0x647dff" command-post="true" id="496" name="LOG . PC LOG BLD Secteur Transport" position="29TNF2967565498" type="LOG . PC LOG BLD Secteur Transport"/>
@@ -196,6 +189,22 @@
                 <unit color="0x647dff" command-post="false" id="498" name="LOG . Peloton Ravitaillement (PR)" position="29TNF2963965579" type="LOG . Peloton Ravitaillement (PR)"/>
                 <unit color="0x647dff" command-post="false" id="499" name="LOG . Peloton Transport TRM 10000" position="29TNF2974465380" type="LOG . Peloton Transport TRM 10000"/>
                 <unit color="0x647dff" command-post="false" id="501" name="LOG . Peloton Transport BLIAT" position="29TNF2976965440" type="LOG . Peloton Transport BLIAT"/>
+              </automat>
+              <automat color="0x647dff" engaged="true" id="545" knowledge-group="6" name="ONG LOG . Secteur reparation maint mob [480]" nature="sfgpusx" type="LOG . Compagnie Maintenance Mobilite">
+                <unit color="0x647dff" command-post="false" id="546" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2873865483" type="LOG . Section Reparation Mob NTI2"/>
+                <unit color="0x647dff" command-post="false" id="547" name="LOG . Section CDT CMM (EVAC)" position="29TNF2884365355" type="LOG . Section Reparation Mob Feu NTI2"/>
+                <unit color="0x647dff" command-post="false" id="548" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2881465241" type="GLAISE - LOG . Section CDT CMM (EVA)"/>
+                <unit color="0x647dff" command-post="false" id="549" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2894865256" type="GLAISE - LOG . Section Reparation Mob BLD"/>
+                <unit color="0x647dff" command-post="false" id="550" name="LOG . Section Evacuation BLIAT" position="29TNF2894965452" type="GLAISE - LOG . Section Reparation MOB FEU BLD"/>
+                <unit color="0x647dff" command-post="false" id="551" name="LOG . Section Reparation Mob NTI3" position="29TNF2885865457" type="LOG . Section Reparation Mob NTI3"/>
+                <unit color="0x647dff" command-post="false" id="552" name="LOG . Section Reparation Mob Feu NTI3" position="29TNF2890565446" type="LOG . Section Reparation Mob Feu NTI3"/>
+                <unit color="0x647dff" command-post="false" id="553" name="GLAISE - LOG . Section Reparation Mob BLT MOB" position="29TNF2894165414" type="GLAISE - LOG . Section Reparation Mob BLT MOB"/>
+                <unit color="0x647dff" command-post="false" id="554" name="GLAISE - LOG . Section Reparation Mob Feu BLT SRMF" position="29TNF2895865370" type="GLAISE - LOG . Section Reparation Mob Feu BLT SRMF"/>
+                <unit color="0x647dff" command-post="false" id="555" name="LOG . Section Reparation Mob NTI3 BLIAT" position="29TNF2895265322" type="LOG . Section Reparation Mob NTI3 BLIAT"/>
+                <unit color="0x647dff" command-post="false" id="556" name="LOG . Section Reparation Mob Feu NTI3 BLIAT" position="29TNF2892565283" type="LOG . Section Reparation Mob Feu NTI3 BLIAT"/>
+                <unit color="0x647dff" command-post="false" id="557" name="LOG . Section Evacuation BLIAT" position="29TNF2888365261" type="LOG . Section Evacuation BLIAT"/>
+                <unit color="0x647dff" command-post="true" id="558" name="LOG . PC CMM" position="29TNF2885965357" type="LOG . PC CMM"/>
+                <unit color="0x647dff" command-post="false" id="559" name="LOG . Groupe Recuperation Evacuation" position="29TNF2883565260" type="LOG . Groupe Recuperation Evacuation"/>
               </automat>
             </formation>
           </formation>
@@ -239,8 +248,8 @@
         <logistic-base id="411">
           <subordinate id="461"/>
           <subordinate id="465"/>
-          <subordinate id="480"/>
           <subordinate id="495"/>
+          <subordinate id="545"/>
         </logistic-base>
         <logistic-base id="502">
           <subordinate id="173"/>
@@ -309,8 +318,8 @@
         </object>
       </objects>
       <tactical>
-        <formation color="0xff3232" id="25" level="ii" name="GTIA [25]" nature="shgpuc">
-          <automat color="0xff3232" engaged="false" id="192" knowledge-group="31" name="MILICE [192]" nature="shgpuc" type="MILICE">
+        <formation color="0xff3232" id="25" level="ii" name="GTIA [25]" nature="shgpuci">
+          <automat color="0xff3232" engaged="false" id="192" knowledge-group="31" name="MILICE [192]" nature="shgpuci" type="MILICE">
             <unit color="0xff3232" command-post="false" id="23" name="INF . Fantassin oeil" position="29TNF3319355360" type="INF . Fantassin oeil"/>
             <unit color="0xff3232" command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
             <unit color="0xff3232" command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
@@ -522,4 +531,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1895256525" -->
+<!-- signature="3474603673" -->

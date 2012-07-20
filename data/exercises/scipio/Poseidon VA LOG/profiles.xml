@@ -86,12 +86,6 @@
       <readwrite/>
     </rights>
   </profile>
-  <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
   <profile name="Superv" password="" role="environment" supervision="true">
     <rights>
       <readonly>
@@ -123,11 +117,5 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Eni" password="" role="eniex" supervision="false">
-    <rights>
-      <readonly/>
-      <readwrite/>
-    </rights>
-  </profile>
 </profiles>
-<!-- signature="0729215921" -->
+<!-- signature="1449221415" -->

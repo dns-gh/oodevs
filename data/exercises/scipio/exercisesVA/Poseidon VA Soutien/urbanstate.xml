@@ -254,7 +254,7 @@
     <urban-object id="131">
       <resources>
         <node initial-stock="0" resource-type="eau courante"/>
-        <node initial-stock="0" resource-type="electricite"/>
+        <node initial-stock="0" production="100" resource-type="electricite"/>
       </resources>
     </urban-object>
     <urban-object id="132"/>
@@ -295,7 +295,7 @@
     <urban-object id="145">
       <resources>
         <node initial-stock="1000" production="200" resource-type="eau courante"/>
-        <node initial-stock="0" resource-type="electricite"/>
+        <node initial-stock="0" production="100" resource-type="electricite"/>
       </resources>
     </urban-object>
     <urban-object id="146"/>
@@ -480,4 +480,4 @@
     <urban-object id="315"/>
   </urban-objects>
 </urban-state>
-<!-- signature="1886267953" -->
+<!-- signature="3217728993" -->

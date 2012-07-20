@@ -733,7 +733,6 @@
           <automat color="0x4bbedc" engaged="true" id="1352" knowledge-group="1109" name="LOG . Secteur munitions" nature="sfgpuss5" type="LOG . Secteur munitions">
             <unit color="0x4bbedc" command-post="true" id="1353" name="LOG . PC LOG BLD secteur munition" position="31TBM8942594415" type="LOG . PC LOG BLD secteur munition"/>
             <unit color="0x4bbedc" command-post="false" id="1354" name="LOG . Groupe Munitions SOFF TT - D" position="31TBM8991093900" type="LOG . Groupe Munitions SOFF TT - D"/>
-            <unit color="0x4bbedc" command-post="false" id="1355" name="LOG . Groupe Munitions OFF TT- D" position="31TBM8939493417" type="LOG . Groupe Munitions OFF TT- D"/>
             <unit color="0x4bbedc" command-post="false" id="1356" name="LOG . Groupe Munitions OFF TD" position="31TBM8890993932" type="LOG . Groupe Munitions OFF TD"/>
             <unit color="0x4bbedc" command-post="false" id="1357" name="LOG . Groupe Munitions SOFF TD" position="31TBM8992694399" type="LOG . Groupe Munitions SOFF TD"/>
             <unit color="0x4bbedc" command-post="false" id="1358" name="GLAISE - LOG . Groupe Munitions SOFF TT - D" position="31TBM9011793894" type="GLAISE - LOG . Groupe Munitions SOFF TT - D"/>
@@ -741,6 +740,7 @@
             <unit color="0x4bbedc" command-post="false" id="1360" name="GLAISE - LOG . Groupe Munitions OFF TD" position="31TBM8938793210" type="GLAISE - LOG . Groupe Munitions OFF TD"/>
             <unit color="0x4bbedc" command-post="false" id="1361" name="GLAISE - LOG . Groupe Munitions SOFF TD" position="31TBM8889393433" type="GLAISE - LOG . Groupe Munitions SOFF TD"/>
             <unit color="0x4bbedc" command-post="false" id="1362" name="LOG . Groupe Munitions BLIAT" position="31TBM8870193938" type="LOG . Groupe Munitions BLIAT"/>
+            <unit color="0x4bbedc" command-post="false" id="1448" name="LOG . Groupe Munitions OFF TT- D" position="31TBM8939493417" type="LOG . Groupe Munitions OFF TT - D"/>
           </automat>
           <automat color="0x4bbedc" engaged="true" id="1363" knowledge-group="1109" name="LOG . Secteur triage" nature="sfgpusm" type="LOG . Secteur triage">
             <unit color="0x4bbedc" command-post="true" id="1364" name="LOG . PC LOG BLD Secteur Sante" position="31TBM8887493520" type="LOG . PC LOG BLD Secteur Sante"/>
@@ -921,4 +921,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0171519824" -->
+<!-- signature="1379467062" -->

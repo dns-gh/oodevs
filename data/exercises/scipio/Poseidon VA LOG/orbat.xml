@@ -67,8 +67,6 @@
                 <resource name="barbele classique" quantity="190"/>
                 <resource name="RATION DE COMBAT 1" quantity="1164"/>
                 <resource name="EAU MINERALE 1L T 1" quantity="6984"/>
-                <resource name="Rechange  NTI1 MOB" quantity="30"/>
-                <resource name="Rechange  NTI1 EA" quantity="6"/>
               </stocks>
             </unit>
           </automat>
@@ -134,8 +132,6 @@
                 <resource name="barbele classique" quantity="110"/>
                 <resource name="RATION DE COMBAT 1" quantity="1044"/>
                 <resource name="EAU MINERALE 1L T 1" quantity="6264"/>
-                <resource name="Rechange  NTI1 MOB" quantity="30"/>
-                <resource name="Rechange  NTI1 EA" quantity="6"/>
               </stocks>
             </unit>
           </automat>
@@ -153,9 +149,9 @@
             <automat color="0x647dff" engaged="true" id="129" knowledge-group="7" name="MUN [129]" nature="sfgpuss5" type="LOG . Secteur munitions">
               <unit color="0x647dff" command-post="true" id="130" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3228765676" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
               <unit color="0x647dff" command-post="false" id="131" name="LOG . Groupe Munitions SOFF TT - D" position="29TNF3278965180" type="LOG . Groupe Munitions SOFF TT - D"/>
-              <unit color="0x647dff" command-post="false" id="132" name="LOG . Groupe Munitions OFF TT- D" position="29TNF3229164679" type="LOG . Groupe Munitions OFF TT- D"/>
               <unit color="0x647dff" command-post="false" id="133" name="LOG . Groupe Munitions OFF TD" position="29TNF3178865175" type="LOG . Groupe Munitions OFF TD"/>
               <unit color="0x647dff" command-post="false" id="134" name="LOG . Groupe Munitions SOFF TD" position="29TNF3278765678" type="LOG . Groupe Munitions SOFF TD"/>
+              <unit color="0x647dff" command-post="false" id="330" name="LOG . Groupe Munitions OFF TT- D" position="29TNF3229164679" type="LOG . Groupe Munitions OFF TT - D"/>
             </automat>
             <automat color="0x647dff" engaged="true" id="163" knowledge-group="7" name="TRANSP [163]" nature="sfgpust" type="LOG . Secteur transport">
               <unit color="0x647dff" command-post="true" id="164" name="LOG . PC LOG BLD Secteur Transport" position="29TNF3219364946" type="LOG . PC LOG BLD Secteur Transport"/>
@@ -180,7 +176,7 @@
               <unit color="0x647dff" command-post="false" id="154" name="LOG . Section Medico Psychologique" position="29TNF3672864103" type="LOG . Section Medico Psychologique"/>
               <unit color="0x647dff" command-post="false" id="155" name="LOG . Antenne Chirurgicale" position="29TNF3622564599" type="LOG . Antenne Chirurgicale"/>
               <unit color="0x647dff" command-post="false" id="156" name="LOG . Section Chirurgicale Modulaire" position="29TNF3722465102" type="LOG . Section Chirurgicale Modulaire"/>
-              <unit color="0x647dff" command-post="false" id="157" name="LOG . Section Chirurgicale HMC" position="29TNF3743364604" type="LOG . Section Chirurgicale HMC"/>
+              <unit color="0x647dff" command-post="false" id="358" name="LOG . Section Chirurgicale HMC" position="29TNF3743364604" type="LOG . Hopital Mobile de Campagne"/>
             </automat>
             <automat color="0x647dff" engaged="true" id="169" knowledge-group="7" name="Tri [169]" nature="sfgpusm" type="LOG . Secteur triage">
               <unit color="0x647dff" command-post="true" id="170" name="LOG . PC LOG BLD Secteur Sante" position="29TNF3612764695" type="LOG . PC LOG BLD Secteur Sante"/>
@@ -195,18 +191,19 @@
               <unit color="0x647dff" command-post="true" id="115" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF2780565348" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
               <unit color="0x647dff" command-post="false" id="116" name="LOG . Section Magasin CAP" position="29TNF2830864851" type="LOG . Section Magasin CAP"/>
             </automat>
-            <automat color="0x647dff" engaged="true" id="139" knowledge-group="7" name="MOB [139]" nature="sfgpusx" type="LOG . Secteur reparation maint mob">
-              <unit color="0x647dff" command-post="true" id="140" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2868565065" type="LOG . PC LOG BLD Secteur Maintenance"/>
-              <unit color="0x647dff" command-post="false" id="141" name="LOG . Section CDT CMM (EVAC)" position="29TNF2918864568" type="LOG . Section CDT CMM (EVAC)"/>
-              <unit color="0x647dff" command-post="false" id="142" name="LOG . Section Reparation Mob BLD  MOB" position="29TNF2868964067" type="LOG . Section Reparation Mob BLD  MOB"/>
-              <unit color="0x647dff" command-post="false" id="143" name="LOG . Section Reparation Mob Feu BLD  SRMF" position="29TNF2818764564" type="LOG . Section Reparation Mob Feu BLD  SRMF"/>
-            </automat>
-            <automat color="0x647dff" engaged="true" id="147" knowledge-group="7" name="SREAT [147]" nature="sfgpusx" type="LOG . Secteur reparation techniques fines">
-              <unit color="0x647dff" command-post="true" id="148" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2925464799" type="LOG . PC LOG BLD Secteur Maintenance"/>
-              <unit color="0x647dff" command-post="false" id="149" name="LOG . Section Reparation EA BLD SREAT" position="29TNF2975764302" type="LOG . Section Reparation EA BLD SREAT"/>
-            </automat>
             <automat color="0x647dff" engaged="true" id="175" knowledge-group="7" logistic-level="logistic-base" name="TC2 [175]" nature="sfgpuss" type="LOG . TC2 LOG">
               <unit color="0x647dff" command-post="true" id="176" name="PC" position="29TNF2911464351" type="LOG . TC2"/>
+            </automat>
+            <automat color="0x647dff" engaged="true" id="331" knowledge-group="7" name="MOB [139]" nature="sfgpusx" type="LOG . Compagnie Maintenance Mobilite">
+              <unit color="0x647dff" command-post="true" id="344" name="LOG . PC CMM" position="29TNF2868764566" type="LOG . PC CMM"/>
+              <unit color="0x647dff" command-post="false" id="345" name="LOG . Groupe Recuperation Evacuation" position="29TNF2862164491" type="LOG . Groupe Recuperation Evacuation"/>
+              <unit color="0x647dff" command-post="false" id="346" name="LOG . Section Reparation Mob Feu NTI2" position="29TNF2893264493" type="LOG . Section Reparation Mob Feu NTI2"/>
+              <unit color="0x647dff" command-post="false" id="347" name="LOG . Section Reparation Mob NTI3" position="29TNF2933064304" type="LOG . Section Reparation Mob NTI3"/>
+            </automat>
+            <automat color="0x647dff" engaged="true" id="348" knowledge-group="7" name="SREAT [147]" nature="sfgpusx" type="LOG . Compagnie de Maintenance Electronique et Armement">
+              <unit color="0x647dff" command-post="true" id="349" name="LOG . PC LOG BLD Secteur Maintenance" position="29TNF2925464799" type="LOG . PC CMEA"/>
+              <unit color="0x647dff" command-post="false" id="350" name="LOG . Section Reparation EA BLD SREAT" position="29TNF2975764302" type="LOG . Section Reparation EA NTI2"/>
+              <unit color="0x647dff" command-post="false" id="353" name="LOG . Section Reparation TSI NTI2" position="29TNF2960664551" type="LOG . Section Reparation TSI NTI2"/>
             </automat>
           </formation>
         </formation>
@@ -246,8 +243,8 @@
         </logistic-base>
         <logistic-base id="175">
           <subordinate id="114"/>
-          <subordinate id="139"/>
-          <subordinate id="147"/>
+          <subordinate id="331"/>
+          <subordinate id="348"/>
         </logistic-base>
         <logistic-base id="108">
           <subordinate id="34"/>
@@ -426,4 +423,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1553734256" -->
+<!-- signature="2974730043" -->
