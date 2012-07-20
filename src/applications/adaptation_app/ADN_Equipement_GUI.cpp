@@ -175,10 +175,10 @@ void ADN_Equipement_GUI::BuildAmmunition()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eAmmoName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code NNO" ), vConnectors[ eNNOCode ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeLFRIL" ), vConnectors[ eLFRILCode ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[ eLFRILCode ] );
     builder.AddEnumField< E_MunitionType >( pInfoHolder, tr( "Type" ), vConnectors[ eType ], ENT_Tr::ConvertFromAmmunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
