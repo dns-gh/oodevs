@@ -519,3 +519,24 @@ std::time_t FileSystem::GetLastWrite( const Path& file ) const
 {
     return boost::filesystem::last_write_time( file );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::GetDirectorySize
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+size_t FileSystem::GetDirectorySize( const Path& root ) const
+{
+    size_t sum = 0;
+    try
+    {
+        for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+            if( boost::filesystem::is_regular_file( it.status() ) )
+                sum += static_cast< size_t >( boost::filesystem::file_size( it->path() ) );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[file] " << err.what();
+        LOG_ERROR( log_ ) << "[file] Unable to size directory " << root.string();
+    }
+    return sum;
+}

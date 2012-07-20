@@ -53,6 +53,7 @@ public:
     virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const;
     virtual Path MakeAnyPath( const Path& root ) const;
     virtual std::time_t GetLastWrite( const Path& file ) const;
+    virtual size_t GetDirectorySize( const Path& dir ) const;
     //@}
 
 private:

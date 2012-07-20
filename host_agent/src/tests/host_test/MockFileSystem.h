@@ -33,6 +33,7 @@ namespace mocks
         MOCK_METHOD( Checksum, 3 );
         MOCK_METHOD( MakeAnyPath, 1 );
         MOCK_METHOD( GetLastWrite, 1 );
+        MOCK_METHOD( GetDirectorySize, 1 );
     };
 
     MOCK_BASE_CLASS( MockUnpack, runtime::Unpacker_ABC )
