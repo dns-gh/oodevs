@@ -301,10 +301,16 @@ std::string FileSystem::ReadFile( const Path& path ) const
 std::vector< Path > FileSystem::Glob( const Path& path, const Path& name ) const
 {
     std::vector< Path > paths;
-    if( IsDirectory( path ) )
-        for( boost::filesystem::recursive_directory_iterator it( path ); it != boost::filesystem::recursive_directory_iterator(); ++it )
-            if( IsFile( *it ) && it->path().filename() == name )
-                paths.push_back( *it );
+    if( !IsDirectory( path ) )
+        return paths;
+    for( boost::filesystem::recursive_directory_iterator it( path ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+    {
+        if( !boost::filesystem::is_regular_file( it->status() ) )
+            continue;
+        const Path path = it->path();
+        if( path.filename() == name )
+            paths.push_back( path );
+    }
     return paths;
 }
 
@@ -470,17 +476,18 @@ std::string FileSystem::Checksum( const Path& root, const FileSystem_ABC::T_Pred
     {
         if( !boost::filesystem::is_regular_file( it.status() ) )
             continue;
-        if( predicate && !predicate( it->path() ) )
+        const Path path = it->path();
+        if( predicate && !predicate( path ) )
             continue;
 #ifdef _MSC_VER
         // msvc does not support utf-8 strings
-        std::ifstream in( it->path().wstring(), std::ifstream::binary );
+        std::ifstream in( path.wstring(), std::ifstream::binary );
 #else
-        std::ifstream in( Utf8Convert( *it ).c_str(), std::ifstream::binary );
+        std::ifstream in( Utf8Convert( path ).c_str(), std::ifstream::binary );
 #endif
         if( in.bad() )
         {
-            LOG_ERROR( log_ ) << "[file] Unable to checksum " << it->path().string();
+            LOG_ERROR( log_ ) << "[file] Unable to checksum " << path.string();
             return std::string();
         }
         while( in.good() )
