@@ -66,12 +66,13 @@ public:
     //@{
     virtual void MagicMove( MT_Vector2D vPosition );
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
-    virtual void SetInhabitantCollision( bool value );
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
     virtual double ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
     virtual double ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const;
+    virtual void AddInhabitantCollision( unsigned int id );
+    virtual void RemoveInhabitantCollision( unsigned int id );
     void Execute( posture::PostureComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     void Execute( location::LocationComputer_ABC& algorithm ) const;
@@ -109,7 +110,7 @@ private:
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool                                    isInCity_;
     bool                                    isFlying_;
-    bool                                    hasCollision_;
+    std::set< unsigned int > 				collisions_;
     //@}
 };
 
