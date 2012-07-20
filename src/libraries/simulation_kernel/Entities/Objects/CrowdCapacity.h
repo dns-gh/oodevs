@@ -47,7 +47,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
-    virtual void ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
 
     double ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const;
