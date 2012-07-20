@@ -805,22 +805,6 @@ Arrêt moteur allumé</translation>
         <translation>T</translation>
     </message>
     <message>
-        <source>Code NNO:</source>
-        <translation>Code NNO:</translation>
-    </message>
-    <message>
-        <source>Code EMAT6:</source>
-        <translation>Code EMAT6:</translation>
-    </message>
-    <message>
-        <source>Code EMAT8:</source>
-        <translation>Code EMAT8:</translation>
-    </message>
-    <message>
-        <source>Code LFRIL:</source>
-        <translation>Code LFRIL:</translation>
-    </message>
-    <message>
         <source>Troop/Crew</source>
         <translation>Transport/Equipage</translation>
     </message>
@@ -1202,11 +1186,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Speed on breached object</source>
-        <translation>Vitesse sur objet breché</translation>
+        <translation type="unfinished">Vitesse sur objet breché</translation>
     </message>
     <message>
         <source>Speed on non breached object</source>
-        <translation>Vitesse sur objet non breché</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1504,22 +1488,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Nom</translation>
     </message>
     <message>
-        <source>CodeEMAT6</source>
-        <translation>Code EMAT6</translation>
-    </message>
-    <message>
-        <source>CodeEMAT8</source>
-        <translation>Code EMAT8</translation>
-    </message>
-    <message>
-        <source>CodeLFRIL</source>
-        <translation>Code LFRIL</translation>
-    </message>
-    <message>
-        <source>CodeNNO</source>
-        <translation>Code NNO</translation>
-    </message>
-    <message>
         <source>Indirect fire</source>
         <translation>Tir indirect</translation>
     </message>
@@ -1686,6 +1654,22 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>Improvised explosive device</source>
         <translation>Engin explosif improvisé</translation>
+    </message>
+    <message>
+        <source>Code NNO</source>
+        <translation type="unfinished">Code NNO</translation>
+    </message>
+    <message>
+        <source>Code LFRIL</source>
+        <translation type="unfinished">Code LFRIL</translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">Code EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">Code EMAT6</translation>
     </message>
 </context>
 <context>
