@@ -90,7 +90,11 @@ NodeController::~NodeController()
 // -----------------------------------------------------------------------------
 void NodeController::Reload()
 {
-    BOOST_FOREACH( const Path& path, system_.Glob( root_, type_ + ".id" ) )
+    BOOST_FOREACH( const Path& dir, system_.Walk( root_, false ) )
+    {
+        const Path path = dir / ( type_ + ".id" );
+        if( !system_.IsFile( path ) )
+            continue;
         try
         {
             T_Node node = factory_.Make( path );
@@ -105,6 +109,7 @@ void NodeController::Reload()
             LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8Convert( path );
             continue; // skip invalid entry
         }
+    }
 }
 
 // -----------------------------------------------------------------------------

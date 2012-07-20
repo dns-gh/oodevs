@@ -43,7 +43,6 @@ namespace
             MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
-            MOCK_EXPECT( system.IsFile ).returns( false );
             MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
             MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
@@ -128,9 +127,11 @@ namespace
 
         void Reload()
         {
-            MOCK_EXPECT( sub.system.Glob ).once().with( root / "nodes", "node.id" ).returns( boost::assign::list_of< Path >( "a/b/c/node.id" )( "node.id" ) );
-            active = AddNode( idActive, nodeActive, "a/b/c/node.id" );
-            idle = AddNode( idIdle, nodeIdle, "node.id" );
+            MOCK_EXPECT( sub.system.Walk ).once().with( root / "nodes", false ).returns( boost::assign::list_of< Path >( "a" )( "b" ) );
+            MOCK_EXPECT( sub.system.IsFile ).once().with( "a/node.id" ).returns( true );
+            MOCK_EXPECT( sub.system.IsFile ).once().with( "b/node.id" ).returns( true );
+            active = AddNode( idActive, nodeActive, "a/node.id" );
+            idle = AddNode( idIdle, nodeIdle, "b/node.id" );
             control.Reload();
         }
     };
