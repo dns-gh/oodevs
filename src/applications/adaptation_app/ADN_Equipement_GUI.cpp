@@ -109,10 +109,10 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeEMAT8" ), vConnectors[ eGenEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeEMAT6" ), vConnectors[ eGenEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeNNO" ), vConnectors[ eGenNNOCode ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code NNO" ), vConnectors[ eGenNNOCode ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[eGenLFRILCode ] );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );

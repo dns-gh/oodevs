@@ -1520,22 +1520,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CodeEMAT6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CodeEMAT8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CodeLFRIL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CodeNNO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Nature</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1757,6 +1741,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
     </message>
     <message>
         <source>Code EMAT6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code NNO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code LFRIL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
