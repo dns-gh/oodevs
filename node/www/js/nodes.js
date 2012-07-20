@@ -407,10 +407,14 @@
     };
 
     NodeItemView.prototype.render = function() {
-      var data;
+      var data, is_open, _ref;
+      is_open = (_ref = $(this.el).find(".collapse")) != null ? _ref.hasClass("in") : void 0;
       $(this.el).empty();
       data = $.extend({}, this.model.attributes);
       data.data_size = bytes_to_size(data.data_size, 2);
+      if (is_open) {
+        data.is_open = true;
+      }
       return $(this.el).html(node_template(data));
     };
 
@@ -515,7 +519,7 @@
       this.model.bind("add", this.add);
       this.model.bind("remove", this.remove);
       this.model.bind("reset", this.reset);
-      this.model.bind("change", this.model.sort);
+      this.model.bind("change:name", this.model.sort);
       this.model.fetch({
         error: function() {
           return print_error("Unable to fetch nodes");

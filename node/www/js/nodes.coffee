@@ -80,9 +80,11 @@ class NodeItemView extends Backbone.View
         "click .edit": "edit"
 
     render: =>
+        is_open = $(@el).find(".collapse")?.hasClass "in"
         $(@el).empty()
         data = $.extend {}, @model.attributes
         data.data_size = bytes_to_size data.data_size, 2
+        data.is_open = true if is_open
         $(@el).html node_template data
 
     delete: =>
@@ -130,10 +132,10 @@ class NodeListView extends Backbone.View
 
     initialize: ->
         @model = new NodeList
-        @model.bind "add",    @add
-        @model.bind "remove", @remove
-        @model.bind "reset",  @reset
-        @model.bind "change", @model.sort
+        @model.bind "add",         @add
+        @model.bind "remove",      @remove
+        @model.bind "reset",       @reset
+        @model.bind "change:name", @model.sort
         @model.fetch error: -> print_error "Unable to fetch nodes"
         setTimeout @delta, 5000
 
