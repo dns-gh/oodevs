@@ -35001,7 +35001,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="370" max-slope="0.6" name="Eqp NTI2 DEM" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010290" codeLFRIL="" codeNNO="1111110020290" comment="" id="370" max-slope="0.6" name="Eqp NTI2 DEM" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35069,7 +35069,7 @@
     </logistic-functions>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="371" max-slope="0.6" name="Eqp NTI2 TRS" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010291" codeLFRIL="" codeNNO="1111110020291" comment="" id="371" max-slope="0.6" name="Eqp NTI2 TRS" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35137,7 +35137,7 @@
     </logistic-functions>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="372" max-slope="0.6" name="Eqp NTI2 COTAC" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010292" codeLFRIL="" codeNNO="1111110020292" comment="" id="372" max-slope="0.6" name="Eqp NTI2 COTAC" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35205,7 +35205,7 @@
     </logistic-functions>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="373" max-slope="0.6" name="Eqp NTI3 DEM" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010293" codeLFRIL="" codeNNO="1111110020293" comment="" id="373" max-slope="0.6" name="Eqp NTI3 DEM" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35274,7 +35274,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="374" max-slope="0.6" name="Eqp NTI3 TRS" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010294" codeLFRIL="" codeNNO="1111110020294" comment="" id="374" max-slope="0.6" name="Eqp NTI3 TRS" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35343,7 +35343,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="375" max-slope="0.6" name="Eqp NTI3 COTAC" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010295" codeLFRIL="" codeNNO="1111110020295" comment="" id="375" max-slope="0.6" name="Eqp NTI3 COTAC" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35412,7 +35412,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="376" max-slope="0.6" name="Eqp NTI3 COTAC BLIAT" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010296" codeLFRIL="" codeNNO="1111110020296" comment="" id="376" max-slope="0.6" name="Eqp NTI3 COTAC BLIAT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35482,7 +35482,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="377" max-slope="0.6" name="Eqp NTI3 TRS BLIAT" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010297" codeLFRIL="" codeNNO="1111110020297" comment="" id="377" max-slope="0.6" name="Eqp NTI3 TRS BLIAT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35552,7 +35552,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="378" max-slope="0.6" name="Eqp NTI3 DEM BLIAT" protection="Combattant" size="Personnel" weight="0.001">
+  <equipment codeEMAT6="" codeEMAT8="00010298" codeLFRIL="" codeNNO="1111110020298" comment="" id="378" max-slope="0.6" name="Eqp NTI3 DEM BLIAT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -35734,4 +35734,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2931777852" -->
+<!-- signature="2796496662" -->
