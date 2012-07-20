@@ -21,6 +21,7 @@
 #include "web/HttpException.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
@@ -95,6 +96,7 @@ Node::Node( const PackageFactory_ABC& packages,
     , num_exercises_    ( 0 )
     , install_size_     ( 0 )
     , cache_size_       ( 0 )
+    , sessions_size_    ( 0 )
     , min_play_seconds_ ( config.min_play_seconds )
 {
     install_ = packages_.Make( root_ / "install", true );
@@ -131,6 +133,7 @@ Node::Node( const PackageFactory_ABC& packages,
     , num_exercises_    ( 0 )
     , install_size_     ( 0 )
     , cache_size_       ( 0 )
+    , sessions_size_    ( 0 )
     , min_play_seconds_ ( config.min_play_seconds )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
@@ -207,7 +210,7 @@ Tree Node::GetProperties() const
     tree.put( "num_exercises", num_exercises_ );
     tree.put( "num_played", num_counter_ );
     tree.put( "num_parallel", parallel_counter_ );
-    tree.put( "data_size", install_size_ + cache_size_ );
+    tree.put( "data_size", install_size_ + cache_size_ + sessions_size_ );
     tree.put( "status", process_ ? "running" : "stopped" );
     return tree;
 }
@@ -524,18 +527,30 @@ struct node::Token
     {
         if( !node )
             return;
-        node->SessionStop( start );
+        node->StopSession( start );
     }
 private:
     Node* node;
     boost::posix_time::ptime start;
 };
 
+namespace
+{
+template< typename T >
+size_t accumulate( const T& map )
+{
+    size_t sum = 0;
+    BOOST_FOREACH( const typename T::value_type& it, map )
+        sum += it.second;
+    return sum;
+}
+}
+
 // -----------------------------------------------------------------------------
-// Name: Node::SessionStart
+// Name: Node::StartSession
 // Created: BAX 2012-07-18
 // -----------------------------------------------------------------------------
-Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
+Node_ABC::T_Token Node::StartSession( const boost::posix_time::ptime& start )
 {
     const bool force = start == boost::posix_time::not_a_date_time;
 
@@ -559,10 +574,10 @@ Node_ABC::T_Token Node::SessionStart( const boost::posix_time::ptime& start )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::SessionStop
+// Name: Node::StopSession
 // Created: BAX 2012-07-18
 // -----------------------------------------------------------------------------
-void Node::SessionStop( const boost::posix_time::ptime& start )
+void Node::StopSession( const boost::posix_time::ptime& start )
 {
     boost::unique_lock< boost::shared_mutex > lock( access_ );
     parallel_counter_ = std::max( size_t( 0 ), parallel_counter_ - 1 );
@@ -576,4 +591,27 @@ void Node::SessionStop( const boost::posix_time::ptime& start )
     lock.unlock();
 
     observer_.Notify( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::RemoveSession
+// Created: BAX 2012-07-19
+// ----------------------------------------------------------------------------
+void Node::RemoveSession( const Uuid& id )
+{
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    sessions_.erase( id );
+    sessions_size_ = accumulate( sessions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::UpdateSessionSize
+// Created: BAX 2012-07-19
+// ----------------------------------------------------------------------------
+void Node::UpdateSessionSize( const Uuid& id, size_t size )
+{
+    boost::lock_guard< boost::shared_mutex > lock( access_ );
+    std::pair< T_Sessions::iterator, bool > it = sessions_.insert( std::make_pair( id, size ) );
+    it.first->second = size;
+    sessions_size_ = accumulate( sessions_ );
 }

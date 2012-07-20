@@ -128,13 +128,16 @@ public:
 
     //! @name Session methods
     //@{
-    virtual T_Token SessionStart( const boost::posix_time::ptime& start );
-    void SessionStop( const boost::posix_time::ptime& start );
+    virtual T_Token StartSession( const boost::posix_time::ptime& start );
+    virtual void UpdateSessionSize( const Uuid& id, size_t size );
+    virtual void RemoveSession( const Uuid& id );
+    void StopSession( const boost::posix_time::ptime& start );
     //@}
 
     //! @name Typedef helpers
     //@{
     typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
+    typedef std::map< Uuid, size_t > T_Sessions;
     //@}
 
 private:
@@ -174,6 +177,8 @@ private:
     size_t num_exercises_;
     size_t install_size_;
     size_t cache_size_;
+    size_t sessions_size_;
+    T_Sessions sessions_;
     //@}
 };
 }

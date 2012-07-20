@@ -79,6 +79,8 @@ private:
     //@{
     void Update();
     void UpdateSession( T_Session session );
+    void UpdateSize();
+    void UpdateSize( T_Session session );
     void Save( const Session_ABC& session ) const;
     void Create( Session_ABC& session );
     //@}
@@ -87,6 +89,8 @@ private:
     //@{
     template< typename T >
     T_Session Dispatch( const Uuid& id, const T& operand ) const;
+    typedef boost::function< bool( const T_Session& ) > T_Operand;
+    void Apply( T_Session session, const T_Operand& operand ) const;
     //@}
 
 private:
@@ -101,6 +105,7 @@ private:
     const Path apps_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;
+    runtime::Timer sizes_;
     mutable runtime::Async async_;
     //@}
 };

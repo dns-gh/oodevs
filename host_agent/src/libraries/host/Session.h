@@ -98,8 +98,9 @@ public:
     virtual Tree Save() const;
     virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& apps );
     virtual bool Stop();
-    virtual void Update();
-    virtual void Poll();
+    virtual bool Update();
+    virtual bool UpdateSize();
+    virtual bool Poll();
     virtual bool Pause();
     virtual void Remove();
     //@}
@@ -146,6 +147,8 @@ private:
     Status status_;
     bool polling_;
     size_t counter_;
+    bool sizing_;
+    size_t size_;
     //@}
 };
 }

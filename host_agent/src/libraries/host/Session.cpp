@@ -151,6 +151,8 @@ Session::Session( const FileSystem_ABC& system,
     , status_ ( STATUS_STOPPED )
     , polling_( false )
     , counter_( 0 )
+    , sizing_ ( false )
+    , size_   ( 0 )
 {
     // NOTHING
 }
@@ -175,12 +177,14 @@ Session::Session( const FileSystem_ABC& system,
     , links_  ( node->LinkExercise( tree.get_child( "links" ) ) )
     , port_   ( AcquirePort( Get< int >( tree, "port" ), ports ) )
     , process_( AcquireProcess( tree, runtime, port_->Get() ) )
-    , running_( process_ ? node->SessionStart( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
+    , running_( process_ ? node->StartSession( boost::posix_time::not_a_date_time ) : Node_ABC::T_Token() )
     , status_ ( process_ ? ConvertStatus( Get< std::string >( tree, "status" ) ) : Session::STATUS_STOPPED )
     , polling_( false )
     , counter_( 0 )
+    , sizing_ ( false )
+    , size_   ( Get< size_t >( tree, "size" ) )
 {
-    // NOTHING
+    node_->UpdateSessionSize( id_, size_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,6 +291,7 @@ Tree Session::Save() const
     Tree tree = GetProperties( true );
 
     boost::shared_lock< boost::shared_mutex > lock( access_ );
+    tree.put( "size", size_ );
     if( !process_ )
         return tree;
     tree.put( "process.pid", process_->GetPid() );
@@ -441,11 +446,11 @@ bool Session::Start( const Runtime_ABC& runtime, const Path& apps )
     if( process_ )
         return ModifyStatus( lock, STATUS_PLAYING );
 
-    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    Node_ABC::T_Token token = node_->SessionStart( boost::posix_time::second_clock::local_time() );
+    Node_ABC::T_Token token = node_->StartSession( boost::posix_time::second_clock::local_time() );
     if( !token )
         return false;
 
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     const Path output = GetOutput();
     system_.MakePaths( output );
     system_.WriteFile( output / "session.xml", GetConfiguration( name_, port_->Get() ) );
@@ -496,10 +501,10 @@ Path Session::GetOutput() const
 // Name: Session::Update
 // Created: BAX 2012-06-14
 // -----------------------------------------------------------------------------
-void Session::Update()
+bool Session::Update()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-    ModifyStatus( lock, status_ );
+    return ModifyStatus( lock, status_ );
 }
 
 namespace
@@ -512,14 +517,40 @@ void ResetBool( boost::upgrade_lock< boost::shared_mutex >& lock, bool& value, b
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::UpdateSize
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+bool Session::UpdateSize()
+{
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+    if( sizing_ )
+        return false;
+    sizing_ = true;
+    runtime::Scoper unsize( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( sizing_ ), false ) );
+    lock.unlock();
+
+    bool modified = false;
+    const size_t next = system_.GetDirectorySize( root_ );
+    lock.lock();
+    modified = next != size_;
+    size_ = next;
+    sizing_ = false;
+    lock.unlock();
+
+    if( modified )
+        node_->UpdateSessionSize( id_, next );
+    return modified;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::Poll
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-void Session::Poll()
+bool Session::Poll()
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     if( polling_ || !process_ || !process_->IsAlive() )
-        return;
+        return false;
 
     polling_ = true;
     const size_t counter = counter_++;
@@ -529,17 +560,17 @@ void Session::Poll()
 
     Client_ABC::T_Response response = client_.Get( "localhost", port_->Get() + WEB_CONTROL_PORT, "/get", Client_ABC::T_Parameters() );
     if( response->GetStatus() != 200 )
-        return;
+        return false;
 
     const Tree data = FromJson( response->GetBody() );
     Session::Status next = ConvertRemoteStatus( Get< std::string >( data, "state" ) );
     if( next == STATUS_COUNT )
-        return;
+        return false;
 
     lock.lock();
     if( counter + 1 != counter_ || GetPid( process_ ) != pid )
-        return;
-    ModifyStatus( lock, next );
+        return false;
+    return ModifyStatus( lock, next );
 }
 
 // -----------------------------------------------------------------------------
@@ -551,6 +582,7 @@ void Session::Remove()
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
     ModifyStatus( lock, STATUS_STOPPED );
     node_->UnlinkExercise( links_ );
+    node_->RemoveSession( id_ );
     system_.Remove( GetRoot() );
     system_.Remove( GetOutput() );
 }

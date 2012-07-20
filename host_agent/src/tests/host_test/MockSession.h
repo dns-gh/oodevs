@@ -41,6 +41,7 @@ namespace mocks
         MOCK_METHOD( Start, 2 );
         MOCK_METHOD( Stop, 0 );
         MOCK_METHOD( Update, 0 );
+        MOCK_METHOD( UpdateSize, 0 );
         MOCK_METHOD( Poll, 0 );
         MOCK_METHOD( Pause, 0 );
         MOCK_METHOD( Remove, 0 );

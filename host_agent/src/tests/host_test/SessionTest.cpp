@@ -83,7 +83,9 @@ namespace
             : node ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) ) )
             , apps ( "apps" )
         {
-            MOCK_EXPECT( node->SessionStart ).returns( boost::make_shared< host::node::Token >() );
+            MOCK_EXPECT( system.GetDirectorySize ).returns( 0 );
+            MOCK_EXPECT( node->StartSession ).returns( boost::make_shared< host::node::Token >() );
+            MOCK_EXPECT( node->UpdateSessionSize );
         }
 
         SessionPtr MakeSession()
@@ -162,33 +164,36 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"name\":\"myName\","
         "\"port\":\"1337\",";
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
-        "\"status\":\"stopped\""
-        "," + items +
+        "\"status\":\"stopped\","
+        + items +
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
-        "\"status\":\"stopped\""
-        ",\"links\":" + links +
+        "\"status\":\"stopped\","
+        "\"links\":" + links + ","
+        "\"size\":\"0\""
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
-        "\"status\":\"playing\""
-        "," + items +
+        "\"status\":\"playing\","
+        + items +
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"playing\","
         "\"links\":" + links + ","
+        "\"size\":\"0\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
         "}}" );
     StopSession( *session, process );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
-        "\"status\":\"stopped\""
-        "," + items +
+        "\"status\":\"stopped\","
+        + items +
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
-        "\"status\":\"stopped\""
-        ",\"links\":" + links +
+        "\"status\":\"stopped\","
+        "\"links\":" + links + ","
+        "\"size\":\"0\""
         "}" );
 }
 

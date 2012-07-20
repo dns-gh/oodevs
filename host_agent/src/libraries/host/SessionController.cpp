@@ -53,6 +53,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     if( !system_.IsFile( app ) )
         throw std::runtime_error( "'" + Utf8Convert( app ) + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Update, this ) );
+    sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::UpdateSize, this ) );
 }
 
 namespace
@@ -70,8 +71,20 @@ void AsyncStop( Async& async, SessionController::T_Session session )
 SessionController::~SessionController()
 {
     timer_->Stop();
+    sizes_->Stop();
     async_.Join();
     sessions_.Foreach( boost::bind( &AsyncStop, boost::ref( async_ ), _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::Apply
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+void SessionController::Apply( SessionController::T_Session session,
+                              const SessionController::T_Operand& operand ) const
+{
+    if( operand( session ) )
+        Save( *session );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,8 +93,9 @@ SessionController::~SessionController()
 // -----------------------------------------------------------------------------
 void SessionController::UpdateSession( T_Session session )
 {
-    session->Update();
-    async_.Go( boost::bind( &Session_ABC::Poll, session ) );
+    Apply( session, boost::bind( &Session_ABC::Update, _1 ) );
+    const T_Operand operand = boost::bind( &Session_ABC::Poll, _1 );
+    async_.Go( boost::bind( &SessionController::Apply, this, session, operand ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,12 +108,34 @@ void SessionController::Update()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionController::UpdateSize
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+void SessionController::UpdateSize( T_Session session )
+{
+    Apply( session, boost::bind( &Session_ABC::UpdateSize, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionController::UpdateSize
+// Created: BAX 2012-07-19
+// -----------------------------------------------------------------------------
+void SessionController::UpdateSize()
+{
+    sessions_.Foreach( boost::bind( &SessionController::UpdateSize, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionController::Reload
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
 void SessionController::Reload( T_Predicate predicate )
 {
-    BOOST_FOREACH( const Path& path, system_.Glob( root_, "session.id" ) )
+    BOOST_FOREACH( const Path& dir, system_.Walk( root_, false ) )
+    {
+        const Path path = dir / "session.id";
+        if( !system_.IsFile( path ) )
+            continue;
         try
         {
             boost::shared_ptr< Session_ABC > ptr = factory_.Make( path );
@@ -114,6 +150,7 @@ void SessionController::Reload( T_Predicate predicate )
             LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8Convert( path );
             continue; // skip invalid entry
         }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -210,8 +247,8 @@ template< typename T >
 SessionController::T_Session SessionController::Dispatch( const Uuid& id, const T& operand ) const
 {
     SessionController::T_Session ptr = sessions_.Get( id );
-    if( ptr && operand( *ptr ) )
-        Save( *ptr );
+    if( ptr  )
+        Apply( ptr, operand );
     return ptr;
 }
 
