@@ -29,7 +29,7 @@ HomePage::HomePage( QWidget* parent, Q3WidgetStack* pages, Config& config, const
 {
     setName( "HomePage" );
     adapt_ =   AddLink( *new AuthoringPage( parent, pages, *this, config, controllers ) );
-    editPage_ = new ScenarioEditPage( pages, *this, config, fileLoader, controllers, launcher );
+    editPage_ = new ScenarioEditPage( parent, pages, *this, config, fileLoader, controllers, launcher );
     prepare_ = AddLink( *editPage_ );
     play_ =    AddLink( *new SelfTrainingPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
     replay_ =  AddLink( *new ReplayPage( pages, *this , config, fileLoader, controllers, launcher ) );

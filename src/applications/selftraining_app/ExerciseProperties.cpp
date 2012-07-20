@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "ExerciseProperties.h"
 #include "moc_ExerciseProperties.cpp"
+#include "MessageDialog.h"
 #include "clients_gui/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
@@ -22,8 +23,9 @@
 // Name: ExerciseProperties constructor
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
-ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
+ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
     : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
+    , parent_         ( granParent )
     , config_         ( config )
     , fileLoader_     ( fileLoader )
     , language_       ( tools::readLang().c_str() )
@@ -130,14 +132,17 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
     try
     {
         std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
-        std::string image, terrain, data, physical;
+        currentTerrain_.clear();
+        currentData_.clear();
+        currentPhysical_.clear();
+        std::string image;
         *xis >> xml::start( "exercise" )
                 >> xml::start( "terrain" )
-                    >> xml::attribute( "name", terrain )
+                    >> xml::attribute( "name", currentTerrain_ )
                 >> xml::end
                 >> xml::start( "model" )
-                    >> xml::attribute( "dataset", data )
-                    >> xml::attribute( "physical", physical )
+                    >> xml::attribute( "dataset", currentData_ )
+                    >> xml::attribute( "physical", currentPhysical_ )
                 >> xml::end;
         if( briefingText_ )
         {
@@ -157,9 +162,9 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         if( terrainList_ )
         {
             const QStringList terrainList = frontend::commands::ListTerrains( config_ );
-            int index = terrainList.findIndex( terrain.c_str() );
+            int index = terrainList.findIndex( currentTerrain_.c_str() );
             terrainList_->setCurrentItem( index + 1 );
-            int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( data.c_str() ).arg( physical.c_str() ) );
+            int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( currentData_.c_str() ).arg( currentPhysical_.c_str() ) );
             if( modelIndex != -1 )
                 modelList_->setCurrentItem( modelIndex );
         }
@@ -200,8 +205,30 @@ void ExerciseProperties::ModelChanged()
 // Name: ExerciseProperties::Commit
 // Created: SBO 2010-11-15
 // -----------------------------------------------------------------------------
-void ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
+bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
+    // Be sure to commit if mismatched terrain or data, even if no changes has occured 
+    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().ascii() != currentTerrain_ )
+    {
+        MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::Yes )
+            dataChanged_ = true;
+        else
+            return false;
+    }
+    if( modelList_ && modelList_->currentItem() > 0 )
+    {
+        const QStringList model = QStringList::split( "/", modelList_->currentText() );
+        if( model.front().ascii() != currentData_ || model.back().ascii() != currentPhysical_ )
+        {
+            MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected model is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
+            if( message.exec() == QMessageBox::Yes )
+                dataChanged_ = true;
+            else
+                return false;
+        }
+    }
+
     if( dataChanged_ )
         if( terrainList_ && terrainList_->currentItem() > 0 && modelList_ && modelList_->currentItem() > 0 )
         {
@@ -210,6 +237,7 @@ void ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
             frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().toUtf8().constData(), model.back().toUtf8().constData() );
         }
     dataChanged_ = false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

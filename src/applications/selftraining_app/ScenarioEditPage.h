@@ -47,7 +47,7 @@ class ScenarioEditPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ScenarioEditPage();
     //@}
 

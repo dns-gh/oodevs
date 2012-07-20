@@ -235,6 +235,20 @@
         <source>No briefing available</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected terrain is not the one referenced by the selected exercise.
+Do really you want to replace it ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected model is not the one referenced by the selected exercise.
+Do really you want to replace it ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportWidget</name>

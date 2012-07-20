@@ -96,6 +96,8 @@ MessageDialog::~MessageDialog()
 void MessageDialog::CreateButton( QWidget* parent, int button )
 {
     QPushButton* buttonWidget = new MenuButton( parent );
+    buttonWidget->setStyleSheet( "color : #FFFFFF" ); // $$$$ ABR 2012-07-20: Still ugly, but at least readable
+
     switch( button )
     {
     case QMessageBox::Ok:

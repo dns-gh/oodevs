@@ -54,7 +54,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( exercises_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( SelectExercise( Q3ListViewItem* ) ) );
     }
     {
-        properties_ = new ExerciseProperties( box, config, fileLoader, showBrief, showParams, enableParams );
+        properties_ = new ExerciseProperties( box, parent, config, fileLoader, showBrief, showParams, enableParams );
         connect( properties_, SIGNAL( ExercisePropertiesChanged() ), this, SLOT( OnExercisePropertiesChanged() ) );
     }
     controllers_.Register( *this );
@@ -221,10 +221,11 @@ bool ExerciseList::IsPropertiesValid() const
 // Name: ExerciseList::ChangeExerciceParameters
 // Created: SLG 2010-07-08
 // -----------------------------------------------------------------------------
-void ExerciseList::ChangeExerciceParameters()
+bool ExerciseList::ChangeExerciceParameters()
 {
     if( const frontend::Exercise_ABC* exercise = GetSelectedExercise() )
-        properties_->Commit( *exercise );
+        return properties_->Commit( *exercise );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
