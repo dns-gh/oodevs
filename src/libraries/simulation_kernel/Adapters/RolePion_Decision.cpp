@@ -1111,7 +1111,7 @@ namespace
 void RolePion_Decision::RegisterAgentKnowledgeFunctions()
 {
     RegisterFunction( "DEC_Agent_RapportDeForceLocal",
-        boost::function< double( const DEC_Decision_ABC*, const core::Model& ) >( boost::bind( &GetRapForLocalAgent, _1, boost::cref( model_ ) ) ) );
+        boost::function< double( const DEC_Decision_ABC* ) >( boost::bind( &GetRapForLocalAgent, _1, boost::cref( model_ ) ) ) );
     RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &GetRapForLocal, boost::ref( GetPion() ), boost::cref( model_ ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDangereuses", boost::bind( &GetDangerousEnemies, boost::ref( GetPion() ), boost::cref( model_ ) ) );
 }
