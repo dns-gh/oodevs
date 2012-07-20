@@ -654,6 +654,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION GENIE Equiper Exploiter Site Franchissement"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Executer Variantement"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7484,4 +7485,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1225025981" -->
+<!-- signature="4263111094" -->
