@@ -133,6 +133,8 @@ std::string WriteHttpReply( size_t count )
 std::string FixJsonList( const std::ostringstream& stream )
 {
     std::string rpy = stream.str();
+    if( rpy.empty() )
+        return "[]";
     rpy.insert( 0, "[" );
     rpy.replace( rpy.size() - 1, 1, "]" );
     return rpy;

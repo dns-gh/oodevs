@@ -274,6 +274,18 @@ BOOST_FIXTURE_TEST_CASE( controller_list_sessions, Fixture )
     CheckList( 200, expected, controller.DoGet( request ) );
 }
 
+BOOST_FIXTURE_TEST_CASE( controller_list_empty_sessions, Fixture )
+{
+    SetRequest( "GET", "/list_sessions", boost::assign::map_list_of
+        ( "node",   defaultIdString )
+        ( "offset", "5" )
+        ( "limit",  "3" )
+    );
+    const std::vector< Tree > expected;
+    MOCK_EXPECT( agent.ListSessions ).once().with( defaultId, 5, 3 ).returns( expected );
+    CheckList( 200, expected, controller.DoGet( request ) );
+}
+
 BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture )
 {
     SetRequest( "GET", "/count_sessions", boost::assign::map_list_of( "node", defaultIdString ) );
