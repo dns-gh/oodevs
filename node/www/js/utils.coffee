@@ -162,3 +162,18 @@ toggle_input_error = (el, txt, def = '') ->
 
 is_disabled = (evt) ->
     return $(evt.currentTarget).hasClass "disabled"
+
+bytes_to_size = (n, precision) ->
+    kb = 1000
+    mb = kb * 1000
+    gb = mb * 1000
+    tb = gb * 1000
+    if n < kb
+        return b + ' B'
+    if n < mb
+        return ( n / kb ).toFixed( precision ) + ' KB'
+    if n < gb
+        return ( n / mb ).toFixed( precision ) + ' MB'
+    if n < tb
+        return ( n / gb ).toFixed( precision ) + ' GB'
+    return ( n / tb ).toFixed( precision ) + ' TB'

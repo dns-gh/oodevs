@@ -81,7 +81,9 @@ class NodeItemView extends Backbone.View
 
     render: =>
         $(@el).empty()
-        $(@el).html node_template @model.attributes
+        data = $.extend {}, @model.attributes
+        data.data_size = bytes_to_size data.data_size, 2
+        $(@el).html node_template data
 
     delete: =>
         @toggle_load()
