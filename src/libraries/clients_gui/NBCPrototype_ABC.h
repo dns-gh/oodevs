@@ -32,6 +32,8 @@ namespace gui
 // =============================================================================
 class NBCPrototype_ABC : public ObjectAttributePrototype_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,6 +55,12 @@ private:
     void FillTypes();
     virtual void showEvent( QShowEvent* );
     void UpdateSelection();
+    //@}
+
+private slots :
+    //! @name Slots
+    //@{
+    void OnSelectionChanged( Q3ListViewItem* );
     //@}
 
 protected:
