@@ -504,7 +504,7 @@
 
       this.create = __bind(this.create, this);
 
-      this.remove = __bind(this.remove, this);
+      this.erase = __bind(this.erase, this);
 
       this.add = __bind(this.add, this);
 
@@ -517,7 +517,7 @@
     NodeListView.prototype.initialize = function() {
       this.model = new NodeList;
       this.model.bind("add", this.add);
-      this.model.bind("remove", this.remove);
+      this.model.bind("remove", this.erase);
       this.model.bind("reset", this.reset);
       this.model.bind("change:name", this.model.sort);
       this.model.fetch({
@@ -552,7 +552,7 @@
       }
     };
 
-    NodeListView.prototype.remove = function(item, list, index) {
+    NodeListView.prototype.erase = function(item, list, index) {
       return $("#id_" + item.id).parent().remove();
     };
 

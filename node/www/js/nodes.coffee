@@ -133,7 +133,7 @@ class NodeListView extends Backbone.View
     initialize: ->
         @model = new NodeList
         @model.bind "add",         @add
-        @model.bind "remove",      @remove
+        @model.bind "remove",      @erase
         @model.bind "reset",       @reset
         @model.bind "change:name", @model.sort
         @model.fetch error: -> print_error "Unable to fetch nodes"
@@ -154,7 +154,7 @@ class NodeListView extends Backbone.View
         else
             $(@el).prepend view.el
 
-    remove: (item, list, index) =>
+    erase: (item, list, index) =>
         $("#id_" + item.id).parent().remove()
 
     create: (data) =>
