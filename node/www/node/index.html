@@ -13,7 +13,6 @@
                             [#macro nav_item item name img]
                             <li[#if item == pg] class="active"[/#if]><a href="?pg=${item}"><img alt="" width="32" height="32" src="img/tango/32x32/${img}.png" /> ${name} </a></li>
                             [/#macro]
-                            [@nav_item item="home"     name="Home"     img="places/user-home" /]
                             [@nav_item item="sessions" name="Sessions" img="actions/document-new" /]
                             [@nav_item item="packages" name="Packages" img="devices/drive-harddisk" /]
                             [@nav_item item="uploads"  name="Uploads"  img="status/software-update-available" /]
