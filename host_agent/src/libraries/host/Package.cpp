@@ -233,6 +233,7 @@ struct Item : Package_ABC::Item_ABC
         , name_ ( name )
         , date_ ( date )
         , meta_ ( meta ? *meta : Metadata::Reload( system, root ) )
+        , size_ ( 0 )
     {
         // NOTHING
     }
@@ -240,6 +241,7 @@ struct Item : Package_ABC::Item_ABC
     Item( const std::string& name )
         : id_   ( 0 )
         , name_ ( name )
+        , size_ ( 0 )
     {
         // NOTHING
     }
