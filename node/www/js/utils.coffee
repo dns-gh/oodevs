@@ -169,7 +169,7 @@ bytes_to_size = (n, precision) ->
     gb = mb * 1000
     tb = gb * 1000
     if n < kb
-        return b + ' B'
+        return n + ' B'
     if n < mb
         return ( n / kb ).toFixed( precision ) + ' KB'
     if n < gb
