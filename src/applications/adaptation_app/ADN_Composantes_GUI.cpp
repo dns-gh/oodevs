@@ -112,10 +112,10 @@ void ADN_Composantes_GUI::Build()
 
     // ID groupbox
     Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Military codes" ) );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code NNO:" ),   vInfosConnectors[ eNNOCode ] );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code EMAT8:" ), vInfosConnectors[ eEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code EMAT6:" ), vInfosConnectors[ eEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code LFRIL:" ), vInfosConnectors[ eLFRILCode ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code NNO" ),   vInfosConnectors[ eNNOCode ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code EMAT8" ), vInfosConnectors[ eEMAT8Code ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code EMAT6" ), vInfosConnectors[ eEMAT6Code ] );
+    builder.AddField< ADN_EditLine_String >( pIdGroupBox, tr( "Code LFRIL" ), vInfosConnectors[ eLFRILCode ] );
 
     // Operational information groupbox
     Q3GroupBox* pInfoGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Operational Information" ) );
@@ -516,7 +516,7 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
         builder.ListItem( tr( "Comments" ), composante.strAdditionalComments_.GetData().c_str() );
         builder.ListItem( tr( "Code NNO" ), composante.strCodeNNO_.GetData().c_str() );
         builder.ListItem( tr( "Code EMAT8" ), composante.strCodeEMAT8_.GetData().c_str() );
-        //builder.ListItem( tr( "Code EMAT6" ), composante.strCodeEMAT6_.GetData().c_str() );
+        builder.ListItem( tr( "Code EMAT6" ), composante.strCodeEMAT6_.GetData().c_str() );
         builder.ListItem( tr( "Code LFRIL" ), composante.strCodeLFRIL_.GetData().c_str() );
         builder.ListItem( tr( "MOS Id" ), composante.nMosId_.GetData() );
         builder.ListItem( tr( "Armor-Plating" ), composante.ptrArmor_.GetData()->strName_.GetData().c_str() );

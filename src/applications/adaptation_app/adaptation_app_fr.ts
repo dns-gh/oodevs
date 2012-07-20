@@ -830,22 +830,6 @@ Arrêt moteur allumé</translation>
         <translation>T</translation>
     </message>
     <message>
-        <source>Code NNO:</source>
-        <translation>Code NNO:</translation>
-    </message>
-    <message>
-        <source>Code EMAT6:</source>
-        <translation>Code EMAT6:</translation>
-    </message>
-    <message>
-        <source>Code EMAT8:</source>
-        <translation>Code EMAT8:</translation>
-    </message>
-    <message>
-        <source>Code LFRIL:</source>
-        <translation>Code LFRIL:</translation>
-    </message>
-    <message>
         <source>Troop/Crew</source>
         <translation>Transport/Equipage</translation>
     </message>
@@ -1252,6 +1236,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Code EMAT8</source>
         <translation type="unfinished">Code EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">Code EMAT6</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1767,14 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>Dispersion factor per iteration</source>
         <translation>Facteur de dispersion par itération</translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">Code EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">Code EMAT6</translation>
     </message>
 </context>
 <context>

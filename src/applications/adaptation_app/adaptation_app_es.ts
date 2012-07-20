@@ -831,22 +831,6 @@ estacionado con motor encendido</translation>
         <translation>T</translation>
     </message>
     <message>
-        <source>Code NNO:</source>
-        <translation>Código NNO:</translation>
-    </message>
-    <message>
-        <source>Code EMAT6:</source>
-        <translation>Código EMAT6:</translation>
-    </message>
-    <message>
-        <source>Code EMAT8:</source>
-        <translation>Código EMAT8:</translation>
-    </message>
-    <message>
-        <source>Code LFRIL:</source>
-        <translation>Código LFRIL:</translation>
-    </message>
-    <message>
         <source>Troop/Crew</source>
         <translation>Tropa/Tripulación</translation>
     </message>
@@ -1253,6 +1237,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>Code EMAT8</source>
         <translation type="unfinished">Código EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">Código EMAT6</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1767,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
     <message>
         <source>Dispersion factor per iteration</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">Código EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">Código EMAT6</translation>
     </message>
 </context>
 <context>
