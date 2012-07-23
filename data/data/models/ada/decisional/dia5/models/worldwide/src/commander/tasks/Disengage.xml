@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Disengage" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Disengage">
-    <description>For the commander agent, to order subordinates to disengage from threat. &#xD;
-Each unit receives the &quot;disangage&quot; mission toward the given &quot;meeting position&quot; parameter.</description>
+    <description>For the commander agent, to order subordinates to disengage from threats. &#xD;
+Each unit receives the &quot;disengage&quot; mission with the given &quot;meeting position&quot; as parameter.</description>
     <parameters>
         <parameter name="objective">
             <description>The objective position to reach.</description>
