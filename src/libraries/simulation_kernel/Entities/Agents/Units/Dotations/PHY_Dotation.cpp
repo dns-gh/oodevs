@@ -175,7 +175,11 @@ void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
 {
     assert( rCapacity_ >= capacity.GetCapacity() );
     rCapacity_        -= capacity.GetCapacity();
+    if( std::abs( rCapacity_ ) < 1e-3 )
+        rCapacity_ = 0;
     rSupplyThreshold_ -= capacity.GetSupplyThreshold();
+    if( std::abs( rSupplyThreshold_ ) < 1e-3 )
+        rSupplyThreshold_ = 0;
     if( rFireReservation_ > rCapacity_ )
     {
         rFireReservation_ = rCapacity_;
@@ -393,5 +397,7 @@ double PHY_Dotation::Supply( double rSupply )
 double PHY_Dotation::GetSupplyThresholdPercentage() const
 {
     assert( rSupplyThreshold_ <= rCapacity_ );
+    if( std::abs( rCapacity_ ) < 1e-3 )
+        return 0;
     return rSupplyThreshold_ / rCapacity_ * 100.f;
 }
