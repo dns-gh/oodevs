@@ -160,6 +160,18 @@
         <source>Dead:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Male\Female\Children/Male</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Male\Female\Children/Female</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Male\Female\Children/Children</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DelayAttribute</name>
