@@ -16,7 +16,8 @@ namespace mocks
 {
     MOCK_BASE_CLASS( MockClient, web::Client_ABC )
     {
-        MOCK_METHOD( Get, 4 );
+        MOCK_METHOD_EXT( Get, 4, web::Client_ABC::T_Response( const std::string&, int, const std::string&, const web::Client_ABC::T_Parameters& ), Get4 );
+        MOCK_METHOD_EXT( Get, 5, web::Client_ABC::T_Response( const std::string&, const std::string&, int, const std::string&, const web::Client_ABC::T_Parameters& ), Get5 );
     };
 
     MOCK_BASE_CLASS( MockResponse, web::Response_ABC )

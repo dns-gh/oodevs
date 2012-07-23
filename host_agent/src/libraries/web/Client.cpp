@@ -76,16 +76,25 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: Client::Get
-// Created: BAX 2012-04-12
+// Created: BAX 2012-07-23
 // -----------------------------------------------------------------------------
-Client::T_Response Client::Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters )
+Client::T_Response Client::Get( const std::string& scheme, const std::string& host, int port, const std::string& path, const T_Parameters& parameters )
 {
     boost::network::uri::uri uri;
-    uri << boost::network::uri::scheme( "http" );
+    uri << boost::network::uri::scheme( scheme );
     uri << boost::network::uri::host( host );
     uri << boost::network::uri::port( boost::numeric_cast< uint16_t >( port ) );
     uri << boost::network::uri::path( path );
     BOOST_FOREACH( const T_Parameters::value_type& value, parameters )
         uri << boost::network::uri::query( value.first, boost::network::uri::encoded( value.second ) );
     return boost::make_shared< Response >( client_.get( boost::network::http::client::request( uri.string() ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Get
+// Created: BAX 2012-04-12
+// -----------------------------------------------------------------------------
+Client::T_Response Client::Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters )
+{
+    return Get( "http", host, port, path, parameters );
 }

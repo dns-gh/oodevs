@@ -17,6 +17,9 @@ func main() {
 	log.Println("Sword Proxy - copyright Masa Group 2012")
 
 	port := flag.Int("port", 8080, "listening port")
+	ssl := flag.Bool("ssl", false, "enable SSL")
+	certificate := flag.String("ssl_certificate", "", "SSL certificate")
+	key := flag.String("ssl_key", "", "SSL key")
 	flag.Parse()
 
 	ctx := NewProxyServer()
@@ -27,7 +30,19 @@ func main() {
 		WriteTimeout:   5 * time.Minute,
 		MaxHeaderBytes: 1 << 20,
 	}
-	err := server.ListenAndServe()
+
+	var err error
+	if *ssl {
+		if len(*certificate) == 0 {
+			log.Fatal("Missing SSL certificate")
+		}
+		if len(*key) == 0 {
+			log.Fatal("Missing SSL key")
+		}
+		err = server.ListenAndServeTLS(*certificate, *key)
+	} else {
+		err = server.ListenAndServe()
+	}
 	if err != nil {
 		log.Fatal(err)
 	}

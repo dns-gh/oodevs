@@ -94,8 +94,10 @@ target_link_libraries( cloud_server
 )
 if( WIN32 )
     target_link_libraries( cloud_server
-        ws2_32
+        libeay32
         shlwapi
+        ssleay32
+        ws2_32
     )
 endif()
 

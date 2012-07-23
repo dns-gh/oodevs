@@ -86,6 +86,14 @@ bool ReadParameter( Path& dst, const std::string& name, int& idx, int argc, cons
     return true;
 }
 
+bool ReadToggle( bool& dst, const std::string& name, const std::string& value )
+{
+    if( name != value )
+        return false;
+    dst = true;
+    return true;
+}
+
 enum Command
 {
     CMD_REGISTER,
@@ -105,7 +113,6 @@ struct Configuration
         int period;
         int min;
         int max;
-        int ssl;
     } ports;
     struct
     {
@@ -113,9 +120,9 @@ struct Configuration
     } proxy;
     struct
     {
-        Path store;
-        std::string type;
-        std::string password;
+        bool enabled;
+        Path certificate;
+        Path key;
     } ssl;
     struct
     {
@@ -146,7 +153,6 @@ struct Configuration
             found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
             found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
             found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
-            found |= ReadParameter( ports.ssl, "--port_ssl", i, argc, argv );
             found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
             found |= ReadParameter( proxy.app, "--proxy", i, argc, argv );
             found |= ReadParameter( java, "--java", i, argc, argv );
@@ -154,9 +160,9 @@ struct Configuration
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
             found |= ReadParameter( node.min_play_seconds, "--node_min_play", i, argc, argv );
             found |= ReadParameter( session.apps, "--session_apps", i, argc, argv );
-            found |= ReadParameter( ssl.store, "--ssl_store", i, argc, argv );
-            found |= ReadParameter( ssl.type, "--ssl_type", i, argc, argv );
-            found |= ReadParameter( ssl.password, "--ssl_password", i, argc, argv );
+            found |= ReadToggle( ssl.enabled, "--ssl", argv[i] );
+            found |= ReadParameter( ssl.certificate, "--ssl_certificate", i, argc, argv );
+            found |= ReadParameter( ssl.key, "--ssl_key", i, argc, argv );
             if( !found )
             {
                 LOG_ERROR( log ) << "[cfg] Unknown parameter " << argv[i];
@@ -286,7 +292,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     Pool pool( 8 );
     UuidFactory uuids;
     web::Client client;
-    const proxy::Ssl ssl( cfg.ports.ssl, cfg.ssl.store, cfg.ssl.type, cfg.ssl.password );
+    const proxy::Ssl ssl( cfg.ssl.enabled, cfg.ssl.certificate, cfg.ssl.key );
     const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.proxy, ssl );
     Proxy proxy( log, runtime, system, proxyConfig, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
@@ -353,7 +359,6 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] ports.min "             << cfg.ports.min;
     LOG_INFO( log ) << "[cfg] ports.max "             << cfg.ports.max;
     LOG_INFO( log ) << "[cfg] ports.proxy "           << cfg.ports.proxy;
-    LOG_INFO( log ) << "[cfg] ports.ssl "             << cfg.ports.ssl;
     LOG_INFO( log ) << "[cfg] cluster.enabled "       << ( cfg.cluster.enabled ? "true" : "false" );
     LOG_INFO( log ) << "[cfg] proxy.app "             << cfg.proxy.app;
     LOG_INFO( log ) << "[cfg] java "                  << cfg.java;
@@ -361,8 +366,9 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] node.root "             << cfg.node.root;
     LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
     LOG_INFO( log ) << "[cfg] session.apps "          << cfg.session.apps;
-    LOG_INFO( log ) << "[cfg] ssl.store "             << cfg.ssl.store;
-    LOG_INFO( log ) << "[cfg] ssl.type "              << cfg.ssl.type;
+    LOG_INFO( log ) << "[cfg] ssl "                   << ( cfg.ssl.enabled ? "true" : "false" );
+    LOG_INFO( log ) << "[cfg] ssl.certificate "       << cfg.ssl.certificate;
+    LOG_INFO( log ) << "[cfg] ssl.key "               << cfg.ssl.key;
 }
 
 Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
@@ -383,9 +389,10 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ports.min             = GetTree( tree, "ports.min", 50000 );
     cfg.ports.max             = GetTree( tree, "ports.max", 60000 );
     cfg.ports.proxy           = GetTree( tree, "ports.proxy", 8080 );
-    cfg.ports.ssl             = GetTree( tree, "ports.ssl", 8443 );
     cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
-    cfg.ssl.type              = GetTree( tree, "ssl.type", std::string( "PKCS12" ) );
+    cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
+    cfg.ssl.certificate       = Utf8Convert( GetTree( tree, "ssl.certificate", Utf8Convert( bin / "certificate.pem" ) ) );
+    cfg.ssl.key               = Utf8Convert( GetTree( tree, "ssl.key", Utf8Convert( bin / "key.pem" ) ) );
     cfg.java                  = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
     cfg.proxy.app             = Utf8Convert( GetTree( tree, "proxy.app",    Utf8Convert( bin / "proxy.exe" ) ) );
     cfg.node.jar              = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );

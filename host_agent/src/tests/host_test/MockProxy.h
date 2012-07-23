@@ -17,7 +17,6 @@ namespace mocks
     MOCK_BASE_CLASS( MockProxy, host::Proxy_ABC )
     {
         MOCK_METHOD( GetPort, 0 );
-        MOCK_METHOD( GetSsl, 0 );
         MOCK_METHOD( Register, 3 );
         MOCK_METHOD( Unregister, 1 );
     };

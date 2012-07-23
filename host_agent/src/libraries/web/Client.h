@@ -17,6 +17,7 @@
 #   pragma warning( disable : 4100 4127 4244 4503 4512 )
 #   undef _SCL_SECURE_NO_WARNINGS
 #endif
+#define BOOST_NETWORK_ENABLE_HTTPS
 #include <boost/network/protocol/http/client.hpp>
 #ifdef _MSC_VER
 #pragma warning( pop )
@@ -42,6 +43,7 @@ public:
     //! @name Methods
     //@{
     virtual T_Response Get( const std::string& host, int port, const std::string& path, const T_Parameters& parameters );
+    virtual T_Response Get( const std::string& scheme, const std::string& host, int port, const std::string& path, const T_Parameters& parameters );
     //@}
 
 private:

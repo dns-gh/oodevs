@@ -118,13 +118,13 @@ namespace
         {
             boost::shared_ptr< MockResponse > rpy = boost::make_shared< MockResponse >();
             MOCK_EXPECT( rpy->GetStatus ).returns( code );
-            MOCK_EXPECT( client.Get ).once().with( "localhost", mock::any, url, mock::any ).returns( rpy );
+            MOCK_EXPECT( client.Get4 ).once().with( "localhost", mock::any, url, mock::any ).returns( rpy );
         }
 
         boost::shared_ptr< MockResponse > ExpectBlockingWebRequest( const std::string& url, int code, Event& start, Event& end )
         {
             boost::shared_ptr< MockResponse > rpy = boost::make_shared< MockResponse >();
-            MOCK_EXPECT( client.Get ).once().with( "localhost", mock::any, url, mock::any ).returns( rpy );
+            MOCK_EXPECT( client.Get4 ).once().with( "localhost", mock::any, url, mock::any ).returns( rpy );
             MOCK_EXPECT( rpy->GetStatus ).calls( boost::bind( &BlockUntil, boost::ref( start ), boost::ref( end ), code ) );
             return rpy;
         }

@@ -41,6 +41,7 @@
         <update name="boost"/>
         <update name="cpp-netlib"/>
         <update name="libarchive"/>
+        <update name="openssl"/>
         <update name="sqlite"/>
         <update name="turtle"/>
         <update name="zlib" version="1.2.6"/>

@@ -173,15 +173,6 @@ int Proxy::GetPort() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Proxy::GetSsl
-// Created: BAX 2012-06-26
-// -----------------------------------------------------------------------------
-int Proxy::GetSsl() const
-{
-    return config_.ssl.port;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Proxy::ToXml
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
@@ -231,12 +222,11 @@ Proxy::T_Process Proxy::MakeProcess() const
 {
     std::vector< std::string > args = boost::assign::list_of
         ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" );
-    if( 0&& !config_.ssl.store.empty() )
+    if( config_.ssl.enabled )
     {
-        args.push_back( "--ssl \"" + boost::lexical_cast< std::string >( config_.ssl.port ) + "\"" );
-        args.push_back( "--ssl_store \"" + Utf8Convert( config_.ssl.store ) + "\"" );
-        args.push_back( "--ssl_type \"" + config_.ssl.type + "\"" );
-        args.push_back( "--ssl_password \"" + config_.ssl.password + "\"" );
+        args.push_back( "--ssl" );
+        args.push_back( "--ssl_certificate \"" + Utf8Convert( config_.ssl.certificate ) + "\"" );
+        args.push_back( "--ssl_key \"" + Utf8Convert( config_.ssl.key ) + "\"" );
     }
     return runtime_.Start( Utf8Convert( config_.app ), args,
             Utf8Convert( Path( config_.app ).remove_filename() ),
@@ -302,7 +292,8 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // -----------------------------------------------------------------------------
 void Proxy::HttpRegister( const std::string& prefix, const Link& link )
 {
-    web::Client_ABC::T_Response response = client_.Get( "localhost", config_.port, "/register_proxy",
+    const std::string scheme = config_.ssl.enabled ? "https" : "http";
+    web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.port, "/register_proxy",
         boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", link.host )
@@ -338,7 +329,8 @@ void Proxy::Unregister( const std::string& prefix )
 // -----------------------------------------------------------------------------
 void Proxy::HttpUnregister( const std::string& prefix )
 {
-    web::Client_ABC::T_Response response = client_.Get( "localhost", config_.port, "/unregister_proxy",
+    const std::string scheme = config_.ssl.enabled ? "https" : "http";
+    web::Client_ABC::T_Response response = client_.Get( scheme, "localhost", config_.port, "/unregister_proxy",
         boost::assign::map_list_of( "prefix", prefix ) );
     if( response->GetStatus() != 200 )
         return;

@@ -57,18 +57,16 @@ namespace proxy
 {
 struct Ssl
 {
-    Ssl( int port, const Path& store, const std::string& type, const std::string& password )
-        : port    ( port )
-        , store   ( store )
-        , type    ( type )
-        , password( password )
+    Ssl( bool enabled, const Path& certificate, const Path& key )
+        : enabled    ( enabled )
+        , certificate( certificate )
+        , key        ( key )
     {
         // NOTHING
     }
-    const int port;
-    const Path store;
-    const std::string type;
-    const std::string password;
+    bool enabled;
+    const Path certificate;
+    const Path key;
 };
 
 struct Config
@@ -108,7 +106,6 @@ public:
     //! @name Methods
     //@{
     virtual int GetPort() const;
-    virtual int GetSsl() const;
     virtual void Register( const std::string& prefix, const std::string& host, int port );
     virtual void Unregister( const std::string& prefix );
     //@}

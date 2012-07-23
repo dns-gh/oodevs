@@ -28,12 +28,6 @@ using namespace mocks;
 
 namespace
 {
-    MOCK_BASE_CLASS( MockResponse, web::Response_ABC )
-    {
-        MOCK_METHOD( GetStatus, 0 );
-        MOCK_METHOD( GetBody, 0 );
-    };
-
     bool Contains( const web::Client_ABC::T_Parameters& actual, const web::Client_ABC::T_Parameters& expected )
     {
         BOOST_FOREACH( const web::Client_ABC::T_Parameters::value_type& value, expected )
@@ -48,7 +42,7 @@ namespace
     struct Fixture
     {
         Fixture()
-            : ssl    ( 8443, "keystore", "PCKS12", "" )
+            : ssl    ( false, "cert.pem", "key.pem" )
             , config ( "", "app", 1337, ssl )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
@@ -93,7 +87,7 @@ namespace
         {
             boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
             MOCK_EXPECT( response->GetStatus ).returns( 200 );
-            MOCK_EXPECT( client.Get ).once().with( "localhost", config.port, "/register_proxy",
+            MOCK_EXPECT( client.Get5 ).once().with( mock::any, "localhost", config.port, "/register_proxy",
                 boost::bind( &Contains, _1, boost::assign::map_list_of
                     ( "prefix", prefix )
                     ( "host",   host )
@@ -106,7 +100,7 @@ namespace
         {
             boost::shared_ptr< MockResponse > response = boost::make_shared< MockResponse >();
             MOCK_EXPECT( response->GetStatus ).returns( 200 );
-            MOCK_EXPECT( client.Get ).once().with( "localhost", config.port, "/unregister_proxy",
+            MOCK_EXPECT( client.Get5 ).once().with( mock::any, "localhost", config.port, "/unregister_proxy",
                 boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", prefix ) ) )
                 .returns( response );
             proxy->Unregister( prefix );
