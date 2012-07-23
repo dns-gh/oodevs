@@ -66,6 +66,9 @@ class SessionList extends Backbone.Collection
         @order = order
         @sort()
 
+contains = (txt, value) ->
+    return txt.toLowerCase().indexOf(value) >= 0
+
 class SessionItemView extends Backbone.View
     tagName:   "div"
     className: "row"
@@ -85,10 +88,10 @@ class SessionItemView extends Backbone.View
         "click .pause" : "pause"
 
     is_search: =>
-        targets = ["name", "exercise"]
-        for it in targets
-            if @model.get(it).toLowerCase().indexOf(@search) >= 0
-                return true
+        if contains @model.get("name"), @search
+            return true
+        if contains @model.get("exercise").name, @search
+            return true
         return false
 
     render: =>
