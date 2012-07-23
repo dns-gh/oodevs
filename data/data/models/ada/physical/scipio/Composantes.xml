@@ -3147,7 +3147,9 @@
       <sensor height="2" type="Detecteur GENIE"/>
     </sensors>
     <radars/>
-    <transports/>
+    <transports>
+      <crew man-boarding-time="6s" man-unloading-time="10s"/>
+    </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
         <resource category="ration" name="EAU MINERALE 1L T 1" value="2"/>
@@ -35734,4 +35736,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2796496662" -->
+<!-- signature="2850662724" -->
