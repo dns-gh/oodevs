@@ -28,6 +28,7 @@ rootnode
         self.commited = false
         self.firing = false
         self.IEDReady = false
+        self.dotation = integration.munitionPourTirIndirect( self.params.objective:getPosition() )
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -40,7 +41,7 @@ rootnode
             return
         end
         
-        if not integration.hasDotation( self.params.dotation ) then -- no more IED
+        if not self.dotation or not integration.hasDotation( self.dotation ) then -- no more IED
             Activate( skill.nodes.CR, 1, { RC = eRC_TirImpossiblePlusDeMunitions } )
             Feedback( self.feedbacks.done )
             return
@@ -67,9 +68,9 @@ rootnode
         
         if self.firing then
             if self.params.objective:isValid() then
-                if self.params.objective:isInAttackRange( self.params.suicide, self.params.dotation ) then
+                if self.params.objective:isInAttackRange( self.params.suicide, self.dotation ) then
                     Activate( skill.nodes.Attack, 1, { objective = self.params.objective, 
-                       suicide = self.params.suicide, dotation = self.params.dotation } )
+                       suicide = self.params.suicide, dotation = self.dotation } )
                 else -- out of range to activate IED and firing
                     Activate( skill.nodes.CR, 1, { RC = eRC_ImpossibleActivateIED } )
                     Feedback( self.feedbacks.done )

@@ -8,12 +8,6 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
-        <parameter name="dotation">
-            <description>Munition utilisee pour commettre l'attentat.</description>
-            <type>
-                <simple name="numeric"/>
-            </type>
-        </parameter>
         <parameter name="suicide">
             <description>Si l'attentat entraine le suicide de celui qui le commet</description>
             <type>

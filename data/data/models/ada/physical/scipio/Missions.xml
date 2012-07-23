@@ -1072,7 +1072,6 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="dotation" name="Munition" optional="false" type="ResourceType"/>
       <parameter dia-name="manual" name="Mise à feu manuelle" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.terrorism.tasks.CommettreAttentatSuicide" dia-type="france.military.platoon.terrorism.tasks.CommettreAttentatSuicide" id="2133" name="PION ASYMETRIQUE Commettre un Attentat Suicide" package="attack">
@@ -3472,4 +3471,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
   </fragorders>
 </missions>
-<!-- signature="3208891152" -->
+<!-- signature="1128871923" -->
