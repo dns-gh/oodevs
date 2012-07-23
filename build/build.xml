@@ -886,7 +886,7 @@
         </sequential>
     </macrodef>
     
-    <target name = "generate-database-common">
+    <target name = "generate-database-common" depends="generate-decisional-files">
         <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
 
