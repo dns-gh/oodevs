@@ -71,14 +71,10 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , client_ ( client )
     , async_  ( pool )
 {
-    if( !system_.Exists( config_.java ) )
-        throw std::runtime_error( runtime::Utf8Convert( config_.java ) + " is missing" );
-    if( !system_.IsFile( config_.java ) )
-        throw std::runtime_error( runtime::Utf8Convert( config_.java ) + " is not a file" );
-    if( !system_.Exists( config_.jar ) )
-        throw std::runtime_error( runtime::Utf8Convert( config_.jar ) + " is missing" );
-    if( !system_.IsFile( config_.jar ) )
-        throw std::runtime_error( runtime::Utf8Convert( config_.jar ) + " is not a file" );
+    if( !system_.Exists( config_.app ) )
+        throw std::runtime_error( runtime::Utf8Convert( config_.app ) + " is missing" );
+    if( !system_.IsFile( config_.app ) )
+        throw std::runtime_error( runtime::Utf8Convert( config_.app ) + " is not a file" );
     const Path tag = config_.root / "proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.port;
     bool hasProcess = system_.IsFile( tag );
@@ -234,17 +230,16 @@ bool Proxy::Reload( const Path& path )
 Proxy::T_Process Proxy::MakeProcess() const
 {
     std::vector< std::string > args = boost::assign::list_of
-        ( "-jar \""  + Utf8Convert( config_.jar.filename() ) + "\"" )
         ( "--port \"" + boost::lexical_cast< std::string >( config_.port ) + "\"" );
-    if( !config_.ssl.store.empty() )
+    if( 0&& !config_.ssl.store.empty() )
     {
         args.push_back( "--ssl \"" + boost::lexical_cast< std::string >( config_.ssl.port ) + "\"" );
         args.push_back( "--ssl_store \"" + Utf8Convert( config_.ssl.store ) + "\"" );
         args.push_back( "--ssl_type \"" + config_.ssl.type + "\"" );
         args.push_back( "--ssl_password \"" + config_.ssl.password + "\"" );
     }
-    return runtime_.Start( Utf8Convert( config_.java ), args,
-            Utf8Convert( Path( config_.jar ).remove_filename() ),
+    return runtime_.Start( Utf8Convert( config_.app ), args,
+            Utf8Convert( Path( config_.app ).remove_filename() ),
             Utf8Convert( config_.root / "proxy.log" ) );
 }
 

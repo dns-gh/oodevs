@@ -109,7 +109,7 @@ struct Configuration
     } ports;
     struct
     {
-        Path jar;
+        Path app;
     } proxy;
     struct
     {
@@ -148,8 +148,8 @@ struct Configuration
             found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
             found |= ReadParameter( ports.ssl, "--port_ssl", i, argc, argv );
             found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
+            found |= ReadParameter( proxy.app, "--proxy", i, argc, argv );
             found |= ReadParameter( java, "--java", i, argc, argv );
-            found |= ReadParameter( proxy.jar, "--proxy_jar", i, argc, argv );
             found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
             found |= ReadParameter( node.min_play_seconds, "--node_min_play", i, argc, argv );
@@ -287,7 +287,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     UuidFactory uuids;
     web::Client client;
     const proxy::Ssl ssl( cfg.ports.ssl, cfg.ssl.store, cfg.ssl.type, cfg.ssl.password );
-    const proxy::Config proxyConfig( cfg.root / "host", cfg.java, cfg.proxy.jar, cfg.ports.proxy, ssl );
+    const proxy::Config proxyConfig( cfg.root / "host", cfg.proxy.app, cfg.ports.proxy, ssl );
     Proxy proxy( log, runtime, system, proxyConfig, client, pool );
     PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
     PackageFactory packages( pool, system );
@@ -355,8 +355,8 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] ports.proxy "           << cfg.ports.proxy;
     LOG_INFO( log ) << "[cfg] ports.ssl "             << cfg.ports.ssl;
     LOG_INFO( log ) << "[cfg] cluster.enabled "       << ( cfg.cluster.enabled ? "true" : "false" );
+    LOG_INFO( log ) << "[cfg] proxy.app "             << cfg.proxy.app;
     LOG_INFO( log ) << "[cfg] java "                  << cfg.java;
-    LOG_INFO( log ) << "[cfg] proxy.jar "             << cfg.proxy.jar;
     LOG_INFO( log ) << "[cfg] node.jar "              << cfg.node.jar;
     LOG_INFO( log ) << "[cfg] node.root "             << cfg.node.root;
     LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
@@ -387,7 +387,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
     cfg.ssl.type              = GetTree( tree, "ssl.type", std::string( "PKCS12" ) );
     cfg.java                  = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
-    cfg.proxy.jar             = Utf8Convert( GetTree( tree, "proxy.jar",    Utf8Convert( bin / "proxy.jar" ) ) );
+    cfg.proxy.app             = Utf8Convert( GetTree( tree, "proxy.app",    Utf8Convert( bin / "proxy.exe" ) ) );
     cfg.node.jar              = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
     cfg.node.root             = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / ".." / "www" ) ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );

@@ -73,18 +73,16 @@ struct Ssl
 
 struct Config
 {
-    Config( const Path& root, const Path& java, const Path& jar, int port, const Ssl& ssl )
+    Config( const Path& root, const Path& app, int port, const Ssl& ssl )
         : root( root )
-        , java( java )
-        , jar ( jar )
+        , app ( app )
         , port( port )
         , ssl ( ssl )
     {
         // NOTHING
     }
     const Path root;
-    const Path java;
-    const Path jar;
+    const Path app;
     const int port;
     const Ssl ssl;
 };

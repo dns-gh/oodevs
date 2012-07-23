@@ -66,8 +66,8 @@ Section $(^Name)
     ; cloud applications
     File "${HOST_AGENT}\out\${PLATFORM}\RelWithDebInfo\cloud_server.exe"
     File "${NODE}\out\jar\node.jar"
-    File "${PROXY}\out\jar\log4j.properties"
-    File "${PROXY}\out\jar\proxy.jar"
+    File "${NODE}\out\jar\log4j.properties"
+    File "${PROXY}\out\${PLATFORM}\proxy.exe"
 
     ; sword applications
     File "${SWORD}\directia-${PLATFORM}-mt-4_6.dll"

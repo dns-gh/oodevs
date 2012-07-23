@@ -49,13 +49,11 @@ namespace
     {
         Fixture()
             : ssl    ( 8443, "keystore", "PCKS12", "" )
-            , config ( "", "java", "jar", 1337, ssl )
+            , config ( "", "app", 1337, ssl )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
-            MOCK_EXPECT( system.Exists ).with( config.java ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( config.java ).returns( true );
-            MOCK_EXPECT( system.Exists ).with( config.jar ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( config.jar ).returns( true );
+            MOCK_EXPECT( system.Exists ).with( config.app ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( config.app ).returns( true );
         }
 
         const proxy::Ssl ssl;
@@ -73,7 +71,7 @@ namespace
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
             MOCK_EXPECT( system.MakePaths );
             MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
-            MOCK_EXPECT( runtime.Start ).once().with( config.java, mock::any, "", mock::any ).returns( process );
+            MOCK_EXPECT( runtime.Start ).once().with( config.app, mock::any, "", mock::any ).returns( process );
             MOCK_EXPECT( system.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );

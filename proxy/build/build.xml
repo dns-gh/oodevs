@@ -1,56 +1,16 @@
 <project name="proxy" default="all">
+    <property environment="env"/>
+    <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="src.dir" value="../src" />
-    <property name="out.dir" value="../out" />
-    <property name="lib.dir" value="../../external" />
-    <property name="jar.dir" value="${out.dir}/jar" />
-
-    <path id="external.jars">
-        <fileset dir="${lib.dir}" includes="**/*.jar" />
-    </path>
-
-    <path id="project.classpath">
-        <path refid="external.jars" />
-    </path>
-
-    <target name="init">
-        <mkdir dir="${out.dir}/classes" />
-        <mkdir dir="${jar.dir}" />
-        <copy file="log4j.properties" todir="${jar.dir}" />
+    <target name="configure">
+        <update name="golang"/>
+        <mkdir dir="${out.dir}"/>
     </target>
 
-    <target name="clean">
-        <delete dir="${out.dir}" />
+    <target name="build">
+        <go_build module="proxy"/>
     </target>
 
-    <target name="build" depends="init">
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${out.dir}/classes" classpathref="project.classpath" />
-    </target>
-
-    <target name="package" depends="build">
-        <jar destfile="${jar.dir}/${ant.project.name}.jar">
-            <fileset dir="${out.dir}/classes" />
-            <restrict>
-                <or>
-                    <name name="**/*.class" />
-                    <name name="**/*.properties" />
-                </or>
-                <archives>
-                    <zips>
-                        <path refid="external.jars" />
-                    </zips>
-                </archives>
-            </restrict>
-            <manifest>
-                <attribute name="Main-Class" value="main.Main" />
-            </manifest>
-        </jar>
-    </target>
-
-    <target name="run" depends="package">
-        <java fork="true" jar="${jar.dir}/${ant.project.name}.jar" />
-    </target>
-
-    <target name="all" depends="package" />
-
+    <target name="all" depends="configure,build" />
 </project>

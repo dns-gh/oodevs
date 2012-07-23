@@ -30,7 +30,7 @@ namespace
 {
 std::string GetPrefix( const std::string& type, const Node_ABC& node )
 {
-    return type == "cluster" ? type : boost::lexical_cast< std::string >( node.GetId() );
+    return type == "cluster" ? "" : boost::lexical_cast< std::string >( node.GetId() );
 }
 }
 
