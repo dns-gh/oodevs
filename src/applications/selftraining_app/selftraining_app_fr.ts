@@ -246,16 +246,22 @@
         <translation>Avertissement</translation>
     </message>
     <message>
-        <source>The selected terrain is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
-        <translation>Le terrain selectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
-Voulez-vous vraiment le remplacer ?</translation>
+        <source>The selected model does not fit the one referenced by the selected terrain, you may lose infrastructure or resource network information.</source>
+        <translation>Le modèle sélectionné ne correspond pas à celui référencé par le terrain sélectionné, vous risquez de perdre des informations d&apos;infratruscture ou de réseau de resource.</translation>
     </message>
     <message>
-        <source>The selected model is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
-        <translation>Le modèle selectionné n&apos;est pas celui référencé par l&apos;exercice sélectionné.
-Voulez-vous vraiment le remplacer ?</translation>
+        <source>The selected model does not fit the one referenced by the selected exercise, you may lose some exercise data.</source>
+        <translation>Le modèle sélectionné ne correspond pas à celui référencé par l&apos;exercise sélectionné, vous risquez de perdre des données de l&apos;exercice.</translation>
+    </message>
+    <message>
+        <source>Terrain &apos;%1&apos; and model &apos;%2&apos; will be used for both exercise and terrain.
+Do you really want to continue ?</source>
+        <translation>Le terrain &apos;%1&apos; et le modèle &apos;%2&apos; seront utilisé pour l&apos;exercice et le terrain.
+Voulez-vous vraiment continuer ?</translation>
+    </message>
+    <message>
+        <source>The selected terrain does not fit the one referenced by the selected exercise. Some units may be outside of the terrain area.</source>
+        <translation>Le terrain sélectionné ne correspond pas à celui référencé par l&apos;exercice sélectionné. Certaines unités peuvent être en dehors du terrain.</translation>
     </message>
 </context>
 <context>

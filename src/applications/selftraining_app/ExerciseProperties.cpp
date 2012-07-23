@@ -210,41 +210,69 @@ void ExerciseProperties::ModelChanged()
     emit ExercisePropertiesChanged();
 }
 
+namespace
+{
+    std::string GetModelFromTerrain( const tools::GeneralConfig& config, const std::string& terrainName )
+    {
+        std::string terrainFile = config.GetTerrainFile( terrainName );
+        xml::xifstream xis( terrainFile );
+        std::string data = "";
+        std::string physical = "";
+        if( xis.has_child( "terrain" ) )
+        {
+            xis >> xml::start( "terrain" )
+                    >> xml::start( "data" )
+                        >> xml::start( "model" )
+                            >> xml::attribute( "dataset", data )
+                            >> xml::attribute( "physical", physical )
+                        >> xml::end //! model
+                    >> xml::end //! data
+                >> xml::end; //! terrain
+            if( !data.empty() && !physical.empty() )
+                return data + "/" + physical;
+        }
+        return "";
+    }
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseProperties::Commit
 // Created: SBO 2010-11-15
 // -----------------------------------------------------------------------------
 bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
-    // Be sure to commit if mismatched terrain or data, even if no changes has occured 
-    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().ascii() != currentTerrain_ )
+    if( terrainList_ && modelList_ && IsValid() )
     {
-        MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-            dataChanged_ = true;
-        else
-            return false;
-    }
-    if( modelList_ && modelList_->currentItem() > 0 )
-    {
-        const QStringList model = QStringList::split( "/", modelList_->currentText() );
-        if( model.front().ascii() != currentData_ || model.back().ascii() != currentPhysical_ )
+        const QStringList selectedModel = QStringList::split( "/", modelList_->currentText() );
+        const std::string selectedTerrain = terrainList_->currentText().ascii();
+        QString message = "";
+
+        if( selectedTerrain != currentTerrain_ )
         {
-            MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected model is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
-            if( message.exec() == QMessageBox::Yes )
+            message += tools::translate( "ExerciseProperties", "The selected terrain does not fit the one referenced by the selected exercise. Some units may be outside of the terrain area." ) + "\n";
+
+            std::string terrainModel = ::GetModelFromTerrain( config_, selectedTerrain );
+            if( !terrainModel.empty() && terrainModel != modelList_->currentText().ascii() )
+                message += tools::translate( "ExerciseProperties", "The selected model does not fit the one referenced by the selected terrain, you may lose infrastructure or resource network information." ) + "\n";
+        }
+
+        if( selectedModel.front().ascii() != currentData_ || selectedModel.back().ascii() != currentPhysical_ )
+            message += tools::translate( "ExerciseProperties", "The selected model does not fit the one referenced by the selected exercise, you may lose some exercise data." ) + "\n";
+
+        if( !message.isEmpty() )
+        {
+            message += "\n" + tools::translate( "ExerciseProperties", "Terrain '%1' and model '%2' will be used for both exercise and terrain.\nDo you really want to continue ?" ).arg( terrainList_->currentText() ).arg( modelList_->currentText() );
+            MessageDialog messageDialog( parent_, tools::translate( "ExerciseProperties", "Warning" ), message, QMessageBox::Yes, QMessageBox::No );
+            if( messageDialog.exec() == QMessageBox::Yes )
                 dataChanged_ = true;
             else
                 return false;
         }
-    }
 
-    if( dataChanged_ )
-        if( terrainList_ && terrainList_->currentItem() > 0 && modelList_ && modelList_->currentItem() > 0 )
-        {
-            const std::string terrain = terrainList_->currentText().ascii();
-            const QStringList model = QStringList::split( "/", modelList_->currentText() );
-            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().ascii(), model.back().ascii() );
-        }
+        if( dataChanged_ )
+            frontend::EditExerciseParameters( config_, exercise.GetName(), selectedTerrain, selectedModel.front().ascii(), selectedModel.back().ascii() );
+    }
     dataChanged_ = false;
     return true;
 }
@@ -255,6 +283,5 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 // -----------------------------------------------------------------------------
 bool ExerciseProperties::IsValid() const
 {
-    return terrainList_->currentText().ascii() != tools::translate( "ExerciseProperties", "Terrain:" ) &&
-           modelList_->currentText().ascii() != tools::translate( "ExerciseProperties", "Model:" );
+    return ( terrainList_ && modelList_ ) ? terrainList_->currentItem() > 0 && modelList_->currentItem() > 0 : true;
 }

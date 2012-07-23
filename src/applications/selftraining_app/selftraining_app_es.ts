@@ -246,13 +246,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected terrain is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
+        <source>The selected model does not fit the one referenced by the selected terrain, you may lose infrastructure or resource network information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected model is not the one referenced by the selected exercise.
-Do really you want to replace it ?</source>
+        <source>The selected model does not fit the one referenced by the selected exercise, you may lose some exercise data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain &apos;%1&apos; and model &apos;%2&apos; will be used for both exercise and terrain.
+Do you really want to continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected terrain does not fit the one referenced by the selected exercise. Some units may be outside of the terrain area.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
