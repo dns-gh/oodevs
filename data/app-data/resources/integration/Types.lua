@@ -265,3 +265,11 @@ eNiveauInstallation_PosteReflexe = 3
 eNiveauInstallation_Poste = 4
 eNiveauInstallation_PosteAmenage = 5
 eNiveauInstallation_PostePrepareGenie = 6
+
+-- Dotations tir indirect
+eObus_Explosif = 0
+eObus_Grenade = 1
+eObus_ACED = 2
+eObus_Fumigenes = 3
+eObus_Eclairant = 4
+eObus_Mine = 5

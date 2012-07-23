@@ -7,12 +7,6 @@
                 <class name="properties.Attackable"/>
             </type>
         </parameter>
-        <parameter name="dotation">
-            <description>Munition utilisee pour commettre l'attentat.</description>
-            <type>
-                <simple name="numeric"/>
-            </type>
-        </parameter>
         <parameter name="position">
             <description>Position vers laquelle on se replie apres avoir commis l'attentat.</description>
             <type>
@@ -37,11 +31,6 @@
                     <parameter name="position">
                         <value>
                             <parameter>position</parameter>
-                        </value>
-                    </parameter>
-                    <parameter name="dotation">
-                        <value>
-                            <parameter>dotation</parameter>
                         </value>
                     </parameter>
                     <parameter name="suicide">
