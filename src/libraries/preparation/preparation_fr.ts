@@ -160,6 +160,18 @@
         <source>Dead:</source>
         <translation>Morts:</translation>
     </message>
+    <message>
+        <source>Male\Female\Children/Male</source>
+        <translation>Répartition H\F\E/Homme</translation>
+    </message>
+    <message>
+        <source>Male\Female\Children/Female</source>
+        <translation>Répartition H\F\E/Femme</translation>
+    </message>
+    <message>
+        <source>Male\Female\Children/Children</source>
+        <translation>Répartition H\F\E/Enfant</translation>
+    </message>
 </context>
 <context>
     <name>DelayAttribute</name>
