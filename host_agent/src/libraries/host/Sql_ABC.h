@@ -81,6 +81,7 @@ struct Statement_ABC : public boost::noncopyable
     virtual void        Bind() = 0;
     virtual bool        Next() = 0;
     virtual bool        IsColumnDefined() = 0;
+    virtual void        SkipNull() = 0;
     virtual bool        ReadBool() = 0;
     virtual int         ReadInt() = 0;
     virtual int64_t     ReadInt64() = 0;

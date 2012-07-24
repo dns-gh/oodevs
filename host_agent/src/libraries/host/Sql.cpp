@@ -291,6 +291,15 @@ bool Statement::IsColumnDefined()
     return type != SQLITE_NULL;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Statement::SkipNull
+// Created: BAX 2012-07-23
+// -----------------------------------------------------------------------------
+void Statement::SkipNull()
+{
+    read_++;
+}
+
 namespace
 {
 void CheckType( sqlite3_stmt* stmt, int expected, int col )

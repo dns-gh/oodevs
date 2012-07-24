@@ -101,6 +101,7 @@ struct Statement : public Statement_ABC
     virtual void        Bind();
     virtual bool        Next();
     virtual bool        IsColumnDefined();
+    virtual void        SkipNull();
     virtual bool        ReadBool();
     virtual int         ReadInt();
     virtual int64_t     ReadInt64();
