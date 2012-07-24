@@ -21,6 +21,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/uuid/nil_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
@@ -73,22 +74,26 @@ size_t Execute( Statement_ABC& st )
 void MakeTables( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
-    Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS revisions ("
+    Execute( *db.Prepare( *tr,
+        "CREATE TABLE IF NOT EXISTS revisions ("
         "  id       INTEGER PRIMARY KEY"
         ", revision INTEGER"
         ", created  DATE"
         ")" ) );
-    Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS users ("
+    Execute( *db.Prepare( *tr,
+        "CREATE TABLE IF NOT EXISTS users ("
         "  id           INTEGER PRIMARY KEY"
         ", username     TEXT UNIQUE NOT NULL"
         ", hash         TEXT NOT NULL"
         ", name         TEXT"
         ", type         TEXT NOT NULL"
+        ", node         TEXT"
         ", temporary    BOOLEAN"
         ", language     TEXT"
         ", created      DATE"
         ")" ) );
-    Execute( *db.Prepare( *tr, "CREATE TABLE IF NOT EXISTS tokens ("
+    Execute( *db.Prepare( *tr,
+        "CREATE TABLE IF NOT EXISTS tokens ("
         "  id       INTEGER PRIMARY KEY"
         ", id_users INTEGER"
         ", source   TEXT NOT NULL"
@@ -99,22 +104,47 @@ void MakeTables( Sql_ABC& db )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Bind
+// Created: BAX 2012-07-23
+// -----------------------------------------------------------------------------
+void Bind( Statement_ABC& st, const Uuid& id )
+{
+    if( id.is_nil() )
+        st.Bind();
+    else
+        st.Bind( boost::lexical_cast< std::string >( id ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserController::CreateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-void CreateUser( Sql_ABC& db, Transaction& tr, const Crypt_ABC& crypt,
+void CreateUser( Sql_ABC& db, Transaction& tr, const Crypt_ABC& crypt, Uuid node,
                  const std::string& username, const std::string& name,
                  const std::string& password, UserType type,
                  bool temporary, const std::string& lang )
 {
+    if( type == web::USER_TYPE_ADMINISTRATOR )
+        node = boost::uuids::nil_uuid();
+    else if( node.is_nil() )
+        throw HttpException( web::FORBIDDEN );
     Sql_ABC::T_Statement st = db.Prepare( tr,
-            "INSERT into users"
-            "          ( username, hash, name, type, temporary, language, created )"
-            "VALUES    ( ?, ?, ?, ?, ?, ?, DATE('now') )" );
+            "INSERT INTO users ("
+            "            username "
+            ",           hash "
+            ",           name "
+            ",           type "
+            ",           node "
+            ",           temporary "
+            ",           language "
+            ",           created "
+            ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, DATE('now') ) "
+            );
     st->Bind( username );
     st->Bind( crypt.Hash( password ) );
     st->Bind( name );
     st->Bind( ConvertUserType( type ) );
+    Bind( *st, node );
     st->Bind( temporary );
     st->Bind( lang );
     Execute( *st );
@@ -128,14 +158,16 @@ void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin();
     Sql_ABC::T_Statement st = db.Prepare( *tr,
-            "INSERT INTO revisions"
-            "          ( revision, created )"
-            "VALUES    ( ?, DATE('NOW') )" );
+            "INSERT INTO revisions ("
+            "            revision "
+            ",           created "
+            ") VALUES  ( ?, DATE('NOW') ) "
+            );
     st->Bind( 1 );
     Execute( *st );
     st.reset();
-    CreateUser( db, *tr, crypt, "admin@masagroup.net", "Default", "admin",
-                web::USER_TYPE_ADMINISTRATOR, false, "eng" );
+    CreateUser( db, *tr, crypt, boost::uuids::nil_uuid(), "admin@masagroup.net",
+                "Default", "admin", web::USER_TYPE_ADMINISTRATOR, false, "eng" );
     db.Commit( *tr );
 }
 
@@ -146,7 +178,10 @@ void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
 int GetRevision( Sql_ABC& db )
 {
     Sql_ABC::T_Transaction tr = db.Begin( false );
-    Sql_ABC::T_Statement st = db.Prepare( *tr, "SELECT revision FROM revisions" );
+    Sql_ABC::T_Statement st = db.Prepare( *tr,
+        "SELECT revision "
+        "FROM   revisions "
+        );
     int rev = 0;
     while( st->Next() )
         rev = st->ReadInt();
@@ -248,9 +283,13 @@ std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Transaction&
     std::string token = boost::lexical_cast< std::string >( uuids.Create() );
     boost::algorithm::erase_all( token, "-" );
     Sql_ABC::T_Statement st = db.Prepare( tr,
-        "INSERT INTO tokens"
-        "          ( id_users, source, token, created ) "
-        "VALUES    ( ?, ?, ?, DATE('now') )" );
+        "INSERT INTO tokens ("
+        "            id_users "
+        ",           source "
+        ",           token "
+        ",           created "
+        ") VALUES  ( ?, ?, ?, DATE('now') ) "
+        );
     st->Bind( user );
     st->Bind( source );
     st->Bind( token );
@@ -264,7 +303,10 @@ std::string CreateToken( const UuidFactory_ABC& uuids, Sql_ABC& db, Transaction&
 // -----------------------------------------------------------------------------
 void DeleteTokenWithUserId( Sql_ABC& db, Transaction& tr, int id )
 {
-    Sql_ABC::T_Statement st = db.Prepare( tr, "DELETE FROM tokens WHERE id_users = ?" );
+    Sql_ABC::T_Statement st = db.Prepare( tr,
+        "DELETE FROM tokens "
+        "WHERE       id_users = ? "
+        );
     st->Bind( id );
     Execute( *st );
 }
@@ -275,7 +317,11 @@ void DeleteTokenWithUserId( Sql_ABC& db, Transaction& tr, int id )
 // -----------------------------------------------------------------------------
 void DeleteTokenWithToken( Sql_ABC& db, Transaction& tr, const std::string& token )
 {
-    Sql_ABC::T_Statement st = db.Prepare( tr, "SELECT id_users FROM tokens WHERE token = ?" );
+    Sql_ABC::T_Statement st = db.Prepare( tr,
+        "SELECT id_users "
+        "FROM   tokens "
+        "WHERE  token = ? "
+        );
     st->Bind( token );
     while( st->Next() )
         DeleteTokenWithUserId( db, tr, st->ReadInt() );
@@ -287,8 +333,13 @@ bool FetchUser( Sql_ABC& db, Transaction& tr, const std::string& username, const
 {
     token.clear();
     Sql_ABC::T_Statement st = db.Prepare( tr,
-        "SELECT     users.id, users.hash, users.name, users.type,"
-        "           users.temporary, users.language, tokens.token "
+        "SELECT     users.id "
+        ",          users.hash "
+        ",          users.name "
+        ",          users.type "
+        ",          users.temporary "
+        ",          users.language "
+        ",          tokens.token "
         "FROM       users "
         "LEFT JOIN  tokens "
         "ON         users.id = tokens.id_users "
@@ -353,11 +404,15 @@ Tree UserController::IsAuthenticated( const std::string& token, const std::strin
     {
         Sql_ABC::T_Transaction tr = db_.Begin( false );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT users.id, users.username, users.name, users.type,"
-            "       users.temporary, users.language "
+            "SELECT users.id "
+            ",      users.username "
+            ",      users.name "
+            ",      users.type "
+            ",      users.temporary "
+            ",      users.language "
             "FROM   tokens "
             "JOIN   users "
-            "ON     users.id = tokens.id_users "
+            "ON     users.id      = tokens.id_users "
             "WHERE  tokens.source = ? "
             "AND    tokens.token  = ? "
             "LIMIT  1 "
@@ -414,8 +469,10 @@ Tree UserController::UpdateLogin( const std::string& username, const std::string
         DeleteTokenWithUserId( db_, *tr, id );
         Sql_ABC::T_Statement st = db_.Prepare( *tr,
             "UPDATE users "
-            "SET    hash = ?, temporary = ?"
-            "WHERE  id = ?" );
+            "SET    hash      = ? "
+            ",      temporary = ? "
+            "WHERE  id        = ? "
+            );
         st->Bind( crypt_.Hash( password ) );
         st->Bind( false );
         st->Bind( id );
@@ -436,15 +493,29 @@ Tree UserController::UpdateLogin( const std::string& username, const std::string
 // Name: UserController::ListUsers
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-std::vector< Tree > UserController::ListUsers( int offset, int limit ) const
+std::vector< Tree > UserController::ListUsers( const Uuid& node, int offset, int limit ) const
 {
     try
     {
+        std::string sql =
+            "SELECT id "
+            ",      username "
+            ",      name "
+            ",      type "
+            ",      temporary "
+            ",      language "
+            "FROM   users ";
+        if( node.is_nil() )
+            sql += "WHERE node IS NULL ";
+        else
+            sql += "WHERE node = ? ";
+        sql +=
+            "LIMIT  ? "
+            "OFFSET ? ";
         Sql_ABC::T_Transaction tr = db_.Begin( false );
-        Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT id, username, name, type, temporary, language "
-            "FROM users "
-            "LIMIT ? OFFSET ?" );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, sql );
+        if( !node.is_nil() )
+            Bind( *st, node );
         st->Bind( limit );
         st->Bind( offset );
         std::vector< Tree > list;
@@ -468,13 +539,21 @@ std::vector< Tree > UserController::ListUsers( int offset, int limit ) const
 // Name: UserController::CountUsers
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-size_t UserController::CountUsers() const
+size_t UserController::CountUsers( const Uuid& node ) const
 {
     try
     {
+        std::string sql =
+            "SELECT id "
+            "FROM   users ";
+        if( node.is_nil() )
+            sql += "WHERE node IS NULL ";
+        else
+            sql += "WHERE node = ? ";
         Sql_ABC::T_Transaction tr = db_.Begin( false );
-        Sql_ABC::T_Statement st = db_.Prepare( *tr,
-                "SELECT DISTINCT id FROM users" );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, sql );
+        if( !node.is_nil() )
+            Bind( *st, node );
         return Execute( *st );
     }
     catch( const SqlException& err )
@@ -489,16 +568,28 @@ size_t UserController::CountUsers() const
 // Name: UserController::GetUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Tree UserController::GetUser( int id ) const
+Tree UserController::GetUser( const Uuid& node, int id ) const
 {
     try
     {
+        std::string sql =
+            "SELECT id "
+            ",      username "
+            ",      name "
+            ",      type "
+            ",      temporary "
+            ",      language "
+            "FROM   users "
+            "WHERE  id   = ? ";
+        if( node.is_nil() )
+            sql += "AND node IS NULL ";
+        else
+            sql += "AND node = ? ";
         Sql_ABC::T_Transaction tr = db_.Begin( false );
-        Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT id, username, name, type, temporary, language "
-            "FROM users "
-            "WHERE id = ?" );
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, sql );
         st->Bind( id );
+        if( !node.is_nil() )
+            Bind( *st, node );
         if( !st->Next() )
             throw HttpException( web::NOT_FOUND );
 
@@ -518,14 +609,13 @@ Tree UserController::GetUser( int id ) const
 // Name: UserController::CreateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Tree UserController::CreateUser( const std::string& username, const std::string& name, const std::string& password, bool temporary )
+Tree UserController::CreateUser( const Uuid& node, const std::string& username, const std::string& name, const std::string& password, UserType type, bool temporary )
 {
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        const UserType type = web::USER_TYPE_ADMINISTRATOR;
         const std::string lang = "eng";
-        ::CreateUser( db_, *tr, crypt_, username, name, password, type, temporary, lang );
+        ::CreateUser( db_, *tr, crypt_, node, username, name, password, type, temporary, lang );
         db_.Commit( *tr );
         tr.reset();
         Tree tree;
@@ -544,20 +634,33 @@ Tree UserController::CreateUser( const std::string& username, const std::string&
 // Name: UserController::DeleteUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Tree UserController::DeleteUser( const std::string& token, int id )
+Tree UserController::DeleteUser( const Uuid& node, const std::string& token, int id )
 {
     try
     {
-        Sql_ABC::T_Transaction tr = db_.Begin();
-        Sql_ABC::T_Statement st = db_.Prepare( *tr,
-            "SELECT     users.id, users.username, users.name, users.type, users.temporary, users.language, tokens.token "
+        std::string sql =
+            "SELECT     users.id "
+            ",          users.username "
+            ",          users.name "
+            ",          users.type "
+            ",          users.temporary "
+            ",          users.language "
+            ",          tokens.token "
             "FROM       users "
             "LEFT JOIN  tokens "
             "ON         tokens.id_users = users.id "
             "AND        tokens.token    = ? "
-            "WHERE      users.id = ?" );
+            "WHERE      users.id        = ? ";
+        if( node.is_nil() )
+            sql += "AND users.node IS NULL ";
+        else
+            sql += "AND users.node = ? ";
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, sql );
         st->Bind( token );
         st->Bind( id );
+        if( !node.is_nil() )
+            Bind( *st, node );
         bool valid = st->Next();
         if( !valid )
             throw HttpException( web::NOT_FOUND );
@@ -569,7 +672,10 @@ Tree UserController::DeleteUser( const std::string& token, int id )
             throw HttpException( web::FORBIDDEN );
 
         DeleteTokenWithUserId( db_, *tr, id );
-        st = db_.Prepare( *tr, "DELETE FROM users WHERE users.id = ?" );
+        st = db_.Prepare( *tr,
+            "DELETE FROM users "
+            "WHERE       users.id = ? "
+            );
         st->Bind( id );
         Execute( *st );
         db_.Commit( *tr );
@@ -587,22 +693,31 @@ Tree UserController::DeleteUser( const std::string& token, int id )
 // Name: UserController::UpdateUser
 // Created: BAX 2012-07-11
 // -----------------------------------------------------------------------------
-Tree UserController::UpdateUser( const std::string& token, int id,
-                                 const std::string& username,
+Tree UserController::UpdateUser( const Uuid& node, const std::string& token,
+                                 int id, const std::string& username,
                                  const std::string& name, bool temporary,
                                  const boost::optional< std::string >& password )
 {
     try
     {
-        Sql_ABC::T_Transaction tr = db_.Begin();
-        Sql_ABC::T_Statement st = db_.Prepare( *tr,
+        std::string sql =
             "UPDATE     users "
-            "SET        username = ?, name = ?, temporary = ? "
-            "WHERE      users.id = ?" );
+            "SET        username  = ? "
+            ",          name      = ? "
+            ",          temporary = ? "
+            "WHERE      id        = ? ";
+        if( node.is_nil() )
+            sql += "AND node IS NULL ";
+        else
+            sql += "AND node = ? ";
+        Sql_ABC::T_Transaction tr = db_.Begin();
+        Sql_ABC::T_Statement st = db_.Prepare( *tr, sql );
         st->Bind( username );
         st->Bind( name );
         st->Bind( temporary );
         st->Bind( id );
+        if( !node.is_nil() )
+            Bind( *st, node );
         Execute( *st );
         if( password )
         {
@@ -610,7 +725,7 @@ Tree UserController::UpdateUser( const std::string& token, int id,
                 "SELECT id "
                 "FROM   tokens "
                 "WHERE  id_users = ? "
-                "AND    token = ? " );
+                "AND    token    = ? " );
             st->Bind( id );
             st->Bind( token );
             const bool found = st->Next();
@@ -621,8 +736,8 @@ Tree UserController::UpdateUser( const std::string& token, int id,
             DeleteTokenWithUserId( db_, *tr, id );
             st = db_.Prepare( *tr,
                 "UPDATE users "
-                "SET    hash = ? "
-                "WHERE  users.id = ?" );
+                "SET    hash     = ? "
+                "WHERE  users.id = ? " );
             st->Bind( crypt_.Hash( *password ) );
             st->Bind( id );
             Execute( *st );

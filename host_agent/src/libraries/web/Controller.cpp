@@ -724,7 +724,7 @@ std::string Controller::ListUsers( const Request_ABC& request )
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit = GetParameter( "limit", request, 10 );
-    return WriteHttpReply( users_.ListUsers( offset, limit ) );
+    return WriteHttpReply( users_.ListUsers( boost::uuids::nil_uuid(), offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -734,7 +734,7 @@ std::string Controller::ListUsers( const Request_ABC& request )
 std::string Controller::CountUsers( const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( users_.CountUsers() );
+    return WriteHttpReply( users_.CountUsers( boost::uuids::nil_uuid() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -745,7 +745,7 @@ std::string Controller::GetUser( const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int id = RequireParameter< int >( "id", request );
-    return WriteHttpReply( users_.GetUser( id ) );
+    return WriteHttpReply( users_.GetUser( boost::uuids::nil_uuid(), id ) );
 }
 
 namespace
@@ -768,7 +768,7 @@ std::string Controller::CreateUser( Request_ABC& request )
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string password = RequireParameter< std::string >( "password", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    return WriteHttpReply( users_.CreateUser( username, name, password, ToBool( temporary ) ) );
+    return WriteHttpReply( users_.CreateUser( boost::uuids::nil_uuid(), username, name, password, USER_TYPE_ADMINISTRATOR, ToBool( temporary ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -779,7 +779,7 @@ std::string Controller::DeleteUser( const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int id = RequireParameter< int >( "id", request );
-    return WriteHttpReply( users_.DeleteUser( request.GetSid(), id ) );
+    return WriteHttpReply( users_.DeleteUser( boost::uuids::nil_uuid(), request.GetSid(), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -793,7 +793,7 @@ std::string Controller::UpdateUser( const Request_ABC& request )
     const std::string user = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    return WriteHttpReply( users_.UpdateUser( request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
+    return WriteHttpReply( users_.UpdateUser( boost::uuids::nil_uuid(), request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
 }
 
 // -----------------------------------------------------------------------------

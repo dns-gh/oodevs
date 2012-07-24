@@ -23,6 +23,7 @@ namespace host
     struct Sql_ABC;
     struct UuidFactory_ABC;
     typedef boost::property_tree::ptree Tree;
+    typedef boost::uuids::uuid Uuid;
 }
 
 namespace host
@@ -50,12 +51,12 @@ struct UserController : public web::UserController_ABC
     virtual Tree                IsAuthenticated( const std::string& token, const std::string& source );
     virtual void                Logout         ( const std::string& token );
     virtual Tree                UpdateLogin    ( const std::string& user, const std::string& current, const std::string& password, const std::string& source );
-    virtual std::vector< Tree > ListUsers      ( int offset, int limit ) const;
-    virtual size_t              CountUsers     () const;
-    virtual Tree                GetUser        ( int id ) const;
-    virtual Tree                CreateUser     ( const std::string& username, const std::string& name, const std::string& password, bool temporary );
-    virtual Tree                DeleteUser     ( const std::string& token, int id );
-    virtual Tree                UpdateUser     ( const std::string& token, int id, const std::string& user, const std::string& name, bool temporary, const boost::optional< std::string >& password );
+    virtual std::vector< Tree > ListUsers      ( const Uuid& node, int offset, int limit ) const;
+    virtual size_t              CountUsers     ( const Uuid& node ) const;
+    virtual Tree                GetUser        ( const Uuid& node, int id ) const;
+    virtual Tree                CreateUser     ( const Uuid& node, const std::string& username, const std::string& name, const std::string& password, web::UserType type, bool temporary );
+    virtual Tree                DeleteUser     ( const Uuid& node, const std::string& token, int id );
+    virtual Tree                UpdateUser     ( const Uuid& node, const std::string& token, int id, const std::string& user, const std::string& name, bool temporary, const boost::optional< std::string >& password );
     //@}
 
 private:

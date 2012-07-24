@@ -20,12 +20,12 @@ namespace mocks
         MOCK_METHOD( IsAuthenticated, 2 );
         MOCK_METHOD( Logout, 1 );
         MOCK_METHOD( UpdateLogin, 4 );
-        MOCK_METHOD( ListUsers, 2 );
-        MOCK_METHOD( CountUsers, 0 );
-        MOCK_METHOD( GetUser, 1 );
-        MOCK_METHOD( CreateUser, 4 );
-        MOCK_METHOD( DeleteUser, 2 );
-        MOCK_METHOD( UpdateUser, 6 );
+        MOCK_METHOD( ListUsers, 3 );
+        MOCK_METHOD( CountUsers, 1 );
+        MOCK_METHOD( GetUser, 2 );
+        MOCK_METHOD( CreateUser, 6 );
+        MOCK_METHOD( DeleteUser, 3 );
+        MOCK_METHOD( UpdateUser, 7 );
     };
 };
 
