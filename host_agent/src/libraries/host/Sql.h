@@ -98,6 +98,7 @@ struct Statement : public Statement_ABC
     virtual void        Bind( double value );
     virtual void        Bind( const std::string& value );
     virtual void        Bind( const char* value );
+    virtual void        Bind();
     virtual bool        Next();
     virtual bool        IsColumnDefined();
     virtual bool        ReadBool();

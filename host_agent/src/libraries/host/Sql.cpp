@@ -255,6 +255,17 @@ void Statement::Bind( const char* value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Statement::Bind
+// Created: BAX 2012-07-23
+// -----------------------------------------------------------------------------
+void Statement::Bind()
+{
+    const int err = sqlite3_bind_null( stmt_.get(), bind_++ );
+    if( err != SQLITE_OK )
+        ThrowSqlException( "Unable to bind null", err );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Statement::Next
 // Created: BAX 2012-06-28
 // -----------------------------------------------------------------------------
