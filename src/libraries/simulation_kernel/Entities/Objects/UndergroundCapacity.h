@@ -11,11 +11,15 @@
 #define __UndergroundCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
+#include "MIL_StructuralStateNotifier_ABC.h"
 
 namespace xml
 {
     class xistream;
 }
+
+class MIL_UrbanObject_ABC;
+class UndergroundAttribute;
 
 // =============================================================================
 /** @class  UndergroundCapacity
@@ -24,8 +28,8 @@ namespace xml
 // Created: JSR 2011-05-30
 // =============================================================================
 class UndergroundCapacity : public ObjectCapacity_ABC
+                          , public MIL_StructuralStateNotifier_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,6 +43,12 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    virtual void Finalize( MIL_Object_ABC& object );
+
+    virtual void NotifyStructuralStateChanged( float structuralState, const MIL_Object_ABC& object );
+    virtual void NotifyFired() {}
+
+    void RegisterUrbanBlock( MIL_Object_ABC& object );
     //@}
 
 private:
@@ -48,6 +58,13 @@ private:
     UndergroundCapacity& operator=( const UndergroundCapacity& ); //!< Assignment operator
     //@}
 
+private:
+    //! @name Member data
+    //@{
+    //unsigned int urbanBlockId_;
+    MIL_UrbanObject_ABC* urbanBlock_;
+    UndergroundAttribute* attribute_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( UndergroundCapacity )

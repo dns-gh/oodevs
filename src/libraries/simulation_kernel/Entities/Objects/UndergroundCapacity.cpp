@@ -9,7 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "UndergroundCapacity.h"
+#include "UndergroundAttribute.h"
 #include "MIL_Object_ABC.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Urban/MIL_UrbanCache.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundCapacity )
 
@@ -18,6 +23,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( UndergroundCapacity )
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
 UndergroundCapacity::UndergroundCapacity()
+    : urbanBlock_( 0 )
+    , attribute_ ( 0 )
 {
     // NOTHING
 }
@@ -27,15 +34,8 @@ UndergroundCapacity::UndergroundCapacity()
 // Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
 UndergroundCapacity::UndergroundCapacity( xml::xistream& /*xis*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: UndergroundCapacity constructor
-// Created: JSR 2011-05-30
-// -----------------------------------------------------------------------------
-UndergroundCapacity::UndergroundCapacity( const UndergroundCapacity& )
+    : urbanBlock_( 0 )
+    , attribute_ ( 0 )
 {
     // NOTHING
 }
@@ -46,7 +46,18 @@ UndergroundCapacity::UndergroundCapacity( const UndergroundCapacity& )
 // -----------------------------------------------------------------------------
 UndergroundCapacity::~UndergroundCapacity()
 {
-    // NOTHING
+    if( urbanBlock_ )
+        urbanBlock_->Unregister( *static_cast< MIL_StructuralStateNotifier_ABC* >( this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundCapacity constructor
+// Created: JSR 2011-05-30
+// -----------------------------------------------------------------------------
+UndergroundCapacity::UndergroundCapacity( const UndergroundCapacity& rhs )
+{
+    urbanBlock_ = rhs.urbanBlock_;
+    attribute_ = rhs.attribute_;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,4 +87,51 @@ void UndergroundCapacity::Instanciate( MIL_Object_ABC& object ) const
 void UndergroundCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundCapacity::RegisterUrbanBlock
+// Created: JSR 2012-07-24
+// -----------------------------------------------------------------------------
+void UndergroundCapacity::RegisterUrbanBlock( MIL_Object_ABC& object )
+{
+    try
+    {
+        if( MIL_AgentServer::IsInitialized() )
+        {
+            attribute_ = object.RetrieveAttribute< UndergroundAttribute >();
+            if( attribute_ )
+            {
+                const MT_Vector2D vector = object.GetLocalisation().ComputeBarycenter();
+                if( const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( MT_Vector2D( static_cast< float >( vector.rX_ ), static_cast< float >( vector.rY_ ) ) ) )
+                {
+                    urbanBlock_ = const_cast< MIL_UrbanObject_ABC* >( object );
+                    urbanBlock_->MIL_Object::Register( *static_cast< MIL_StructuralStateNotifier_ABC* >( this ) );
+                }
+            }
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundCapacity::Finalize
+// Created: JSR 2012-07-24
+// -----------------------------------------------------------------------------
+void UndergroundCapacity::Finalize( MIL_Object_ABC& object )
+{
+    RegisterUrbanBlock( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UndergroundCapacity::NotifyStructuralStateChanged
+// Created: JSR 2012-07-23
+// -----------------------------------------------------------------------------
+void UndergroundCapacity::NotifyStructuralStateChanged( float structuralState, const MIL_Object_ABC& /*object*/ )
+{
+    if( attribute_ && structuralState < 0.25f )
+        attribute_->SetActivation( false );
 }

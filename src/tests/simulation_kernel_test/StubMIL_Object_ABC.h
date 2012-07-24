@@ -62,6 +62,7 @@ public:
     virtual void Register( ObjectAttribute_ABC* ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void Register( MIL_StructuralStateNotifier_ABC& ) {}
     virtual void Register( MIL_InteractiveContainer_ABC* ) {}
+    virtual void Unregister( MIL_StructuralStateNotifier_ABC& ) {}
     virtual void ApplyStructuralState( float /*structuralState*/ ) const {}
     virtual void Instanciate( MIL_Object_ABC& /*object*/ ) const {}
     virtual void Finalize() {}

@@ -131,6 +131,17 @@ void MIL_Object::Register( MIL_StructuralStateNotifier_ABC& notifier )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object::Unregister
+// Created: JSR 2012-07-23
+// -----------------------------------------------------------------------------
+void MIL_Object::Unregister( MIL_StructuralStateNotifier_ABC& notifier )
+{
+    T_StructuralStateNotifiers::iterator it = std::find( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), &notifier );
+    if( it != structuralStateNotifiers_.end() )
+        structuralStateNotifiers_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Object::AddAttribute
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
@@ -283,6 +294,9 @@ void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, co
         capacity->ApplyIndirectFire( *this, attritionSurface, dotation, army );
     if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
         ApplyDirectFire();
+    if( UndergroundAttribute* underground = RetrieveAttribute< UndergroundAttribute >() )
+        if( attritionSurface.IsInside( GetLocalisation().ComputeBarycenter() ) )
+            underground->SetActivation( false );
 }
 
 // -----------------------------------------------------------------------------

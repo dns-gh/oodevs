@@ -575,7 +575,17 @@ void MIL_EntityManager::Finalize()
     armyFactory_->Finalize();
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
     inhabitantFactory_->Finalize();
+    FinalizeObjects();
     UpdateStates();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FinalizeObjects
+// Created: JSR 2012-07-24
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::FinalizeObjects()
+{
+    pObjectManager_->FinalizeObjects( *pFloodModel_ );
 }
 
 namespace
@@ -654,8 +664,6 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis, const MIL_Config& 
     xis >> xml::start( "parties" )
         >> xml::list( boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _2, _3, boost::cref( config ) ) )
         >> xml::end;
-
-    pObjectManager_->FinalizeObjects( *pFloodModel_ );
 }
 
 // -----------------------------------------------------------------------------
