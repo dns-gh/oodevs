@@ -344,14 +344,17 @@ std::string Controller::DoPost( Request_ABC& request )
     }
     catch( const HttpException& err )
     {
+        LOG_WARN( log_ ) << "[web] " << uri << " " << GetStatusMessage( err.code ) << " " << err.msg;
         return WriteHttpReply( err.code, err.msg );
     }
     catch( const std::exception& err )
     {
+        LOG_WARN( log_ ) << "[web] " << uri << " " << err.what();
         return WriteHttpReply( INTERNAL_SERVER_ERROR, err.what() );
     }
     catch( ... )
     {
+        LOG_WARN( log_ ) << "[web] " << uri << " unknown exception";
         return WriteHttpReply( INTERNAL_SERVER_ERROR );
     }
     return WriteHttpReply( NOT_FOUND );
