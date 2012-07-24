@@ -25,16 +25,16 @@ end
 
 integration.isTask = function( self )
   local orderType = self.source:GetType()
-  return orderType == "france.military.platoon.combat.support.air.tasks.ModifierAltitude" or
-         orderType == "france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" or
-         orderType == "france.military.platoon.tasks.Embarquer" or
-         orderType == "france.military.platoon.tasks.Debarquer" or
-         orderType == "france.military.platoon.tasks.Illuminer" or
-         orderType == "france.military.platoon.combat.support.art.tasks.UtiliserALR" or
-         orderType == "france.military.platoon.tasks.Observer" or
-         orderType == "france.military.platoon.tasks.Orienter" or
-         orderType == "france.military.platoon.tasks.RejoindreAToutPrix" or
-         orderType == "france.military.platoon.tasks.DeposerUnite" or
+  return orderType == "platoon.combat.support.air.tasks.ModifierAltitude" or
+         orderType == "platoon.combat.support.engineer.tasks.ActiverObstacles" or
+         orderType == "platoon.tasks.Embarquer" or
+         orderType == "platoon.tasks.Debarquer" or
+         orderType == "platoon.tasks.Illuminer" or
+         orderType == "platoon.combat.support.art.tasks.UtiliserALR" or
+         orderType == "platoon.tasks.Observer" or
+         orderType == "platoon.tasks.Orienter" or
+         orderType == "platoon.tasks.RejoindreAToutPrix" or
+         orderType == "platoon.tasks.DeposerUnite" or
          orderType == "security.behaviors.tasks.StopAndGoToGarage" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
@@ -73,11 +73,11 @@ end
 
 integration.mustBePropagate = function( self )
   local orderType = self.source:GetType()
-  return orderType == "france.military.platoon.combat.support.air.tasks.ModifierAltitude" or
-         orderType == "france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" or
-         orderType == "france.military.platoon.tasks.Embarquer" or 
-         orderType == "france.military.platoon.tasks.Debarquer" or
-         orderType == "france.military.platoon.tasks.DeposerUnite" or
+  return orderType == "platoon.combat.support.air.tasks.ModifierAltitude" or
+         orderType == "platoon.combat.support.engineer.tasks.ActiverObstacles" or
+         orderType == "platoon.tasks.Embarquer" or 
+         orderType == "platoon.tasks.Debarquer" or
+         orderType == "platoon.tasks.DeposerUnite" or
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
          orderType == "Rep_OrderConduite_RecupererTransporteurs" or
@@ -161,35 +161,35 @@ integration.startFragOrderTask = function( self )
 
   local orderType = self.source:GetType()
 
-  if orderType == "france.military.platoon.tasks.Illuminer" then
+  if orderType == "platoon.tasks.Illuminer" then
       mission.entity = CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() )
       if self.source == meKnowledge.source then
         mission.ally = meKnowledge
       else
         mission.ally = CreateKnowledge( integration.ontology.types.agent, self.source:GetAgent_() )
       end
-  elseif orderType =="france.military.platoon.combat.support.art.tasks.UtiliserALR" then
+  elseif orderType =="platoon.combat.support.art.tasks.UtiliserALR" then
     mission.entity = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
     mission.munition = self.source:Getmunitions_()
     mission.interventionType = self.source:GetnbIT_()
-  elseif orderType == "france.military.platoon.tasks.RejoindreAToutPrix" then
+  elseif orderType == "platoon.tasks.RejoindreAToutPrix" then
     mission.objectif = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
-  elseif orderType == "france.military.platoon.tasks.DeposerUnite" then
+  elseif orderType == "platoon.tasks.DeposerUnite" then
         local targetPoint = self.source:GetpointCible_()
         mission.unite = CreateKnowledge( integration.ontology.types.agentKnowledge, self.source:GetAgentKnowledge_() )
         if targetPoint ~= nil then
             mission.position = CreateKnowledge( integration.ontology.types.point, targetPoint )
         end
-  elseif orderType == "france.military.platoon.tasks.Observer" then
+  elseif orderType == "platoon.tasks.Observer" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
-  elseif orderType == "france.military.platoon.tasks.Orienter" then
+  elseif orderType == "platoon.tasks.Orienter" then
     mission.objective = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
   elseif orderType == "Rep_OrderConduite_SauvegardeContreBatterie" then
-    orderType = "france.military.platoon.combat.support.art.tasks.AssurerMiseEnOeuvre"
+    orderType = "platoon.combat.support.art.tasks.AssurerMiseEnOeuvre"
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )}
   elseif orderType == "Rep_OrderConduite_MiseEnBatterieInopinee" then
     orderType = "agent.tasks_frago.RapidDeploiement"
-    mission.entity = CreateKnowledge( integration.ontology.types.point, self.source:GetpointCible_() )
+    mission.entity = CreateKnowledge( integraTion.ontology.types.point, self.source:GetpointCible_() )
     mission.interventionType = self.source:GetnbIT_()
     mission.munition = self.source:Getmunitions_()
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )}
@@ -243,10 +243,10 @@ integration.startFragOrderTask = function( self )
     orderType = "agent.tasks.UnequipNBCOutfit"
   elseif orderType =="Rep_OrderConduite_ChangerAmbiance" then
     if self.source:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete then
-        orderType = "france.military.platoon.tasks.ChangerAmbianceSurete"
+        orderType = "platoon.tasks.ChangerAmbianceSurete"
     else
-        orderType = "france.military.platoon.tasks.ChangerAmbianceVitesse"
-        stopTask( "france.military.platoon.tasks.ChangerAmbianceSurete" )
+        orderType = "platoon.tasks.ChangerAmbianceVitesse"
+        stopTask( "platoon.tasks.ChangerAmbianceSurete" )
     end
   elseif orderType =="Rep_OrderConduite_Pion_InterdireMunition" then
     DEC_Pion_InterdireMunition(self.source:Getmunitions_())
@@ -260,13 +260,13 @@ integration.startFragOrderTask = function( self )
     DEC_Pion_AutoriserToutesMunitions()
     integration.cleanFragOrder( self )
     return
-  elseif orderType == "france.military.platoon.tasks.Embarquer" then
-    stopTask( "france.military.platoon.tasks.Debarquer" )
+  elseif orderType == "platoon.tasks.Embarquer" then
+    stopTask( "platoon.tasks.Debarquer" )
     integration.cleanFragOrder( self )
-  elseif orderType == "france.military.platoon.tasks.Debarquer" then
-    stopTask( "france.military.platoon.tasks.Embarquer" )
+  elseif orderType == "platoon.tasks.Debarquer" then
+    stopTask( "platoon.tasks.Embarquer" )
     integration.cleanFragOrder( self )
-  elseif orderType == "france.military.platoon.combat.support.air.tasks.ModifierAltitude" then
+  elseif orderType == "platoon.combat.support.air.tasks.ModifierAltitude" then
     mission.altitude = self.source:GetnbIT_()
   elseif orderType == "Rep_OrderConduite_Population_ChangerAttitude" then
     DEC_Population_ChangerAttitude(self.source:GetorderConduitePopulationChangerAttitude_())
@@ -282,9 +282,9 @@ integration.startFragOrderTask = function( self )
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_Engager" then
-    orderType = "france.military.platoon.combat.support.art.tasks.Engager"
+    orderType = "platoon.combat.support.art.tasks.Engager"
   elseif orderType == "Rep_OrderConduite_Pion_Desengager" then
-    orderType = "france.military.platoon.combat.support.art.tasks.Desengager"
+    orderType = "platoon.combat.support.art.tasks.Desengager"
   elseif orderType == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
     if integration.isLogisticTypeUnit( ) then
         DEC_Maintenance_ChangerRegimeTravail( self.source:GetorderConduiteModifierRegimeTravailMaintenance_() )
@@ -317,7 +317,7 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnVSRAM" then
     if integration.isLogisticTypeUnit( ) then
-        orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnVSRAM" 
+        orderType = "platoon.combat.support.log.tasks.RenforcerEnVSRAM" 
         mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
         mission.nbrAmbulances = self.source:GetnbrAmbulances_()
     else
@@ -326,7 +326,7 @@ integration.startFragOrderTask = function( self )
     end
   elseif orderType == "Rep_OrderConduite_Pion_TransfererVSRAM" then
     if integration.isLogisticTypeUnit( ) then
-        orderType = "france.military.platoon.combat.support.log.tasks.TransfererVSRAM"
+        orderType = "platoon.combat.support.log.tasks.TransfererVSRAM"
         mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
         mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
         mission.nbrAmbulances = self.source:GetnbrAmbulances_()
@@ -336,7 +336,7 @@ integration.startFragOrderTask = function( self )
     end
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" then
     if integration.isLogisticTypeUnit( ) then
-        orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresVSRAM"
+        orderType = "platoon.combat.support.log.tasks.ReprendreAuxOrdresVSRAM"
         mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
         mission.nbrAmbulances = self.source:GetnbrAmbulances_()
     else
@@ -345,7 +345,7 @@ integration.startFragOrderTask = function( self )
     end
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then
-        orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnRemorqueurs"
+        orderType = "platoon.combat.support.log.tasks.RenforcerEnRemorqueurs"
         mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
         mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
     else
@@ -354,7 +354,7 @@ integration.startFragOrderTask = function( self )
     end
   elseif orderType == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then   
-        orderType = "france.military.platoon.combat.support.log.tasks.TransfererRemorqueurs"
+        orderType = "platoon.combat.support.log.tasks.TransfererRemorqueurs"
         mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
         mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionARenforcer_() )
         mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
@@ -364,14 +364,14 @@ integration.startFragOrderTask = function( self )
     end
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then     
-        orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresRemorqueurs"
+        orderType = "platoon.combat.support.log.tasks.ReprendreAuxOrdresRemorqueurs"
         mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, self.source:GetpionRenforce_() )
         mission.nbrRemorqueurs = self.source:GetnbrRemorqueurs_()
     else
         integration.cleanFragOrder( self )
         return
     end
-  elseif orderType == "france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" then
+  elseif orderType == "platoon.combat.support.engineer.tasks.ActiverObstacles" then
     if myself.obstacleToActivate then  -- les unités qui ont construits des obstacles à activer sont les seules à recevoir l'ODC
         local obstacles = {}
         local obstaclesList = self.source:GetObjectKnowledge_()
@@ -388,7 +388,7 @@ integration.startFragOrderTask = function( self )
     DEC_RecupererTransporteursSansDelai()
     integration.cleanFragOrder( self )
     return
-  elseif orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+  elseif orderType == "platoon.combat.support.art.tasks.AppliquerFeux" then
     return
   elseif orderType == "Rep_OrderConduite_Decrocher" then
     return

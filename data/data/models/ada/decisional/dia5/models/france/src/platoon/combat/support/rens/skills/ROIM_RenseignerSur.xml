@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.rens.skills.ROIM_RenseignerSur" source-version="1.0.0">
+    <parameters>
+        <parameter name="ficelleDeVol">
+            <type>
+                <list>
+                    <class name="world.Point"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveAndTakePosition" skill="agent.skills.actions.MoveAndTakePosition"/>
+        <link name="decoller" skill="platoon.combat.support.air.skills.Decoller"/>
+        <link name="atterir" skill="platoon.combat.support.air.skills.Atterrir"/>
+        <link name="moveAlong" skill="platoon.skills.MoveAlong"/>
+    </links>
+</skill>

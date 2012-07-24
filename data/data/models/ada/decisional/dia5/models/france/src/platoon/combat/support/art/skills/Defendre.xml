@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.art.skills.Defendre" source-version="1.0.0">
+    <parameters>
+        <parameter name="zone">
+            <type>
+                <class name="properties.Positionable"/>
+            </type>
+        </parameter>
+        <parameter name="position" nullable="true">
+            <type>
+                <class name="properties.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="typeDeploiement">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+        <parameter name="ph">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+    </parameters>
+    <modifiers/>
+    <links>
+        <link name="moveTo" skill="agent.skills.MoveToward"/>
+        <link name="intercepterMissile" skill="platoon.combat.support.art.skills.IntercepterMissile"/>
+    </links>
+    <resources>
+        <resource name="agent.resources.EngageCapacity" variable="engage"/>
+    </resources>
+</skill>

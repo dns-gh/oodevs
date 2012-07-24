@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.tasks.Convoyer" source-version="1.0.0">
+	<stages>
+		<stage label="Convoyer">
+			<skills>
+				<skill name="platoon.combat.support.log.skills.Convoyer" main="true"/>
+			</skills>
+		</stage>
+	</stages>
+</task>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.RejoindreAToutPrix" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.GoTo">
+    <parameters>
+        <parameter name="objectif">
+            <type>
+                <class name="properties.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <next-task name="agent.frago.GoTo">
+        <parameter name="objectives">
+            <value>
+                <list>
+                    <parameter>objectif</parameter>
+                </list>
+            </value>
+        </parameter>
+    </next-task>
+</task>

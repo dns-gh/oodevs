@@ -904,7 +904,7 @@
     </target>   
  
     <target name="generate-database-france" depends="generate-database-military,generate-database-crowd" description="compile behavior model database france">
-        <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/crowd/src;${models.dir}/military/src" luac="false"/>
+        <bmc src="${models.dir}/france/src/" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/crowd/src;${models.dir}/military/src" luac="false"/>
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
     

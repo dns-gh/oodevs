@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.Animer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Animate">
+    <description>Animer un object tactique</description>
+    <parameters>
+        <parameter name="entities">
+            <description>Les objets à animer</description>
+            <type>
+                <list>
+                    <class name="properties.Animatable"/>
+                    <class name="properties.Animating"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Animer les objets.</description>
+    </goal>
+    <stages>
+        <stage label="Animation" disable-when-done="true">
+            <description>Animer les object</description>
+            <goal>
+                <description>Animer les objets</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.primitives.Animate" main="true" priority="1.0">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

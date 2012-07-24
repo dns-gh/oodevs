@@ -7,8 +7,7 @@ masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directi
                                        libPath .. "/models/common/src",
                                        libPath .. "/models/crowd/src",
                                        libPath .. "/models/military/src", 
-                                       libPath .. "/models/src" } )
-
+                                       libPath .. "/models/france/src" } )
 integration.ontology =
 {
     types =

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.skills.Engager" source-version="1.0.0">
-	<description>Ce skill engage l'entité.</description>
-</skill>

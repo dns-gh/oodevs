@@ -151,7 +151,7 @@ end
 integration.readyForLoad = function( unit )
     local unitSrc = unit.source
     local mission = DEC_GetRawMission( unitSrc )
-    if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "france.military.platoon.tasks.SeFaireTransporter" ) then
+    if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "platoon.tasks.SeFaireTransporter" ) then
         if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < 300 then -- $$$$ HARD CODDED VALUE
             return true 
         end
@@ -162,7 +162,7 @@ end
 integration.knowledgeReadyForLoad = function( knowledge )
     local knowledgeSrc = knowledge.source
     local mission = DEC_Connaissance_GetRawMission( knowledgeSrc )
-    if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "france.military.platoon.tasks.SeFaireTransporter" ) then
+    if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "platoon.tasks.SeFaireTransporter" ) then
         if DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < 300 then -- $$$$ HARD CODDED VALUE
             return true 
         end

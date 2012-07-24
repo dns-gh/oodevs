@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.tasks.RenseignerSur" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.RenseignerSur">
+  <description>Soutien dynamique. Appuyer par le mouvement.</description>
+  <parameters>
+    <parameter name="objective">
+      <type>
+        <class name="properties.Observable"/>
+        <class name="properties.Observing"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages/>
+  <next-task name="agent.tasks.Monitor">
+    <parameter name="objective">
+      <value>
+        <parameter>objective</parameter>
+      </value>
+    </parameter>
+    <parameter name="positions">
+      <value>
+        <list>
+          <parameter>objective</parameter>
+        </list>
+      </value>
+    </parameter>
+  </next-task>
+</task>
