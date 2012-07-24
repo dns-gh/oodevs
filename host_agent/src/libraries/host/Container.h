@@ -74,7 +74,7 @@ public:
     }
 
     template< typename U >
-    static void Adapter( const U& operand, T_ObjectPtr ptr )
+    static void Adapt( const U& operand, T_ObjectPtr ptr )
     {
         operand( *ptr );
     }
@@ -82,7 +82,7 @@ public:
     template< typename U >
     void ForeachRef( const U& operand, const T_Predicate& predicate = T_Predicate() ) const
     {
-        Foreach( boost::bind( &T_Container::Adapter< U >, boost::cref( operand ), _1 ), predicate );
+        Foreach( boost::bind( &T_Container::Adapt< U >, boost::cref( operand ), _1 ), predicate );
     }
 
     template< typename U >
