@@ -95,7 +95,7 @@ namespace
             const wrapper::View& component = perceiver[ "components" ].GetElement( i );
             for( std::size_t j = 0; j < component[ "sensors" ].GetSize(); ++j )
             {
-                const wrapper::View& sensor = component[ "components" ].GetElement( j );
+                const wrapper::View& sensor = component[ "sensors" ].GetElement( j );
                 const SensorType* sensorType = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
                 if( !sensorType )
                     throw std::invalid_argument( "Invalid sensor type : " + sensor[ "type" ] );
