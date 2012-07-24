@@ -79,6 +79,7 @@ public:
     virtual const std::string& GetDIAType() const;
 
     virtual int GetRulesOfEngagementState() const;
+    virtual E_OperationalState GetOperationalState() const;
 
     virtual int GeteEtatDec() const;
     virtual void SeteEtatDec( int value );

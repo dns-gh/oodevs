@@ -11,7 +11,9 @@
 #include "ProtectionCapacity.h"
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
@@ -116,13 +118,24 @@ void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
+    DEC_RolePion_Decision* decision = agent.RetrieveRole< DEC_RolePion_Decision >();
+    E_OperationalState opState = eOpStateOperational;
+    if( decision )
+        opState = decision->GetOperationalState();
     if( it != container_.end() )
     {
-        if( bGeniePrepared_ )
-            agent.GetRole< PHY_RoleInterface_Posture >().SetPosturePostePrepareGenie();
+        if( opState != eOpStateOperational )
+            container_.erase( it );
         else
-            agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
+        {
+            if( bGeniePrepared_ )
+                agent.GetRole< PHY_RoleInterface_Posture >().SetPosturePostePrepareGenie();
+            else
+                agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
+        }
     }
+    else if( opState == eOpStateOperational && static_cast< int >( container_.size() ) < size_max_ )
+        container_.insert( &agent );
 }
 
 // -----------------------------------------------------------------------------

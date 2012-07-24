@@ -1063,6 +1063,15 @@ int DEC_RolePion_Decision::GetRulesOfEngagementState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetOperationalState
+// Created: JSR 2012-07-24
+// -----------------------------------------------------------------------------
+E_OperationalState DEC_RolePion_Decision::GetOperationalState() const
+{
+    return nOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::NotifyCloseCombatStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
