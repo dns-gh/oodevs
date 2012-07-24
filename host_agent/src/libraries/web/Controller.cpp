@@ -219,27 +219,9 @@ Uuid Convert( const std::string& uuid )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: UuidDispatch
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-template< typename T >
-std::string UuidDispatch( const Request_ABC& request, const std::string& name, Agent_ABC& agent, T member )
+Uuid GetId( const Request_ABC& request, const std::string key = "id" )
 {
-    const std::string id = RequireParameter< std::string >( name, request );
-    return WriteHttpReply( CALL_MEMBER( agent, member )( Convert( id ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UuidDispatch
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-template< typename T >
-std::string UuidDispatch( const Request_ABC& request, const std::string& name, Agent_ABC& agent, T member, cpplog::BaseLogger& log, const std::string& function )
-{
-    const std::string id = RequireParameter< std::string >( name, request );
-    LOG_INFO( log ) << "[web] " << function << " id:" << id;
-    return WriteHttpReply( CALL_MEMBER( agent, member )( Convert( id ) ) );
+    return Convert( RequireParameter< std::string >( key, request ) );
 }
 }
 
@@ -252,8 +234,7 @@ std::string Controller::DoGet( Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
-        if( uri != "/is_authenticated" && !IsAuthenticated( request ) )
-            return WriteHttpReply( UNAUTHORIZED );
+        // cluster
         if( uri == "/get_cluster" )        return GetCluster( request );
         if( uri == "/start_cluster" )      return StartCluster( request );
         if( uri == "/stop_cluster" )       return StopCluster( request );
@@ -312,20 +293,6 @@ std::string Controller::DoGet( Request_ABC& request )
     return WriteHttpReply( NOT_FOUND );
 }
 
-namespace
-{
-// -----------------------------------------------------------------------------
-// Name: SkipAuthentication
-// Created: BAX 2012-07-05
-// -----------------------------------------------------------------------------
-bool SkipAuthentication( const std::string& uri )
-{
-    if( uri == "/login" ) return true;
-    if( uri == "/update_login" ) return true;
-    return false;
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: Controller::DoPost
 // Created: BAX 2012-03-07
@@ -335,8 +302,6 @@ std::string Controller::DoPost( Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
-        if( !SkipAuthentication( uri ) && !IsAuthenticated( request ) )
-            return WriteHttpReply( UNAUTHORIZED );
         if( uri == "/upload_cache" ) return UploadCache( request );
         if( uri == "/login" )        return UserLogin( request );
         if( uri == "/update_login" ) return UserUpdateLogin( request );
@@ -364,29 +329,32 @@ std::string Controller::DoPost( Request_ABC& request )
 // Name: Controller::GetCluster
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::GetCluster( const Request_ABC& /*request*/ )
+std::string Controller::GetCluster( const Request_ABC& request )
 {
-    return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::GetCluster )() );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.GetCluster() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StartCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-std::string Controller::StartCluster( const Request_ABC& /*request*/ )
+std::string Controller::StartCluster( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     LOG_INFO( log_ ) << "[web] start_cluster";
-    return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::StartCluster )() );
+    return WriteHttpReply( agent_.StartCluster() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::StopCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-std::string Controller::StopCluster( const Request_ABC& /*request*/ )
+std::string Controller::StopCluster( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     LOG_INFO( log_ ) << "[web] stop_cluster";
-    return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::StopCluster )() );
+    return WriteHttpReply( agent_.StopCluster() );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,6 +363,7 @@ std::string Controller::StopCluster( const Request_ABC& /*request*/ )
 // -----------------------------------------------------------------------------
 std::string Controller::ListNodes( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 10 );
     return WriteHttpReply( agent_.ListNodes( offset, limit ) );
@@ -404,8 +373,9 @@ std::string Controller::ListNodes( const Request_ABC& request )
 // Name: Controller::CountNodes
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::CountNodes( const Request_ABC& /*request*/ )
+std::string Controller::CountNodes( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     return WriteHttpReply( agent_.CountNodes() );
 }
 
@@ -415,7 +385,8 @@ std::string Controller::CountNodes( const Request_ABC& /*request*/ )
 // -----------------------------------------------------------------------------
 std::string Controller::GetNode( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetNode );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.GetNode( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -424,10 +395,11 @@ std::string Controller::GetNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CreateNode( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const std::string name = RequireParameter< std::string >( "name", request );
-    LOG_INFO( log_ ) << "[web] /create_node name: " << name;
     const int num_sessions = GetParameter( "num_sessions", request, 16 );
     const int parallel_sessions = GetParameter( "parallel_sessions", request, 4 );
+    LOG_INFO( log_ ) << "[web] /create_node name: " << name;
     return WriteHttpReply( agent_.CreateNode( name, num_sessions, parallel_sessions ) );
 }
 
@@ -437,7 +409,10 @@ std::string Controller::CreateNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteNode( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteNode, log_, "/delete_node" );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const std::string id = RequireParameter< std::string >( "id", request );
+    LOG_INFO( log_ ) << "[web] /delete_node id: " << id;
+    return WriteHttpReply( agent_.DeleteNode( Convert( id ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -446,7 +421,8 @@ std::string Controller::DeleteNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StartNode( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::StartNode );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.StartNode( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -455,7 +431,8 @@ std::string Controller::StartNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StopNode( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::StopNode );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.StopNode( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -464,10 +441,11 @@ std::string Controller::StopNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::UpdateNode( const Request_ABC& request )
 {
-    const std::string id = RequireParameter< std::string >( "id", request );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid id = GetId( request );
     const size_t num_sessions = RequireParameter< size_t >( "num_sessions", request );
     const size_t parallel_sessions = RequireParameter< size_t >( "parallel_sessions", request );
-    return WriteHttpReply( agent_.UpdateNode( Convert( id ), num_sessions, parallel_sessions ) );
+    return WriteHttpReply( agent_.UpdateNode( id, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -476,7 +454,8 @@ std::string Controller::UpdateNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetInstall( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetInstall );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.GetInstall( GetId( request ) ) );
 }
 
 namespace
@@ -503,6 +482,7 @@ std::string ListDispatch( const Request_ABC& request, const T& functor )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteInstall( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     return ListDispatch( request, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ) );
 }
 
@@ -512,7 +492,8 @@ std::string Controller::DeleteInstall( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetCache( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetCache );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.GetCache( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -521,7 +502,8 @@ std::string Controller::GetCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteCache( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteCache );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.DeleteCache( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -530,6 +512,7 @@ std::string Controller::DeleteCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::InstallFromCache( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     return ListDispatch( request, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
 }
 
@@ -539,10 +522,11 @@ std::string Controller::InstallFromCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListSessions( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid id = GetId( request, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 10 );
-    const std::string node = GetParameter( "node", request, std::string() );
-    return WriteHttpReply( agent_.ListSessions( Convert( node ), offset, limit ) );
+    return WriteHttpReply( agent_.ListSessions( id, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -551,8 +535,9 @@ std::string Controller::ListSessions( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CountSessions( const Request_ABC& request )
 {
-    const std::string node = GetParameter( "node", request, std::string() );
-    return WriteHttpReply( agent_.CountSessions( Convert( node ) ) );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid id = GetId( request, "node" );
+    return WriteHttpReply( agent_.CountSessions( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -561,7 +546,8 @@ std::string Controller::CountSessions( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetSession( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::GetSession );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.GetSession( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,6 +556,7 @@ std::string Controller::GetSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CreateSession( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const std::string node = RequireParameter< std::string >( "node", request );
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
     const std::string name = RequireParameter< std::string >( "name", request );
@@ -583,7 +570,10 @@ std::string Controller::CreateSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteSession( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteSession, log_, "/delete_session" );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const std::string id = RequireParameter< std::string >( "id", request );
+    LOG_INFO( log_ ) << "[web] /delete_session id: " << id;
+    return WriteHttpReply( agent_.DeleteSession( Convert( id ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -592,7 +582,8 @@ std::string Controller::DeleteSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StartSession( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::StartSession );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.StartSession( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -601,7 +592,8 @@ std::string Controller::StartSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StopSession( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::StopSession );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.StopSession( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -610,7 +602,8 @@ std::string Controller::StopSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::PauseSession( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::PauseSession );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.PauseSession( GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -619,7 +612,8 @@ std::string Controller::PauseSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListExercises( const Request_ABC& request )
 {
-    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid id = GetId( request );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 10 );
     return WriteHttpReply( agent_.ListExercises( id, offset, limit ) );
@@ -631,8 +625,8 @@ std::string Controller::ListExercises( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CountExercises( const Request_ABC& request )
 {
-    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
-    return WriteHttpReply( agent_.CountExercises( id ) );
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    return WriteHttpReply( agent_.CountExercises( GetId( request ) ) );
 }
 
 namespace
@@ -649,6 +643,7 @@ void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid
 // -----------------------------------------------------------------------------
 std::string Controller::UploadCache( Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const std::string id = RequireParameter< std::string >( "id", request );
     LOG_INFO( log_ ) << "[web] /upload_cache id: " << id;
     boost::optional< Tree > reply;
@@ -659,16 +654,19 @@ std::string Controller::UploadCache( Request_ABC& request )
     return WriteHttpReply( *reply );
 }
 
+namespace
+{
 // -----------------------------------------------------------------------------
-// Name: Controller::GetSource
+// Name: GetSource
 // Created: BAX 2012-07-02
 // -----------------------------------------------------------------------------
-std::string Controller::GetSource( const Request_ABC& request )
+std::string GetSource( const Request_ABC& request )
 {
     const boost::optional< std::string > opt = request.GetHeader( "Remote-Address" );
     if( opt == boost::none )
         return request.GetRemoteIp();
     return *opt;
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -678,17 +676,6 @@ std::string Controller::GetSource( const Request_ABC& request )
 std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 {
     return WriteHttpReply( users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controller::IsAuthenticated
-// Created: BAX 2012-07-02
-// -----------------------------------------------------------------------------
-bool Controller::IsAuthenticated( const Request_ABC& request )
-{
-    if( !secure_ )
-        return true;
-    return !users_.IsAuthenticated( request.GetSid(), GetSource( request ) ).empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -734,6 +721,7 @@ std::string Controller::UserUpdateLogin( Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListUsers( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit = GetParameter( "limit", request, 10 );
     return WriteHttpReply( users_.ListUsers( offset, limit ) );
@@ -745,6 +733,7 @@ std::string Controller::ListUsers( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CountUsers( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     return WriteHttpReply( users_.CountUsers() );
 }
 
@@ -754,6 +743,7 @@ std::string Controller::CountUsers( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetUser( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int id = RequireParameter< int >( "id", request );
     return WriteHttpReply( users_.GetUser( id ) );
 }
@@ -772,6 +762,7 @@ bool ToBool( const std::string& value )
 // -----------------------------------------------------------------------------
 std::string Controller::CreateUser( Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     request.ParseForm();
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
@@ -786,6 +777,7 @@ std::string Controller::CreateUser( Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteUser( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int id = RequireParameter< int >( "id", request );
     return WriteHttpReply( users_.DeleteUser( request.GetSid(), id ) );
 }
@@ -796,9 +788,26 @@ std::string Controller::DeleteUser( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::UpdateUser( const Request_ABC& request )
 {
+    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const int id = RequireParameter< int >( "id", request );
     const std::string user = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
     return WriteHttpReply( users_.UpdateUser( request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::Authenticate
+// Created: BAX 2012-07-23
+// -----------------------------------------------------------------------------
+void Controller::Authenticate( const Request_ABC& request, UserType type )
+{
+    if( !secure_ )
+        return;
+    const std::string token = request.GetSid();
+    const std::string source = GetSource( request );
+    const Tree user = users_.IsAuthenticated( token, source );
+    const boost::optional< std::string > opt = user.get_optional< std::string >( "type" );
+    if( opt == boost::none || ConvertUserType( *opt ) > type )
+        throw HttpException( web::UNAUTHORIZED );
 }

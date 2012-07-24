@@ -11,6 +11,7 @@
 #define CONTROLLER_H
 
 #include "Observer_ABC.h"
+#include "UserType.h"
 #include <string>
 
 namespace cpplog
@@ -23,7 +24,10 @@ namespace web
     struct Agent_ABC;
     struct Request_ABC;
     struct UserController_ABC;
+}
 
+namespace web
+{
 // =============================================================================
 /** @class  Controller
     @brief  Process controller
@@ -113,8 +117,8 @@ private:
 
     //! @name Helpers
     //@{
+    void        Authenticate   ( const Request_ABC& request, UserType type );
     bool        IsAuthenticated( const Request_ABC& request );
-    std::string GetSource      ( const Request_ABC& request );
     //@}
 
 private:

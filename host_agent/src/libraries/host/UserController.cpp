@@ -15,6 +15,7 @@
 #include "Sql_ABC.h"
 #include "UuidFactory_ABC.h"
 #include "web/HttpException.h"
+#include "web/UserType.h"
 
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/lexical_cast.hpp>
@@ -24,42 +25,7 @@
 
 using namespace host;
 using web::HttpException;
-
-namespace
-{
-enum UserType
-{
-    USER_TYPE_ADMINISTRATOR,
-    USER_TYPE_MANAGER,
-    USER_TYPE_USER,
-    USER_TYPE_COUNT,
-};
-
-// -----------------------------------------------------------------------------
-// Name: Convert
-// Created: BAX 2012-07-05
-// -----------------------------------------------------------------------------
-const char* Convert( UserType type )
-{
-    switch( type )
-    {
-        case USER_TYPE_ADMINISTRATOR:   return "administrator";
-        case USER_TYPE_MANAGER:         return "manager";
-    }
-    return "user";
-}
-
-// -----------------------------------------------------------------------------
-// Name: Convert
-// Created: BAX 2012-07-05
-// -----------------------------------------------------------------------------
-UserType Convert( const std::string& type )
-{
-    if( type == "administrator" )   return USER_TYPE_ADMINISTRATOR;
-    if( type == "manager" )         return USER_TYPE_MANAGER;
-    return USER_TYPE_USER;
-}
-}
+using web::UserType;
 
 // -----------------------------------------------------------------------------
 // Name: UserController::UserController
@@ -148,7 +114,7 @@ void CreateUser( Sql_ABC& db, Transaction& tr, const Crypt_ABC& crypt,
     st->Bind( username );
     st->Bind( crypt.Hash( password ) );
     st->Bind( name );
-    st->Bind( Convert( type ) );
+    st->Bind( ConvertUserType( type ) );
     st->Bind( temporary );
     st->Bind( lang );
     Execute( *st );
@@ -169,7 +135,7 @@ void MakeDefaultDatabase( const Crypt_ABC& crypt, Sql_ABC& db )
     Execute( *st );
     st.reset();
     CreateUser( db, *tr, crypt, "admin@masagroup.net", "Default", "admin",
-                USER_TYPE_ADMINISTRATOR, false, "eng" );
+                web::USER_TYPE_ADMINISTRATOR, false, "eng" );
     db.Commit( *tr );
 }
 
@@ -557,13 +523,13 @@ Tree UserController::CreateUser( const std::string& username, const std::string&
     try
     {
         Sql_ABC::T_Transaction tr = db_.Begin();
-        const UserType type = USER_TYPE_ADMINISTRATOR;
+        const UserType type = web::USER_TYPE_ADMINISTRATOR;
         const std::string lang = "eng";
         ::CreateUser( db_, *tr, crypt_, username, name, password, type, temporary, lang );
         db_.Commit( *tr );
         tr.reset();
         Tree tree;
-        PutUser( tree, static_cast< int >( db_.LastId() ), username, name, Convert( type ), temporary, lang );
+        PutUser( tree, static_cast< int >( db_.LastId() ), username, name, ConvertUserType( type ), temporary, lang );
         return tree;
     }
     catch( const SqlException& err )
