@@ -178,6 +178,8 @@ public:
     public:
                  UsageTemplateInfos();
         explicit UsageTemplateInfos( xml::xistream& input );
+        explicit UsageTemplateInfos( ADN_Urban_Data::AccommodationInfos& accomodation, ADN_Type_Int proportion );
+
         virtual ~UsageTemplateInfos();
 
         virtual std::string GetNodeName();
@@ -185,15 +187,33 @@ public:
         void Write( xml::xostream& output );
 
     public:
-        ADN_Type_String strName_;
+        ADN_TypePtr_InVector_ABC< AccommodationInfos > accommodation_;
+
+        //AccommodationInfos* accommodation_;
         ADN_Type_Int proportion_;
     };
 
-    typedef ADN_Type_Vector_ABC< UsageTemplateInfos >    T_UsageTemplateInfosVector;
-    typedef T_UsageTemplateInfosVector::iterator        IT_UsageTemplateInfosVector;
-    typedef T_UsageTemplateInfosVector::const_iterator CIT_UsageTemplateInfosVector;
 
 //*****************************************************************************
+
+public:
+    class T_UsageTemplateInfosVector : public ADN_Type_Vector_ABC< UsageTemplateInfos >
+    {
+    public:
+        explicit T_UsageTemplateInfosVector( ADN_Ref_ABC* parent, bool bAutoRef = true, const char* szName = 0 );
+        virtual ~T_UsageTemplateInfosVector();
+
+    protected:
+        virtual bool AddItemPrivate( void* pObj, bool bCreateCommand = false );
+
+    private:
+        ADN_Ref_ABC* parent_;
+    };
+
+    typedef T_UsageTemplateInfosVector::iterator        IT_UsageTemplateInfosVector;
+    typedef T_UsageTemplateInfosVector::const_iterator CIT_UsageTemplateInfosVector;
+//*****************************************************************************
+
 public:
     class UrbanTemplateInfos : public ADN_Ref_ABC
                              , public ADN_DataTreeNode_ABC

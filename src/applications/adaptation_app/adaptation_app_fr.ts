@@ -5740,6 +5740,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
         <translation>Urbain - Type de toit invalide &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
+        <translation">Urbain - Type d'activité invalide &apos;%1&apos</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>

@@ -34,7 +34,7 @@ public:
         tab_.setItem( nRow, 0, pItemName );
         tab_.setItem( nRow, 1, pItemValue );
         pItemName->setEnabled( false );
-        pItemName->GetConnector().Connect( &pInfos->strName_ );
+        pItemName->GetConnector().Connect( &pInfos->accommodation_.GetData()->strName_ );
         pItemValue->GetConnector().Connect( &pInfos->proportion_ );
     }
 
@@ -107,9 +107,8 @@ void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint&
     else
     {
         ADN_Urban_Data::AccommodationInfos* pResult = (ADN_Urban_Data::AccommodationInfos*)nMenuResult;
-        ADN_Urban_Data::UsageTemplateInfos* pNewInfo = new ADN_Urban_Data::UsageTemplateInfos();
-        pNewInfo->proportion_ = 0;
-        pNewInfo->strName_ = pResult->strName_.GetData();
+        ADN_Urban_Data::UsageTemplateInfos* pNewInfo = new ADN_Urban_Data::UsageTemplateInfos( *pResult, 0 );
+
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );
@@ -128,7 +127,7 @@ bool ADN_Template_Usages::Contains( ADN_Urban_Data::AccommodationInfos& accommod
     {
         ADN_TableItem_ABC* pItem = static_cast< ADN_TableItem_ABC* >( item( n, 1 ) );
         ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( pItem->GetData() );
-        if( pInfos->strName_.GetData() == accommodation.strName_.GetData() )
+        if( pInfos->accommodation_.GetData()->strName_.GetData() == accommodation.strName_.GetData() )
             return true;
         ++n;
     }

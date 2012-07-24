@@ -5706,6 +5706,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
