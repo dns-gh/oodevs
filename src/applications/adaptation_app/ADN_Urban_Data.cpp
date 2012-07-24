@@ -684,6 +684,37 @@ std::string ADN_Urban_Data::InfrastructureInfos::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::T_UsageTemplateInfosVector
+// Created: NPT 2012-07-24
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::T_UsageTemplateInfosVector::T_UsageTemplateInfosVector( ADN_Ref_ABC* parent, bool bAutoRef /*= true*/, const char* szName /*= 0*/ )
+    : ADN_Type_Vector_ABC< UsageTemplateInfos >( bAutoRef, szName )
+    , parent_( parent )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::~T_UsageTemplateInfosVector
+// Created: NPT 2012-07-24
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::T_UsageTemplateInfosVector::~T_UsageTemplateInfosVector()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AddItemPrivate
+// Created: NPT 2012-07-24
+// -----------------------------------------------------------------------------
+bool ADN_Urban_Data::T_UsageTemplateInfosVector::AddItemPrivate( void* pObj, bool bCreateCommand /*= false*/ )
+{
+    if( parent_ && pObj )
+        parent_->BindExistenceTo( &static_cast< UsageTemplateInfos* >( pObj )->accommodation_ );
+    return ADN_Type_Vector_ABC< UsageTemplateInfos >::AddItemPrivate( pObj, bCreateCommand );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::UrbanTemplateInfos
 // Created: LGY 2011-09-20
 // -----------------------------------------------------------------------------
@@ -697,6 +728,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos()
     , trafficability_( 0 )
     , ptrMaterial_   ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), 0 )
     , ptrRoofShape_  ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), 0 )
+    , usages_        ( this )
 {
     BindExistenceTo( &ptrMaterial_ );
     BindExistenceTo( &ptrRoofShape_ );
@@ -710,6 +742,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
     : strName_     ( input.attribute< std::string >( "name" ) )
     , ptrMaterial_ ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), 0 )
     , ptrRoofShape_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), 0 )
+    , usages_      ( this )
 {
     BindExistenceTo( &ptrMaterial_ );
     BindExistenceTo( &ptrRoofShape_ );
@@ -763,7 +796,8 @@ ADN_Urban_Data::UrbanTemplateInfos::~UrbanTemplateInfos()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UrbanTemplateInfos::ReadUsage( xml::xistream& xis )
 {
-    usages_.AddItem( new UsageTemplateInfos( xis ) );
+    UsageTemplateInfos* usageTemplate = new UsageTemplateInfos( xis );
+    usages_.AddItem( usageTemplate );
 }
 
 // -----------------------------------------------------------------------------
@@ -886,8 +920,8 @@ void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
-    : strName_   ( "" )
-    , proportion_( 0 )
+    : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
+    , proportion_   ( 100 )
 {
     // NOTHING
 }
@@ -897,8 +931,23 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
-    : strName_   ( input.attribute< std::string >( "type" ) )
-    , proportion_( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) )
+    : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
+    , proportion_   ( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) ) 
+{
+    std::string type = input.attribute< std::string >( "type" );
+    ADN_Urban_Data::AccommodationInfos* accomodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( type );
+    if( !accomodation )
+        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid accomodation type '%1'" ).arg( type.c_str() ).toUtf8().constData() );
+    accommodation_ = accomodation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::UsageTemplateInfos
+// Created: LGY 2011-09-21
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( ADN_Urban_Data::AccommodationInfos& accomodation, ADN_Type_Int proportion )
+    : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation )
+    , proportion_   ( proportion.GetData() ) 
 {
     // NOTHING
 }
@@ -920,7 +969,7 @@ void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
 {
     double proportion = static_cast< double >( proportion_.GetData() ) / 100.f;
     output << xml::start( "usage" )
-           << xml::attribute( "type", strName_ )
+           << xml::attribute( "type", accommodation_.GetData()->strName_ )
            << xml::attribute( "proportion", proportion )
            << xml::end;
 }
@@ -940,5 +989,5 @@ std::string ADN_Urban_Data::UsageTemplateInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Urban_Data::UsageTemplateInfos::GetItemName()
 {
-    return strName_.GetData();
+    return accommodation_.GetData()->strName_.GetData();
 }
