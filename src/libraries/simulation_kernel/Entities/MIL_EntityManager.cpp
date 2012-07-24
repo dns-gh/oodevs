@@ -479,7 +479,17 @@ void MIL_EntityManager::Finalize()
     armyFactory_->Finalize();
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
     inhabitantFactory_->Finalize();
+    FinalizeObjects();
     UpdateStates();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FinalizeObjects
+// Created: JSR 2012-07-24
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::FinalizeObjects()
+{
+    pObjectManager_->FinalizeObjects();
 }
 
 // -----------------------------------------------------------------------------
@@ -495,8 +505,6 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
     xis >> xml::start( "parties" )
         >> xml::list( "party", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
         >> xml::end;
-
-    pObjectManager_->FinalizeObjects();
 }
 
 // -----------------------------------------------------------------------------

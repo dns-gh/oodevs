@@ -160,6 +160,7 @@ public:
     void Update();
     void Clean();
     void Finalize();
+    void FinalizeObjects();
     //@}
 
     //! @external helper

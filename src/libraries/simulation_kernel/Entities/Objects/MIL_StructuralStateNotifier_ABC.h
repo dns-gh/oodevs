@@ -10,8 +10,6 @@
 #ifndef __MIL_StructuralStateNotifier_ABC_h_
 #define __MIL_StructuralStateNotifier_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_Object_ABC;
 
 // =============================================================================
@@ -20,7 +18,7 @@ class MIL_Object_ABC;
 */
 // Created: JSR 2011-01-14
 // =============================================================================
-class MIL_StructuralStateNotifier_ABC : boost::noncopyable
+class MIL_StructuralStateNotifier_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -16,6 +16,7 @@
 #include "CrowdCapacity.h"
 #include "FloodAttribute.h"
 #include "LogisticAttribute.h"
+#include "UndergroundCapacity.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectLoader.h"
@@ -70,7 +71,6 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
         if( it->second->IsUniversal() )
             universalObjects_.insert( it->second );
     }
-    FinalizeObjects();
 }
 
 // -----------------------------------------------------------------------------
@@ -347,6 +347,8 @@ void MIL_ObjectManager::FinalizeObjects()
             altitude->ModifyAltitude( it->second->GetLocalisation() );
         if( LogisticAttribute* logistic = it->second->RetrieveAttribute< LogisticAttribute >() )
             logistic->Finalize();
+        if( UndergroundCapacity* underground = it->second->Retrieve< UndergroundCapacity >() )
+            underground->RegisterUrbanBlock( *it->second );
     }
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
         if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )

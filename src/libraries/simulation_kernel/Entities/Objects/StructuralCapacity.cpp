@@ -210,12 +210,14 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation )
 {
-    const double area = object.GetLocalisation().GetArea();
     const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
-    // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
-    if( area == 0 || materialAttribute == 0 )
+    if( !materialAttribute )
         return;
-    structuralState_ = (float)std::max( 0., (double)structuralState_ - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) / area );
+    const double area = object.GetLocalisation().GetArea();
+    // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
+    if( area == 0 )
+        return;
+    structuralState_ = static_cast< float >( std::max( 0., structuralState_ - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) / area ) );
     object.ApplyStructuralState( structuralState_ );
 }
 
@@ -328,7 +330,7 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
         for( ; start != points.end(); ++start, ++end )
         {
             if( end == points.end() )
-                end =points.begin();
+                end = points.begin();
             MT_Line line( *start, *end );
             if( surface.Intersect2D( line ) )
                 lines.push_back( line );
@@ -342,7 +344,7 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
             {
                 MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
                 if( mineAttribute )
-                    mineAttribute->Set(0.);//default valorization is set to 100%
+                    mineAttribute->Set( 0. );//default valorization is set to 100%
             }
         }
 

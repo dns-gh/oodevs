@@ -416,6 +416,8 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> nInitialRealTime_
          >> nRealTime_
          >> localTime_;
+    if( pEntityManager_ )
+        pEntityManager_->FinalizeObjects();
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
