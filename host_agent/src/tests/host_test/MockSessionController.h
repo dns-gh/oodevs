@@ -23,13 +23,12 @@ namespace mocks
         MOCK_METHOD( Reload, 1 );
         MOCK_METHOD( List, 3 );
         MOCK_METHOD( Count, 1 );
-        MOCK_METHOD( Has, 1 );
-        MOCK_METHOD( Get, 1 );
+        MOCK_METHOD( Get, 2 );
         MOCK_METHOD( Create, 3 );
-        MOCK_METHOD( Delete, 1 );
-        MOCK_METHOD( Start, 1 );
-        MOCK_METHOD( Stop, 1 );
-        MOCK_METHOD( Pause, 1 );
+        MOCK_METHOD( Delete, 2 );
+        MOCK_METHOD( Start, 2 );
+        MOCK_METHOD( Stop, 2 );
+        MOCK_METHOD( Pause, 2 );
     };
 };
 

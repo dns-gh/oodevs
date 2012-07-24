@@ -74,6 +74,15 @@ Tree Dispatch( T& controller, const U& member, const Uuid& id )
 }
 
 template< typename T, typename U >
+Tree DispatchNode( T& controller, const U& member, const Uuid& node, const Uuid& id )
+{
+    boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( node, id );
+    if( !ptr )
+        throw HttpException( web::NOT_FOUND );
+    return ptr->GetProperties();
+}
+
+template< typename T, typename U >
 Tree ClusterDispatch( T* controller, const U& member, const Uuid& id )
 {
     if( !controller )
@@ -195,7 +204,7 @@ Tree Agent::DeleteNode( const Uuid& id )
     }
     // destroy objects outside the lock
     BOOST_FOREACH( SessionController_ABC::T_Session ptr, invalid )
-        sessions_.Delete( ptr->GetId() );
+        sessions_.Delete( id, ptr->GetId() );
     return Tree( ptr->GetProperties() );
 }
 
@@ -311,9 +320,9 @@ size_t Agent::CountSessions( const Uuid& node ) const
 // Name: Agent::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Tree Agent::GetSession( const Uuid& id ) const
+Tree Agent::GetSession( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Get, id );
+    return DispatchNode( sessions_, &SessionController_ABC::Get, node, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,36 +339,36 @@ Tree Agent::CreateSession( const Uuid& node, const std::string& name, const std:
 // Name: Agent::DeleteSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Tree Agent::DeleteSession( const Uuid& id )
+Tree Agent::DeleteSession( const Uuid& node, const Uuid& id )
 {
-    return Dispatch( sessions_, &SessionController_ABC::Delete, id );
+    return DispatchNode( sessions_, &SessionController_ABC::Delete, node, id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::StartSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Tree Agent::StartSession( const Uuid& id ) const
+Tree Agent::StartSession( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Start, id );
+    return DispatchNode( sessions_, &SessionController_ABC::Start, node, id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::StopSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
-Tree Agent::StopSession( const Uuid& id ) const
+Tree Agent::StopSession( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Stop, id );
+    return DispatchNode( sessions_, &SessionController_ABC::Stop, node, id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::PauseSession
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-Tree Agent::PauseSession( const Uuid& id ) const
+Tree Agent::PauseSession( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( sessions_, &SessionController_ABC::Pause, id );
+    return DispatchNode( sessions_, &SessionController_ABC::Pause, node, id );
 }
 
 // -----------------------------------------------------------------------------

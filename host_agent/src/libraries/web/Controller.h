@@ -14,6 +14,14 @@
 #include "UserType.h"
 #include <string>
 
+namespace boost
+{
+namespace uuids
+{
+    struct uuid;
+};
+}
+
 namespace cpplog
 {
     class BaseLogger;
@@ -24,6 +32,7 @@ namespace web
     struct Agent_ABC;
     struct Request_ABC;
     struct UserController_ABC;
+    typedef boost::uuids::uuid Uuid;
 }
 
 namespace web
@@ -117,8 +126,8 @@ private:
 
     //! @name Helpers
     //@{
-    void        Authenticate   ( const Request_ABC& request, UserType type );
-    bool        IsAuthenticated( const Request_ABC& request );
+    void Authenticate( const Request_ABC& request, UserType required );
+    Uuid AuthenticateNode( const Request_ABC& request, UserType required, const std::string& id );
     //@}
 
 private:

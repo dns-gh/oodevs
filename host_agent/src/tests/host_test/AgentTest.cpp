@@ -252,7 +252,7 @@ BOOST_FIXTURE_TEST_CASE( agent_delete_node, Fixture<> )
 {
     MOCK_EXPECT( nodes.Delete ).once().with( defaultNode ).returns( node );
     MOCK_EXPECT( sessions.List ).with( boost::bind( &Fixture::CheckIsNodePredicate, this, _1, defaultNode ), 0, mock::any ).once().returns( boost::assign::list_of( mockSessions[0] ) );
-    MOCK_EXPECT( sessions.Delete ).once().with( mockSessions[0]->GetId() ).returns( mockSessions[0] );
+    MOCK_EXPECT( sessions.Delete ).once().with( defaultNode, mockSessions[0]->GetId() ).returns( mockSessions[0] );
     CheckTree( boost::bind( &Agent_ABC::DeleteNode, &agent, defaultNode ), ToJson( node->GetProperties() ) );
 }
 
@@ -285,8 +285,8 @@ BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture<> )
 {
-    MOCK_EXPECT( sessions.Get ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckTree( boost::bind( &Agent_ABC::GetSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    MOCK_EXPECT( sessions.Get ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckTree( boost::bind( &Agent_ABC::GetSession, &agent, anotherNode, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture<> )
@@ -302,20 +302,20 @@ BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture<> )
 {
-    MOCK_EXPECT( sessions.Delete ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckTree( boost::bind( &Agent_ABC::DeleteSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    MOCK_EXPECT( sessions.Delete ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckTree( boost::bind( &Agent_ABC::DeleteSession, &agent, anotherNode, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_start_session, Fixture<> )
 {
-    MOCK_EXPECT( sessions.Start ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    MOCK_EXPECT( sessions.Start ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckTree( boost::bind( &Agent_ABC::StartSession, &agent, anotherNode, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_session, Fixture<> )
 {
-    MOCK_EXPECT( sessions.Stop ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
-    CheckTree( boost::bind( &Agent_ABC::StopSession, &agent, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
+    MOCK_EXPECT( sessions.Stop ).once().with( anotherNode, mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckTree( boost::bind( &Agent_ABC::StopSession, &agent, anotherNode, mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture<> )

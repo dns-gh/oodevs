@@ -26,6 +26,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 using namespace web;
 using namespace property_tree;
@@ -184,7 +185,7 @@ T GetParameter( const std::string& name, const Request_ABC& data, const T& value
     }
     catch( const boost::bad_lexical_cast& /*err*/ )
     {
-        throw HttpException( BAD_REQUEST, "invalid parameter \"" + name + "\"=\""  + *option + "\"" );
+        throw HttpException( BAD_REQUEST );
     }
 }
 
@@ -197,7 +198,7 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
 {
     const boost::optional< std::string > value = request.GetParameter( name );
     if( value == boost::none )
-        throw HttpException( BAD_REQUEST, "missing " + name + " parameter" );
+        throw HttpException( BAD_REQUEST );
     return boost::lexical_cast< T >( *value );
 }
 
@@ -215,13 +216,13 @@ Uuid Convert( const std::string& uuid )
     }
     catch( const std::runtime_error& /*err*/ )
     {
-        throw HttpException( BAD_REQUEST, "invalid \"uuid\" " + uuid );
+        throw HttpException( BAD_REQUEST );
     }
 }
 
-Uuid GetId( const Request_ABC& request, const std::string key = "id" )
+Uuid GetId( const Request_ABC& request )
 {
-    return Convert( RequireParameter< std::string >( key, request ) );
+    return Convert( RequireParameter< std::string >( "id", request ) );
 }
 }
 
@@ -454,16 +455,15 @@ std::string Controller::UpdateNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetInstall( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.GetInstall( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    return WriteHttpReply( agent_.GetInstall( node ) );
 }
 
 namespace
 {
 template< typename T >
-std::string ListDispatch( const Request_ABC& request, const T& functor )
+std::string ListDispatch( const Request_ABC& request, const Uuid& id, const T& functor )
 {
-    const Uuid id = Convert( RequireParameter< std::string >( "id", request ) );
     const std::string join = RequireParameter< std::string >( "items", request );
     std::vector< std::string > tokens;
     boost::algorithm::split( tokens, join, boost::is_any_of( "," ) );
@@ -482,8 +482,8 @@ std::string ListDispatch( const Request_ABC& request, const T& functor )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteInstall( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return ListDispatch( request, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
+    return ListDispatch( request, node, boost::bind( &Agent_ABC::DeleteInstall, &agent_, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,8 +492,10 @@ std::string Controller::DeleteInstall( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetCache( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.GetCache( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
+    return WriteHttpReply( agent_.GetCache( node ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -502,8 +504,10 @@ std::string Controller::GetCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteCache( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.DeleteCache( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
+    return WriteHttpReply( agent_.DeleteCache( node ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -512,8 +516,10 @@ std::string Controller::DeleteCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::InstallFromCache( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return ListDispatch( request, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
+    return ListDispatch( request, node, boost::bind( &Agent_ABC::InstallFromCache, &agent_, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -522,11 +528,10 @@ std::string Controller::InstallFromCache( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListSessions( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const Uuid id = GetId( request, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 10 );
-    return WriteHttpReply( agent_.ListSessions( id, offset, limit ) );
+    return WriteHttpReply( agent_.ListSessions( node, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -535,9 +540,8 @@ std::string Controller::ListSessions( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CountSessions( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const Uuid id = GetId( request, "node" );
-    return WriteHttpReply( agent_.CountSessions( id ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    return WriteHttpReply( agent_.CountSessions( node ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -546,8 +550,8 @@ std::string Controller::CountSessions( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetSession( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.GetSession( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
+    return WriteHttpReply( agent_.GetSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -556,12 +560,13 @@ std::string Controller::GetSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CreateSession( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const std::string node = RequireParameter< std::string >( "node", request );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << name << " exercise: " << exercise;
-    return WriteHttpReply( agent_.CreateSession( Convert( node ), name, exercise ) );
+    return WriteHttpReply( agent_.CreateSession( node, name, exercise ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,10 +575,10 @@ std::string Controller::CreateSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteSession( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const std::string id = RequireParameter< std::string >( "id", request );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid id = GetId( request );
     LOG_INFO( log_ ) << "[web] /delete_session id: " << id;
-    return WriteHttpReply( agent_.DeleteSession( Convert( id ) ) );
+    return WriteHttpReply( agent_.DeleteSession( node, id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -582,8 +587,8 @@ std::string Controller::DeleteSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StartSession( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.StartSession( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    return WriteHttpReply( agent_.StartSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -592,8 +597,8 @@ std::string Controller::StartSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StopSession( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.StopSession( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    return WriteHttpReply( agent_.StopSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -602,8 +607,8 @@ std::string Controller::StopSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::PauseSession( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.PauseSession( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    return WriteHttpReply( agent_.PauseSession( node, GetId( request ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -612,11 +617,12 @@ std::string Controller::PauseSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListExercises( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const Uuid id = GetId( request );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit  = GetParameter( "limit",  request, 10 );
-    return WriteHttpReply( agent_.ListExercises( id, offset, limit ) );
+    return WriteHttpReply( agent_.ListExercises( node, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -625,8 +631,10 @@ std::string Controller::ListExercises( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CountExercises( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( agent_.CountExercises( GetId( request ) ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
+    return WriteHttpReply( agent_.CountExercises( node ) );
 }
 
 namespace
@@ -643,11 +651,12 @@ void OnUploadCache( boost::optional< Tree >& reply, Agent_ABC& agent, const Uuid
 // -----------------------------------------------------------------------------
 std::string Controller::UploadCache( Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const std::string id = RequireParameter< std::string >( "id", request );
-    LOG_INFO( log_ ) << "[web] /upload_cache id: " << id;
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "id" );
+    if( node.is_nil() )
+        throw HttpException( web::BAD_REQUEST );
+    LOG_INFO( log_ ) << "[web] /upload_cache id: " << node;
     boost::optional< Tree > reply;
-    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), Convert( id ), _1 ) );
+    request.RegisterMime( "cache", boost::bind( &OnUploadCache, boost::ref( reply ), boost::ref( agent_ ), node, _1 ) );
     request.ParseMime();
     if( reply == boost::none )
         return WriteHttpReply( NOT_FOUND );
@@ -721,10 +730,10 @@ std::string Controller::UserUpdateLogin( Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::ListUsers( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int offset = GetParameter( "offset", request, 0 );
     const int limit = GetParameter( "limit", request, 10 );
-    return WriteHttpReply( users_.ListUsers( boost::uuids::nil_uuid(), offset, limit ) );
+    return WriteHttpReply( users_.ListUsers( node, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -733,8 +742,8 @@ std::string Controller::ListUsers( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CountUsers( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    return WriteHttpReply( users_.CountUsers( boost::uuids::nil_uuid() ) );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    return WriteHttpReply( users_.CountUsers( node ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -743,9 +752,9 @@ std::string Controller::CountUsers( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetUser( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
-    return WriteHttpReply( users_.GetUser( boost::uuids::nil_uuid(), id ) );
+    return WriteHttpReply( users_.GetUser( node, id ) );
 }
 
 namespace
@@ -762,13 +771,14 @@ bool ToBool( const std::string& value )
 // -----------------------------------------------------------------------------
 std::string Controller::CreateUser( Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
     request.ParseForm();
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const std::string username = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string password = RequireParameter< std::string >( "password", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    return WriteHttpReply( users_.CreateUser( boost::uuids::nil_uuid(), username, name, password, USER_TYPE_ADMINISTRATOR, ToBool( temporary ) ) );
+    const UserType type = ConvertUserType( RequireParameter< std::string >( "type", request ) );
+    return WriteHttpReply( users_.CreateUser( node, username, name, password, type, ToBool( temporary ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -777,9 +787,9 @@ std::string Controller::CreateUser( Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteUser( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
-    return WriteHttpReply( users_.DeleteUser( boost::uuids::nil_uuid(), request.GetSid(), id ) );
+    return WriteHttpReply( users_.DeleteUser( node, request.GetSid(), id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -788,26 +798,73 @@ std::string Controller::DeleteUser( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::UpdateUser( const Request_ABC& request )
 {
-    Authenticate( request, USER_TYPE_ADMINISTRATOR );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
     const int id = RequireParameter< int >( "id", request );
     const std::string user = RequireParameter< std::string >( "username", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
-    return WriteHttpReply( users_.UpdateUser( boost::uuids::nil_uuid(), request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
+    return WriteHttpReply( users_.UpdateUser( node, request.GetSid(), id, user, name, ToBool( temporary ), request.GetParameter( "password" ) ) );
+}
+
+namespace
+{
+UserType ValidateType( const Tree& user, UserType required )
+{
+    const boost::optional< std::string > opt = user.get_optional< std::string >( "type" );
+    if( opt == boost::none )
+        throw HttpException( web::UNAUTHORIZED );
+    const UserType type = ConvertUserType( *opt );
+    if( type > required )
+        throw HttpException( web::UNAUTHORIZED );
+    return type;
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Controller::Authenticate
 // Created: BAX 2012-07-23
 // -----------------------------------------------------------------------------
-void Controller::Authenticate( const Request_ABC& request, UserType type )
+void Controller::Authenticate( const Request_ABC& request, UserType required )
 {
     if( !secure_ )
         return;
-    const std::string token = request.GetSid();
-    const std::string source = GetSource( request );
-    const Tree user = users_.IsAuthenticated( token, source );
-    const boost::optional< std::string > opt = user.get_optional< std::string >( "type" );
-    if( opt == boost::none || ConvertUserType( *opt ) > type )
-        throw HttpException( web::UNAUTHORIZED );
+    const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+    ValidateType( user, required );
+}
+
+namespace
+{
+Uuid MaybeUuid( const boost::optional< std::string >& opt )
+{
+    if( opt == boost::none )
+        return boost::uuids::nil_uuid();
+    else
+        return Convert( *opt );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::Authenticate
+// Created: BAX 2012-07-23
+// -----------------------------------------------------------------------------
+web::Uuid Controller::AuthenticateNode( const Request_ABC& request, UserType required, const std::string& key )
+{
+    const boost::optional< std::string > optional = request.GetParameter( key );
+    if( !secure_ )
+        return MaybeUuid( optional );
+
+    const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+    const UserType type = ValidateType( user, required );
+    if( type == USER_TYPE_ADMINISTRATOR )
+        return MaybeUuid( optional );
+
+    const boost::optional< std::string > implicit = user.get_optional< std::string >( "node" );
+    if( implicit == boost::none )
+        throw HttpException( web::INTERNAL_SERVER_ERROR );
+
+    if( optional != boost::none )
+        if( *optional != *implicit )
+            throw HttpException( web::BAD_REQUEST );
+
+    return Convert( *implicit );
 }

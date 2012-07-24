@@ -55,15 +55,14 @@ struct SessionController_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual void        Reload( T_Predicate predicate ) = 0;
-    virtual T_Sessions  List( T_Predicate predicate, int offset, int limit ) const = 0;
-    virtual size_t      Count( T_Predicate predicate ) const = 0;
-    virtual bool        Has( const Uuid& id ) const = 0;
-    virtual T_Session   Get( const Uuid& id ) const = 0;
+    virtual T_Sessions  List  ( T_Predicate predicate, int offset, int limit ) const = 0;
+    virtual size_t      Count ( T_Predicate predicate ) const = 0;
+    virtual T_Session   Get   ( const Uuid& node, const Uuid& id ) const = 0;
     virtual T_Session   Create( const Uuid& node, const std::string& name, const std::string& exercise ) = 0;
-    virtual T_Session   Delete( const Uuid& id ) = 0;
-    virtual T_Session   Start( const Uuid& id ) const = 0;
-    virtual T_Session   Stop( const Uuid& id ) const = 0;
-    virtual T_Session   Pause( const Uuid& id ) const = 0;
+    virtual T_Session   Delete( const Uuid& node, const Uuid& id ) = 0;
+    virtual T_Session   Start ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Stop  ( const Uuid& node, const Uuid& id ) const = 0;
+    virtual T_Session   Pause ( const Uuid& node, const Uuid& id ) const = 0;
     //@}
 };
 }

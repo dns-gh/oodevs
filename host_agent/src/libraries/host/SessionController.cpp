@@ -180,21 +180,16 @@ size_t SessionController::Count( T_Predicate predicate ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SessionController::Has
-// Created: BAX 2012-04-20
-// -----------------------------------------------------------------------------
-bool SessionController::Has( const Uuid& id ) const
-{
-    return sessions_.Has( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SessionController::Get
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Get( const Uuid& id ) const
+SessionController::T_Session SessionController::Get( const Uuid& node, const Uuid& id ) const
 {
-    return sessions_.Get( id );
+    T_Session ptr = sessions_.Get( id );
+    if( !node.is_nil() )
+        if( ptr && ptr->GetNode() != node )
+            return T_Session();
+    return ptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,11 +232,13 @@ void SessionController::Save( const Session_ABC& session ) const
 // Name: SessionController::Delete
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Delete( const Uuid& id )
+SessionController::T_Session SessionController::Delete( const Uuid& node, const Uuid& id )
 {
     boost::shared_ptr< Session_ABC > session = sessions_.Detach( id );
     if( !session )
         return session;
+    if( !node.is_nil() && node != session->GetNode() )
+        return T_Session();
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
     async_.Go( boost::bind( &Session_ABC::Remove, session ) );
     return session;
@@ -252,11 +249,14 @@ SessionController::T_Session SessionController::Delete( const Uuid& id )
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
 template< typename T >
-SessionController::T_Session SessionController::Dispatch( const Uuid& id, const T& operand ) const
+SessionController::T_Session SessionController::Dispatch( const Uuid& node, const Uuid& id, const T& operand ) const
 {
     SessionController::T_Session ptr = sessions_.Get( id );
-    if( ptr  )
-        Apply( ptr, operand );
+    if( !ptr )
+        return ptr;
+    if( !node.is_nil() && node != ptr->GetNode() )
+        return T_Session();
+    Apply( ptr, operand );
     return ptr;
 }
 
@@ -264,25 +264,25 @@ SessionController::T_Session SessionController::Dispatch( const Uuid& id, const 
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Start( const Uuid& id ) const
+SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( apps_ ) ) );
+    return Dispatch( node, id, boost::bind( &Session_ABC::Start, _1, boost::cref( runtime_ ), boost::cref( apps_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Stop
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Stop( const Uuid& id ) const
+SessionController::T_Session SessionController::Stop( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( id, boost::bind( &Session_ABC::Stop, _1 ) );
+    return Dispatch( node, id, boost::bind( &Session_ABC::Stop, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SessionController::Pause
 // Created: BAX 2012-06-19
 // -----------------------------------------------------------------------------
-SessionController::T_Session SessionController::Pause( const Uuid& id ) const
+SessionController::T_Session SessionController::Pause( const Uuid& node, const Uuid& id ) const
 {
-    return Dispatch( id, boost::bind( &Session_ABC::Pause, _1 ) );
+    return Dispatch( node, id, boost::bind( &Session_ABC::Pause, _1 ) );
 }

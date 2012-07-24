@@ -77,12 +77,12 @@ namespace
         // sessions
         MOCK_METHOD( ListSessions, 3 );
         MOCK_METHOD( CountSessions, 1 );
-        MOCK_METHOD( GetSession, 1 );
+        MOCK_METHOD( GetSession, 2 );
         MOCK_METHOD( CreateSession, 3 );
-        MOCK_METHOD( DeleteSession, 1 );
-        MOCK_METHOD( StartSession, 1 );
-        MOCK_METHOD( StopSession, 1 );
-        MOCK_METHOD( PauseSession, 1 );
+        MOCK_METHOD( DeleteSession, 2 );
+        MOCK_METHOD( StartSession, 2 );
+        MOCK_METHOD( StopSession, 2 );
+        MOCK_METHOD( PauseSession, 2 );
         // exercises
         MOCK_METHOD( ListExercises, 3 );
         MOCK_METHOD( CountExercises, 1 );
@@ -297,7 +297,8 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
 {
     SetRequest( "GET", "/get_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.GetSession ).once().with( defaultId ).returns( FromJson( expected ) );
+    MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+    MOCK_EXPECT( agent.GetSession ).once().with( mock::any, defaultId ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
@@ -319,14 +320,15 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_return
 {
     MOCK_EXPECT( request.GetUri ).once().returns( "/create_session" );
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
-    CheckReply( 400, "missing node parameter", controller.DoGet( request ) );
+    CheckReply( 400, std::string(), controller.DoGet( request ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
 {
     SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.DeleteSession ).once().with( defaultId ).returns( FromJson( expected ) );
+    MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+    MOCK_EXPECT( agent.DeleteSession ).once().with( mock::any, defaultId ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
@@ -334,7 +336,8 @@ BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
 {
     SetRequest( "GET", "/start_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.StartSession ).once().with( defaultId ).returns( FromJson( expected ) );
+    MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+    MOCK_EXPECT( agent.StartSession ).once().with( mock::any, defaultId ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
@@ -342,7 +345,8 @@ BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
 {
     SetRequest( "GET", "/stop_session", boost::assign::map_list_of( "id", defaultIdString ) );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.StopSession ).once().with( defaultId ).returns( FromJson( expected ) );
+    MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+    MOCK_EXPECT( agent.StopSession ).once().with( mock::any, defaultId ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
@@ -368,7 +372,7 @@ BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
 {
-    static const char* targets[] =
+    static const std::string targets[] =
     {
         "/get_node",    "/start_node",    "/stop_node",    "/delete_node",
         "/get_session", "/start_session", "/stop_session", "/delete_session",
@@ -376,14 +380,16 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
     for( size_t i = 0; i < sizeof( targets ) / sizeof*( targets ); ++i )
     {
         SetRequest( "GET", targets[i], boost::assign::map_list_of( "id", "1" ) );
-        CheckReply( 400, "invalid \"uuid\" 1", controller.DoGet( request ) );
+        if( boost::algorithm::contains( targets[i], "session" ) )
+            MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );
+        CheckReply( 400, std::string(), controller.DoGet( request ) );
     }
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture )
 {
     SetRequest( "GET", "/list_exercises", boost::assign::map_list_of( "id", defaultIdString )( "offset", "abc" ) );
-    CheckReply( 400, "invalid parameter \"offset\"=\"abc\"", controller.DoGet( request ) );
+    CheckReply( 400, std::string(), controller.DoGet( request ) );
 }
 
 namespace

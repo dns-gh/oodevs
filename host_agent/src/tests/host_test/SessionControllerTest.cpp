@@ -150,8 +150,8 @@ BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
     BOOST_CHECK_EQUAL( control.Count(), size_t( 2 ) );
     SessionController::T_Sessions sessions = control.List();
     BOOST_CHECK_EQUAL( sessions.size(), size_t( 2 ) );
-    BOOST_CHECK( control.Get( idActive ) );
-    BOOST_CHECK( control.Get( idIdle ) );
+    BOOST_CHECK( control.Get( idNode, idActive ) );
+    BOOST_CHECK( control.Get( idNode, idIdle ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
@@ -160,8 +160,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
     SessionController::T_Session session = control.Create( idNode, "myName2", "myExercise2" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
-    BOOST_CHECK( control.Has( idIdle ) );
-    BOOST_CHECK_EQUAL( control.Get( idIdle ), session );
+    BOOST_CHECK_EQUAL( control.Get( idNode, idIdle ), session );
     SessionController::T_Sessions sessions = control.List();
     BOOST_REQUIRE_EQUAL( sessions.size(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( sessions.front(), session );
@@ -173,14 +172,13 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
 
     MOCK_RESET( active->Stop );
     MOCK_EXPECT( active->Remove ).once();
-    SessionController::T_Session session = control.Delete( idActive );
+    SessionController::T_Session session = control.Delete( idNode, idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
-    BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
     MOCK_RESET( idle->Stop );
     MOCK_EXPECT( idle->Remove ).once();
-    session = control.Delete( idIdle );
+    session = control.Delete( idNode, idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 0 ) );
 }
@@ -189,7 +187,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
     MOCK_EXPECT( idle->Start ).once().returns( true );
-    SessionController::T_Session session = control.Start( idIdle );
+    SessionController::T_Session session = control.Start( idNode, idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }
 
@@ -197,6 +195,6 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 {
     Reload();
     MOCK_EXPECT( active->Stop ).once().returns( true );
-    SessionController::T_Session session = control.Stop( idActive );
+    SessionController::T_Session session = control.Stop( idNode, idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }
