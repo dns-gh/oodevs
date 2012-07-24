@@ -105,6 +105,7 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
     xis >> xml::optional >> xml::attribute( "time-before-warning", time );
     if( tools::DecodeTime( time, workRate.nDelayBeforeWarningRC_ ) && workRate.nDelayBeforeWarningRC_ == 0 )
         xis.error( "Time before warning is null" );
+    workRate.nDelayBeforeWarningRC_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( workRate.nDelayBeforeWarningRC_ ) );
 }
 
 // -----------------------------------------------------------------------------
