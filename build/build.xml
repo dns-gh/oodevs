@@ -1704,6 +1704,7 @@
                 <include name="data/terrains/Nord egypt/**"/>
                 <include name="data/terrains/Paris_Est/**"/>
                 <include name="data/terrains/Portoshima/**"/>
+				<include name="data/propagations/Portoshima Plume 2/**"/>
             </zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
