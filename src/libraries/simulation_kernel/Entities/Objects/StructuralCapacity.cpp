@@ -158,6 +158,8 @@ void StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
 // -----------------------------------------------------------------------------
 bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, double factor )
 {
+    static const double structuralEffectFactor = 20.;
+
     const double objectArea = object.GetLocalisation().GetArea();
     if( !objectArea )
         return false;
@@ -169,7 +171,7 @@ bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
         ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
     const float oldStructuralState = structuralState_;
 
-    structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - ratio * factor ) );
+    structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - structuralEffectFactor * ratio * factor ) );
     if( ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
         for( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
             ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
