@@ -5847,7 +5847,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
-        <translation>Urbain - Type d'activité invalide &apos;%1&apos</translation>
+        <translation>Urbain - Type d'activité invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
