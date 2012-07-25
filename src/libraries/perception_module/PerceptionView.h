@@ -42,7 +42,7 @@ public:
     virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const MT_Vector2D& vPoint ) const;
 
     virtual void                   Execute( const wrapper::View& model, const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const T_AgentPtrVector& perceivableAgents );
-    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target );
+    virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
 
     virtual void                   Execute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const T_ObjectVector& perceivableObjects );
     virtual const PerceptionLevel& Compute( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const DEC_Knowledge_Object& knowledge ) const;
@@ -61,7 +61,7 @@ private:
     //! @name Helpers
     //@{
     void FinalizeSurfaceAgents();
-    void TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces );
+    void TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces ) const;
     bool IsEnabled( const wrapper::View& perceiver ) const;
     //@}
 
@@ -79,9 +79,9 @@ private:
     //@{
     const size_t identifier_;
     PerceptionObserver_ABC& observer_;
-    T_PerceptionTickMap perceptionsBuffer_;
-    T_PerceptionTickMap perceptionsUnderway_;
-    bool wasInCity_;
+    mutable T_PerceptionTickMap perceptionsBuffer_;
+    mutable T_PerceptionTickMap perceptionsUnderway_;
+    mutable bool wasInCity_;
     //@}
 };
 

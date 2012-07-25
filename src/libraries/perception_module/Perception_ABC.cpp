@@ -35,7 +35,7 @@ void Perception_ABC::Execute( const wrapper::View& /*model*/, const wrapper::Vie
 // Name: Perception_ABC::Compute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*target*/ )
+const sword::perception::PerceptionLevel& Perception_ABC::Compute( const wrapper::View& /*perceiver*/, const SurfacesAgent_ABC& /*surfaces*/, const wrapper::View& /*target*/ ) const
 {
     return PerceptionLevel::notSeen_;
 }

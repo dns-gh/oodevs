@@ -89,7 +89,7 @@ const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, 
 // Name: PerceptionView::Compute
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target )
+const PerceptionLevel& PerceptionView::Compute( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
 {
     TransferPerception( perceiver, surfaces );
     if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, target ) || GET_HOOK( IsAgentIdentified )( perceiver, target ) )
@@ -354,7 +354,7 @@ void PerceptionView::FinalizePerception( const wrapper::View& perceiver, const S
 // Name: PerceptionView::TransferPerception
 // Created: SLG 2010-05-07
 // -----------------------------------------------------------------------------
-void PerceptionView::TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces )
+void PerceptionView::TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces ) const
 {
     bool isInCity = GET_HOOK( IsInCity )( perceiver );
     if( isInCity && !wasInCity_ )
