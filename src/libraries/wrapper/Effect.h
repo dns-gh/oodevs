@@ -39,6 +39,7 @@ public:
     void Post(); // $$$$ MCO : should it be done by the destructor (it cannot throw) ?
 
     Node AddElement();
+    Node MarkForRemove();
 
     template< typename T >
     Effect& operator=( T value )

@@ -128,3 +128,14 @@ Node& Node::SetUserData( const void* data )
         throw std::runtime_error( "unable to set user data" );
     return *this;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Node::MarkForRemove
+// Created: SLI 2012-07-20
+// -----------------------------------------------------------------------------
+Node& Node::MarkForRemove()
+{
+    if( ! ::SWORD_MarkForRemove( node_ ) )
+        throw std::runtime_error( "could not mark node for remove" );
+    return *this;
+}
