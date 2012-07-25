@@ -15,9 +15,11 @@
     {{#if items.length}}
     <div class="package_header">
         <h2>Installed Packages</h2>
+        [#if user.type != "user"]
         <span class="remove_all">
             <a class="btn"><i class="icon-trash"></i> Clear </a>
         </span>
+        [/#if]
     </div>
     {{/if}}
     <table class="table table-striped">
@@ -69,7 +71,9 @@
                     [#if type == "exercise"]
                     <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
                     [/#if]
+                    [#if user.type != "user" ]
                     <a class="btn delete"><i class="icon-trash"></i> </a>
+                    [/#if]
                 </td>
             </tr>
             [#if type == "exercise"]

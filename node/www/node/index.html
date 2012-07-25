@@ -15,9 +15,10 @@
                             [/#macro]
                             [@nav_item item="sessions" name="Sessions" img="actions/document-new" /]
                             [@nav_item item="packages" name="Packages" img="devices/drive-harddisk" /]
+                            [#if user.type != "user"]
                             [@nav_item item="uploads"  name="Uploads"  img="status/software-update-available" /]
                             [@nav_item item="users"    name="Users"    img="apps/system-users" /]
-                            [@nav_item item="settings" name="Settings" img="categories/preferences-system" /]
+                            [/#if]
                         </ul>
                     </div>
                     [#if pg == "sessions"]
