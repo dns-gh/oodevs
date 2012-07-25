@@ -54,7 +54,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     Model()
-        : isAny_( false )
+        : isAny_   ( false )
+        , toRemove_( false )
     {}
     Model( const Model& rhs )
         : value_   ( rhs.value_ )
@@ -62,6 +63,7 @@ public:
         , children_( rhs.children_ )
         , elements_( rhs.elements_ )
         , isAny_   ( rhs.isAny_ )
+        , toRemove_( rhs.isAny_ )
     {}
     //@}
 
@@ -74,6 +76,7 @@ public:
         children_ = rhs.children_;
         elements_ = rhs.elements_;
         isAny_ = rhs.isAny_;
+        toRemove_ = rhs.toRemove_;
         return *this;
     }
 
@@ -120,6 +123,10 @@ public:
     {
         return isAny_;
     }
+    bool IsMarkedForRemove() const
+    {
+        return toRemove_;
+    }
     //@}
 
     //! @name Operations
@@ -136,7 +143,11 @@ public:
         else
             data_.reset();
     }
-
+    Model& MarkForRemove()
+    {
+        toRemove_ = true;
+        return *this;
+    }
     virtual void Accept( core::ModelVisitor_ABC& visitor ) const
     {
         if( value_ )
@@ -263,6 +274,27 @@ private:
         bool visited_;
     };
 
+    struct RemoveValidator : NullModelVisitor
+    {
+        RemoveValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
+            : model_  ( model )
+            , valid_  ( valid )
+            , visited_( false )
+        {
+            actual.Accept( *this );
+            if( ! visited_ && model_.IsMarkedForRemove() )
+                valid_ = false;
+        }
+        virtual void MarkForRemove()
+        {
+            visited_ = true;
+            if( !model_.IsMarkedForRemove() )
+                valid_ = false;
+        }
+        const Model& model_;
+        bool& valid_;
+        bool visited_;
+    };
     struct NodeValidator : NullModelVisitor
     {
         NodeValidator( const Model& model, const core::Visitable_ABC& actual, bool& valid )
@@ -275,6 +307,7 @@ private:
             ChildrenValidator( model, actual, valid );
             ElementValidator( model, actual, valid );
             UserDataValidator( model, actual, valid );
+            RemoveValidator( model, actual, valid );
         }
 
         const Model& model_;
@@ -307,6 +340,7 @@ private:
     std::vector< Model > elements_;
     T_Children children_;
     bool isAny_;
+    bool toRemove_;
     //@}
 };
 

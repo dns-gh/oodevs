@@ -224,6 +224,15 @@ namespace core
             CATCH
                 return false;
         }
+        static int SWORD_MarkForRemove( SWORD_Model* node )
+        {
+            TRY
+                BOOST_REQUIRE( node );
+                core::Convert( node )->MarkForRemove();
+                return true;
+            CATCH
+                return false;
+        }
         static const SWORD_Model* SWORD_GetChildInt( const SWORD_Model* parent, unsigned int key )
         {
             TRY

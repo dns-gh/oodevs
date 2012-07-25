@@ -257,6 +257,21 @@ BOOST_AUTO_TEST_CASE( a_model_accepts_empty_user_data )
     }
 }
 
+BOOST_AUTO_TEST_CASE( a_model_can_be_marked_for_remove )
+{
+    Model model;
+    model.MarkForRemove();
+    {
+        core::Model expected;
+        expected.MarkForRemove();
+        BOOST_CHECK( model.Check( expected ) );
+    }
+    {
+        core::Model expected;
+        BOOST_CHECK( ! model.Check( expected ) );
+    }
+}
+
 BOOST_AUTO_TEST_CASE( a_model_is_printable )
 {
     Model model;
