@@ -94,7 +94,7 @@ integration.unloadFriend = function( unit )
 end
 
 integration.isFriendTranported = function( unit )
-    return unit.source:DEC_Agent_EstTransporte() -- $$$ MIA TODO TEMP immonde
+    return unit.source:DEC_Agent_EstTransporte()
 end
 
 -- -----------------------------------------------------------------------------------

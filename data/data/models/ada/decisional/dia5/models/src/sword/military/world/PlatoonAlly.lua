@@ -193,7 +193,7 @@ predicate "isSelfCommanding"
 {
     dependencies = {},
     method = function( self )
-        return not DEC_Agent_AutomateEstEmbraye()
+        return not self.source:DEC_Agent_AutomateEstEmbraye()
     end
 }
 predicate "isDestroyed" 
@@ -636,7 +636,7 @@ return
         integration.pionRC( ... )
     end,
     isPC = function( self )
-        local pionPC = DEC_Automate_PionPC()
+        local pionPC = self.source:DEC_Automate_PionPC()
         if self.source == pionPC then
             return true
         end
@@ -692,7 +692,7 @@ return
     getForceRatio = function( self )
         -- Interpolation linéaire avec DEC_RapportDeForceLocal [1;5] --> [0;1]
         -- 0 signifie très défavorable, 1 très favorable.
-        return integration.getForceRatio()
+        return integration.getForceRatio( self )
     end,
     
     getForceRatioAgent = function( self, pion )
@@ -720,13 +720,13 @@ return
         return integration.canIlluminate()
     end,
     getOperationalCapacity = function( self )
-        return DEC_Agent_EtatOpsMajeur() * 100
+        return self.source:DEC_Agent_EtatOpsMajeur() * 100
     end,
     getDestructionState = function( self ) -- destruction physique, indépendant des capacités opérationnelles.
         return ( 1 - DEC_Agent_EtatOps() ) * 100
     end,
     getEchelon = function( self )
-        return F_Pion_GeteEtatEchelon( meKnowledge.source )
+        return F_Pion_GeteEtatEchelon( self.source )
     end,
     loadIt = function( self )
         return integration.loadFriend( self ) -- refugee
@@ -777,7 +777,7 @@ return
         integration.desactivateInjuredTreatment()
     end,
     hasRadar = function( self, typeRadar )
-        return integration.hasRadar( typeRadar )
+        return integration.hasRadar( self, typeRadar )
     end,
     adoptFiltrationPosture = masalife.brain.integration.startStopAction( 
     { 
@@ -956,6 +956,6 @@ return
         return integration.getUnitPC( self ) 
     end,
     isUnderIndirectFire = function( self )
-        return integration.isUnderIndirectFire
+        return integration.isUnderIndirectFire()
     end,
 }
