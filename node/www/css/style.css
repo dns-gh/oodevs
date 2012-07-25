@@ -25,6 +25,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .brand_name{margin-right:-20px;}
 .pull-right .label{float:left;margin-top:10px;}
 .sub_header td{padding-top:24px;font-weight:bold;border-top:0;}
+.ufirst:first-letter{text-transform:uppercase;}
 .package_name:first-letter,.package_description:first-letter{text-transform:uppercase;}
 .package_name,.package_description{margin:20px;}
 .package .form-actions{margin:0;text-align:right;}
