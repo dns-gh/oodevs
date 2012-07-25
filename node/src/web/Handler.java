@@ -136,7 +136,7 @@ public class Handler extends HttpServlet {
             if (sid == null)
                 return null;
             final ContentExchange exchange = new ContentExchange(true);
-            final String uri = "http://localhost:" + host_ + "/is_authenticated?sid=" + sid + "&type=" + type_;
+            final String uri = "http://localhost:" + host_ + "/is_authenticated?sid=" + sid;
             exchange.setURL(uri);
             tryAddHeader(exchange, req, "Remote-Address");
             client_.send(exchange);
@@ -167,6 +167,8 @@ public class Handler extends HttpServlet {
         final String user = isAuthenticated(req);
         final JSONObject juser = user == null ? null : (JSONObject) JSONValue.parse(user);
         if (user == null)
+            serve("login", null, req, res);
+        else if (type_.equals("cluster") && !juser.get("type").toString().equals("administrator"))
             serve("login", null, req, res);
         else if (Boolean.parseBoolean(juser.get("temporary").toString()))
             serve("update_login", juser, req, res);
