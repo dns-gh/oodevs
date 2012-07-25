@@ -654,7 +654,7 @@
   <report category="operational" id="459" message="End of speed limitation"/>
   <report category="operational" id="460" message="Enter and exit are not in the same underground network"/>
   <report category="operational" id="461" message="Fire is being extinguished"/>
-  <report category="operational" id="462" message="Terrorist %1 dropped">
+  <report category="operational" id="462" message="%1 dropped">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="463" message="Object cannot be operated"/>
@@ -689,4 +689,4 @@
   </report>
   <report category="operational" id="479" message="All parameters units are destroyed"/>
 </reports>
-<!-- signature="1622073277" -->
+<!-- signature="0430387681" -->
