@@ -9,8 +9,6 @@ rootnode
     {
         skill.nodes.SupportElement
     },
-    
-    feedbacks = { "failed" },
 
     -- --------------------------------------------------------------------------------
     -- A support position is reached
