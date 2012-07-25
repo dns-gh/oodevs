@@ -681,5 +681,12 @@
   <report category="operational" id="474" message="PC is jammed or in radio silence"/>
   <report category="operational" id="475" message="Firing of IED impossible: not yet in place"/>
   <report category="operational" id="476" message="IED ready for firing"/>
+  <report category="operational" id="477" message="The followed unit %1 is destroyed">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="478" message="The supported unit %1 is destroyed">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="479" message="All parameters units are destroyed"/>
 </reports>
-<!-- signature="1429231724" -->
+<!-- signature="1622073277" -->

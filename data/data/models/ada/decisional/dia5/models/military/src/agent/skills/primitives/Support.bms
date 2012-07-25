@@ -9,6 +9,8 @@ rootnode
     {
         skill.nodes.SupportElement
     },
+    
+    feedbacks = { "failed" },
 
     -- --------------------------------------------------------------------------------
     -- A support position is reached
@@ -17,11 +19,20 @@ rootnode
         self.onPosition = true
     end,
 
+    failed = function( self, additionnalParams )
+        removeFromList(additionnalParams.entity, self.entities)
+        if not next(self.entities) then
+            DEC_RC( eRC_NoUnitsInParameter )
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
     -- --------------------------------------------------------------------------------
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self ) 
         self.onPosition = false 
+        self.entities = copyTable( self.params.entities )
     end,
 
     -- --------------------------------------------------------------------------------
@@ -29,7 +40,7 @@ rootnode
     -- Suppport element if possible, else try to coordinate
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        for _, entity in pairs( self.params.entities ) do
+        for _, entity in pairs( self.entities ) do
             Activate( skill.nodes.SupportElement, entity:supportPriority(),
                 { entity = entity } )
         end
@@ -45,6 +56,7 @@ rootnode
 node "SupportElement"
 {
     connections = { skill.links.observe, skill.links.moveAndTakePosition },
+    feedbacks = { "failed" },
 
     -- --------------------------------------------------------------------------------
     -- A support position is reached
@@ -54,13 +66,18 @@ node "SupportElement"
     end,
 
     create = function( self )
-        self.positions = queries.getPositionsToSupport[ "execute" ]({elementsToSupport = {self.params.entity}, dynamic = true})
+        self.positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]({elementsToSupport = {self.params.entity}, dynamic = true})
     end,
     -- --------------------------------------------------------------------------------
     -- Move toward a destroying element and edstroy the entity
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+
+        if self.params.entity:operationalLevel() == 0 then
+               DEC_RC( eRC_CombatSupportUnitIsDead, DEC_GetSzName(self.params.entity.source) )
+               Feedback( self.feedbacks.failed, {entity = self.params.entity } )
+        end
 
         -- Main observation effort on the entity
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
@@ -82,7 +99,7 @@ node "SupportElement"
         -- If the bestPosition is not enought good for supporting the entity
         self.efficiencies = {}
         self.maxEfficiency = 0
-        self.positions = queries.getPositionsToSupport[ "execute" ]({elementsToSupport = {self.params.entity}, dynamic = true})
+        self.positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]({elementsToSupport = {self.params.entity}, dynamic = true})
         for i = 1, #self.positions do
             local position = self.positions[i]
             local efficiency = position:supportEfficiency( self.params.entity )
