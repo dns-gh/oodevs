@@ -28,7 +28,7 @@ DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model
 // Name: PerceptionCoupDeSonde constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PerceptionCoupDeSonde::PerceptionCoupDeSonde( const wrapper::View& entity, PerceptionObserver_ABC& observer )
+PerceptionCoupDeSonde::PerceptionCoupDeSonde( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : observer_( observer )
     , rWidth_  ( entity[ "perceptions/drill-blow/width" ] )
     , rLength_ ( entity[ "perceptions/drill-blow/length" ] )

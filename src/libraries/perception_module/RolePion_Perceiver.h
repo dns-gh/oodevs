@@ -38,8 +38,8 @@ public:
     //! @name Operations
     //@{
     bool HasRadar( const wrapper::View& entity, size_t radarType ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& entity, const MT_Vector2D& vPoint ) const;
-    const PerceptionLevel& ComputePerception( const wrapper::View& entity, const DEC_Knowledge_Object& object ) const;
+    const PerceptionLevel& ComputePerception( const wrapper::View& model, const wrapper::View& entity, const MT_Vector2D& vPoint ) const;
+    const PerceptionLevel& ComputePerception( const wrapper::View& model, const wrapper::View& entity, const DEC_Knowledge_Object& object ) const;
     void ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const;
     //@}
 
@@ -47,7 +47,7 @@ private:
     //! @name Helpers
     //@{
     template< typename Target, typename Constructor >
-    const PerceptionLevel& ComputePerception( const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const;
+    const PerceptionLevel& ComputePerception( const wrapper::View& model, const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const;
     //@}
 };
 

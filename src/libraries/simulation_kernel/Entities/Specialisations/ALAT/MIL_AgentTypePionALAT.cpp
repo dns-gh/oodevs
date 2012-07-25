@@ -45,19 +45,3 @@ const MIL_AgentTypePion* MIL_AgentTypePionALAT::Create( const std::string& strNa
 {
     return new MIL_AgentTypePionALAT( strName, strType, xis );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionALAT::RegisterFunctions
-// Created: LDC 2009-04-23
-// -----------------------------------------------------------------------------
-void MIL_AgentTypePionALAT::RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const
-{
-    brain[ "DEC_ALAT_ActiverReconnaissance" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecoAlat, boost::ref( agent ), _1 ) );
-    brain[ "DEC_ALAT_DesactiverReconnaissance" ] = boost::bind( &DEC_PerceptionFunctions::DisableRecoAlat, boost::ref( agent ) );
-    brain[ "DEC_ALAT_ReconnaissanceNonVuTerminee" ] = boost::bind( &DEC_PerceptionFunctions::HasNoDelayedPeceptions, boost::cref( agent ) );
-    brain[ "DEC_Perception_ActiverSurveillance" ] =
-        boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableSurveillanceLocalisation, boost::ref( agent ), _1 ) );
-    brain[ "DEC_Perception_DesactiverSurveillance" ] =
-        boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableSurveillanceLocalisation, boost::ref( agent ), _1 ) );
-}

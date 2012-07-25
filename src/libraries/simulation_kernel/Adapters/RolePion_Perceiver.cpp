@@ -15,15 +15,12 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionCoupDeSonde.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoPoint.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoLocalisation.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoObjects.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRecoUrbanBlock.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -102,6 +99,7 @@ namespace
         boost::function< void() > disable_;
     };
     class IdentifiedToggleListener : public ListenerHelper
+                                   , private core::ModelVisitor_ABC
     {
     public:
         IdentifiedToggleListener( core::Model& node, boost::function< int( const core::Model& ) > enable, boost::function< void( int ) > disable )
@@ -112,19 +110,33 @@ namespace
     private:
         void Toggled( const core::Model& node )
         {
-            const int identifier = node[ "perception-id" ];
-            if( node[ "activated" ] )
-                identifiers_[ identifier ] = enable_( node );
-            else
+            node.Accept( *this );
+        }
+        virtual void Visit( const std::string& key, const core::Visitable_ABC& /*child*/ )
+        {
+            if( identifiers_.find( key ) == identifiers_.end() )
             {
-                disable_( identifiers_[ identifier ] );
-                identifiers_.erase( identifier );
+                const core::Model& node = operator[]( key ); // $$$$ SLI: not that great...
+                const unsigned int id = enable_( node );
+                identifiers_[ key ].reset( new ListenerHelper( node, ListenerHelper::T_Callback(), boost::bind( &IdentifiedToggleListener::Disable, this, key, id ) ) );
             }
         }
+        void Disable( std::string key, unsigned int identifier )
+        {
+            identifiers_.erase( key );
+            disable_( identifier );
+        }
+        virtual void Visit( int64_t ) {}
+        virtual void Visit( uint64_t ) {}
+        virtual void Visit( double ) {}
+        virtual void Visit( const std::string& ) {}
+        virtual void Visit( const core::Visitable_ABC& ) {}
+        virtual void Visit( boost::shared_ptr< core::UserData_ABC > ) {}
+        virtual void MarkForRemove() {}
     private:
         boost::function< int( const core::Model& ) > enable_;
         boost::function< void( int ) > disable_;
-        std::map< int, int > identifiers_;
+        std::map< std::string, boost::shared_ptr< ListenerHelper > > identifiers_;
     };
     int EnableLocalizedRadar( PHY_RoleInterface_Perceiver& perceiver, const PHY_RadarClass& radarClass, const core::Model& node )
     {
@@ -204,7 +216,7 @@ namespace
 
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
-DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::Initialize
@@ -225,6 +237,7 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     : sink_                          ( sink )
     , facade_                        ( sink.GetFacade() )
     , owner_                         ( pion )
+    , model_                         ( sink.GetModel() )
     , entity_                        ( entity )
     , bHasChanged_                   ( true )
     , bExternalMustChangePerception_ ( false )
@@ -236,8 +249,6 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     , pPerceptionRecoLocalisation_   ( 0 )
     , pPerceptionRecoUrbanBlock_     ( 0 )
     , pPerceptionRadar_              ( 0 )
-    , pPerceptionAlat_               ( 0 )
-    , pPerceptionSurveillance_       ( 0 )
     , pPerceptionRecoObjects_        ( 0 )
     , pPerceptionFlyingShell_        ( 0 )
 {
@@ -258,12 +269,12 @@ RolePion_Perceiver::RolePion_Perceiver( const Sink& sink, MIL_Agent_ABC& pion, c
     AddListener< IdentifiedToggleListener >( "perceptions/reco", boost::bind( &EnableReco, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoLocalisation, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/recognition-point", boost::bind( &EnableRecognitionPoint, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoPoint, this, _1 ) );
     AddListener< IdentifiedToggleListener >( "perceptions/object-detection", boost::bind( &EnableObjectDetection, boost::ref( *this ), boost::ref( pion.GetRole< DEC_Decision_ABC >() ), _1 ), boost::bind( &RolePion_Perceiver::DisableRecoObjects, this, _1 ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyPerception< MIL_PopulationConcentration, bool >, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/population-flows" ] ), boost::bind( &::NotifyFlowPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( entity[ "perceptions/notifications/urban-blocks" ] ), boost::bind( &::NotifyUrbanObjectPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyPerception< MIL_Agent_ABC, bool >, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyPerception< MIL_Object_ABC, void >, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyPerception< MIL_PopulationConcentration, bool >, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/population-flows" ] ), boost::bind( &::NotifyFlowPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/urban-blocks" ] ), boost::bind( &::NotifyUrbanObjectPerception, _1, boost::ref( notifications_ ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,12 +425,9 @@ void RolePion_Perceiver::DisableCoupDeSonde()
 // Name: RolePion_Perceiver::EnableRecoAlat
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& localisation )
+void RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& /*localisation*/ )
 {
-    if( pPerceptionAlat_ )
-        return;
-    pPerceptionAlat_ = new PHY_PerceptionAlat( *this, localisation );
-    activePerceptions_.push_back( pPerceptionAlat_ );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -429,43 +437,25 @@ void RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoAlat()
 {
-    if( !pPerceptionAlat_ )
-        return;
-    activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionAlat_ ) );
-    delete pPerceptionAlat_;
-    pPerceptionAlat_ = 0;
-    owner_.GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::EnableSurveillanceLocalisation
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-int RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& localisation )
+int RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& /*localisation*/ )
 {
-    if( !pPerceptionSurveillance_ )
-    {
-        pPerceptionSurveillance_ = new PHY_PerceptionRecoSurveillance( *this );
-        activePerceptions_.push_back( pPerceptionSurveillance_ );
-    }
-    return pPerceptionSurveillance_->AddLocalisation( localisation );
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::DisableSurveillanceLocalisation
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
+void RolePion_Perceiver::DisableSurveillanceLocalisation( int /*id*/ )
 {
-    if( !pPerceptionSurveillance_ )
-        return;
-    pPerceptionSurveillance_->RemoveLocalisation( id );
-    if( !pPerceptionSurveillance_->HasLocalisationToHandle() )
-    {
-        activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionSurveillance_ ) );
-        delete pPerceptionSurveillance_;
-        pPerceptionSurveillance_ = 0;
-    }
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -786,9 +776,7 @@ void RolePion_Perceiver::DisableAllPerceptions()
     Reset( pPerceptionRecoLocalisation_ );
     Reset( pPerceptionRecoUrbanBlock_ );
     Reset( pPerceptionRecoObjects_ );
-    Reset( pPerceptionSurveillance_ );
     Reset( pPerceptionRadar_ );
-    Reset( pPerceptionAlat_ );
     Reset( pPerceptionFlyingShell_ );
 }
 
@@ -809,7 +797,7 @@ void RolePion_Perceiver::ExecutePerceptions()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Knowledge_Object& knowledge ) const
 {
-    return PHY_PerceptionLevel::FindPerceptionLevel( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &entity_ ), &knowledge ) );
+    return PHY_PerceptionLevel::FindPerceptionLevel( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &model_ ), core::Convert( &entity_ ), &knowledge ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1013,7 +1001,7 @@ void RolePion_Perceiver::DisableRecordMode()
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::HasDelayedPerceptions() const
 {
-    return owner_.GetKnowledge().GetKsPerception().HasDelayedPerceptions();
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // =============================================================================

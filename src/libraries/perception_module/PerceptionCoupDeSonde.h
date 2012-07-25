@@ -27,7 +27,7 @@ class PerceptionCoupDeSonde : public Perception_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionCoupDeSonde( const wrapper::View& entity, PerceptionObserver_ABC& observer );
+             PerceptionCoupDeSonde( const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer );
     virtual ~PerceptionCoupDeSonde();
     //@}
 

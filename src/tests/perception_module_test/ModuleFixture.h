@@ -27,12 +27,11 @@ class DEC_Knowledge_Object;
 class TER_Localisation;
 
 #define REGISTERED_HOOKS( APPLY ) \
-    APPLY( GetPerceptionId, 0, int, () ) \
     APPLY( InitializePerceptionTypes, 1, void, ( const char* xml ) ) \
-    APPLY( IsPointVisible, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) ) \
+    APPLY( IsPointVisible, 3, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) ) \
     APPLY( AgentHasRadar, 2, bool, ( const SWORD_Model* entity, size_t radarType ) ) \
     APPLY( GetPerception, 3, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) ) \
-    APPLY( ComputeKnowledgeObjectPerception, 2, size_t, ( const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+    APPLY( ComputeKnowledgeObjectPerception, 3, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
@@ -117,11 +116,15 @@ class TER_Localisation;
     APPLY( HasUrbanObjectArchitecture, 1, bool, ( const UrbanObjectWrapper* urbanObject ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanComponentPerceive, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
-    APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) )
+    APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) ) \
+    APPLY( GetVisionObjectsInSurface, 4, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) ) \
+    APPLY( GetVisionObject, 1, unsigned char, ( const MT_Vector2D* point ) ) \
+    APPLY( IsPointInsideLocalisation, 2, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( IsUsingActiveRadar, 1, bool, ( const SWORD_Model* entity ) ) \
-    APPLY( IsUsingSpecializedActiveRadar, 2, bool, ( const SWORD_Model* entity, const char* radarType ) )
+    APPLY( IsUsingSpecializedActiveRadar, 2, bool, ( const SWORD_Model* entity, const char* radarType ) ) \
+    APPLY( GetPerceptionId, 0, int, () ) \
 
 HOOK_FIXTURE( HOOKS )
 

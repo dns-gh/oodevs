@@ -21,14 +21,11 @@
 
 class DEC_KS_Perception;
 class PHY_Perception_ABC;
-class PHY_PerceptionCoupDeSonde;
 class PHY_PerceptionRecoPoint;
 class PHY_PerceptionRecoLocalisation;
 class PHY_PerceptionRecoObjects;
-class PHY_PerceptionRecoSurveillance;
 class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
-class PHY_PerceptionAlat;
 class PHY_PerceptionFlyingShell;
 class TER_Agent_ABC;
 class TER_Object_ABC;
@@ -225,6 +222,7 @@ private:
     const Sink& sink_;
     core::Facade& facade_;
     MIL_Agent_ABC& owner_;
+    core::Model& model_;
     core::Model& entity_;
     T_Listeners listeners_;
     MT_Vector2D lastPerceiverPosition_;
@@ -238,9 +236,7 @@ private:
     PHY_PerceptionRecoLocalisation* pPerceptionRecoLocalisation_;
     PHY_PerceptionRecoUrbanBlock*   pPerceptionRecoUrbanBlock_;
     PHY_PerceptionRecoObjects*      pPerceptionRecoObjects_;
-    PHY_PerceptionRecoSurveillance* pPerceptionSurveillance_;
     PHY_PerceptionRadar*            pPerceptionRadar_;
-    PHY_PerceptionAlat*             pPerceptionAlat_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
     T_PerceptionVector              activePerceptions_;
 

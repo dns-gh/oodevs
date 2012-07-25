@@ -209,6 +209,12 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::GetPerception, boost::cref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Perception_ActiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_DesactiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( GetPion() ) ) );
+    // ALAT
+    RegisterFunction( "DEC_ALAT_ActiverReconnaissance", boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecoAlat, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_ALAT_DesactiverReconnaissance", boost::bind( &DEC_PerceptionFunctions::DisableRecoAlat, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_ALAT_ReconnaissanceNonVuTerminee", boost::bind( &DEC_PerceptionFunctions::HasNoDelayedPeceptions, boost::cref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_ActiverSurveillance", boost::function< int( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableSurveillanceLocalisation, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_Perception_DesactiverSurveillance", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::DisableSurveillanceLocalisation, boost::ref( GetPion() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -532,6 +532,9 @@
     <Filter Include="Source Files\Adapters\Legacy">
       <UniqueIdentifier>{376da3a0-ac39-41df-8be2-ae971b1fea70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Adapters\EventListeners">
+      <UniqueIdentifier>{787ff5a8-7bdc-4134-84db-f68021e17c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2580,9 +2583,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\PerceptionHooks.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
@@ -2592,22 +2592,10 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.cpp">
-      <Filter>Source Files\Adapters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.cpp">
@@ -2619,11 +2607,29 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\FloodModelFactory.cpp">
       <Filter>Source Files\Adapters\Legacy</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.cpp">
-      <Filter>Source Files\Adapters</Filter>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ExternalPerceptionEventListener.cpp">
-      <Filter>Source Files\Adapters</Filter>
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\AlatMonitoringEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5132,9 +5138,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Composantes.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
@@ -5324,22 +5327,10 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ReportEventListener.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementHooks.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory.h">
@@ -5351,11 +5342,29 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.h">
-      <Filter>Source Files\Adapters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ExternalPerceptionEventListener.h">
-      <Filter>Source Files\Adapters</Filter>
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementCallbackEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportNameEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\MovementReportEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\AlatMonitoringEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

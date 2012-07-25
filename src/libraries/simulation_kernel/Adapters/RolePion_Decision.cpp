@@ -32,9 +32,11 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KS_Perception.h"
 #include "Tools/MIL_Tools.h"
 #include <core/Facade.h>
 #include <core/Model.h>
@@ -93,7 +95,7 @@ DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( boost:
 
 // perception
 DECLARE_HOOK( GetPerceptionId, int, () )
-DECLARE_HOOK( IsPointVisible, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) )
+DECLARE_HOOK( IsPointVisible, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) )
 DECLARE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
 DECLARE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
 
@@ -610,9 +612,13 @@ namespace
     template< typename T >
     int EnableLocalizedDetection( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, T localisation )
     {
+        return EnableLocalizedDetectionId( facade, pion, perception, localisation, GET_HOOK( GetPerceptionId )() );
+    }
+    template< typename T >
+    int EnableLocalizedDetectionId( core::Facade& facade, MIL_AgentPion& pion, const std::string& perception, T localisation, int perceptionId )
+    {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling flying shell detection." );
-        const int perceptionId = GET_HOOK( GetPerceptionId )();
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = true;
@@ -699,7 +705,7 @@ namespace
     bool IsPointVisible( MIL_AgentPion& pion, const core::Model& model, MT_Vector2D* pPt )
     {
         const core::Model& entity = model[ "entities" ][ pion.GetID() ];
-        return GET_HOOK( IsPointVisible )( core::Convert( &entity ), pPt );
+        return GET_HOOK( IsPointVisible )( core::Convert( &model ), core::Convert( &entity ), pPt );
     }
     void IdentifyAllAgentsInZone( core::Facade& facade, MIL_AgentPion& pion, const TER_Localisation* localization )
     {
@@ -721,6 +727,10 @@ namespace
     {
         const core::Model& entity = model[ "entities" ][ pion.GetID() ];
         return GET_HOOK( GetPerception )( core::Convert( &entity ), pPoint.get(), pTarget.get() );
+    }
+    bool HasNoDelayedPerceptions( const MIL_AgentPion& pion )
+    {
+        return !pion.GetKnowledge().GetKsPerception().HasDelayedPerceptions();
     }
 }
 
@@ -763,6 +773,12 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &IsPointVisible, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
     RegisterFunction( "DEC_Agent_ARadar", boost::function< bool( const DEC_Decision_ABC*, int ) >( boost::bind( &AgentHasRadar, boost::cref( model_ ), _1, _2 ) ) );
     RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &GetPerception, boost::cref( GetPion() ), boost::cref( model_ ), _1, _2 ) ) );
+    // ALAT
+    RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_ALAT_ActiverReconnaissance", &EnableLocalizedDetectionId< const TER_Localisation* >, "alat/reco", _1, 0u ); // $$$$ _RC_ SLI 2012-07-12: no perception id
+    RegisterCommand< void() >                                      ( "DEC_ALAT_DesactiverReconnaissance", &DisableLocalizedDetection, "alat/reco", 0u ); // $$$$ _RC_ SLI 2012-07-12: no perception id
+    RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_Perception_ActiverSurveillance", &EnableLocalizedDetection< const TER_Localisation* >, "alat/monitoring", _1 );
+    RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverSurveillance", &DisableLocalizedDetection, "alat/monitoring", _1 );
+    RegisterFunction( "DEC_ALAT_ReconnaissanceNonVuTerminee", boost::bind( &HasNoDelayedPerceptions, boost::cref( GetPion() ) ) );
 }
 
 namespace

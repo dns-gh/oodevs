@@ -10,6 +10,8 @@
 #include "RolePion_Perceiver.h"
 #include "PerceptionView.h"
 #include "PerceptionCoupDeSonde.h"
+#include "PerceptionAlat.h"
+#include "PerceptionRecoSurveillance.h"
 #include "PerceptionLevel.h"
 #include "SurfacesAgent_ABC.h"
 #include "SurfacesAgentVisitor_ABC.h"
@@ -35,6 +37,7 @@
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include <boost/lambda/lambda.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -61,13 +64,13 @@ DECLARE_HOOK( GetTransporter, const SWORD_Model*, ( const SWORD_Model* model, co
 
 namespace
 {
-    DEFINE_HOOK( IsPointVisible, bool, ( const SWORD_Model* entity, const MT_Vector2D* point ) )
+    DEFINE_HOOK( IsPointVisible, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) )
     {
         bool result = false;
         try
         {
             RolePion_Perceiver perceiver;
-            const PerceptionLevel& level = perceiver.ComputePerception( entity, *point );
+            const PerceptionLevel& level = perceiver.ComputePerception( model, entity, *point );
             result = level != PerceptionLevel::notSeen_;
         }
         catch( std::exception& e )
@@ -79,16 +82,16 @@ namespace
             ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in IsPointVisible hook" );
         }
         if( GET_PREVIOUS_HOOK( IsPointVisible ) )
-            result = result || GET_PREVIOUS_HOOK( IsPointVisible )( entity, point );
+            result = result || GET_PREVIOUS_HOOK( IsPointVisible )( model, entity, point );
         return result;
     }
-    DEFINE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
+    DEFINE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const DEC_Knowledge_Object* object ) )
     {
         size_t level = PerceptionLevel::notSeen_.GetID();
         try
         {
             RolePion_Perceiver perceiver;
-            level = perceiver.ComputePerception( entity, *object ).GetID();
+            level = perceiver.ComputePerception( model, entity, *object ).GetID();
         }
         catch( std::exception& e )
         {
@@ -99,7 +102,7 @@ namespace
             ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in ComputeKnowledgeObjectPerception hook" );
         }
         if( GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception ) )
-            level = std::max( level, GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception )( entity, object ) );
+            level = std::max( level, GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception )( model, entity, object ) );
         return level;
     }
     DEFINE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
@@ -453,16 +456,26 @@ namespace
     typedef std::vector< T_Perception > T_PerceptionVector;
 
     template< typename Type >
-    void AddActivePerception( const std::string& sensor, T_PerceptionVector& activeperceptions, const wrapper::View& entity, PerceptionObserver_ABC& observer )
+    void AddActivePerception( const std::string& sensor, T_PerceptionVector& activeperceptions, const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     {
         if( entity[ "perceptions" ][ sensor ][ "activated" ] )
-            activeperceptions.push_back( boost::shared_ptr< Type >( new Type( entity, observer ) ) );
+            activeperceptions.push_back( boost::shared_ptr< Type >( new Type( model, entity, observer ) ) );
     }
-    T_PerceptionVector CreateActivePerceptions( const wrapper::View& entity, PerceptionObserver_ABC& observer )
+    template< typename Type >
+    void AddActiveListPerception( const std::string& sensor, T_PerceptionVector& activeperceptions, const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer )
+    {
+        bool activated = false;
+        entity[ "perceptions" ][ sensor ].VisitChildren( boost::lambda::var( activated ) = true );
+        if( activated )
+            activeperceptions.push_back( boost::shared_ptr< Type >( new Type( model, entity, observer ) ) );
+    }
+    T_PerceptionVector CreateActivePerceptions( const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     {
         T_PerceptionVector activePerceptions;
-        AddActivePerception< PerceptionView >( "sensor", activePerceptions, entity, observer );
-        AddActivePerception< PerceptionCoupDeSonde >( "scan", activePerceptions, entity, observer );
+        AddActivePerception< PerceptionView >( "sensor", activePerceptions, model, entity, observer );
+        AddActivePerception< PerceptionCoupDeSonde >( "scan", activePerceptions, model, entity, observer );
+        AddActiveListPerception< PerceptionAlat >( "alat/reco", activePerceptions, model, entity, observer );
+        AddActiveListPerception< PerceptionRecoSurveillance >( "alat/monitoring", activePerceptions, model, entity, observer );
         return activePerceptions;
     }
 }
@@ -474,7 +487,7 @@ namespace
 void RolePion_Perceiver::ExecutePerceptions( const wrapper::View& model, const wrapper::View& entity ) const
 {
     PerceptionObserver observer( entity );
-    T_PerceptionVector activePerceptions = CreateActivePerceptions( entity, observer );
+    T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
     T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
@@ -554,10 +567,10 @@ namespace
 // Created: SLI 2012-07-10
 // -----------------------------------------------------------------------------
 template< typename Target, typename Constructor >
-const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const
+const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& model, const wrapper::View& entity, const Target& target, Constructor surfaceConstructor ) const
 {
     NullObserver observer;
-    T_PerceptionVector activePerceptions = CreateActivePerceptions( entity, observer );
+    T_PerceptionVector activePerceptions = CreateActivePerceptions( model, entity, observer );
     T_RadarsPerClassMap radars;
     T_SurfaceAgentMap surfacesAgent;
     T_SurfaceObjectMap surfacesObject;
@@ -582,18 +595,18 @@ const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::Vie
 // Name: RolePion_Perceiver::ComputePerception
 // Created: SLI 2012-06-21
 // -----------------------------------------------------------------------------
-const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const MT_Vector2D& vPoint ) const
+const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& model, const wrapper::View& entity, const MT_Vector2D& vPoint ) const
 {
-    return ComputePerception( entity, vPoint, boost::bind( &CreateSurfaces< T_SurfacesAgents, T_SurfaceAgentMap, T_SurfaceObjectMap >, _1, _2 ) );
+    return ComputePerception( model, entity, vPoint, boost::bind( &CreateSurfaces< T_SurfacesAgents, T_SurfaceAgentMap, T_SurfaceObjectMap >, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::ComputePerception
 // Created: SLI 2012-07-10
 // -----------------------------------------------------------------------------
-const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& entity, const DEC_Knowledge_Object& object ) const
+const PerceptionLevel& RolePion_Perceiver::ComputePerception( const wrapper::View& model, const wrapper::View& entity, const DEC_Knowledge_Object& object ) const
 {
-    return ComputePerception( entity, object, boost::bind( &CreateSurfaces< T_SurfacesObjects, T_SurfaceObjectMap, T_SurfaceAgentMap >, _2, _1 ) );
+    return ComputePerception( model, entity, object, boost::bind( &CreateSurfaces< T_SurfacesObjects, T_SurfaceObjectMap, T_SurfaceAgentMap >, _2, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,7 +23,9 @@
 #include "PerceptionLevel.h"
 #include "RadarClass.h"
 #include "RadarType.h"
+#include "PerceptionRecoSurveillance.h"
 #include "wrapper/Command.h"
+#include <boost/lambda/lambda.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace sword;
@@ -42,13 +44,20 @@ namespace
         xis >> xml::start( "sensors" );
         try
         {
-            RadarType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+            PerceptionRecoSurveillance::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
             SensorType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+            RadarType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
         }
         catch( std::runtime_error e )
         {
             ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
         }
+    }
+    bool IsActivated( const sword::wrapper::View& sensor )
+    {
+        bool activated = false;
+        sensor.VisitChildren( boost::lambda::var( activated ) = true );
+        return activated;
     }
     DEFINE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
     {
@@ -56,18 +65,18 @@ namespace
         const bool radar = view[ "perceptions/radars/radar/activated" ]
                         || view[ "perceptions/radars/tapping/activated" ]
                         || view[ "perceptions/radars/tapping-radar/activated" ];
-        const bool localizedRadar = view[ "perceptions/localized-radars/radar/activated" ]
-                                 || view[ "perceptions/localized-radars/tapping/activated" ]
-                                 || view[ "perceptions/localized-radars/tapping-radar/activated" ];
-        const bool flyingShell = view[ "perceptions/flying-shell/activated" ];
+        const bool localizedRadar = IsActivated( view[ "perceptions/localized-radars/radar" ] )
+                                 || IsActivated( view[ "perceptions/localized-radars/tapping" ] )
+                                 || IsActivated( view[ "perceptions/localized-radars/tapping-radar" ] );
+        const bool flyingShell = IsActivated( view[ "perceptions/flying-shell" ] );
         return radar || localizedRadar || flyingShell;
     }
     DEFINE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
     {
         const sword::wrapper::View view( entity );
         const bool radar = view[ "perceptions/radars" ][ radarType ][ "activated" ];
-        const bool localizedRadar = view[ "perceptions/localized-radars" ][ radarType ][ "activated" ];
-        const bool flyingShell = view[ "perceptions/flying-shell/activated" ];
+        const bool localizedRadar = IsActivated( view[ "perceptions/localized-radars" ][ radarType ] );
+        const bool flyingShell = IsActivated( view[ "perceptions/flying-shell" ] );
         return radar || localizedRadar || flyingShell;
     }
 }

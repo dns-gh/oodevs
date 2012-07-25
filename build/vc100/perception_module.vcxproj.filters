@@ -134,6 +134,21 @@
     <ClInclude Include="..\..\src\libraries\perception_module\ListInCircleVisitor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionAlat.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionRecoSurveillance.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionLocalisation.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\PerceptionWithLocation.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\perception_module\VisionObject.h">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCommand.cpp">
@@ -223,5 +238,19 @@
     <ClCompile Include="..\..\src\libraries\perception_module\PerceptionCoupDeSonde.cpp">
       <Filter>Source Files\Perceptions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionAlat.cpp">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionRecoSurveillance.cpp">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\perception_module\PerceptionLocalisation.cpp">
+      <Filter>Source Files\Perceptions</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\perception_module\PerceptionWithLocation.inl">
+      <Filter>Source Files\Perceptions</Filter>
+    </None>
   </ItemGroup>
 </Project>

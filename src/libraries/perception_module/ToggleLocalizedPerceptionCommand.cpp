@@ -10,6 +10,7 @@
 #include "ToggleLocalizedPerceptionCommand.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Event.h"
 
 using namespace sword;
 using namespace sword::perception;
@@ -48,7 +49,12 @@ void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& model ) con
     if( isActivated_ )
         effect[ perceptionId_ ].SetUserData( localization_ );
     else
+    {
         effect[ perceptionId_ ].MarkForRemove();
+        wrapper::Event event( perception_ + " disabled" );
+        event[ "entity" ] = identifier_;
+        event.Post();
+    }
     effect.Post();
 }
 

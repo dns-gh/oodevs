@@ -16,6 +16,8 @@
 #include "simulation_kernel/MIL_UrbanCache.h"
 #include "simulation_kernel/PHY_MaterialCompositionType.h"
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
+#include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
+#include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
@@ -60,7 +62,6 @@
 #include "simulation_terrain/TER_PopulationFlowManager.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
-#include "meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "Tools/MIL_Tools.h"
 #include <core/Facade.h>
@@ -541,6 +542,18 @@ namespace
         const core::Model& rootNode = *core::Convert( model );
         return core::Convert( &rootNode[ "entities" ][ transporter->GetID() ] );
     }
+    DEFINE_HOOK( GetVisionObjectsInSurface, void, ( const TER_Localisation* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
+    {
+        MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( *localisation, emptySurface, forestSurface, urbanSurface );
+    }
+    DEFINE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
+    {
+        return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( *point );
+    }
+    DEFINE_HOOK( IsPointInsideLocalisation, bool, ( const TER_Localisation* localisation, const MT_Vector2D* point ) )
+    {
+        return localisation->IsInside( *point );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -616,5 +629,8 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( IsObjectUniversal, facade );
     REGISTER_HOOK( CanComponentPerceive, facade );
     REGISTER_HOOK( GetTransporter, facade );
+    REGISTER_HOOK( GetVisionObjectsInSurface, facade );
+    REGISTER_HOOK( GetVisionObject, facade );
+    REGISTER_HOOK( IsPointInsideLocalisation, facade );
     RolePion_Perceiver::Initialize( facade );
 }

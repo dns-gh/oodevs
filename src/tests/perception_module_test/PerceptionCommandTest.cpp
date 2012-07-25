@@ -38,6 +38,11 @@ namespace
         ConfigurationFixture()
         {
             const std::string xml( "<sensors>"
+                                   "  <alat-monitoring-times>"
+                                   "    <alat-monitoring-time terrain='Vide' time='1s'/>"
+                                   "    <alat-monitoring-time terrain='Foret' time='5s'/>"
+                                   "    <alat-monitoring-time terrain='Urbain' time='20s'/>"
+                                   "  </alat-monitoring-times>"
                                    "  <radars>"
                                    "    <radar action-range='60000' name='my-radar' type='radar'>"
                                    "      <detectable-activities>"
@@ -143,6 +148,8 @@ namespace
             entity[ "movement/height" ] = 0;
             entity[ "perceptions/sensor/activated" ] = true;
             entity[ "perceptions/scan/activated" ] = false;
+            entity[ "perceptions/alat/reco" ];
+            entity[ "perceptions/alat/monitoring" ];
             entity[ "perceptions/record-mode/activated" ] = false;
             core::Model& component = entity[ "components"].AddElement();
             component[ "type/sensor-rotation-angle" ] = 3;
@@ -411,11 +418,11 @@ BOOST_FIXTURE_TEST_CASE( is_point_visible_hook_computes_visibility_between_entit
     MOCK_EXPECT( GetAltitude ).with( 0., 0. ).returns( 0. );
     {
         MOCK_EXPECT( ComputeRayTrace ).once().returns( 5000 );
-        BOOST_CHECK( IsPointVisible( core::Convert( &entity ), &point ) );
+        BOOST_CHECK( IsPointVisible( core::Convert( &model ), core::Convert( &entity ), &point ) );
     }
     {
         MOCK_EXPECT( ComputeRayTrace ).once().returns( -1. );
-        BOOST_CHECK( !IsPointVisible( core::Convert( &entity ), &point ) );
+        BOOST_CHECK( !IsPointVisible( core::Convert( &model ), core::Convert( &entity ), &point ) );
     }
 }
 
@@ -505,10 +512,10 @@ BOOST_FIXTURE_TEST_CASE( compute_knowledge_object_perception_hook_returns_percep
     MOCK_EXPECT( GetKnowledgeObjectType ).returns( 0u );
     {
         MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( true );
-        BOOST_CHECK_EQUAL( 3u, ComputeKnowledgeObjectPerception( core::Convert( &entity ), object ) );
+        BOOST_CHECK_EQUAL( 3u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), object ) );
     }
     {
         MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( false );
-        BOOST_CHECK_EQUAL( 0u, ComputeKnowledgeObjectPerception( core::Convert( &entity ), object ) );
+        BOOST_CHECK_EQUAL( 0u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), object ) );
     }
 }

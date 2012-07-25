@@ -149,13 +149,14 @@ BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarde
     commands.Execute();
 }
 
-BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_resets_localization, sword::perception::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_removes_perception_node_and_sends_event, sword::perception::ModuleFixture )
 {
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
     perception[ perceptionId ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
+    ExpectEvent( "my-perception disabled", sword::test::MakeModel( "entity", identifier ) );
     commands.Start( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )

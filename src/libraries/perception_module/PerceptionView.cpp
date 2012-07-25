@@ -56,7 +56,7 @@ using namespace sword::perception;
 // Name: PerceptionView constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PerceptionView::PerceptionView( const wrapper::View& entity, PerceptionObserver_ABC& observer )
+PerceptionView::PerceptionView( const wrapper::View& /*model*/, const wrapper::View& entity, PerceptionObserver_ABC& observer )
     : identifier_( entity[ "identifier" ] )
     , observer_  ( observer )
     , wasInCity_ ( GET_HOOK( IsInCity )( entity ) ) // TODO SLG : Passer par algo car dépendance de role en perceiver et urbanlocation

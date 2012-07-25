@@ -33,7 +33,7 @@ class PerceptionView : public Perception_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionView( const wrapper::View& entity, PerceptionObserver_ABC& observer );
+             PerceptionView( const wrapper::View& model, const wrapper::View& entity, PerceptionObserver_ABC& observer );
     virtual ~PerceptionView();
     //@}
 
