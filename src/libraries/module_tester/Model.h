@@ -158,6 +158,8 @@ public:
             visitor.Visit( it->first, it->second );
         for( std::size_t i = 0; i < elements_.size(); ++i )
             visitor.Visit( elements_[ i ] );
+        if( toRemove_ )
+            visitor.MarkForRemove();
     }
     //@}
 
