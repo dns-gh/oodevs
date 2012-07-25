@@ -203,13 +203,11 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
     const int localization = 0;
     const double speed = 13;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
-    object[ "activated" ] = false;
-    ExpectEffect( object, sword::test::MakeModel( "activated", true )
-                                                ( "perception-id", perceptionId )
-                                                ( "speed", speed )
-                                                ( "center/x", 1 )
-                                                ( "center/y", 2 )
-                                                ( "localization", sword::test::MakeUserData( &localization ) ) );
+    ExpectEffect( object, sword::test::MakeModel( perceptionId,
+                                                    sword::test::MakeModel()( "speed", speed )
+                                                                            ( "center/x", 1 )
+                                                                            ( "center/y", 2 )
+                                                                            ( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -226,10 +224,7 @@ BOOST_FIXTURE_TEST_CASE( deactivating_object_detection_resets_localization, swor
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
-    object[ "activated" ] = true;
-    ExpectEffect( object, sword::test::MakeModel( "activated", false )
-                                                ( "perception-id", perceptionId )
-                                                ( "localization", sword::test::MakeUserData( static_cast< void* >( 0 ) ) ) );
+    ExpectEffect( object, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
     commands.Start( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )

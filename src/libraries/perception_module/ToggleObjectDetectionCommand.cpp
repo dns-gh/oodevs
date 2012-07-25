@@ -47,15 +47,15 @@ void ToggleObjectDetectionCommand::Execute( const wrapper::View& model ) const
 {
     const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/object-detection"];
     wrapper::Effect effect( radar );
-    effect[ "activated" ] = isActivated_;
     if( isActivated_ )
     {
-        effect[ "speed" ] = speed_;
-        effect[ "center/x" ] = centerX_;
-        effect[ "center/y" ] = centerY_;
+        effect[ perceptionId_ ][ "speed" ] = speed_;
+        effect[ perceptionId_ ][ "center/x" ] = centerX_;
+        effect[ perceptionId_ ][ "center/y" ] = centerY_;
+        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
     }
-    effect[ "perception-id" ] = perceptionId_;
-    effect[ "localization" ].SetUserData( localization_ );
+    else
+        effect[ perceptionId_ ].MarkForRemove();
     effect.Post();
 }
 
