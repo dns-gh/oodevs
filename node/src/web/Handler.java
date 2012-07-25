@@ -98,14 +98,10 @@ public class Handler extends HttpServlet {
         root.put("debug", debug_);
         if (user != null) {
             final Map<String, String> sub = new HashMap<String, String>();
-            sub.put("id", user.get("id").toString());
-            sub.put("username", user.get("username").toString());
-            sub.put("name", user.get("name").toString());
-            sub.put("type", user.get("type").toString());
-            sub.put("temporary", user.get("temporary").toString());
-            sub.put("language", user.get("language").toString());
+            for (final Object key : user.keySet()) {
+                sub.put(key.toString(), user.get(key).toString());
+            }
             root.put("user", sub);
-            root.put("sid", user.get("sid").toString());
         }
         try {
             ctx.process(root, reply.getWriter());
