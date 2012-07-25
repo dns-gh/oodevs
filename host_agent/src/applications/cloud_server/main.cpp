@@ -367,8 +367,11 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
     LOG_INFO( log ) << "[cfg] session.apps "          << cfg.session.apps;
     LOG_INFO( log ) << "[cfg] ssl "                   << ( cfg.ssl.enabled ? "true" : "false" );
-    LOG_INFO( log ) << "[cfg] ssl.certificate "       << cfg.ssl.certificate;
-    LOG_INFO( log ) << "[cfg] ssl.key "               << cfg.ssl.key;
+    if( cfg.ssl.enabled )
+    {
+        LOG_INFO( log ) << "[cfg] ssl.certificate "       << cfg.ssl.certificate;
+        LOG_INFO( log ) << "[cfg] ssl.key "               << cfg.ssl.key;
+    }
 }
 
 Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
