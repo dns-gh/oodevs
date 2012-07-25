@@ -239,13 +239,11 @@ BOOST_FIXTURE_TEST_CASE( activating_recognition_point_forwards_center_and_speed_
     const double growthSpeed = 13;
     const double size = 45;
     core::Model& point = model[ "entities" ][ identifier ][ "perceptions/recognition-point" ];
-    point[ "activated" ] = false;
-    ExpectEffect( point, sword::test::MakeModel( "activated", true )
-                                               ( "perception-id", perceptionId )
-                                               ( "growth-speed", growthSpeed )
-                                               ( "size", size )
-                                               ( "center/x", 1 )
-                                               ( "center/y", 2 ) );
+    ExpectEffect( point, sword::test::MakeModel( perceptionId,
+                            sword::test::MakeModel( "growth-speed", growthSpeed )
+                                                  ( "size", size )
+                                                  ( "center/x", 1 )
+                                                  ( "center/y", 2 ) ) );
     commands.Start( "toggle recognition point",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -262,9 +260,7 @@ BOOST_FIXTURE_TEST_CASE( deactivating_recognition_point, sword::perception::Modu
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/recognition-point" ];
-    object[ "activated" ] = true;
-    ExpectEffect( object, sword::test::MakeModel( "activated", false )
-                                                ( "perception-id", perceptionId ) );
+    ExpectEffect( object, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
     commands.Start( "toggle recognition point",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )

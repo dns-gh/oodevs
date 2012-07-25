@@ -47,15 +47,15 @@ void ToggleRecognitionPointCommand::Execute( const wrapper::View& model ) const
 {
     const wrapper::View& point = model[ "entities" ][ identifier_ ][ "perceptions/recognition-point"];
     wrapper::Effect effect( point );
-    effect[ "activated" ] = isActivated_;
     if( isActivated_ )
     {
-        effect[ "size" ] = size_;
-        effect[ "growth-speed" ] = speed_;
-        effect[ "center/x" ] = centerX_;
-        effect[ "center/y" ] = centerY_;
+        effect[ perceptionId_ ][ "size" ] = size_;
+        effect[ perceptionId_ ][ "growth-speed" ] = speed_;
+        effect[ perceptionId_ ][ "center/x" ] = centerX_;
+        effect[ perceptionId_ ][ "center/y" ] = centerY_;
     }
-    effect[ "perception-id" ] = perceptionId_;
+    else
+        effect[ perceptionId_ ].MarkForRemove();
     effect.Post();
 }
 
