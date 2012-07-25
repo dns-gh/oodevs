@@ -10,7 +10,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="disengagement" disable-when-done="true">
+        <stage label="moving toward position" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.MoveToward" main="true" priority="1000.0">
                     <parameter name="entities">

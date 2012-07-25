@@ -40,7 +40,7 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="platoon.skills.LibererEmbarques">
+                <skill name="agent.skills.UnloadTransportedUnits">
                     <parameter name="entities">
                         <value>
                             <parameter>entities</parameter>

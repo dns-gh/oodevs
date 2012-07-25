@@ -90,6 +90,7 @@
         <skill name="agent.skills.ReactToFireArea"/>
         <skill name="agent.skills.Decontaminate"/>
         <skill name="agent.skills.actions.ApplyMortarFires"/>
+        <skill name="agent.skills.UnloadTransportedUnits"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

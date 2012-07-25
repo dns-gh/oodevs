@@ -14,7 +14,6 @@
         <skill name="platoon.skills.GiveOrderIlluminate"/>
         <skill name="platoon.skills.Harass"/>
         <skill name="platoon.skills.Intercept"/>
-        <skill name="platoon.skills.LibererEmbarques"/>
         <skill name="platoon.skills.MoveAlong"/>
         <skill name="platoon.skills.Produire"/>
         <skill name="agent.skills.RecoverHumanTransporters"/>

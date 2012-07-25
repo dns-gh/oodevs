@@ -24,7 +24,7 @@
         <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
     </goal>
     <stages>
-        <stage label="support" permanent="true">
+        <stage label="supporting units" permanent="true">
             <let name="enemiesInRange">
                 <value>
                     <call method="queries.getEnemiesEngagingFriends">

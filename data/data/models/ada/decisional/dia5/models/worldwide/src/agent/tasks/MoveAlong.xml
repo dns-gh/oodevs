@@ -12,7 +12,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="movement" disable-when-done="true">
+        <stage label="moving along route" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.MoveAlong" main="true">
                     <parameter name="entities">

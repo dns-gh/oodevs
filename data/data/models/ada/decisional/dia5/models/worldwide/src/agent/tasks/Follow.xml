@@ -12,7 +12,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="follow" permanent="true">
+        <stage label="following units" permanent="true">
             <skills>
                 <skill name="agent.skills.primitives.StayClose">
                     <parameter name="entities">

@@ -55,7 +55,6 @@ rootnode
             meKnowledge:sendMessage( "No subordinate units to perform the mission" )
             Feedback( self.feedbacks.failed )
          end
-         DEC_Trace( "is reached = "..tostring( self.params.waypoints[ 1 ]:isReached() ) )
     end
 }
 

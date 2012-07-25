@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.EscortPrisoner" source-version="1.0.0" extends="commander.tasks.knowledges.ReachingEffect">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.EscortRefugeesToPosition" source-version="1.0.0" extends="commander.tasks.knowledges.ReachingEffect">
     <description>Interface des connaissances de mission de niveau compagnie</description>
     <methods>
         <method name="getReachable">
@@ -15,16 +15,16 @@
             <return>
                 <type>
                     <list>
-                        <class name="world.Platoon"/>
+                        <class name="world.Object"/>
                     </list>
                 </type>
             </return>
         </method>
-            <method name="getNbrFront">
-        <return>
-            <type>
-                <simple name="numeric"/>
-            </type>
+        <method name="getNbrFront">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
             </return>
         </method>
     </methods>

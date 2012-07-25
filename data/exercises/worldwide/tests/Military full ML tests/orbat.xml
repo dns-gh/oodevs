@@ -2,7 +2,45 @@
 <orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
   <parties>
     <party id="316" name="Army 316" type="friend">
-      <objects/>
+      <objects>
+        <object id="457" name="Refugee Holding Area [457]" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3757257102</point>
+              <point>29TNF3735456969</point>
+              <point>29TNF3741356718</point>
+              <point>29TNF3749956684</point>
+              <point>29TNF3764856759</point>
+              <point>29TNF3787356783</point>
+              <point>29TNF3787356811</point>
+              <point>29TNF3768256994</point>
+            </points>
+          </shape>
+          <attributes>
+            <lodging capacity="4000"/>
+            <logistic-base id="455"/>
+          </attributes>
+        </object>
+        <object id="458" name="Detainee Holding Area [458]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3832557564</point>
+              <point>29TNF3828657461</point>
+              <point>29TNF3830457397</point>
+              <point>29TNF3839057377</point>
+              <point>29TNF3844357324</point>
+              <point>29TNF3856157321</point>
+              <point>29TNF3860757342</point>
+              <point>29TNF3859657445</point>
+              <point>29TNF3844657551</point>
+            </points>
+          </shape>
+          <attributes>
+            <lodging capacity="8000"/>
+            <logistic-base id="455"/>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="318" level="ii" name="Formation [318]" symbol="symbols/sfgpucim">
           <automat engaged="false" id="320" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
@@ -41,6 +79,14 @@
             <unit command-post="true" id="397" name="SAFETY.Police Unit" position="29TNF3657659525" type="SAFETY.Police Unit"/>
             <unit command-post="false" id="398" name="SAFETY.Medical advanced post" position="29TNF3647759542" type="SAFETY.Medical advanced post"/>
             <unit command-post="false" id="399" name="SAFETY.Rescue Helicopters" position="29TNF3651159601" type="SAFETY.Rescue Helicopters"/>
+          </automat>
+          <automat engaged="true" id="455" knowledge-group="321" logistic-level="logistic-base" name="LOG.Logistic combat train" symbol="symbols/sfgpuss" type="LOG.Logistic combat train">
+            <unit command-post="true" id="456" name="LOG.Logistic CT" position="29TNF3808857408" type="LOG.Logistic CT"/>
+          </automat>
+          <automat engaged="true" id="475" knowledge-group="321" name="OOTW.Refugees" symbol="symbols/sfgpue" type="OOTW.Refugees">
+            <unit command-post="true" id="476" name="OOTW.Refugee" position="29TNF3693258616" type="OOTW.Refugee"/>
+            <unit command-post="false" id="477" name="OOTW.Refugee" position="29TNF3702758841" type="OOTW.Refugee"/>
+            <unit command-post="false" id="478" name="OOTW.Refugee" position="29TNF3673058308" type="OOTW.Refugee"/>
           </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
@@ -202,6 +248,37 @@
             <unit command-post="false" id="383" name="MILITARY.Infantry platoon" position="29TNF3500249866" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="384" name="MILITARY.Infantry platoon" position="29TNF3500349667" type="MILITARY.Infantry platoon"/>
           </automat>
+          <automat engaged="false" id="427" knowledge-group="377" name="OOTW.Refugees" symbol="symbols/sfgpue" type="OOTW.Refugees">
+            <unit command-post="true" id="428" name="OOTW.Refugee" position="29TNF3583756613" type="OOTW.Refugee"/>
+            <unit command-post="false" id="445" name="OOTW.Refugee" position="29TNF3596856576" type="OOTW.Refugee"/>
+            <unit command-post="false" id="446" name="OOTW.Refugee" position="29TNF3595256434" type="OOTW.Refugee"/>
+            <unit command-post="false" id="447" name="OOTW.Refugee" position="29TNF3610456560" type="OOTW.Refugee"/>
+            <unit command-post="false" id="448" name="OOTW.Refugee" position="29TNF3601656810" type="OOTW.Refugee"/>
+          </automat>
+          <automat engaged="true" id="440" knowledge-group="377" name="OOTW.Journalists" symbol="symbols/sfgpuc" type="OOTW.Journalists">
+            <unit command-post="true" id="441" name="OOTW.Journalist" position="29TNF3624155339" type="OOTW.Journalist"/>
+            <unit command-post="false" id="442" name="OOTW.Journalist" position="29TNF3624055439" type="OOTW.Journalist"/>
+            <unit command-post="false" id="443" name="OOTW.Journalist" position="29TNF3624155240" type="OOTW.Journalist"/>
+          </automat>
+          <automat engaged="true" id="449" knowledge-group="377" name="OOTW.Refugees" symbol="symbols/sfgpue" type="OOTW.Refugees">
+            <unit command-post="true" id="450" name="OOTW.Refugee" position="29TNF3676957511" type="OOTW.Refugee"/>
+            <unit command-post="false" id="451" name="OOTW.Refugee" position="29TNF3669357434" type="OOTW.Refugee"/>
+            <unit command-post="false" id="452" name="OOTW.Refugee" position="29TNF3695457637" type="OOTW.Refugee"/>
+            <limit name="Limit 453">
+              <point>29TNF3750762107</point>
+              <point>29TNF3792959415</point>
+              <point>29TNF3837558658</point>
+              <point>29TNF3852453429</point>
+            </limit>
+            <limit name="Limit 454">
+              <point>29TNF3379162294</point>
+              <point>29TNF3358260674</point>
+              <point>29TNF3432058199</point>
+              <point>29TNF3487057273</point>
+              <point>29TNF3482953809</point>
+              <point>29TNF3611351324</point>
+            </limit>
+          </automat>
           <lima name="Phase line 387">
             <point>29TNF3325550349</point>
             <point>29TNF3520552416</point>
@@ -243,4 +320,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3757945919" -->
+<!-- signature="2942133757" -->
