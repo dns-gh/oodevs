@@ -51,10 +51,12 @@ void PHY_MaintenanceResourcesAlarms::ReadResource( xml::xistream& xis )
     if( rRation < 0 || rRation > 100 )
         xis.error( "availability-threshod not in [0..100]" );
     rRation /= 100.;
-    if( strType == "repairer" )
+    if( strType == "AlerteDisponibiliteReparateurs" )
         repairerResourcesLevels_.insert( rRation );
-    else if( strType == "tug" )
+    else if( strType == "AlerteDisponibiliteRemorqueurs" )
         haulerResourcesLevels_.insert( rRation );
+    else
+        xis.error( "invalid resource type for maintenance resource-availability-alert" );
 }
 
 // -----------------------------------------------------------------------------
