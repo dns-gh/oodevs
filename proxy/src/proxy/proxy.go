@@ -35,7 +35,7 @@ func main() {
 		Handler:        ctx,
 		ReadTimeout:    5 * time.Minute,
 		WriteTimeout:   5 * time.Minute,
-		MaxHeaderBytes: 1 << 20,
+		MaxHeaderBytes: http.DefaultMaxHeaderBytes,
 	}
 
 	var err error
@@ -114,7 +114,7 @@ func (it *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	ctx := it.FindProxy(r.URL.Path)
 	if ctx == nil {
-		http.Error(w, http.StatusText(404), 404)
+		http.NotFound(w, r)
 		return
 	}
 
