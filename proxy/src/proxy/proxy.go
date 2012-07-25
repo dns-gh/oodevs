@@ -22,6 +22,13 @@ func main() {
 	key := flag.String("ssl_key", "", "SSL key")
 	flag.Parse()
 
+	log.Println("port", *port)
+	log.Println("ssl", *ssl)
+	if *ssl {
+		log.Println("certificate", *certificate)
+		log.Println("key", *key)
+	}
+
 	ctx := NewProxyServer()
 	server := &http.Server{
 		Addr:           fmt.Sprintf(":%d", *port),
