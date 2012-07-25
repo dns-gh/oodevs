@@ -53,7 +53,7 @@ message AuthenticationResponse {
     @li When connecting to a running exercise; creation of all available profiles are notified to client
     @li During the game, upon manual creation of a profile by an authorised user (supervisor)
 */
-message ProfileCreation {
+message ProfileCreation {   
     required Profile profile = 1; //!< Information about the created profile
 }
 

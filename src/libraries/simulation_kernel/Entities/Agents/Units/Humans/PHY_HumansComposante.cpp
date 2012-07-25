@@ -383,7 +383,7 @@ void PHY_HumansComposante::NotifyHumanChanged( Human_ABC& human, const Human_ABC
         assert( nNbrUsableHumans_ > 0 );
         -- nNbrUsableHumans_;
     }
-    if( human.IsUsable() )
+    if( human.IsUsable() ) 
     {
         assert( pComposante_->GetState() != PHY_ComposanteState::dead_ );
         ++ nNbrUsableHumans_;
