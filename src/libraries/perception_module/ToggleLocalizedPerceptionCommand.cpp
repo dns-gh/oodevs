@@ -43,11 +43,12 @@ ToggleLocalizedPerceptionCommand::~ToggleLocalizedPerceptionCommand()
 // -----------------------------------------------------------------------------
 void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& model ) const
 {
-    const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions"][ perception_ ];
-    wrapper::Effect effect( radar );
-    effect[ "activated" ] = isActivated_;
-    effect[ "perception-id" ] = perceptionId_;
-    effect[ "localization" ].SetUserData( localization_ );
+    const wrapper::View& perception = model[ "entities" ][ identifier_ ][ "perceptions"][ perception_ ];
+    wrapper::Effect effect( perception );
+    if( isActivated_ )
+        effect[ perceptionId_ ].SetUserData( localization_ );
+    else
+        effect[ perceptionId_ ].MarkForRemove();
     effect.Post();
 }
 

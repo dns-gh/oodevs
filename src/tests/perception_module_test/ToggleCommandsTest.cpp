@@ -138,16 +138,13 @@ BOOST_FIXTURE_TEST_CASE( deactivated_radar_resets_localization, sword::perceptio
     commands.Execute();
 }
 
-BOOST_FIXTURE_TEST_CASE( activating_flying_shell_detection_localization_is_forwarded_to_effect, sword::perception::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarded_to_effect, sword::perception::ModuleFixture )
 {
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
     const int localization = 0;
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
-    perception[ "activated" ] = false;
-    ExpectEffect( perception, sword::test::MakeModel( "activated", true )
-                                                    ( "perception-id", perceptionId )
-                                                    ( "localization", sword::test::MakeUserData( &localization ) ) );
+    ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MakeUserData( &localization ) ) );
     commands.Start( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -162,10 +159,8 @@ BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_resets_localization, 
     const size_t identifier = 42;
     const size_t perceptionId = 1337;
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
-    perception[ "activated" ] = true;
-    ExpectEffect( perception, sword::test::MakeModel( "activated", false )
-                                                    ( "perception-id", perceptionId )
-                                                    ( "localization", sword::test::MakeUserData( static_cast< void* >( 0 ) ) ) );
+    perception[ perceptionId ];
+    ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
     commands.Start( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
