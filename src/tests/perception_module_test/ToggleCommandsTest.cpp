@@ -107,10 +107,7 @@ BOOST_FIXTURE_TEST_CASE( activated_radar_localization_is_forwarded_to_effect, sw
     const int tapping = 1;
     const int localization = 0;
     core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/localized-radars/tapping" ];
-    radar[ "activated" ] = false;
-    ExpectEffect( radar, sword::test::MakeModel( "activated", true )
-                                               ( "perception-id", perceptionId )
-                                               ( "localization", sword::test::MakeUserData( &localization ) ) );
+    ExpectEffect( radar, sword::test::MakeModel( perceptionId, sword::test::MakeUserData( &localization ) ) );
     commands.Start( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )
@@ -126,10 +123,8 @@ BOOST_FIXTURE_TEST_CASE( deactivated_radar_resets_localization, sword::perceptio
     const size_t perceptionId = 1337;
     const int tapping = 1;
     core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/localized-radars/tapping" ];
-    radar[ "activated" ] = true;
-    ExpectEffect( radar, sword::test::MakeModel( "activated", false )
-                                               ( "perception-id", perceptionId )
-                                               ( "localization", sword::test::MakeUserData( static_cast< void* >( 0 ) ) ) );
+    radar[ perceptionId ];
+    ExpectEffect( radar, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
     commands.Start( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )
