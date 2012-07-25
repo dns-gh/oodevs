@@ -8,11 +8,6 @@
             [/#if]
             <ul class="nav pull-right">
                 [#if user??]
-                <script>var user = {};
-                    [#list user?keys as key]
-                    user.${key}="${user[key]}";
-                    [/#list]
-                </script>
                 <li class="label
                 [#if     user.type == "administrator" ]
                 label-important

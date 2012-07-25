@@ -339,10 +339,9 @@
   };
 
   scope = function(model) {
-    if (user.type !== "administrator") {
-      return model;
+    if (typeof uuid !== "undefined" && uuid !== null) {
+      model.node = uuid;
     }
-    model.node = uuid;
     return model;
   };
 

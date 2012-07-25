@@ -59,9 +59,8 @@ validate_settings = (ui, add) ->
     return data
 
 scope = (model) ->
-    if user.type != "administrator"
-        return model
-    model.node = uuid
+    if uuid?
+        model.node = uuid
     return model
 
 class UserItem extends Backbone.Model
