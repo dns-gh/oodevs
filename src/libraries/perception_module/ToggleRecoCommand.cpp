@@ -45,14 +45,14 @@ void ToggleRecoCommand::Execute( const wrapper::View& model ) const
 {
     const wrapper::View& radar = model[ "entities" ][ identifier_ ][ "perceptions/reco"];
     wrapper::Effect effect( radar );
-    effect[ "activated" ] = isActivated_;
     if( isActivated_ )
     {
-        effect[ "has-growth-speed" ] = static_cast< bool >( growthSpeed_ );
-        effect[ "growth-speed" ] = growthSpeed_ ? *growthSpeed_ : 0;
+        effect[ perceptionId_ ][ "has-growth-speed" ] = static_cast< bool >( growthSpeed_ );
+        effect[ perceptionId_ ][ "growth-speed" ] = growthSpeed_ ? *growthSpeed_ : 0;
+        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
     }
-    effect[ "perception-id" ] = perceptionId_;
-    effect[ "localization" ].SetUserData( localization_ );
+    else
+        effect[ perceptionId_ ].MarkForRemove();
     effect.Post();
 }
 
