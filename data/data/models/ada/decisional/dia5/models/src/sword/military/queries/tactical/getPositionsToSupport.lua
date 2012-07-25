@@ -33,7 +33,7 @@ queryImplementation "getPositionsToSupport"
                 local foundAPositionForThisObjective = false
                 if not objective:isNearby() then 
                     knowledges[ #knowledges + 1 ] = CreateProxyKnowledge( 
-                    sword.military.world.SupportingArea, objective )
+                       sword.military.world.SupportingArea, objective,{distanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 )/2 , distanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 )/2 } )
                 else
                     -- Les blocs urbains
                     local urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle( objective:getPosition(), 100 )
@@ -56,7 +56,7 @@ queryImplementation "getPositionsToSupport"
                  -- si pas de position on vient à hauteur de l'agent soutenu
                 if not foundAPositionForThisObjective then
                     newResult[ #newResult + 1 ] = CreateProxyKnowledge( 
-                    sword.military.world.SupportingArea, objective )
+                       sword.military.world.SupportingArea, objective, {distanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 )/2 , distanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 )/2 } )
                 end
             end
             

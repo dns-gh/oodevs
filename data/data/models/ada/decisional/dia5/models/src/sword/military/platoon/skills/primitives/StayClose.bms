@@ -7,7 +7,9 @@ rootnode
 {
     connections = { skill.nodes.StayCloseToElement },
 
-    done = function( self, additionnalParams )
+    done = function( self ) end,
+
+    failed = function( self, additionnalParams )
         removeFromList(additionnalParams.entity, self.entities)
         if not next(self.entities) then
             DEC_RC( eRC_NoUnitsInParameter )
@@ -35,6 +37,7 @@ rootnode
 node "StayCloseToElement"
 {
     connections = { skill.links.moveAndTakePosition, skill.links.observe },
+    feedbacks = { "failed" },
 
     -- --------------------------------------------------------------------------------
     -- Move toward closest positionable elements using the skill MoveAndTakePosition
@@ -42,7 +45,7 @@ node "StayCloseToElement"
     activate = function( self )
         if self.params.entity:operationalLevel() == 0 then
                DEC_RC( eRC_FollowingUnitIsDead, DEC_GetSzName(self.params.entity.source) )
-               Feedback( self.feedbacks.done, {entity = self.params.entity } )
+               Feedback( self.feedbacks.failed, {entity = self.params.entity } )
         end
 
         -- Main observation effort on current neutralizable element

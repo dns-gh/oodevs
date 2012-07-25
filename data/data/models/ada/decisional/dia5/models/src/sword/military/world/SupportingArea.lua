@@ -4,11 +4,8 @@ return
     -- Overrided high level methods
     -- --------------------------------------------------------------------------------
     canTakePosition = function( self )
-        local pH = 0.8
-        local maxRange = DEC_Tir_PorteeMaxPourTirer( pH )
-        -- supporting position distance is less than 1/2 of fire range
         local distance = integration.distance( self.proxy, meKnowledge )
-        if distance < maxRange/2 then
+        if distance < self.distanceMin then
             return true
         else
             return false
