@@ -637,5 +637,12 @@
   <report category="operational" id="430" message="Pion PC brouillé ou en silence radio"/>
   <report category="operational" id="431" message="Mise à feu de l'IED impossible : il n'est pas encore en place"/>
   <report category="operational" id="432" message="IED prêt pour mise à feu"/>
+  <report category="operational" id="433" message="L'unité %1 suivie est tactiquement détruite">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="434" message="L'unité %1 appuyée est tactiquement détruite">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="435" message="Les unités passées en paramètre sont toutes détruites"/>
 </reports>
-<!-- signature="1575883721" -->
+<!-- signature="3598027572" -->

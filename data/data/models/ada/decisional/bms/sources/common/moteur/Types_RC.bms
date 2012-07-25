@@ -448,7 +448,10 @@ eRC_Jammed = 429
 eRC_PCJammed = 430
 eRC_IEDNotReady = 431
 eRC_IEDReadyForFiring = 432
-eNbr = 433
+eRC_FollowingUnitIsDead = 433
+eRC_CombatSupportUnitIsDead = 434
+eRC_NoUnitsInParameter = 435
+eNbr = 436
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion

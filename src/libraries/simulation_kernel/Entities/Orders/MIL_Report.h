@@ -589,6 +589,9 @@ public:
         eRC_PCJammed, // 430
         eRC_IEDNotReady,
         eRC_IEDReadyForFiring,
+        eRC_FollowingUnitIsDead,
+        eRC_CombatSupportUnitIsDead,
+        eRC_NoUnitsInParameter,
         eLast
     };
     //@}
