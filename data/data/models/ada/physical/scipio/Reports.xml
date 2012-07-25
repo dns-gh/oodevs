@@ -611,7 +611,7 @@
   <report category="operational" id="416" message="Pas de position trafficable dans la zone"/>
   <report category="operational" id="417" message="Pris sous tir d'IED"/>
   <report category="operational" id="418" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
-  <report category="operational" id="419" message="Terroriste %1 déposé">
+  <report category="operational" id="419" message="%1 déposé">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="420" message="Subit un interrogatoire"/>
@@ -645,4 +645,4 @@
   </report>
   <report category="operational" id="435" message="Les unités passées en paramètre sont toutes détruites"/>
 </reports>
-<!-- signature="3598027572" -->
+<!-- signature="3143469309" -->

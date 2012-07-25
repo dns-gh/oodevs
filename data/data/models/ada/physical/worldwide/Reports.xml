@@ -611,7 +611,7 @@
   <report category="operational" id="416" message="No trafficable position in zone"/>
   <report category="operational" id="417" message="Under IED fire"/>
   <report category="operational" id="418" message="Enter and exit are not in the same underground network"/>
-  <report category="operational" id="419" message="Terrorist %1 dropped">
+  <report category="operational" id="419" message="%1 dropped">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="420" message="Being interrogated"/>
@@ -645,4 +645,4 @@
   </report>
   <report category="operational" id="435" message="All parameters units are destroyed"/>
 </reports>
-<!-- signature="2817595200" -->
+<!-- signature="3667326369" -->
