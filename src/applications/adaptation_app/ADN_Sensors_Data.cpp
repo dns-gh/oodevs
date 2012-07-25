@@ -513,11 +513,11 @@ ADN_Sensors_Data::TargetInfos* ADN_Sensors_Data::TargetInfos::CreateCopy()
     pNew->strName_            = strName_.GetData();
     pNew->rDistanceDetection_ = rDistanceDetection_.GetData();
     pNew->populationInfos_.CopyFrom( populationInfos_ );
-    for( IT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
+    for( unsigned int i = 0; i < vModifStance_.size(); ++i )
     {
-        ModificatorPostureInfos* pNewModif = new ModificatorPostureInfos( (*it)->eType_ );
-        pNewModif->rCoeff_ = (*it)->rCoeff_.GetData();
-        pNew->vModifStance_.AddItem( pNewModif );
+        ModificatorPostureInfos* pNewModif = new ModificatorPostureInfos( vModifStance_[i]->eType_ );
+        pNewModif->rCoeff_ = vModifStance_[i]->rCoeff_.GetData();
+        pNew->vModifStance_[i] = pNewModif;
     }
     return pNew;
 }
