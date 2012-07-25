@@ -778,6 +778,16 @@ std::string Controller::CreateUser( Request_ABC& request )
     const std::string password = RequireParameter< std::string >( "password", request );
     const std::string temporary = RequireParameter< std::string >( "temporary", request );
     const UserType type = ConvertUserType( RequireParameter< std::string >( "type", request ) );
+    if( type == USER_TYPE_COUNT )
+        throw HttpException( BAD_REQUEST );
+    if( secure_ )
+    {
+        const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+        const boost::optional< std::string > opt = user.get_optional< std::string >( "type" );
+        UserType current = opt == boost::none ? USER_TYPE_COUNT : ConvertUserType( *opt );
+        if( current > type )
+            throw HttpException( UNAUTHORIZED );
+    }
     return WriteHttpReply( users_.CreateUser( node, username, name, password, type, ToBool( temporary ) ) );
 }
 
