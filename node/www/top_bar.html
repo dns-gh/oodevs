@@ -13,7 +13,15 @@
                     user.${key}="${user[key]}";
                     [/#list]
                 </script>
-                <li class="label label-important ufirst"> ${user.type} </li>
+                <li class="label
+                [#if     user.type == "administrator" ]
+                label-important
+                [#elseif user.type == "manager" ]
+                label-success
+                [#else]
+                label-info
+                [/#if]
+                ufirst"> ${user.type} </li>
                 <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> ${user.name} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
