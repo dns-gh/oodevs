@@ -37,6 +37,9 @@
                     [#if pg == "uploads"]
                     [#include "/node/uploads.html"]
                     [/#if]
+                    [#if pg == "users"]
+                    [#include "/users.html"]
+                    [/#if]
                 </div>
             </div>
         </div>
@@ -49,6 +52,9 @@
         [/#if]
         [#if pg == "uploads"]
         <script src="js/uploads.js"></script>
+        [/#if]
+        [#if pg == "users"]
+        <script src="js/users.js"></script>
         [/#if]
     </body>
 </html>

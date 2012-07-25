@@ -1,4 +1,5 @@
 [#ftl]
+[#assign is_cluster = name == "cluster"]
 <div class="row">
     <div class="span9">
         <div id="user_settings"></div>
@@ -18,6 +19,9 @@
             <thead>
                 <th>Email</th>
                 <th>Name</th>
+                [#if !is_cluster]
+                <th>Type</th>
+                [/#if]
                 <th></th>
             </thead>
             <tbody id="users">
@@ -46,6 +50,19 @@
                         <input type="text" id="name"{{#if name}} value="{{name}}"{{/if}}/>
                     </div>
                 </div>
+                [#if !is_cluster ]
+                {{#if add}}
+                <div class="control-group">
+                    <label class="control-label" for="type">Type</label>
+                    <div class="controls">
+                        <select id="type">
+                            <option value="manager">Manager</option>
+                            <option value="user" selected="selected">User</option>
+                        </select>
+                    </div>
+                </div>
+                {{/if}}
+                [/#if]
                 <div class="control-group">
                     <label class="control-label" for="lang">Language</label>
                     <div class="controls">
@@ -96,6 +113,9 @@
 <script type="text/template" id="user_template">
     <td>{{username}}</td>
     <td>{{name}}</td>
+    [#if !is_cluster]
+    <td class="ufirst">{{type}}</td>
+    [/#if]
     <td class="action">
         <a class="btn edit"><i class="icon-edit"></i> Edit </a>
         {{#equal id "${user.id}" }}

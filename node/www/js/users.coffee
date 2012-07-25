@@ -33,6 +33,7 @@ check_missing = (list) ->
 validate_settings = (ui, add) ->
     user = ui.find "#username"
     name = ui.find "#name"
+    type = ui.find "#type option:selected"
     pwd  = ui.find "#password"
     bis  = ui.find "#password_bis"
     tmp  = ui.find "#temporary"
@@ -51,25 +52,33 @@ validate_settings = (ui, add) ->
         name:       name.val()
         temporary:  tmp.is ":checked"
         type:       "administrator"
-    if pwd.val()?.length
+    if type?.val()?.length
+        data.type = type.val()
+    if pwd?.val()?.length
         data.password = pwd.val()
     return data
+
+scope = (model) ->
+    if user.type != "administrator"
+        return model
+    model.node = uuid
+    return model
 
 class UserItem extends Backbone.Model
     view: UserItemView
 
     sync: (method, model, options) =>
         if method == "create"
-            return pajax "/api/create_user", model.attributes,
+            return pajax "/api/create_user", scope( model.attributes ),
                 options.success, options.error
         if method == "read"
-            return ajax "/api/get_user", id: model.id,
+            return ajax "/api/get_user", scope( id: model.id ),
                 options.success, options.error
         if method == "delete"
-            return ajax "/api/delete_user", id: model.id,
+            return ajax "/api/delete_user", scope( id: model.id ),
                 options.success, options.error
         if method == "update"
-            return ajax "/api/update_user", model.attributes,
+            return ajax "/api/update_user", scope( model.attributes ),
                 options.success, options.error
         return Backbone.sync method, model, options
 
@@ -78,7 +87,7 @@ class UserList extends Backbone.Collection
 
     sync: (method, model, options) =>
         if method == "read"
-            return ajax "/api/list_users", null,
+            return ajax "/api/list_users", scope({}),
                 options.success, options.error
         return Backbone.sync method, model, options
 
