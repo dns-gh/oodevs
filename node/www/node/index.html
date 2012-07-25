@@ -34,11 +34,13 @@
                     [#if pg == "packages"]
                     [#include "/node/packages.html"]
                     [/#if]
+                    [#if user.type != "user"]
                     [#if pg == "uploads"]
                     [#include "/node/uploads.html"]
                     [/#if]
                     [#if pg == "users"]
                     [#include "/users.html"]
+                    [/#if]
                     [/#if]
                 </div>
             </div>
@@ -50,11 +52,13 @@
         [#if pg == "packages"]
         <script src="js/packages.js"></script>
         [/#if]
+        [#if user.type != "user"]
         [#if pg == "uploads"]
         <script src="js/uploads.js"></script>
         [/#if]
         [#if pg == "users"]
         <script src="js/users.js"></script>
+        [/#if]
         [/#if]
     </body>
 </html>
