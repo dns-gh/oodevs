@@ -560,7 +560,7 @@ std::string Controller::GetSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::CreateSession( const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     if( node.is_nil() )
         throw HttpException( web::BAD_REQUEST );
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
@@ -575,7 +575,7 @@ std::string Controller::CreateSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteSession( const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     const Uuid id = GetId( request );
     LOG_INFO( log_ ) << "[web] /delete_session id: " << id;
     return WriteHttpReply( agent_.DeleteSession( node, id ) );
@@ -587,7 +587,7 @@ std::string Controller::DeleteSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StartSession( const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     return WriteHttpReply( agent_.StartSession( node, GetId( request ) ) );
 }
 
@@ -597,7 +597,7 @@ std::string Controller::StartSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::StopSession( const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     return WriteHttpReply( agent_.StopSession( node, GetId( request ) ) );
 }
 
@@ -607,7 +607,7 @@ std::string Controller::StopSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::PauseSession( const Request_ABC& request )
 {
-    const Uuid node = AuthenticateNode( request, USER_TYPE_MANAGER, "node" );
+    const Uuid node = AuthenticateNode( request, USER_TYPE_USER, "node" );
     return WriteHttpReply( agent_.PauseSession( node, GetId( request ) ) );
 }
 
