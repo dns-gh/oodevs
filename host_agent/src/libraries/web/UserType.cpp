@@ -40,7 +40,7 @@ std::string web::ConvertUserType( UserType type )
 // -----------------------------------------------------------------------------
 UserType web::ConvertUserType( const std::string& type )
 {
-    for( size_t i = 0; i < COUNT_OF( types_map )-1; ++i )
+    for( size_t i = 0; i < COUNT_OF( types_map ); ++i )
         if( types_map[i].text == type )
             return types_map[i].type;
     return USER_TYPE_COUNT;
