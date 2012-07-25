@@ -23,8 +23,8 @@ integration.canUseDotation = function( munition )
     return DEC_CanUseDotation(munition)
 end
 
-integration.isContaminated = function()
-    return DEC_Agent_EstContamine()
+integration.isContaminated = function( self )
+    return self.source:DEC_Agent_EstContamine()
 end
 
 integration.isPoisoned = function()
@@ -408,7 +408,7 @@ end
 -- @release 2011-05-13
 -- --------------------------------------------------------------------------------
 integration.bodyIsMoving = function( self )
-    return myself:DEC_Agent_EstEnMouvement()
+    return self.source:DEC_Agent_EstEnMouvement()
 end
 integration.activateInjuredSorting = function( self )
     DEC_Sante_ActiverFonctionTri()
@@ -566,8 +566,8 @@ end
 -- @author DDA
 -- @release 2011-12-10
 -- -------------------------------------------------------------------------------- 
-integration.hasRadar = function ( typeRadar )
-    return DEC_Agent_ARadar( meKnowledge.source, typeRadar )
+integration.hasRadar = function ( self, typeRadar )
+    return DEC_Agent_ARadar( self.source, typeRadar )
 end
 
 
