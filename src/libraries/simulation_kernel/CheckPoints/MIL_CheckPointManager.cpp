@@ -228,12 +228,17 @@ namespace
 {
     struct CrcChecker
     {
-        void ReadCrc( xml::xistream& xis )
+        void ReadCrc( xml::xistream& xis, const MIL_Config& config )
         {
             std::string strFileName;
             boost::crc_32_type::value_type nCRC;
             xis >> xml::attribute( "name", strFileName )
                 >> xml::attribute( "crc", nCRC );
+            if( !bfs::exists( strFileName ) && strFileName.find( config.GetExercisesDir() ) != std::string::npos )
+            {
+                bfs::path fnPath( strFileName );
+                strFileName = config.BuildExerciseChildFile( fnPath.filename() );
+            }
             if( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
                 throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ ,
                     "Cannot load checkpoint - File '" + strFileName + "' has changed since the checkpoint creation" );
@@ -250,7 +255,7 @@ void MIL_CheckPointManager::CheckFilesCRC( const MIL_Config& config )
     CrcChecker checker;
     xml::xifstream xis( config.BuildCheckpointChildFile( "CRCs.xml" ) );
     xis >> xml::start( "files" )
-        >> xml::list( "file", checker, &CrcChecker::ReadCrc );
+        >> xml::list( "file", checker, &CrcChecker::ReadCrc, config );
 }
 
 // -----------------------------------------------------------------------------
