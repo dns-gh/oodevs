@@ -684,7 +684,14 @@ std::string GetSource( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::UserIsAuthenticated( const Request_ABC& request )
 {
-    return WriteHttpReply( users_.IsAuthenticated( request.GetSid(), GetSource( request ) ) );
+    const std::string type = RequireParameter< std::string >( "type", request );
+    const Tree user = users_.IsAuthenticated( request.GetSid(), GetSource( request ) );
+    if( type != "cluster" )
+        return WriteHttpReply( user );
+    const UserType current = ConvertUserType( user.get< std::string >( "type" ) );
+    if( current != USER_TYPE_ADMINISTRATOR )
+        throw HttpException( UNAUTHORIZED );
+    return WriteHttpReply( user );
 }
 
 // -----------------------------------------------------------------------------

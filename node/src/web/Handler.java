@@ -136,7 +136,7 @@ public class Handler extends HttpServlet {
             if (sid == null)
                 return null;
             final ContentExchange exchange = new ContentExchange(true);
-            final String uri = "http://localhost:" + host_ + "/is_authenticated?sid=" + sid;
+            final String uri = "http://localhost:" + host_ + "/is_authenticated?sid=" + sid + "&type=" + type_;
             exchange.setURL(uri);
             tryAddHeader(exchange, req, "Remote-Address");
             client_.send(exchange);
