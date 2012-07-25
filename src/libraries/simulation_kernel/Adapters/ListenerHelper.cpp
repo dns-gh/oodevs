@@ -14,12 +14,24 @@
 using namespace sword;
 
 // -----------------------------------------------------------------------------
-// Name: ListenerHelper::function< void
-// Created: SLI 2012-03-20
+// Name: ListenerHelper constructor
+// Created: SLI 2012-07-24
 // -----------------------------------------------------------------------------
-ListenerHelper::ListenerHelper( core::Model& model, T_Callback callback )
-    : model_   ( &model )
-    , callback_( callback )
+ListenerHelper::ListenerHelper( const core::Model& model, T_Callback changed )
+    : model_  ( &model )
+    , changed_( changed )
+{
+    model.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListenerHelper constructor
+// Created: SLI 2012-07-24
+// -----------------------------------------------------------------------------
+ListenerHelper::ListenerHelper( const core::Model& model, T_Callback changed, T_Callback removed )
+    : model_  ( &model )
+    , changed_( changed )
+    , removed_( removed )
 {
     model.Register( *this );
 }
@@ -52,14 +64,18 @@ const core::Model& ListenerHelper::operator*() const
 void ListenerHelper::NotifyChanged( const core::Model& model )
 {
     model_ = const_cast< core::Model* >( &model );
-    callback_( model );
+    if( changed_ )
+        changed_( model );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ListenerHelper::NotifyRemoved
 // Created: SLI 2012-07-16
 // -----------------------------------------------------------------------------
-void ListenerHelper::NotifyRemoved( const core::Model& /*model*/ )
+void ListenerHelper::NotifyRemoved( const core::Model& model )
 {
+    if( removed_ )
+        removed_( model );
+    model.Unregister( *this );
     model_ = 0;
 }

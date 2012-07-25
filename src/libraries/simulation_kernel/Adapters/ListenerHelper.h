@@ -32,7 +32,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ListenerHelper( core::Model& model, T_Callback callback );
+             ListenerHelper( const core::Model& model, T_Callback changed );
+             ListenerHelper( const core::Model& model, T_Callback changed, T_Callback removed );
     virtual ~ListenerHelper();
     //@}
 
@@ -58,8 +59,9 @@ private:
 private:
     //! @name Member data
     //@{
-    core::Model* model_;
-    T_Callback callback_;
+    const core::Model* model_;
+    T_Callback changed_;
+    T_Callback removed_;
     //@}
 };
 
