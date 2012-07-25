@@ -179,7 +179,8 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     if( message.has_surrendered_unit() )
     {
-        const kernel::Team_ABC* surrenderedTo = teamResolver_.Find( message.surrendered_unit().id() );
+        int side = message.surrendered_unit().id();
+        const kernel::Team_ABC* surrenderedTo = side == 0 ? 0 : teamResolver_.Find( side );
         if( surrenderedTo != surrenderedTo_ )
         {
             surrenderedTo_ = surrenderedTo;
