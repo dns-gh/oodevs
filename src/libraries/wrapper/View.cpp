@@ -183,3 +183,24 @@ bool View::operator!=( const View& rhs ) const
 {
     return model_ != rhs.model_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: View::function< void
+// Created: SLI 2012-07-23
+// -----------------------------------------------------------------------------
+void View::VisitChildren( T_ChildrenVisitor visitor ) const
+{
+    struct ChildrenVisitor
+    {
+        explicit ChildrenVisitor( T_ChildrenVisitor visitor )
+            : visitor_( visitor )
+        {}
+        static void Visit( const char* key, const SWORD_Model* child, void* userData )
+        {
+            static_cast< ChildrenVisitor* >( userData )->visitor_( key, child );
+        }
+        T_ChildrenVisitor visitor_;
+    } childrenVisitor( visitor );
+    if( !::SWORD_VisitChildren( model_, &ChildrenVisitor::Visit, &childrenVisitor ) )
+        throw std::runtime_error( "could not visit children" );
+}
