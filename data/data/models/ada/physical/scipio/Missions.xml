@@ -1572,7 +1572,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" id="2483" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1580,7 +1580,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" id="2484" name="PION RENS RASIT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3076,7 +3076,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.art.tasks.RATACAcquerirObjectifs" dia-type="france.military.company.combat.support.art.tasks.RATACAcquerirObjectifs" id="28774" mrt-dia-behavior="france.military.company.combat.support.art.tasks.RATACAcquerirObjectifs" name="AUTOMATE ASS RATAC Acquerir Objectifs" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3148,7 +3148,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
+      <parameter dia-name="byNight" name="Attendre la nuit" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3471,4 +3471,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_MiseAFeuIED" id="28799" name="Pion Mise A Feu IED"/>
   </fragorders>
 </missions>
-<!-- signature="1128871923" -->
+<!-- signature="2828593620" -->
