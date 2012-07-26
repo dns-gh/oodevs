@@ -81,9 +81,13 @@ void PHY_PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
 {
-    tools::ReadTimeAttribute( xis, "empty", rEmptySurveillanceTime_ );
-    tools::ReadTimeAttribute( xis, "forest", rForestSurveillanceTime_ );
-    tools::ReadTimeAttribute( xis, "urban", rUrbanSurveillanceTime_ );
+    const std::string terrain = xis.attribute< std::string >( "terrain" );
+    if( terrain == "Vide" )
+        tools::ReadTimeAttribute( xis, "time", rEmptySurveillanceTime_ );
+    else if( terrain == "Foret" )
+        tools::ReadTimeAttribute( xis, "time", rForestSurveillanceTime_ );
+    else if( terrain == "Urbain" )
+        tools::ReadTimeAttribute( xis, "time", rUrbanSurveillanceTime_ );
 
     rEmptySurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rEmptySurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
     rEmptySurveillanceTime_ /= 10000.;                                                                  // dT.hectare-1     => dT.m-2
