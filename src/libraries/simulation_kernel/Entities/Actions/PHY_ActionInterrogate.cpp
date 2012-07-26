@@ -39,12 +39,9 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
     float affinity = pKnowledge->GetAgentKnown().GetAffinity( callerTeamID );
     ComputeTimeToWait( affinity );
     E_ReturnCode result = eRunning;
-    if( affinity < 0.)
-    {
-        if( pKnowledge->GetAgentKnown().GetKnowledge().GetRapForLocalValue() > 2.5 )
+    if( affinity < 0 || pKnowledge->IsAnEnemy( caller.GetArmy() ) == eTristate_True && pKnowledge->GetAgentKnown().GetKnowledge().GetRapForLocalValue() >= 2.25 )
             result = eFailed;
-    }
-    if( result == eRunning )
+    else
         MIL_Report::PostEvent( pKnowledge->GetAgentKnown(), MIL_Report::eReport_Questionning );
     Callback( static_cast< int >( result ) );
 }
@@ -94,7 +91,7 @@ void PHY_ActionInterrogate::ComputeTimeToWait( float affinity )
 // -----------------------------------------------------------------------------
 void PHY_ActionInterrogate::Execute()
 {
-    if( pKnowledge_ && pKnowledge_->GetAgentKnown().GetKnowledge().GetRapForLocalValue() > 2.5 )
+    if( pKnowledge_ && pKnowledge_->GetAgentKnown().GetKnowledge().GetRapForLocalValue() >= 2.25 )
          Callback( static_cast< int >( eFailed ) );
     else
     {
