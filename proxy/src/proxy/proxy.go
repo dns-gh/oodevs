@@ -173,7 +173,12 @@ func (it *Server) List(w http.ResponseWriter) {
 	it.access.RLock()
 	defer it.access.RUnlock()
 	fmt.Fprint(w, "[")
+	next := false
 	for _, v := range it.targets {
+		if next {
+			fmt.Fprintf(w, ",")
+		}
+		next = true
 		fmt.Fprintf(w, "{\"prefix\":\"%s\",\"host\":\"%s\",\"port\":\"%s\"}", v.prefix, v.host, v.port)
 	}
 	fmt.Fprint(w, "]")
