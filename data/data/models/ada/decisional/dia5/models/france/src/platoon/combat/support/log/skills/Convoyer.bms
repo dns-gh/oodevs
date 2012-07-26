@@ -70,7 +70,7 @@ end,
                 end
                 self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = self.destinataireCourant:getMyPosition()
             end
-            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplyRecipient } )
+            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplyRecipient, pathType = eTypeItiLogistique } )
             if( self.arrived ) then
                 self.arrived = false
                 integration.deplacementVersDestinataireEffectue()
@@ -91,7 +91,7 @@ end,
                 end
                 self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = self.transporteur:getMyPosition()
             end
-            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToTransportersProvider } )
+            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToTransportersProvider, pathType = eTypeItiLogistique } )
             if( self.arrived ) then
                 self.arrived = false
                 integration.deplacementVersTransporteurEffectue()
