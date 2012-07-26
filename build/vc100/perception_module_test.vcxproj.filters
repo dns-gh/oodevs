@@ -23,6 +23,9 @@
     <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionFixture.h">
       <Filter>Source Files\Fixtures</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionViewFixture.h">
+      <Filter>Source Files\Fixtures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\perception_module_test\perception_module_test_pch.cpp">

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "perception_module_test_pch.h"
-#include "PerceptionFixture.h"
+#include "PerceptionViewFixture.h"
 
 using namespace sword::perception;
 
@@ -22,11 +22,10 @@ struct MIL_Report
 
 namespace
 {
-    struct Fixture : public sword::perception::PerceptionFixture
+    struct Fixture : public sword::perception::PerceptionViewFixture
     {
         Fixture()
         {
-            MOCK_EXPECT( IsInCity ).returns( false );
             MOCK_EXPECT( GetUrbanObjectListWithinCircle );
             MOCK_EXPECT( AppendAddedKnowledge );
             MOCK_EXPECT( GetAgentListWithinCircle );
@@ -34,12 +33,6 @@ namespace
             MOCK_EXPECT( GetConcentrationListWithinCircle );
             MOCK_EXPECT( GetFlowListWithinCircle );
             MOCK_EXPECT( GetTransporter ).returns( 0 );
-            MOCK_EXPECT( CanComponentPerceive ).returns( true );
-            MOCK_EXPECT( GetLastPostureIdentifier ).returns( 0u );
-            MOCK_EXPECT( GetCurrentPostureIdentifier ).returns( 0u );
-            MOCK_EXPECT( GetPostureCompletionPercentage ).returns( 1. );
-            MOCK_EXPECT( ComputePerceptionDistanceFactor ).returns( 1. );
-            MOCK_EXPECT( GetCollidingPopulationDensity ).returns( 1. );
             ExpectEffect( entity[ "perceptions/max-agent-perception-distance" ] );
             ExpectEffect( entity[ "perceptions/max-theoretical-agent-perception-distance" ] );
             ExpectEffect( entity[ "perceptions/peripherical-vision" ], sword::test::MakeModel( "activated", false ) );
@@ -271,23 +264,6 @@ BOOST_FIXTURE_TEST_CASE( next_peripherical_vision_step_is_updated_with_effect, F
     commands.Execute();
 }
 
-BOOST_FIXTURE_TEST_CASE( is_point_visible_hook_computes_visibility_between_entity_and_point_depending_raytrace, Fixture )
-{
-    MOCK_RESET( CreateEffect );
-    MOCK_RESET( PostEffect );
-    MT_Vector2D point;
-    MOCK_EXPECT( GetAltitude ).with( 0., 1. ).returns( 0. );
-    MOCK_EXPECT( GetAltitude ).with( 0., 0. ).returns( 0. );
-    {
-        MOCK_EXPECT( ComputeRayTrace ).once().returns( 5000 );
-        BOOST_CHECK( IsPointVisible( core::Convert( &model ), core::Convert( &entity ), &point ) );
-    }
-    {
-        MOCK_EXPECT( ComputeRayTrace ).once().returns( -1. );
-        BOOST_CHECK( !IsPointVisible( core::Convert( &model ), core::Convert( &entity ), &point ) );
-    }
-}
-
 BOOST_FIXTURE_TEST_CASE( direction_vision_mode_uses_vision_direction_as_main_perception_direction, Fixture )
 {
     ExpectNotifications();
@@ -326,58 +302,4 @@ BOOST_FIXTURE_TEST_CASE( location_vision_mode_computes_location_direction_as_mai
     ExpectNotifications();
     commands.Post( "perception", core::MakeModel( "identifier", identifier ) );
     commands.Execute();
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_has_radar_hook_checks_if_one_component_has_radar_type, sword::perception::ConfigurationFixture )
-{
-    {
-        core::Model entity;
-        entity[ "components" ].AddElement()[ "radars" ].AddElement()[ "type" ] = "my-radar";
-        MOCK_EXPECT( CanComponentPerceive ).returns( true );
-        BOOST_CHECK( AgentHasRadar( core::Convert( &entity ), 0 ) );
-    }
-    {
-        core::Model entity;
-        entity[ "components" ].AddElement()[ "radars" ];
-        MOCK_EXPECT( CanComponentPerceive ).returns( true );
-        BOOST_CHECK( !AgentHasRadar( core::Convert( &entity ), 0 ) );
-    }
-}
-
-BOOST_FIXTURE_TEST_CASE( get_perception_hook_between_two_points_returns_max_perception_energy, sword::perception::ConfigurationFixture )
-{
-    core::Model entity;
-    {
-        core::Model& sensor = entity[ "components" ].AddElement()[ "sensors" ].AddElement();
-        sensor[ "type" ] = "sensor-type";
-        sensor[ "height" ] = 0.;
-    }
-    {
-        core::Model& sensor = entity[ "components" ].AddElement()[ "sensors" ].AddElement();
-        sensor[ "type" ] = "sensor-type";
-        sensor[ "height" ] = 0.;
-    }
-    MT_Vector2D point;
-    MT_Vector2D target( 0, 10 );
-    MOCK_EXPECT( CanComponentPerceive ).returns( true );
-    MOCK_EXPECT( GetAltitude ).returns( 0 );
-    MOCK_EXPECT( ComputeRayTrace ).once().returns( 42. );
-    MOCK_EXPECT( ComputeRayTrace ).once().returns( 43. );
-    BOOST_CHECK_EQUAL( 43., GetPerception( core::Convert( &entity ), &point, &target ) );
-}
-
-BOOST_FIXTURE_TEST_CASE( compute_knowledge_object_perception_hook_returns_perception_level, Fixture )
-{
-    MOCK_RESET( CreateEffect );
-    MOCK_RESET( PostEffect );
-    DEC_Knowledge_Object* object = reinterpret_cast< DEC_Knowledge_Object* >( 43 );
-    MOCK_EXPECT( GetKnowledgeObjectType ).returns( 0u );
-    {
-        MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( true );
-        BOOST_CHECK_EQUAL( 3u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), object ) );
-    }
-    {
-        MOCK_EXPECT( KnowledgeObjectIntersectWithCircle ).once().returns( false );
-        BOOST_CHECK_EQUAL( 0u, ComputeKnowledgeObjectPerception( core::Convert( &model ), core::Convert( &entity ), object ) );
-    }
 }

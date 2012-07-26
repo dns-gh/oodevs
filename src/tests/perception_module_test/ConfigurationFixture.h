@@ -17,11 +17,11 @@ namespace sword
 {
 namespace perception
 {
-    double ConvertSeconds( double seconds )
+    inline double ConvertSeconds( double seconds )
     {
         return seconds / 10.;
     }
-    bool Assign( size_t* identifier )
+    inline bool Assign( size_t* identifier )
     {
         *identifier = 0;
         return true;
