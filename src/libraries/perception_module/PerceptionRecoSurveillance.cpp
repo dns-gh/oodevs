@@ -46,8 +46,8 @@ PerceptionRecoSurveillanceReco::PerceptionRecoSurveillanceReco( const TER_Locali
     : localisation_             ( localisation )
     , currentTimeStep_          ( currentTimeStep )
     , nForestDetectionTimeStep_ ( currentTimeStep )
-    , nUrbanDetectionTimeStep_  ( nForestDetectionTimeStep_ )
-    , nEmptyDetectionTimeStep_  ( nForestDetectionTimeStep_ )
+    , nUrbanDetectionTimeStep_  ( currentTimeStep )
+    , nEmptyDetectionTimeStep_  ( currentTimeStep )
 {
     unsigned int nForestSurface = 0;
     unsigned int nEmptySurface  = 0;
