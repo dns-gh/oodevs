@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "ProgressPage.h"
 #include "moc_ProgressPage.cpp"
+#include "Application.h"
 #include "frontend/Process_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
@@ -77,7 +78,7 @@ void ProgressPage::UpdateProgress()
     if( percentage == 100 )
     {
         timer_->stop();
-        qApp->mainWidget()->hide();
+        static_cast< Application* >( qApp )->GetMainWindow()->hide();
     }
 }
 
@@ -87,10 +88,19 @@ void ProgressPage::UpdateProgress()
 // -----------------------------------------------------------------------------
 void ProgressPage::NotifyStopped()
 {
+    QApplication::postEvent( qApp, new QCustomEvent( static_cast< QEvent::Type >( QEvent::User + 667 ), static_cast< void* >( this ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProgressPage::DoNotifyStopped
+// Created: JSR 2012-07-26
+// -----------------------------------------------------------------------------
+void ProgressPage::DoNotifyStopped()
+{
     timer_->stop();
     process_.reset();
-    qApp->mainWidget()->show();
-    qApp->mainWidget()->setActiveWindow();
+    static_cast< Application* >( qApp )->GetMainWindow()->show();
+    static_cast< Application* >( qApp )->GetMainWindow()->activateWindow();
     Previous();
 }
 

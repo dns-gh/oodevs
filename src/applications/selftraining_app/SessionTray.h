@@ -10,8 +10,9 @@
 #ifndef __SessionTray_h_
 #define __SessionTray_h_
 
-class TrayIcon;
-class TrayMenu;
+#include <boost/noncopyable.hpp>
+
+class QSystemTrayIcon;
 
 // =============================================================================
 /** @class  SessionTray
@@ -19,7 +20,7 @@ class TrayMenu;
 */
 // Created: RDS 2008-09-26
 // =============================================================================
-class SessionTray
+class SessionTray : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,17 +36,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SessionTray( const SessionTray& );            //!< Copy constructorS
-    SessionTray& operator=( const SessionTray& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    TrayMenu& trayMenu_;
-    TrayIcon& trayIcon_;
+    QSystemTrayIcon& trayIcon_;
     //@}
 };
 

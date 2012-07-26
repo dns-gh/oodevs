@@ -26,7 +26,7 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
-    : gui::LanguageChangeObserver_ABC< Q3MainWindow >()
+    : gui::LanguageChangeObserver_ABC< QMainWindow >()
     , interpreter_( new LinkInterpreter( this, controllers ) )
     , sessionTray_( 0 )
 {
@@ -115,10 +115,13 @@ void MainWindow::CenterWindow()
 // Name: MainWindow::Maximize
 // Created: RDS 2008-09-05
 // -----------------------------------------------------------------------------
-void MainWindow::Maximize()
+void MainWindow::Maximize( QSystemTrayIcon::ActivationReason reason )
 {
-    show();
-    setActiveWindow();
+    if( reason == QSystemTrayIcon::Trigger )
+    {
+        show();
+        activateWindow();
+    }
 }
 
 // -----------------------------------------------------------------------------

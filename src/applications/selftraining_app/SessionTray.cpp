@@ -9,21 +9,21 @@
 
 #include "selftraining_app_pch.h"
 #include "SessionTray.h"
-#include "TrayIcon.h"
 #include "TrayMenu.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
+#include <QtGui/qsystemtrayicon.h>
 
 // -----------------------------------------------------------------------------
 // Name: SessionTray constructor
 // Created: RDS 2008-09-26
 // -----------------------------------------------------------------------------
 SessionTray::SessionTray( QWidget *parent )
-    : trayMenu_ ( *new TrayMenu( parent ) )
-    , trayIcon_ ( *new TrayIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ), "", &trayMenu_ ) )
+    : trayIcon_( *new QSystemTrayIcon( QIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ), parent ) )
 {
     trayIcon_.show();
-    QObject::connect( &trayIcon_, SIGNAL( clicked( const QPoint& ) ), parent, SLOT( Maximize() ) );
+    QObject::connect( &trayIcon_, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ), parent, SLOT( Maximize( QSystemTrayIcon::ActivationReason ) ) );
+    trayIcon_.setContextMenu( new TrayMenu( parent ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,8 +33,6 @@ SessionTray::SessionTray( QWidget *parent )
 SessionTray::~SessionTray()
 {
     trayIcon_.hide();
-    delete &trayMenu_;
-    delete &trayIcon_;
 }
 
 // -----------------------------------------------------------------------------
@@ -45,4 +43,3 @@ void SessionTray::OnLanguageChanged()
 {
     trayIcon_.setToolTip( tools::translate( "SessionTray", "Show window" ) );
 }
-

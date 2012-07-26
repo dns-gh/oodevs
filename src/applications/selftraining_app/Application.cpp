@@ -14,6 +14,7 @@
 #include "Launcher.h"
 #include "MainWindow.h"
 #include "MessageDialog.h"
+#include "ProgressPage.h"
 #include "SessionTray.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
@@ -151,6 +152,15 @@ Launcher& Application::GetLauncher() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Application::GetMainWindow
+// Created: JSR 2012-07-25
+// -----------------------------------------------------------------------------
+QWidget* Application::GetMainWindow()
+{
+    return mainWindow_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Application::notify
 // Created: SBO 2011-03-24
 // -----------------------------------------------------------------------------
@@ -163,5 +173,10 @@ bool Application::notify( QObject* emitter, QEvent* event )
             delete message;
             return true;
         }
+    if( event && event->type() == QEvent::User + 667 )
+    {
+        static_cast< ProgressPage* >( static_cast< QCustomEvent* >( event )->data() )->DoNotifyStopped();
+        return true;
+    }
     return QApplication::notify( emitter, event );
 }

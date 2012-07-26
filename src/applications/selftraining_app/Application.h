@@ -30,6 +30,7 @@ namespace tools
 
 class Config;
 class Launcher;
+class QMainWindow;
 
 // =============================================================================
 /** @class  Application
@@ -57,6 +58,7 @@ public:
     //! @name Accessors
     //@{
     Launcher& GetLauncher() const;
+    QWidget* GetMainWindow();
     //@}
 
 private slots:
@@ -82,7 +84,7 @@ private:
     std::auto_ptr< Launcher >                           launcher_;
     std::auto_ptr< frontend::LauncherClient >           launcherClient_;
     std::auto_ptr< QTimer >                             timer_;
-    Q3MainWindow*                                       mainWindow_;
+    QMainWindow*                                        mainWindow_;
     //@}
 };
 

@@ -9,6 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "TrayMenu.h"
+#include "Application.h"
 #include "moc_TrayMenu.cpp"
 #include "clients_gui/Tools.h"
 
@@ -17,11 +18,14 @@
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
 TrayMenu::TrayMenu( QWidget* mainWindow )
-    : currentSession_( 0 )
 {
     setPalette( mainWindow->palette() );
-    insertItem( tools::translate( "TrayMenu", "Show Normal" ), mainWindow, SLOT( showNormal() ) );
-    insertItem( tools::translate( "TrayMenu", "Quit" ), this, SLOT( OnQuit() ) );
+    QAction* showAction = new QAction( tools::translate( "TrayMenu", "Show Normal" ), this );
+    connect( showAction, SIGNAL( triggered() ), mainWindow, SLOT( showNormal() ) );
+    QAction* quitAction = new QAction( tools::translate( "TrayMenu", "Quit" ), this );
+    connect( quitAction, SIGNAL( triggered() ), this, SLOT( OnQuit() ) );
+    addAction( showAction );
+    addAction( quitAction );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,6 +43,6 @@ TrayMenu::~TrayMenu()
 // -----------------------------------------------------------------------------
 void TrayMenu::OnQuit()
 {
-    qApp->mainWidget()->showNormal();
+    static_cast< Application* >( qApp )->GetMainWindow()->showNormal();
     qApp->closeAllWindows();
 }

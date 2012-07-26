@@ -142,12 +142,6 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\SessionTray.cpp">
       <Filter>Source Files\Systray</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\TrayIcon.cpp">
-      <Filter>Source Files\Systray</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\TrayIcon_win.cpp">
-      <Filter>Source Files\Systray</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\TrayMenu.cpp">
       <Filter>Source Files\Systray</Filter>
     </ClCompile>
@@ -291,9 +285,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\SideList.h">
       <Filter>Source Files\Widgets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\TrayIcon.h">
-      <Filter>Source Files\Systray</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\TrayMenu.h">
       <Filter>Source Files\Systray</Filter>

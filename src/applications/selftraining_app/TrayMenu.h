@@ -18,7 +18,7 @@ class Session;
 */
 // Created: RDS 2008-08-21
 // =============================================================================
-class TrayMenu : public Q3PopupMenu
+class TrayMenu : public QMenu
 {
     Q_OBJECT;
 
@@ -34,20 +34,6 @@ private slots:
     //@{
     void OnQuit();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TrayMenu( const TrayMenu& );            //!< Copy constructor
-    TrayMenu& operator=( const TrayMenu& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const Session* currentSession_;
-    //@}
-
 };
 
 #endif // __TrayMenu_h_

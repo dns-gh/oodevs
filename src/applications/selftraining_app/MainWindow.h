@@ -12,6 +12,8 @@
 
 #include <boost/noncopyable.hpp>
 #include "clients_gui/LanguageChangeObserver_ABC.h"
+#include <QtGui/qmainwindow.h>
+#include <QtGui/qsystemtrayicon.h>
 
 namespace kernel
 {
@@ -43,7 +45,7 @@ class SessionTray;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class MainWindow : public gui::LanguageChangeObserver_ABC< Q3MainWindow >
+class MainWindow : public gui::LanguageChangeObserver_ABC< QMainWindow >
                  , private boost::noncopyable
 {
 
@@ -59,7 +61,7 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void Maximize();
+    void Maximize( QSystemTrayIcon::ActivationReason reason );
     //@}
 
 protected:
