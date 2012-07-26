@@ -13,12 +13,24 @@
             </type>
         </parameter>
     </parameters>
-    <stages/>
-    <next-task name="agent.tasks.MobilitySupport">
-        <parameter name="entities">
-            <value>
-                <parameter>entities</parameter>
-            </value>
-        </parameter>
-    </next-task>
+    <goal>
+        <description>Appui à la mobilité : Dégager ou contourner les obstacles rencontrés par les alliés.</description>
+    </goal>
+    <stages>
+        <stage label="Appui mobilite" permanent="true" disable-when-done="false">
+            <description>Appui à la mobilité : dégager ou contourner les obstacles rencontrés.</description>
+            <goal>
+                <description>Appui à la mobilité : dégager ou contourner les obstacles rencontrés.</description>
+            </goal>
+            <skills>
+                <skill name="agent.skills.MobilitySupport">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

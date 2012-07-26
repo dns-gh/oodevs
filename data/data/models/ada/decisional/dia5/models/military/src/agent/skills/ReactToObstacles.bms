@@ -17,7 +17,7 @@ rootnode
         local nbAppuiMobility = #appuiForMobility
         
         if nbAppuiMobility > 0 and meKnowledge:isMoving() then
-            local obstacles = sword.military.queries.objects.getObstaclesOnPath[ "execute" ]()-- get obstacle
+            local obstacles = queries.getObstaclesOnPath[ "execute" ]()-- get obstacle
             for _, entity in pairs( appuiForMobility ) do
                 Activate( skill.nodes.AskForMobilitySupport, 1, { entity = entity, obstacles = obstacles } )
             end

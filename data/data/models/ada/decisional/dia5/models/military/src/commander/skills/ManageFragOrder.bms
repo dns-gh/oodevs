@@ -44,7 +44,7 @@ rootnode
                 local typeOrder = fragOrder.source:GetType()
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
                 local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"               
-                local entities = sword.military.company.queries.getCommanding[ "execute" ]({role = "none", withPC = true})
+                local entities = commander.queries.getCommanding[ "execute" ]({role = "none", withPC = true})
                 if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" then -- Il faut enlever le silence radio à tous les pions
                     entities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
                 end
