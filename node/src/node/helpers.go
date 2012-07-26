@@ -57,10 +57,16 @@ func sub(args ...interface{}) map[string]interface{} {
 	return rpy
 }
 
+func reset(h map[string]interface{}, key string) interface{} {
+	delete(h, key)
+	return h
+}
+
 func GetHelpers() template.FuncMap {
 	return template.FuncMap{
-		"ne":          ne,
 		"eq":          eq,
+		"ne":          ne,
+		"reset":       reset,
 		"set_default": set_default,
 		"sub":         sub,
 	}
