@@ -17,7 +17,9 @@ rootnode
     activate = function( self )
         local Activate = Activate
         self.obstacles = sword.military.queries.objects.getObstaclesToSupport[ "execute" ]()
-        self.positions = sword.military.queries.tactical.getPositionsToFollow[ "execute" ]( {elementsToFollow = self.params.entities, dynamic = "true" })
+        self.positions = sword.military.queries.tactical.getPositionsToFollow[ "execute" ]( {elementsToFollow = self.params.entities,
+                                                                                             distanceMin = self.params.distanceMin, 
+                                                                                             dynamic = "true" })
         Activate( skill.links.StayClose, 0.1, {entities = self.params.entities, positions = self.positions})
         if self.obstacles then
             Activate( skill.links.ByPass, 0.9, {entities = self.obstacles})
