@@ -141,17 +141,30 @@ public:
 
     bool Attach( T_ObjectPtr ptr )
     {
+        const T_Objects::value_type next = std::make_pair( ptr->GetId(), ptr );
         boost::lock_guard< boost::shared_mutex > lock( access_ );
-        return objects_.insert( std::make_pair( ptr->GetId(), ptr ) ).second;
+        return objects_.insert( next ).second;
+    }
+
+    bool AttachUnless( T_ObjectPtr ptr, const T_Predicate& predicate )
+    {
+        boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+        BOOST_FOREACH( const T_Objects::value_type& value, objects_ )
+            if( predicate( *value.second ) )
+                return false;
+        const T_Objects::value_type next = std::make_pair( ptr->GetId(), ptr );
+        boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+        return objects_.insert( next ).second;
     }
 
     T_ObjectPtr Detach( const Uuid& id )
     {
-        boost::lock_guard< boost::shared_mutex > lock( access_ );
+        boost::upgrade_lock< boost::shared_mutex > lock( access_ );
         typename T_Objects::iterator it = objects_.find( id );
         if( it == objects_.end() )
             return T_ObjectPtr();
         T_ObjectPtr ptr = it->second;
+        boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
         objects_.erase( it );
         return ptr;
     }
