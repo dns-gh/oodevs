@@ -36,7 +36,7 @@ Once all units has been loaded, they are tranported to the prisoners camp. Once 
                 </skill>
             </skills>
         </stage>
-        <stage label="jailing units" disable-when-done="true">
+        <stage label="moving to camp" disable-when-done="true">
             <skills>
                 <skill name="agent.skills.DischargeIn" main="true">
                     <parameter name="camp">
