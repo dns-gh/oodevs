@@ -129,11 +129,13 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\perception_module_test\ConfigurationFixture.h" />
     <ClInclude Include="..\..\src\tests\perception_module_test\ModuleFixture.h" />
+    <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionCommandFixture.h" />
     <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionFixture.h" />
     <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionViewFixture.h" />
     <ClInclude Include="..\..\src\tests\perception_module_test\perception_module_test_pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\tests\perception_module_test\DefaultSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ExternalPerceptionCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\HooksTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\IdentifyAgentsCommandTest.cpp" />
@@ -144,6 +146,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\perception_module_test\ScanSensorTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\ToggleCommandsTest.cpp" />
     <ClCompile Include="..\..\src\tests\perception_module_test\VisionCommandTest.cpp" />
   </ItemGroup>

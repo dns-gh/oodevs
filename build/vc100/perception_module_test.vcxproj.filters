@@ -26,6 +26,9 @@
     <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionViewFixture.h">
       <Filter>Source Files\Fixtures</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionCommandFixture.h">
+      <Filter>Source Files\Fixtures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\perception_module_test\perception_module_test_pch.cpp">
@@ -47,6 +50,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\perception_module_test\ExternalPerceptionCommandTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\perception_module_test\DefaultSensorTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\perception_module_test\ScanSensorTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
