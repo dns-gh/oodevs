@@ -53,8 +53,7 @@ public:
                              const runtime::FileSystem_ABC& system,
                              const NodeFactory_ABC& nodes,
                              const Path& root,
-                             const Path& java,
-                             const Path& jar,
+                             const Path& app,
                              const Path& web,
                              const std::string& type,
                              int host,
@@ -127,8 +126,7 @@ private:
     const runtime::FileSystem_ABC& system_;
     const NodeFactory_ABC& factory_;
     const Path root_;
-    const Path java_;
-    const Path jar_;
+    const Path app_;
     const Path web_;
     const std::string type_;
     const int host_;

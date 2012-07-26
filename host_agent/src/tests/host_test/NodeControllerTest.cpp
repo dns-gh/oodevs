@@ -35,14 +35,12 @@ namespace
 {
     struct SubFixture
     {
-        SubFixture( const Path& java, const Path& jar, const Path& web )
+        SubFixture( const Path& app, const Path& web )
             : idx( 0 )
         {
             MOCK_EXPECT( system.MakePaths );
-            MOCK_EXPECT( system.Exists ).with( java ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
-            MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
+            MOCK_EXPECT( system.Exists ).with( app ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( app ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );
             MOCK_EXPECT( proxy.GetPort ).returns( 8080 );
             MOCK_EXPECT( system.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
@@ -86,18 +84,16 @@ namespace
     {
         Fixture()
             : root   ( "e:/root" )
-            , java   ( "e:/java/some_java.exe" )
-            , jar    ( "e:/jar/some_jar.jar" )
+            , app    ( "e:/bin/node.exe" )
             , web    ( "e:/zomg/www" )
             , type   ( isCluster ? "cluster" : "node" )
-            , sub    ( java, jar, web )
-            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, java, jar, web, type, 0, sub.pool, sub.proxy )
+            , sub    ( app, web )
+            , control( sub.log, sub.runtime, sub.system, sub.nodes, root, app, web, type, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }
         const Path root;
-        const Path java;
-        const Path jar;
+        const Path app;
         const Path web;
         const std::string type;
         SubFixture sub;

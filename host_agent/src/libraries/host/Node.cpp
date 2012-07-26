@@ -248,8 +248,8 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar,
-                  const Path& web, const std::string& type, int host, bool weak )
+bool Node::Start( const Runtime_ABC& runtime, const Path& app, const Path& web,
+                  const std::string& type, int host, bool weak )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     if( stopped_ && weak )
@@ -260,8 +260,7 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar,
     if( process_  && process_->IsAlive() )
         return modified;
 
-    T_Process ptr = runtime.Start( Utf8Convert( java ), boost::assign::list_of
-        ( "-jar \"" + Utf8Convert( jar.filename() ) + "\"" )
+    T_Process ptr = runtime.Start( Utf8Convert( app ), boost::assign::list_of< std::string >
 #ifdef _DEBUG
         ( "--debug" )
 #endif
@@ -271,8 +270,7 @@ bool Node::Start( const Runtime_ABC& runtime, const Path& java, const Path& jar,
         ( MakeOption( "name", name_ ) )
         ( MakeOption( "host", host ) )
         ( MakeOption( "port", port_->Get() ) ),
-        Utf8Convert( Path( jar ).remove_filename() ),
-        Utf8Convert( root_ / ( type + ".log" ) ) );
+        std::string(), Utf8Convert( root_ / ( type + ".log" ) ) );
     if( !ptr )
         return modified;
 

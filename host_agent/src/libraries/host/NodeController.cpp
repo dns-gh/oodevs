@@ -43,8 +43,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const FileSystem_ABC& system,
                                 const NodeFactory_ABC& nodes,
                                 const Path& root,
-                                const Path& java,
-                                const Path& jar,
+                                const Path& app,
                                 const Path& web,
                                 const std::string& type,
                                 int host,
@@ -55,8 +54,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , system_  ( system )
     , factory_ ( nodes )
     , root_    ( root / ( type == "cluster" ? type : "nodes" ) )
-    , java_    ( java )
-    , jar_     ( jar )
+    , app_     ( app )
     , web_     ( web )
     , type_    ( type )
     , host_    ( host )
@@ -64,10 +62,8 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , async_   ( pool )
 {
     system.MakePaths( root_ );
-    if( !system_.IsFile( java_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8Convert( java_ ) + "' is not a java binary" );
-    if( !system_.IsFile( jar_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8Convert( jar_ ) + "' is not a jar binary" );
+    if( !system_.IsFile( app_ ) )
+        throw std::runtime_error( "'" + runtime::Utf8Convert( app_ ) + "' is not a binary" );
     if( !system_.IsDirectory( web_ ) )
         throw std::runtime_error( "'" + runtime::Utf8Convert( web_ ) + "' is not a directory" );
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Update, this ) );
@@ -250,7 +246,7 @@ NodeController::T_Node NodeController::Stop( const Uuid& id ) const
 // -----------------------------------------------------------------------------
 void NodeController::Start( Node_ABC& node, bool force, bool weak ) const
 {
-    bool modified = node.Start( runtime_, java_, jar_, web_, type_, host_, weak );
+    bool modified = node.Start( runtime_, app_, web_, type_, host_, weak );
     if( modified || force )
         Save( node );
 }

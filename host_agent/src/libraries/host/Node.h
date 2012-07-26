@@ -96,7 +96,7 @@ public:
     //! @name Public methods
     //@{
     virtual Tree Save() const;
-    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& java, const Path& jar,
+    virtual bool Start( const runtime::Runtime_ABC& runtime, const Path& app,
                         const Path& web, const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );

@@ -95,7 +95,7 @@ namespace
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
-            BOOST_REQUIRE( node.Start( runtime, "java", "jar", "web", "node", 0, false ) );
+            BOOST_REQUIRE( node.Start( runtime, "node.exe", "web", "node", 0, false ) );
             return process;
         }
 
@@ -194,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
 {
     NodePtr node = MakeNode();
     StartNode( *node, processPid, processName );
-    BOOST_CHECK( !node->Start( runtime, "java", "jar", "web", "node", 0, false ) );
+    BOOST_CHECK( !node->Start( runtime, "node.exe", "web", "node", 0, false ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )

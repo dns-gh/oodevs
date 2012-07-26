@@ -106,7 +106,6 @@ struct Configuration
 {
     Command command;
     Path root;
-    Path java;
     struct
     {
         int proxy;
@@ -130,7 +129,7 @@ struct Configuration
     } cluster;
     struct
     {
-        Path jar;
+        Path app;
         Path root;
         int min_play_seconds;
     } node;
@@ -155,8 +154,7 @@ struct Configuration
             found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
             found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
             found |= ReadParameter( proxy.app, "--proxy", i, argc, argv );
-            found |= ReadParameter( java, "--java", i, argc, argv );
-            found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
+            found |= ReadParameter( node.app, "--node", i, argc, argv );
             found |= ReadParameter( node.root, "--node_root", i, argc, argv );
             found |= ReadParameter( node.min_play_seconds, "--node_min_play", i, argc, argv );
             found |= ReadParameter( session.apps, "--session_apps", i, argc, argv );
@@ -299,9 +297,9 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     PackageFactory packages( pool, system );
     NodeFactory fnodes( packages, system, runtime, uuids, ports, cfg.node.min_play_seconds, pool );
     const Port host = ports.Create();
-    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "node", host->Get(), pool, proxy );
+    NodeController nodes( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, "node", host->Get(), pool, proxy );
     fnodes.observer = &nodes;
-    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.java, cfg.node.jar, cfg.node.root, "cluster", host->Get(), pool, proxy );
+    NodeController cluster( log, runtime, system, fnodes, cfg.root, cfg.node.app, cfg.node.root, "cluster", host->Get(), pool, proxy );
     SessionFactory fsessions( system, runtime, uuids, nodes, ports, client );
     SessionController sessions( log, runtime, system, fsessions, nodes, cfg.root, cfg.session.apps, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
@@ -361,8 +359,7 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] ports.proxy "           << cfg.ports.proxy;
     LOG_INFO( log ) << "[cfg] cluster.enabled "       << ( cfg.cluster.enabled ? "true" : "false" );
     LOG_INFO( log ) << "[cfg] proxy.app "             << cfg.proxy.app;
-    LOG_INFO( log ) << "[cfg] java "                  << cfg.java;
-    LOG_INFO( log ) << "[cfg] node.jar "              << cfg.node.jar;
+    LOG_INFO( log ) << "[cfg] node.app "              << cfg.node.app;
     LOG_INFO( log ) << "[cfg] node.root "             << cfg.node.root;
     LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
     LOG_INFO( log ) << "[cfg] session.apps "          << cfg.session.apps;
@@ -384,7 +381,6 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     if( system.IsFile( config ) )
         tree = FromJson( system.ReadFile( config ) );
 
-    const char* jhome = getenv( "JAVA_HOME" );
     const Path bin = Path( module ).remove_filename();
     Configuration cfg;
     cfg.root                  = Utf8Convert( GetTree( tree, "root", Utf8Convert( root ) ) );
@@ -396,9 +392,8 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
     cfg.ssl.certificate       = Utf8Convert( GetTree( tree, "ssl.certificate", Utf8Convert( bin / "certificate.pem" ) ) );
     cfg.ssl.key               = Utf8Convert( GetTree( tree, "ssl.key", Utf8Convert( bin / "key.pem" ) ) );
-    cfg.java                  = GetTree( tree, "java", jhome ? Path( jhome ) / "bin" / "java.exe" : "" );
     cfg.proxy.app             = Utf8Convert( GetTree( tree, "proxy.app",    Utf8Convert( bin / "proxy.exe" ) ) );
-    cfg.node.jar              = Utf8Convert( GetTree( tree, "node.jar",     Utf8Convert( bin / "node.jar" ) ) );
+    cfg.node.app              = Utf8Convert( GetTree( tree, "node.app",     Utf8Convert( bin / "node.exe" ) ) );
     cfg.node.root             = Utf8Convert( GetTree( tree, "node.root",    Utf8Convert( bin / ".." / "www" ) ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
     cfg.session.apps          = Utf8Convert( GetTree( tree, "session.apps", Utf8Convert( bin ) ) );
