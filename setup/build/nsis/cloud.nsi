@@ -39,10 +39,6 @@ Function .onInit
         SetErrorLevel 740 ;ERROR_ELEVATION_REQUIRED
         Quit
     ${EndIf}
-    ReadEnvStr $0 JAVA_HOME
-    IfFileExists "$0\bin\java.exe" +3 0
-        MessageBox mb_iconstop "Unable to locate Java. Please set JAVA_HOME environment variable."
-        Quit
 FunctionEnd
 
 ;--------------------------------
