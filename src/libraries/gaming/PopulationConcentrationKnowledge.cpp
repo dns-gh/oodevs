@@ -11,6 +11,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
+#include "PopulationConcentration.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -33,7 +34,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& 
     , nID_            ( message.knowledge().id() )
     , concentrationId_( message.concentration().id() )
     , position_       ( converter.ConvertToXY( message.position() ) )
-    , radius_         ( 100.f )
+    , radius_         ( 0 )
     , deadRadius_     ( 0 )
 {
     controller_.Create( *this );
@@ -56,17 +57,17 @@ void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentration
 {
     static const float oneOnpi = 1.f / std::acos( -1.f );
     if( message.has_attitude()  )
-        eAttitude_ = ( E_PopulationAttitude )message.attitude();
+        eAttitude_ = static_cast< E_PopulationAttitude >( message.attitude() );
     if( message.has_perceived()  )
         bIsPerceived_ = message.perceived() != 0;
     if( message.has_alive()  )
-        nNbrAliveHumans_ = ( uint )message.alive();
+        nNbrAliveHumans_ = static_cast< unsigned int >( message.alive() );
     if( message.has_dead()  )
-        nNbrDeadHumans_ = ( uint )message.dead();
+        nNbrDeadHumans_ = static_cast< unsigned int >( message.dead() );
     if( message.has_concentration()  )
         concentrationId_ = message.concentration().id();
     if( message.has_pertinence()  )
-        rRelevance_ = float( message.pertinence() );
+        rRelevance_ = static_cast< float >( message.pertinence() );
 
     const kernel::PopulationConcentration_ABC* concentration = resolver_.FindConcentration( concentrationId_ );
     const float density = concentration ? concentration->GetDensity() : 0.f;
@@ -75,6 +76,8 @@ void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentration
         radius_     = std::sqrt( ( ( nNbrAliveHumans_ + nNbrDeadHumans_ ) / density ) * oneOnpi );
         deadRadius_ = std::sqrt( ( nNbrDeadHumans_ / density ) * oneOnpi );
     }
+    if( radius_ == 0 && concentration )
+        radius_ = static_cast< const PopulationConcentration* >( concentration )->GetRadius();
     controller_.Update( *this );
 }
 
@@ -130,10 +133,10 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const ker
         return;
     if( resolver_.FindConcentration( concentrationId_ ) ) // $$$$ SBO 2007-02-27: isPerceived?
     {
-        float currentColor[4];
+        float currentColor[ 4 ];
         glPushAttrib( GL_CURRENT_BIT );
         glGetFloatv( GL_CURRENT_COLOR, currentColor );
-        currentColor[3] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
+        currentColor[ 3 ] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
         glColor4fv( currentColor );
         tools.DrawDisc( position_, radius_ );
         glColor4f( COLOR_BLACK );

@@ -49,6 +49,7 @@ public:
     virtual unsigned int GetWoundedHumans() const;
     virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
+    virtual float GetRadius() const;
     virtual float GetDensity() const;
     virtual QString GetAttitude() const;
     virtual float GetHeight( bool aggregated ) const;

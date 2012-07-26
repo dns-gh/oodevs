@@ -127,6 +127,15 @@ unsigned int PopulationConcentration::GetDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetRadius
+// Created: NPT 2012-07-26
+// -----------------------------------------------------------------------------
+float PopulationConcentration::GetRadius() const
+{
+    return radius_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationConcentration::GetDensity
 // Created: AGE 2006-02-20
 // -----------------------------------------------------------------------------
