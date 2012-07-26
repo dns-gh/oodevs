@@ -127,7 +127,9 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\tests\perception_module_test\ConfigurationFixture.h" />
     <ClInclude Include="..\..\src\tests\perception_module_test\ModuleFixture.h" />
+    <ClInclude Include="..\..\src\tests\perception_module_test\PerceptionFixture.h" />
     <ClInclude Include="..\..\src\tests\perception_module_test\perception_module_test_pch.h" />
   </ItemGroup>
   <ItemGroup>
