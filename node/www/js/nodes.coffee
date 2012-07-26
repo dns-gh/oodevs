@@ -194,6 +194,10 @@ validate_input_node = (control, result) ->
         return false
     return true
 
+$("#node_ident").keypress (e) ->
+    reg = /[a-z0-9-_]+/
+    return reg.test String.fromCharCode e.which
+
 $("#node_create").click ->
     ident = $ "#node_ident"
     if !validate_input_node ident, ident.val().length

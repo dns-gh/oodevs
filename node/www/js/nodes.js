@@ -623,6 +623,12 @@
     return true;
   };
 
+  $("#node_ident").keypress(function(e) {
+    var reg;
+    reg = /[a-z0-9-_]+/;
+    return reg.test(String.fromCharCode(e.which));
+  });
+
   $("#node_create").click(function() {
     var ident;
     ident = $("#node_ident");
