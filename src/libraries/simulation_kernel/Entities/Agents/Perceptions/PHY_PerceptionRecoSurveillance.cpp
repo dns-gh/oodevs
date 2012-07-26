@@ -75,6 +75,17 @@ void PHY_PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
         >> xml::end;
 }
 
+namespace
+{
+    void UpdateTime( xml::xistream& xis, double& time )
+    {
+        tools::ReadTimeAttribute( xis, "time", time );
+        time = MIL_Tools::ConvertSecondsToSim( time ); // second.hectare-1 => dT.hectare-1
+        time /= 10000.;                                // dT.hectare-1     => dT.m-2
+        time = 1. / ( 1. / time );                     // dT.m-2           => dT.px-2
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoSurveillance::ReadAlatTime
 // Created: ABL 2007-07-24
@@ -83,23 +94,11 @@ void PHY_PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
 {
     const std::string terrain = xis.attribute< std::string >( "terrain" );
     if( terrain == "Vide" )
-        tools::ReadTimeAttribute( xis, "time", rEmptySurveillanceTime_ );
+        UpdateTime( xis, rEmptySurveillanceTime_ );
     else if( terrain == "Foret" )
-        tools::ReadTimeAttribute( xis, "time", rForestSurveillanceTime_ );
+        UpdateTime( xis, rForestSurveillanceTime_ );
     else if( terrain == "Urbain" )
-        tools::ReadTimeAttribute( xis, "time", rUrbanSurveillanceTime_ );
-
-    rEmptySurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rEmptySurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
-    rEmptySurveillanceTime_ /= 10000.;                                                                  // dT.hectare-1     => dT.m-2
-    rEmptySurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rEmptySurveillanceTime_ );  // dT.m-2           => dT.px-2
-
-    rForestSurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rForestSurveillanceTime_ );                 // second.hectare-1 => dT.hectare-1
-    rForestSurveillanceTime_ /= 10000.;                                                                    // dT.hectare-1     => dT.m-2
-    rForestSurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rForestSurveillanceTime_ );   // dT.m-2           => dT.px-2
-
-    rUrbanSurveillanceTime_ = MIL_Tools::ConvertSecondsToSim( rUrbanSurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
-    rUrbanSurveillanceTime_ /= 10000.;                                                                  // dT.hectare-1     => dT.m-2
-    rUrbanSurveillanceTime_ = 1. / MIL_Tools::ConvertMeterSquareToSim( 1. / rUrbanSurveillanceTime_ );  // dT.m-2           => dT.px-2
+        UpdateTime( xis, rUrbanSurveillanceTime_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -132,10 +132,20 @@ struct PerceptionRecoSurveillance::LoadingWrapper
 void PerceptionRecoSurveillance::Initialize( xml::xistream& xis )
 {
     LoadingWrapper loader;
-
     xis >> xml::start( "alat-monitoring-times" )
             >> xml::list( "alat-monitoring-time", loader, &LoadingWrapper::ReadAlatTime )
         >> xml::end;
+}
+
+namespace
+{
+    void UpdateTime( xml::xistream& xis, double& time )
+    {
+        tools::ReadTimeAttribute( xis, "time", time );
+        time = GET_HOOK( ConvertSecondsToSim )( time ); // second.hectare-1 => dT.hectare-1
+        time /= 10000.;                                 // dT.hectare-1     => dT.m-2
+        time = 1. / ( 1. / time );                      // dT.m-2           => dT.px-2
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -146,23 +156,11 @@ void PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
 {
     const std::string terrain = xis.attribute< std::string >( "terrain" );
     if( terrain == "Vide" )
-        tools::ReadTimeAttribute( xis, "time", rEmptySurveillanceTime_ );
+        UpdateTime( xis, rEmptySurveillanceTime_ );
     else if( terrain == "Foret" )
-        tools::ReadTimeAttribute( xis, "time", rForestSurveillanceTime_ );
+        UpdateTime( xis, rForestSurveillanceTime_ );
     else if( terrain == "Urbain" )
-        tools::ReadTimeAttribute( xis, "time", rUrbanSurveillanceTime_ );
-
-    rEmptySurveillanceTime_ = GET_HOOK( ConvertSecondsToSim )( rEmptySurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
-    rEmptySurveillanceTime_ /= 10000.;                                                                   // dT.hectare-1     => dT.m-2
-    rEmptySurveillanceTime_ = 1. / ( 1. / rEmptySurveillanceTime_ );                                     // dT.m-2           => dT.px-2
-
-    rForestSurveillanceTime_ = GET_HOOK( ConvertSecondsToSim )( rForestSurveillanceTime_ );                 // second.hectare-1 => dT.hectare-1
-    rForestSurveillanceTime_ /= 10000.;                                                                     // dT.hectare-1     => dT.m-2
-    rForestSurveillanceTime_ = 1. / ( 1. / rForestSurveillanceTime_ );                                      // dT.m-2           => dT.px-2
-
-    rUrbanSurveillanceTime_ = GET_HOOK( ConvertSecondsToSim )( rUrbanSurveillanceTime_ );                // second.hectare-1 => dT.hectare-1
-    rUrbanSurveillanceTime_ /= 10000.;                                                                   // dT.hectare-1     => dT.m-2
-    rUrbanSurveillanceTime_ = 1. / ( 1. / rUrbanSurveillanceTime_ );                                     // dT.m-2           => dT.px-2
+        UpdateTime( xis, rUrbanSurveillanceTime_ );
 }
 
 // -----------------------------------------------------------------------------
