@@ -235,7 +235,7 @@ void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString
         usedByInfo_.usersList_ = userList;
         usedByInfo_.targetTab_ = targetTab;
         usedByInfo_.subTargetTab_ = subTargetTab;
-        popupMenu.insertItem( tr( "Search for '%1' that use" ).arg( userName ), this, SLOT( ContextMenuSearchElements() ) );
+        popupMenu.insertItem( tr( "Search for '%1' that use" ).arg( userName.toLower() ), this, SLOT( ContextMenuSearchElements() ) );
     }
 }
 
@@ -243,20 +243,30 @@ void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString
 // Name: ADN_ListView::FormatUsersList
 // Created: ABR 2012-01-25
 // -----------------------------------------------------------------------------
-std::string ADN_ListView::FormatUsersList( QStringList usersList )
+std::string ADN_ListView::FormatUsersList( const QString& category, const QStringList& usersList ) const
 {
     std::string result = "";
     if( usersList.isEmpty() )
-    {
         result = tr( "<b>Unused</b>" ).toUtf8().constData();
-    }
     else
+        FillMultiUsersList( category, usersList, result );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FillMultiUsersList
+// Created: ABR 2012-07-25
+// -----------------------------------------------------------------------------
+void ADN_ListView::FillMultiUsersList( const QString& category, const QStringList& usersList, std::string& result ) const
+{
+    if( !usersList.isEmpty() )
     {
-        result = tr( "<b>Used by:</b>" ).toUtf8().constData();
+        if( !result.empty() )
+            result += "<br>";
+        result += tr( "<nobr><b>Used by the following '%1':</b></nobr>" ).arg( category.toLower() ).toUtf8().constData();
         for( QStringList::const_iterator constIterator = usersList.constBegin(); constIterator != usersList.constEnd(); ++constIterator )
             result += "<br><nobr>" + (*constIterator).toStdString() + "</nobr>";
     }
-    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +322,7 @@ void ADN_ListView::ContextMenuDelete()
     // Check if the item is multi-referenced, and warn the user if it's the case.
     if( pCurrentData->IsMultiRef() )
     {
-        if( !ADN_GuiTools::MultiRefWarning() )
+        if( !ADN_GuiTools::MultiRefWarning( pCurrentData ) )
             return;
     }
     else if( !ADN_GuiTools::DeletionWarning() )

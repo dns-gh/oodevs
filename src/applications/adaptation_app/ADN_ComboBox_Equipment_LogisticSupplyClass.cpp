@@ -31,7 +31,7 @@ public:
         ADN_ComboBoxItem* pItem = new ADN_ComboBoxItem(*pCombo_,obj);
 
         // connect it with armor name
-        pItem->GetConnector().Connect( (helpers::LogisticSupplyClass*)obj );
+        pItem->GetConnector().Connect( &static_cast< helpers::LogisticSupplyClass* >( obj )->strName_ );
 
         // return
         return pItem;
@@ -46,8 +46,7 @@ public:
 ADN_ComboBox_Equipment_LogisticSupplyClass::ADN_ComboBox_Equipment_LogisticSupplyClass(QWidget * parent, const char * name)
 : ADN_ComboBox(parent,name)
 {
-    // connector creation
-    pConnector_=new ADN_CCB_Equipement_LogisticSupplyClass(*this);
+    pConnector_ = new ADN_CCB_Equipement_LogisticSupplyClass(*this);
 }
 
 //-----------------------------------------------------------------------------

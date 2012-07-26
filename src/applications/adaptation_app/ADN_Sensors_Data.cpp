@@ -125,7 +125,7 @@ ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos(ADN_Categories_Data
 std::string ADN_Sensors_Data::ModificatorSizeInfos::GetNodeName()
 {
     std::string strResult( "à la catégorie de volume " );
-    return strResult + ptrSize_.GetData()->GetData();
+    return strResult + ptrSize_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ std::string ADN_Sensors_Data::ModificatorSizeInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorSizeInfos::GetItemName()
 {
-    return ptrSize_.GetData()->GetData();
+    return ptrSize_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void ADN_Sensors_Data::ModificatorSizeInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "distance-modifier" )
-            << xml::attribute( "type", ptrSize_.GetData()->GetData() )
+            << xml::attribute( "type", ptrSize_.GetData()->strName_.GetData() )
             << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }

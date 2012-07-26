@@ -46,6 +46,7 @@ public:
     static const std::string& ConvertFromSupplyConvoyType( E_SupplyConvoyType, E_Conversion = eToSim );
     static const std::string& ConvertFromConstructorType( E_ConstructorType, E_Conversion = eToSim );
     static const std::string& ConvertFromPropagationModel( E_PropagationModel, E_Conversion = eToSim );
+    static const std::string& ConvertFromWorkspaceElement( E_WorkspaceElements, E_Conversion = eToTr );
     //@}
 
     //! @name Convert To functions
@@ -71,6 +72,7 @@ public:
     static E_SupplyConvoyType   ConvertToSupplyConvoyType( const std::string& );
     static E_ConstructorType         ConvertToConstructorType( const std::string& );
     static E_PropagationModel        ConvertToPropagationModel( const std::string& );
+    static E_WorkspaceElements       ConvertToWorkspaceElements( const std::string& );
     //@}
 
     //! @name Initializer
@@ -102,6 +104,7 @@ public:
     typedef converter<E_SupplyConvoyType>           T_ConverterSupplyConvoyType;
     typedef converter< E_ConstructorType >         T_ConverterConstructorType;
     typedef converter< E_PropagationModel >        T_ConverterPropagationModel;
+    typedef converter< E_WorkspaceElements >       T_ConverterWorkspaceElements;
     //@}
 
     //! @name Converters
@@ -126,6 +129,7 @@ public:
     static T_ConverterSupplyConvoyType  supplyConvoyTypeConverter_[];
     static T_ConverterConstructorType         constructorTypeConverter_[];
     static T_ConverterPropagationModel        propagationModelConverter_[];
+    static T_ConverterWorkspaceElements       workspaceElementsConverter_[];
     //@}
 };
 

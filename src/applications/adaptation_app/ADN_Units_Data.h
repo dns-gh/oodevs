@@ -258,6 +258,7 @@ public:
 
     QStringList GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetUnitsThatUse( helpers::LogisticSupplyClass& supply );
 
 private:
     void ReadArchive( xml::xistream& input );

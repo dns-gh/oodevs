@@ -31,7 +31,19 @@ class ADN_Categories_Data : public ADN_Data_ABC
 {
 
 public:
-    typedef ADN_Type_String SizeInfos;
+    class SizeInfos : public ADN_Ref_ABC
+                    , public ADN_DataTreeNode_ABC
+    {
+    public:
+        SizeInfos() {}
+        SizeInfos* CreateCopy() { return new SizeInfos(); }
+        std::string GetItemName() { return strName_.GetData(); }
+
+    public:
+        ADN_Type_String strName_;
+    };
+
+    //typedef ADN_Type_String SizeInfos;
     typedef ADN_Type_Vector_ABC< SizeInfos >         T_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::iterator            IT_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::const_iterator     CIT_SizeInfos_Vector;
@@ -52,7 +64,7 @@ public:
     helpers::ArmorInfos*                   FindArmor( const std::string& strName );
     SizeInfos*                             FindSize( const std::string& strName );
     helpers::ResourceNatureInfos*          FindDotationNature( const std::string& strName );
-    helpers::LogisticSupplyClass*     FindLogisticSupplyClass( const std::string& strName );
+    helpers::LogisticSupplyClass*          FindLogisticSupplyClass( const std::string& strName );
     static unsigned long                   GetNewIdentifier();
 
 private:
@@ -139,7 +151,7 @@ inline
 ADN_Categories_Data::SizeInfos* ADN_Categories_Data::FindSize( const std::string& strName )
 {
     for( IT_SizeInfos_Vector it = vSizes_.begin(); it != vSizes_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+        if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
             return *it;
     return 0;
 }
@@ -152,7 +164,7 @@ inline
 helpers::ResourceNatureInfos* ADN_Categories_Data::FindDotationNature( const std::string& strName )
 {
     for( helpers::IT_ResourceNatureInfos_Vector it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+        if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
             return *it;
     return 0;
 }
@@ -165,7 +177,7 @@ inline
 helpers::LogisticSupplyClass* ADN_Categories_Data::FindLogisticSupplyClass( const std::string& strName )
 {
     for( helpers::IT_LogisticSupplyClass_Vector it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+        if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
             return *it;
     return 0;
 }

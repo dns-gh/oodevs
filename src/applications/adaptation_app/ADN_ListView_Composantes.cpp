@@ -179,7 +179,9 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
     {
         ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate(  "ADN_ListView_Composantes", "Units" ), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
     }
     popupMenu.exec( pt );
 }
@@ -190,8 +192,9 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 std::string ADN_ListView_Composantes::GetToolTipFor( Q3ListViewItem& item )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
-    ComposanteInfos* pCastData = (ComposanteInfos*)pData;
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eUnits ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ) );
 }

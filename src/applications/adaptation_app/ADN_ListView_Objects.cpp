@@ -314,10 +314,39 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
         {
             ADN_Objects_Data_ObjectInfos* pCastData = static_cast< ADN_Objects_Data_ObjectInfos* >( pCurData_ );
             assert( pCastData != 0 );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Sensors" ) , ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Resources" ) , ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), eEquipement, eDotationFamily_Munition );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Equipments" ) , ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                          ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                          ADN_Tr::ConvertFromWorkspaceElement( eEquipement ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), eEquipement, eDotationFamily_Munition );
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                          ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
         }
         popupMenu.exec( pt );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Objects::GetToolTipFor
+// Created: ABR 2012-07-25
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_Objects::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ADN_Objects_Data_ObjectInfos* pCastData = (ADN_Objects_Data_ObjectInfos*)pData;
+    assert( pCastData != 0 );
+
+    std::string result;
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipement ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
+
+    if( result.empty() )
+        result = tr( "<b>Unused</b>" ).toUtf8().constData();
+    return result;
 }

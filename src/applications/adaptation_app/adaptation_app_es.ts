@@ -203,26 +203,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_ArmorCategory_Wizard</name>
-    <message id="0">
-        <source>New armor plating creation</source>
-        <oldsource>New armor category creation</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
-    </message>
-    <message>
-        <source>Creation finished</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Armor plating</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new armor plating.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
@@ -534,10 +514,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Breakdowns</source>
         <translation>Fallas</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2293,15 +2269,15 @@ tirador</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt; Using: %1 &gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search for &apos;%1&apos; that use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;nobr&gt;&lt;b&gt;Used by the following &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2331,7 +2307,7 @@ tirador</translation>
         <translation>Blindaje</translation>
     </message>
     <message>
-        <source>Equipments</source>
+        <source>Armor plating</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2342,12 +2318,27 @@ tirador</translation>
         <translation>Naturaleza de recurso</translation>
     </message>
     <message>
-        <source>New nature</source>
-        <translation>Nueva naturaleza</translation>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete nature</source>
-        <translation>Borrar naturaleza</translation>
+        <source>Natures</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Categories_LogisticSupplyClass</name>
+    <message>
+        <source>Logistic categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2357,16 +2348,8 @@ tirador</translation>
         <translation>Volumenes</translation>
     </message>
     <message>
-        <source>New size</source>
-        <translation>Nuevo volúmen</translation>
-    </message>
-    <message>
-        <source>Delete size</source>
-        <translation>Borrar volúmen</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
+        <source>Size</source>
+        <translation type="unfinished">Volúmen</translation>
     </message>
 </context>
 <context>
@@ -2374,10 +2357,6 @@ tirador</translation>
     <message>
         <source>Equipments</source>
         <translation>Equipos</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2408,20 +2387,12 @@ tirador</translation>
         <source>Launchers</source>
         <translation>Lanzadores</translation>
     </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_MissionTypes</name>
     <message>
         <source>Missions</source>
         <translation>Misiones</translation>
-    </message>
-    <message>
-        <source>Doctrine models</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2453,18 +2424,6 @@ tirador</translation>
         <source>Models</source>
         <translation>Modelos</translation>
     </message>
-    <message>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automata</source>
-        <translation type="unfinished">Autómata</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
@@ -2473,15 +2432,7 @@ tirador</translation>
         <translation>Objetos</translation>
     </message>
     <message>
-        <source>Sensors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2513,6 +2464,14 @@ tirador</translation>
         <source>RoofShape</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>RoofShapes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Sensors</name>
@@ -2528,11 +2487,11 @@ tirador</translation>
 <context>
     <name>ADN_ListView_Templates</name>
     <message>
-        <source>New</source>
+        <source>Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete</source>
+        <source>Templates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2542,72 +2501,52 @@ tirador</translation>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
-    <message>
-        <source>Automata</source>
-        <translation type="unfinished">Autómata</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_UrbanAccommodation_Type</name>
     <message>
-        <source>New</source>
-        <translation>Nuevo</translation>
+        <source>Activity</source>
+        <translation type="unfinished">Actividad</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Template</source>
+        <source>Templates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activity</source>
-        <translation type="unfinished">Actividad</translation>
+        <source>Activities</source>
+        <translation type="unfinished">Actividas</translation>
     </message>
 </context>
 <context>
     <name>ADN_ListView_UrbanInfrastructure_Type</name>
     <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_ListView_UrbanMaterial_Type</name>
     <message>
-        <source>New</source>
-        <translation>Nuevo</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
         <source>Material</source>
         <translation type="unfinished">Material</translation>
+    </message>
+    <message>
+        <source>Materials</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_ListView_Urban_Type</name>
     <message>
-        <source>New</source>
-        <translation>Nuevo</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
         <source>Facade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facades</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3071,6 +3010,29 @@ tirador</translation>
     </message>
     <message>
         <source>Warning: total of percentages must equal 100%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_MultiRefWarningDialog</name>
+    <message>
+        <source>Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multi references</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Ok&quot; to destroy it and all its references.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This item is referenced by all the following item:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4341,6 +4303,11 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
+    <message id="0">
+        <source>ADN_Sensors_Environments_GUI</source>
+        <oldsource>New armor plating creation</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
+    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modificadores</translation>
@@ -4803,21 +4770,21 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_Tools</name>
     <message>
-        <source>Multi references</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>This item is referenced by at least one other item.
-Click &quot;Ok&quot; to destroy it and all its references.</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Delete?</source>
         <translation></translation>
     </message>
     <message>
+        <source>Multi references</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Really delete this item?
 Click &quot;Ok&quot; to delete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This item is referenced by at least one other item.
+Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5419,6 +5386,114 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Resource network type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UnitSymbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launchers</source>
+        <translation type="unfinished">Lanzadores</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished">Protecciones activas</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensores</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished">Fallas</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished">Autómata</translation>
+    </message>
+    <message>
+        <source>Jamming</source>
+        <translation type="unfinished">Brouillage</translation>
+    </message>
+    <message>
+        <source>Human factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge groups</source>
+        <translation type="unfinished">Grupos de conocimiento</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished">Logística</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5665,7 +5740,7 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sensores</translation>
     </message>
     <message>
         <source>Level:</source>
@@ -6084,10 +6159,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Weapon system</source>
         <translation></translation>
     </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Weapons_PhSizeListView</name>
@@ -6127,6 +6198,29 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Wizard</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Crear nuevo</translation>
+    </message>
+    <message>
+        <source>Create a copy of:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The provided name is either empty or already in use, please pick another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Wizard_ABC</name>
     <message>
         <source>Next</source>
@@ -6146,98 +6240,25 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Wizard_Default</name>
+    <message>
+        <source>Creation finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &apos;%1&apos; creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Workspace</name>
-    <message>
-        <source>Categories</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation>NBC</translation>
-    </message>
-    <message>
-        <source>Launchers</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Active Protections</source>
-        <translation>Protections Actives</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Capteurs</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipements</translation>
-    </message>
-    <message>
-        <source>Op. indicators</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Doctrine models</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Automata</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Pannes</translation>
-    </message>
-    <message>
-        <source>Jamming</source>
-        <translation>Brouillage</translation>
-    </message>
-    <message>
-        <source>Human factors</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Knowledge groups</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Reports</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Loading GUI...</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Log</translation>
     </message>
     <message>
         <source>GUI loaded</source>
@@ -6282,30 +6303,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>ADN - Data export</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Resource networks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Symbols</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>UnitSymbols</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

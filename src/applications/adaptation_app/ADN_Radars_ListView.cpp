@@ -109,5 +109,6 @@ std::string ADN_Radars_ListView::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     RadarInfos* pCastData = static_cast< RadarInfos* >( pData );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }

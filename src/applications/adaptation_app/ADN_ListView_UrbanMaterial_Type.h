@@ -30,6 +30,7 @@ public:
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
+    virtual std::string GetToolTipFor( Q3ListViewItem& item );
 };
 
 #endif // __ADN_ListView_UrbanMaterial_Type_h_

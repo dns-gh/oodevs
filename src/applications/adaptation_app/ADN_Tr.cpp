@@ -277,6 +277,39 @@ ADN_Tr::T_ConverterPropagationModel ADN_Tr::propagationModelConverter_[] =
     T_ConverterPropagationModel( "", "", (E_PropagationModel)-1 )
 };
 
+ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
+{
+    T_ConverterWorkspaceElements( "categories",       QT_TRANSLATE_NOOP("ADN_Tr", "Categories" ),           eCategories ),
+    T_ConverterWorkspaceElements( "symbols",          QT_TRANSLATE_NOOP("ADN_Tr", "Symbols" ),              eSymbols ),
+    T_ConverterWorkspaceElements( "unitsymbols",      QT_TRANSLATE_NOOP("ADN_Tr", "UnitSymbols" ),          eUnitSymbols ),
+    T_ConverterWorkspaceElements( "urban",            QT_TRANSLATE_NOOP("ADN_Tr", "Urban" ),                eUrban ),
+    T_ConverterWorkspaceElements( "nbc",              QT_TRANSLATE_NOOP("ADN_Tr", "NBC" ),                  eNBC ),
+    T_ConverterWorkspaceElements( "launcher",         QT_TRANSLATE_NOOP("ADN_Tr", "Launchers" ),            eLaunchers ),
+    T_ConverterWorkspaceElements( "equipment",        QT_TRANSLATE_NOOP("ADN_Tr", "Resources" ),            eEquipement ),
+    T_ConverterWorkspaceElements( "fireclasses",      QT_TRANSLATE_NOOP("ADN_Tr", "Fires" ),                eFireClasses ),
+    T_ConverterWorkspaceElements( "drawings",         QT_TRANSLATE_NOOP("ADN_Tr", "Drawings" ),             eDrawings ),
+    T_ConverterWorkspaceElements( "objects",          QT_TRANSLATE_NOOP("ADN_Tr", "Objects" ),              eObjects ),
+    T_ConverterWorkspaceElements( "weapons",          QT_TRANSLATE_NOOP("ADN_Tr", "Weapon systems" ),       eWeapons ),
+    T_ConverterWorkspaceElements( "activeprotection", QT_TRANSLATE_NOOP("ADN_Tr", "Active Protections" ),   eActiveProtections ),
+    T_ConverterWorkspaceElements( "sensors",          QT_TRANSLATE_NOOP("ADN_Tr", "Sensors" ),              eSensors ),
+    T_ConverterWorkspaceElements( "breakdowns",       QT_TRANSLATE_NOOP("ADN_Tr", "Breakdowns" ),           eBreakdowns ),
+    T_ConverterWorkspaceElements( "composantes",      QT_TRANSLATE_NOOP("ADN_Tr", "Equipments" ),           eComposantes ),
+    T_ConverterWorkspaceElements( "resourcenetworks", QT_TRANSLATE_NOOP("ADN_Tr", "Resource networks" ),    eResourceNetworks ),
+    T_ConverterWorkspaceElements( "aiengine",         QT_TRANSLATE_NOOP("ADN_Tr", "Op. indicators" ),       eAiEngine ),
+    T_ConverterWorkspaceElements( "missions",         QT_TRANSLATE_NOOP("ADN_Tr", "Missions" ),             eMissions ),
+    T_ConverterWorkspaceElements( "models",           QT_TRANSLATE_NOOP("ADN_Tr", "Doctrine models" ),      eModels ),
+    T_ConverterWorkspaceElements( "units",            QT_TRANSLATE_NOOP("ADN_Tr", "Units" ),                eUnits ),
+    T_ConverterWorkspaceElements( "automata",         QT_TRANSLATE_NOOP("ADN_Tr", "Automata" ),             eAutomata ),
+    T_ConverterWorkspaceElements( "communications",   QT_TRANSLATE_NOOP("ADN_Tr", "Jamming" ),              eCommunications ),
+    T_ConverterWorkspaceElements( "humanfactors",     QT_TRANSLATE_NOOP("ADN_Tr", "Human factors" ),        eHumanFactors ),
+    T_ConverterWorkspaceElements( "knowledgegroups",  QT_TRANSLATE_NOOP("ADN_Tr", "Knowledge groups" ),     eKnowledgeGroups ),
+    T_ConverterWorkspaceElements( "population",       QT_TRANSLATE_NOOP("ADN_Tr", "Crowds" ),               ePopulation ),
+    T_ConverterWorkspaceElements( "people",           QT_TRANSLATE_NOOP("ADN_Tr", "Populations" ),          ePeople ),
+    T_ConverterWorkspaceElements( "reports",          QT_TRANSLATE_NOOP("ADN_Tr", "Reports" ),              eReports ),
+    T_ConverterWorkspaceElements( "logistic",         QT_TRANSLATE_NOOP("ADN_Tr", "Log" ),                  eLogistic ),
+    T_ConverterWorkspaceElements( "", "", (E_WorkspaceElements)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromLocation
 // Created: APE 2005-02-18
@@ -464,6 +497,15 @@ const std::string& ADN_Tr::ConvertFromConstructorType( E_ConstructorType nValue,
 const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValue, E_Conversion nConverterType )
 {
     return ADN_Tr::InverseFindInConverter( propagationModelConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromWorkspaceElement
+// Created: ABR 2012-07-24
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( workspaceElementsConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -656,6 +698,15 @@ E_PropagationModel ADN_Tr::ConvertToPropagationModel( const std::string& strName
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToWorkspaceElements
+// Created: ABR 2012-07-24
+// -----------------------------------------------------------------------------
+E_WorkspaceElements ADN_Tr::ConvertToWorkspaceElements( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( workspaceElementsConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -681,4 +732,5 @@ void ADN_Tr::InitTranslations()
     InitTr( supplyConvoyTypeConverter_, "ADN_Tr" );
     InitTr( constructorTypeConverter_, "ADN_Tr" );
     InitTr( propagationModelConverter_, "ADN_Tr" );
+    InitTr( workspaceElementsConverter_, "ADN_Tr" );
 }

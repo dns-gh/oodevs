@@ -47,7 +47,7 @@ public:
 
         // Connect the item
         pItemLogThreshold->GetConnector().Connect( &pInfo->rLogThreshold_ );
-        pItemName->GetConnector().Connect( pInfo->ptrLogisticSupplyClass_.GetData() );
+        pItemName->GetConnector().Connect( &pInfo->ptrLogisticSupplyClass_.GetData()->strName_ );
     }
 
 private:
@@ -109,14 +109,14 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const 
     {
         bool found = false;
         for( int i = 0; i < numRows() && !found; ++i )
-            if( text( i, 0 ).toUtf8().constData() == (*it)->GetData() )
+            if( text( i, 0 ).toUtf8().constData() == (*it)->strName_.GetData() )
                 found = true;
 
         if( !found )
         {
             // This id is used to encode the category into the item.
             int nItemId = (int)(*it); // $$$$ ABR 2012-02-16: OMG
-            targetMenu.insertItem( (*it)->GetData().c_str(), nItemId );
+            targetMenu.insertItem( (*it)->strName_.GetData().c_str(), nItemId );
         }
     }
     if( targetMenu.count() > 0 )

@@ -32,7 +32,7 @@ public:
         ADN_ComboBoxItem* pItem=new ADN_ComboBoxItem(*pCombo_,obj);
 
         // connect it with armor name
-        pItem->GetConnector().Connect( (SizeInfos*)obj );
+        pItem->GetConnector().Connect( & static_cast< SizeInfos* >( obj )->strName_ );
 
         // return
         return pItem;

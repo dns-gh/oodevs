@@ -170,8 +170,8 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) co
            << xml::attribute( "package-size", rNbrInPackage_ )
            << xml::attribute( "package-mass", rPackageWeight_ )
            << xml::attribute( "package-volume", rPackageVolume_ )
-           << xml::attribute( "nature", ptrResourceNature_.GetData()->GetData() )
-           << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->GetData() )
+           << xml::attribute( "nature", ptrResourceNature_.GetData()->strName_.GetData() )
+           << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->strName_.GetData() )
            << xml::attribute( "id-nature", ptrResourceNature_.GetData()->GetId() )
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
@@ -926,7 +926,41 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectIn
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
                 if( ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strType_.GetData() == object.strType_.GetData() )
-                    result << (*itCategory)->strName_.GetData().c_str();
+                    result << ( *itCategory )->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::GetEquipmentsThatUse
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::ResourceNatureInfos& object )
+{
+    QStringList result;
+    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        ResourceInfos* pComp = *it;
+        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+            if( ( *itCategory )->ptrResourceNature_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                    result << ( *itCategory )->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::GetEquipmentsThatUse
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::LogisticSupplyClass& object )
+{
+    QStringList result;
+    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        ResourceInfos* pComp = *it;
+        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+            if( ( *itCategory )->ptrLogisticSupplyClass_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                result << ( *itCategory )->strName_.GetData().c_str();
     }
     return result;
 }

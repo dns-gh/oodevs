@@ -290,7 +290,7 @@ void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& outpu
 ADN_Population_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr )
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_  ( ptr->GetData() )
+    , strName_  ( ptr->strName_.GetData() )
     , ptrVolume_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
     , rDensity_ ( 0. )
     , rMaxSpeed_( 0. )
@@ -317,7 +317,7 @@ void ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& o
     if( rDensity_ == 0. && rMaxSpeed_ == 0. )
         return;
     output << xml::start( "unit" )
-             << xml::attribute( "unit-size", *ptrVolume_.GetData() )
+             << xml::attribute( "unit-size", ptrVolume_.GetData()->strName_ )
              << xml::attribute( "population-density", rDensity_  )
              << xml::attribute( "max-speed", rMaxSpeed_  )
            << xml::end;

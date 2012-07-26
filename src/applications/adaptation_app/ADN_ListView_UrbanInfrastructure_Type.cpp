@@ -16,33 +16,7 @@
 #include "ADN_Urban_GUI.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
-
-//-----------------------------------------------------------------------------
-// Internal List View Urban_Infrastructure connector to be connected with ADN_ListView_Urban_Infrastructure
-//-----------------------------------------------------------------------------
-class ADN_CLV_UrbanInfrastructure_Type
-    : public ADN_Connector_ListView_ABC
-{
-public:
-
-    ADN_CLV_UrbanInfrastructure_Type(ADN_ListView_UrbanInfrastructure_Type& list)
-        : ADN_Connector_ListView_ABC(list)
-    {}
-
-    virtual ~ADN_CLV_UrbanInfrastructure_Type()
-    {}
-
-    ADN_ListViewItem* CreateItem(void * obj)
-    {
-        // create new list item
-        ADN_ListViewItem *pItem                 = new ADN_ListViewItem( &list_, obj, 1 );
-
-        return pItem;
-    }
-
-private:
-    ADN_CLV_UrbanInfrastructure_Type& operator=( const ADN_CLV_UrbanInfrastructure_Type& );
-};
+#include "ADN_Wizard_Default.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanInfrastructure_Type constructor
@@ -51,13 +25,9 @@ private:
 ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, Qt::WFlags f)
 :   ADN_ListView(parent,"Infrastructure",f)
 {
-    // Add a column
     addColumn( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ) );
     setResizeMode( Q3ListView::LastColumn );
-
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<ADN_Urban_Data::InfrastructureInfos>(*this);
-
+    pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this );
     this->SetDeletionEnabled( true );
 }
 
@@ -80,7 +50,6 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
         return;
 
     ADN_Urban_Data::InfrastructureInfos* pInfos = ( ADN_Urban_Data::InfrastructureInfos* )pCurData_;
-
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Urban_GUI::eNbrUrbanInfrastructureGuiElements );
 
     vItemConnectors_[ADN_Urban_GUI::eUrbanInfrastructureName]->Connect( &pInfos->strName_, bConnect );
@@ -101,48 +70,12 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
 // Name: ADN_ListView_UrbanInfrastructure_Type::OnContextMenu
 // Created: SLG 2010-12-20
 //-----------------------------------------------------------------------------
-void  ADN_ListView_UrbanInfrastructure_Type::OnContextMenu( const QPoint& pt)
+void  ADN_ListView_UrbanInfrastructure_Type::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popuMenu( this );
-
-    popuMenu.insertItem( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "New" ), 0 );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Delete" ), 1 );
-    popuMenu.setItemEnabled( 1, pCurData_ != 0 );
-
-    int nResult = popuMenu.exec( pt );
-    switch ( nResult )
-    {
-    case 0:
-        {
-            // create new sensor & add it to list
-             ADN_Urban_Data::InfrastructureInfos* pNewInfo = new ADN_Urban_Data::InfrastructureInfos();
-
-            ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-            pCList->AddItem( pNewInfo );
-
-            // Put the  new item at the top of the list (to be coherent with the application)
-            int pos= FindNdx( pNewInfo );
-            while( pos != 0 )
-            {
-                static_cast<ADN_Connector_Vector_ABC*>(&GetConnector())->SwapItem( pos - 1, pos );
-                --pos;
-            }
-
-            // set current item
-            setCurrentItem( FindItem( pNewInfo ) );
-            break;
-        }
-    case 1:
-        {
-            ADN_Urban_Data::InfrastructureInfos* pCurInfrastructure= (ADN_Urban_Data::InfrastructureInfos*) pCurData_;
-            if( pCurInfrastructure->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                return;
-
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurInfrastructure );
-            break;
-        }
-    default:
-        break;
-    }
-
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard_Default< ADN_Urban_Data::InfrastructureInfos > wizard( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ),
+                                                                      tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructures" ),
+                                                                      ADN_Workspace::GetWorkspace().GetUrban().GetData().GetInfrastructuresInfos(), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    popupMenu.exec( pt );
 }

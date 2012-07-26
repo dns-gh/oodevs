@@ -190,7 +190,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "stock" )
-            << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->GetData() )
+            << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->strName_.GetData() )
             << xml::attribute( "threshold", rLogThreshold_ )
            << xml::end;
 }
@@ -1034,5 +1034,19 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model 
         if( (*it)->ptrModel_.GetData() == &model )
             result << pUnit->strName_.GetData().c_str();
     }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::GetUnitsThatUse
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& supply )
+{
+    QStringList result;
+    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+        for( CIT_StockLogThresholdInfos_Vector itStock = ( *it )->stocks_.vLogThresholds_.begin(); itStock != ( *it )->stocks_.vLogThresholds_.end(); ++itStock )
+            if( ( *itStock )->ptrLogisticSupplyClass_.GetData()->strName_.GetData() == supply.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
     return result;
 }

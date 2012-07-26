@@ -16,40 +16,31 @@
 namespace helpers
 {
 
-class LogisticSupplyClass : public ADN_Type_String
+class LogisticSupplyClass : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
 {
-
 public:
     LogisticSupplyClass();
     LogisticSupplyClass( const std::string name, int id );
-    std::string GetItemName();
+    LogisticSupplyClass* CreateCopy();
+    std::string GetItemName() { return strName_.GetData(); }
     void SetId( int id );
     int GetId();
 
 public:
-    ADN_Type_String strName_; // $$$ Dummy for  ADN_ChangeValueCommand_Pointer usage
+    ADN_Type_String strName_;
     ADN_Type_Int id_;
 };
 
 typedef ADN_Type_Vector_ABC< LogisticSupplyClass > T_LogisticSupplyClass_Vector;
 typedef T_LogisticSupplyClass_Vector::iterator    IT_LogisticSupplyClass_Vector;
 
-// -----------------------------------------------------------------------------
-// Name: ArmorInfos::GetItemName
-// Created: APE 2004-11-10
-// -----------------------------------------------------------------------------
-inline
-std::string LogisticSupplyClass::GetItemName()
-{
-    return std::string();
-}
-
 }
 
 inline
 std::ostream& operator<<( std::ostream& os, helpers::LogisticSupplyClass& value )
 {
-    os << value.GetData();
+    os << value.strName_.GetData();
     return os;
 }
 

@@ -18,7 +18,6 @@
 
 #include <QtGui/qapplication.h>
 #include <QtGui/qpushbutton.h>
-
 #include "ADN_Wizard_LastPage.h"
 
 // -----------------------------------------------------------------------------

@@ -13,7 +13,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_GuiTools.h"
+#include "ADN_Wizard_Default.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Templates constructor
@@ -22,7 +22,7 @@
 ADN_ListView_Templates::ADN_ListView_Templates( QWidget* pParent, Qt::WFlags f )
     :  ADN_ListView( pParent, "Template", f )
 {
-    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Template" ) );
+    addColumn( tools::translate( "ADN_ListView_Templates", "Template" ) );
     setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanTemplateInfos >( *this );
     SetDeletionEnabled( true );
@@ -67,41 +67,12 @@ void ADN_ListView_Templates::ConnectItem( bool bConnect )
 // Name: ADN_ListView_Templates::OnContextMenu
 // Created: LGY 2011-09-20
 // -----------------------------------------------------------------------------
-void ADN_ListView_Templates::OnContextMenu( const QPoint& point )
+void ADN_ListView_Templates::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popuMenu( this );
-
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Templates", "New" ), 0 );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Templates", "Delete" ), 1 );
-    popuMenu.setItemEnabled( 1, pCurData_ != 0 );
-
-    int nResult = popuMenu.exec( point );
-
-    switch ( nResult )
-    {
-    case 0:
-        {
-            ADN_Urban_Data::UrbanTemplateInfos* pNewInfo = new ADN_Urban_Data::UrbanTemplateInfos();
-            ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-            pCList->AddItem( pNewInfo );
-            int position = FindNdx( pNewInfo );
-            while( position != 0 )
-            {
-                static_cast< ADN_Connector_Vector_ABC* >( &GetConnector() )->SwapItem( position - 1, position );
-                --position;
-            }
-            setCurrentItem( FindItem( pNewInfo ) );
-            break;
-        }
-    case 1:
-        {
-            ADN_Urban_Data::UrbanTemplateInfos* pCurrent = (ADN_Urban_Data::UrbanTemplateInfos*) pCurData_;
-            if( pCurrent->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                return;
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
-            break;
-        }
-    default:
-        break;
-    }
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard_Default< ADN_Urban_Data::UrbanTemplateInfos > wizard( tools::translate( "ADN_ListView_Templates", "Template" ),
+                                                                     tools::translate( "ADN_ListView_Templates", "Templates" ),
+                                                                     ADN_Workspace::GetWorkspace().GetUrban().GetData().GetTemplatesInfos(), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    popupMenu.exec( pt );
 }

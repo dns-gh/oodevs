@@ -57,7 +57,7 @@ public:
         pItem->setPixmap( 0, icon );
 
         // Connect it with the size info.
-        pItem->Connect( 0, static_cast<PhSizeInfos*>(pObj)->ptrSize_.GetData() );
+        pItem->Connect( 0, &static_cast<PhSizeInfos*>(pObj)->ptrSize_.GetData()->strName_ );
 
         return pItem;
     }

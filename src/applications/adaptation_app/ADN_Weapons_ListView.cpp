@@ -103,7 +103,9 @@ void ADN_Weapons_ListView::OnContextMenu( const QPoint& pt )
     {
         WeaponInfos* pCastData = static_cast< WeaponInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_Weapons_ListView", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
 }
@@ -115,9 +117,10 @@ void ADN_Weapons_ListView::OnContextMenu( const QPoint& pt )
 std::string ADN_Weapons_ListView::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
-    WeaponInfos* pCastData = (WeaponInfos*)pData;
+    WeaponInfos* pCastData = static_cast< WeaponInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }
 
 // -----------------------------------------------------------------------------

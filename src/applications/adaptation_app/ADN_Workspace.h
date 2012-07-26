@@ -99,6 +99,10 @@ public:
     static void CleanWorkspace();
 
 public:
+    typedef std::map< E_WorkspaceElements, QStringList >  T_UsingElements;
+    typedef T_UsingElements::const_iterator             CIT_UsingElements;
+
+public:
     void Build( ADN_MainWindow& mainWindow );
     void Reset( const std::string& filename, bool bVisible = true );
     void Load( const std::string& filename, const tools::Loader_ABC& fileLoader );
@@ -137,6 +141,8 @@ public:
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
     ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& GetUnitSymbols() const;
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
+
+    T_UsingElements GetElementThatUse( ADN_Ref_ABC* data );
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();

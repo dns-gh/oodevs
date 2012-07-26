@@ -155,8 +155,11 @@ public:
     ADN_String_Cmp(const std::string& val) : val_(val) {}
     virtual ~ADN_String_Cmp() {}
 
-    bool operator()( ADN_Type_String* tgtnfos ) const
-    {   return tgtnfos->GetData()==val_;}
+    template< typename T >
+    bool operator()( T* infos ) const
+    {
+        return infos && infos->strName_.GetData() == val_;
+    }
 
 private:
     std::string val_;
@@ -180,17 +183,10 @@ namespace
 
     struct StringExtractor
     {
-        std::string operator()( ADN_Type_String& value ) const
+        template< typename T >
+        std::string operator()( T& infos ) const
         {
-            return value.GetData();
-        }
-    };
-
-    struct ArmorExtractor
-    {
-        std::string operator()( helpers::ArmorInfos& armor ) const
-        {
-            return armor.strName_.GetData();
+            return infos.strName_.GetData();
         }
     };
 }
@@ -206,8 +202,9 @@ void ADN_Categories_Data::ReadVolume( xml::xistream& input )
     if( foundSize != vSizes_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated volume type name '%1'" ).arg( strName.c_str() ).toUtf8().constData() );
 
-    SizeInfos* pNewArmor = new SizeInfos(strName);
-    pNewArmor->SetDataName( "le nom de la catégorie de volume" );
+    SizeInfos* pNewArmor = new SizeInfos();
+    pNewArmor->strName_ = strName;
+    pNewArmor->strName_.SetDataName( "le nom de la catégorie de volume" );
     vSizes_.AddItem( pNewArmor );
 }
 
@@ -260,7 +257,7 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     if( !id )
         id = idFactory_.Create();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
-    pNew->SetDataName( "le nom de la nature de dotation" );
+    pNew->strName_.SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
     idFactory_.Reserve( id );
 }
@@ -281,7 +278,7 @@ void ADN_Categories_Data::ReadLogisticSupplyClass( xml::xistream& input )
     if( !id )
         id = idFactory_.Create();
     helpers::LogisticSupplyClass* pNew = new helpers::LogisticSupplyClass( strName, id );
-    pNew->SetDataName( "le nom de la categorie logistic de dotation" );
+    pNew->strName_.SetDataName( "le nom de la categorie logistic de dotation" );
     vLogisticSupplyClasses_.AddItem( pNew );
     idFactory_.Reserve( id );
 }
@@ -322,9 +319,9 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Volumes" );
     for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
-        if( ( *itSize )->GetData().empty() )
+        if( ( *itSize )->strName_.GetData().empty() )
             throw ADN_DataException(tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Invalid volume type name" ).toUtf8().constData() );
-        std::string strData( ( *itSize )->GetData() );
+        std::string strData( ( *itSize )->strName_.GetData() );
         output << xml::start( "volume" )
                 << xml::attribute( "name", trim( strData ) )
                << xml::end;
@@ -340,7 +337,7 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
 void ADN_Categories_Data::WriteArmors( xml::xostream& output )
 {
     // Check the armors data for duplicates.
-    if( HasDuplicates( vArmors_, ArmorExtractor() ) )
+    if( HasDuplicates( vArmors_, StringExtractor() ) )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data", "Categories - Duplicated armor type names" ).toUtf8().constData() );
 
     output << xml::start( "protections" );
@@ -364,9 +361,9 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
     ADN_Tools::AddSchema( output, "ResourceNatures" );
     for( helpers::T_ResourceNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
-        if( ( *it )->GetData().empty() )
+        if( ( *it )->strName_.GetData().empty() )
             throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toUtf8().constData() );
-        std::string strData( ( *it )->GetData() );
+        std::string strData( ( *it )->strName_.GetData() );
         output << xml::start( "nature" )
                 << xml::attribute( "type", trim( strData ) )
                 << xml::attribute( "id", ( *it )->id_ )
@@ -389,9 +386,9 @@ void ADN_Categories_Data::WriteLogisticSupplyClasses( xml::xostream& output )
     ADN_Tools::AddSchema( output, "LogisticSupplyClasses" );
     for( helpers::T_LogisticSupplyClass_Vector::const_iterator it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
     {
-        if( ( *it )->GetData().empty() )
+        if( ( *it )->strName_.GetData().empty() )
             throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).toUtf8().constData() );
-        std::string strData( ( *it )->GetData() );
+        std::string strData( ( *it )->strName_.GetData() );
         output << xml::start( "logistic-supply-class" )
                 << xml::attribute( "type", trim( strData ) )
                 << xml::attribute( "id", ( *it )->id_ )

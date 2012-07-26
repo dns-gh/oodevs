@@ -443,9 +443,6 @@
     <Filter Include="Source Files\Workspace\Container\Container GUI">
       <UniqueIdentifier>{372c418f-bfe1-4ee7-990d-0b29db600bf5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Categories\Categories GUI\Wizard">
-      <UniqueIdentifier>{801aec7f-b38d-4374-9ab2-25d05f099ba0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tools\Consistency">
       <UniqueIdentifier>{095a10bc-af39-4fff-a3af-28c38df1c342}</UniqueIdentifier>
     </Filter>
@@ -1375,14 +1372,14 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.cpp">
-      <Filter>Source Files\Workspace\Categories\Categories GUI\Wizard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.cpp">
       <Filter>Source Files\Tools\Consistency</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.cpp">
       <Filter>Source Files\Tools\Consistency</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp">
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2097,12 +2094,14 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI\Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyErrorTypes.h">
       <Filter>Source Files\Tools\Consistency</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.h">
+      <Filter>Source Files\Tools\Consistency</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard_Default.h">
+      <Filter>Source Files\Tools\Wizard Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2525,6 +2524,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.h">
       <Filter>Source Files\Tools\Consistency</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.h">
+      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

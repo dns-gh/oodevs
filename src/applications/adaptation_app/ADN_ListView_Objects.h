@@ -28,6 +28,7 @@ public:
     virtual ~ADN_ListView_Objects();
 
     void OnContextMenu( const QPoint& pt );
+    virtual std::string GetToolTipFor( Q3ListViewItem& item );
 
 private:
     //! @name Helpers

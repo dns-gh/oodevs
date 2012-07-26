@@ -96,9 +96,10 @@ public:
     ADN_String_Cmp(const std::string& val) : val_( val ) {}
     virtual ~ADN_String_Cmp() {}
 
-    bool operator()( ADN_Type_String* tgtnfos ) const
+    template< typename T >
+    bool operator()( T* infos ) const
     {
-        return tgtnfos->GetData() == val_;
+        return infos->strName_.GetData() == val_;
     }
 
 private:
@@ -123,9 +124,10 @@ namespace
 
     struct StringExtractor
     {
-        std::string operator()( ADN_Type_String& value ) const
+        template< typename T >
+        std::string operator()( T& infos ) const
         {
-            return value.GetData();
+            return infos.strName_.GetData();
         }
     };
 }
@@ -288,6 +290,19 @@ void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::UrbanMaterialInfos::CreateCopy
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::UrbanMaterialInfos::CreateCopy()
+{
+    ADN_Urban_Data::UrbanMaterialInfos* result = new ADN_Urban_Data::UrbanMaterialInfos();
+    result->vAttritionInfos_.Clear();
+    for( IT_AttritionInfos_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
+        result->vAttritionInfos_.AddItem( ( *it )->CreateCopy() );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::UrbanMaterialInfos constructor
 // Created: SLG 2010-07-01
 // -----------------------------------------------------------------------------
@@ -329,7 +344,7 @@ ADN_Urban_Data::UrbanMaterialInfos::~UrbanMaterialInfos()
 void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
 {
     std::string protection = input.attribute< std::string >( "protection" );
-    helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ));
+    helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ) );
     if( itAttrition == vAttritionInfos_.end() )
         throw ADN_DataException( tr( "Invalid data" ).toUtf8().constData(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toUtf8().constData() );
     ( *itAttrition )->ReadArchive( input );
@@ -375,8 +390,9 @@ void ADN_Urban_Data::ReadFacade( xml::xistream& input )
     if( it != vFacades_.end() )
         throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).toUtf8().constData() );
 
-    UrbanInfos* pNewFacade = new UrbanInfos( strName );
-    pNewFacade->SetDataName( "le nom du type de facade" );
+    UrbanInfos* pNewFacade = new UrbanInfos();
+    pNewFacade->strName_ = strName;
+    pNewFacade->strName_.SetDataName( "le nom du type de facade" );
     vFacades_.AddItem( pNewFacade );
 }
 
@@ -393,10 +409,10 @@ void ADN_Urban_Data::WriteFacades( xml::xostream& output ) const
     output << xml::start( "facade-types" );
     for( T_UrbanInfos_Vector::const_iterator itFacade = vFacades_.begin(); itFacade != vFacades_.end(); ++itFacade )
     {
-        if( ( *itFacade )->GetData().empty() )
+        if( ( *itFacade )->strName_.GetData().empty() )
             throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toUtf8().constData(), tools::translate( "Urban_Data", "Facade - Invalid volume type name" ).toUtf8().constData() );
 
-        std::string strData = ( *itFacade )->GetData();
+        std::string strData = ( *itFacade )->strName_.GetData();
         output << xml::start( "facade-type" )
                     << xml::attribute( "name", trim( strData ) )
                << xml::end;
@@ -491,6 +507,18 @@ void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& outp
            << xml::attribute( "nominal-capacity", nominalCapacity_.GetData() )
            << xml::attribute( "max-capacity", maxCapacity_.GetData() )
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos::CreateCopy
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::AccommodationInfos* ADN_Urban_Data::AccommodationInfos::CreateCopy()
+{
+    ADN_Urban_Data::AccommodationInfos* result = new ADN_Urban_Data::AccommodationInfos();
+    result->nominalCapacity_ = nominalCapacity_.GetData();
+    result->maxCapacity_ = maxCapacity_.GetData();
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -607,6 +635,20 @@ void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& ou
         output << xml::end;
     }
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos::CreateCopy
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::InfrastructureInfos::CreateCopy()
+{
+    ADN_Urban_Data::InfrastructureInfos* result = new ADN_Urban_Data::InfrastructureInfos();
+
+    result->pSymbol_ = pSymbol_.GetData();
+    result->capacities_ = capacities_;
+
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -854,6 +896,30 @@ void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::UrbanTemplateInfos::CreateCopy
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::UrbanTemplateInfos* ADN_Urban_Data::UrbanTemplateInfos::CreateCopy()
+{
+    ADN_Urban_Data::UrbanTemplateInfos* result = new ADN_Urban_Data::UrbanTemplateInfos();
+
+    result->strName_= strName_.GetData();
+    result->color_ = color_.GetData();
+    result->alpha_ = alpha_.GetData();
+    result->height_ = height_.GetData();
+    result->floor_ = floor_.GetData();
+    result->parking_ = parking_.GetData();
+    result->occupation_ = occupation_.GetData();
+    result->trafficability_ = trafficability_.GetData();
+    result->ptrMaterial_ = ptrMaterial_.GetData();
+    result->ptrRoofShape_ = ptrRoofShape_.GetData();
+    for( CIT_UsageTemplateInfosVector it = usages_.begin(); it != usages_.end(); ++it )
+        result->usages_.AddItem( ( *it )->CreateCopy() );
+
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::UrbanInfos
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
@@ -974,6 +1040,20 @@ void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::UsageTemplateInfos::CreateCopy
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::UsageTemplateInfos* ADN_Urban_Data::UsageTemplateInfos::CreateCopy()
+{
+    ADN_Urban_Data::UsageTemplateInfos* result = new ADN_Urban_Data::UsageTemplateInfos();
+
+    result->accommodation_ = accommodation_.GetData();
+    result->proportion_ = proportion_.GetData();
+
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::GetNodeName
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
@@ -989,4 +1069,44 @@ std::string ADN_Urban_Data::UsageTemplateInfos::GetNodeName()
 std::string ADN_Urban_Data::UsageTemplateInfos::GetItemName()
 {
     return accommodation_.GetData()->strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetUrbanTemplateThatUse
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( UrbanMaterialInfos& infos )
+{
+    QStringList result;
+    for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+        if( ( *it )->ptrMaterial_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetUrbanTemplateThatUse
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( RoofShapeInfos& infos )
+{
+    QStringList result;
+    for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+        if( ( *it )->ptrRoofShape_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetUrbanTemplateThatUse
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
+{
+    QStringList result;
+    for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+        for( CIT_UsageTemplateInfosVector itUsage = ( *it )->usages_.begin(); itUsage != ( *it )->usages_.end(); ++itUsage )
+            if( ( *itUsage )->accommodation_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+    return result;
 }

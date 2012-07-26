@@ -61,6 +61,9 @@ ADN_Template_Usages::ADN_Template_Usages( QWidget* parent )
     setNumRows( 0 );
     horizontalHeader()->setLabel( 0, tr( "Usage" ) );
     horizontalHeader()->setLabel( 1, tr( "Proportion(%)" ) );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
+
     pConnector_ = new ADN_CT_Template_Usages( *this );
 }
 

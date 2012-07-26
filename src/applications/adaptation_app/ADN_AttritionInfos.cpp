@@ -83,3 +83,14 @@ xml::xostream& AttritionInfos::operator<<( xml::xostream& xos )
     WriteArchive( xos );
     return xos;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_AttritionInfos::CreateCopy
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+AttritionInfos* AttritionInfos::CreateCopy()
+{
+    AttritionInfos* result = new AttritionInfos( ptrArmor_.GetData() );
+    result->CopyFrom( *this );
+    return result;
+}
