@@ -526,7 +526,7 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "carrying" )
                 << xml::attribute( "mass", rWeight_ )
                 << xml::attribute( "volume", rVolume_ )
-                << xml::attribute( "nature", ptrResourceNature_.GetData()->GetData() )
+                << xml::attribute( "nature", ptrResourceNature_.GetData()->strName_.GetData() )
                << xml::end;
     output << xml::end;
 }
@@ -2168,7 +2168,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
                << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
                << xml::attribute( "codeNNO",   strCodeNNO_   )
                << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
-               << xml::attribute( "size", *ptrSize_.GetData() )
+               << xml::attribute( "size", ptrSize_.GetData()->strName_ )
                << xml::attribute( "weight", rWeight_ );
 
     output << xml::start( "speeds" )
@@ -2487,7 +2487,7 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Categories_Data::Si
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
     {
         ComposanteInfos* pComp = *it;
-        if( *pComp->ptrSize_.GetData() == size.GetData() )
+        if( pComp->ptrSize_.GetData()->strName_.GetData() == size.strName_.GetData() )
             result << pComp->strName_.GetData().c_str();
     }
     return result;

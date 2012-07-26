@@ -111,7 +111,9 @@ void ADN_ListView_Units::OnContextMenu( const QPoint& pt )
     {
         UnitInfos* pCastData = static_cast< UnitInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Units", "Automata" ), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
     }
     popupMenu.exec( pt );
 }
@@ -125,7 +127,8 @@ std::string ADN_ListView_Units::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
     UnitInfos* pCastData = static_cast< UnitInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -81,7 +81,8 @@ public:
 
             bool operator()( ModificatorSizeInfos* tgtnfos ) const
             {
-                return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->GetData() == val_;
+                //return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->GetData() == val_;
+                return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->strName_ == val_;
             }
 
         private:

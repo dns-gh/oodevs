@@ -2,7 +2,8 @@ HEADERS = ADN_GUI_ABC.h \
 ADN_Rich_ListViewItem.h \
 ADN_Table.h \
 ADN_Wizard_ABC.h \
-
+ADN_Wizard_Default.h \
+ADN_Wizard_FirstPage_Default.h \
 
 SOURCES = ADN_WeaponFilter.cpp \
 ADN_ActiveProtectionsListView.cpp \
@@ -16,7 +17,6 @@ ADN_AiEngine_Data.cpp \
 ADN_AiEngine_GUI.cpp \
 ADN_App.cpp \
 ADN_ArmorInfos.cpp \
-ADN_ArmorCategory_Wizard.cpp \
 ADN_UserData_ListViewItem.inl \
 ADN_Connector_Enum.inl \
 ADN_AttritionEffectOnHuman.cpp \
@@ -129,6 +129,7 @@ ADN_Model_Wizard.cpp \
 ADN_Models_Data.cpp \
 ADN_Models_GUI.cpp \
 ADN_MultiPercentage.cpp \
+ADN_MultiRefWarningDialog.cpp \
 ADN_NBC_Datas.cpp \
 ADN_NBC_GUI.cpp \
 ADN_NBC_Intox_GUI.cpp \
@@ -207,8 +208,6 @@ ADN_Weapons_ListView.cpp \
 ADN_Weapons_PhSizeListView.cpp \
 ADN_Weapons_PhTable.cpp \
 ADN_WeatherFireEffects_Table.cpp \
-ADN_Wizard_ABC.inl \
-ADN_Wizard_FirstPage_Default.inl \
 ADN_Workspace.cpp \
 qtundo.cpp \
 

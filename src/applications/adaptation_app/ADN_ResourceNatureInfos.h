@@ -16,7 +16,8 @@
 namespace helpers
 {
 
-class ResourceNatureInfos : public ADN_Type_String
+class ResourceNatureInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
 {
 
 public:
@@ -25,9 +26,10 @@ public:
     std::string GetItemName();
     void SetId( int id );
     int GetId();
+    ResourceNatureInfos* CreateCopy();
 
 public:
-    ADN_Type_String strName_; // $$$ Dummy for  ADN_ChangeValueCommand_Pointer usage
+    ADN_Type_String strName_;
     ADN_Type_Int id_;
 };
 
@@ -49,7 +51,7 @@ std::string ResourceNatureInfos::GetItemName()
 inline
 std::ostream& operator<<( std::ostream& os, helpers::ResourceNatureInfos& value )
 {
-    os << value.GetData();
+    os << value.strName_.GetData();
     return os;
 }
 

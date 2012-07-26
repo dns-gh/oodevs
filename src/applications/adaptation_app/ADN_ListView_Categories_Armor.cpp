@@ -11,7 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
-#include "ADN_ArmorCategory_Wizard.h"
+#include "ADN_Wizard_Default.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
@@ -53,12 +53,8 @@ private:
 ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, const char * name, Qt::WFlags f)
     : ADN_ListView(parent,name,f)
 {
-
-    // add one column
     addColumn( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) );
     setResizeMode( Q3ListView::AllColumns );
-
-    // connector creation
     pConnector_ = new ADN_CLV_Categories_Armor(*this);
     this->SetDeletionEnabled( true, false );
 }
@@ -100,13 +96,16 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
     Q3PopupMenu popupMenu( this );
-    ADN_ArmorCategory_Wizard wizard( this );
+    ADN_Wizard_Default< ArmorInfos > wizard( tools::translate( "ADN_ListView_Categories_Armor", "Armor plating" ),
+                                             tools::translate( "ADN_ListView_Categories_Armor", "Armor plating" ),
+                                             ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
         ArmorInfos* pCastData = static_cast< ArmorInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Categories_Armor", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
 }
@@ -131,40 +130,14 @@ void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ListView_Categories_Armor::ContextMenuDelete
-// Created: LGY 2012-05-14
+// Name: ADN_ListView_Categories_Armor::GetToolTipFor
+// Created: ABR 2012-07-25
 // -----------------------------------------------------------------------------
-void ADN_ListView_Categories_Armor::ContextMenuDelete()
+std::string ADN_ListView_Categories_Armor::GetToolTipFor( Q3ListViewItem& item )
 {
-    if( pCurData_ == 0 || !bDeletionEnabled_ )
-        return;
-
-    ArmorInfos* pInfos = (ArmorInfos*)pCurData_;
-    if( pInfos == 0 )
-        return;
-
-    if( IsReferenced( pInfos->strName_.GetData() ) )
-    {
-        if( !ADN_GuiTools::MultiRefWarning() )
-            return;
-    }
-    else if( !ADN_GuiTools::DeletionWarning() )
-        return;
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pInfos );
-    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ListView_Categories_Armor::IsReferenced
-// Created: LGY 2012-05-14
-// -----------------------------------------------------------------------------
-bool ADN_ListView_Categories_Armor::IsReferenced( const std::string& name ) const
-{
-    ADN_Composantes_Data::T_ComposanteInfos_Vector& vAllComposantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
-    for( ADN_Composantes_Data::T_ComposanteInfos_Vector::const_iterator it = vAllComposantes.begin(); it != vAllComposantes.end(); ++it )
-        if( (*it)->ptrArmor_.GetData()->strName_.GetData() == name )
-            return true;
-
-    return false;
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ArmorInfos* pCastData = static_cast< ArmorInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }

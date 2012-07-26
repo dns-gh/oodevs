@@ -154,7 +154,7 @@ ADN_Weapons_Data::PhSizeInfos::~PhSizeInfos()
 std::string ADN_Weapons_Data::PhSizeInfos::GetNodeName()
 {
     std::string strResult( "sur une cible de taille " );
-    return strResult + ptrSize_.GetData()->GetData();
+    return strResult + ptrSize_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ void ADN_Weapons_Data::PhSizeInfos::ReadArchive( xml::xistream& input )
 void ADN_Weapons_Data::PhSizeInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "hit-probabilities" )
-            << xml::attribute( "target", *ptrSize_.GetData() );
+            << xml::attribute( "target", ptrSize_.GetData()->strName_ );
     for( IT_PhInfosVector it = vPhs_.begin(); it != vPhs_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

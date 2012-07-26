@@ -31,7 +31,7 @@ public:
         ADN_ComboBoxItem* pItem = new ADN_ComboBoxItem(*pCombo_,obj);
 
         // connect it with armor name
-        pItem->GetConnector().Connect( (helpers::ResourceNatureInfos*)obj );
+        pItem->GetConnector().Connect( &static_cast< helpers::ResourceNatureInfos* >( obj )->strName_ );
 
         // return
         return pItem;

@@ -355,7 +355,7 @@ void ADN_Sensors_GUI::AddHeaders( ADN_Table* pTable, int& nCol, const char* szNa
     unsigned int n = 0;
     for( ADN_Categories_Data::CIT_SizeInfos_Vector it = materials.begin(); it != materials.end(); ++it )
     {
-        builder.AddTableCell( pTable, 1, nCol + n, (*it)->GetData().c_str() );
+        builder.AddTableCell( pTable, 1, nCol + n, (*it)->strName_.GetData().c_str() );
         ++n;
     }
     nCol += static_cast< int >( materials.size() );
@@ -427,7 +427,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     int nCol = 6;
     builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( sizes.size() ), tr( "Target size" ) );
     for( uint n = 0; n < sizes.size(); ++n )
-        builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->GetData().c_str() );
+        builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->strName_.GetData().c_str() );
     nCol += static_cast< int >( sizes.size() );
 
     ::AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );

@@ -18,9 +18,7 @@
 
 #include <QtGui/qapplication.h>
 #include <QtGui/qpushbutton.h>
-
 #include "ADN_WizardPage_ABC.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC constructor
@@ -38,7 +36,6 @@ ADN_Wizard_ABC<T>::ADN_Wizard_ABC( QWidget* pParent, const char* szName )
     setTitleFont( QFont( QApplication::font().family(), 12, QFont::Bold ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC destructor
 // Created: AGN 2003-11-18
@@ -48,7 +45,6 @@ ADN_Wizard_ABC<T>::~ADN_Wizard_ABC()
 {
     delete pResult_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC::CreateObject
@@ -67,7 +63,6 @@ ADN_Ref_ABC* ADN_Wizard_ABC<T>::CreateObject()
     return pResult;  
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC::showPage
 // Created: AGN 2003-11-18
@@ -85,7 +80,6 @@ void ADN_Wizard_ABC<T>::showPage( QWidget* pPage )
     Q3Wizard::showPage( pPage );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC::accept
 // Created: AGN 2003-11-18
@@ -96,7 +90,6 @@ void ADN_Wizard_ABC<T>::accept()
     if( ValidateAll() )
         QDialog::accept();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC::ValidatePage
@@ -117,7 +110,6 @@ bool ADN_Wizard_ABC<T>::ValidatePage( int nPageIndex )
     }
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC::ValidateAll

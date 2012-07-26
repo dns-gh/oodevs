@@ -19,20 +19,25 @@
 #include "adaptation_app_pch.h"
 #include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
+#include "ADN_MultiRefWarningDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::MultiRefWarning
 // Created: APE 2005-01-27
 // -----------------------------------------------------------------------------
-bool ADN_GuiTools::MultiRefWarning()
+bool ADN_GuiTools::MultiRefWarning( ADN_Ref_ABC* data /* = 0 */ )
 {
-    int nResult = QMessageBox::warning( 0,
-        qApp->translate( "ADN_Tools", "Multi references" ),
-        qApp->translate( "ADN_Tools", "This item is referenced by at least one other item.\nClick \"Ok\" to destroy it and all its references." ),
-        QMessageBox::Ok     | QMessageBox::Default,
-        QMessageBox::Cancel | QMessageBox::Escape );
+    ADN_Workspace::T_UsingElements usingElements;
+    if( data )
+        usingElements = ADN_Workspace::GetWorkspace().GetElementThatUse( data );
+    if( usingElements.empty() )
+        return QMessageBox::Ok == QMessageBox::warning( 0,
+            qApp->translate( "ADN_Tools", "Multi references" ),
+            qApp->translate( "ADN_Tools", "This item is referenced by at least one other item.\nClick \"Ok\" to destroy it and all its references." ),
+            QMessageBox::Ok     | QMessageBox::Default,
+            QMessageBox::Cancel | QMessageBox::Escape );
 
-    return nResult == QMessageBox::Ok;
+    return ADN_MultiRefWarningDialog( 0, usingElements ).exec() == QMessageBox::Ok;
 }
 
 // -----------------------------------------------------------------------------

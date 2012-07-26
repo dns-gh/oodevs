@@ -88,7 +88,7 @@ public:
             ~Cmp() {}
 
             bool operator()( PhSizeInfos* tgtnfos ) const
-            {   return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->GetData()==val_;}
+            {   return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->strName_.GetData()==val_;}
 
         private:
             std::string val_;

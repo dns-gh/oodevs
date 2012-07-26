@@ -226,6 +226,7 @@ public:
     void                    Initialize();
 
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object );
 
 private:
     void ReadArchive( xml::xistream& );

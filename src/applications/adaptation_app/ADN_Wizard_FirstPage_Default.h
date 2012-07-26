@@ -61,6 +61,14 @@ protected:
     //@{
     void Initialize();
     virtual T* NewT();
+    void InitializeTranslation()
+    {
+        pNameLabel_->setText( qApp->translate( "ADN_Wizard", "Name" ) );
+        pNewRadioButton_->setText( qApp->translate( "ADN_Wizard", "Create new" ) );
+        pCopyRadioButton_->setText( qApp->translate( "ADN_Wizard", "Create a copy of:" ) );
+        strErrorTitle_ = qApp->translate( "ADN_Wizard", "Unable to create" );
+        strErrorMsg_ = qApp->translate( "ADN_Wizard", "The provided name is either empty or already in use, please pick another one." );
+    }
     //@}
 
     void showEvent( QShowEvent* pEvent );
@@ -75,6 +83,8 @@ protected:
     Q3ListView* pExistingItemsListView_;
     QRadioButton* pNewRadioButton_;
     QRadioButton* pCopyRadioButton_;
+    QString strErrorTitle_;
+    QString strErrorMsg_;
     //@}
 };
 

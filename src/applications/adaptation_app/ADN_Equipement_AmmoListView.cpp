@@ -157,8 +157,9 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 std::string ADN_Equipement_AmmoListView::GetToolTipFor( Q3ListViewItem& item )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
-    AmmoCategoryInfo* pCastData = (AmmoCategoryInfo*)pData;
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    AmmoCategoryInfo* pCastData = static_cast< AmmoCategoryInfo* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
 }

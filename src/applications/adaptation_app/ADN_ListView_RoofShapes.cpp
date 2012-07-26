@@ -13,7 +13,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_GuiTools.h"
+#include "ADN_Wizard_Default.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_RoofShapes constructor
@@ -47,7 +47,6 @@ void ADN_ListView_RoofShapes::ConnectItem( bool bConnect )
         return;
 
     ADN_Urban_Data::RoofShapeInfos* pInfos = ( ADN_Urban_Data::RoofShapeInfos* )pCurData_;
-
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Urban_GUI::eNbrUrbanGuiElements );
 
     vItemConnectors_[ ADN_Urban_GUI::eUrbanName ]->Connect( &pInfos->strName_, bConnect );
@@ -57,41 +56,25 @@ void ADN_ListView_RoofShapes::ConnectItem( bool bConnect )
 // Name: ADN_ListView_RoofShapes::OnContextMenu
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_ListView_RoofShapes::OnContextMenu( const QPoint& point )
+void ADN_ListView_RoofShapes::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popuMenu( this );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Urban_Type", "New" ), 0 );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Urban_Type", "Delete" ), 1 );
-    popuMenu.setItemEnabled( 1, pCurData_ != 0 );
-    int nResult = popuMenu.exec( point );
-    switch ( nResult )
-    {
-    case 0:
-        {
-            ADN_Urban_Data::RoofShapeInfos* pNewInfo = new ADN_Urban_Data::RoofShapeInfos();
-            ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-            pCList->AddItem( pNewInfo );
-            int pos = FindNdx( pNewInfo );
-            while( pos != 0 )
-            {
-                pCList->SwapItem( pos - 1, pos );
-                --pos;
-            }
-            setCurrentItem( FindItem( pNewInfo ) );
-            break;
-        }
-    case 1:
-        {
-            ADN_Urban_Data::RoofShapeInfos* pCurSize=(ADN_Urban_Data::RoofShapeInfos*)pCurData_;
-            if( pCurSize )
-            {
-                if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                    return;
-                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurSize);
-            }
-            break;
-        }
-    default:
-        break;
-    }
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard_Default< ADN_Urban_Data::RoofShapeInfos > wizard( tools::translate( "ADN_ListView_RoofShapes", "RoofShape" ),
+                                                                 tools::translate( "ADN_ListView_RoofShapes", "RoofShapes" ),
+                                                                 ADN_Workspace::GetWorkspace().GetUrban().GetData().GetRoofShapesInfos(), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_RoofShapes::GetToolTipFor
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_RoofShapes::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ADN_Urban_Data::RoofShapeInfos* pCastData = static_cast< ADN_Urban_Data::RoofShapeInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( tools::translate( "ADN_ListView_RoofShapes", "Templates" ),
+                            ADN_Workspace::GetWorkspace().GetUrban().GetData().GetUrbanTemplateThatUse( *pCastData ) );
 }

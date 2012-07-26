@@ -32,6 +32,8 @@ public:
     void ReadArchive( xml::xistream& );
     void WriteArchive( xml::xostream&, const std::string& tag = "attrition" );
 
+    AttritionInfos* CreateCopy();
+
 public:
     //! @name Operators
     //@{

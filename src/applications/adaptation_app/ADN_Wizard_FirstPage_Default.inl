@@ -62,7 +62,7 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
     Q3VBox* pNameBox = new Q3VBox( pRightSide_ );
     pNameBox->setSpacing( 5 );
 
-    pNameLabel_ = new QLabel( qApp->translate( "ADN_Wizard", "Name" ), pNameBox );
+    pNameLabel_ = new QLabel( pNameBox );
 
     pNameEdit_ = new QLineEdit( pNameBox );
     pNameEdit_->setFixedWidth( 350 );
@@ -75,8 +75,8 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
     Q3ButtonGroup* pButtonGroup = new Q3ButtonGroup( 2, Qt::Vertical, pCopyBox );
     pButtonGroup->setMargin( 0 );
     pButtonGroup->setLineWidth( 0 );
-    pNewRadioButton_  = new QRadioButton( qApp->translate( "ADN_Wizard", "Create new" ), pButtonGroup );
-    pCopyRadioButton_ = new QRadioButton( qApp->translate( "ADN_Wizard", "Create a copy of:" ), pButtonGroup );
+    pNewRadioButton_  = new QRadioButton( pButtonGroup );
+    pCopyRadioButton_ = new QRadioButton( pButtonGroup );
 
     pExistingItemsListView_ = new Q3ListView( pCopyBox );
     pExistingItemsListView_->addColumn( "" );
@@ -96,7 +96,9 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
 
     connect( pCopyRadioButton_, SIGNAL( toggled( bool ) ), pExistingItemsListView_, SLOT( setEnabled( bool ) ) );
     pButtonGroup->setButton( 0 );
-    pExistingItemsListView_->setEnabled( false );  
+    pExistingItemsListView_->setEnabled( false );
+
+    InitializeTranslation();
 }
 
 
@@ -109,12 +111,10 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
 {
     std::string strNewName = pNameEdit_->text().ascii();
     // Check if the name empty.
-    QString strErrorTitle( qApp->translate( "ADN_Wizard", "Creation impossible" ) );
-    QString strErrorMsg( qApp->translate( "ADN_Wizard", "The provided name is either empty or already in use, please pick another one." ) );
 
     if( strNewName.empty() )
     {
-        QMessageBox::warning( this, strErrorTitle, strErrorMsg, QMessageBox::Ok, Qt::NoButton );
+        QMessageBox::warning( this, strErrorTitle_, strErrorMsg_, QMessageBox::Ok, Qt::NoButton );
         return 0;
     }
 
@@ -123,7 +123,7 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
     {
         if( (*it)->strName_.GetData() == strNewName )
         {
-            QMessageBox::warning( this, strErrorTitle, strErrorMsg, QMessageBox::Ok, Qt::NoButton );
+            QMessageBox::warning( this, strErrorTitle_, strErrorMsg_, QMessageBox::Ok, Qt::NoButton );
             return 0;
         }
     }

@@ -34,7 +34,7 @@ public:
     ADN_ListViewItem* CreateItem( void* pObj )
     {
         ADN_ListViewItem* pItem = new ADN_ListViewItem( &list_, pObj, 1 );
-        pItem->Connect( 0, static_cast< SpeedEffectVolumeInfos* >(pObj)->ptrVolume_.GetData() );
+        pItem->Connect( 0, &static_cast< SpeedEffectVolumeInfos* >(pObj)->ptrVolume_.GetData()->strName_ );
         return pItem;
     }
 };

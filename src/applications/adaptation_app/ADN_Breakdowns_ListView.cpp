@@ -23,9 +23,9 @@
 #include "ADN_Composantes_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Breakdown_Wizard.h"
+#include "ADN_Tr.h"
 
 typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView constructor
@@ -43,7 +43,6 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* 
     SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView destructor
 // Created: APE 2005-01-06
@@ -52,7 +51,6 @@ ADN_Breakdowns_ListView::~ADN_Breakdowns_ListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView::ConnectItem
@@ -74,7 +72,6 @@ void ADN_Breakdowns_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Breakdowns_GUI::eParts]->Connect( &pInfos->vRepairParts_, bConnect );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView::OnContextMenu
 // Created: APE 2005-01-10
@@ -88,7 +85,21 @@ void ADN_Breakdowns_ListView::OnContextMenu( const QPoint& pt )
     {
         BreakdownInfo* pCastData = static_cast< BreakdownInfo* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_Breakdowns_ListView", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_ListView::GetToolTipFor
+// Created: ABR 2012-07-25
+// -----------------------------------------------------------------------------
+std::string ADN_Breakdowns_ListView::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    BreakdownInfo* pCastData = static_cast< BreakdownInfo* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }

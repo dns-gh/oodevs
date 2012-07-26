@@ -121,7 +121,7 @@ public:
         pNewData->SetPointPen( QPen( color ) );
         pNewData->SetLinePen( QPen( color ) );
 
-        pNewData->SetName( pPhSizeInfos->ptrSize_.GetData()->GetData().c_str() );
+        pNewData->SetName( pPhSizeInfos->ptrSize_.GetData()->strName_.GetData().c_str() );
 
         graph_.RegisterPlotData( *pNewData );
         nNbrDatas_++;
@@ -409,7 +409,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
         int nSubRow = 0;
         for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nSubRow )
         {
-            builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow + nSubRow, 1, * (*it2)->ptrSize_.GetData(), eNone, Q3TableItem::Never );
+            builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow + nSubRow, 1, (*it2)->ptrSize_.GetData()->strName_, eNone, Q3TableItem::Never );
 
             // Make sure empty cells are non-editable.
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
@@ -498,7 +498,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
             int nRow = 1;
             for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nRow )
             {
-                builder.TableItem( nRow, 0, (*it2)->ptrSize_.GetData()->GetData().c_str() );
+                builder.TableItem( nRow, 0, (*it2)->ptrSize_.GetData()->strName_.GetData().c_str() );
                 ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
                 for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
                 {

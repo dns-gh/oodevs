@@ -109,7 +109,9 @@ void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
     {
         SensorInfos* pCastData = static_cast< SensorInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Sensors", "Equipments" ), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
     }
     popupMenu.exec( pt );
 }
@@ -120,8 +122,9 @@ void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
 // -----------------------------------------------------------------------------
 std::string ADN_ListView_Sensors::GetToolTipFor( Q3ListViewItem& item )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
-    SensorInfos* pCastData = (SensorInfos*)pData;
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    SensorInfos* pCastData = static_cast< SensorInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }

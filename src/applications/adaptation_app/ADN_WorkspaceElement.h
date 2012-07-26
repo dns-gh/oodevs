@@ -27,8 +27,8 @@ class ADN_WorkspaceElement : public ADN_WorkspaceElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_WorkspaceElement( const char* szName )
-                 : ADN_WorkspaceElement_ABC( szName )
+    explicit ADN_WorkspaceElement( E_WorkspaceElements element )
+                 : ADN_WorkspaceElement_ABC( ADN_Tr::ConvertFromWorkspaceElement( element ).c_str() )
                  , data_( *new DATA() )
                  , gui_( *new GUI( data_ ) )
     {}

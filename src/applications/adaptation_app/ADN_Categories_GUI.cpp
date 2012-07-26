@@ -106,7 +106,6 @@ void ADN_Categories_GUI::Build()
     pListSize_=new ADN_ListView_Categories_Size(pGroupSize);
     connect( pListSize_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     static_cast<ADN_Connector_Vector_ABC*>( &pListSize_->GetConnector() )->Connect( &data_.GetSizesInfos() );
-    //QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
 
     // size
     pGroup = new Q3VGroupBox( tr( "Size" ),pGroup);
@@ -123,8 +122,8 @@ void ADN_Categories_GUI::Build()
     // dotation natures list
     T_ConnectorVector    vDotationNatureInfosConnectors( eNbrDotationNatureGuiElements, (ADN_Connector_ABC*)0 );
     pListDotationNature_ = new ADN_ListView_Categories_DotationNature( pNatureHBox );
+    connect( pListDotationNature_, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     static_cast<ADN_Connector_Vector_ABC*>( &pListDotationNature_->GetConnector() )->Connect( &data_.GetDotationNaturesInfos() );
-    //QWhatsThis::add( pListDotationNature_, "Les différentes nature de dotations existantes dans la simulation." );
 
     // size
     pNatureGroup = new Q3VGroupBox( tr( "Nature" ), pNatureGroup );

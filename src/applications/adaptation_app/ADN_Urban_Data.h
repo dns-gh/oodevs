@@ -54,6 +54,8 @@ public:
         virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteAccommodation( xml::xostream& output );
+        AccommodationInfos* CreateCopy();
+
     public:
         //! @name Member Data
         //@{
@@ -82,6 +84,7 @@ public:
         virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteInfrastructure( xml::xostream& output );
+        InfrastructureInfos* CreateCopy();
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
         typedef T_CapacityMap::iterator IT_CapacityMap;
@@ -117,6 +120,7 @@ public:
         virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteMaterial( xml::xostream& output );
+        UrbanMaterialInfos* CreateCopy();
 
     private:
         //! @name Helpers
@@ -152,12 +156,10 @@ public:
         virtual std::string GetNodeName();
         virtual std::string GetItemName();
         void WriteRoofShape( xml::xostream& output );
+        RoofShapeInfos* CreateCopy() { return new RoofShapeInfos(); }
 
     public:
-        //! @name Member Data
-        //@{
         ADN_Type_String strName_;
-        //@}
     };
 
     typedef ADN_Type_Vector_ABC< RoofShapeInfos >     T_RoofShapeInfos_Vector;
@@ -167,7 +169,17 @@ public:
 //*****************************************************************************
 
 public:
-    typedef ADN_Type_String UrbanInfos;
+    class UrbanInfos : public ADN_Ref_ABC
+                     , public ADN_DataTreeNode_ABC
+    {
+    public:
+        UrbanInfos() {}
+        UrbanInfos* CreateCopy() { return new UrbanInfos(); }
+        std::string GetItemName() { return strName_.GetData(); }
+
+    public:
+        ADN_Type_String strName_;
+    };
     typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
     typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
 
@@ -186,11 +198,10 @@ public:
         virtual std::string GetNodeName();
         virtual std::string GetItemName();
         void Write( xml::xostream& output );
+        UsageTemplateInfos* CreateCopy();
 
     public:
         ADN_TypePtr_InVector_ABC< AccommodationInfos > accommodation_;
-
-        //AccommodationInfos* accommodation_;
         ADN_Type_Int proportion_;
     };
 
@@ -227,6 +238,7 @@ public:
         virtual std::string GetNodeName();
         virtual std::string GetItemName();
         void Write( xml::xostream& output );
+        UrbanTemplateInfos* CreateCopy();
 
     private:
         void ReadUsage( xml::xistream& xis );
@@ -278,6 +290,10 @@ public:
     T_InfrastructureInfos_Vector& GetInfrastructuresInfos();
     InfrastructureInfos* FindInfrastructure( const std::string& strName );
     T_UrbanTemplateInfos_Vector& GetTemplatesInfos();
+
+    QStringList GetUrbanTemplateThatUse( UrbanMaterialInfos& infos );
+    QStringList GetUrbanTemplateThatUse( RoofShapeInfos& infos );
+    QStringList GetUrbanTemplateThatUse( AccommodationInfos& infos );
 
 private:
     //! @name Helpers
@@ -375,7 +391,7 @@ inline
 ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindFacade( const std::string& strName )
 {
     for( IT_UrbanInfos_Vector it = vFacades_.begin(); it != vFacades_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( ( *it )->GetData(), strName ) )
+        if( ADN_Tools::CaselessCompare( ( *it )->strName_.GetData(), strName ) )
             return *it;
     return 0;
 }

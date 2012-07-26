@@ -17,7 +17,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Launchers_GUI.h"
 #include "ADN_WeaponFilter.h"
-
+#include "ADN_Tr.h"
 #include <boost/bind.hpp>
 
 typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
@@ -101,7 +101,9 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
     {
         LauncherInfos* pCastData = static_cast< LauncherInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tr( "Weapon systems" ), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
     }
     popupMenu.exec( pt );
 }
@@ -112,8 +114,9 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 std::string ADN_ListView_Launchers::GetToolTipFor( Q3ListViewItem& item )
 {
-    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
-    LauncherInfos* pCastData = (LauncherInfos*)pData;
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    LauncherInfos* pCastData = static_cast< LauncherInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
 }

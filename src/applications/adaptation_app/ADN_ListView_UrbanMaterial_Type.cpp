@@ -13,41 +13,8 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
-
-typedef ADN_Urban_Data::UrbanInfos UrbanInfos;
-
-//-----------------------------------------------------------------------------
-// Internal List View Urban_Material connector to be connected with ADN_ListView_Urban_Material
-//-----------------------------------------------------------------------------
-class ADN_CLV_UrbanMaterial_Type
-    : public ADN_Connector_ListView_ABC
-{
-public:
-
-    ADN_CLV_UrbanMaterial_Type(ADN_ListView_UrbanMaterial_Type& list)
-        : ADN_Connector_ListView_ABC(list)
-    {}
-
-    virtual ~ADN_CLV_UrbanMaterial_Type()
-    {}
-
-    ADN_ListViewItem* CreateItem(void * obj)
-    {
-        // create new list item
-        ADN_ListViewItem *pItem                 = new ADN_ListViewItem( &list_, obj, 1 );
-
-        // connect list item with object's name
-        //pItem->Connect(0,static_cast< ADN_Urban_Data::UrbanMaterialInfos* >( obj ) );
-
-        return pItem;
-    }
-
-private:
-    ADN_CLV_UrbanMaterial_Type& operator=( const ADN_CLV_UrbanMaterial_Type& );
-};
-
+#include "ADN_Wizard_Default.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanMaterial_Type constructor
@@ -56,16 +23,9 @@ private:
 ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type(QWidget * parent, Qt::WFlags f)
 :   ADN_ListView(parent,"Material",f)
 {
-    // Add a column
     addColumn( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) );
     setResizeMode( Q3ListView::AllColumns );
-
-    // Connector creation
-   // pConnector_ = new ADN_CLV_UrbanMaterial_Type( *this );
-
-    // Connector creation
-    pConnector_ = new ADN_Connector_ListView<ADN_Urban_Data::UrbanMaterialInfos>(*this);
-
+    pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanMaterialInfos >( *this );
     this->SetDeletionEnabled( true );
 }
 
@@ -88,7 +48,6 @@ void ADN_ListView_UrbanMaterial_Type::ConnectItem( bool bConnect )
         return;
 
     ADN_Urban_Data::UrbanMaterialInfos* pInfos = ( ADN_Urban_Data::UrbanMaterialInfos* )pCurData_;
-
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Urban_GUI::eNbrUrbanMaterialGuiElements );
 
     vItemConnectors_[ADN_Urban_GUI::eUrbanMaterialName]->Connect( &pInfos->strName_, bConnect );
@@ -101,46 +60,23 @@ void ADN_ListView_UrbanMaterial_Type::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& pt)
 {
-    Q3PopupMenu popuMenu( this );
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard_Default< ADN_Urban_Data::UrbanMaterialInfos > wizard( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ),
+                                                                     tools::translate( "ADN_ListView_UrbanMaterial_Type", "Materials" ),
+                                                                     ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    popupMenu.exec( pt );
+}
 
-    popuMenu.insertItem( tools::translate( "ADN_ListView_UrbanMaterial_Type", "New" ), 0 );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Delete" ), 1 );
-    popuMenu.setItemEnabled( 1, pCurData_ != 0 );
-
-    int nResult = popuMenu.exec( pt );
-    switch ( nResult )
-    {
-    case 0:
-        {
-            // create new sensor & add it to list
-             ADN_Urban_Data::UrbanMaterialInfos* pNewInfo = new ADN_Urban_Data::UrbanMaterialInfos();
-
-            ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-            pCList->AddItem( pNewInfo );
-
-            // Put the  new item at the top of the list (to be coherent with the application)
-            int pos= FindNdx( pNewInfo );
-            while( pos != 0 )
-            {
-                static_cast<ADN_Connector_Vector_ABC*>(&GetConnector())->SwapItem( pos - 1, pos );
-                --pos;
-            }
-
-            // set current item
-            setCurrentItem( FindItem( pNewInfo ) );
-            break;
-        }
-    case 1:
-        {
-            ADN_Urban_Data::UrbanMaterialInfos* pCurMaterial= (ADN_Urban_Data::UrbanMaterialInfos*) pCurData_;
-            if( pCurMaterial->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                return;
-
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurMaterial );
-            break;
-        }
-    default:
-        break;
-    }
-
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_UrbanMaterial_Type::GetToolTipFor
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_UrbanMaterial_Type::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    ADN_Urban_Data::UrbanMaterialInfos* pCastData = static_cast< ADN_Urban_Data::UrbanMaterialInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( tools::translate( "ADN_ListView_RoofShapes", "Templates" ),
+                            ADN_Workspace::GetWorkspace().GetUrban().GetData().GetUrbanTemplateThatUse( *pCastData ) );
 }

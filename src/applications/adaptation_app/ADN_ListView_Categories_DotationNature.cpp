@@ -9,37 +9,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_DotationNature.h"
-#include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
-#include "ADN_GuiTools.h"
+#include "ADN_Equipement_Data.h"
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_Tr.h"
-
-//-----------------------------------------------------------------------------
-// Internal List View Categories_DotationNature connector to be connected with ADN_ListView_Categories_DotationNature
-//-----------------------------------------------------------------------------
-class ADN_CLV_Categories_DotationNature
-: public ADN_Connector_ListView_ABC
-{
-public:
-
-    ADN_CLV_Categories_DotationNature( ADN_ListView_Categories_DotationNature& list )
-        : ADN_Connector_ListView_ABC( list ) {}
-
-    virtual ~ADN_CLV_Categories_DotationNature() {}
-
-    ADN_ListViewItem* CreateItem( void * obj )
-    {
-        ADN_ListViewItem *pItem = new ADN_ListViewItem( &list_, obj, 1 );
-        pItem->Connect( 0, static_cast< helpers::ResourceNatureInfos* >( obj ) );
-        return pItem;
-    }
-
-private:
-    ADN_CLV_Categories_DotationNature& operator=( const ADN_CLV_Categories_DotationNature& );
-};
-
+#include "ADN_Wizard_Default.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
@@ -50,7 +26,7 @@ ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature( 
 {
     addColumn( tools::translate( "ADN_ListView_Categories_DotationNature", "Resource Natures" ) );
     setResizeMode( Q3ListView::AllColumns );
-    pConnector_ = new ADN_CLV_Categories_DotationNature( *this );
+    pConnector_ = new ADN_Connector_ListView< helpers::ResourceNatureInfos >( *this );
     SetDeletionEnabled( true );
 }
 
@@ -62,7 +38,6 @@ ADN_ListView_Categories_DotationNature::~ADN_ListView_Categories_DotationNature(
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ConnectItem
@@ -76,7 +51,7 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
     helpers::ResourceNatureInfos* pInfos = (helpers::ResourceNatureInfos*) pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrDotationNatureGuiElements );
 
-    vItemConnectors_[ ADN_Categories_GUI::eDotationNatureName ]->Connect( pInfos, bConnect );
+    vItemConnectors_[ ADN_Categories_GUI::eDotationNatureName ]->Connect( &pInfos->strName_, bConnect );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,48 +60,23 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popuMenu( this );
+    Q3PopupMenu popupMenu( this );
+    ADN_Wizard_Default< helpers::ResourceNatureInfos > wizard( tools::translate( "ADN_ListView_Categories_DotationNature", "Nature" ),
+                                                               tools::translate( "ADN_ListView_Categories_DotationNature", "Natures" ),
+                                                               ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    popupMenu.exec( pt );
+}
 
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_DotationNature", "New nature"), 0 );
-    popuMenu.insertItem( tools::translate( "ADN_ListView_Categories_DotationNature", "Delete nature"), 1 );
-    popuMenu.setItemEnabled( 1, pCurData_ != 0 );
-
-    int nResult = popuMenu.exec( pt );
-    switch ( nResult )
-    {
-        case 0:
-        {
-            helpers::ResourceNatureInfos* pNewInfo = new helpers::ResourceNatureInfos( "new nature", ADN_Categories_Data::GetNewIdentifier() );
-            pNewInfo->SetDataName( "new nature" );
-
-            ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-            pCList->AddItem( pNewInfo );
-
-            // Put the  new item at the top of the list (to be coherent with the application)
-            int pos = FindNdx( pNewInfo );
-            while( pos != 0 )
-            {
-                pCList->SwapItem( pos - 1, pos );
-                --pos;
-            }
-
-            // set current item
-            setCurrentItem( FindItem( pNewInfo ) );
-            break;
-        }
-        case 1:
-        {
-            helpers::ResourceNatureInfos* pCurSize = ( helpers::ResourceNatureInfos* )pCurData_;
-            if( pCurSize )
-            {
-                if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                    return;
-
-                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurSize );
-            }
-            break;
-        }
-        default:
-            break;
-    }
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Categories_DotationNature::GetToolTipFor
+// Created: ABR 2012-07-26
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast< ADN_ListViewItem& >( item ).GetData();
+    helpers::ResourceNatureInfos* pCastData = static_cast< helpers::ResourceNatureInfos* >( pData );
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipement ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ) );
 }
