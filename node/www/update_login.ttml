@@ -1,9 +1,8 @@
-[#ftl]
 <!DOCTYPE html>
 <html lang="en">
-    [#include "head.html"]
+    [ template "head.ttml" . ]
     <body>
-        [#include "top_bar.html"]
+        [ template "top_bar.ttml" . ]
         <div class="container">
             <div class="row">
                 <div class="hero-unit masa_header">
@@ -39,6 +38,6 @@
             </div>
         </div>
     </body>
-    [#include "imports.html"]
+    [ template "imports.ttml" . ]
     <script src="js/update_login.js"></script>
 </html>

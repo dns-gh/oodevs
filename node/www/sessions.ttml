@@ -1,5 +1,4 @@
-[#ftl]
-[#-- Session Create Dialog --]
+<!-- Session Create Dialog -->
 <div id="session_create" class="modal fade hide">
     <div class="modal-header">
         <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
@@ -30,7 +29,7 @@
         <a class="btn btn-inverse" data-dismiss="modal"> Cancel</a>
     </div>
 </div>
-[#-- Session Toolbar --]
+<!-- Session Toolbar -->
 <div class="row">
     <div class="span9">
         <div id="session_error"></div>
@@ -43,14 +42,14 @@
         </span>
     </div>
 </div>
-[#-- Session List --]
+<!-- Session List -->
 <div id="sessions">
 </div>
-[#-- Error Template --]
+<!-- Error Template -->
 <script type="text/template" id="session_error_template">
     <div class="alert alert-error"><b>Error</b> {{content}}</div>
 </script>
-[#-- Session Template --]
+<!-- Session Template -->
 <script type="text/template" id="session_template">
     <div id="{{{id}}}" class="span9">
         <div class="row-fluid well session_row">

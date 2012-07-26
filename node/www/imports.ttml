@@ -1,6 +1,5 @@
-[#ftl]
-[#-- script include order is required --]
-[#if debug ]
+[ if .debug ]
+<!-- script include order is required -->
 <script src="js/jquery-1.7.2.js"></script>
 <script src="js/bootstrap-2.0.4.js"></script>
 <script src="js/underscore-1.3.3.js"></script>
@@ -8,6 +7,6 @@
 <script src="js/handlebars-1.0.0.beta.6.js"></script>
 <script src="js/spin.js"></script>
 <script src="js/jquery.cookie.js"></script>
-[#else]
+[ else ]
 <script src="js/externals.js"></script>
-[/#if]
+[ end ]

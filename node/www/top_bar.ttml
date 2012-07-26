@@ -1,31 +1,32 @@
-[#ftl]
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand"> Sword <span class="ufirst">${type}</span></a>
-            [#if name!="cluster"]
-            <a class="brand_name brand"> ${name}</a>
-            [/#if]
+            <a class="brand"> Sword <span class="ufirst">[ .type ]</span></a>
+            [ if ne .type "cluster" ]
+            <a class="brand_name brand"> [ .name ]</a>
+            [ end ]
             <ul class="nav pull-right">
-                [#if user??]
+                [ if .user ]
                 <li class="label
-                [#if     user.type == "administrator" ]
+                [ if eq .user.type "administrator" ]
                 label-important
-                [#elseif user.type == "manager" ]
+                [ else ]
+                [ if eq .user.type "manager" ]
                 label-success
-                [#else]
+                [ else ]
                 label-info
-                [/#if]
-                ufirst"> ${user.type} </li>
+                [ end ]
+                [ end ]
+                ufirst"> [ .user.type ] </li>
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> ${user.name} <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> [ .user.name ] <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="emu_btn"><b>${user.name}</b><br/>${user.username}</a></li>
+                    <li><a class="emu_btn"><b>[ .user.name ]</b><br/>[ .user.username ]</a></li>
                     <li class="divider"></li>
                     <li><a class="emu_btn sign_out"><i class="i"></i> Sign Out </a></li>
                 </ul>
                 </li>
-                [/#if]
+                [ end ]
             </ul>
         </div>
     </div>

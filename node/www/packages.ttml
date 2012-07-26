@@ -1,4 +1,3 @@
-[#ftl]
 <div class="row">
     <div class="span9">
         <div id="upload_error"></div>
@@ -6,51 +5,51 @@
         </div>
     </div>
 </div>
-[#-- Error Template --]
+<!-- Error Template -->
 <script type="text/template" id="package_error_template">
     <div class="alert alert-error"><b>Error</b> {{content}}</div>
 </script>
-[#-- Package Template --]
+<!-- Package Template -->
 <script type="text/template" id="package_template">
     {{#if items.length}}
     <div class="package_header">
         <h2>Installed Packages</h2>
-        [#if user.type != "user"]
+        [ if ne .user.type "user" ]
         <span class="remove_all">
             <a class="btn"><i class="icon-trash"></i> Clear </a>
         </span>
-        [/#if]
+        [ end ]
     </div>
     {{/if}}
     <table class="table table-striped">
 
-        [#assign num_cols = 5]
-        [#macro header more type item]
-        <tr class="package_row${more}">
-            <${item} class="type">${type}s</${item}>
-            <${item}>Package</${item}>
-            <${item}>Date</${item}>
-            <${item}>Checksum</${item}>
-            <${item}></${item}>
+        [ $cols := 5 ]
+        [ define "package_header" ]
+        <tr class="package_row[ .more ]">
+            <[ .tag ] class="type">[ .type ]s</[ .tag ]>
+            <[ .tag ]>Package</[ .tag ]>
+            <[ .tag ]>Date</[ .tag ]>
+            <[ .tag ]>Checksum</[ .tag ]>
+            <[ .tag ]></[ .tag ]>
         </tr>
-        [/#macro]
+        [ end ]
 
-        [#macro row type]
-        {{#is_first_item items "${type}"}}
+        [ define "package_row" ]
+        {{#is_first_item items "[ .type ]"}}
         <thead>
-            [@header '' type 'th' /]
+            [ template "package_header" sub "tag" "th" "more" "" "type" .type ]
         </thead>
         <tbody>
             {{else}}
-            {{#has_item_type items "${type}"}}
-            {{#is_odd_item_row items "${type}"}}
-            <tr class="hide"><td colspan="${num_cols}"></td></tr>
+            {{#has_item_type items "[ .type ]"}}
+            {{#is_odd_item_row items "[ .type ]"}}
+            <tr class="hide"><td colspan="[ .cols ]"></td></tr>
             {{/is_odd_item_row}}
-            [@header ' sub_header' type 'td' /]
+            [ template "package_header" sub "tag" "td" "more" " sub_header" "type" .type ]
             {{/has_item_type}}
             {{/is_first_item}}
 
-            {{#for_all_items items "${type}"}}
+            {{#for_all_items items "[ .type ]"}}
             <tr class="package_row">
                 <td class="name">
                     {{name}}
@@ -68,29 +67,29 @@
                 <td class="date">{{date}}</td>
                 <td>0x{{checksum}}</td>
                 <td class="action" data-rel="{{id}}">
-                    [#if type == "exercise"]
+                    [ if eq .type "exercise" ]
                     <a class="btn more" data-toggle="button"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-                    [/#if]
-                    [#if user.type != "user" ]
+                    [ end ]
+                    [ if ne .user.type "user" ]
                     <a class="btn delete"><i class="icon-trash"></i> </a>
-                    [/#if]
+                    [ end ]
                 </td>
             </tr>
-            [#if type == "exercise"]
+            [ if eq .type "exercise" ]
             <tr id="briefing_{{id}}" class="hide">
-                <td colspan="${num_cols}" class="item_briefing">
+                <td colspan="[ .cols ]" class="item_briefing">
                     {{#if model.length}}<div><span class="item_label">Model</span> {{model}}</div>{{/if}}
                     {{#if terrain.length}}<div><span class="item_label">Terrain</span> {{terrain}}</div>{{/if}}
                     <div class="briefing_content">{{{briefing}}}</div>
                 </td>
             </tr>
-            <tr class="hide"><td colspan="${num_cols}"></td></tr>
-            [/#if]
+            <tr class="hide"><td colspan="[ .cols ]"></td></tr>
+            [ end ]
             {{/for_all_items}}
-            [/#macro]
-            [@row type="model" /]
-            [@row type="terrain" /]
-            [@row type="exercise" /]
+            [ end ]
+            [ template "package_row" sub "user" .user "cols" $cols "type" "model" ]
+            [ template "package_row" sub "user" .user "cols" $cols "type" "terrain" ]
+            [ template "package_row" sub "user" .user "cols" $cols "type" "exercise" ]
         </tbody>
     </table>
 </script>
