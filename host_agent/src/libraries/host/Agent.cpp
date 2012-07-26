@@ -107,7 +107,7 @@ Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeControll
         if( cluster_->Count() )
             clusterId_ = cluster_->List( 0, 1 ).front()->GetId();
         else
-            clusterId_ = cluster_->Create( "cluster", 0, 0 )->GetId();
+            clusterId_ = cluster_->Create( std::string(), "cluster", 0, 0 )->GetId();
         cluster_->Start( clusterId_ );
     }
     nodes_.Reload();
@@ -181,10 +181,10 @@ Tree Agent::GetNode( const Uuid& id ) const
 // Name: Agent::CreateNode
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Tree Agent::CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions )
+Tree Agent::CreateNode( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
-    return Create( nodes_.Create( name, num_sessions, parallel_sessions ) );
+    return Create( nodes_.Create( ident, name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,9 +230,9 @@ Tree Agent::StopNode( const Uuid& id ) const
 // Name: Agent::UpdateNode
 // Created: BAX 2012-07-17
 // -----------------------------------------------------------------------------
-Tree Agent::UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions )
+Tree Agent::UpdateNode( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
 {
-    NodeController_ABC::T_Node ptr = nodes_.Update( id, num_sessions, parallel_sessions );
+    NodeController_ABC::T_Node ptr = nodes_.Update( id, name, num_sessions, parallel_sessions );
     if( !ptr )
         throw HttpException( web::NOT_FOUND );
     return Tree( ptr->GetProperties() );

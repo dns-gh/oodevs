@@ -35,7 +35,6 @@ namespace host
     struct PortFactory_ABC;
     struct SessionFactory_ABC;
     struct UuidFactory_ABC;
-    template< typename T > class Container;
     typedef boost::filesystem::path Path;
 
 // =============================================================================

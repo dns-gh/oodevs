@@ -5,7 +5,7 @@
         <div class="form-inline create_form">
             <div class="control-group">
                 <div class="controls">
-                    <input id="node_name" type="text" placeholder="Name..."/>
+                    <input id="node_ident" type="text" placeholder="Identifier..."/>
                     <a id="node_edit" class="btn"><i class="icon-cog"></i></a>
                     <a id="node_create" class="btn"><i class="icon-plus"></i> Add...</a>
                 </div>
@@ -23,15 +23,24 @@
 <script type="text/template" id="node_error_template">
     <div class="alert alert-error"><b>Error</b> {{content}}</div>
 </script>
+<script type="text/template" id="node_warning_template">
+    <div class="alert"><b>Warning</b> {{content}}</div>
+</script>
 <!-- Node Settings Dialog -->
 <script type="text/template" id="node_settings_template">
     <div class="modal fade">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">&times;</a>
-            <h3>{{{name}}} Node Settings</h3>
+            <h3>{{ident}} Node Settings</h3>
         </div>
         <div class="modal-body">
             <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                        <input type="text" class="name" value="{{{name}}}"/>
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label">Max Sessions</label>
                     <div class="controls">
@@ -60,7 +69,7 @@
             <div class="btn-group node_buttons">
                 <a title="Loading..." class="btn hide disabled spin_btn"></a>
                 {{#is_option status running=""}}
-                <a target="{{{id}}}" href="/{{{id}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
+                <a target="{{{id}}}" href="/{{{ident}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
                 {{/is_option}}
                 {{#is_option status stopped=""}}
                 <a title="Play" class="btn play"><i class="icon-play"></i></a>
@@ -74,11 +83,19 @@
                 {{/is_option}}
             </div>
             <span class="well {{{status}}}"></span>
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/>
+                {{ident}}
+            </a>
         </div>
         <div id="collapse_{{{id}}}" class="accordion-body collapse{{#if is_open}} in{{/if}}">
             <div class="accordion-inner">
                 <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Name</label>
+                        <div class="controls">
+                            <span class="uneditable-input read_only">{{name}}</span>
+                        </div>
+                    </div>
                     <div class="control-group">
                         <label class="control-label">Sessions</label>
                         <div class="controls">

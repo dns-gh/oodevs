@@ -64,6 +64,7 @@ namespace
     const Uuid idActive = boost::uuids::string_generator()( idActiveText );
     const std::string nodeActive = "{"
                                    "\"id\":\"" + idActiveText + "\","
+                                   "\"ident\":\"myName\","
                                    "\"name\":\"myName\","
                                    "\"port\":\"1337\","
                                    "\"root\":\"root\","
@@ -74,6 +75,7 @@ namespace
     const Uuid idIdle = boost::uuids::string_generator()( idIdleText );
     const std::string nodeIdle = "{"
                                  "\"id\":\"" + idIdleText + "\","
+                                 "\"ident\":\"myName2\","
                                  "\"name\":\"myName2\","
                                  "\"port\":\"1338\","
                                  "\"root\":\"root\""
@@ -108,7 +110,7 @@ namespace
             const std::string idText = tree.get< std::string >( "id" );
             if( path.empty() )
             {
-                MOCK_EXPECT( sub.nodes.Make4 ).once().with( mock::any, tree.get< std::string >( "name" ), mock::any, mock::any ).returns( node );
+                MOCK_EXPECT( sub.nodes.Make5 ).once().with( mock::any, mock::any, tree.get< std::string >( "name" ), mock::any, mock::any ).returns( node );
                 MOCK_EXPECT( node->Start ).once().returns( true );
             }
             else
@@ -116,7 +118,7 @@ namespace
                 MOCK_EXPECT( sub.nodes.Make1 ).once().returns( node );
             }
             MOCK_EXPECT( sub.system.WriteFile ).returns( true );
-            MOCK_EXPECT( sub.proxy.Register ).once().with( idText, "localhost", node->GetPort() );
+            MOCK_EXPECT( sub.proxy.Register ).once().with( node->GetIdent(), "localhost", node->GetPort() );
             MOCK_EXPECT( node->Stop ).once().returns( true );
             return node;
         }
@@ -146,7 +148,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_reloads, Fixture<> )
 BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
 {
     AddNode( idIdle, nodeIdle );
-    NodeController::T_Node node = control.Create( "myName2", 16, 8 );
+    NodeController::T_Node node = control.Create( "myName2", "myName2", 16, 8 );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK( control.Has( idIdle ) );
@@ -160,7 +162,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
 {
     Reload();
 
-    MOCK_EXPECT( sub.proxy.Unregister ).once().with( idActiveText );
+    MOCK_EXPECT( sub.proxy.Unregister ).once().with( active->GetIdent() );
     MOCK_RESET( active->Stop );
     MOCK_EXPECT( active->Remove ).once();
     NodeController::T_Node node = control.Delete( idActive );
@@ -168,7 +170,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
     BOOST_CHECK( !control.Has( idActive ) );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
 
-    MOCK_EXPECT( sub.proxy.Unregister ).once().with( idIdleText );
+    MOCK_EXPECT( sub.proxy.Unregister ).once().with( idle->GetIdent() );
     MOCK_RESET( idle->Stop );
     MOCK_EXPECT( idle->Remove ).once();
     node = control.Delete( idIdle );
@@ -216,4 +218,18 @@ BOOST_FIXTURE_TEST_CASE( node_controller_delete_cache, Fixture<> )
     MOCK_EXPECT( idle->DeleteCache ).once().returns( Tree() );
     Tree tree = control.DeleteCache( idIdle );
     BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
+}
+
+BOOST_FIXTURE_TEST_CASE( node_controller_cannot_create_node_with_duplicate_ident, Fixture<> )
+{
+    Reload();
+    const std::string idText = "84003698-7894-3549-0973-454970358210";
+    const Uuid id = boost::uuids::string_generator()( idText );
+    Tree tree;
+    tree.put( "ident", "myName" );
+    tree.put( "port", 4567 );
+    boost::shared_ptr< MockNode > node = boost::make_shared< MockNode >( id, tree );
+    MOCK_EXPECT( sub.nodes.Make5 ).once().returns( node );
+    control.Create( "myName", "zomg", 16, 8 );
+    MOCK_EXPECT( sub.system.Remove ).once().returns( true );
 }

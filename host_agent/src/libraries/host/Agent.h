@@ -63,11 +63,11 @@ public:
     virtual std::vector< Tree > ListNodes ( int offset, int limit ) const;
     virtual size_t              CountNodes() const;
     virtual Tree                GetNode   ( const Uuid& id ) const;
-    virtual Tree                CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions );
+    virtual Tree                CreateNode( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions );
     virtual Tree                DeleteNode( const Uuid& id );
     virtual Tree                StartNode ( const Uuid& id ) const;
     virtual Tree                StopNode  ( const Uuid& id ) const;
-    virtual Tree                UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions );
+    virtual Tree                UpdateNode( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions );
     //@}
 
     //! @name Install Methods

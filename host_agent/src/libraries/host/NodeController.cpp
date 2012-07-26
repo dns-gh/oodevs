@@ -26,14 +26,6 @@ using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
 
-namespace
-{
-std::string GetPrefix( const std::string& type, const Node_ABC& node )
-{
-    return type == "cluster" ? "" : boost::lexical_cast< std::string >( node.GetId() );
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: NodeController::NodeController
 // Created: BAX 2012-04-17
@@ -80,6 +72,14 @@ NodeController::~NodeController()
     nodes_.ForeachRef( boost::bind( &NodeController::Stop, this, _1, false, true ) );
 }
 
+namespace
+{
+bool HasSameIdent( const std::string& ident, const Node_ABC& node )
+{
+    return ident == node.GetIdent();
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: NodeController::ReloadNode
 // Created: BAX 2012-07-20
@@ -91,7 +91,11 @@ void NodeController::ReloadNode( const Path& path )
         T_Node node = factory_.Make( path );
         if( !node )
             return;
-        nodes_.Attach( node );
+
+        bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, node->GetIdent(), _1 ) );
+        if( !valid )
+            return;
+
         Create( *node, true );
     }
     catch( const std::exception& err )
@@ -168,10 +172,10 @@ NodeController::T_Node NodeController::Get( const Uuid& id ) const
 void NodeController::Create( Node_ABC& node, bool reload )
 {
     const int port = node.GetPort();
-    LOG_INFO( log_ ) << "[" << type_ << "] " << ( reload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetName() << " :" << port;
+    LOG_INFO( log_ ) << "[" << type_ << "] " << ( reload ? "Reloaded " : "Added " ) << node.GetId() << " " << node.GetIdent() << " :" << port;
     if( !reload )
         system_.MakePaths( node.GetRoot() );
-    proxy_.Register( GetPrefix( type_, node ), "localhost", port );
+    proxy_.Register( node.GetIdent(), "localhost", port );
     if( reload )
         Save( node );
     else
@@ -182,11 +186,17 @@ void NodeController::Create( Node_ABC& node, bool reload )
 // Name: NodeController::Create
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-NodeController::T_Node NodeController::Create( const std::string& name, size_t num_sessions, size_t parallel_sessions )
+NodeController::T_Node NodeController::Create( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions )
 {
     const Path output = system_.MakeAnyPath( root_ );
-    T_Node node = factory_.Make( output, name, num_sessions, parallel_sessions );
-    nodes_.Attach( node );
+    T_Node node = factory_.Make( output, ident, name, num_sessions, parallel_sessions );
+    bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );
+    if( !valid )
+    {
+        async_.Go( boost::bind( &FileSystem_ABC::Remove, &system_, output ) );
+        return T_Node();
+    }
+
     Create( *node, false );
     return node;
 }
@@ -210,8 +220,8 @@ NodeController::T_Node NodeController::Delete( const Uuid& id )
     T_Node node = nodes_.Detach( id );
     if( !node )
         return node;
-    LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetName() << " :" << node->GetPort();
-    proxy_.Unregister( GetPrefix( type_, *node ) );
+    LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->GetId() << " " << node->GetIdent() << " :" << node->GetPort();
+    proxy_.Unregister( node->GetIdent() );
     node->Remove( system_, async_ );
     return node;
 }
@@ -262,11 +272,11 @@ void NodeController::Stop( Node_ABC& node, bool skip, bool weak ) const
         Save( node );
 }
 
-NodeController::T_Node NodeController::Update( const Uuid& id, size_t num_sessions, size_t parallel_sessions )
+NodeController::T_Node NodeController::Update( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
 {
     T_Node node = nodes_.Get( id );
     if( node )
-        node->Update( num_sessions, parallel_sessions );
+        node->Update( name, num_sessions, parallel_sessions );
     return node;
 }
 

@@ -84,6 +84,7 @@ Node::Node( const PackageFactory_ABC& packages,
     , uuids_            ( uuids )
     , observer_         ( observer )
     , id_               ( uuids.Create() )
+    , ident_            ( config.ident )
     , name_             ( config.name )
     , root_             ( config.root )
     , port_             ( ports.Create() )
@@ -120,6 +121,7 @@ Node::Node( const PackageFactory_ABC& packages,
     , uuids_            ( uuids )
     , observer_         ( observer )
     , id_               ( Get< Uuid >( tree, "id" ) )
+    , ident_            ( Get< std::string >( tree, "ident" ) )
     , name_             ( Get< std::string >( tree, "name" ) )
     , root_             ( config.root )
     , port_             ( AcquirePort( Get< int >( tree, "port" ), ports ) )
@@ -171,9 +173,9 @@ Path Node::GetRoot() const
 // Name: Node::GetName
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-std::string Node::GetName() const
+std::string Node::GetIdent() const
 {
-    return name_;
+    return ident_;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,6 +195,7 @@ Tree Node::GetCommonProperties() const
 {
     Tree tree;
     tree.put( "id", id_ );
+    tree.put( "ident", ident_ );
     tree.put( "name", name_ );
     tree.put( "port", port_->Get() );
     tree.put( "num_sessions", num_sessions_ );
@@ -206,6 +209,7 @@ Tree Node::GetCommonProperties() const
 // -----------------------------------------------------------------------------
 Tree Node::GetProperties() const
 {
+    boost::shared_lock< boost::shared_mutex > lock( access_ );
     Tree tree = GetCommonProperties();
     tree.put( "num_exercises", num_exercises_ );
     tree.put( "num_played", num_counter_ );
@@ -221,9 +225,8 @@ Tree Node::GetProperties() const
 // -----------------------------------------------------------------------------
 Tree Node::Save() const
 {
-    Tree tree = GetCommonProperties();
-
     boost::shared_lock< boost::shared_mutex > lock( access_ );
+    Tree tree = GetCommonProperties();
     tree.put( "num_counter", num_counter_ );
     if( cache_ )
         tree.put( "cache", Utf8Convert( cache_->GetPath().filename() ) );
@@ -328,9 +331,11 @@ void Node::Remove( const FileSystem_ABC& system, Async& async )
 // Name: Node::Update
 // Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
-void Node::Update( size_t num_sessions, size_t parallel_sessions )
+void Node::Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
+    if( name != boost::none )
+        name_ = *name;
     num_sessions_ = num_sessions;
     num_counter_ = 0;
     parallel_sessions_ = parallel_sessions;

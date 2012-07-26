@@ -20,20 +20,20 @@ namespace mocks
         {
             MOCK_EXPECT( GetId ).returns( id );
             MOCK_EXPECT( GetRoot ).returns( "" );
-            MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
+            MOCK_EXPECT( GetIdent ).returns( tree.get< std::string >( "ident" ) );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
             MOCK_EXPECT( Save ).returns( tree );
         }
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetRoot, 0 );
-        MOCK_METHOD( GetName, 0 );
+        MOCK_METHOD( GetIdent, 0 );
         MOCK_METHOD( GetPort, 0 );
         MOCK_METHOD( GetProperties, 0 );
         MOCK_METHOD( Save, 0 );
         MOCK_METHOD( Start, 6 );
         MOCK_METHOD( Stop, 1 );
         MOCK_METHOD( Remove, 2 );
-        MOCK_METHOD( Update, 2 );
+        MOCK_METHOD( Update, 3 );
         MOCK_METHOD( GetInstall, 0 );
         MOCK_METHOD( DeleteInstall, 1 );
         MOCK_METHOD( UploadCache, 1 );
@@ -53,8 +53,8 @@ namespace mocks
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )
     {
         MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Path& tag ), Make1 );
-        MOCK_METHOD_EXT( Make, 4, host::NodeFactory_ABC::Ptr( const host::Path& root,
-                         const std::string& name, size_t num_sessions, size_t parallel_sessions ), Make4 );
+        MOCK_METHOD_EXT( Make, 5, host::NodeFactory_ABC::Ptr( const host::Path& root,
+                         const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ), Make5 );
     };
 };
 

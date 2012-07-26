@@ -46,6 +46,7 @@ namespace host
 struct NodeConfig
 {
     Path root;
+    std::string ident;
     std::string name;
     size_t num_sessions;
     size_t parallel_sessions;
@@ -89,7 +90,7 @@ public:
     virtual Uuid GetId() const;
     virtual Path GetRoot() const;
     virtual int  GetPort() const;
-    virtual std::string GetName() const;
+    virtual std::string GetIdent() const;
     virtual Tree GetProperties() const;
     //@}
 
@@ -100,7 +101,7 @@ public:
                         const Path& web, const std::string& type, int host, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( const runtime::FileSystem_ABC& system, runtime::Async& async );
-    virtual void Update( size_t num_sessions, size_t parallel_sessions );
+    virtual void Update( const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions );
     //@}
 
     //! @name Node_ABC methods
@@ -156,7 +157,7 @@ private:
     const PackageFactory_ABC& packages_;
     const NodeObserver_ABC& observer_;
     const Uuid id_;
-    const std::string name_;
+    const std::string ident_;
     const Path root_;
     const Port port_;
     const int min_play_seconds_;
@@ -170,6 +171,7 @@ private:
     T_Process process_;
     bool stopped_;
     mutable runtime::Async async_;
+    std::string name_;
     size_t num_sessions_;
     size_t num_counter_;
     size_t parallel_sessions_;

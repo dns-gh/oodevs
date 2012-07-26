@@ -80,7 +80,7 @@ namespace
         boost::shared_ptr< MockNode > node;
         const host::Path apps;
         Fixture()
-            : node ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"name\":\"a\",\"port\":\"1\"}" ) ) )
+            : node ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
             , apps ( "apps" )
         {
             MOCK_EXPECT( system.GetDirectorySize ).returns( 0 );

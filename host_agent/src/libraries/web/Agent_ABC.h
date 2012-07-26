@@ -18,6 +18,7 @@
 
 namespace boost
 {
+    template< typename T > class optional;
 namespace filesystem
 {
     class path;
@@ -59,11 +60,11 @@ struct Agent_ABC : public boost::noncopyable
     virtual std::vector< Tree > ListNodes ( int offset, int limit ) const = 0;
     virtual size_t              CountNodes() const = 0;
     virtual Tree                GetNode   ( const Uuid& id ) const = 0;
-    virtual Tree                CreateNode( const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual Tree                CreateNode( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
     virtual Tree                DeleteNode( const Uuid& id ) = 0;
     virtual Tree                StartNode ( const Uuid& id ) const = 0;
     virtual Tree                StopNode  ( const Uuid& id ) const = 0;
-    virtual Tree                UpdateNode( const Uuid& id, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual Tree                UpdateNode( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
     //@}
 
     //! @name Install Methods

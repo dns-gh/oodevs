@@ -16,6 +16,7 @@
 
 namespace boost
 {
+    template< typename T > class optional;
     template< typename T > class shared_ptr;
 namespace filesystem
 {
@@ -63,11 +64,11 @@ struct NodeController_ABC : public boost::noncopyable
     virtual size_t  Count() const = 0;
     virtual bool    Has( const Uuid& id ) const = 0;
     virtual T_Node  Get( const Uuid& id ) const = 0;
-    virtual T_Node  Create( const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual T_Node  Create( const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) = 0;
     virtual T_Node  Delete( const Uuid& id ) = 0;
     virtual T_Node  Start( const Uuid& id ) const = 0;
     virtual T_Node  Stop( const Uuid& id ) const = 0;
-    virtual T_Node  Update( const Uuid& id, size_t num_sessions, size_t parallel_sessions ) = 0;
+    virtual T_Node  Update( const Uuid& id, const boost::optional< std::string >& name, size_t num_sessions, size_t parallel_sessions ) = 0;
     //@}
 
     //! @name Install Methods

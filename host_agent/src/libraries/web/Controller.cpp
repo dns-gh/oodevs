@@ -25,6 +25,7 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/xpressive/xpressive.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
@@ -390,6 +391,11 @@ std::string Controller::GetNode( const Request_ABC& request )
     return WriteHttpReply( agent_.GetNode( GetId( request ) ) );
 }
 
+namespace
+{
+const boost::xpressive::sregex identRegex = boost::xpressive::sregex::compile( "^[a-z0-9-_]+$" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Controller::CreateNode
 // Created: BAX 2012-04-03
@@ -397,11 +403,15 @@ std::string Controller::GetNode( const Request_ABC& request )
 std::string Controller::CreateNode( const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
-    const std::string name = RequireParameter< std::string >( "name", request );
+    const std::string ident = RequireParameter< std::string >( "ident", request );
+    if( !boost::xpressive::regex_match( ident, identRegex ) )
+        throw HttpException( BAD_REQUEST );
+    const boost::optional< std::string > opt = request.GetParameter( "name" );
+    const std::string name = opt == boost::none || opt->empty() ? ident : *opt;
     const int num_sessions = GetParameter( "num_sessions", request, 16 );
     const int parallel_sessions = GetParameter( "parallel_sessions", request, 4 );
-    LOG_INFO( log_ ) << "[web] /create_node name: " << name;
-    return WriteHttpReply( agent_.CreateNode( name, num_sessions, parallel_sessions ) );
+    LOG_INFO( log_ ) << "[web] /create_node ident: " << ident;
+    return WriteHttpReply( agent_.CreateNode( ident, name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,9 +454,12 @@ std::string Controller::UpdateNode( const Request_ABC& request )
 {
     Authenticate( request, USER_TYPE_ADMINISTRATOR );
     const Uuid id = GetId( request );
+    const boost::optional< std::string > name = request.GetParameter( "name" );
+    if( name != boost::none && name->empty() )
+        throw HttpException( BAD_REQUEST );
     const size_t num_sessions = RequireParameter< size_t >( "num_sessions", request );
     const size_t parallel_sessions = RequireParameter< size_t >( "parallel_sessions", request );
-    return WriteHttpReply( agent_.UpdateNode( id, num_sessions, parallel_sessions ) );
+    return WriteHttpReply( agent_.UpdateNode( id, name, num_sessions, parallel_sessions ) );
 }
 
 // -----------------------------------------------------------------------------

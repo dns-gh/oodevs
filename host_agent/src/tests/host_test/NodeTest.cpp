@@ -126,6 +126,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
     NodePtr node = MakeNode();
     const std::string base = "{"
         "\"id\":\"12345678-90ab-cdef-9876-543210123456\","
+        "\"ident\":\"\","
         "\"name\":\"myName\","
         "\"port\":\"1337\","
         "\"num_sessions\":\"16\","

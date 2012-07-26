@@ -83,7 +83,7 @@ void MakeTables( Sql_ABC& db )
     Execute( *db.Prepare( *tr,
         "CREATE TABLE IF NOT EXISTS users ("
         "  id           INTEGER PRIMARY KEY"
-        ", username     TEXT UNIQUE NOT NULL"
+        ", username     TEXT NOT NULL"
         ", hash         TEXT NOT NULL"
         ", name         TEXT"
         ", type         TEXT NOT NULL"
@@ -91,6 +91,7 @@ void MakeTables( Sql_ABC& db )
         ", temporary    BOOLEAN"
         ", language     TEXT"
         ", created      DATE"
+        ", UNIQUE     ( username, node ) ON CONFLICT ABORT "
         ")" ) );
     Execute( *db.Prepare( *tr,
         "CREATE TABLE IF NOT EXISTS tokens ("

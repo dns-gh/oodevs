@@ -10,9 +10,13 @@
 node_settings = Handlebars.compile $("#node_settings_template").html()
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
+node_warning_template = Handlebars.compile $("#node_warning_template").html()
 
 print_error = (text) ->
     display_error "node_error", node_error_template, text
+
+print_warning = (text) ->
+    display_error "node_error", node_warning_template, text
 
 pop_settings = (ui, data) ->
     ui.html node_settings data
@@ -21,11 +25,13 @@ pop_settings = (ui, data) ->
     return [ui, mod]
 
 validate_settings = (ui, item) ->
-    max = ui.find ".num_sessions"
-    par = ui.find ".parallel_sessions"
+    name = ui.find ".name"
+    max  = ui.find ".num_sessions"
+    par  = ui.find ".parallel_sessions"
     data =
         num_sessions: parseInt max.val(), 10
         parallel_sessions: parseInt par.val(), 10
+    data.name = name.val() if name.val()?
     return data
 
 class NodeItem extends Backbone.Model
@@ -63,7 +69,7 @@ class NodeList extends Backbone.Collection
         return @name_compare lhs, rhs
 
     name_compare: (lhs, rhs) =>
-        return text_compare lhs.get("name"), rhs.get("name")
+        return text_compare lhs.get("ident"), rhs.get("ident")
 
 class NodeItemView extends Backbone.View
     tagName:   "div"
@@ -89,7 +95,7 @@ class NodeItemView extends Backbone.View
 
     delete: =>
         @toggle_load()
-        @model.destroy wait: true, error: => print_error "Unable to delete node " + @model.get "name"
+        @model.destroy wait: true, error: => print_error "Unable to delete node " + @model.get "ident"
 
     stop: =>
         @toggle_load()
@@ -98,7 +104,7 @@ class NodeItemView extends Backbone.View
                 @toggle_load()
                 @model.set item
             () =>
-                print_error "Unable to stop node " + @model.get "name"
+                print_error "Unable to stop node " + @model.get "ident"
                 @toggle_load()
 
     play: =>
@@ -108,11 +114,12 @@ class NodeItemView extends Backbone.View
                 @toggle_load()
                 @model.set item
             () =>
-                print_error "Unable to start node " + @model.get "name"
+                print_error "Unable to start node " + @model.get "ident"
                 @toggle_load()
 
     edit: (evt) =>
         return if is_disabled evt
+        previous = @model.get "ident"
         [ui, mod] = pop_settings $(@el).find(".node_settings"), @model.attributes
         mod.find(".apply").click =>
             data = validate_settings ui, @model
@@ -120,8 +127,11 @@ class NodeItemView extends Backbone.View
             mod.modal "hide"
             @model.save data,
                 wait: true
+                success: =>
+                    if data.name != previous
+                        print_warning "Please restart node " + @model.get("ident") + " to apply changes"
                 error: =>
-                    print_error "Unable to update node " + @model.get "name"
+                    print_error "Unable to update node " + @model.get "ident"
 
     toggle_load: =>
         for it in $(@el).find(".session_top_right .btn")
@@ -160,7 +170,7 @@ class NodeListView extends Backbone.View
     create: (data) =>
         item = new NodeItem
         item.set data
-        @model.create item, wait: true, error: => print_error "Unable to create node " + item.get "name"
+        @model.create item, wait: true, error: => print_error "Unable to create node " + item.get "ident"
 
     delta: =>
         next = new NodeList
@@ -180,23 +190,24 @@ validate_input_node = (control, result) ->
         group = control.parent().parent()
         group.addClass "error"
         setTimeout (->group.removeClass "error"), 3000
-        print_error "Missing node name"
+        print_error "Missing short name"
         return false
     return true
 
 $("#node_create").click ->
-    name = $ "#node_name"
-    if !validate_input_node name, name.val().length
+    ident = $ "#node_ident"
+    if !validate_input_node ident, ident.val().length
         return
-    node_default.set "name", name.val()
+    node_default.set "ident", ident.val()
     node_view.create node_default
-    name.val ''
+    ident.val ''
 
 $("#node_edit").click ->
     [ui, mod] = pop_settings $("#node_settings"), node_default.attributes
     mod.find(".apply").click ->
         data = validate_settings ui, node_default
         return unless data?
+        node_default.set "name", data.name if data.name?
         node_default.set "num_sessions", data.num_sessions
         node_default.set "parallel_sessions", data.parallel_sessions
         mod.modal "hide"

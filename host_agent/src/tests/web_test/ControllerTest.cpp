@@ -61,11 +61,11 @@ namespace
         MOCK_METHOD( ListNodes, 2 );
         MOCK_METHOD( CountNodes, 0 );
         MOCK_METHOD( GetNode, 1 );
-        MOCK_METHOD( CreateNode, 3 );
+        MOCK_METHOD( CreateNode, 4 );
         MOCK_METHOD( DeleteNode, 1 );
         MOCK_METHOD( StartNode, 1 );
         MOCK_METHOD( StopNode, 1 );
-        MOCK_METHOD( UpdateNode, 3 );
+        MOCK_METHOD( UpdateNode, 4 );
         // install
         MOCK_METHOD( GetInstall, 1 );
         MOCK_METHOD( DeleteInstall, 2 );
@@ -228,12 +228,13 @@ BOOST_FIXTURE_TEST_CASE( controller_create_node, Fixture )
 {
     const std::string name = "node_name";
     SetRequest( "GET", "/create_node", boost::assign::map_list_of
+        ( "ident", name )
         ( "name", name )
         ( "num_sessions", "16" )
         ( "parallel_sessions", "8" )
     );
     const std::string expected = "{\"dummy\":\"ymmud\"}";
-    MOCK_EXPECT( agent.CreateNode ).once().with( name, 16, 8 ).returns( FromJson( expected ) );
+    MOCK_EXPECT( agent.CreateNode ).once().with( name, name, 16, 8 ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
 }
 
@@ -428,4 +429,14 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_cache, Fixture )
     const std::string expected = "{\"dummy\":\"ymmud\"}";
     MOCK_EXPECT( agent.DeleteCache ).once().with( defaultId ).returns( FromJson( expected ) );
     CheckReply( 200, expected, controller.DoGet( request ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_create_node_rejects_invalid_idents, Fixture )
+{
+    SetRequest( "GET", "/create_node", boost::assign::map_list_of( "ident", "" ) );
+    CheckReply( 400, std::string(), controller.DoGet( request ) );
+    SetRequest( "GET", "/create_node", boost::assign::map_list_of( "ident", "A" ) );
+    CheckReply( 400, std::string(), controller.DoGet( request ) );
+    SetRequest( "GET", "/create_node", boost::assign::map_list_of( "ident", "% s+*" ) );
+    CheckReply( 400, std::string(), controller.DoGet( request ) );
 }

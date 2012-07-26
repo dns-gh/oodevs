@@ -192,10 +192,11 @@ struct NodeFactory : public NodeFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const
+    Ptr Make( const Path& root, const std::string& ident, const std::string& name, size_t num_sessions, size_t parallel_sessions ) const
     {
         NodeConfig cfg;
         cfg.root = root;
+        cfg.ident = ident;
         cfg.name = name;
         cfg.num_sessions = num_sessions;
         cfg.parallel_sessions = parallel_sessions;
