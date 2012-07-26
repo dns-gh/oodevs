@@ -42,8 +42,8 @@ namespace
 // Name: PerceptionRecoSurveillanceReco constructor
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-PerceptionRecoSurveillanceReco::PerceptionRecoSurveillanceReco( const TER_Localisation* localisation, unsigned int currentTimeStep )
-    : localisation_             ( localisation )
+PerceptionRecoSurveillanceReco::PerceptionRecoSurveillanceReco( const wrapper::View& perception, unsigned int currentTimeStep )
+    : localisation_             ( static_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) )
     , currentTimeStep_          ( currentTimeStep )
     , nForestDetectionTimeStep_ ( currentTimeStep )
     , nUrbanDetectionTimeStep_  ( currentTimeStep )
@@ -52,7 +52,7 @@ PerceptionRecoSurveillanceReco::PerceptionRecoSurveillanceReco( const TER_Locali
     unsigned int nForestSurface = 0;
     unsigned int nEmptySurface  = 0;
     unsigned int nUrbanSurface  = 0;
-    GET_HOOK( GetVisionObjectsInSurface )( localisation, nEmptySurface, nForestSurface, nUrbanSurface );
+    GET_HOOK( GetVisionObjectsInSurface )( localisation_, nEmptySurface, nForestSurface, nUrbanSurface );
     const_cast< unsigned int& >( nForestDetectionTimeStep_ ) += static_cast< unsigned int >( nForestSurface * rForestSurveillanceTime_ );
     const_cast< unsigned int& >( nEmptyDetectionTimeStep_  ) += static_cast< unsigned int >( nEmptySurface  * rEmptySurveillanceTime_  );
     const_cast< unsigned int& >( nUrbanDetectionTimeStep_  ) += static_cast< unsigned int >( nUrbanSurface  * rUrbanSurveillanceTime_ );
@@ -169,8 +169,7 @@ void PerceptionRecoSurveillance::ReadAlatTime( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PerceptionRecoSurveillance::AddLocalisation( const std::string& /*key*/, const wrapper::View& perception, unsigned int currentTimeStep )
 {
-    const TER_Localisation* localization = static_cast< const TER_Localisation* >( perception.GetUserData() );
-    Add( std::auto_ptr< PerceptionRecoSurveillanceReco >( new PerceptionRecoSurveillanceReco( localization, currentTimeStep ) ) );
+    Add( std::auto_ptr< PerceptionRecoSurveillanceReco >( new PerceptionRecoSurveillanceReco( perception, currentTimeStep ) ) );
 }
 
 // -----------------------------------------------------------------------------

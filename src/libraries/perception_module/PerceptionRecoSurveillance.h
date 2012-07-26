@@ -29,7 +29,7 @@ namespace perception
 class PerceptionRecoSurveillanceReco : public PerceptionLocalisation
 {
 public:
-    PerceptionRecoSurveillanceReco( const TER_Localisation* localisation, unsigned int currentTimeStep );
+    PerceptionRecoSurveillanceReco( const wrapper::View& perception, unsigned int currentTimeStep );
 
     bool IsInside       ( const MT_Vector2D& ) const;
     void GetAgentsInside( const wrapper::View&, Perception_ABC::T_AgentPtrVector& ) const;

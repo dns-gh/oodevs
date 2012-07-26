@@ -28,9 +28,9 @@ DECLARE_HOOK( GetVisionObject, unsigned char, ( const MT_Vector2D* point ) )
 
 namespace
 {
-    void AddLocalization( std::vector< const TER_Localisation* >& localizations, const std::string& /*key*/, const wrapper::View& localization )
+    void AddLocalization( std::vector< const TER_Localisation* >& localizations, const std::string& /*key*/, const wrapper::View& perception )
     {
-        localizations.push_back( reinterpret_cast< const TER_Localisation* >( localization.GetUserData() ) );
+        localizations.push_back( reinterpret_cast< const TER_Localisation* >( perception[ "localization" ].GetUserData() ) );
     }
 }
 

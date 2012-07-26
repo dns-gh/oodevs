@@ -17,7 +17,7 @@ BOOST_FIXTURE_TEST_CASE( alat_reco_sensor_recognized_all_agents_in_location_depe
     const unsigned char eVisionEmpty = 0;
     const TER_Localisation* localization = reinterpret_cast< const TER_Localisation* >( 1337 );
     entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/alat/reco/0" ].SetUserData( localization );
+    entity[ "perceptions/alat/reco/0/localization" ].SetUserData( localization );
     const SWORD_Model* other = core::Convert( &model[ "entities/other" ] );
     model[ "entities/other/pion" ].SetUserData< MIL_Agent_ABC* >( reinterpret_cast< MIL_Agent_ABC* >( 43 ) );
     model[ "entities/other/movement/position/x" ] = 5;
