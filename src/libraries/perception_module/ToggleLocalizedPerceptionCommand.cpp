@@ -47,7 +47,7 @@ void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& model ) con
     const wrapper::View& perception = model[ "entities" ][ identifier_ ][ "perceptions"][ perception_ ];
     wrapper::Effect effect( perception );
     if( isActivated_ )
-        effect[ perceptionId_ ].SetUserData( localization_ );
+        effect[ perceptionId_ ][ "localization" ].SetUserData( localization_ );
     else
     {
         effect[ perceptionId_ ].MarkForRemove();

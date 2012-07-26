@@ -107,7 +107,8 @@ BOOST_FIXTURE_TEST_CASE( activated_radar_localization_is_forwarded_to_effect, sw
     const int tapping = 1;
     const int localization = 0;
     core::Model& radar = model[ "entities" ][ identifier ][ "perceptions/localized-radars/tapping" ];
-    ExpectEffect( radar, sword::test::MakeModel( perceptionId, sword::test::MakeUserData( &localization ) ) );
+    ExpectEffect( radar, sword::test::MakeModel( perceptionId,
+                            sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle localized radar",
         core::MakeModel( "identifier", identifier )
                        ( "radar-class", tapping )
@@ -139,7 +140,8 @@ BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarde
     const size_t perceptionId = 1337;
     const int localization = 0;
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
-    ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MakeUserData( &localization ) ) );
+    ExpectEffect( perception, sword::test::MakeModel( perceptionId,
+                                sword::test::MakeModel( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -171,9 +173,9 @@ BOOST_FIXTURE_TEST_CASE( activating_reco_forwards_localization_and_growth_speed_
     const size_t perceptionId = 1337;
     const int localization = 0;
     core::Model& reco = model[ "entities" ][ identifier ][ "perceptions/reco" ];
-    ExpectEffect( reco, sword::test::MakeModel( perceptionId, sword::test::MakeModel()( "has-growth-speed", true )
-                                                                                      ( "growth-speed", 31 )
-                                                                                      ( "localization", sword::test::MakeUserData( &localization ) ) ) );
+    ExpectEffect( reco, sword::test::MakeModel( perceptionId, sword::test::MakeModel( "has-growth-speed", true )
+                                                                                    ( "growth-speed", 31 )
+                                                                                    ( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle reco",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )
@@ -205,10 +207,10 @@ BOOST_FIXTURE_TEST_CASE( activating_object_detection_forwards_localization_and_s
     const double speed = 13;
     core::Model& object = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
     ExpectEffect( object, sword::test::MakeModel( perceptionId,
-                                                    sword::test::MakeModel()( "speed", speed )
-                                                                            ( "center/x", 1 )
-                                                                            ( "center/y", 2 )
-                                                                            ( "localization", sword::test::MakeUserData( &localization ) ) ) );
+                                                    sword::test::MakeModel( "speed", speed )
+                                                                          ( "center/x", 1 )
+                                                                          ( "center/y", 2 )
+                                                                          ( "localization", sword::test::MakeUserData( &localization ) ) ) );
     commands.Start( "toggle object detection",
         core::MakeModel( "identifier", identifier )
                        ( "activated", true )

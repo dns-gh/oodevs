@@ -45,7 +45,7 @@ ToggleRecognitionPointCommand::~ToggleRecognitionPointCommand()
 // -----------------------------------------------------------------------------
 void ToggleRecognitionPointCommand::Execute( const wrapper::View& model ) const
 {
-    const wrapper::View& point = model[ "entities" ][ identifier_ ][ "perceptions/recognition-point"];
+    const wrapper::View& point = model[ "entities" ][ identifier_ ][ "perceptions/recognition-point" ];
     wrapper::Effect effect( point );
     if( isActivated_ )
     {
